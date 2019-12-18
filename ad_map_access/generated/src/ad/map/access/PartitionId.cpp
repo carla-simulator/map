@@ -1,0 +1,41 @@
+/*
+ * ----------------- BEGIN LICENSE BLOCK ---------------------------------
+ *
+ * Copyright (C) 2018-2019 Intel Corporation
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * ----------------- END LICENSE BLOCK -----------------------------------
+ */
+
+/**
+ * Generated file
+ * @file
+ *
+ * Generator Version : 10.6.1-1904
+ */
+
+#include "ad/map/access/PartitionId.hpp"
+
+/*!
+ * @brief namespace ad
+ */
+namespace ad {
+/*!
+ * @brief namespace map
+ */
+namespace map {
+/*!
+ * @brief namespace access
+ *
+ * Accessing map data
+ */
+namespace access {
+
+const uint64_t PartitionId::cMinValue = 0;
+
+const uint64_t PartitionId::cMaxValue = std::numeric_limits<uint64_t>::max();
+
+} // namespace access
+} // namespace map
+} // namespace ad
