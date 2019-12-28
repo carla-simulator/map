@@ -10,4 +10,4 @@ This includes type safe implemenations of e.g. Distance, Speed, Duration and Acc
 In addition, the types define AD specific precision, minima, maxima and input range values.
 
 ## API documentation <a name="apidoc"></a>
-Detailed documentation on API level is available via Doxygen documentation within the code.
+Detailed documentation on API level is available via [Doxygen documentation](https://maplib.readthedocs.io/en/latest/ad_physics/apidoc/html/index.html) within the code.

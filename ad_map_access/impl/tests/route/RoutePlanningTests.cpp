@@ -26,8 +26,6 @@ struct RoutePlanningTest : ::testing::Test
 {
   RoutePlanningTest()
   {
-    //    DLT_REGISTER_APP("amat", "ad map access test");
-    //    DLT_ENABLE_LOCAL_PRINT();
   }
 
   virtual ~RoutePlanningTest() = default;
@@ -35,7 +33,6 @@ struct RoutePlanningTest : ::testing::Test
   virtual void SetUp()
   {
     access::cleanup();
-    //    DLT_SET_APPLICATION_LL_TS_LIMIT(DLT_LOG_VERBOSE, DLT_TRACE_STATUS_OFF);
   }
 
   virtual void TearDown()

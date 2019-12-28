@@ -13,6 +13,12 @@ cmake_minimum_required(VERSION 3.5)
 project(MapMaker)
 set(PROJECT_NAMESPACE mapmaker::)
 
+option(BUILD_MAP_MAKER "Build tool to generate ad_map from OSM" OFF)
+
+if (NOT BUILD_MAP_MAKER)
+  return()
+endif()
+
 include(../../cmake/testing.cmake)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)

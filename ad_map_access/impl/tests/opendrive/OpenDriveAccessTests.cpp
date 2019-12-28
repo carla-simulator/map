@@ -29,8 +29,6 @@ struct OpenDriveAccessTests : ::testing::Test
   virtual void SetUp()
   {
     access::cleanup();
-    //  DLT_SET_APPLICATION_LL_TS_LIMIT(DLT_LOG_VERBOSE, DLT_TRACE_STATUS_OFF);
-    //  DLT_ENABLE_LOCAL_PRINT();
   }
   virtual void TearDown()
   {

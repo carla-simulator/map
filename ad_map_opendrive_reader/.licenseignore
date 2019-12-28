@@ -1,7 +1,0 @@
-build.gradle
-3rdParty
-include
-src
-cmake
-CMakeLists.txt
-README.md

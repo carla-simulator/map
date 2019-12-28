@@ -539,7 +539,6 @@ struct FindLaneChangeResult
  *   latest. A valid routeIteratorLaneChangeEnd can be in the range [std::begin(route), std::end(route)[
  * - the laneChangeDirection specifying if the lane change goes from left to right or right to left.
  *
- * This function uses the dlt context of the AdMapAccess::instance() singleton.
  *
  * @param[in] currentPositionEgoVehicle the currentPosition of the ego vehicle
  * @param[in] route the route on which the first lane change is searched

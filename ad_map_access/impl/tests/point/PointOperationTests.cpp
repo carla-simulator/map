@@ -22,8 +22,6 @@ struct PointOperationTest : ::testing::Test
 {
   PointOperationTest()
   {
-    // DLT_REGISTER_APP("amat", "ad map access test");
-    // DLT_ENABLE_LOCAL_PRINT();
   }
 
   virtual void SetUp()

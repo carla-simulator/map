@@ -24,13 +24,10 @@ struct RoutePredictionTest : ::testing::Test
 {
   RoutePredictionTest()
   {
-    // DLT_REGISTER_APP("amat", "ad map access test");
-    // DLT_ENABLE_LOCAL_PRINT();
   }
 
   virtual void SetUp()
   {
-    // DLT_SET_APPLICATION_LL_TS_LIMIT(DLT_LOG_VERBOSE, DLT_TRACE_STATUS_OFF);
     access::cleanup();
     if (!access::init(getTestMap()))
     {

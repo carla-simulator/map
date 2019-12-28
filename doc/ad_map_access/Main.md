@@ -48,7 +48,7 @@ of this library.
 5. [Design for Security](./HLD_Security.md)
 
 ## API documentation <a name="apidoc"></a>
-Detailed documentation on API level is available via Doxygen documentation within the code.
+Detailed documentation on API level is available via [Doxygen documentation](https://maplib.readthedocs.io/en/latest/ad_map_access/apidoc/html/index.html) within the code.
 
 ## Tools <a name="tools"></a>
 

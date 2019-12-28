@@ -1,7 +1,6 @@
 # Map support for Automated Driving
-=====
 
-## Table of contents
+#### Table of contents
 1. [Introduction](#introduction)
 2. [License](#license)
 3. [Releases](#releases)
@@ -27,18 +26,15 @@ In addition, the terms in the following apply:
 [RELEASE NOTES AND DISCLAIMERS](./RELEASE_NOTES_AND_DISCLAIMERS.md).
 
 ## Documentation
-Visit the project's [GitHub page](todo) to access the online version of the full documentation of this library. This includes:
-
-- [Doxygen](todo)
-- [Markdown](todo)
+Visit the project's [Documentation page](https://maplib.readthedocs.io/en/latest/) to access the online version of the full documentation of this library.
 
 ## Releases <a name="releases"></a>
-### Release 1.0.0 <a name="release_1"></a>
+#### Release 1.0.0 <a name="release_1"></a>
 The initial release of the map C++ software libraries.
 
 ## Getting started <a name="started"></a>
 
-### Installation of dependencies
+#### Installation of dependencies
 Currently, the focused operating system is Ubuntu 16.04. Nevertheless, the library should work in a similar way for any other Linux OS.
 To install the dependencies for Ubuntu 16.04 execute the following command:
 ```bash
@@ -50,14 +46,14 @@ If you want to use doxygen for API documentation, please also install:
  user$> sudo apt-get install doxygen graphviz
 ```
 
-### Get the library
+#### Get the library
 To download the library, you may run:
 ```bash
  user$> git clone https://github.com/carla-simulation/map.git
  user$> cd map
 ```
 
-### Supported systems <a name="systems"></a>
+#### Supported systems <a name="systems"></a>
 Currently Ubuntu 16.04 is the supported system. Other Linux OS and compiler combinations might also work.
 Important: cmake is required to be at least version 3.5!
 

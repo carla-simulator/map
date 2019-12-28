@@ -26,13 +26,10 @@ using namespace ::ad::map::point;
 
 FactoryTest::FactoryTest()
 {
-  //    DLT_REGISTER_APP("amat", "ad map access test");
-  //    DLT_ENABLE_LOCAL_PRINT();
 }
 
 void FactoryTest::SetUp()
 {
-  //    DLT_SET_APPLICATION_LL_TS_LIMIT(DLT_LOG_VERBOSE, DLT_TRACE_STATUS_OFF);
   access::cleanup();
   mVehicle.type = restriction::RoadUserType::INVALID;
   mVehicle.passengers = restriction::PassengerCount(2);

@@ -47,14 +47,14 @@ coordinate system the lane geometry object provides an internal ENU cache.
 
 ECEF ("earth-centered, earth-fixed") is a geographic coordinate system and Cartesian coordinate system.
 It represents positions as an X, Y, and Z coordinate. The point (0,0,0) is defined as the center of mass
-of the earth,[2] hence the name "earth-centered." Its axes are aligned with the international reference
+of the earth, hence the name "earth-centered." Its axes are aligned with the international reference
 pole (IRP) and international reference meridian (IRM) that are fixed with respect to the surface of the
 earth, hence the description "earth-fixed.“ The z-axis extends through True north, which does not coincide
 with the instantaneous earth rotational axis. The x-axis intersects the sphere of the earth at 0° latitude
 (the equator) and 0° longitude (prime meridian in Greenwich). This means that ECEF rotates with the earth,
 and therefore coordinates of a point fixed on the surface of the earth do not change.
 
-https://en.wikipedia.org/wiki/ECEF
+Source [Wikipedia](https://en.wikipedia.org/wiki/ECEF)
 
 #### ENU <a name="enu"></a>
 
@@ -68,7 +68,7 @@ formed from a plane tangent to the Earth's surface fixed to a specific location 
 sometimes known as a "Local Tangent" or "local geodetic" plane. By convention the east axis is
 labeled x, the north y and the up  z.
 
-https://en.wikipedia.org/wiki/Geographic_coordinate_system
+Source: [Wikipedia](https://en.wikipedia.org/wiki/Geographic_coordinate_system)
 
 ### Road Network <a name="roadnetwork"></a>
 
