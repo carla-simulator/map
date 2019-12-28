@@ -9,7 +9,6 @@
 #include "ad/map/access/Operation.hpp"
 
 #include <boost/filesystem/path.hpp>
-#include <dlt/dlt_cpp_extension.hpp>
 
 #include "AdMapAccess.hpp"
 #include "ad/map/config/MapConfigFileHandler.hpp"

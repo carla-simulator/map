@@ -22,9 +22,6 @@ struct AdMapBoundingBoxMapMatchingTest : ::testing::Test
 {
   AdMapBoundingBoxMapMatchingTest()
   {
-    // DLT_REGISTER_APP("ammt", "ad map matching test");
-    // DLT_SET_APPLICATION_LL_TS_LIMIT(DLT_LOG_VERBOSE, DLT_TRACE_STATUS_OFF);
-    // DLT_ENABLE_LOCAL_PRINT();
   }
 
   virtual void SetUp()

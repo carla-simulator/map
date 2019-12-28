@@ -11,6 +11,10 @@ cmake_minimum_required(VERSION 3.5)
 project(ad_map_access_qgis)
 include(GNUInstallDirs)
 
+if (NOT BUILD_QGPIS_PLUGIN)
+  return()
+endif()
+
 #
 # qgis plugin is just installed into the plugin directory
 #

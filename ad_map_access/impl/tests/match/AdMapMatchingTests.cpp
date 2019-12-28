@@ -20,8 +20,6 @@ struct AdMapMatchingTest : ::testing::Test
 {
   AdMapMatchingTest()
   {
-    // DLT_REGISTER_APP("amat", "ad map access test");
-    // DLT_ENABLE_LOCAL_PRINT();
   }
 
   virtual void SetUp()
@@ -32,7 +30,6 @@ struct AdMapMatchingTest : ::testing::Test
     mMinProbabilty = physics::Probability(0.05);
     mHeadingHints.clear();
     mMapMatching = new match::AdMapMatching();
-    // DLT_SET_APPLICATION_LL_TS_LIMIT(DLT_LOG_VERBOSE, DLT_TRACE_STATUS_OFF);
   }
 
   virtual void TearDown()
