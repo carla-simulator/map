@@ -1,5 +1,4 @@
 # General build instructions
-=====
 
 ## Building a single library
 

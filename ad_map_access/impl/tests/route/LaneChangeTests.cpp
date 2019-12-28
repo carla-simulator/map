@@ -21,9 +21,6 @@ struct LaneChangeTest : ::testing::Test
 {
   LaneChangeTest()
   {
-    // DLT_REGISTER_APP("LChT", "lane change tests");
-    // DLT_SET_APPLICATION_LL_TS_LIMIT(DLT_LOG_VERBOSE, DLT_TRACE_STATUS_OFF);
-    // DLT_ENABLE_LOCAL_PRINT();
   }
 
   virtual ~LaneChangeTest() = default;
