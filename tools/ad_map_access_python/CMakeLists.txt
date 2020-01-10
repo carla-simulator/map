@@ -15,10 +15,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 project(ad_map_access_python)
 
-if (NOT BUILD_PYTHON)
-  return()
-endif()
-
 find_package(ad_map_access REQUIRED CONFIG)
 find_package(PythonLibs 2.7 REQUIRED)
 

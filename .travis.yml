@@ -47,7 +47,6 @@ matrix:
         - ln -s ../../ad_map_opendrive_reader
         - ln -s ../../ad_physics
         - ln -s ../../cmake
-        - ln -s ../../tools
         - cd ..
         - colcon build --cmake-args -DBUILD_HARDENING=ON -DSPDLOG_BUILD_SHARED=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON
         - cd build/ad_map_access && ctest -V && cd ../..
@@ -90,7 +89,6 @@ matrix:
         - ln -s ../../ad_map_opendrive_reader
         - ln -s ../../ad_physics
         - ln -s ../../cmake
-        - ln -s ../../tools
         - cd ..
         - colcon build --cmake-args -DBUILD_HARDENING=ON -DSPDLOG_BUILD_SHARED=ON -DBUILD_APIDOC=ON
         - cd ../
