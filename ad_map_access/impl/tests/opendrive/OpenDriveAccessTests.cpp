@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2019 Intel Corporation
+// Copyright (C) 2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -37,7 +37,7 @@ struct OpenDriveAccessTests : ::testing::Test
 
   void checkEdgePoints(lane::LaneId laneId, point::ECEFEdge const &edge)
   {
-    EXPECT_GE(edge.size(), 2) << static_cast<uint64_t>(laneId);
+    EXPECT_GE(edge.size(), 2u) << static_cast<uint64_t>(laneId);
     for (auto pointIter = edge.begin(); pointIter != edge.end(); pointIter++)
     {
       auto nextPointIter = pointIter + 1;
@@ -179,7 +179,7 @@ TEST_F(OpenDriveAccessTests, read_map)
   access::setENUReferencePoint(p);
 
   auto lanes = lane::getLanes();
-  ASSERT_GT(lanes.size(), 0);
+  ASSERT_GT(lanes.size(), 0u);
 
   // write map for convenience
   serialize::SerializerFileCRC32 serializer(true);
@@ -203,7 +203,7 @@ TEST_F(OpenDriveAccessTests, read_written_map)
   access::setENUReferencePoint(p);
 
   auto lanes = lane::getLanes();
-  ASSERT_GT(lanes.size(), 0);
+  ASSERT_GT(lanes.size(), 0u);
 }
 
 TEST_F(OpenDriveAccessTests, lane_points_town01)
@@ -245,7 +245,7 @@ TEST_F(OpenDriveAccessTests, TrafficSignTest)
   ASSERT_TRUE(access::init("test_files/bad/Town01copy.txt"));
   LandmarkIdList idList;
   idList = getLandmarks();
-  ASSERT_EQ(idList.size(), 3);
+  ASSERT_EQ(idList.size(), 3u);
 }
 
 TEST_F(OpenDriveAccessTests, defaultIntersectionType)

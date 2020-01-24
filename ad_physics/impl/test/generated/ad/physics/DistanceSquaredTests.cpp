@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,22 +25,24 @@ TEST(DistanceSquaredTests, defaultConstructionIsInvalid)
 
 TEST(DistanceSquaredTests, minIsDefinedAsExpected)
 {
-  EXPECT_EQ(-1e18, ::ad::physics::DistanceSquared::cMinValue);
-  EXPECT_EQ(::ad::physics::DistanceSquared::cMinValue, static_cast<double>(::ad::physics::DistanceSquared::getMin()));
+  EXPECT_DOUBLE_EQ(-1e18, ::ad::physics::DistanceSquared::cMinValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::DistanceSquared::cMinValue,
+                   static_cast<double>(::ad::physics::DistanceSquared::getMin()));
 }
 
 TEST(DistanceSquaredTests, maxIsDefinedAsExpected)
 {
-  EXPECT_EQ(1e18, ::ad::physics::DistanceSquared::cMaxValue);
-  EXPECT_EQ(::ad::physics::DistanceSquared::cMaxValue, static_cast<double>(::ad::physics::DistanceSquared::getMax()));
+  EXPECT_DOUBLE_EQ(1e18, ::ad::physics::DistanceSquared::cMaxValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::DistanceSquared::cMaxValue,
+                   static_cast<double>(::ad::physics::DistanceSquared::getMax()));
 }
 
 TEST(DistanceSquaredTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::DistanceSquared::cPrecisionValue);
-  EXPECT_EQ(1e-6, ::ad::physics::DistanceSquared::cPrecisionValue);
-  EXPECT_EQ(::ad::physics::DistanceSquared::cPrecisionValue,
-            static_cast<double>(::ad::physics::DistanceSquared::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-6, ::ad::physics::DistanceSquared::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::DistanceSquared::cPrecisionValue,
+                   static_cast<double>(::ad::physics::DistanceSquared::getPrecision()));
 }
 
 TEST(DistanceSquaredTests, minIsValid)
@@ -99,37 +101,41 @@ TEST(DistanceSquaredTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(DistanceSquaredTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::DistanceSquared::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::physics::DistanceSquared>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::DistanceSquared::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::DistanceSquared>::lowest()));
 }
 
 TEST(DistanceSquaredTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::DistanceSquared::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::physics::DistanceSquared>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::DistanceSquared::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::DistanceSquared>::max()));
 }
 
 TEST(DistanceSquaredTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::DistanceSquared::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::physics::DistanceSquared>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::DistanceSquared::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::DistanceSquared>::epsilon()));
 }
 
 TEST(DistanceSquaredTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::physics::DistanceSquared(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::physics::DistanceSquared(-1.))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::DistanceSquared(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::DistanceSquared(-1.))));
+  EXPECT_DOUBLE_EQ(
     ::ad::physics::DistanceSquared::cPrecisionValue,
     static_cast<double>(std::fabs(::ad::physics::DistanceSquared(::ad::physics::DistanceSquared::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::DistanceSquared::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::DistanceSquared(::ad::physics::DistanceSquared::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::DistanceSquared::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::DistanceSquared(-::ad::physics::DistanceSquared::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::DistanceSquared::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::DistanceSquared(::ad::physics::DistanceSquared::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::DistanceSquared::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::DistanceSquared(-::ad::physics::DistanceSquared::cMaxValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::DistanceSquared::cMinValue),
+    static_cast<double>(std::fabs(::ad::physics::DistanceSquared(::ad::physics::DistanceSquared::cMinValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::DistanceSquared::cMinValue),
+    static_cast<double>(std::fabs(::ad::physics::DistanceSquared(-::ad::physics::DistanceSquared::cMinValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::DistanceSquared::cMaxValue),
+    static_cast<double>(std::fabs(::ad::physics::DistanceSquared(::ad::physics::DistanceSquared::cMaxValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::DistanceSquared::cMaxValue),
+    static_cast<double>(std::fabs(::ad::physics::DistanceSquared(-::ad::physics::DistanceSquared::cMaxValue))));
 }
 
 TEST(DistanceSquaredTests, constructionFromValidFPValue)
@@ -137,7 +143,7 @@ TEST(DistanceSquaredTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::DistanceSquared::cMinValue;
   ::ad::physics::DistanceSquared value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(DistanceSquaredTests, copyConstructionFromValidValue)
@@ -145,7 +151,7 @@ TEST(DistanceSquaredTests, copyConstructionFromValidValue)
   ::ad::physics::DistanceSquared const validValue(::ad::physics::DistanceSquared::cMinValue);
   ::ad::physics::DistanceSquared value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(DistanceSquaredTests, moveConstructionFromValidValue)
@@ -153,7 +159,7 @@ TEST(DistanceSquaredTests, moveConstructionFromValidValue)
   ::ad::physics::DistanceSquared value(
     std::move(::ad::physics::DistanceSquared(::ad::physics::DistanceSquared::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::DistanceSquared::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::DistanceSquared::cMinValue, static_cast<double>(value));
 }
 
 TEST(DistanceSquaredTests, assignmentFromValidValue)
@@ -162,7 +168,7 @@ TEST(DistanceSquaredTests, assignmentFromValidValue)
   ::ad::physics::DistanceSquared value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(DistanceSquaredTests, moveAssignmentFromValidValue)
@@ -170,7 +176,7 @@ TEST(DistanceSquaredTests, moveAssignmentFromValidValue)
   ::ad::physics::DistanceSquared value;
   value = std::move(::ad::physics::DistanceSquared(::ad::physics::DistanceSquared::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::DistanceSquared::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::DistanceSquared::cMinValue, static_cast<double>(value));
 }
 
 TEST(DistanceSquaredTests, constructionFromInvalidFPValue)
@@ -208,7 +214,7 @@ TEST(DistanceSquaredTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::physics::DistanceSquared value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_PHYSICS_DISTANCESQUARED_THROWS_EXCEPTION == 1)

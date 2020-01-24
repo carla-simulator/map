@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2018-2019 Intel Corporation
+# Copyright (C) 2018-2020 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -8,7 +8,7 @@
 "..."
 
 import Globs
-import ad_map_access_python as admap
+import ad_map_access_qgis_python as admap
 
 from .ADMapQgsLayers import ADMapQgsLayers
 from .Worker import Worker

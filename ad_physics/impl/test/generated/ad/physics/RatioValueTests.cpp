@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,8 +25,9 @@ TEST(RatioValueTests, defaultConstructionIsInvalid)
 TEST(RatioValueTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::RatioValue::cPrecisionValue);
-  EXPECT_EQ(1e-9, ::ad::physics::RatioValue::cPrecisionValue);
-  EXPECT_EQ(::ad::physics::RatioValue::cPrecisionValue, static_cast<double>(::ad::physics::RatioValue::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-9, ::ad::physics::RatioValue::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::RatioValue::cPrecisionValue,
+                   static_cast<double>(::ad::physics::RatioValue::getPrecision()));
 }
 
 TEST(RatioValueTests, minIsValid)
@@ -85,36 +86,37 @@ TEST(RatioValueTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(RatioValueTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::RatioValue::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::physics::RatioValue>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::RatioValue::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::RatioValue>::lowest()));
 }
 
 TEST(RatioValueTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::RatioValue::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::physics::RatioValue>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::RatioValue::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::RatioValue>::max()));
 }
 
 TEST(RatioValueTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::RatioValue::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::physics::RatioValue>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::RatioValue::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::RatioValue>::epsilon()));
 }
 
 TEST(RatioValueTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::physics::RatioValue(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::physics::RatioValue(-1.))));
-  EXPECT_EQ(::ad::physics::RatioValue::cPrecisionValue,
-            static_cast<double>(std::fabs(::ad::physics::RatioValue(::ad::physics::RatioValue::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::RatioValue::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::RatioValue(::ad::physics::RatioValue::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::RatioValue::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::RatioValue(-::ad::physics::RatioValue::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::RatioValue::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::RatioValue(::ad::physics::RatioValue::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::RatioValue::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::RatioValue(-::ad::physics::RatioValue::cMaxValue))));
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::RatioValue(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::RatioValue(-1.))));
+  EXPECT_DOUBLE_EQ(
+    ::ad::physics::RatioValue::cPrecisionValue,
+    static_cast<double>(std::fabs(::ad::physics::RatioValue(::ad::physics::RatioValue::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::RatioValue::cMinValue),
+                   static_cast<double>(std::fabs(::ad::physics::RatioValue(::ad::physics::RatioValue::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::RatioValue::cMinValue),
+                   static_cast<double>(std::fabs(::ad::physics::RatioValue(-::ad::physics::RatioValue::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::RatioValue::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::physics::RatioValue(::ad::physics::RatioValue::cMaxValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::RatioValue::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::physics::RatioValue(-::ad::physics::RatioValue::cMaxValue))));
 }
 
 TEST(RatioValueTests, constructionFromValidFPValue)
@@ -122,7 +124,7 @@ TEST(RatioValueTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::RatioValue::cMinValue;
   ::ad::physics::RatioValue value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(RatioValueTests, copyConstructionFromValidValue)
@@ -130,14 +132,14 @@ TEST(RatioValueTests, copyConstructionFromValidValue)
   ::ad::physics::RatioValue const validValue(::ad::physics::RatioValue::cMinValue);
   ::ad::physics::RatioValue value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(RatioValueTests, moveConstructionFromValidValue)
 {
   ::ad::physics::RatioValue value(std::move(::ad::physics::RatioValue(::ad::physics::RatioValue::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::RatioValue::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::RatioValue::cMinValue, static_cast<double>(value));
 }
 
 TEST(RatioValueTests, assignmentFromValidValue)
@@ -146,7 +148,7 @@ TEST(RatioValueTests, assignmentFromValidValue)
   ::ad::physics::RatioValue value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(RatioValueTests, moveAssignmentFromValidValue)
@@ -154,7 +156,7 @@ TEST(RatioValueTests, moveAssignmentFromValidValue)
   ::ad::physics::RatioValue value;
   value = std::move(::ad::physics::RatioValue(::ad::physics::RatioValue::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::RatioValue::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::RatioValue::cMinValue, static_cast<double>(value));
 }
 
 TEST(RatioValueTests, constructionFromInvalidFPValue)
@@ -192,7 +194,7 @@ TEST(RatioValueTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::physics::RatioValue value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_PHYSICS_RATIOVALUE_THROWS_EXCEPTION == 1)

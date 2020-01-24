@@ -1,0 +1,80 @@
+#!/usr/bin/python
+# ----------------- BEGIN LICENSE BLOCK ---------------------------------
+#
+# Copyright (c) 2020 Intel Corporation
+#
+# SPDX-License-Identifier: MIT
+#
+# ----------------- END LICENSE BLOCK -----------------------------------
+
+"""
+This module uses pygccxml and py++ to generate
+Python interfaces for all classes and datatypes
+of the ad_map_access library.
+
+The resulting library is called libad_map_access_python
+"""
+
+from python_wrapper_helper import generate_python_wrapper, post_process_python_wrapper
+
+
+def main():
+    """
+    Main function to generate Python-C++ binding code
+    """
+    header_dirs = {
+        "../generated/include",
+        "../impl/include"
+    }
+    include_dirs = {
+        "../../ad_physics/generated/include",
+        "../../ad_physics/impl/include",
+        "../../ad_map_opendrive_reader/include",
+        "../../dependencies/spdlog/include",
+    }
+    # currently ignored files,
+    # these will require manual adaptions if one wants to enable those
+    ignore_files = {
+        # issue: virtual calculate() function
+        "route/Route.hpp",
+        "route/RouteAStar.hpp",
+        "route/RouteExpander.hpp",
+        "route/RoutePrediction.hpp",
+        # issue: compile errors, serializer, Factory should not be required directly
+        "serialize/",
+        "access/Factory.hpp",
+        "opendrive/AdMapFactory.hpp",
+        # issue: store makes problems on compilation, because returning reference not possible
+        "access/Store.hpp",
+    }
+
+    generate_python_wrapper(library_name="libad_map_access_python",
+                            cpp_filename="AdMapAccessPythonWrapper.cpp",
+                            header_directories=header_dirs,
+                            include_paths=include_dirs,
+                            declarations={
+                                "ad", "toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"},
+                            ignore_declarations={"Store", "getStore"},
+                            ignore_files=ignore_files)
+
+    additional_replacements = {
+        # physics types used as default without full namespace in code
+        ("physics::Distance(", "ad::physics::Distance("),
+        ("physics::ParametricValue(", "ad::physics::ParametricValue("),
+        ("nullptr", "0"),
+        # some renaming for set data types
+        ("\"vector_less__ad_scope_map_scope_lane_scope_LaneId__greater_\"", "\"LaneIdList\""),
+        ("\"set_less__ad_scope_map_scope_lane_scope_LaneId__greater_\"", "\"LaneIdSet\""),
+        ("\"set_less__ad_scope_map_scope_landmark_scope_LandmarkId__greater_\"", "\"LandmarkIdSet\""),
+        ("\"vector_less__ad_scope_map_scope_route_scope_ConnectingInterval__greater_\"", "\"ConnectingSegment\""),
+        ("\"vector_less__ad_scope_map_scope_match_scope_MapMatchedPosition__greater_\"",
+         "\"MapMatchedPositionConfidenceList\""),
+    }
+
+    post_process_python_wrapper(header_directories=header_dirs,
+                                cpp_filename="AdMapAccessPythonWrapper.cpp",
+                                additional_replacements=additional_replacements
+                                )
+
+if __name__ == '__main__':
+    main()

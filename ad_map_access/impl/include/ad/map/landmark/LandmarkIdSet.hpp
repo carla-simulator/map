@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -9,7 +9,9 @@
 #pragma once
 
 #include <functional>
-#include <unordered_set>
+#include <set>
+#include <sstream>
+#include <string>
 #include "ad/map/landmark/LandmarkId.hpp"
 
 /** @brief namespace ad */
@@ -20,21 +22,35 @@ namespace map {
 namespace landmark {
 
 /**
- * @brief Hash of a landmark identifier
+ * @brief Set to store landmark identifiers
  */
-struct LandmarkIdHash
-{
-  std::size_t operator()(LandmarkId const &landmarkId) const noexcept
-  {
-    return static_cast<uint64_t>(landmarkId);
-  }
-};
-
-/**
- * @brief Set to store hashes for landmark identifiers
- */
-using LandmarkIdSet = std::unordered_set<LandmarkId, LandmarkIdHash>;
+typedef std::set<LandmarkId> LandmarkIdSet;
 
 } // namespace landmark
 } // namespace map
 } // namespace ad
+
+namespace std {
+
+inline std::ostream &operator<<(std::ostream &os, ::ad::map::landmark::LandmarkIdSet const &landmarkIdSet)
+{
+  os << "[ ";
+  for (auto it = landmarkIdSet.begin(); it != landmarkIdSet.end(); ++it)
+  {
+    if (it != landmarkIdSet.begin())
+    {
+      os << ", ";
+    }
+    os << *it;
+  }
+  os << "]";
+  return os;
+}
+
+static inline std::string to_string(::ad::map::landmark::LandmarkIdSet const &landmarkIdSet)
+{
+  stringstream sstream;
+  sstream << landmarkIdSet;
+  return sstream.str();
+}
+} // namespace std

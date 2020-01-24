@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2018-2019 Intel Corporation
+# Copyright (C) 2018-2020 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -11,7 +11,7 @@ from PyQt4.QtCore import QVariant
 from PyQt4.QtGui import QColor
 from qgis.core import QgsField
 
-import ad_map_access_python as admap
+import ad_map_access_qgis_python as admap
 import Globs
 
 from .QGISLayer import WGS84ArrowLayer, WGS84PolylineLayer, WGS84SurfaceLayer, WGS84PointLayer, WGS84SVGPointLayer

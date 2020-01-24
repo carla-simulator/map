@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -324,10 +324,10 @@ TEST_F(LaneIntervalOperationTest, GetProjectedENUEdgeOnTown01)
 
   point::ENUEdge edge_enu1, edge_enu2, edge_enu3, edge_enu4;
   edge_enu1 = getLeftProjectedENUEdge(laneInt1);
-  ASSERT_GT(edge_enu1.size(), 0);
+  ASSERT_GT(edge_enu1.size(), 0u);
 
   edge_enu2 = getRightProjectedENUEdge(laneInt1);
-  ASSERT_GT(edge_enu2.size(), 0);
+  ASSERT_GT(edge_enu2.size(), 0u);
 
   lane::ENUBorder border_enu1;
   border_enu1 = getENUProjectedBorder(laneInt1);

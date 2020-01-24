@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -10,6 +10,7 @@
 
 #include "ad/map/landmark/Types.hpp"
 #include "ad/map/serialize/ISerializer.hpp"
+#include "ad/map/serialize/SerializeGeneratedPointTypes.hpp"
 
 /** @brief namespace ad */
 namespace ad {
@@ -21,7 +22,7 @@ namespace serialize {
 /**
  * @brief serializer for landmark::LandmarkId
  */
-template <> inline bool doSerialize(ISerializer &serializer, landmark::LandmarkId &x)
+inline bool doSerialize(ISerializer &serializer, landmark::LandmarkId &x)
 {
   return serializer.serializeGeneratedType<landmark::LandmarkId, uint64_t, SerializeableMagic::LandmarkId>(x);
 }
@@ -29,7 +30,7 @@ template <> inline bool doSerialize(ISerializer &serializer, landmark::LandmarkI
 /**
  * @brief serializer for landmark::Landmark
  */
-template <> inline bool doSerialize(ISerializer &serializer, landmark::Landmark &landmark)
+inline bool doSerialize(ISerializer &serializer, landmark::Landmark &landmark)
 {
   return serializer.serialize(SerializeableMagic::Landmark) && doSerialize(serializer, landmark.id)
     && serializer.serialize(landmark.type) && doSerialize(serializer, landmark.position)

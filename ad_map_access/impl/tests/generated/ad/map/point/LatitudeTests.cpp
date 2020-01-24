@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,9 +25,9 @@ TEST(LatitudeTests, defaultConstructionIsInvalid)
 TEST(LatitudeTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::map::point::Latitude::cPrecisionValue);
-  EXPECT_EQ(1e-8, ::ad::map::point::Latitude::cPrecisionValue);
-  EXPECT_EQ(::ad::map::point::Latitude::cPrecisionValue,
-            static_cast<double>(::ad::map::point::Latitude::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-8, ::ad::map::point::Latitude::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cPrecisionValue,
+                   static_cast<double>(::ad::map::point::Latitude::getPrecision()));
 }
 
 TEST(LatitudeTests, minIsValid)
@@ -86,36 +86,37 @@ TEST(LatitudeTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(LatitudeTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::Latitude::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::Latitude>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Latitude::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::Latitude>::lowest()));
 }
 
 TEST(LatitudeTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::Latitude::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::Latitude>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Latitude::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::Latitude>::max()));
 }
 
 TEST(LatitudeTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::Latitude::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::Latitude>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Latitude::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::Latitude>::epsilon()));
 }
 
 TEST(LatitudeTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::map::point::Latitude(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::map::point::Latitude(-1.))));
-  EXPECT_EQ(::ad::map::point::Latitude::cPrecisionValue,
-            static_cast<double>(std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Latitude::cMinValue),
-            static_cast<double>(std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Latitude::cMinValue),
-            static_cast<double>(std::fabs(::ad::map::point::Latitude(-::ad::map::point::Latitude::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Latitude::cMaxValue),
-            static_cast<double>(std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Latitude::cMaxValue),
-            static_cast<double>(std::fabs(::ad::map::point::Latitude(-::ad::map::point::Latitude::cMaxValue))));
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::Latitude(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::Latitude(-1.))));
+  EXPECT_DOUBLE_EQ(
+    ::ad::map::point::Latitude::cPrecisionValue,
+    static_cast<double>(std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Latitude::cMinValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Latitude::cMinValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Latitude(-::ad::map::point::Latitude::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Latitude::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cMaxValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Latitude::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Latitude(-::ad::map::point::Latitude::cMaxValue))));
 }
 
 TEST(LatitudeTests, constructionFromValidFPValue)
@@ -123,7 +124,7 @@ TEST(LatitudeTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::Latitude::cMinValue;
   ::ad::map::point::Latitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(LatitudeTests, copyConstructionFromValidValue)
@@ -131,14 +132,14 @@ TEST(LatitudeTests, copyConstructionFromValidValue)
   ::ad::map::point::Latitude const validValue(::ad::map::point::Latitude::cMinValue);
   ::ad::map::point::Latitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(LatitudeTests, moveConstructionFromValidValue)
 {
   ::ad::map::point::Latitude value(std::move(::ad::map::point::Latitude(::ad::map::point::Latitude::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::Latitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cMinValue, static_cast<double>(value));
 }
 
 TEST(LatitudeTests, assignmentFromValidValue)
@@ -147,7 +148,7 @@ TEST(LatitudeTests, assignmentFromValidValue)
   ::ad::map::point::Latitude value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(LatitudeTests, moveAssignmentFromValidValue)
@@ -155,7 +156,7 @@ TEST(LatitudeTests, moveAssignmentFromValidValue)
   ::ad::map::point::Latitude value;
   value = std::move(::ad::map::point::Latitude(::ad::map::point::Latitude::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::Latitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cMinValue, static_cast<double>(value));
 }
 
 TEST(LatitudeTests, constructionFromInvalidFPValue)
@@ -193,7 +194,7 @@ TEST(LatitudeTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::map::point::Latitude value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_MAP_POINT_LATITUDE_THROWS_EXCEPTION == 1)

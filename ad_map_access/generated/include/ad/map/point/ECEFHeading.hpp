@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -47,12 +47,12 @@ struct ECEFHeading
   /*!
    * \brief Smart pointer on ECEFHeading
    */
-  using Ptr = std::shared_ptr<ECEFHeading>;
+  typedef std::shared_ptr<ECEFHeading> Ptr;
 
   /*!
    * \brief Smart pointer on constant ECEFHeading
    */
-  using ConstPtr = std::shared_ptr<ECEFHeading const>;
+  typedef std::shared_ptr<ECEFHeading const> ConstPtr;
 
   /*!
    * \brief standard constructor

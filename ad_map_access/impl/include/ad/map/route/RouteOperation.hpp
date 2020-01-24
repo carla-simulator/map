@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -201,6 +201,21 @@ restriction::SpeedLimitList getSpeedLimits(LaneSegment const &laneSegment);
  * @brief get the speed limits between the two given iterators
  */
 restriction::SpeedLimitList getSpeedLimits(RouteIterator const &startIterator, RouteIterator const &endIterator);
+
+/**
+ * @brief get the speed limits of a complete route
+ */
+restriction::SpeedLimitList getSpeedLimits(FullRoute const &fullRoute);
+
+/**
+ * @brief get the speed limits of a connecting segment
+ */
+restriction::SpeedLimitList getSpeedLimits(ConnectingSegment const &connectingSegment);
+
+/**
+ * @brief get the speed limits of a connecting route
+ */
+restriction::SpeedLimitList getSpeedLimits(ConnectingRoute const &connectingRoute);
 
 /**
  * @brief checks if the point is within the roadSegment
@@ -539,6 +554,7 @@ struct FindLaneChangeResult
  *   latest. A valid routeIteratorLaneChangeEnd can be in the range [std::begin(route), std::end(route)[
  * - the laneChangeDirection specifying if the lane change goes from left to right or right to left.
  *
+ * This function uses the logger of the AdMapAccess::instance() singleton.
  *
  * @param[in] currentPositionEgoVehicle the currentPosition of the ego vehicle
  * @param[in] route the route on which the first lane change is searched

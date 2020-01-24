@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,9 +25,9 @@ TEST(AltitudeTests, defaultConstructionIsInvalid)
 TEST(AltitudeTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::map::point::Altitude::cPrecisionValue);
-  EXPECT_EQ(1e-3, ::ad::map::point::Altitude::cPrecisionValue);
-  EXPECT_EQ(::ad::map::point::Altitude::cPrecisionValue,
-            static_cast<double>(::ad::map::point::Altitude::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-3, ::ad::map::point::Altitude::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cPrecisionValue,
+                   static_cast<double>(::ad::map::point::Altitude::getPrecision()));
 }
 
 TEST(AltitudeTests, minIsValid)
@@ -86,36 +86,37 @@ TEST(AltitudeTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(AltitudeTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::Altitude::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::Altitude>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Altitude::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::Altitude>::lowest()));
 }
 
 TEST(AltitudeTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::Altitude::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::Altitude>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Altitude::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::Altitude>::max()));
 }
 
 TEST(AltitudeTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::Altitude::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::Altitude>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Altitude::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::Altitude>::epsilon()));
 }
 
 TEST(AltitudeTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::map::point::Altitude(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::map::point::Altitude(-1.))));
-  EXPECT_EQ(::ad::map::point::Altitude::cPrecisionValue,
-            static_cast<double>(std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Altitude::cMinValue),
-            static_cast<double>(std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Altitude::cMinValue),
-            static_cast<double>(std::fabs(::ad::map::point::Altitude(-::ad::map::point::Altitude::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Altitude::cMaxValue),
-            static_cast<double>(std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Altitude::cMaxValue),
-            static_cast<double>(std::fabs(::ad::map::point::Altitude(-::ad::map::point::Altitude::cMaxValue))));
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::Altitude(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::Altitude(-1.))));
+  EXPECT_DOUBLE_EQ(
+    ::ad::map::point::Altitude::cPrecisionValue,
+    static_cast<double>(std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Altitude::cMinValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Altitude::cMinValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Altitude(-::ad::map::point::Altitude::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Altitude::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cMaxValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Altitude::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Altitude(-::ad::map::point::Altitude::cMaxValue))));
 }
 
 TEST(AltitudeTests, constructionFromValidFPValue)
@@ -123,7 +124,7 @@ TEST(AltitudeTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::Altitude::cMinValue;
   ::ad::map::point::Altitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(AltitudeTests, copyConstructionFromValidValue)
@@ -131,14 +132,14 @@ TEST(AltitudeTests, copyConstructionFromValidValue)
   ::ad::map::point::Altitude const validValue(::ad::map::point::Altitude::cMinValue);
   ::ad::map::point::Altitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(AltitudeTests, moveConstructionFromValidValue)
 {
   ::ad::map::point::Altitude value(std::move(::ad::map::point::Altitude(::ad::map::point::Altitude::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::Altitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cMinValue, static_cast<double>(value));
 }
 
 TEST(AltitudeTests, assignmentFromValidValue)
@@ -147,7 +148,7 @@ TEST(AltitudeTests, assignmentFromValidValue)
   ::ad::map::point::Altitude value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(AltitudeTests, moveAssignmentFromValidValue)
@@ -155,7 +156,7 @@ TEST(AltitudeTests, moveAssignmentFromValidValue)
   ::ad::map::point::Altitude value;
   value = std::move(::ad::map::point::Altitude(::ad::map::point::Altitude::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::Altitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cMinValue, static_cast<double>(value));
 }
 
 TEST(AltitudeTests, constructionFromInvalidFPValue)
@@ -193,7 +194,7 @@ TEST(AltitudeTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::map::point::Altitude value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_MAP_POINT_ALTITUDE_THROWS_EXCEPTION == 1)

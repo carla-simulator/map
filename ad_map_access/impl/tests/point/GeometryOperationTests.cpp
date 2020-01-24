@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -133,14 +133,14 @@ TEST_F(GeometryOperationTest, ParametricRange)
 
   ECEFEdge edge_ecef3;
   getParametricRange(geo1, trange, edge_ecef3, false);
-  ASSERT_EQ(edge_ecef3.size(), 3);
+  ASSERT_EQ(edge_ecef3.size(), 3u);
   ASSERT_EQ(edge_ecef3[0], createECEFPoint(1.4, 2, 3));
   ASSERT_EQ(edge_ecef3[1], createECEFPoint(2, 2, 3));
   ASSERT_EQ(edge_ecef3[2], createECEFPoint(2.6, 2, 3));
 
   edge_ecef3.clear();
   getParametricRange(geo1, trange, edge_ecef3, true);
-  ASSERT_EQ(edge_ecef3.size(), 3);
+  ASSERT_EQ(edge_ecef3.size(), 3u);
   ASSERT_EQ(edge_ecef3[0], createECEFPoint(2.6, 2, 3));
   ASSERT_EQ(edge_ecef3[1], createECEFPoint(2, 2, 3));
   ASSERT_EQ(edge_ecef3[2], createECEFPoint(1.4, 2, 3));
@@ -155,7 +155,7 @@ TEST_F(GeometryOperationTest, ParametricRange)
   getParametricRange(geo1, trange, edge_ecef3, false);
   GeoEdge edge_geo1;
   getParametricRange(geo1, trange, edge_geo1, false);
-  ASSERT_EQ(edge_geo1.size(), 3);
+  ASSERT_EQ(edge_geo1.size(), 3u);
   GeoEdge edge_geo2;
   edge_geo2 = toGeo(edge_ecef3);
   ASSERT_EQ(edge_geo1[0], edge_geo2[0]);
@@ -171,7 +171,7 @@ TEST_F(GeometryOperationTest, ParametricRange)
   geo1 = createGeometry(edge_ecef1, false);
   getParametricRange(geo1, trange, edge_ecef3, true);
   getParametricRange(geo1, trange, edge_geo1, true);
-  ASSERT_EQ(edge_geo1.size(), 3);
+  ASSERT_EQ(edge_geo1.size(), 3u);
   edge_geo2 = toGeo(edge_ecef3);
   ASSERT_EQ(edge_geo1[0], edge_geo2[0]);
   ASSERT_EQ(edge_geo1[1], edge_geo2[1]);
@@ -188,7 +188,7 @@ TEST_F(GeometryOperationTest, ParametricRange)
   geo1 = createGeometry(edge_ecef1, false);
   geo2 = createGeometry(edge_ecef2, false);
   edge_ecef3 = getMiddleEdge(geo1, geo2);
-  ASSERT_EQ(edge_ecef3.size(), 3);
+  ASSERT_EQ(edge_ecef3.size(), 3u);
   ASSERT_EQ(edge_ecef3[0], createECEFPoint(3.5, 4, 4.5));
   ASSERT_EQ(edge_ecef3[1], createECEFPoint(4.5, 4, 4.5));
   ASSERT_EQ(edge_ecef3[2], createECEFPoint(5.5, 4, 4.5));
