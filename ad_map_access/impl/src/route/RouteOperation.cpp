@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -283,6 +283,39 @@ restriction::SpeedLimitList getSpeedLimits(RouteIterator const &startIterator, R
       auto const segmentSpeedLimits = getSpeedLimits(*roadSegmentIter);
       resultLimits.insert(resultLimits.end(), segmentSpeedLimits.begin(), segmentSpeedLimits.end());
     }
+  }
+  return resultLimits;
+}
+
+restriction::SpeedLimitList getSpeedLimits(FullRoute const &fullRoute)
+{
+  restriction::SpeedLimitList resultLimits;
+  for (auto const &roadSegment : fullRoute.roadSegments)
+  {
+    auto const segmentSpeedLimits = getSpeedLimits(roadSegment);
+    resultLimits.insert(resultLimits.end(), segmentSpeedLimits.begin(), segmentSpeedLimits.end());
+  }
+  return resultLimits;
+}
+
+restriction::SpeedLimitList getSpeedLimits(ConnectingSegment const &connectingSegment)
+{
+  restriction::SpeedLimitList resultLimits;
+  for (auto const &connectingInverval : connectingSegment)
+  {
+    auto const segmentSpeedLimits = getSpeedLimits(connectingInverval.laneInterval);
+    resultLimits.insert(resultLimits.end(), segmentSpeedLimits.begin(), segmentSpeedLimits.end());
+  }
+  return resultLimits;
+}
+
+restriction::SpeedLimitList getSpeedLimits(ConnectingRoute const &connectingRoute)
+{
+  restriction::SpeedLimitList resultLimits;
+  for (auto const &connectingSegment : connectingRoute.connectingSegments)
+  {
+    auto const segmentSpeedLimits = getSpeedLimits(connectingSegment);
+    resultLimits.insert(resultLimits.end(), segmentSpeedLimits.begin(), segmentSpeedLimits.end());
   }
   return resultLimits;
 }

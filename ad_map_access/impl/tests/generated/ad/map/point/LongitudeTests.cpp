@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,9 +25,9 @@ TEST(LongitudeTests, defaultConstructionIsInvalid)
 TEST(LongitudeTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::map::point::Longitude::cPrecisionValue);
-  EXPECT_EQ(1e-8, ::ad::map::point::Longitude::cPrecisionValue);
-  EXPECT_EQ(::ad::map::point::Longitude::cPrecisionValue,
-            static_cast<double>(::ad::map::point::Longitude::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-8, ::ad::map::point::Longitude::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cPrecisionValue,
+                   static_cast<double>(::ad::map::point::Longitude::getPrecision()));
 }
 
 TEST(LongitudeTests, minIsValid)
@@ -86,36 +86,39 @@ TEST(LongitudeTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(LongitudeTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::Longitude::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::Longitude>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Longitude::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::Longitude>::lowest()));
 }
 
 TEST(LongitudeTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::Longitude::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::Longitude>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Longitude::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::Longitude>::max()));
 }
 
 TEST(LongitudeTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::Longitude::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::Longitude>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Longitude::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::Longitude>::epsilon()));
 }
 
 TEST(LongitudeTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::map::point::Longitude(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::map::point::Longitude(-1.))));
-  EXPECT_EQ(::ad::map::point::Longitude::cPrecisionValue,
-            static_cast<double>(std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Longitude::cMinValue),
-            static_cast<double>(std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Longitude::cMinValue),
-            static_cast<double>(std::fabs(::ad::map::point::Longitude(-::ad::map::point::Longitude::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Longitude::cMaxValue),
-            static_cast<double>(std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::Longitude::cMaxValue),
-            static_cast<double>(std::fabs(::ad::map::point::Longitude(-::ad::map::point::Longitude::cMaxValue))));
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::Longitude(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::Longitude(-1.))));
+  EXPECT_DOUBLE_EQ(
+    ::ad::map::point::Longitude::cPrecisionValue,
+    static_cast<double>(std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Longitude::cMinValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cMinValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::map::point::Longitude::cMinValue),
+    static_cast<double>(std::fabs(::ad::map::point::Longitude(-::ad::map::point::Longitude::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Longitude::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cMaxValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::map::point::Longitude::cMaxValue),
+    static_cast<double>(std::fabs(::ad::map::point::Longitude(-::ad::map::point::Longitude::cMaxValue))));
 }
 
 TEST(LongitudeTests, constructionFromValidFPValue)
@@ -123,7 +126,7 @@ TEST(LongitudeTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::Longitude::cMinValue;
   ::ad::map::point::Longitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(LongitudeTests, copyConstructionFromValidValue)
@@ -131,14 +134,14 @@ TEST(LongitudeTests, copyConstructionFromValidValue)
   ::ad::map::point::Longitude const validValue(::ad::map::point::Longitude::cMinValue);
   ::ad::map::point::Longitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(LongitudeTests, moveConstructionFromValidValue)
 {
   ::ad::map::point::Longitude value(std::move(::ad::map::point::Longitude(::ad::map::point::Longitude::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::Longitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMinValue, static_cast<double>(value));
 }
 
 TEST(LongitudeTests, assignmentFromValidValue)
@@ -147,7 +150,7 @@ TEST(LongitudeTests, assignmentFromValidValue)
   ::ad::map::point::Longitude value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(LongitudeTests, moveAssignmentFromValidValue)
@@ -155,7 +158,7 @@ TEST(LongitudeTests, moveAssignmentFromValidValue)
   ::ad::map::point::Longitude value;
   value = std::move(::ad::map::point::Longitude(::ad::map::point::Longitude::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::Longitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMinValue, static_cast<double>(value));
 }
 
 TEST(LongitudeTests, constructionFromInvalidFPValue)
@@ -193,7 +196,7 @@ TEST(LongitudeTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::map::point::Longitude value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_MAP_POINT_LONGITUDE_THROWS_EXCEPTION == 1)

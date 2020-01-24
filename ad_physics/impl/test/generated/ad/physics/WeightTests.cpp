@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,8 +25,8 @@ TEST(WeightTests, defaultConstructionIsInvalid)
 TEST(WeightTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::Weight::cPrecisionValue);
-  EXPECT_EQ(1e-3, ::ad::physics::Weight::cPrecisionValue);
-  EXPECT_EQ(::ad::physics::Weight::cPrecisionValue, static_cast<double>(::ad::physics::Weight::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-3, ::ad::physics::Weight::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cPrecisionValue, static_cast<double>(::ad::physics::Weight::getPrecision()));
 }
 
 TEST(WeightTests, minIsValid)
@@ -85,36 +85,36 @@ TEST(WeightTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(WeightTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::Weight::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::physics::Weight>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Weight::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::Weight>::lowest()));
 }
 
 TEST(WeightTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::Weight::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::physics::Weight>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Weight::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::Weight>::max()));
 }
 
 TEST(WeightTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::Weight::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::physics::Weight>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Weight::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::Weight>::epsilon()));
 }
 
 TEST(WeightTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::physics::Weight(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::physics::Weight(-1.))));
-  EXPECT_EQ(::ad::physics::Weight::cPrecisionValue,
-            static_cast<double>(std::fabs(::ad::physics::Weight(::ad::physics::Weight::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Weight::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::Weight(::ad::physics::Weight::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Weight::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::Weight(-::ad::physics::Weight::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Weight::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::Weight(::ad::physics::Weight::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Weight::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::Weight(-::ad::physics::Weight::cMaxValue))));
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::Weight(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::Weight(-1.))));
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cPrecisionValue,
+                   static_cast<double>(std::fabs(::ad::physics::Weight(::ad::physics::Weight::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Weight::cMinValue),
+                   static_cast<double>(std::fabs(::ad::physics::Weight(::ad::physics::Weight::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Weight::cMinValue),
+                   static_cast<double>(std::fabs(::ad::physics::Weight(-::ad::physics::Weight::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Weight::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::physics::Weight(::ad::physics::Weight::cMaxValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Weight::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::physics::Weight(-::ad::physics::Weight::cMaxValue))));
 }
 
 TEST(WeightTests, constructionFromValidFPValue)
@@ -122,7 +122,7 @@ TEST(WeightTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::Weight::cMinValue;
   ::ad::physics::Weight value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(WeightTests, copyConstructionFromValidValue)
@@ -130,14 +130,14 @@ TEST(WeightTests, copyConstructionFromValidValue)
   ::ad::physics::Weight const validValue(::ad::physics::Weight::cMinValue);
   ::ad::physics::Weight value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(WeightTests, moveConstructionFromValidValue)
 {
   ::ad::physics::Weight value(std::move(::ad::physics::Weight(::ad::physics::Weight::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::Weight::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cMinValue, static_cast<double>(value));
 }
 
 TEST(WeightTests, assignmentFromValidValue)
@@ -146,7 +146,7 @@ TEST(WeightTests, assignmentFromValidValue)
   ::ad::physics::Weight value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(WeightTests, moveAssignmentFromValidValue)
@@ -154,7 +154,7 @@ TEST(WeightTests, moveAssignmentFromValidValue)
   ::ad::physics::Weight value;
   value = std::move(::ad::physics::Weight(::ad::physics::Weight::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::Weight::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cMinValue, static_cast<double>(value));
 }
 
 TEST(WeightTests, constructionFromInvalidFPValue)
@@ -192,7 +192,7 @@ TEST(WeightTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::physics::Weight value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_PHYSICS_WEIGHT_THROWS_EXCEPTION == 1)

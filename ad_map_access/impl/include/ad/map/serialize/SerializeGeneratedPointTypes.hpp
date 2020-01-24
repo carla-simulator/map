@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -20,6 +20,8 @@
 #include "ad/map/point/Longitude.hpp"
 #include "ad/map/point/ParaPoint.hpp"
 #include "ad/map/serialize/ISerializer.hpp"
+#include "ad/map/serialize/SerializeGeneratedBasicTypes.hpp"
+#include "ad/map/serialize/SerializeGeneratedPhysicsTypes.hpp"
 
 /** @brief namespace ad */
 namespace ad {
@@ -31,7 +33,7 @@ namespace serialize {
 /**
  * @brief Serializer for point::ECEFCoordinate
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::ECEFCoordinate &x)
+inline bool doSerialize(ISerializer &serializer, point::ECEFCoordinate &x)
 {
   return serializer.serializeGeneratedType<point::ECEFCoordinate, double, SerializeableMagic::ECEFCoordinate>(x);
 }
@@ -39,7 +41,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::ECEFCoordina
 /**
  * @brief Serializer for point::ENUCoordinate
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::ENUCoordinate &x)
+inline bool doSerialize(ISerializer &serializer, point::ENUCoordinate &x)
 {
   return serializer.serializeGeneratedType<point::ENUCoordinate, double, SerializeableMagic::ENUCoordinate>(x);
 }
@@ -47,7 +49,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::ENUCoordinat
 /**
  * @brief Serializer for point::Longitude
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::Longitude &x)
+inline bool doSerialize(ISerializer &serializer, point::Longitude &x)
 {
   return serializer.serializeGeneratedType<point::Longitude, double, SerializeableMagic::Longitude>(x);
 }
@@ -55,7 +57,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::Longitude &x
 /**
  * @brief Serializer for point::Latitude
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::Latitude &x)
+inline bool doSerialize(ISerializer &serializer, point::Latitude &x)
 {
   return serializer.serializeGeneratedType<point::Latitude, double, SerializeableMagic::Latitude>(x);
 }
@@ -63,7 +65,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::Latitude &x)
 /**
  * @brief Serializer for point::Altitude
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::Altitude &x)
+inline bool doSerialize(ISerializer &serializer, point::Altitude &x)
 {
   return serializer.serializeGeneratedType<point::Altitude, double, SerializeableMagic::Altitude>(x);
 }
@@ -71,7 +73,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::Altitude &x)
 /**
  * @brief Serializer for point::ParaPoint
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::ParaPoint &paraPoint)
+inline bool doSerialize(ISerializer &serializer, point::ParaPoint &paraPoint)
 {
   return serializer.serialize(SerializeableMagic::ParaPoint) && doSerialize(serializer, paraPoint.laneId)
     && doSerialize(serializer, paraPoint.parametricOffset);
@@ -80,7 +82,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::ParaPoint &p
 /**
  * @brief Serializer for point::ENUPoint
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::ENUPoint &enuPoint)
+inline bool doSerialize(ISerializer &serializer, point::ENUPoint &enuPoint)
 {
   //@todo: fix ENUCoordinate -> ENUPoint: currently here for backward compat
   return serializer.serialize(SerializeableMagic::ENUCoordinate) && doSerialize(serializer, enuPoint.x)
@@ -90,7 +92,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::ENUPoint &en
 /**
  * @brief Serializer for point::ECEFPoint
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::ECEFPoint &ecefPoint)
+inline bool doSerialize(ISerializer &serializer, point::ECEFPoint &ecefPoint)
 {
   //@todo: fix ECEFCoordinate -> ECEFPoint: currently here for backward compat
   return serializer.serialize(SerializeableMagic::ECEFCoordinate) && doSerialize(serializer, ecefPoint.x)
@@ -100,7 +102,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::ECEFPoint &e
 /**
  * @brief Serializer for point::GeoPoint
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::GeoPoint &geoPoint)
+inline bool doSerialize(ISerializer &serializer, point::GeoPoint &geoPoint)
 {
   return serializer.serialize(SerializeableMagic::GeoPoint) && doSerialize(serializer, geoPoint.longitude)
     && doSerialize(serializer, geoPoint.latitude) && doSerialize(serializer, geoPoint.altitude);
@@ -109,7 +111,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::GeoPoint &ge
 /**
  * @brief Serializer for point::BoundingSphere
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::BoundingSphere &boundingSphere)
+inline bool doSerialize(ISerializer &serializer, point::BoundingSphere &boundingSphere)
 {
   // @todo: keep original format, so no magic for bounding sphere for now
   return doSerialize(serializer, boundingSphere.center) && doSerialize(serializer, boundingSphere.radius);
@@ -118,7 +120,7 @@ template <> inline bool doSerialize(ISerializer &serializer, point::BoundingSphe
 /**
  * @brief Serializer for point::Geometry
  */
-template <> inline bool doSerialize(ISerializer &serializer, point::Geometry &geometry)
+inline bool doSerialize(ISerializer &serializer, point::Geometry &geometry)
 {
   if (!serializer.isStoring())
   {

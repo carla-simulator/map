@@ -4,7 +4,8 @@
 1. [Introduction](#introduction)
 2. [High Level Design](#highleveldesign)
 3. [API documentation](#apidoc)
-4. [Tools](#tools)
+4. [Python Binding](#python)
+5. [Tools](#tools)
 
 ## Introduction <a name="introduction"></a>
 This *ad_map_access* library provides a C++ implementation for accessing and operating on AD map data.
@@ -50,6 +51,9 @@ of this library.
 ## API documentation <a name="apidoc"></a>
 Detailed documentation on API level is available via [Doxygen documentation](https://ad-map-access.readthedocs.io/en/latest/ad_map_access/apidoc/html/index.html) within the code.
 
+## Python Binding <a name="python"></a>
+There is also a python binding for the *ad_map_access* library available: [*ad_map_access_python*](./ad_map_access_python.md)
+
 ## Tools <a name="tools"></a>
 
 ### QGIS <a name="qgis"></a>
@@ -83,4 +87,4 @@ The tools around map making are there to provide basic offline conversion from
 [OpenStreetMap](https://www.openstreetmap.org/) data into the proprietary ad_map_access
 binary format. In general these tools are making use of an intermediate format to be
 easy extended for other input or output formats. For details see the
-[MapMaker documentation](../../tools/map_maker/README.md).
+[MapMaker documentation](../map_maker/README.md).

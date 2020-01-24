@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,8 +25,8 @@ TEST(AngleTests, defaultConstructionIsInvalid)
 TEST(AngleTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::Angle::cPrecisionValue);
-  EXPECT_EQ(1e-3, ::ad::physics::Angle::cPrecisionValue);
-  EXPECT_EQ(::ad::physics::Angle::cPrecisionValue, static_cast<double>(::ad::physics::Angle::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-3, ::ad::physics::Angle::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cPrecisionValue, static_cast<double>(::ad::physics::Angle::getPrecision()));
 }
 
 TEST(AngleTests, minIsValid)
@@ -85,36 +85,36 @@ TEST(AngleTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(AngleTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::Angle::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::physics::Angle>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Angle::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::Angle>::lowest()));
 }
 
 TEST(AngleTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::Angle::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::physics::Angle>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Angle::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::Angle>::max()));
 }
 
 TEST(AngleTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::Angle::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::physics::Angle>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Angle::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::Angle>::epsilon()));
 }
 
 TEST(AngleTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::physics::Angle(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::physics::Angle(-1.))));
-  EXPECT_EQ(::ad::physics::Angle::cPrecisionValue,
-            static_cast<double>(std::fabs(::ad::physics::Angle(::ad::physics::Angle::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Angle::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::Angle(::ad::physics::Angle::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Angle::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::Angle(-::ad::physics::Angle::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Angle::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::Angle(::ad::physics::Angle::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Angle::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::Angle(-::ad::physics::Angle::cMaxValue))));
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::Angle(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::Angle(-1.))));
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cPrecisionValue,
+                   static_cast<double>(std::fabs(::ad::physics::Angle(::ad::physics::Angle::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Angle::cMinValue),
+                   static_cast<double>(std::fabs(::ad::physics::Angle(::ad::physics::Angle::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Angle::cMinValue),
+                   static_cast<double>(std::fabs(::ad::physics::Angle(-::ad::physics::Angle::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Angle::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::physics::Angle(::ad::physics::Angle::cMaxValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Angle::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::physics::Angle(-::ad::physics::Angle::cMaxValue))));
 }
 
 TEST(AngleTests, constructionFromValidFPValue)
@@ -122,7 +122,7 @@ TEST(AngleTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::Angle::cMinValue;
   ::ad::physics::Angle value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(AngleTests, copyConstructionFromValidValue)
@@ -130,14 +130,14 @@ TEST(AngleTests, copyConstructionFromValidValue)
   ::ad::physics::Angle const validValue(::ad::physics::Angle::cMinValue);
   ::ad::physics::Angle value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(AngleTests, moveConstructionFromValidValue)
 {
   ::ad::physics::Angle value(std::move(::ad::physics::Angle(::ad::physics::Angle::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::Angle::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cMinValue, static_cast<double>(value));
 }
 
 TEST(AngleTests, assignmentFromValidValue)
@@ -146,7 +146,7 @@ TEST(AngleTests, assignmentFromValidValue)
   ::ad::physics::Angle value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(AngleTests, moveAssignmentFromValidValue)
@@ -154,7 +154,7 @@ TEST(AngleTests, moveAssignmentFromValidValue)
   ::ad::physics::Angle value;
   value = std::move(::ad::physics::Angle(::ad::physics::Angle::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::Angle::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cMinValue, static_cast<double>(value));
 }
 
 TEST(AngleTests, constructionFromInvalidFPValue)
@@ -192,7 +192,7 @@ TEST(AngleTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::physics::Angle value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_PHYSICS_ANGLE_THROWS_EXCEPTION == 1)

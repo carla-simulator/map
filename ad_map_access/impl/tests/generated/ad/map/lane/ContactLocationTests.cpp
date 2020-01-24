@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -91,5 +91,5 @@ TEST(ContactLocationTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::map::lane::ContactLocation value(::ad::map::lane::ContactLocation::INVALID);
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -267,11 +267,11 @@ TEST_F(FactoryTest, TestFactory)
   ASSERT_FALSE(IsTransitionOk(x13, x12, righ, restriction::RoadUserType::BICYCLE));
 
   auto landmarks = lane::getLane(x11).visibleLandmarks;
-  ASSERT_EQ(landmarks.size(), 1);
+  ASSERT_EQ(landmarks.size(), 1u);
   ASSERT_TRUE(landmarks.front() == landmark::LandmarkId(1234));
 
   auto globalLandmarks = landmark::getLandmarks();
-  ASSERT_EQ(globalLandmarks.size(), 1);
+  ASSERT_EQ(globalLandmarks.size(), 1u);
   ASSERT_TRUE(landmarks.front() == globalLandmarks.front());
 
   access::PartitionId p(0);
@@ -449,13 +449,13 @@ TEST_F(FactoryTest, Store)
 {
   ASSERT_FALSE(mStorePtr->empty());
   auto laneIdList = mStorePtr->getLanes(access::PartitionId(0));
-  ASSERT_EQ(laneIdList.size(), 3);
+  ASSERT_EQ(laneIdList.size(), 3u);
   ASSERT_EQ(laneIdList[0], lane::LaneId(11));
   ASSERT_EQ(laneIdList[1], lane::LaneId(12));
   ASSERT_EQ(laneIdList[2], lane::LaneId(13));
 
   auto laneMarkIdList = mStorePtr->getLandmarks(access::PartitionId(0));
-  ASSERT_EQ(laneMarkIdList.size(), 1);
+  ASSERT_EQ(laneMarkIdList.size(), 1u);
   ASSERT_EQ(laneMarkIdList[0], landmark::LandmarkId(1234));
 }
 TEST_F(FactoryTest, StoreLaneLength)
@@ -486,12 +486,12 @@ TEST_F(FactoryTest, StoreLaneLength)
 
   lane::LaneIdList laneIdList;
   laneIdList = mStorePtr->getLanes(std::string("abc"), false);
-  ASSERT_EQ(laneIdList.size(), 0);
+  ASSERT_EQ(laneIdList.size(), 0u);
   laneIdList = mStorePtr->getLanes(std::string("::ad::map::lane::LaneType::NORMAL"), false);
-  ASSERT_EQ(laneIdList.size(), 1);
+  ASSERT_EQ(laneIdList.size(), 1u);
 
   laneIdList = mStorePtr->getLanes(access::PartitionId(0), std::string("abc"), false);
-  ASSERT_EQ(laneIdList.size(), 0);
+  ASSERT_EQ(laneIdList.size(), 0u);
   laneIdList = mStorePtr->getLanes(access::PartitionId(0), std::string("::ad::map::lane::LaneType::NORMAL"), false);
-  ASSERT_EQ(laneIdList.size(), 1);
+  ASSERT_EQ(laneIdList.size(), 1u);
 }

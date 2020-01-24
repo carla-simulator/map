@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -21,7 +21,7 @@ namespace serialize {
 /**
  * @brief serializer for lane::LaneId
  */
-template <> inline bool doSerialize(ISerializer &serializer, lane::LaneId &x)
+inline bool doSerialize(ISerializer &serializer, lane::LaneId &x)
 {
   return serializer.serializeGeneratedType<lane::LaneId, uint64_t, SerializeableMagic::LaneId>(x);
 }

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -50,12 +50,12 @@ struct MapMatchedPosition
   /*!
    * \brief Smart pointer on MapMatchedPosition
    */
-  using Ptr = std::shared_ptr<MapMatchedPosition>;
+  typedef std::shared_ptr<MapMatchedPosition> Ptr;
 
   /*!
    * \brief Smart pointer on constant MapMatchedPosition
    */
-  using ConstPtr = std::shared_ptr<MapMatchedPosition const>;
+  typedef std::shared_ptr<MapMatchedPosition const> ConstPtr;
 
   /*!
    * \brief standard constructor

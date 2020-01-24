@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -24,22 +24,24 @@ TEST(ENUCoordinateTests, defaultConstructionIsInvalid)
 
 TEST(ENUCoordinateTests, minIsDefinedAsExpected)
 {
-  EXPECT_EQ(-1e6, ::ad::map::point::ENUCoordinate::cMinValue);
-  EXPECT_EQ(::ad::map::point::ENUCoordinate::cMinValue, static_cast<double>(::ad::map::point::ENUCoordinate::getMin()));
+  EXPECT_DOUBLE_EQ(-1e6, ::ad::map::point::ENUCoordinate::cMinValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue,
+                   static_cast<double>(::ad::map::point::ENUCoordinate::getMin()));
 }
 
 TEST(ENUCoordinateTests, maxIsDefinedAsExpected)
 {
-  EXPECT_EQ(1e6, ::ad::map::point::ENUCoordinate::cMaxValue);
-  EXPECT_EQ(::ad::map::point::ENUCoordinate::cMaxValue, static_cast<double>(::ad::map::point::ENUCoordinate::getMax()));
+  EXPECT_DOUBLE_EQ(1e6, ::ad::map::point::ENUCoordinate::cMaxValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMaxValue,
+                   static_cast<double>(::ad::map::point::ENUCoordinate::getMax()));
 }
 
 TEST(ENUCoordinateTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::map::point::ENUCoordinate::cPrecisionValue);
-  EXPECT_EQ(1e-3, ::ad::map::point::ENUCoordinate::cPrecisionValue);
-  EXPECT_EQ(::ad::map::point::ENUCoordinate::cPrecisionValue,
-            static_cast<double>(::ad::map::point::ENUCoordinate::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-3, ::ad::map::point::ENUCoordinate::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cPrecisionValue,
+                   static_cast<double>(::ad::map::point::ENUCoordinate::getPrecision()));
 }
 
 TEST(ENUCoordinateTests, minIsValid)
@@ -98,39 +100,39 @@ TEST(ENUCoordinateTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(ENUCoordinateTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::ENUCoordinate::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::ENUCoordinate>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUCoordinate::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUCoordinate>::lowest()));
 }
 
 TEST(ENUCoordinateTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::ENUCoordinate::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::ENUCoordinate>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUCoordinate::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUCoordinate>::max()));
 }
 
 TEST(ENUCoordinateTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::ENUCoordinate::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::ENUCoordinate>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUCoordinate::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUCoordinate>::epsilon()));
 }
 
 TEST(ENUCoordinateTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-1.))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-1.))));
+  EXPECT_DOUBLE_EQ(
     ::ad::map::point::ENUCoordinate::cPrecisionValue,
     static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cPrecisionValue))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ENUCoordinate::cMinValue),
     static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMinValue))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ENUCoordinate::cMinValue),
     static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-::ad::map::point::ENUCoordinate::cMinValue))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ENUCoordinate::cMaxValue),
     static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMaxValue))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ENUCoordinate::cMaxValue),
     static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-::ad::map::point::ENUCoordinate::cMaxValue))));
 }
@@ -140,7 +142,7 @@ TEST(ENUCoordinateTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::ENUCoordinate::cMinValue;
   ::ad::map::point::ENUCoordinate value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(ENUCoordinateTests, copyConstructionFromValidValue)
@@ -148,7 +150,7 @@ TEST(ENUCoordinateTests, copyConstructionFromValidValue)
   ::ad::map::point::ENUCoordinate const validValue(::ad::map::point::ENUCoordinate::cMinValue);
   ::ad::map::point::ENUCoordinate value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(ENUCoordinateTests, moveConstructionFromValidValue)
@@ -156,7 +158,7 @@ TEST(ENUCoordinateTests, moveConstructionFromValidValue)
   ::ad::map::point::ENUCoordinate value(
     std::move(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::ENUCoordinate::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue, static_cast<double>(value));
 }
 
 TEST(ENUCoordinateTests, assignmentFromValidValue)
@@ -165,7 +167,7 @@ TEST(ENUCoordinateTests, assignmentFromValidValue)
   ::ad::map::point::ENUCoordinate value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(ENUCoordinateTests, moveAssignmentFromValidValue)
@@ -173,7 +175,7 @@ TEST(ENUCoordinateTests, moveAssignmentFromValidValue)
   ::ad::map::point::ENUCoordinate value;
   value = std::move(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::ENUCoordinate::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue, static_cast<double>(value));
 }
 
 TEST(ENUCoordinateTests, constructionFromInvalidFPValue)
@@ -211,7 +213,7 @@ TEST(ENUCoordinateTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::map::point::ENUCoordinate value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_MAP_POINT_ENUCOORDINATE_THROWS_EXCEPTION == 1)

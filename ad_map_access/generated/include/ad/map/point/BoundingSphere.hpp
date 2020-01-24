@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -48,12 +48,12 @@ struct BoundingSphere
   /*!
    * \brief Smart pointer on BoundingSphere
    */
-  using Ptr = std::shared_ptr<BoundingSphere>;
+  typedef std::shared_ptr<BoundingSphere> Ptr;
 
   /*!
    * \brief Smart pointer on constant BoundingSphere
    */
-  using ConstPtr = std::shared_ptr<BoundingSphere const>;
+  typedef std::shared_ptr<BoundingSphere const> ConstPtr;
 
   /*!
    * \brief standard constructor

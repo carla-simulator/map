@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2019 Intel Corporation
+// Copyright (C) 2019-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -34,12 +34,12 @@ struct RoutePredictionTest : ::testing::Test
       throw std::runtime_error("Unable to initialize with " + getTestMap());
     }
     auto pois = access::getPointsOfInterest();
-    ASSERT_GE(pois.size(), 1);
+    ASSERT_GE(pois.size(), 1u);
     match::AdMapMatching mapMatching;
     auto mapMatchingResults
       = mapMatching.getMapMatchedPositions(pois.front().geoPoint, physics::Distance(1.), physics::Probability(0.8));
 
-    ASSERT_GE(mapMatchingResults.size(), 1);
+    ASSERT_GE(mapMatchingResults.size(), 1u);
     predictionStart.point = mapMatchingResults.front().lanePoint.paraPoint;
     predictionStart.direction = route::planning::RoutingDirection::POSITIVE;
   }
@@ -118,13 +118,13 @@ TEST_F(RoutePredictionTestTown03, route_prediction_constructor)
   ASSERT_EQ(routePredictions.size(), 38u);
 }
 
-TEST_F(RoutePredictionTestTown03, route_getFullRoutes)
+TEST_F(RoutePredictionTestTown03, route_getBasicRoutes)
 {
   predictionStart.direction = route::planning::RoutingDirection::DONT_CARE;
   map::route::planning::RoutePrediction routePrediction(predictionStart, physics::Distance(10.));
   if (routePrediction.calculate())
   {
-    std::vector<Route::FullRoute> res = routePrediction.getFullRoutes();
+    std::vector<Route::BasicRoute> res = routePrediction.getBasicRoutes();
   }
 }
 

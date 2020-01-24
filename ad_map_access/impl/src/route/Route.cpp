@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -48,10 +48,10 @@ const point::ParaPointList &Route::getRawRoute(size_t const routeIndex) const
   return emptyRoute;
 }
 
-Route::FullRoute Route::getFullRoute(size_t const routeIndex) const
+Route::BasicRoute Route::getBasicRoute(size_t const routeIndex) const
 {
   auto rawRoute = getRawRoute(routeIndex);
-  FullRoute fr;
+  BasicRoute fr;
   for (size_t i = 0; i < rawRoute.size(); i++)
   {
     const point::ParaPoint &para_point = rawRoute[i];
@@ -98,13 +98,13 @@ Route::FullRoute Route::getFullRoute(size_t const routeIndex) const
   return fr;
 }
 
-std::vector<Route::FullRoute> Route::getFullRoutes() const
+std::vector<Route::BasicRoute> Route::getBasicRoutes() const
 {
-  std::vector<FullRoute> routeVector;
+  std::vector<BasicRoute> routeVector;
   routeVector.resize(raw_routes.size());
   for (size_t i = 0u; i < raw_routes.size(); ++i)
   {
-    routeVector[i] = getFullRoute(i);
+    routeVector[i] = getBasicRoute(i);
   }
   return routeVector;
 }

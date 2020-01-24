@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -85,22 +85,22 @@ TEST_F(IntersectionTest, create_intersections_all_way_stop)
   auto fullRoute = route::planning::planRoute(routeStart, routeEnd);
 
   auto intersections = intersection::Intersection::getIntersectionsForRoute(fullRoute);
-  ASSERT_EQ(1, intersections.size());
+  ASSERT_EQ(1u, intersections.size());
   auto const &intersection = intersections[0];
   auto iType = intersection->intersectionType();
   ASSERT_EQ(intersection::IntersectionType::AllWayStop, iType);
-  ASSERT_EQ(1, intersection->outgoingParaPointsOnRoute().size());
+  ASSERT_EQ(1u, intersection->outgoingParaPointsOnRoute().size());
 
   lane::LaneId laneId = intersection->outgoingParaPointsOnRoute()[0].laneId;
   ASSERT_EQ(toEastId, laneId);
   ::ad::physics::ParametricValue parametricOffset = intersection->outgoingParaPointsOnRoute()[0].parametricOffset;
   ASSERT_EQ(physics::ParametricValue(0.), parametricOffset);
   auto incoming = intersection->incomingLanes();
-  ASSERT_EQ(3, incoming.size());
+  ASSERT_EQ(3u, incoming.size());
   lane::LaneIdSet expectedIncoming{lane::LaneId{248}, lane::LaneId{252}, lane::LaneId{264}};
   compareLists(incoming, expectedIncoming);
   auto internal = intersection->internalLanes();
-  ASSERT_EQ(12, internal.size());
+  ASSERT_EQ(12u, internal.size());
   lane::LaneIdSet expectedInternal{lane::LaneId{63},
                                    lane::LaneId{76},
                                    lane::LaneId{98},
@@ -147,7 +147,7 @@ TEST_F(IntersectionTest, create_intersections_all_way_stop)
   speed = intersection->getSpeedLimit();
   ASSERT_NEAR((double)speed, 1000, 0.001);
 
-  ASSERT_EQ(1, intersection->outgoingParaPointsOnRoute().size());
+  ASSERT_EQ(1u, intersection->outgoingParaPointsOnRoute().size());
   laneId = intersection->outgoingParaPointsOnRoute()[0].laneId;
   ASSERT_EQ(lane::uniqueLaneId(toEast), laneId);
   parametricOffset = intersection->outgoingParaPointsOnRoute()[0].parametricOffset;
@@ -215,15 +215,15 @@ TEST_F(IntersectionTest, create_intersections_all_way_stop)
 
   route::RoutePlanningCounter routeCounter;
   routeCounter = intersection->getRoutePlanningCounter();
-  ASSERT_EQ(routeCounter, 1);
+  ASSERT_EQ(routeCounter, 1u);
   route::SegmentCounter segmentCounter;
   segmentCounter = intersection->getRouteSegmentCountFromDestination();
-  ASSERT_EQ(segmentCounter, 2);
+  ASSERT_EQ(segmentCounter, 2u);
   intersection->updateRouteCounters(4, 5);
   routeCounter = intersection->getRoutePlanningCounter();
-  ASSERT_EQ(routeCounter, 4);
+  ASSERT_EQ(routeCounter, 4u);
   segmentCounter = intersection->getRouteSegmentCountFromDestination();
-  ASSERT_EQ(segmentCounter, 5);
+  ASSERT_EQ(segmentCounter, 5u);
   intersection->updateRouteCounters(1, 2);
 
   match::MapMatchedObjectBoundingBox object;
@@ -268,22 +268,22 @@ TEST_F(IntersectionTest, traffic_lights_pfz_elf_to_rusch)
   // contain left-straight arrows type traffic light
   // no additional lanes with higher priorities
   auto intersections = intersection::Intersection::getIntersectionsForRoute(fullRoute);
-  ASSERT_EQ(1, intersections.size());
+  ASSERT_EQ(1u, intersections.size());
   auto const &intersection = intersections[0];
   auto iType = intersection->intersectionType();
   ASSERT_EQ(intersection::IntersectionType::TrafficLight, iType);
   auto const &priorityLanes = intersection->incomingParaPointsWithHigherPriority();
-  ASSERT_EQ(priorityLanes.size(), 0);
+  ASSERT_EQ(priorityLanes.size(), 0u);
   auto const &lights = intersection->applicableTrafficLights();
-  ASSERT_EQ(2, lights.size());
+  ASSERT_EQ(2u, lights.size());
   point::GeoPoint geoPoint;
   landmark::LandmarkId id1, id2;
   geoPoint = point::createGeoPoint(point::Longitude(8.457552564), point::Latitude(49.02053703), point::Altitude(3.));
   id1 = landmark::uniqueLandmarkId(geoPoint);
   geoPoint = point::createGeoPoint(point::Longitude(8.457664809), point::Latitude(49.02051672), point::Altitude(5.));
   id2 = landmark::uniqueLandmarkId(geoPoint);
-  ASSERT_EQ(1, lights.count(id1));
-  ASSERT_EQ(1, lights.count(id2));
+  ASSERT_EQ(1u, lights.count(id1));
+  ASSERT_EQ(1u, lights.count(id2));
 
   lane::LaneIdSet resultLaneIdSets, expectedLaneIdSets;
   resultLaneIdSets = intersection->lanesOnRoute();
@@ -424,15 +424,15 @@ TEST_F(IntersectionTest, traffic_lights_pfz_elf_to_rusch)
 
   route::RoutePlanningCounter routeCounter;
   routeCounter = intersection->getRoutePlanningCounter();
-  ASSERT_EQ(routeCounter, 2);
+  ASSERT_EQ(routeCounter, 2u);
   route::SegmentCounter segmentCounter;
   segmentCounter = intersection->getRouteSegmentCountFromDestination();
-  ASSERT_EQ(segmentCounter, 4);
+  ASSERT_EQ(segmentCounter, 4u);
   intersection->updateRouteCounters(4, 5);
   routeCounter = intersection->getRoutePlanningCounter();
-  ASSERT_EQ(routeCounter, 4);
+  ASSERT_EQ(routeCounter, 4u);
   segmentCounter = intersection->getRouteSegmentCountFromDestination();
-  ASSERT_EQ(segmentCounter, 5);
+  ASSERT_EQ(segmentCounter, 5u);
   intersection->updateRouteCounters(2, 4);
 }
 
@@ -453,22 +453,22 @@ TEST_F(IntersectionTest, traffic_lights_pfz_rusch_to_elf)
   // contain right arrow type traffic light
   // no additional lanes with higher priorities
   auto intersections = intersection::Intersection::getIntersectionsForRoute(fullRoute);
-  ASSERT_EQ(1, intersections.size());
+  ASSERT_EQ(1u, intersections.size());
   auto const &intersection = intersections[0];
   auto iType = intersection->intersectionType();
   ASSERT_EQ(intersection::IntersectionType::TrafficLight, iType);
   auto const &priorityLanes = intersection->incomingParaPointsWithHigherPriority();
-  ASSERT_EQ(priorityLanes.size(), 0);
+  ASSERT_EQ(priorityLanes.size(), 0u);
   auto const &lights = intersection->applicableTrafficLights();
-  ASSERT_EQ(2, lights.size());
+  ASSERT_EQ(2u, lights.size());
   point::GeoPoint geoPoint;
   landmark::LandmarkId id1, id2;
   geoPoint = point::createGeoPoint(point::Longitude(8.457704425), point::Latitude(49.02050956), point::Altitude(5.));
   id1 = landmark::uniqueLandmarkId(geoPoint);
   geoPoint = point::createGeoPoint(point::Longitude(8.457737438), point::Latitude(49.02050359), point::Altitude(3.));
   id2 = landmark::uniqueLandmarkId(geoPoint);
-  ASSERT_EQ(1, lights.count(id1));
-  ASSERT_EQ(1, lights.count(id2));
+  ASSERT_EQ(1u, lights.count(id1));
+  ASSERT_EQ(1u, lights.count(id2));
 
   lane::LaneIdSet resultLaneIdSets, expectedLaneIdSets;
   resultLaneIdSets = intersection->lanesOnRoute();
@@ -608,15 +608,15 @@ TEST_F(IntersectionTest, traffic_lights_pfz_rusch_to_elf)
 
   route::RoutePlanningCounter routeCounter;
   routeCounter = intersection->getRoutePlanningCounter();
-  ASSERT_EQ(routeCounter, 3);
+  ASSERT_EQ(routeCounter, 3u);
   route::SegmentCounter segmentCounter;
   segmentCounter = intersection->getRouteSegmentCountFromDestination();
-  ASSERT_EQ(segmentCounter, 4);
+  ASSERT_EQ(segmentCounter, 4u);
   intersection->updateRouteCounters(4, 5);
   routeCounter = intersection->getRoutePlanningCounter();
-  ASSERT_EQ(routeCounter, 4);
+  ASSERT_EQ(routeCounter, 4u);
   segmentCounter = intersection->getRouteSegmentCountFromDestination();
-  ASSERT_EQ(segmentCounter, 5);
+  ASSERT_EQ(segmentCounter, 5u);
   intersection->updateRouteCounters(3, 4);
 }
 
@@ -637,10 +637,10 @@ TEST_F(IntersectionTest, extract_turn_direction)
     point::ParaPoint routeEnd(point::createParaPoint(toEastId, physics::ParametricValue(0.5)));
     auto fullRoute = route::planning::planRoute(routeStart, routeEnd);
     auto intersections = intersection::Intersection::getIntersectionsForRoute(fullRoute);
-    ASSERT_EQ(1, intersections.size());
+    ASSERT_EQ(1u, intersections.size());
     auto const &intersection = intersections[0];
     auto const &outgoing = intersection->outgoingParaPointsOnRoute();
-    ASSERT_EQ(outgoing.size(), 1);
+    ASSERT_EQ(outgoing.size(), 1u);
     ASSERT_EQ(intersection::TurnDirection::Left, intersection->turnDirection());
   }
   // straight
@@ -651,7 +651,7 @@ TEST_F(IntersectionTest, extract_turn_direction)
     point::ParaPoint routeEnd(point::createParaPoint(toNorthId, physics::ParametricValue(0.5)));
     auto fullRoute = route::planning::planRoute(routeStart, routeEnd);
     auto intersections = intersection::Intersection::getIntersectionsForRoute(fullRoute);
-    ASSERT_EQ(1, intersections.size());
+    ASSERT_EQ(1u, intersections.size());
     auto const &intersection = intersections[0];
     ASSERT_EQ(intersection::TurnDirection::Straight, intersection->turnDirection());
   }
@@ -663,7 +663,7 @@ TEST_F(IntersectionTest, extract_turn_direction)
     point::ParaPoint routeEnd(point::createParaPoint(toWestId, physics::ParametricValue(0.5)));
     auto fullRoute = route::planning::planRoute(routeStart, routeEnd);
     auto intersections = intersection::Intersection::getIntersectionsForRoute(fullRoute);
-    ASSERT_EQ(1, intersections.size());
+    ASSERT_EQ(1u, intersections.size());
     auto const &intersection = intersections[0];
     ASSERT_EQ(intersection::TurnDirection::Right, intersection->turnDirection());
   }
@@ -678,11 +678,11 @@ TEST_F(IntersectionTest, validate_tpk_to_pfz_map)
   match::AdMapMatching mapMatching;
   auto from = mapMatching.getMapMatchedPositions(start, physics::Distance(1), physics::Probability(0.5));
   auto to = mapMatching.getMapMatchedPositions(end, physics::Distance(1), physics::Probability(0.5));
-  ASSERT_EQ(from.size(), 1);
-  ASSERT_EQ(to.size(), 1);
+  ASSERT_EQ(from.size(), 1u);
+  ASSERT_EQ(to.size(), 1u);
   auto fullRoute = route::planning::planRoute(from[0].lanePoint.paraPoint, to[0].lanePoint.paraPoint);
   auto intersections = intersection::Intersection::getIntersectionsForRoute(fullRoute);
-  ASSERT_EQ(1, intersections.size());
+  ASSERT_EQ(1u, intersections.size());
   auto const &intersection = intersections[0];
   auto iType = intersection->intersectionType();
   ASSERT_EQ(intersection::IntersectionType::TrafficLight, iType);

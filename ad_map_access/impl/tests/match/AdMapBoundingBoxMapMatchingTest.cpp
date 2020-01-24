@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -59,7 +59,7 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_within_single_lane)
   auto centerMapMatched = mapMatching.getMapMatchedPositions(mObjectPosition, mDistance, mMinProbabilty);
 
   point::ParaPointList para = getParaPoints(centerMapMatched);
-  ASSERT_EQ(para.size(), 2);
+  ASSERT_EQ(para.size(), 2u);
 
   ASSERT_FALSE(centerMapMatched.empty());
   auto heading = mapMatching.getLaneENUHeading(centerMapMatched.front());
@@ -70,7 +70,7 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_within_single_lane)
 
   auto result = mapMatching.getMapMatchedBoundingBox(mObjectPosition, mDistance, mMinProbabilty);
 
-  ASSERT_EQ(result.laneOccupiedRegions.size(), size_t(1));
+  ASSERT_EQ(result.laneOccupiedRegions.size(), 1u);
   for (auto centerMatch : centerMapMatched)
   {
     if (centerMatch.type == match::MapMatchedPositionType::LANE_IN)
@@ -109,7 +109,7 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_within_single_lane)
   LaneOccupiedRegionList occRegion = mapMatching.getLaneOccupiedRegions(enuObjs, mDistance, mMinProbabilty);
 
   lane::LaneId x11;
-  ASSERT_EQ(occRegion.size(), size_t(1));
+  ASSERT_EQ(occRegion.size(), 1u);
   for (auto centerMatch : centerMapMatched)
   {
     if (centerMatch.type == match::MapMatchedPositionType::LANE_IN)
@@ -181,7 +181,7 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, rotate_box_within_lane)
 
   auto result = mapMatching.getMapMatchedBoundingBox(mObjectPosition, mDistance, mMinProbabilty);
 
-  ASSERT_EQ(result.laneOccupiedRegions.size(), size_t(2));
+  ASSERT_EQ(result.laneOccupiedRegions.size(), 2u);
 
   auto search = std::find_if(result.laneOccupiedRegions.begin(),
                              result.laneOccupiedRegions.end(),

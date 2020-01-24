@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -124,6 +124,12 @@ inline route::FullRoute planRoute(const point::ParaPoint &start,
   * @param[in] dest  Destination point as geo point.
   */
 route::FullRoute planRoute(const RoutingParaPoint &start, const point::GeoPoint &dest);
+
+/** @brief Calculates route between two points.
+  * @param[in] start Start point as RoutingParaPoint (Be aware: routing direction in respect to lane orientation!).
+  * @param[in] dest  Destination point as ENU point.
+  */
+route::FullRoute planRoute(const RoutingParaPoint &start, const point::ENUPoint &dest);
 
 /** @brief Calculates route between two points.
   * @param[in] start Start point.

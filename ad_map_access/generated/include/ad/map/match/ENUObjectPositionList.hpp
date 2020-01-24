@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -39,7 +39,7 @@ namespace match {
 /*!
  * \brief DataType ENUObjectPositionList
  */
-using ENUObjectPositionList = std::vector<::ad::map::match::ENUObjectPosition>;
+typedef std::vector<::ad::map::match::ENUObjectPosition> ENUObjectPositionList;
 
 } // namespace match
 } // namespace map

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -24,24 +24,24 @@ TEST(ECEFCoordinateTests, defaultConstructionIsInvalid)
 
 TEST(ECEFCoordinateTests, minIsDefinedAsExpected)
 {
-  EXPECT_EQ(-1e9, ::ad::map::point::ECEFCoordinate::cMinValue);
-  EXPECT_EQ(::ad::map::point::ECEFCoordinate::cMinValue,
-            static_cast<double>(::ad::map::point::ECEFCoordinate::getMin()));
+  EXPECT_DOUBLE_EQ(-1e9, ::ad::map::point::ECEFCoordinate::cMinValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMinValue,
+                   static_cast<double>(::ad::map::point::ECEFCoordinate::getMin()));
 }
 
 TEST(ECEFCoordinateTests, maxIsDefinedAsExpected)
 {
-  EXPECT_EQ(1e9, ::ad::map::point::ECEFCoordinate::cMaxValue);
-  EXPECT_EQ(::ad::map::point::ECEFCoordinate::cMaxValue,
-            static_cast<double>(::ad::map::point::ECEFCoordinate::getMax()));
+  EXPECT_DOUBLE_EQ(1e9, ::ad::map::point::ECEFCoordinate::cMaxValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMaxValue,
+                   static_cast<double>(::ad::map::point::ECEFCoordinate::getMax()));
 }
 
 TEST(ECEFCoordinateTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::map::point::ECEFCoordinate::cPrecisionValue);
-  EXPECT_EQ(1e-3, ::ad::map::point::ECEFCoordinate::cPrecisionValue);
-  EXPECT_EQ(::ad::map::point::ECEFCoordinate::cPrecisionValue,
-            static_cast<double>(::ad::map::point::ECEFCoordinate::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-3, ::ad::map::point::ECEFCoordinate::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cPrecisionValue,
+                   static_cast<double>(::ad::map::point::ECEFCoordinate::getPrecision()));
 }
 
 TEST(ECEFCoordinateTests, minIsValid)
@@ -100,39 +100,39 @@ TEST(ECEFCoordinateTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(ECEFCoordinateTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::ECEFCoordinate::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::ECEFCoordinate>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ECEFCoordinate::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::ECEFCoordinate>::lowest()));
 }
 
 TEST(ECEFCoordinateTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::ECEFCoordinate::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::ECEFCoordinate>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ECEFCoordinate::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::ECEFCoordinate>::max()));
 }
 
 TEST(ECEFCoordinateTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::ECEFCoordinate::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::ECEFCoordinate>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ECEFCoordinate::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::ECEFCoordinate>::epsilon()));
 }
 
 TEST(ECEFCoordinateTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-1.))));
-  EXPECT_EQ(::ad::map::point::ECEFCoordinate::cPrecisionValue,
-            static_cast<double>(
-              std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cPrecisionValue))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-1.))));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cPrecisionValue,
+                   static_cast<double>(
+                     std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ECEFCoordinate::cMinValue),
     static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cMinValue))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ECEFCoordinate::cMinValue),
     static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-::ad::map::point::ECEFCoordinate::cMinValue))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ECEFCoordinate::cMaxValue),
     static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cMaxValue))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ECEFCoordinate::cMaxValue),
     static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-::ad::map::point::ECEFCoordinate::cMaxValue))));
 }
@@ -142,7 +142,7 @@ TEST(ECEFCoordinateTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::ECEFCoordinate::cMinValue;
   ::ad::map::point::ECEFCoordinate value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(ECEFCoordinateTests, copyConstructionFromValidValue)
@@ -150,7 +150,7 @@ TEST(ECEFCoordinateTests, copyConstructionFromValidValue)
   ::ad::map::point::ECEFCoordinate const validValue(::ad::map::point::ECEFCoordinate::cMinValue);
   ::ad::map::point::ECEFCoordinate value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(ECEFCoordinateTests, moveConstructionFromValidValue)
@@ -158,7 +158,7 @@ TEST(ECEFCoordinateTests, moveConstructionFromValidValue)
   ::ad::map::point::ECEFCoordinate value(
     std::move(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::ECEFCoordinate::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMinValue, static_cast<double>(value));
 }
 
 TEST(ECEFCoordinateTests, assignmentFromValidValue)
@@ -167,7 +167,7 @@ TEST(ECEFCoordinateTests, assignmentFromValidValue)
   ::ad::map::point::ECEFCoordinate value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(ECEFCoordinateTests, moveAssignmentFromValidValue)
@@ -175,7 +175,7 @@ TEST(ECEFCoordinateTests, moveAssignmentFromValidValue)
   ::ad::map::point::ECEFCoordinate value;
   value = std::move(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::ECEFCoordinate::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMinValue, static_cast<double>(value));
 }
 
 TEST(ECEFCoordinateTests, constructionFromInvalidFPValue)
@@ -213,7 +213,7 @@ TEST(ECEFCoordinateTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::map::point::ECEFCoordinate value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_MAP_POINT_ECEFCOORDINATE_THROWS_EXCEPTION == 1)

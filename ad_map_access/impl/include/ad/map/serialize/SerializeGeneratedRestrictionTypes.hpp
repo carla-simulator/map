@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -10,6 +10,7 @@
 
 #include "ad/map/restriction/Types.hpp"
 #include "ad/map/serialize/ISerializer.hpp"
+#include "ad/map/serialize/SerializeGeneratedPhysicsTypes.hpp"
 
 /** @brief namespace ad */
 namespace ad {
@@ -21,7 +22,7 @@ namespace serialize {
 /**
  * @brief serializer for restriction::PassengerCount
  */
-template <> inline bool doSerialize(ISerializer &serializer, restriction::PassengerCount &x)
+inline bool doSerialize(ISerializer &serializer, restriction::PassengerCount &x)
 {
   return serializer.serializeGeneratedType<restriction::PassengerCount, uint16_t, SerializeableMagic::PassengerCount>(
     x);
@@ -30,7 +31,7 @@ template <> inline bool doSerialize(ISerializer &serializer, restriction::Passen
 /**
  * @brief serializer for restriction::Restriction
  */
-template <> inline bool doSerialize(ISerializer &serializer, restriction::Restriction &x)
+inline bool doSerialize(ISerializer &serializer, restriction::Restriction &x)
 {
   return serializer.serialize(SerializeableMagic::Restriction) && serializer.serialize(x.negated)
     && doSerialize(serializer, x.passengersMin) && serializer.serializeVector(x.roadUserTypes);
@@ -39,7 +40,7 @@ template <> inline bool doSerialize(ISerializer &serializer, restriction::Restri
 /**
  * @brief serializer for restriction::Restrictions
  */
-template <> inline bool doSerialize(ISerializer &serializer, restriction::Restrictions &x)
+inline bool doSerialize(ISerializer &serializer, restriction::Restrictions &x)
 {
   return serializer.serialize(SerializeableMagic::Restrictions)
     //@todo: special serializable magic for backward compatibility
@@ -50,7 +51,7 @@ template <> inline bool doSerialize(ISerializer &serializer, restriction::Restri
 /**
  * @brief serializer for restriction::SpeedLimit
  */
-template <> inline bool doSerialize(ISerializer &serializer, restriction::SpeedLimit &x)
+inline bool doSerialize(ISerializer &serializer, restriction::SpeedLimit &x)
 {
   bool ok = serializer.serialize(SerializeableMagic::SpeedLimit) && doSerialize(serializer, x.speedLimit)
     && doSerialize(serializer, x.lanePiece);

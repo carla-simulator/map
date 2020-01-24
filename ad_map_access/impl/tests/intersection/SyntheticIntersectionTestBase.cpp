@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -81,17 +81,7 @@ void SyntheticIntersectionTestBase::compareVectors(point::ParaPointList left, po
 
 void SyntheticIntersectionTestBase::compareLists(lane::LaneIdSet ids, lane::LaneIdSet otherIds) const
 {
-  std::vector<lane::LaneId> idVector(ids.begin(), ids.end());
-  std::vector<lane::LaneId> otherIdVector(otherIds.begin(), otherIds.end());
-
-  std::sort(idVector.begin(), idVector.end());
-  std::sort(otherIdVector.begin(), otherIdVector.end());
-  ASSERT_EQ(idVector.size(), otherIdVector.size());
-
-  for (uint32_t i = 0; i < idVector.size(); i++)
-  {
-    EXPECT_EQ(idVector[i], otherIdVector[i]);
-  }
+  ASSERT_EQ(ids, otherIds);
 }
 
 void SyntheticIntersectionTestBase::performBasicChecks()
@@ -145,7 +135,7 @@ void SyntheticIntersectionTestBase::performBasicTrafficLightsChecks(
 
   for (auto expectedTrafficLight : expectedTrafficLights)
   {
-    ASSERT_EQ(1, trafficLights.count(expectedTrafficLight.id))
+    ASSERT_EQ(1u, trafficLights.count(expectedTrafficLight.id))
       << "Traffic Light ID=" << static_cast<uint64_t>(expectedTrafficLight.id) << "  NOT FOUND";
     if (expectedTrafficLight.type != landmark::TrafficLightType::UNKNOWN)
     {

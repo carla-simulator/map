@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -21,7 +21,7 @@ namespace serialize {
 /**
  * @brief Serializer for access::PartitionId
  */
-template <> inline bool doSerialize(ISerializer &serializer, access::PartitionId &x)
+inline bool doSerialize(ISerializer &serializer, access::PartitionId &x)
 {
   return serializer.serializeGeneratedType<access::PartitionId, uint64_t, SerializeableMagic::PartitionId>(x);
 }
@@ -29,7 +29,7 @@ template <> inline bool doSerialize(ISerializer &serializer, access::PartitionId
 /**
  * @brief Serializer for access::GeometryStoreItem
  */
-template <> inline bool doSerialize(ISerializer &serializer, access::GeometryStoreItem &item)
+inline bool doSerialize(ISerializer &serializer, access::GeometryStoreItem &item)
 {
   return serializer.serialize(SerializeableMagic::GeometryStoreItem) && serializer.serialize(item.leftEdgeOffset)
     && serializer.serialize(item.leftEdgePoints) && serializer.serialize(item.rightEdgeOffset)
@@ -39,7 +39,7 @@ template <> inline bool doSerialize(ISerializer &serializer, access::GeometrySto
 /**
  * @brief Serializer for access::MapMetaData
  */
-template <> inline bool doSerialize(ISerializer &serializer, access::MapMetaData &metaData)
+inline bool doSerialize(ISerializer &serializer, access::MapMetaData &metaData)
 {
   return serializer.serialize(SerializeableMagic::MapMetaData) && serializer.serialize(metaData.trafficType);
 }

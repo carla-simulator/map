@@ -1,0 +1,37 @@
+site_name: ad_map_access
+repo_url: https://github.com/carla-simulator/map
+docs_dir: doc
+edit_uri: 'edit/master/doc/'
+theme: readthedocs
+
+nav:
+- Home: index.md
+- Release Notes and Disclaimer: RELEASE_NOTES_AND_DISCLAIMERS.md
+- OpenDRIVE Reader: ad_map_opendrive_reader/Main.md
+- Map Library:
+  - Overview: ad_map_access/Main.md
+  - Datatypes: ad_physics/Main.md
+  - Map Model: ad_map_access/HLD_MapDataModel.md
+  - Intersections: ad_map_access/HLD_Intersection.md
+  - Map Matching: ad_map_access/HLD_MapMatching.md
+  - Routes: ad_map_access/HLD_Routes.md
+  - Security: ad_map_access/HLD_Security.md
+  - Map Maker: map_maker/README.md
+- Building:
+  - BUILDING.md
+- Python Integration:
+  - Datatypes: ad_physics/ad_physics_python.md
+  - Library: ad_map_access/ad_map_access_python.md
+- Doxygen:
+  - Datatypes: 'https://ad-map-access.readthedocs.io/en/latest/ad_physics/apidoc/html/index.html'
+  - Library: 'https://ad-map-access.readthedocs.io/en/latest/ad_map_access/apidoc/html/index.html'
+- Changelog: CHANGELOG.md
+
+markdown_extensions:
+  - admonition
+  - markdown_include.include:
+      base_path: '.'
+  - pymdownx.emoji
+  - mdx_truly_sane_lists
+  - toc:
+      toc_depth: 2-3

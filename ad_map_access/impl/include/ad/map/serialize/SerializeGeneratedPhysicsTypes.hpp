@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -27,7 +27,7 @@ namespace serialize {
 /**
  * @brief Serializer for physics::ParametricValue
  */
-template <> inline bool doSerialize(ISerializer &serializer, physics::ParametricValue &x)
+inline bool doSerialize(ISerializer &serializer, physics::ParametricValue &x)
 {
   return serializer.serializeGeneratedType<physics::ParametricValue, double, SerializeableMagic::ParametricValue>(x);
 }
@@ -35,7 +35,7 @@ template <> inline bool doSerialize(ISerializer &serializer, physics::Parametric
 /**
  * @brief Serializer for physics::Distance
  */
-template <> inline bool doSerialize(ISerializer &serializer, physics::Distance &x)
+inline bool doSerialize(ISerializer &serializer, physics::Distance &x)
 {
   return serializer.serializeGeneratedType<physics::Distance, double, SerializeableMagic::Distance>(x);
 }
@@ -43,7 +43,7 @@ template <> inline bool doSerialize(ISerializer &serializer, physics::Distance &
 /**
  * @brief Serializer for physics::Duration
  */
-template <> inline bool doSerialize(ISerializer &serializer, physics::Duration &x)
+inline bool doSerialize(ISerializer &serializer, physics::Duration &x)
 {
   return serializer.serializeGeneratedType<physics::Duration, double, SerializeableMagic::Duration>(x);
 }
@@ -51,7 +51,7 @@ template <> inline bool doSerialize(ISerializer &serializer, physics::Duration &
 /**
  * @brief Serializer for physics::Speed
  */
-template <> inline bool doSerialize(ISerializer &serializer, physics::Speed &x)
+inline bool doSerialize(ISerializer &serializer, physics::Speed &x)
 {
   return serializer.serializeGeneratedType<physics::Speed, double, SerializeableMagic::Speed>(x);
 }
@@ -59,7 +59,7 @@ template <> inline bool doSerialize(ISerializer &serializer, physics::Speed &x)
 /**
  * @brief Serializer for physics::Weight
  */
-template <> inline bool doSerialize(ISerializer &serializer, physics::Weight &x)
+inline bool doSerialize(ISerializer &serializer, physics::Weight &x)
 {
   return serializer.serializeGeneratedType<physics::Weight, double, SerializeableMagic::Weight>(x);
 }
@@ -67,7 +67,7 @@ template <> inline bool doSerialize(ISerializer &serializer, physics::Weight &x)
 /**
  * @brief Serializer for physics::MetricRange
  */
-template <> inline bool doSerialize(ISerializer &serializer, physics::MetricRange &x)
+inline bool doSerialize(ISerializer &serializer, physics::MetricRange &x)
 {
   return doSerialize(serializer, x.minimum) && doSerialize(serializer, x.maximum);
 }
@@ -75,7 +75,7 @@ template <> inline bool doSerialize(ISerializer &serializer, physics::MetricRang
 /**
  * @brief Serializer for physics::ParametricRange
  */
-template <> inline bool doSerialize(ISerializer &serializer, physics::ParametricRange &x)
+inline bool doSerialize(ISerializer &serializer, physics::ParametricRange &x)
 {
   return serializer.serialize(SerializeableMagic::ParametricRange) && doSerialize(serializer, x.minimum)
     && doSerialize(serializer, x.maximum);

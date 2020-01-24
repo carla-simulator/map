@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -31,9 +31,9 @@ class Route
 {
 public:
   /**
-   * @brief Full route description.
+   * @brief Basic route description.
    */
-  typedef std::vector<point::ParaPointList> FullRoute;
+  typedef std::vector<point::ParaPointList> BasicRoute;
 
   /**
    * @brief Routing type.
@@ -121,11 +121,11 @@ public:
     return raw_routes;
   }
 
-  /** @returns Full calculated route. */
-  FullRoute getFullRoute(size_t const routeIndex = 0u) const;
+  /** @returns Calculated base route. */
+  BasicRoute getBasicRoute(size_t const routeIndex = 0u) const;
 
-  /** @returns All full calculated routes. */
-  std::vector<FullRoute> getFullRoutes() const;
+  /** @returns All calculated basic routes. */
+  std::vector<BasicRoute> getBasicRoutes() const;
 
 protected:
   RoutingParaPoint start_; ///< Start point.

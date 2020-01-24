@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,9 +25,9 @@ TEST(ENUHeadingTests, defaultConstructionIsInvalid)
 TEST(ENUHeadingTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::map::point::ENUHeading::cPrecisionValue);
-  EXPECT_EQ(0.0001, ::ad::map::point::ENUHeading::cPrecisionValue);
-  EXPECT_EQ(::ad::map::point::ENUHeading::cPrecisionValue,
-            static_cast<double>(::ad::map::point::ENUHeading::getPrecision()));
+  EXPECT_DOUBLE_EQ(0.0001, ::ad::map::point::ENUHeading::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cPrecisionValue,
+                   static_cast<double>(::ad::map::point::ENUHeading::getPrecision()));
 }
 
 TEST(ENUHeadingTests, minIsValid)
@@ -86,37 +86,41 @@ TEST(ENUHeadingTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(ENUHeadingTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::ENUHeading::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::ENUHeading>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUHeading::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUHeading>::lowest()));
 }
 
 TEST(ENUHeadingTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::ENUHeading::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::ENUHeading>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUHeading::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUHeading>::max()));
 }
 
 TEST(ENUHeadingTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::map::point::ENUHeading::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::map::point::ENUHeading>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUHeading::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUHeading>::epsilon()));
 }
 
 TEST(ENUHeadingTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-1.))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-1.))));
+  EXPECT_DOUBLE_EQ(
     ::ad::map::point::ENUHeading::cPrecisionValue,
     static_cast<double>(std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::ENUHeading::cMinValue),
-            static_cast<double>(std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::ENUHeading::cMinValue),
-            static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-::ad::map::point::ENUHeading::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::ENUHeading::cMaxValue),
-            static_cast<double>(std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::map::point::ENUHeading::cMaxValue),
-            static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-::ad::map::point::ENUHeading::cMaxValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::map::point::ENUHeading::cMinValue),
+    static_cast<double>(std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMinValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::map::point::ENUHeading::cMinValue),
+    static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-::ad::map::point::ENUHeading::cMinValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::map::point::ENUHeading::cMaxValue),
+    static_cast<double>(std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMaxValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::map::point::ENUHeading::cMaxValue),
+    static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-::ad::map::point::ENUHeading::cMaxValue))));
 }
 
 TEST(ENUHeadingTests, constructionFromValidFPValue)
@@ -124,7 +128,7 @@ TEST(ENUHeadingTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::ENUHeading::cMinValue;
   ::ad::map::point::ENUHeading value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(ENUHeadingTests, copyConstructionFromValidValue)
@@ -132,14 +136,14 @@ TEST(ENUHeadingTests, copyConstructionFromValidValue)
   ::ad::map::point::ENUHeading const validValue(::ad::map::point::ENUHeading::cMinValue);
   ::ad::map::point::ENUHeading value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(ENUHeadingTests, moveConstructionFromValidValue)
 {
   ::ad::map::point::ENUHeading value(std::move(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::ENUHeading::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cMinValue, static_cast<double>(value));
 }
 
 TEST(ENUHeadingTests, assignmentFromValidValue)
@@ -148,7 +152,7 @@ TEST(ENUHeadingTests, assignmentFromValidValue)
   ::ad::map::point::ENUHeading value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(ENUHeadingTests, moveAssignmentFromValidValue)
@@ -156,7 +160,7 @@ TEST(ENUHeadingTests, moveAssignmentFromValidValue)
   ::ad::map::point::ENUHeading value;
   value = std::move(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::point::ENUHeading::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cMinValue, static_cast<double>(value));
 }
 
 TEST(ENUHeadingTests, constructionFromInvalidFPValue)
@@ -194,7 +198,7 @@ TEST(ENUHeadingTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::map::point::ENUHeading value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_MAP_POINT_ENUHEADING_THROWS_EXCEPTION == 1)

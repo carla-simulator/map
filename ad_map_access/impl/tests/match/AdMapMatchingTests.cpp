@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -128,12 +128,12 @@ void AdMapMatchingTest::compareMapMatching(int line,
 
   ASSERT_EQ(expectedNumberOfMatches, testResults.size()) << " compareMapMatching called from " << line << "\n";
 
-  if ((mRouteHint.roadSegments.size() > 0) && (testResults.size() > 0))
+  if ((mRouteHint.roadSegments.size() > 0u) && (testResults.size() > 0u))
   {
-    ASSERT_EQ(1, mRouteHint.roadSegments.size()) << " compareMapMatching called from " << line << "\n";
-    ASSERT_EQ(1, mRouteHint.roadSegments[0].drivableLaneSegments.size()) << " compareMapMatching called from " << line
-                                                                         << "\n";
-    ASSERT_LT(0, testResults.size()) << " compareMapMatching called from " << line << "\n";
+    ASSERT_EQ(1u, mRouteHint.roadSegments.size()) << " compareMapMatching called from " << line << "\n";
+    ASSERT_EQ(1u, mRouteHint.roadSegments[0].drivableLaneSegments.size()) << " compareMapMatching called from " << line
+                                                                          << "\n";
+    ASSERT_LT(0u, testResults.size()) << " compareMapMatching called from " << line << "\n";
     ASSERT_EQ(mRouteHint.roadSegments[0].drivableLaneSegments[0].laneInterval.laneId,
               testResults[0].mapMatchedPosition.lanePoint.paraPoint.laneId)
       << " compareMapMatching called from " << line << "\n";
@@ -194,11 +194,11 @@ TEST_F(AdMapMatchingTest, laneOperation)
   auto hintPoint = point::createGeoPoint(point::Longitude(8.4401803), point::Latitude(49.0191987), point::Altitude(0.));
   MapMatchedPositionConfidenceList mapMatchingResults;
   EXECUTE_NO_LOG(mapMatchingResults = mMapMatching->findLanes(point::ECEFPoint(), physics::Distance(0.01)));
-  ASSERT_EQ(mapMatchingResults.size(), 0);
+  ASSERT_EQ(mapMatchingResults.size(), 0u);
   mapMatchingResults = mMapMatching->findLanes(toECEF(hintPoint), physics::Distance());
-  ASSERT_EQ(mapMatchingResults.size(), 0);
+  ASSERT_EQ(mapMatchingResults.size(), 0u);
   mapMatchingResults = mMapMatching->findLanes(toECEF(hintPoint), physics::Distance(0.01));
-  ASSERT_EQ(mapMatchingResults.size(), 1);
+  ASSERT_EQ(mapMatchingResults.size(), 1u);
   ASSERT_NEAR(double(ad::map::lane::calcWidth(toENU(hintPoint))), 3.0039, 0.0001);
 
   LaneOccupiedRegionList laneOccupiedRegions;

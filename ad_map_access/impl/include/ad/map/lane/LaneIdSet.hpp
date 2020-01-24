@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -9,9 +9,9 @@
 #pragma once
 
 #include <functional>
+#include <set>
 #include <sstream>
 #include <string>
-#include <unordered_set>
 #include "ad/map/lane/LaneId.hpp"
 
 /** @brief namespace ad */
@@ -21,15 +21,7 @@ namespace map {
 /** @brief namespace lane */
 namespace lane {
 
-struct LaneIdHash
-{
-  std::size_t operator()(LaneId const &laneId) const noexcept
-  {
-    return static_cast<uint64_t>(laneId);
-  }
-};
-
-using LaneIdSet = std::unordered_set<LaneId, LaneIdHash>;
+typedef std::set<LaneId> LaneIdSet;
 
 } // namespace lane
 } // namespace map

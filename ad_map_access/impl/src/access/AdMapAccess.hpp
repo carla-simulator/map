@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -11,7 +11,6 @@
 #include <mutex>
 #include <spdlog/spdlog.h>
 #include <string>
-#include <unordered_set>
 #include "ad/map/access/Store.hpp"
 #include "ad/map/config/MapConfigFileHandler.hpp"
 #include "ad/map/point/CoordinateTransform.hpp"

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -25,8 +25,8 @@ namespace point {
 class CoordinateTransform
 {
 public:
-  using Ptr = std::shared_ptr<CoordinateTransform>;            ///< Smart pointer to the object.
-  using ConstPtr = std::shared_ptr<CoordinateTransform const>; ///< Smart pointer to the object.
+  typedef std::shared_ptr<CoordinateTransform> Ptr;            ///< Smart pointer to the object.
+  typedef std::shared_ptr<CoordinateTransform const> ConstPtr; ///< Smart pointer to the object.
 
 public: // Constructor/Destructor
   /**
@@ -138,7 +138,7 @@ public: // Useful methods
    */
   static double geocentricLatitude(const Latitude &lat);
 
-public: // Generic Conversions
+public: // Conversions
   /**
    * @brief Convert point between coordinate systems.
    * \tparam SourceC Source coordinate system.
@@ -146,7 +146,70 @@ public: // Generic Conversions
    * @param[in] x Source point.
    * @param[out] y Target point.
    */
-  template <typename SourceC, typename TargetC> void convert(const SourceC &x, TargetC &y) const = delete;
+  void convert(const GeoPoint &x, ENUPoint &y) const
+  {
+    y = Geo2ENU(x);
+  }
+
+  /**
+   * @brief Convert point between coordinate systems.
+   * \tparam SourceC Source coordinate system.
+   * \tparam TargetC Target coordinate system.
+   * @param[in] x Source point.
+   * @param[out] y Target point.
+   */
+  void convert(const ENUPoint &x, GeoPoint &y) const
+  {
+    y = ENU2Geo(x);
+  }
+
+  /**
+   * @brief Convert point between coordinate systems.
+   * \tparam SourceC Source coordinate system.
+   * \tparam TargetC Target coordinate system.
+   * @param[in] x Source point.
+   * @param[out] y Target point.
+   */
+  void convert(const GeoPoint &x, ECEFPoint &y) const
+  {
+    y = Geo2ECEF(x);
+  }
+
+  /**
+   * @brief Convert point between coordinate systems.
+   * \tparam SourceC Source coordinate system.
+   * \tparam TargetC Target coordinate system.
+   * @param[in] x Source point.
+   * @param[out] y Target point.
+   */
+  void convert(const ECEFPoint &x, GeoPoint &y) const
+  {
+    y = ECEF2Geo(x);
+  }
+
+  /**
+   * @brief Convert point between coordinate systems.
+   * \tparam SourceC Source coordinate system.
+   * \tparam TargetC Target coordinate system.
+   * @param[in] x Source point.
+   * @param[out] y Target point.
+   */
+  void convert(const ECEFPoint &x, ENUPoint &y) const
+  {
+    y = ECEF2ENU(x);
+  }
+
+  /**
+   * @brief Convert point between coordinate systems.
+   * \tparam SourceC Source coordinate system.
+   * \tparam TargetC Target coordinate system.
+   * @param[in] x Source point.
+   * @param[out] y Target point.
+   */
+  void convert(const ENUPoint &x, ECEFPoint &y) const
+  {
+    y = ENU2ECEF(x);
+  }
 
   /**
    * @brief Convert points between coordinate systems.
@@ -156,14 +219,14 @@ public: // Generic Conversions
    * @param[out] ys Target points.
    */
   template <typename SourceC, typename TargetC>
-  inline void convert(const std::vector<SourceC> &xs, std::vector<TargetC> &ys) const
+  void convert(const std::vector<SourceC> &xs, std::vector<TargetC> &ys) const
   {
     ys.clear();
     ys.reserve(xs.size());
     for (auto x : xs)
     {
       TargetC y;
-      convert<SourceC, TargetC>(x, y);
+      convert(x, y);
       ys.push_back(y);
     }
   }
@@ -199,39 +262,6 @@ private:                           // Static Data
   static size_t instance_counter_; ///< This class instance counter.
                                    ///< Used to generate initial reference point identifier.
 };
-
-/////////////////
-// Implementation
-
-template <> inline void CoordinateTransform::convert<GeoPoint, ENUPoint>(const GeoPoint &x, ENUPoint &y) const
-{
-  y = Geo2ENU(x);
-}
-
-template <> inline void CoordinateTransform::convert<ENUPoint, GeoPoint>(const ENUPoint &x, GeoPoint &y) const
-{
-  y = ENU2Geo(x);
-}
-
-template <> inline void CoordinateTransform::convert<GeoPoint, ECEFPoint>(const GeoPoint &x, ECEFPoint &y) const
-{
-  y = Geo2ECEF(x);
-}
-
-template <> inline void CoordinateTransform::convert<ECEFPoint, GeoPoint>(const ECEFPoint &x, GeoPoint &y) const
-{
-  y = ECEF2Geo(x);
-}
-
-template <> inline void CoordinateTransform::convert<ECEFPoint, ENUPoint>(const ECEFPoint &x, ENUPoint &y) const
-{
-  y = ECEF2ENU(x);
-}
-
-template <> inline void CoordinateTransform::convert<ENUPoint, ECEFPoint>(const ENUPoint &x, ECEFPoint &y) const
-{
-  y = ENU2ECEF(x);
-}
 
 } // namespace point
 } // namespace map

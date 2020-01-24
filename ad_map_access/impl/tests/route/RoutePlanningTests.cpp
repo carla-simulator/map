@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -334,7 +334,7 @@ TEST_F(RoutePlanningTest, route_following)
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
-  ASSERT_GT(compareRoute.roadSegments.size(), 0);
+  ASSERT_GT(compareRoute.roadSegments.size(), 0u);
   // position within the first segment: shorten first segment
   ASSERT_TRUE(route::shortenRoute(createParaPoint(startLaneId, physics::ParametricValue(0.4)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(0.4);
@@ -494,7 +494,7 @@ TEST_F(RoutePlanningTest, route_following_multiple_choices)
   ASSERT_TRUE(route::shortenRoute(std::vector<ParaPoint>{createParaPoint(firstLaneId, physics::ParametricValue(.8)),
                                                          createParaPoint(firstLaneId, physics::ParametricValue(.5))},
                                   route));
-  ASSERT_GT(compareRoute.roadSegments.size(), 0);
+  ASSERT_GT(compareRoute.roadSegments.size(), 0u);
   eraseFirstSegment(compareRoute);
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.5);
   compareRoutes(compareRoute, route);
@@ -657,7 +657,7 @@ TEST_F(RoutePlanningTest, routing_point)
   access::setENUReferencePoint(mTestPoints.back().first);
 
   auto lanes = lane::getLanes();
-  ASSERT_GT(lanes.size(), 0);
+  ASSERT_GT(lanes.size(), 0u);
   lane::LaneId x11 = lanes[0];
 
   match::LaneOccupiedRegion occupiedRegion;
@@ -670,12 +670,12 @@ TEST_F(RoutePlanningTest, routing_point)
   RoutingParaPoint routingPoint1, routingPoint2;
   routingPoint1 = createRoutingPoint(occupiedRegion, RoutingDirection::POSITIVE);
   ASSERT_EQ(routingPoint1.point.laneId, x11);
-  ASSERT_EQ((double)routingPoint1.point.parametricOffset, 0.5);
+  ASSERT_DOUBLE_EQ((double)routingPoint1.point.parametricOffset, 0.5);
   ASSERT_EQ(routingPoint1.direction, RoutingDirection::POSITIVE);
 
   routingPoint2 = createRoutingPoint(occupiedRegion, point::createENUHeading(M_PI_2));
   ASSERT_EQ(routingPoint2.point.laneId, x11);
-  ASSERT_EQ((double)routingPoint2.point.parametricOffset, 0.5);
+  ASSERT_DOUBLE_EQ((double)routingPoint2.point.parametricOffset, 0.5);
   ASSERT_EQ(routingPoint2.direction, RoutingDirection::NEGATIVE);
 }
 
@@ -726,10 +726,19 @@ TEST_F(RoutePlanningTest, route_para_point)
 
   restriction::SpeedLimitList speedLimits;
   speedLimits = getSpeedLimits(routeIter1, routeIter2);
-  ASSERT_EQ(speedLimits.size(), 1);
+  ASSERT_EQ(speedLimits.size(), 1u);
   ASSERT_NEAR((double)speedLimits[0].speedLimit, 8.3333, 0.0001);
   ASSERT_NEAR((double)speedLimits[0].lanePiece.minimum, 0., 0.0001);
   ASSERT_NEAR((double)speedLimits[0].lanePiece.maximum, 1., 0.0001);
+
+  speedLimits = getSpeedLimits(routeLeft);
+  ASSERT_EQ(speedLimits.size(), 3);
+  for (auto const &speedLimit : speedLimits)
+  {
+    ASSERT_NEAR((double)speedLimit.speedLimit, 8.3333, 0.0001);
+    ASSERT_NEAR((double)speedLimit.lanePiece.minimum, 0., 0.0001);
+    ASSERT_NEAR((double)speedLimit.lanePiece.maximum, 1., 0.0001);
+  }
 
   route::FullRoute bypassingRoute;
   ASSERT_TRUE(calculateBypassingRoute(routeLeft, bypassingRoute));
@@ -787,8 +796,8 @@ TEST_F(RoutePlanningTest, route_match_position)
   match::MapMatchedPositionConfidenceList matchPosition1, matchPosition2;
   matchPosition1 = mapMatching.getMapMatchedPositions(point_geo1, physics::Distance(1), physics::Probability(0.5));
   matchPosition2 = mapMatching.getMapMatchedPositions(point_geo2, physics::Distance(1), physics::Probability(0.5));
-  ASSERT_GT(matchPosition1.size(), 0);
-  ASSERT_GT(matchPosition2.size(), 0);
+  ASSERT_GT(matchPosition1.size(), 0u);
+  ASSERT_GT(matchPosition2.size(), 0u);
 
   dis = signedDistanceToLane(startLaneId, routeLeft, matchPosition1);
   ASSERT_NEAR((double)dis, 0., 0.0001);
@@ -819,14 +828,14 @@ TEST_F(RoutePlanningTest, route_match_position)
   match::MapMatchedObjectBoundingBox boundBox1, boundBox2;
   boundBox1 = mapMatching.getMapMatchedBoundingBox(mObjectPosition1, physics::Distance(1), physics::Probability(0.5));
   boundBox2 = mapMatching.getMapMatchedBoundingBox(mObjectPosition2, physics::Distance(1), physics::Probability(0.5));
-  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0);
-  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0);
+  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0u);
+  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0u);
 
   std::vector<FullRoute> fullRouteVec;
   fullRouteVec = predictRoutesOnDistance(boundBox1, physics::Distance(22.1776));
-  ASSERT_GT(fullRouteVec.size(), 0);
+  ASSERT_GT(fullRouteVec.size(), 0u);
   fullRouteVec = predictRoutesOnDuration(boundBox1, physics::Duration(3.33));
-  ASSERT_GT(fullRouteVec.size(), 0);
+  ASSERT_GT(fullRouteVec.size(), 0u);
 
   auto findWaypointResult2 = route::objectOnRoute(boundBox1, fullRouteVec[0]);
   ASSERT_TRUE(findWaypointResult2.isValid());
@@ -857,12 +866,22 @@ TEST_F(RoutePlanningTest, route_match_position)
 
   ConnectingRoute conRoute1;
   conRoute1 = calculateConnectingRoute(boundBox1, boundBox2);
-  ASSERT_GT(conRoute1.connectingSegments.size(), 0);
+  ASSERT_GT(conRoute1.connectingSegments.size(), 0u);
   dis = calcLength(conRoute1);
   ASSERT_NEAR((double)dis, 26.7761, 0.0001);
 
   duration = calcDuration(conRoute1);
   ASSERT_NEAR((double)duration, 3.2131, 0.0001);
+
+  restriction::SpeedLimitList speedLimits;
+  speedLimits = getSpeedLimits(conRoute1);
+  ASSERT_EQ(speedLimits.size(), 2);
+  for (auto const &speedLimit : speedLimits)
+  {
+    ASSERT_NEAR((double)speedLimit.speedLimit, 8.3333, 0.0001);
+    ASSERT_NEAR((double)speedLimit.lanePiece.minimum, 0., 0.0001);
+    ASSERT_NEAR((double)speedLimit.lanePiece.maximum, 1., 0.0001);
+  }
 
   ASSERT_FALSE(intersectionOnConnectedRoute(conRoute1));
 
@@ -870,10 +889,10 @@ TEST_F(RoutePlanningTest, route_match_position)
   mObjectPosition2.centerPoint = point::toENU(createGeoPoint(Longitude(8.4408261), Latitude(49.0200051), Altitude(0.)));
   boundBox1 = mapMatching.getMapMatchedBoundingBox(mObjectPosition1, physics::Distance(1), physics::Probability(0.5));
   boundBox2 = mapMatching.getMapMatchedBoundingBox(mObjectPosition2, physics::Distance(1), physics::Probability(0.5));
-  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0);
-  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0);
+  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0u);
+  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0u);
   conRoute1 = calculateConnectingRoute(boundBox1, boundBox2);
-  ASSERT_GT(conRoute1.connectingSegments.size(), 0);
+  ASSERT_GT(conRoute1.connectingSegments.size(), 0u);
   dis = calcLength(conRoute1);
   ASSERT_NEAR((double)dis, 613.9365, 0.0001);
 
@@ -881,10 +900,10 @@ TEST_F(RoutePlanningTest, route_match_position)
   mObjectPosition2.centerPoint = point::toENU(createGeoPoint(Longitude(8.4408261), Latitude(49.0200051), Altitude(0.)));
   boundBox1 = mapMatching.getMapMatchedBoundingBox(mObjectPosition1, physics::Distance(1), physics::Probability(0.5));
   boundBox2 = mapMatching.getMapMatchedBoundingBox(mObjectPosition2, physics::Distance(1), physics::Probability(0.5));
-  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0);
-  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0);
+  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0u);
+  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0u);
   conRoute1 = calculateConnectingRoute(boundBox1, boundBox2);
-  ASSERT_GT(conRoute1.connectingSegments.size(), 0);
+  ASSERT_GT(conRoute1.connectingSegments.size(), 0u);
   dis = calcLength(conRoute1);
   ASSERT_NEAR((double)dis, 613.9365, 0.0001);
 
@@ -892,10 +911,10 @@ TEST_F(RoutePlanningTest, route_match_position)
   mObjectPosition2.centerPoint = point::toENU(createGeoPoint(Longitude(8.4404534), Latitude(49.0199487), Altitude(0.)));
   boundBox1 = mapMatching.getMapMatchedBoundingBox(mObjectPosition1, physics::Distance(1), physics::Probability(0.5));
   boundBox2 = mapMatching.getMapMatchedBoundingBox(mObjectPosition2, physics::Distance(1), physics::Probability(0.5));
-  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0);
-  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0);
+  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0u);
+  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0u);
   conRoute1 = calculateConnectingRoute(boundBox1, boundBox2);
-  ASSERT_GT(conRoute1.connectingSegments.size(), 0);
+  ASSERT_GT(conRoute1.connectingSegments.size(), 0u);
   dis = calcLength(conRoute1);
   ASSERT_NEAR((double)dis, 579.9489, 0.0001);
 }

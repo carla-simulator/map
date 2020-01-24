@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -90,9 +90,9 @@ TEST_F(LaneOperationTest, getPointsOfInterest)
   auto pos = point::createGeoPoint(point::Longitude(8.0026912), point::Latitude(48.9970472), point::Altitude(3.1));
   std::vector<config::PointOfInterest> poI;
   poI = access::getPointsOfInterest(pos, physics::Distance(1.0));
-  ASSERT_EQ(poI.size(), 0);
+  ASSERT_EQ(poI.size(), 0u);
   poI = access::getPointsOfInterest(pos, physics::Distance(5.0));
-  ASSERT_EQ(poI.size(), 1);
+  ASSERT_EQ(poI.size(), 1u);
   ASSERT_EQ(poI.front().name, std::string("T1"));
 }
 
@@ -525,7 +525,7 @@ TEST_F(LaneOperationTest, BoarderOperation)
   border_enu1.left = edge_enu1;
   border_enu1.right = edge_enu2;
   normalizeBorder(border_enu1, &border_enu2);
-  ASSERT_EQ(border_enu1.right.size(), 3);
+  ASSERT_EQ(border_enu1.right.size(), 3u);
   ASSERT_EQ(border_enu1.right[2], createENUPoint(701., 2., 0));
 
   edge_enu1.clear();
@@ -546,7 +546,7 @@ TEST_F(LaneOperationTest, BoarderOperation)
   border_enu2.left = edge_enu1;
   border_enu2.right = edge_enu2;
   normalizeBorder(border_enu1, &border_enu2);
-  ASSERT_EQ(border_enu1.right.size(), 3);
+  ASSERT_EQ(border_enu1.right.size(), 3u);
   ASSERT_EQ(border_enu1.right[2], createENUPoint(701., 2., 0));
 
   edge_enu1.clear();
@@ -578,7 +578,7 @@ TEST_F(LaneOperationTest, BoarderOperation)
   edge_enu2.push_back(createENUPoint(901., 401, 1));
   edge_enu3 = edge_enu1;
   makeTransitionFromFirstEdgeContinuous(edge_enu1, edge_enu2);
-  ASSERT_EQ(edge_enu1.size(), 3);
+  ASSERT_EQ(edge_enu1.size(), 3u);
   ASSERT_EQ(edge_enu1[0], edge_enu3[0]);
   ASSERT_NE(edge_enu1[1], edge_enu3[1]);
   ASSERT_GT(calcLength(edge_enu1), calcLength(edge_enu3));
@@ -603,7 +603,7 @@ TEST_F(LaneOperationTest, BoarderOperation)
   edge_enu2.push_back(createENUPoint(901., 401, 1));
   edge_enu3 = edge_enu2;
   makeTransitionToSecondEdgeContinuous(edge_enu1, edge_enu2);
-  ASSERT_EQ(edge_enu2.size(), 3);
+  ASSERT_EQ(edge_enu2.size(), 3u);
   ASSERT_EQ(edge_enu2[0], edge_enu1[1]);
   ASSERT_NE(edge_enu2[1], edge_enu3[0]);
   ASSERT_EQ(edge_enu2[2], edge_enu3[1]);
@@ -639,8 +639,8 @@ TEST_F(LaneOperationTest, BoarderOperation)
   border_enu3 = border_enu1;
   makeTransitionFromFirstBorderContinuous(border_enu1, border_enu2);
   ASSERT_NE(border_enu1, border_enu3);
-  ASSERT_EQ(border_enu1.left.size(), 4);
-  ASSERT_EQ(border_enu1.right.size(), 4);
+  ASSERT_EQ(border_enu1.left.size(), 4u);
+  ASSERT_EQ(border_enu1.right.size(), 4u);
   ASSERT_EQ(border_enu1.left[0], border_enu3.left[0]);
   ASSERT_EQ(border_enu1.left[3], border_enu2.left[0]);
   ASSERT_EQ(border_enu1.right[0], border_enu3.right[0]);
@@ -672,9 +672,9 @@ TEST_F(LaneOperationTest, BoarderOperation)
   ASSERT_GT(calcLength(border_enu1.right), rightedge_length);
 
   struct IndexPairs indexPairs = getIndexPairs(edge_enu1, edge_enu2);
-  ASSERT_EQ(indexPairs.leftEdgeIndices.size(), 2);
-  ASSERT_EQ(indexPairs.leftEdgeIndices[0], 0);
-  ASSERT_EQ(indexPairs.leftEdgeIndices[1], 1);
+  ASSERT_EQ(indexPairs.leftEdgeIndices.size(), 2u);
+  ASSERT_EQ(indexPairs.leftEdgeIndices[0], 0u);
+  ASSERT_EQ(indexPairs.leftEdgeIndices[1], 1u);
   ASSERT_EQ(indexPairs.leftEdgeIndices, indexPairs.rightEdgeIndices);
 
   edge_enu1.clear();
@@ -685,12 +685,12 @@ TEST_F(LaneOperationTest, BoarderOperation)
   edge_enu2.push_back(createENUPoint(1., 4., 1));
   edge_enu2.push_back(createENUPoint(401., 4., 1));
   indexPairs = getIndexPairs(edge_enu1, edge_enu2);
-  ASSERT_EQ(indexPairs.leftEdgeIndices.size(), 3);
-  ASSERT_EQ(indexPairs.leftEdgeIndices[0], 0);
-  ASSERT_EQ(indexPairs.leftEdgeIndices[1], 1);
-  ASSERT_EQ(indexPairs.leftEdgeIndices[2], 2);
-  ASSERT_EQ(indexPairs.rightEdgeIndices.size(), 3);
-  ASSERT_EQ(indexPairs.rightEdgeIndices[0], 0);
-  ASSERT_EQ(indexPairs.rightEdgeIndices[1], 1);
-  ASSERT_EQ(indexPairs.rightEdgeIndices[2], 1);
+  ASSERT_EQ(indexPairs.leftEdgeIndices.size(), 3u);
+  ASSERT_EQ(indexPairs.leftEdgeIndices[0], 0u);
+  ASSERT_EQ(indexPairs.leftEdgeIndices[1], 1u);
+  ASSERT_EQ(indexPairs.leftEdgeIndices[2], 2u);
+  ASSERT_EQ(indexPairs.rightEdgeIndices.size(), 3u);
+  ASSERT_EQ(indexPairs.rightEdgeIndices[0], 0u);
+  ASSERT_EQ(indexPairs.rightEdgeIndices[1], 1u);
+  ASSERT_EQ(indexPairs.rightEdgeIndices[2], 1u);
 }

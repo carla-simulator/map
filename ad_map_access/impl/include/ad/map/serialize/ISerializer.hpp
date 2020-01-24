@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -273,8 +273,6 @@ private:                                 // Special types
   typedef uint8_t EnumSerializationType; ///< Use 8 bits for enum serializations.
 };
 
-template <typename T> bool doSerialize(ISerializer &serializer, T &) = delete;
-
 /////////////////
 // Implementation
 
@@ -325,7 +323,7 @@ template <> inline bool ISerializer::read<std::string>(std::string &value)
   return false;
 }
 
-template <> inline bool doSerialize(ISerializer &serializer, std::string &value)
+inline bool doSerialize(ISerializer &serializer, std::string &value)
 {
   return serializer.serialize(SerializeableMagic::String) && serializer.serialize(value);
 }
@@ -635,5 +633,3 @@ inline bool ISerializer::readObjectVecMap(std::map<T, std::vector<U>, Comp> &x)
 } // namespace serialize
 } // namespace map
 } // namespace ad
-
-#include "ad/map/serialize/SerializeGeneratedTypes.hpp"

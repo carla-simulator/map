@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -41,7 +41,7 @@ namespace lane {
  *
  * List of Contact Types
  */
-using ContactTypeList = std::vector<::ad::map::lane::ContactType>;
+typedef std::vector<::ad::map::lane::ContactType> ContactTypeList;
 
 } // namespace lane
 } // namespace map

@@ -29,6 +29,11 @@ In addition, the terms in the following apply:
 Visit the project's [Documentation page](https://ad-map-access.readthedocs.io/en/latest/) to access the online version of the full documentation of this library.
 
 ## Releases <a name="releases"></a>
+General release notes and changes can be found in the [Changelog](https://ad-map-access.readthedocs.io/en/latest/CHANGELOG/index.html)
+
+#### Release 1.1.0 <a name="release_1_1"></a>
+Added python bindings
+
 #### Release 1.0.0 <a name="release_1"></a>
 The initial release of the map C++ software libraries.
 
@@ -58,7 +63,7 @@ Currently Ubuntu 16.04 is the supported system. Other Linux OS and compiler comb
 Important: cmake is required to be at least version 3.5!
 
 ## Building the library <a name="building"></a>
-See the detailed [Build instructions](./doc/BUILDING.md).
+See the detailed [Build instructions](https://ad-map-access.readthedocs.io/en/latest/BUILDING/index.html).
 
 ## Contributing <a name="contributing"></a>
 Contibutions are very welcome!

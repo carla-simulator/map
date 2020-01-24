@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -203,5 +203,5 @@ TEST(TrafficLightTypeTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::map::landmark::TrafficLightType value(::ad::map::landmark::TrafficLightType::INVALID);
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -46,12 +46,12 @@ struct MapMetaData
   /*!
    * \brief Smart pointer on MapMetaData
    */
-  using Ptr = std::shared_ptr<MapMetaData>;
+  typedef std::shared_ptr<MapMetaData> Ptr;
 
   /*!
    * \brief Smart pointer on constant MapMetaData
    */
-  using ConstPtr = std::shared_ptr<MapMetaData const>;
+  typedef std::shared_ptr<MapMetaData const> ConstPtr;
 
   /*!
    * \brief standard constructor

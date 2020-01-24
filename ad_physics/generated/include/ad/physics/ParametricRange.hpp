@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -41,12 +41,12 @@ struct ParametricRange
   /*!
    * \brief Smart pointer on ParametricRange
    */
-  using Ptr = std::shared_ptr<ParametricRange>;
+  typedef std::shared_ptr<ParametricRange> Ptr;
 
   /*!
    * \brief Smart pointer on constant ParametricRange
    */
-  using ConstPtr = std::shared_ptr<ParametricRange const>;
+  typedef std::shared_ptr<ParametricRange const> ConstPtr;
 
   /*!
    * \brief standard constructor

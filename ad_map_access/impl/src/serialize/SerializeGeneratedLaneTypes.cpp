@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -9,12 +9,13 @@
 #include "ad/map/serialize/SerializeGeneratedLaneTypes.hpp"
 #include "ad/map/point/BoundingSphereOperation.hpp"
 #include "ad/map/point/ECEFOperation.hpp"
+#include "ad/map/serialize/SerializeGeneratedTypes.hpp"
 
 namespace ad {
 namespace map {
 namespace serialize {
 
-template <> bool doSerialize(ISerializer &serializer, lane::Lane &lane)
+bool doSerialize(ISerializer &serializer, lane::Lane &lane)
 {
   bool ok = serializer.serialize(SerializeableMagic::Lane) && doSerialize(serializer, lane.id)
     && serializer.serialize(lane.type) && serializer.serialize(lane.direction)
@@ -41,7 +42,7 @@ template <> bool doSerialize(ISerializer &serializer, lane::Lane &lane)
   return ok;
 }
 
-template <> bool doSerialize(ISerializer &serializer, lane::ContactLane &contactLane)
+bool doSerialize(ISerializer &serializer, lane::ContactLane &contactLane)
 {
   return serializer.serialize(SerializeableMagic::ContactLane) && doSerialize(serializer, contactLane.toLane)
     && serializer.serialize(contactLane.location) && serializer.serializeVector(contactLane.types)

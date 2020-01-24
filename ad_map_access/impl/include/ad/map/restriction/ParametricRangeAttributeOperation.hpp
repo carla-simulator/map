@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -16,18 +16,12 @@ namespace map {
 namespace restriction {
 
 /**
- * @brief Compare two attributes of a RangeAttribute for equality.
- * @param[in] left RangeAttributes object.
- * @param[in] right RangeAttributes object.
- * @returns true if the attributes of the left RangeAttributes and right RangeAttribute can be considered to be equal.
+ * @brief Compare two speed limit attributes for equality.
+ * @param[in] left SpeedLimit object.
+ * @param[in] right SpeedLimit object.
+ * @returns true if the attributes of the left SpeedLimit and right SpeedLimit can be considered to be equal.
  */
-template <typename RangeAttribute>
-bool areAttributesEqual(RangeAttribute const &left, RangeAttribute const &right) = delete;
-
-/**
- * @brief Implements areAttributesEqual() for SpeedLimit
- */
-template <> bool areAttributesEqual(SpeedLimit const &left, SpeedLimit const &right)
+bool areAttributesEqual(SpeedLimit const &left, SpeedLimit const &right)
 {
   return left.speedLimit == right.speedLimit;
 }

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -135,7 +135,7 @@ std::vector<PointType> getParametricRange(std::vector<PointType> const &edge,
                                           physics::Distance const &edgeLength,
                                           const physics::ParametricRange &trange)
 {
-  using EdgeType = std::vector<PointType>;
+  typedef std::vector<PointType> EdgeType;
   if (!edge.empty())
   {
     EdgeType pts;
@@ -290,7 +290,7 @@ std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &lef
                                                physics::Distance const &rightEdgeLength,
                                                physics::ParametricValue const lateralAlignment)
 {
-  using EdgeType = std::vector<PointType>;
+  typedef std::vector<PointType> EdgeType;
 
   if (!withinValidInputRange(lateralAlignment))
   {

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -35,7 +35,7 @@ point::ENUHeading getObjectENUHeading(const match::MapMatchedObjectBoundingBox &
   {
     rearLeftPosition = mapMatchedBoundingBox.referencePointPositions[int32_t(match::ObjectReferencePoints::RearLeft)]
                          .front()
-                         .matchedPoint;
+                         .queryPoint;
   }
   point::ECEFPoint rearRightPosition;
   bool const rearRightAvailable
@@ -44,7 +44,7 @@ point::ENUHeading getObjectENUHeading(const match::MapMatchedObjectBoundingBox &
   {
     rearRightPosition = mapMatchedBoundingBox.referencePointPositions[int32_t(match::ObjectReferencePoints::RearRight)]
                           .front()
-                          .matchedPoint;
+                          .queryPoint;
   }
   point::ECEFPoint frontLeftPosition;
   bool const frontLeftAvailable
@@ -53,7 +53,7 @@ point::ENUHeading getObjectENUHeading(const match::MapMatchedObjectBoundingBox &
   {
     frontLeftPosition = mapMatchedBoundingBox.referencePointPositions[int32_t(match::ObjectReferencePoints::FrontLeft)]
                           .front()
-                          .matchedPoint;
+                          .queryPoint;
   }
   point::ECEFPoint frontRightPosition;
   bool const frontRightAvailable
@@ -63,7 +63,7 @@ point::ENUHeading getObjectENUHeading(const match::MapMatchedObjectBoundingBox &
     frontRightPosition
       = mapMatchedBoundingBox.referencePointPositions[int32_t(match::ObjectReferencePoints::FrontRight)]
           .front()
-          .matchedPoint;
+          .queryPoint;
   }
 
   point::ECEFHeading ecefHeading;

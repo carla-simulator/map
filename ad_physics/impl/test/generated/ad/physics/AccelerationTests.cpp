@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -24,22 +24,22 @@ TEST(AccelerationTests, defaultConstructionIsInvalid)
 
 TEST(AccelerationTests, minIsDefinedAsExpected)
 {
-  EXPECT_EQ(-1e3, ::ad::physics::Acceleration::cMinValue);
-  EXPECT_EQ(::ad::physics::Acceleration::cMinValue, static_cast<double>(::ad::physics::Acceleration::getMin()));
+  EXPECT_DOUBLE_EQ(-1e3, ::ad::physics::Acceleration::cMinValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::Acceleration::cMinValue, static_cast<double>(::ad::physics::Acceleration::getMin()));
 }
 
 TEST(AccelerationTests, maxIsDefinedAsExpected)
 {
-  EXPECT_EQ(1e3, ::ad::physics::Acceleration::cMaxValue);
-  EXPECT_EQ(::ad::physics::Acceleration::cMaxValue, static_cast<double>(::ad::physics::Acceleration::getMax()));
+  EXPECT_DOUBLE_EQ(1e3, ::ad::physics::Acceleration::cMaxValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::Acceleration::cMaxValue, static_cast<double>(::ad::physics::Acceleration::getMax()));
 }
 
 TEST(AccelerationTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::Acceleration::cPrecisionValue);
-  EXPECT_EQ(1e-4, ::ad::physics::Acceleration::cPrecisionValue);
-  EXPECT_EQ(::ad::physics::Acceleration::cPrecisionValue,
-            static_cast<double>(::ad::physics::Acceleration::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-4, ::ad::physics::Acceleration::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::Acceleration::cPrecisionValue,
+                   static_cast<double>(::ad::physics::Acceleration::getPrecision()));
 }
 
 TEST(AccelerationTests, minIsValid)
@@ -98,36 +98,39 @@ TEST(AccelerationTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(AccelerationTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::Acceleration::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::physics::Acceleration>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Acceleration::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::Acceleration>::lowest()));
 }
 
 TEST(AccelerationTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::Acceleration::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::physics::Acceleration>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Acceleration::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::Acceleration>::max()));
 }
 
 TEST(AccelerationTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::Acceleration::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::physics::Acceleration>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Acceleration::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::Acceleration>::epsilon()));
 }
 
 TEST(AccelerationTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::physics::Acceleration(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::physics::Acceleration(-1.))));
-  EXPECT_EQ(::ad::physics::Acceleration::cPrecisionValue,
-            static_cast<double>(std::fabs(::ad::physics::Acceleration(::ad::physics::Acceleration::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Acceleration::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::Acceleration(::ad::physics::Acceleration::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Acceleration::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::Acceleration(-::ad::physics::Acceleration::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Acceleration::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::Acceleration(::ad::physics::Acceleration::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::Acceleration::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::Acceleration(-::ad::physics::Acceleration::cMaxValue))));
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::Acceleration(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::Acceleration(-1.))));
+  EXPECT_DOUBLE_EQ(
+    ::ad::physics::Acceleration::cPrecisionValue,
+    static_cast<double>(std::fabs(::ad::physics::Acceleration(::ad::physics::Acceleration::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Acceleration::cMinValue),
+                   static_cast<double>(std::fabs(::ad::physics::Acceleration(::ad::physics::Acceleration::cMinValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::Acceleration::cMinValue),
+    static_cast<double>(std::fabs(::ad::physics::Acceleration(-::ad::physics::Acceleration::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Acceleration::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::physics::Acceleration(::ad::physics::Acceleration::cMaxValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::Acceleration::cMaxValue),
+    static_cast<double>(std::fabs(::ad::physics::Acceleration(-::ad::physics::Acceleration::cMaxValue))));
 }
 
 TEST(AccelerationTests, constructionFromValidFPValue)
@@ -135,7 +138,7 @@ TEST(AccelerationTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::Acceleration::cMinValue;
   ::ad::physics::Acceleration value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(AccelerationTests, copyConstructionFromValidValue)
@@ -143,14 +146,14 @@ TEST(AccelerationTests, copyConstructionFromValidValue)
   ::ad::physics::Acceleration const validValue(::ad::physics::Acceleration::cMinValue);
   ::ad::physics::Acceleration value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(AccelerationTests, moveConstructionFromValidValue)
 {
   ::ad::physics::Acceleration value(std::move(::ad::physics::Acceleration(::ad::physics::Acceleration::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::Acceleration::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Acceleration::cMinValue, static_cast<double>(value));
 }
 
 TEST(AccelerationTests, assignmentFromValidValue)
@@ -159,7 +162,7 @@ TEST(AccelerationTests, assignmentFromValidValue)
   ::ad::physics::Acceleration value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(AccelerationTests, moveAssignmentFromValidValue)
@@ -167,7 +170,7 @@ TEST(AccelerationTests, moveAssignmentFromValidValue)
   ::ad::physics::Acceleration value;
   value = std::move(::ad::physics::Acceleration(::ad::physics::Acceleration::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::Acceleration::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Acceleration::cMinValue, static_cast<double>(value));
 }
 
 TEST(AccelerationTests, constructionFromInvalidFPValue)
@@ -205,7 +208,7 @@ TEST(AccelerationTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::physics::Acceleration value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_PHYSICS_ACCELERATION_THROWS_EXCEPTION == 1)
