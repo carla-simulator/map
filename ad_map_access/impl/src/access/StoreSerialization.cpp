@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -12,6 +12,7 @@
 #include "ad/map/access/Operation.hpp"
 #include "ad/map/access/Store.hpp"
 #include "ad/map/lane/LaneOperation.hpp"
+#include "ad/map/serialize/SerializeGeneratedTypes.hpp"
 
 #include <algorithm>
 #include <string>

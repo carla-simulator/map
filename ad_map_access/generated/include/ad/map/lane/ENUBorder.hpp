@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -46,12 +46,12 @@ struct ENUBorder
   /*!
    * \brief Smart pointer on ENUBorder
    */
-  using Ptr = std::shared_ptr<ENUBorder>;
+  typedef std::shared_ptr<ENUBorder> Ptr;
 
   /*!
    * \brief Smart pointer on constant ENUBorder
    */
-  using ConstPtr = std::shared_ptr<ENUBorder const>;
+  typedef std::shared_ptr<ENUBorder const> ConstPtr;
 
   /*!
    * \brief standard constructor

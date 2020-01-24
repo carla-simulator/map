@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -20,12 +20,12 @@
 /*!
  * The major version of ad_physics
  */
-#define AD_PHYSICS_VERSION_MAJOR 0
+#define AD_PHYSICS_VERSION_MAJOR 1
 
 /*!
  * The minor version of ad_physics
  */
-#define AD_PHYSICS_VERSION_MINOR 0
+#define AD_PHYSICS_VERSION_MINOR 1
 
 /*!
  * The revision of ad_physics
@@ -35,4 +35,4 @@
 /*!
  * The version of ad_physics as string
  */
-#define AD_PHYSICS_VERSION_STRING "0.0.0"
+#define AD_PHYSICS_VERSION_STRING "1.1.0"

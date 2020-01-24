@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2018-2019 Intel Corporation
+# Copyright (C) 2018-2020 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -12,7 +12,7 @@ from qgis.gui import QgsMessageBar
 from qgis.core import QgsMessageLog
 from PyQt4.QtGui import QAction, QFileDialog, QIcon
 
-import ad_map_access_python as admap
+import ad_map_access_qgis_python as admap
 import Globs
 import Logger
 from .ADMapQgs import ADMapQgs

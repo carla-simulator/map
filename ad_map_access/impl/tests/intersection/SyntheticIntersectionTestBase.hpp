@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -107,7 +107,7 @@ struct SyntheticIntersectionTestBase : test_support::ArtificialIntersectionTestB
   void compareVectors(point::ParaPointList left, point::ParaPointList right) const;
 
   /**
-   * @brief support for comparison of two unordered test sets
+   * @brief support for comparison of two test sets
    *
    * The sets are passed by value because a copy is required in each case to be able to sort them
    * before the actual comparison

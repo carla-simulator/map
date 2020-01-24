@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 10.6.1-1904
+ * Generator Version : 11.0.0-1917
  */
 
 #pragma once
@@ -46,12 +46,12 @@ struct MapMatchedObjectBoundingBox
   /*!
    * \brief Smart pointer on MapMatchedObjectBoundingBox
    */
-  using Ptr = std::shared_ptr<MapMatchedObjectBoundingBox>;
+  typedef std::shared_ptr<MapMatchedObjectBoundingBox> Ptr;
 
   /*!
    * \brief Smart pointer on constant MapMatchedObjectBoundingBox
    */
-  using ConstPtr = std::shared_ptr<MapMatchedObjectBoundingBox const>;
+  typedef std::shared_ptr<MapMatchedObjectBoundingBox const> ConstPtr;
 
   /*!
    * \brief standard constructor
@@ -117,7 +117,7 @@ struct MapMatchedObjectBoundingBox
   }
 
   ::ad::map::match::LaneOccupiedRegionList laneOccupiedRegions;
-  using ReferencePointPositionsType = std::vector<::ad::map::match::MapMatchedPositionConfidenceList>;
+  typedef std::vector<::ad::map::match::MapMatchedPositionConfidenceList> ReferencePointPositionsType;
   ReferencePointPositionsType referencePointPositions;
 };
 

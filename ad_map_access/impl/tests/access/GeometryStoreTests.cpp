@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -43,7 +43,7 @@ TEST_F(GeometryStoreTest, GeometryStore)
   EXPECT_THROW(geoStore.check(NULL), std::runtime_error);
 
   auto lanes = lane::getLanes();
-  ASSERT_GT(lanes.size(), 0);
+  ASSERT_GT(lanes.size(), 0u);
 
   auto lanePtr = lane::getLanePtr(lanes[0]);
   ASSERT_TRUE(geoStore.store(lanePtr));

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -12,7 +12,6 @@
 #include <memory>
 #include <sstream>
 #include <string>
-#include <unordered_map>
 #include <vector>
 #include "ad/map/intersection/IntersectionType.hpp"
 #include "ad/map/intersection/TurnDirection.hpp"
@@ -425,9 +424,9 @@ private:
    * key: id of lane
    * value: set of lanes that relate with this one (e.g. overlap)
    */
-  std::unordered_map<lane::LaneId, lane::LaneIdSet, lane::LaneIdHash> mOverlapping;
-  std::unordered_map<lane::LaneId, lane::LaneIdSet, lane::LaneIdHash> mSuccessor;
-  std::unordered_map<lane::LaneId, lane::LaneIdSet, lane::LaneIdHash> mPredecessor;
+  std::map<lane::LaneId, lane::LaneIdSet> mOverlapping;
+  std::map<lane::LaneId, lane::LaneIdSet> mSuccessor;
+  std::map<lane::LaneId, lane::LaneIdSet> mPredecessor;
 
   void extractLanesOfIntersection(lane::LaneId const laneId);
 

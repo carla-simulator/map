@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,9 +25,9 @@ TEST(ParametricValueTests, defaultConstructionIsInvalid)
 TEST(ParametricValueTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::ParametricValue::cPrecisionValue);
-  EXPECT_EQ(1e-6, ::ad::physics::ParametricValue::cPrecisionValue);
-  EXPECT_EQ(::ad::physics::ParametricValue::cPrecisionValue,
-            static_cast<double>(::ad::physics::ParametricValue::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-6, ::ad::physics::ParametricValue::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cPrecisionValue,
+                   static_cast<double>(::ad::physics::ParametricValue::getPrecision()));
 }
 
 TEST(ParametricValueTests, minIsValid)
@@ -86,37 +86,41 @@ TEST(ParametricValueTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(ParametricValueTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::ParametricValue::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::physics::ParametricValue>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::ParametricValue::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::ParametricValue>::lowest()));
 }
 
 TEST(ParametricValueTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::ParametricValue::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::physics::ParametricValue>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::ParametricValue::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::ParametricValue>::max()));
 }
 
 TEST(ParametricValueTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::ParametricValue::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::physics::ParametricValue>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::ParametricValue::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::ParametricValue>::epsilon()));
 }
 
 TEST(ParametricValueTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::physics::ParametricValue(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::physics::ParametricValue(-1.))));
-  EXPECT_EQ(
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::ParametricValue(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::ParametricValue(-1.))));
+  EXPECT_DOUBLE_EQ(
     ::ad::physics::ParametricValue::cPrecisionValue,
     static_cast<double>(std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::ParametricValue::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::ParametricValue::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::ParametricValue(-::ad::physics::ParametricValue::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::ParametricValue::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::ParametricValue::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::ParametricValue(-::ad::physics::ParametricValue::cMaxValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::ParametricValue::cMinValue),
+    static_cast<double>(std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMinValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::ParametricValue::cMinValue),
+    static_cast<double>(std::fabs(::ad::physics::ParametricValue(-::ad::physics::ParametricValue::cMinValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::ParametricValue::cMaxValue),
+    static_cast<double>(std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMaxValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::ParametricValue::cMaxValue),
+    static_cast<double>(std::fabs(::ad::physics::ParametricValue(-::ad::physics::ParametricValue::cMaxValue))));
 }
 
 TEST(ParametricValueTests, constructionFromValidFPValue)
@@ -124,7 +128,7 @@ TEST(ParametricValueTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::ParametricValue::cMinValue;
   ::ad::physics::ParametricValue value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(ParametricValueTests, copyConstructionFromValidValue)
@@ -132,7 +136,7 @@ TEST(ParametricValueTests, copyConstructionFromValidValue)
   ::ad::physics::ParametricValue const validValue(::ad::physics::ParametricValue::cMinValue);
   ::ad::physics::ParametricValue value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(ParametricValueTests, moveConstructionFromValidValue)
@@ -140,7 +144,7 @@ TEST(ParametricValueTests, moveConstructionFromValidValue)
   ::ad::physics::ParametricValue value(
     std::move(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::ParametricValue::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cMinValue, static_cast<double>(value));
 }
 
 TEST(ParametricValueTests, assignmentFromValidValue)
@@ -149,7 +153,7 @@ TEST(ParametricValueTests, assignmentFromValidValue)
   ::ad::physics::ParametricValue value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(ParametricValueTests, moveAssignmentFromValidValue)
@@ -157,7 +161,7 @@ TEST(ParametricValueTests, moveAssignmentFromValidValue)
   ::ad::physics::ParametricValue value;
   value = std::move(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::ParametricValue::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cMinValue, static_cast<double>(value));
 }
 
 TEST(ParametricValueTests, constructionFromInvalidFPValue)
@@ -195,7 +199,7 @@ TEST(ParametricValueTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::physics::ParametricValue value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_PHYSICS_PARAMETRICVALUE_THROWS_EXCEPTION == 1)

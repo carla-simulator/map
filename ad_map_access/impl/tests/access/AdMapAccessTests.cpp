@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -45,7 +45,7 @@ TEST_F(AdMapAccessTest, read_map)
   EXPECT_NO_THROW(access::setENUReferencePoint(p));
 
   auto lanes = lane::getLanes();
-  ASSERT_GT(lanes.size(), 0);
+  ASSERT_GT(lanes.size(), 0u);
 }
 
 TEST_F(AdMapAccessTest, initialize)

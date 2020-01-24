@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -183,13 +183,12 @@ FullRoute planRoute(const RoutingParaPoint &routingStart, const RoutingParaPoint
   return createFullRoute(rawRoute);
 }
 
-FullRoute planRoute(const RoutingParaPoint &routingStart, const point::GeoPoint &dest)
+FullRoute planRoute(const match::MapMatchedPositionConfidenceList &mapMatchingResults,
+                    const RoutingParaPoint &routingStart)
 {
   FullRoute resultRoute;
   physics::Distance resultDistance = std::numeric_limits<physics::Distance>::max();
-  match::AdMapMatching mapMatching;
-  auto mapMatchingResults = mapMatching.getMapMatchedPositions(dest, physics::Distance(1.), physics::Probability(.05));
-  for (auto const &mapMatchingResult : mapMatchingResults)
+  for (const auto &mapMatchingResult : mapMatchingResults)
   {
     FullRoute route = planRoute(routingStart, createRoutingPoint(mapMatchingResult.lanePoint.paraPoint));
     physics::Distance const routeDistance = calcLength(route);
@@ -199,8 +198,23 @@ FullRoute planRoute(const RoutingParaPoint &routingStart, const point::GeoPoint 
       resultRoute = route;
     }
   }
-
   return resultRoute;
+}
+
+FullRoute planRoute(const RoutingParaPoint &routingStart, const point::GeoPoint &dest)
+{
+  match::AdMapMatching mapMatching;
+  auto mapMatchingResults = mapMatching.getMapMatchedPositions(dest, physics::Distance(1.), physics::Probability(.05));
+
+  return planRoute(mapMatchingResults, routingStart);
+}
+
+FullRoute planRoute(const RoutingParaPoint &routingStart, const point::ENUPoint &dest)
+{
+  match::AdMapMatching mapMatching;
+  auto mapMatchingResults = mapMatching.getMapMatchedPositions(dest, physics::Distance(1.), physics::Probability(.05));
+
+  return planRoute(mapMatchingResults, routingStart);
 }
 
 FullRoute planRoute(const RoutingParaPoint &start, const std::vector<point::GeoPoint> &dest)

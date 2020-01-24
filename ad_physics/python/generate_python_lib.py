@@ -1,0 +1,44 @@
+#!/usr/bin/python
+
+# ----------------- BEGIN LICENSE BLOCK ---------------------------------
+#
+# Copyright (c) 2020 Intel Corporation
+#
+# SPDX-License-Identifier: MIT
+#
+# ----------------- END LICENSE BLOCK -----------------------------------
+
+"""
+This module uses pygccxml and py++ to generate
+Python interfaces for all classes and datatypes
+of the ad_physics library.
+
+The resulting library is called libad_physics_python
+"""
+
+from python_wrapper_helper import generate_python_wrapper, post_process_python_wrapper
+
+
+def main():
+    """
+    Main function to generate Python-C++ binding code
+    """
+    header_dirs = {
+        "../generated/include/",
+        "../impl/include/"
+    }
+    include_dirs = {
+        "../../dependencies/spdlog/include/"
+    }
+
+    generate_python_wrapper(library_name="libad_physics_python",
+                            cpp_filename="AdPhysicsPythonWrapper.cpp",
+                            header_directories=header_dirs,
+                            include_paths=include_dirs,
+                            declarations={
+                                "ad", "toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
+                            )
+    post_process_python_wrapper(header_directories=header_dirs, cpp_filename="AdPhysicsPythonWrapper.cpp")
+
+if __name__ == '__main__':
+    main()

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -30,7 +30,7 @@ TEST_F(LandmarkOperationTests, TestLandmark)
 
   EXPECT_TRUE(mFactory->addLandmark(
     mPartitionId, landmarkId, landmark::LandmarkType::UNKNOWN, position, orientationECEF, boundingBox));
-  EXPECT_EQ(landmark::getLandmarks().size(), 1);
+  EXPECT_EQ(landmark::getLandmarks().size(), 1u);
 
   landmark::LandmarkId result;
   result = landmark::uniqueLandmarkId(point);
@@ -47,13 +47,13 @@ TEST_F(LandmarkOperationTests, TestLandmark)
   reinitFromWrittenMap("test_files/test_landmark.adm");
 
   // check if the landmark is in the store
-  EXPECT_EQ(landmark::getLandmarks().size(), 1);
+  EXPECT_EQ(landmark::getLandmarks().size(), 1u);
   EXPECT_TRUE(landmark::getLandmarks().front() == landmarkId);
 
   // get the lane from the store and check the visible landmarks
   EXPECT_TRUE(lane::getLanes().front() == mLaneId);
   auto lane = lane::getLane(mLaneId);
-  EXPECT_EQ(lane.visibleLandmarks.size(), 1);
+  EXPECT_EQ(lane.visibleLandmarks.size(), 1u);
   EXPECT_TRUE(lane.visibleLandmarks.front() == landmarkId);
 }
 
@@ -96,7 +96,7 @@ TEST_F(LandmarkOperationTests, TestTrafficLight)
   Geometry bounding_box = createGeometry({position, orientation}, false);
   EXPECT_TRUE(mFactory->addTrafficLight(
     mPartitionId, landmarkId, landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN, position, orientation, bounding_box));
-  EXPECT_EQ(landmark::getLandmarks().size(), 1);
+  EXPECT_EQ(landmark::getLandmarks().size(), 1u);
 
   // add the traffic light as contact for two lanes
   lane::LaneId x12 = addLane();
@@ -122,7 +122,7 @@ TEST_F(LandmarkOperationTests, TestTrafficLight)
   reinitFromWrittenMap("test_files/test_traffic_light.adm");
 
   // check that the traffic light is in the store
-  EXPECT_EQ(landmark::getLandmarks().size(), 1);
+  EXPECT_EQ(landmark::getLandmarks().size(), 1u);
   EXPECT_TRUE(landmark::getLandmarks().front() == landmarkId);
   auto traffic_light = landmark::getLandmark(landmarkId);
   EXPECT_TRUE(traffic_light.type == landmark::LandmarkType::TRAFFIC_LIGHT);
@@ -131,7 +131,7 @@ TEST_F(LandmarkOperationTests, TestTrafficLight)
   // check the lane contact in the store
   EXPECT_TRUE(lane::getLanes().front() == mLaneId);
   auto lane = lane::getLane(mLaneId);
-  EXPECT_EQ(lane.visibleLandmarks.size(), 1);
+  EXPECT_EQ(lane.visibleLandmarks.size(), 1u);
   EXPECT_TRUE(lane.visibleLandmarks.front() == landmarkId);
   auto contact = lane.contactLanes.front();
   EXPECT_TRUE(contact.trafficLightId == landmarkId);
@@ -148,7 +148,7 @@ TEST_F(LandmarkOperationTests, TestTrafficSign)
   std::string text("60");
   EXPECT_TRUE(mFactory->addTrafficSign(
     mPartitionId, landmarkId, landmark::TrafficSignType::MAX_SPEED, position, orientation, bounding_box, text));
-  EXPECT_EQ(landmark::getLandmarks().size(), 1);
+  EXPECT_EQ(landmark::getLandmarks().size(), 1u);
 
   // add the landmark as visible landmark to a lane
   EXPECT_TRUE(mFactory->add(mLaneId, landmarkId));
@@ -156,7 +156,7 @@ TEST_F(LandmarkOperationTests, TestTrafficSign)
   reinitFromWrittenMap("test_files/test_traffic_sign.adm");
 
   // check if the landmark is in the store
-  EXPECT_EQ(landmark::getLandmarks().size(), 1);
+  EXPECT_EQ(landmark::getLandmarks().size(), 1u);
   EXPECT_TRUE(landmark::getLandmarks().front() == landmarkId);
 
   EXPECT_THROW_NO_LOG(landmark::getLandmarkPtr(landmark::LandmarkId(1000)), std::invalid_argument);
@@ -166,6 +166,6 @@ TEST_F(LandmarkOperationTests, TestTrafficSign)
   // get the lane from the store and check the visible landmarks
   EXPECT_TRUE(lane::getLanes().front() == mLaneId);
   auto lane = lane::getLane(mLaneId);
-  EXPECT_EQ(lane.visibleLandmarks.size(), 1);
+  EXPECT_EQ(lane.visibleLandmarks.size(), 1u);
   EXPECT_TRUE(lane.visibleLandmarks.front() == landmarkId);
 }

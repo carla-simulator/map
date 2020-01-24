@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,22 +25,22 @@ TEST(SpeedSquaredTests, defaultConstructionIsInvalid)
 
 TEST(SpeedSquaredTests, minIsDefinedAsExpected)
 {
-  EXPECT_EQ(-1e6, ::ad::physics::SpeedSquared::cMinValue);
-  EXPECT_EQ(::ad::physics::SpeedSquared::cMinValue, static_cast<double>(::ad::physics::SpeedSquared::getMin()));
+  EXPECT_DOUBLE_EQ(-1e6, ::ad::physics::SpeedSquared::cMinValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMinValue, static_cast<double>(::ad::physics::SpeedSquared::getMin()));
 }
 
 TEST(SpeedSquaredTests, maxIsDefinedAsExpected)
 {
-  EXPECT_EQ(1e6, ::ad::physics::SpeedSquared::cMaxValue);
-  EXPECT_EQ(::ad::physics::SpeedSquared::cMaxValue, static_cast<double>(::ad::physics::SpeedSquared::getMax()));
+  EXPECT_DOUBLE_EQ(1e6, ::ad::physics::SpeedSquared::cMaxValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMaxValue, static_cast<double>(::ad::physics::SpeedSquared::getMax()));
 }
 
 TEST(SpeedSquaredTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::SpeedSquared::cPrecisionValue);
-  EXPECT_EQ(1e-6, ::ad::physics::SpeedSquared::cPrecisionValue);
-  EXPECT_EQ(::ad::physics::SpeedSquared::cPrecisionValue,
-            static_cast<double>(::ad::physics::SpeedSquared::getPrecision()));
+  EXPECT_DOUBLE_EQ(1e-6, ::ad::physics::SpeedSquared::cPrecisionValue);
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cPrecisionValue,
+                   static_cast<double>(::ad::physics::SpeedSquared::getPrecision()));
 }
 
 TEST(SpeedSquaredTests, minIsValid)
@@ -99,36 +99,39 @@ TEST(SpeedSquaredTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(SpeedSquaredTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::SpeedSquared::getMin()),
-            static_cast<double>(std::numeric_limits<::ad::physics::SpeedSquared>::lowest()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::SpeedSquared::getMin()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::SpeedSquared>::lowest()));
 }
 
 TEST(SpeedSquaredTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::SpeedSquared::getMax()),
-            static_cast<double>(std::numeric_limits<::ad::physics::SpeedSquared>::max()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::SpeedSquared::getMax()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::SpeedSquared>::max()));
 }
 
 TEST(SpeedSquaredTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_EQ(static_cast<double>(::ad::physics::SpeedSquared::getPrecision()),
-            static_cast<double>(std::numeric_limits<::ad::physics::SpeedSquared>::epsilon()));
+  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::SpeedSquared::getPrecision()),
+                   static_cast<double>(std::numeric_limits<::ad::physics::SpeedSquared>::epsilon()));
 }
 
 TEST(SpeedSquaredTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_EQ(0., static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-0.))));
-  EXPECT_EQ(1., static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-1.))));
-  EXPECT_EQ(::ad::physics::SpeedSquared::cPrecisionValue,
-            static_cast<double>(std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cPrecisionValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::SpeedSquared::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::SpeedSquared::cMinValue),
-            static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-::ad::physics::SpeedSquared::cMinValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::SpeedSquared::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMaxValue))));
-  EXPECT_EQ(std::fabs(::ad::physics::SpeedSquared::cMaxValue),
-            static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-::ad::physics::SpeedSquared::cMaxValue))));
+  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-0.))));
+  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-1.))));
+  EXPECT_DOUBLE_EQ(
+    ::ad::physics::SpeedSquared::cPrecisionValue,
+    static_cast<double>(std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::SpeedSquared::cMinValue),
+                   static_cast<double>(std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMinValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::SpeedSquared::cMinValue),
+    static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-::ad::physics::SpeedSquared::cMinValue))));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::SpeedSquared::cMaxValue),
+                   static_cast<double>(std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMaxValue))));
+  EXPECT_DOUBLE_EQ(
+    std::fabs(::ad::physics::SpeedSquared::cMaxValue),
+    static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-::ad::physics::SpeedSquared::cMaxValue))));
 }
 
 TEST(SpeedSquaredTests, constructionFromValidFPValue)
@@ -136,7 +139,7 @@ TEST(SpeedSquaredTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::SpeedSquared::cMinValue;
   ::ad::physics::SpeedSquared value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
 }
 
 TEST(SpeedSquaredTests, copyConstructionFromValidValue)
@@ -144,14 +147,14 @@ TEST(SpeedSquaredTests, copyConstructionFromValidValue)
   ::ad::physics::SpeedSquared const validValue(::ad::physics::SpeedSquared::cMinValue);
   ::ad::physics::SpeedSquared value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(SpeedSquaredTests, moveConstructionFromValidValue)
 {
   ::ad::physics::SpeedSquared value(std::move(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMinValue)));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::SpeedSquared::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMinValue, static_cast<double>(value));
 }
 
 TEST(SpeedSquaredTests, assignmentFromValidValue)
@@ -160,7 +163,7 @@ TEST(SpeedSquaredTests, assignmentFromValidValue)
   ::ad::physics::SpeedSquared value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
 }
 
 TEST(SpeedSquaredTests, moveAssignmentFromValidValue)
@@ -168,7 +171,7 @@ TEST(SpeedSquaredTests, moveAssignmentFromValidValue)
   ::ad::physics::SpeedSquared value;
   value = std::move(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMinValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::physics::SpeedSquared::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMinValue, static_cast<double>(value));
 }
 
 TEST(SpeedSquaredTests, constructionFromInvalidFPValue)
@@ -206,7 +209,7 @@ TEST(SpeedSquaredTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::physics::SpeedSquared value;
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
 
 #if (AD_PHYSICS_SPEEDSQUARED_THROWS_EXCEPTION == 1)

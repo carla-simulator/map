@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -25,11 +25,35 @@ namespace route {
 
 struct ConnectingInterval
 {
+  /**
+  * \brief standard comparison operator
+  *
+  * \param[in] other Other ConnectingInterval
+  *
+  * \returns \c true if both ConnectingInterval are equal
+  */
+  bool operator==(const ConnectingInterval &other) const
+  {
+    return (laneInterval == other.laneInterval) && (laneOffset == other.laneOffset);
+  }
+
+  /**
+   * \brief standard comparison operator
+   *
+   * \param[in] other Other ConnectingInterval.
+   *
+   * \returns \c true if both ConnectingInterval are different
+   */
+  bool operator!=(const ConnectingInterval &other) const
+  {
+    return !operator==(other);
+  }
+
   route::LaneInterval laneInterval;
   int32_t laneOffset{0};
 };
 
-using ConnectingSegment = std::vector<route::ConnectingInterval>;
+typedef std::vector<route::ConnectingInterval> ConnectingSegment;
 
 struct ConnectingRoute
 {

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2019 Intel Corporation
+ * Copyright (C) 2018-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -79,5 +79,5 @@ TEST(TurnDirectionTests, ostreamOperatorTest)
   std::stringstream stream;
   ::ad::map::intersection::TurnDirection value(::ad::map::intersection::TurnDirection::Unknown);
   stream << value;
-  ASSERT_GT(stream.str().size(), 0);
+  ASSERT_GT(stream.str().size(), 0u);
 }
