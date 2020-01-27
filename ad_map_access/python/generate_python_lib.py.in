@@ -23,14 +23,11 @@ def main():
     Main function to generate Python-C++ binding code
     """
     header_dirs = {
-        "../generated/include",
-        "../impl/include"
+        "${CMAKE_CURRENT_LIST_DIR}/../generated/include/",
+        "${CMAKE_CURRENT_LIST_DIR}/../impl/include/"
     }
     include_dirs = {
-        "../../ad_physics/generated/include",
-        "../../ad_physics/impl/include",
-        "../../ad_map_opendrive_reader/include",
-        "../../dependencies/spdlog/include",
+        "${GENPY_INCLUDE_DIRS}"
     }
     # currently ignored files,
     # these will require manual adaptions if one wants to enable those

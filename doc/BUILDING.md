@@ -5,6 +5,9 @@ The components within this repository have some dependencies:
 
  - **ad_physics**:
    - spdlog: <https://github.com/gabime/spdlog.git>
+   - **ad_physics_python** (if Python binding build enabled):
+     - Python lib
+     - castxml, pygccxml and py++
  - **ad_map_opendrive_reader**:
    - Boost
    - pugixml
@@ -14,17 +17,12 @@ The components within this repository have some dependencies:
    - Boost (including components filesystem and  program_options)
    - *ad_map_opendrive_reader*
    - *ad_physics*
+   - **ad_map_access_python** (if Python binding build enabled):
+     - *ad_physics_python*
+     - Python lib
+     - castxml, pygccxml and py++
  - **ad_map_access_test_support**:
    - *ad_map_access*
- - **ad_physics_python**:
-   - *ad_physics*
-   - Python lib
-   - castxml, pygccxml and py++
- - **ad_map_access_python**:
-   - *ad_map_access*
-   - *ad_physics_python*
-   - Python lib
-   - castxml, pygccxml and py++
  - **ad_map_access_qgis_python (in tools)**:
    - *ad_map_access*
    - Python lib
@@ -131,5 +129,12 @@ Usually, build hardening is injected by the surrounding build system. Neverthele
 hardening flags to ensure the code is compatible to respective flags. To enable hardening compiler and linker flags:
 ```bash
  build$>  cmake -DBUILD_HARDENING=ON ..
+ build$>  make
+```
+
+#### Python binding
+With this option enabled, Python bindings are generated and compiled. This option is disabled by default.
+```bash
+ build$>  cmake -DBUILD_PYTHON_BINDING=ON ..
  build$>  make
 ```

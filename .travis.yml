@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (c) 2019 Intel Corporation
+# Copyright (c) 2019-2020 Intel Corporation
 #
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
@@ -33,8 +33,11 @@ matrix:
             - libgtest-dev
             - libopenblas-dev
             - liblapacke-dev
+            - python-pip
+            - castxml
       before_install:
         - pip3 install setuptools
+        - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip
       before_script:
         - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
         - sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
@@ -42,7 +45,7 @@ matrix:
         - sudo apt-get install python3-colcon-common-extensions
       script:
         - git submodule update --init
-        - colcon build --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON
+        - colcon build --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON
         - colcon test --packages-select ad_map_access ad_physics
       after_failure:
         - tail --lines=2000 build.log
