@@ -54,7 +54,7 @@ If you want to use doxygen for API documentation, please also install:
 #### Get the library
 To download the library, you may run:
 ```bash
- user$> git clone https://github.com/carla-simulation/map.git
+ user$> git clone https://github.com/carla-simulator/map.git
  user$> cd map
 ```
 
