@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2019 Intel Corporation
+// Copyright (C) 2019-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -25,6 +25,12 @@ namespace route {
  */
 namespace planning {
 
+static const physics::Distance cMinimumNeighborDistance{0.1};
+
+static const physics::Duration cMinimumNeighborDuration{0.05};
+
+static const physics::Speed cMinimumSpeed{10.};
+
 /**
  * @brief Implements routing support functionality on the lane network.
  *
@@ -34,18 +40,31 @@ namespace planning {
 template <class RoutingCostData> class RouteExpander : public Route
 {
 public:
+  //! definition of the routing cost data
+  struct RoutingCost
+  {
+    physics::Distance routeDistance{0.};
+    physics::Duration routeDuration{0.};
+    RoutingCostData costData{};
+  };
   //! definition of the routing point
-  typedef std::pair<RoutingParaPoint, RoutingCostData> RoutingPoint;
+  typedef std::pair<RoutingParaPoint, RoutingCost> RoutingPoint;
 
   /**
    * @brief Constructor
    *
    * @param[in] start Start point.
    * @param[in] dest  Destination point.
+   * @param[in] maxDistance maximum route search distance.
+   * @param[in] maxDuration maximum route search duration.
    * @param[in] typ   Type of the route to be calculated.
    */
-  RouteExpander(const RoutingParaPoint &start, const RoutingParaPoint &dest, Type const &routingType)
-    : Route(start, dest, routingType)
+  RouteExpander(const RoutingParaPoint &start,
+                const RoutingParaPoint &dest,
+                physics::Distance const &maxDistance,
+                physics::Duration const &maxDuration,
+                Type const &routingType)
+    : Route(start, dest, maxDistance, maxDuration, routingType)
   {
   }
 
@@ -84,13 +103,13 @@ protected:
    * @param[in] originLane the lane object of the \a origin point
    * @param[in] origin the origin RoutingPoint provided to the ExpandNeighbors() function
    * @param[in] neighborLane the lane object of the \a neighbor point
-   * @param[in] neighbor the neighbor point which is added
+   * @param[in] neighbor the neighbor RoutingPoint which is added (RoutingCostData not filled!)
    * @param[in] expandReason the reason why the origin was expanded to this neighbor
    */
   virtual void addNeighbor(lane::Lane::ConstPtr originLane,
                            RoutingPoint const &origin,
                            lane::Lane::ConstPtr neighborLane,
-                           RoutingParaPoint const &neighbor,
+                           RoutingPoint const &neighbor,
                            ExpandReason const &expandReason)
     = 0;
 
@@ -126,6 +145,14 @@ protected:
   void expandLongitudinalNeighbors(lane::Lane::ConstPtr lane, RoutingPoint const &origin);
   //! perform the expansion of the neighbor points in lateral (contacts: left/right) lane direction
   void expandLateralNeighbors(lane::Lane::ConstPtr lane, RoutingPoint const &origin);
+
+  //! create neighbor point and calculate the actual distance/duration to reach it
+  RoutingPoint createNeighbor(lane::Lane::ConstPtr originLane,
+                              RoutingPoint const &origin,
+                              lane::Lane::ConstPtr neighborLane,
+                              RoutingParaPoint neighborRoutingParaPoint);
+  //! create longitudinal neighbor point with minimal actual distance/duration to reach
+  RoutingPoint createLongitudinalNeighbor(RoutingPoint const &origin, RoutingParaPoint neighborRoutingParaPoint);
 };
 
 template <class RoutingCostData>
@@ -135,7 +162,12 @@ void RouteExpander<RoutingCostData>::expandNeighbors(
   lane::Lane::ConstPtr lane = lane::getLanePtr(origin.first.point.laneId);
   if (lane)
   {
-    if (isRouteable(*lane))
+    if ( // lane has to be routable to expand
+      isRouteable(*lane)
+      && ( // max distance and max duration are not yet reached
+           ((origin.second.routeDistance < mMaxDistance) && (origin.second.routeDuration < mMaxDuration))
+           // or we are within an intersection
+           || lane::isLanePartOfAnIntersection(*lane)))
     {
       expandSameLaneNeighbors(lane, origin);
       expandLongitudinalNeighbors(lane, origin);
@@ -149,6 +181,63 @@ void RouteExpander<RoutingCostData>::expandNeighbors(
 }
 
 template <class RoutingCostData>
+typename RouteExpander<RoutingCostData>::RoutingPoint
+RouteExpander<RoutingCostData>::createNeighbor(lane::Lane::ConstPtr originLane,
+                                               RoutingPoint const &origin,
+                                               lane::Lane::ConstPtr neighborLane,
+                                               RoutingParaPoint neighborRoutingParaPoint)
+{
+  RoutingPoint neighbor;
+  neighbor.first = neighborRoutingParaPoint;
+
+  physics::Distance neighborDistance{0.};
+  physics::Duration neighborDuration{0.};
+  point::ECEFPoint pt_origin
+    = getParametricPoint(*originLane, origin.first.point.parametricOffset, physics::ParametricValue(0.5));
+  point::ECEFPoint pt_neighbor
+    = getParametricPoint(*neighborLane, neighbor.first.point.parametricOffset, physics::ParametricValue(0.5));
+  neighborDistance = point::distance(pt_neighbor, pt_origin);
+  physics::ParametricRange drivingRange;
+  if (origin.first.point.parametricOffset < neighbor.first.point.parametricOffset)
+  {
+    drivingRange.minimum = origin.first.point.parametricOffset;
+    drivingRange.maximum = neighbor.first.point.parametricOffset;
+  }
+  else
+  {
+    drivingRange.minimum = neighbor.first.point.parametricOffset;
+    drivingRange.maximum = origin.first.point.parametricOffset;
+  }
+
+  if (originLane == neighborLane)
+  {
+    neighborDuration = getDuration(*originLane, drivingRange);
+  }
+  else
+  {
+    auto const maxSpeed = std::max(getMaxSpeed(*originLane, drivingRange), cMinimumSpeed);
+    neighborDuration = neighborDistance / maxSpeed;
+  }
+  neighborDistance = std::max(neighborDistance, cMinimumNeighborDistance);
+  neighborDuration = std::max(neighborDuration, cMinimumNeighborDuration);
+  neighbor.second.routeDistance = origin.second.routeDistance + neighborDistance;
+  neighbor.second.routeDuration = origin.second.routeDuration + neighborDuration;
+  return neighbor;
+}
+
+template <class RoutingCostData>
+typename RouteExpander<RoutingCostData>::RoutingPoint
+RouteExpander<RoutingCostData>::createLongitudinalNeighbor(RoutingPoint const &origin,
+                                                           RoutingParaPoint neighborRoutingParaPoint)
+{
+  RoutingPoint neighbor;
+  neighbor.first = neighborRoutingParaPoint;
+  neighbor.second.routeDistance = origin.second.routeDistance + cMinimumNeighborDistance;
+  neighbor.second.routeDuration = origin.second.routeDuration + cMinimumNeighborDuration;
+  return neighbor;
+}
+
+template <class RoutingCostData>
 void RouteExpander<RoutingCostData>::expandSameLaneNeighbors(
   lane::Lane::ConstPtr lane, typename RouteExpander<RoutingCostData>::RoutingPoint const &origin)
 {
@@ -157,23 +246,20 @@ void RouteExpander<RoutingCostData>::expandSameLaneNeighbors(
           || (isNegativeMovement(lane, origin) && (origin.first.point.parametricOffset >= getDest().parametricOffset))))
   {
     // approaching the destination from valid side
-    addNeighbor(lane, origin, lane, getRoutingDest(), ExpandReason::Destination);
+    auto const neighbor = createNeighbor(lane, origin, lane, getRoutingDest());
+    addNeighbor(lane, origin, lane, neighbor, ExpandReason::Destination);
   }
   if (isPositiveMovement(lane, origin) && !isEnd(origin))
   {
-    addNeighbor(lane,
-                origin,
-                lane,
-                createRoutingParaPoint(lane->id, physics::ParametricValue(1.), origin.first.direction),
-                ExpandReason::SameLaneNeighbor);
+    auto const neighbor = createNeighbor(
+      lane, origin, lane, createRoutingParaPoint(lane->id, physics::ParametricValue(1.), origin.first.direction));
+    addNeighbor(lane, origin, lane, neighbor, ExpandReason::SameLaneNeighbor);
   }
   if (isNegativeMovement(lane, origin) && !isStart(origin))
   {
-    addNeighbor(lane,
-                origin,
-                lane,
-                createRoutingParaPoint(lane->id, physics::ParametricValue(0.), origin.first.direction),
-                ExpandReason::SameLaneNeighbor);
+    auto const neighbor = createNeighbor(
+      lane, origin, lane, createRoutingParaPoint(lane->id, physics::ParametricValue(0.), origin.first.direction));
+    addNeighbor(lane, origin, lane, neighbor, ExpandReason::SameLaneNeighbor);
   }
 }
 
@@ -181,48 +267,47 @@ template <class RoutingCostData>
 void RouteExpander<RoutingCostData>::expandLongitudinalNeighbors(
   lane::Lane::ConstPtr lane, typename RouteExpander<RoutingCostData>::RoutingPoint const &origin)
 {
-  lane::ContactLaneList contact_lanes;
+  lane::ContactLaneList contactLanes;
   if (isEnd(origin) && isPositiveMovement(lane, origin))
   {
-    contact_lanes = getContactLanes(*lane, lane::ContactLocation::SUCCESSOR);
+    contactLanes = getContactLanes(*lane, lane::ContactLocation::SUCCESSOR);
   }
   else if (isStart(origin) && isNegativeMovement(lane, origin))
   {
-    contact_lanes = getContactLanes(*lane, lane::ContactLocation::PREDECESSOR);
+    contactLanes = getContactLanes(*lane, lane::ContactLocation::PREDECESSOR);
   }
-  for (auto contact_lane : contact_lanes)
+  for (auto contactLane : contactLanes)
   {
-    lane::Lane::ConstPtr other_lane = lane::getLanePtr(contact_lane.toLane);
-    if (other_lane)
+    lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.toLane);
+    if (otherLane)
     {
-      if (isRouteable(*other_lane))
+      if (isRouteable(*otherLane))
       {
-        lane::ContactLocation other_to_lane = getContactLocation(*other_lane, lane->id);
-        if (other_to_lane == lane::ContactLocation::SUCCESSOR)
+        lane::ContactLocation otherToLane = getContactLocation(*otherLane, lane->id);
+        if (otherToLane == lane::ContactLocation::SUCCESSOR)
         {
           auto routingDirection = RoutingDirection::NEGATIVE;
           if (origin.first.direction == RoutingDirection::DONT_CARE)
           {
             routingDirection = RoutingDirection::DONT_CARE;
           }
-          addNeighbor(lane,
-                      origin,
-                      other_lane,
-                      createRoutingParaPoint(other_lane->id, physics::ParametricValue(1.), routingDirection),
-                      ExpandReason::LongitudinalNeighbor);
+
+          auto const neighbor = createLongitudinalNeighbor(
+            origin, createRoutingParaPoint(otherLane->id, physics::ParametricValue(1.), routingDirection));
+
+          addNeighbor(lane, origin, otherLane, neighbor, ExpandReason::LongitudinalNeighbor);
         }
-        else if (other_to_lane == lane::ContactLocation::PREDECESSOR)
+        else if (otherToLane == lane::ContactLocation::PREDECESSOR)
         {
           auto routingDirection = RoutingDirection::POSITIVE;
           if (origin.first.direction == RoutingDirection::DONT_CARE)
           {
             routingDirection = RoutingDirection::DONT_CARE;
           }
-          addNeighbor(lane,
-                      origin,
-                      other_lane,
-                      createRoutingParaPoint(other_lane->id, physics::ParametricValue(0.), routingDirection),
-                      ExpandReason::LongitudinalNeighbor);
+          auto const neighbor = createLongitudinalNeighbor(
+            origin, createRoutingParaPoint(otherLane->id, physics::ParametricValue(0.), routingDirection));
+
+          addNeighbor(lane, origin, otherLane, neighbor, ExpandReason::LongitudinalNeighbor);
         }
         else
         {
@@ -241,30 +326,27 @@ template <class RoutingCostData>
 void RouteExpander<RoutingCostData>::expandLateralNeighbors(
   lane::Lane::ConstPtr lane, typename RouteExpander<RoutingCostData>::RoutingPoint const &origin)
 {
-  if (lane->type != lane::LaneType::INTERSECTION)
+  for (auto const &contactLane : getContactLanes(*lane, {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT}))
   {
-    for (auto const &contact_lane : getContactLanes(*lane, {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT}))
+    lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.toLane);
+    if (otherLane)
     {
-      lane::Lane::ConstPtr other_lane = lane::getLanePtr(contact_lane.toLane);
-      if (other_lane)
+      if (isRouteable(*otherLane))
       {
-        if (isRouteable(*other_lane))
+        if (laneDirectionIsIgnored() || (lane->direction == otherLane->direction))
         {
-          if (laneDirectionIsIgnored() || (lane->direction == other_lane->direction))
-          {
-            addNeighbor(
-              lane,
-              origin,
-              other_lane,
-              createRoutingParaPoint(other_lane->id, origin.first.point.parametricOffset, origin.first.direction),
-              ExpandReason::LateralNeighbor);
-          }
+          auto const neighbor = createNeighbor(
+            lane,
+            origin,
+            otherLane,
+            createRoutingParaPoint(otherLane->id, origin.first.point.parametricOffset, origin.first.direction));
+          addNeighbor(lane, origin, otherLane, neighbor, ExpandReason::LateralNeighbor);
         }
       }
-      else
-      {
-        throw std::runtime_error("No other lane!");
-      }
+    }
+    else
+    {
+      throw std::runtime_error("No other lane!");
     }
   }
 }

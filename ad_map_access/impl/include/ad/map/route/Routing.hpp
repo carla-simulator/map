@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -75,11 +75,6 @@ struct RoutingParaPoint
   point::ParaPoint point;
   RoutingDirection direction{RoutingDirection::DONT_CARE};
 };
-
-/**
- *  @brief typedef for a set of RoutingParaPoint
- */
-typedef std::set<RoutingParaPoint> RoutingParaPointSet;
 
 /**
  * @brief create a RoutingParaPoint

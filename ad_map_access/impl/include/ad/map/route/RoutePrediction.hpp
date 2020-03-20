@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -25,19 +25,14 @@ namespace route {
  */
 namespace planning {
 
-/**
- * @brief cost data for route prediction
- */
-struct RoutePredictionCost
+struct RoutePredictionScore
 {
-  physics::Distance routeDistance{0.};
-  physics::Duration routeDuration{0.};
 };
 
 /**
  * @brief Implements route prediction on the lane network.
  */
-class RoutePrediction : public RouteExpander<RoutePredictionCost>
+class RoutePrediction : public RouteExpander<RoutePredictionScore>
 {
 public:
   using RouteExpander::RoutingPoint;
@@ -45,8 +40,10 @@ public:
   /**
    * @brief Constructor.
    *
-   *    Calculates route predictions from a starting point until either the given predictionDistance or the given
+   * Calculates route predictions from a starting point until either the given predictionDistance or the given
    * predictionDuration is reached.
+   * Note: Route predictions will not stop in the middle of an intersection.
+   *   They continue until the intersection is left again.
    *
    * @param[in] start Start point.
    * @param[in] predictionDistance maximum prediction distance.
@@ -59,7 +56,9 @@ public:
   /**
    * @brief Constructor.
    *
-   *    Calculates route predictions from a starting point until either the given predictionDistance is reached.
+   * Calculates route predictions from a starting point until the given predictionDistance is reached.
+   * Note: Route predictions will not stop in the middle of an intersection.
+   *   They continue until the intersection is left again.
    *
    * @param[in] start Start point.
    * @param[in] predictionDistance maximum prediction distance.
@@ -69,7 +68,9 @@ public:
   /**
    * @brief Constructor.
    *
-   *    Calculates route predictions from a starting point until either the given predictionDuration is reached.
+   * Calculates route predictions from a starting point until the given predictionDuration is reached.
+   * Note: Route predictions will not stop in the middle of an intersection.
+   *   They continue until the intersection is left again.
    *
    * @param[in] start Start point.
    * @param[in] predictionDuration maximum prediction duration.
@@ -88,25 +89,19 @@ private:
   void addNeighbor(lane::Lane::ConstPtr originLane,
                    RoutingPoint const &origin,
                    lane::Lane::ConstPtr neighborLane,
-                   RoutingParaPoint const &neighbor,
+                   RoutingPoint const &neighbor,
                    ExpandReason const &expandReason) override;
-
   /**
    * @brief Element of the routing tree
    */
   struct RouteTreeElement
   {
     //! Constructor.
-    RouteTreeElement(RouteTreeElement const *parent,
-                     RoutingParaPoint const &routingParaPoint,
-                     RoutePredictionCost const predictionCost = RoutePredictionCost())
-      : routingPoint({routingParaPoint, predictionCost})
+    RouteTreeElement(RouteTreeElement const *parent, RoutingPoint const &iRoutingPoint)
+      : routingPoint(iRoutingPoint)
       , theParent(parent)
     {
     }
-
-    //! function used for path reconstruction. All leaves have to add their path
-    void addPaths(std::vector<point::ParaPointList> &paths);
 
     //! comparing route tree elements by their actual route-point to ensure children are unique
     struct RouteTreeElementCompare
@@ -117,12 +112,14 @@ private:
       }
     };
 
+    typedef std::set<std::shared_ptr<RouteTreeElement>, RouteTreeElementCompare> RouteTreeElementUniqueRoutePointSet;
+
     //! the routing point represented by this tree element
     RoutingPoint routingPoint;
     //! the children of the tree element. If children are empty, the element is a leaf of the tree
-    std::set<std::shared_ptr<RouteTreeElement>, RouteTreeElementCompare> children;
-    //! pointer to the parent, required for later reconstruction of the paths
-    RouteTreeElement const *const theParent;
+    RouteTreeElementUniqueRoutePointSet children;
+    //! pointer to the parent(s) of this, required for later reconstruction of the paths
+    RouteTreeElement const *theParent;
   };
 
   /**
@@ -130,18 +127,13 @@ private:
    */
   void reconstructPaths();
 
-  //! prediction distance to be used
-  physics::Distance const mPredictionDistance;
-  //! prediction duration to be used
-  physics::Duration const mPredictionDuration;
-
   //! the tree root element
   std::shared_ptr<RouteTreeElement> mRouteTreeRoot;
 
   /**
    * @brief the already processed transitions from -> {to} (only process a transition once)
    */
-  std::map<RoutingParaPoint, RoutingParaPointSet> mProcessedTransitions;
+  std::map<RoutingParaPoint, RouteTreeElement::RouteTreeElementUniqueRoutePointSet> mProcessedTransitions;
 
   //! the list of elements to be processed
   std::deque<std::shared_ptr<RouteTreeElement>> mElementsToProcess;

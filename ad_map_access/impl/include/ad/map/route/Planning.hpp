@@ -9,7 +9,9 @@
 #pragma once
 
 #include "ad/map/config/PointOfInterest.hpp"
-#include "ad/map/match/MapMatchedObjectBoundingBox.hpp"
+#include "ad/map/match/Object.hpp"
+#include "ad/map/route/Route.hpp"
+#include "ad/map/route/RouteOperation.hpp"
 #include "ad/map/route/Routing.hpp"
 #include "ad/map/route/Types.hpp"
 
@@ -50,6 +52,11 @@ RoutingParaPoint createRoutingPoint(point::ParaPoint const &paraPoint,
 /**
  * @brief create a RoutingParaPoint
  *
+ * We select the routing point by either taking the maximum or minimum of the occupied region
+ * Since occupied regions span over a certain area, the point is selected in a way,
+ * that it is ensured that any other point within the region can be reached by routing with
+ * the given routing direction
+ *
  * @param[in] occupiedRegion the occupied region
  * @param[in] routingDirection the routing direction in respect to the lane orientation
  *   Be aware: this might be different from the nominal driving direction!
@@ -68,16 +75,24 @@ RoutingParaPoint createRoutingPoint(point::ParaPoint const &paraPoint, point::EN
 /**
  * @brief create a RoutingParaPoint
  *
+ * We select the routing point by either taking the maximum or minimum of the occupied region
+ * Since occupied regions span over a certain area, the point is selected in a way,
+ * that it is ensured that any other point within the region can be reached by routing with
+ * the given routing direction
+ *
  * @param[in] occupiedRegion the occupied region
  * @param[in] heading the heading to be respected
  */
 RoutingParaPoint createRoutingPoint(match::LaneOccupiedRegion const &occupiedRegion, point::ENUHeading const &heading);
 
 /** @brief Calculates route between two points.
-* @param[in] start Start point as RoutingParaPoint (Be aware: routing direction in respect to lane orientation!).
-* @param[in] dest  Destination point as RoutingParaPoint (Be aware: routing direction in respect to lane orientation!).
-*/
-route::FullRoute planRoute(const RoutingParaPoint &start, const RoutingParaPoint &dest);
+ * @param[in] start Start point as RoutingParaPoint (Be aware: routing direction in respect to lane orientation!).
+ * @param[in] dest  Destination point as RoutingParaPoint (Be aware: routing direction in respect to lane orientation!).
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ */
+route::FullRoute planRoute(const RoutingParaPoint &start,
+                           const RoutingParaPoint &dest,
+                           RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection);
 
 /** @brief Calculates route between two points.
  *
@@ -85,183 +100,310 @@ route::FullRoute planRoute(const RoutingParaPoint &start, const RoutingParaPoint
  *
  * @param[in] start Start point.
  * @param[in] dest  Destination point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
  */
-inline route::FullRoute planRoute(const point::ParaPoint &start, const point::ParaPoint &dest)
+inline route::FullRoute planRoute(const point::ParaPoint &start,
+                                  const point::ParaPoint &dest,
+                                  RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection)
 {
-  return planRoute(createRoutingPoint(start), createRoutingPoint(dest));
+  return planRoute(createRoutingPoint(start), createRoutingPoint(dest), routeCreationMode);
 }
 
 /** @brief Calculates route between two points.
  *
  * Orientation at dest is not considered.
  *
-* @param[in] start Start point.
-* @param[in] startHeading Heading at start point.
-* @param[in] dest  Destination point.
-*/
-inline route::FullRoute
-planRoute(const point::ParaPoint &start, point::ENUHeading const &startHeading, const point::ParaPoint &dest)
-{
-  return planRoute(createRoutingPoint(start, startHeading), createRoutingPoint(dest));
-}
-
-/** @brief Calculates route between two points.
-* @param[in] start Start point.
-* @param[in] startHeading Heading at start point.
-* @param[in] dest  Destination point.
-* @param[in] destHeading Heading at dest point.
-*/
+ * @param[in] start Start point.
+ * @param[in] startHeading Heading at start point.
+ * @param[in] dest  Destination point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ */
 inline route::FullRoute planRoute(const point::ParaPoint &start,
                                   point::ENUHeading const &startHeading,
                                   const point::ParaPoint &dest,
-                                  point::ENUHeading const &destHeading)
+                                  RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection)
 {
-  return planRoute(createRoutingPoint(start, startHeading), createRoutingPoint(dest, destHeading));
+  return planRoute(createRoutingPoint(start, startHeading), createRoutingPoint(dest), routeCreationMode);
 }
 
 /** @brief Calculates route between two points.
-  * @param[in] start Start point as RoutingParaPoint (Be aware: routing direction in respect to lane orientation!).
-  * @param[in] dest  Destination point as geo point.
-  */
-route::FullRoute planRoute(const RoutingParaPoint &start, const point::GeoPoint &dest);
-
-/** @brief Calculates route between two points.
-  * @param[in] start Start point as RoutingParaPoint (Be aware: routing direction in respect to lane orientation!).
-  * @param[in] dest  Destination point as ENU point.
-  */
-route::FullRoute planRoute(const RoutingParaPoint &start, const point::ENUPoint &dest);
-
-/** @brief Calculates route between two points.
-  * @param[in] start Start point.
-  * @param[in] dest  Destination point as geo point.
-  */
-inline route::FullRoute planRoute(const point::ParaPoint &start, const point::GeoPoint &dest)
+ * @param[in] start Start point.
+ * @param[in] startHeading Heading at start point.
+ * @param[in] dest  Destination point.
+ * @param[in] destHeading Heading at dest point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ */
+inline route::FullRoute planRoute(const point::ParaPoint &start,
+                                  point::ENUHeading const &startHeading,
+                                  const point::ParaPoint &dest,
+                                  point::ENUHeading const &destHeading,
+                                  RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection)
 {
-  return planRoute(createRoutingPoint(start), dest);
+  return planRoute(createRoutingPoint(start, startHeading), createRoutingPoint(dest, destHeading), routeCreationMode);
 }
 
 /** @brief Calculates route between two points.
-  * @param[in] start Start point.
-  * @param[in] startHeading Heading at start point.
-  * @param[in] dest  Destination point as geo point.
-  */
-inline route::FullRoute
-planRoute(const point::ParaPoint &start, point::ENUHeading const &startHeading, const point::GeoPoint &dest)
+ * @param[in] start Start point as RoutingParaPoint (Be aware: routing direction in respect to lane orientation!).
+ * @param[in] dest  Destination point as geo point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ */
+route::FullRoute planRoute(const RoutingParaPoint &start,
+                           const point::GeoPoint &dest,
+                           RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection);
+
+/** @brief Calculates route between two points.
+ * @param[in] start Start point as RoutingParaPoint (Be aware: routing direction in respect to lane orientation!).
+ * @param[in] dest  Destination point as ENU point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ */
+route::FullRoute planRoute(const RoutingParaPoint &start,
+                           const point::ENUPoint &dest,
+                           RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection);
+
+/** @brief Calculates route between two points.
+ * @param[in] start Start point.
+ * @param[in] dest  Destination point as geo point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ */
+inline route::FullRoute planRoute(const point::ParaPoint &start,
+                                  const point::GeoPoint &dest,
+                                  RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection)
 {
-  return planRoute(createRoutingPoint(start, startHeading), dest);
+  return planRoute(createRoutingPoint(start), dest, routeCreationMode);
 }
 
 /** @brief Calculates route between two points.
-  * @param[in] start Start point.
-  * @param[in] dest  Destination point as point of interest.
-  */
-inline FullRoute planRoute(const point::ParaPoint &start, const config::PointOfInterest &dest)
+ * @param[in] start Start point.
+ * @param[in] startHeading Heading at start point.
+ * @param[in] dest  Destination point as geo point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ */
+inline route::FullRoute planRoute(const point::ParaPoint &start,
+                                  point::ENUHeading const &startHeading,
+                                  const point::GeoPoint &dest,
+                                  RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection)
 {
-  return planRoute(start, dest.geoPoint);
+  return planRoute(createRoutingPoint(start, startHeading), dest, routeCreationMode);
+}
+
+/** @brief Calculates route between two points.
+ * @param[in] start Start point.
+ * @param[in] dest  Destination point as point of interest.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ */
+inline FullRoute planRoute(const point::ParaPoint &start,
+                           const config::PointOfInterest &dest,
+                           RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection)
+{
+  return planRoute(start, dest.geoPoint, routeCreationMode);
 }
 
 /** @brief Calculates route between two points considering supporting points on the way.
-  * @param[in] start Start point.
+ * @param[in] start Start point.
  * @param[in] dest Vector with supporting points as geo points to be visited on the route. Last point in the list is the
  * actual destination point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
  *
  * Be aware: Supporting points providing multiple map maptched positions (i.e. the ones located within intersections)
  * are discarded to ensure the proper route is taken.
  */
-FullRoute planRoute(const RoutingParaPoint &start, const std::vector<point::GeoPoint> &dest);
+FullRoute planRoute(const RoutingParaPoint &start,
+                    const std::vector<point::GeoPoint> &dest,
+                    RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection);
+
+/** @brief Calculates route between two points considering supporting points on the way.
+ * @param[in] start Start point.
+ * @param[in] dest Vector with supporting points as ENU points to be visited on the route. Last point in the list is the
+ * actual destination point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ *
+ * Be aware: Supporting points providing multiple map maptched positions (i.e. the ones located within intersections)
+ * are discarded to ensure the proper route is taken.
+ */
+FullRoute planRoute(const RoutingParaPoint &start,
+                    const std::vector<point::ENUPoint> &dest,
+                    RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection);
 
 /**
  * @brief Calculates route between two points considering supporting points on the way
  * @param[in] start Start point.
  * @param[in] dest Vector with supporting points to be visited on the route. Last point in the list is the actual
  * destination point.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
  */
-FullRoute planRoute(const RoutingParaPoint &start, std::vector<RoutingParaPoint> const &dest);
+FullRoute planRoute(const RoutingParaPoint &start,
+                    std::vector<RoutingParaPoint> const &dest,
+                    RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection);
 
 /** @brief Calculates route between two points considering supporting points on the way.
-  * @param[in] start Start point.
-  * @param[in] startHeading Heading at start point.
+ * @param[in] start Start point.
+ * @param[in] startHeading Heading at start point.
  * @param[in] dest Vector with supporting points as geo points to be visited on the route. Last point in the list is the
  * actual destination point.
-  */
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ */
 inline route::FullRoute planRoute(const point::ParaPoint &start,
                                   point::ENUHeading const &startHeading,
-                                  const std::vector<point::GeoPoint> &dest)
+                                  const std::vector<point::GeoPoint> &dest,
+                                  RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection)
 {
-  return planRoute(createRoutingPoint(start, startHeading), dest);
+  return planRoute(createRoutingPoint(start, startHeading), dest, routeCreationMode);
 }
 
 /**
  * @brief perform route based prediction restricted by the prediction duration.
+ * Note: Route predictions will not stop in the middle of an intersection.
+ *   They continue until the intersection is left again.
  *
  * @param[in] start start point.
  * @param[in] predictionDuration duration when the prediction can be stopped.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
  *
  * @return vector with all possible predicted routes.
  */
 std::vector<route::FullRoute> predictRoutesOnDuration(const RoutingParaPoint &start,
-                                                      physics::Duration const &predictionDuration);
+                                                      physics::Duration const &predictionDuration,
+                                                      RouteCreationMode const routeCreationMode
+                                                      = RouteCreationMode::SameDrivingDirection);
 
 /**
  * @brief perform route based prediction restricted by the prediction distance.
+ * Note: Route predictions will not stop in the middle of an intersection.
+ *   They continue until the intersection is left again.
  *
  * @param[in] start start point.
  * @param[in] predictionDistance distance when the prediction can be stopped.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
  *
  * @return vector with all possible predicted routes.
  */
 std::vector<route::FullRoute> predictRoutesOnDistance(const RoutingParaPoint &start,
-                                                      physics::Distance const &predictionDistance);
+                                                      physics::Distance const &predictionDistance,
+                                                      RouteCreationMode const routeCreationMode
+                                                      = RouteCreationMode::SameDrivingDirection);
 
 /**
  * @brief perform route based prediction restricted by the prediction distance and duration.
+ * Note: Route predictions will not stop in the middle of an intersection.
+ *   They continue until the intersection is left again.
  *
  * @param[in] start start point.
  * @param[in] predictionDistance distance when the prediction can be stopped.
  * @param[in] predictionDuration duration when the prediction can be stopped.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
  *
  * @return vector with all possible predicted routes.
  */
 std::vector<route::FullRoute> predictRoutes(const RoutingParaPoint &start,
                                             physics::Distance const &predictionDistance,
-                                            physics::Duration const &predictionDuration);
+                                            physics::Duration const &predictionDuration,
+                                            RouteCreationMode const routeCreationMode
+                                            = RouteCreationMode::SameDrivingDirection);
 
 /**
  * @brief perform route based prediction restricted by the prediction duration.
+ * Note: Route predictions will not stop in the middle of an intersection.
+ *   They continue until the intersection is left again.
  *
  * @param[in] start start point as map matched bounding box.
  * @param[in] predictionDuration duration when the prediction can be stopped.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
  *
  * @return vector with all possible predicted routes.
  */
 std::vector<route::FullRoute> predictRoutesOnDuration(const match::MapMatchedObjectBoundingBox &start,
-                                                      physics::Duration const &predictionDuration);
+                                                      physics::Duration const &predictionDuration,
+                                                      RouteCreationMode const routeCreationMode
+                                                      = RouteCreationMode::SameDrivingDirection);
 
 /**
  * @brief perform route based prediction restricted by the prediction distance.
+ * Note: Route predictions will not stop in the middle of an intersection.
+ *   They continue until the intersection is left again.
  *
  * @param[in] start start point as map matched bounding box.
  * @param[in] predictionDistance distance when the prediction can be stopped.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
  *
  * @return vector with all possible predicted routes.
  */
 std::vector<route::FullRoute> predictRoutesOnDistance(const match::MapMatchedObjectBoundingBox &start,
-                                                      physics::Distance const &predictionDistance);
+                                                      physics::Distance const &predictionDistance,
+                                                      RouteCreationMode const routeCreationMode
+                                                      = RouteCreationMode::SameDrivingDirection);
+
+/**
+ * @brief perform route based prediction restricted by the prediction distance and duration.
+ * Note: Route predictions will not stop in the middle of an intersection.
+ *   They continue until the intersection is left again.
+ *
+ * @param[in] start start point as map matched bounding box.
+ * @param[in] predictionDistance distance when the prediction can be stopped.
+ * @param[in] predictionDuration duration when the prediction can be stopped.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ *
+ * @return vector with all possible predicted routes.
+ */
+std::vector<route::FullRoute> predictRoutes(const match::MapMatchedObjectBoundingBox &start,
+                                            physics::Distance const &predictionDistance,
+                                            physics::Duration const &predictionDuration,
+                                            RouteCreationMode const routeCreationMode
+                                            = RouteCreationMode::SameDrivingDirection);
 
 /**
  * @brief Calculate the connecting route between the the two objects
  *
- * The heading of the object at start is respected on route planning, the heading of the object at the destination is
- * ignored.
  * For route calculations the route type core::Route::Type::SHORTEST_IGNORE_DIRECTION is used.
- * The returned connecting route only contains the direct predecessor and successor lanes of the raw route.
- * Neighbor lanes not being relevant for the two objects are not provided.
  *
  * @param[in] startObject object at starting position
  * @param[in] destObject object at destination position
+ * @param[in] maxDistance distance when the search can be stopped.
+ * @param[in] maxDuration duration when the search can be stopped.
  */
-ConnectingRoute calculateConnectingRoute(const match::MapMatchedObjectBoundingBox &startObject,
-                                         const match::MapMatchedObjectBoundingBox &destObject);
+ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
+                                         const match::Object &destObject,
+                                         physics::Distance const &maxDistance,
+                                         physics::Duration const &maxDuration);
+
+/**
+ * @brief Calculate the connecting route between the the two objects
+ *
+ * For route calculations the route type core::Route::Type::SHORTEST_IGNORE_DIRECTION is used.
+ *
+ * @param[in] startObject object at starting position
+ * @param[in] destObject object at destination position
+ * @param[in] maxDistance distance when the search can be stopped.
+ */
+ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
+                                         const match::Object &destObject,
+                                         physics::Distance const &maxDistance);
+
+/**
+ * @brief Calculate the connecting route between the the two objects
+ *
+ * For route calculations the route type core::Route::Type::SHORTEST_IGNORE_DIRECTION is used.
+ *
+ * @param[in] startObject object at starting position
+ * @param[in] destObject object at destination position
+ * @param[in] maxDuration duration when the search can be stopped.
+ */
+ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
+                                         const match::Object &destObject,
+                                         physics::Duration const &maxDuration);
+
+/**
+ * @brief update route planning counters of the route
+ *
+ * mainly used internally.
+ */
+void updateRoutePlanningCounters(route::FullRoute &route);
+
+/**
+ * @brief helper function to create a full route
+ *
+ * mainly used internally.
+ */
+FullRoute createFullRoute(const Route::RawRoute &rawRoute, RouteCreationMode const routeCreationMode);
 
 } // namespace planning
 } // namespace route

@@ -52,6 +52,9 @@ TEST(RoadSegmentListValidInputRangeTests, testValidInputRangeElementValid)
   bool elementDrivableLaneSegmentsElementLaneIntervalWrongWay{true};
   elementDrivableLaneSegmentsElementLaneInterval.wrongWay = elementDrivableLaneSegmentsElementLaneIntervalWrongWay;
   elementDrivableLaneSegmentsElement.laneInterval = elementDrivableLaneSegmentsElementLaneInterval;
+  ::ad::map::route::RouteLaneOffset elementDrivableLaneSegmentsElementRouteLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+  elementDrivableLaneSegmentsElement.routeLaneOffset = elementDrivableLaneSegmentsElementRouteLaneOffset;
   elementDrivableLaneSegments.resize(1, elementDrivableLaneSegmentsElement);
   element.drivableLaneSegments = elementDrivableLaneSegments;
   ::ad::map::route::SegmentCounter elementSegmentCountFromDestination(

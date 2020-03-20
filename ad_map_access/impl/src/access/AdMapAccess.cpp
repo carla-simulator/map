@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -90,7 +90,8 @@ bool AdMapAccess::initialize(std::string const &configFileName)
 
 bool AdMapAccess::initializeFromOpenDriveContent(std::string const &openDriveContent,
                                                  double const overlapMargin,
-                                                 intersection::IntersectionType const defaultIntersectionType)
+                                                 intersection::IntersectionType const defaultIntersectionType,
+                                                 landmark::TrafficLightType const defaultTrafficLightType)
 {
   LockGuard guard(mMutex);
   if (mConfigFileHandler.isInitialized())
@@ -111,7 +112,8 @@ bool AdMapAccess::initializeFromOpenDriveContent(std::string const &openDriveCon
   auto store = std::make_shared<Store>();
   opendrive::AdMapFactory factory(*store);
 
-  bool result = factory.createAdMapFromString(openDriveContent, overlapMargin, defaultIntersectionType);
+  bool result
+    = factory.createAdMapFromString(openDriveContent, overlapMargin, defaultIntersectionType, defaultTrafficLightType);
   if (result)
   {
     mInitializedFromStore = true;
@@ -189,7 +191,8 @@ bool AdMapAccess::readOpenDriveMap(std::string const &mapName)
   opendrive::AdMapFactory factory(*mStore);
   return factory.createAdMap(mapName,
                              static_cast<double>(mConfigFileHandler.adMapEntry().openDriveOverlapMargin),
-                             mConfigFileHandler.adMapEntry().openDriveDefaultIntersectionType);
+                             mConfigFileHandler.adMapEntry().openDriveDefaultIntersectionType,
+                             mConfigFileHandler.adMapEntry().openDriveDefaultTrafficLightType);
 }
 
 bool AdMapAccess::readAdMap(std::string const &mapName)

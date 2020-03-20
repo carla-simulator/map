@@ -2,8 +2,6 @@
 #
 # Copyright (C) 2019 Intel Corporation
 #
-# SPDX-License-Identifier: MIT
-#
 # ----------------- END LICENSE BLOCK -----------------------------------
 
 option(BUILD_HARDENING "Enable build hardening flags" OFF)

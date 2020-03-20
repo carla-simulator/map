@@ -31,8 +31,11 @@ Visit the project's [Documentation page](https://ad-map-access.readthedocs.io/en
 ## Releases <a name="releases"></a>
 General release notes and changes can be found in the [Changelog](https://ad-map-access.readthedocs.io/en/latest/CHANGELOG/index.html)
 
+#### Release 2.0.0 <a name="release_2_0"></a>
+Improved route and especially connected route handling.
+
 #### Release 1.1.0 <a name="release_1_1"></a>
-Added python bindings
+Added python bindings.
 
 #### Release 1.0.0 <a name="release_1"></a>
 The initial release of the map C++ software libraries.

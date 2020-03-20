@@ -103,7 +103,7 @@ struct GeoPoint
    */
   bool operator==(const GeoPoint &other) const
   {
-    return (longitude == other.longitude) && (altitude == other.altitude) && (latitude == other.latitude);
+    return (longitude == other.longitude) && (latitude == other.latitude) && (altitude == other.altitude);
   }
 
   /**
@@ -124,14 +124,14 @@ struct GeoPoint
   ::ad::map::point::Longitude longitude{std::numeric_limits<double>::quiet_NaN()};
 
   /*!
-   * The altitude of the geo point.
-   */
-  ::ad::map::point::Altitude altitude{std::numeric_limits<double>::quiet_NaN()};
-
-  /*!
    * The latitude of the geo point.
    */
   ::ad::map::point::Latitude latitude{std::numeric_limits<double>::quiet_NaN()};
+
+  /*!
+   * The altitude of the geo point.
+   */
+  ::ad::map::point::Altitude altitude{std::numeric_limits<double>::quiet_NaN()};
 };
 
 } // namespace point
@@ -173,11 +173,11 @@ inline std::ostream &operator<<(std::ostream &os, GeoPoint const &_value)
   os << "longitude:";
   os << _value.longitude;
   os << ",";
-  os << "altitude:";
-  os << _value.altitude;
-  os << ",";
   os << "latitude:";
   os << _value.latitude;
+  os << ",";
+  os << "altitude:";
+  os << _value.altitude;
   os << ")";
   return os;
 }

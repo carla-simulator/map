@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -138,26 +138,27 @@ inline bool isEndOfInterval(LaneInterval const &laneInterval, point::ParaPoint c
 /**
  * @brief checks if the direction of this route interval is positive in respect to the lane geometry
  *
- * @returns @c true if the parametric points follow: start <= end
- * Be aware: if the route interval is degenerated isRouteDirectionPositive() and isRouteDirectionNegative() return
- * the same value
+ * @returns @c true if the parametric points follow: start < end
+ * @returns @c lane::isLaneDirectionPositive(laneInterval.laneId) ^ wrongWay if start == end  (degenerated interval uses
+ * wrong way flag to determine
+ *  the route direction)
  */
-inline bool isRouteDirectionPositive(LaneInterval const &laneInterval)
-{
-  return (laneInterval.start <= laneInterval.end);
-}
+bool isRouteDirectionPositive(LaneInterval const &laneInterval);
 
 /**
  * @brief checks if the direction of this route interval is negative in respect to the lane geometry
  *
- * @returns @c true if the parametric points follow: end <= start
- * Be aware: if the route interval is degenerated isRouteDirectionPositive() and isRouteDirectionNegative() return
- * the same value
+ * @returns !isRouteDirectionPositive()
  */
 inline bool isRouteDirectionNegative(LaneInterval const &laneInterval)
 {
-  return (laneInterval.start >= laneInterval.end);
+  return !isRouteDirectionPositive(laneInterval);
 }
+
+/**
+ * @brief checks if the route direction is aligned with the nominal driving direction of the lane
+ */
+bool isRouteDirectionAlignedWithDrivingDirection(LaneInterval const &laneInterval);
 
 /**
  * @brief checks if the parametric offset is within the interval
@@ -333,7 +334,7 @@ physics::Duration calcDuration(LaneInterval const &laneInterval);
 /**
  * @brief get right edge of the lane interval as ENUEdge
  *
- * Be aware: Right is in the sense of the the lane interval orientation.
+ * Be aware: Right is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -343,7 +344,7 @@ void getRightEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
 /**
  * @brief get right edge of the lane interval as ECEFEdge
  *
- * Be aware: Right is in the sense of the the lane interval orientation.
+ * Be aware: Right is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -353,7 +354,7 @@ void getRightEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
 /**
  * @brief get right edge of the lane interval as GeoEdge
  *
- * Be aware: Right is in the sense of the the lane interval orientation.
+ * Be aware: Right is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -363,7 +364,7 @@ void getRightEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
 /**
  * @brief get right edge of the lane interval as ENUEdge
  *
- * Be aware: Right is in the sense of the the lane interval orientation.
+ * Be aware: Right is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -373,7 +374,7 @@ point::ENUEdge getRightENUEdge(LaneInterval const &laneInterval);
 /**
  * @brief get right edge of the lane interval as ECEFEdge
  *
- * Be aware: Right is in the sense of the the lane interval orientation.
+ * Be aware: Right is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -383,7 +384,7 @@ point::ECEFEdge getRightECEFEdge(LaneInterval const &laneInterval);
 /**
  * @brief get right edge of the lane interval as GeoEdge
  *
- * Be aware: Right is in the sense of the the lane interval orientation.
+ * Be aware: Right is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -391,9 +392,69 @@ point::ECEFEdge getRightECEFEdge(LaneInterval const &laneInterval);
 point::GeoEdge getRightGeoEdge(LaneInterval const &laneInterval);
 
 /**
+ * @brief get right edge of the lane interval as ENUEdge using projection to find the start of the edge
+ *
+ * Be aware: Right is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+void getRightProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
+
+/**
+ * @brief get right edge of the lane interval as ECEFEdge using projection to find the start of the edge
+ *
+ * Be aware: Right is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+void getRightProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
+
+/**
+ * @brief get right edge of the lane interval as GeoEdge using projection to find the start of the edge
+ *
+ * Be aware: Right is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+void getRightProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
+
+/**
+ * @brief get right edge of the lane interval as ENUEdge using projection to find the start of the edge
+ *
+ * Be aware: Right is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+point::ENUEdge getRightProjectedENUEdge(LaneInterval const &laneInterval);
+
+/**
+ * @brief get right edge of the lane interval as ECEFEdge using projection to find the start of the edge
+ *
+ * Be aware: Right is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+point::ECEFEdge getRightProjectedECEFEdge(LaneInterval const &laneInterval);
+
+/**
+ * @brief get right edge of the lane interval as GeoEdge using projection to find the start of the edge
+ *
+ * Be aware: Right is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+point::GeoEdge getRightProjectedGeoEdge(LaneInterval const &laneInterval);
+
+/**
  * @brief get Left edge of the lane interval as ENUEdge
  *
- * Be aware: Left is in the sense of the the lane interval orientation.
+ * Be aware: Left is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -403,7 +464,7 @@ void getLeftEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
 /**
  * @brief get Left edge of the lane interval as ECEFEdge
  *
- * Be aware: Left is in the sense of the the lane interval orientation.
+ * Be aware: Left is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -413,7 +474,7 @@ void getLeftEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
 /**
  * @brief get Left edge of the lane interval as GeoEdge
  *
- * Be aware: Left is in the sense of the the lane interval orientation.
+ * Be aware: Left is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -423,7 +484,7 @@ void getLeftEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
 /**
  * @brief get left edge of the lane interval as ENUEdge
  *
- * Be aware: Left is in the sense of the the lane interval orientation.
+ * Be aware: Left is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -433,7 +494,7 @@ point::ENUEdge getLeftENUEdge(LaneInterval const &laneInterval);
 /**
  * @brief get left edge of the lane interval as ECEFEdge
  *
- * Be aware: Left is in the sense of the the lane interval orientation.
+ * Be aware: Left is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -443,7 +504,7 @@ point::ECEFEdge getLeftECEFEdge(LaneInterval const &laneInterval);
 /**
  * @brief get left edge of the lane interval as GeoEdge
  *
- * Be aware: Left is in the sense of the the lane interval orientation.
+ * Be aware: Left is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -453,7 +514,37 @@ point::GeoEdge getLeftGeoEdge(LaneInterval const &laneInterval);
 /**
  * @brief get Left edge of the lane interval as ENUEdge using projection to find the start of the edge
  *
- * Be aware: Left is in the sense of the the lane interval orientation.
+ * Be aware: Left is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
+
+/**
+ * @brief get Left edge of the lane interval as ECEFEdge using projection to find the start of the edge
+ *
+ * Be aware: Left is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
+
+/**
+ * @brief get Left edge of the lane interval as GeoEdge using projection to find the start of the edge
+ *
+ * Be aware: Left is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+void getLeftProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
+
+/**
+ * @brief get left edge of the lane interval as ENUEdge using projection to find the start of the edge
+ *
+ * Be aware: Left is in the sense of the lane interval orientation.
  *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
@@ -461,14 +552,24 @@ point::GeoEdge getLeftGeoEdge(LaneInterval const &laneInterval);
 point::ENUEdge getLeftProjectedENUEdge(LaneInterval const &laneInterval);
 
 /**
- * @brief get right edge of the lane interval as ENUEdge using projection to find the start of the edge
+ * @brief get left edge of the lane interval as ECEFEdge using projection to find the start of the edge
  *
- * Be aware: Right is in the sense of the the lane interval orientation.
- *    If the lane interval has negative direction the physical left edge of the underlying lane is returned.
+ * Be aware: Left is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::ENUEdge getRightProjectedENUEdge(LaneInterval const &laneInterval);
+point::ECEFEdge getLeftProjectedECEFEdge(LaneInterval const &laneInterval);
+
+/**
+ * @brief get left edge of the lane interval as GeoEdge using projection to find the start of the edge
+ *
+ * Be aware: Left is in the sense of the lane interval orientation.
+ *    If the lane interval has negative direction the physical right edge of the underlying lane is returned.
+ *    Furthermore, the points are ordered in the logical lane interval direction:
+ *    the first point is at lane interval start and the last one at lane interval end.
+ */
+point::GeoEdge getLeftProjectedGeoEdge(LaneInterval const &laneInterval);
 
 /**
  * @brief get the geo borders of this lane
@@ -616,6 +717,13 @@ LaneInterval cutIntervalAtEnd(LaneInterval const &laneInterval, physics::Paramet
  * @brief get the speed limits of the lane interval
  */
 restriction::SpeedLimitList getSpeedLimits(LaneInterval const &laneInterval);
+
+/**
+ * @brief get the metric ranges of the lane interval
+ */
+void getMetricRanges(LaneInterval const &laneInterval,
+                     physics::MetricRange &lengthRange,
+                     physics::MetricRange &widthRange);
 
 } // namespace route
 } // namespace map

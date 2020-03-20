@@ -50,6 +50,9 @@ TEST(LaneSegmentListValidInputRangeTests, testValidInputRangeElementValid)
   bool elementLaneIntervalWrongWay{true};
   elementLaneInterval.wrongWay = elementLaneIntervalWrongWay;
   element.laneInterval = elementLaneInterval;
+  ::ad::map::route::RouteLaneOffset elementRouteLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+  element.routeLaneOffset = elementRouteLaneOffset;
   value.push_back(element);
   ASSERT_TRUE(withinValidInputRange(value));
 }

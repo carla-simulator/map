@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -99,6 +99,30 @@ getUnsignedDistance(LaneInterval const &laneInterval, point::ParaPoint const &fi
   return std::fabs(first.parametricOffset - second.parametricOffset);
 }
 
+bool isRouteDirectionPositive(LaneInterval const &laneInterval)
+{
+  if (laneInterval.start == laneInterval.end)
+  {
+    return lane::isLaneDirectionPositive(laneInterval.laneId) ^ laneInterval.wrongWay;
+  }
+  else
+  {
+    return (laneInterval.start < laneInterval.end);
+  }
+}
+
+bool isRouteDirectionAlignedWithDrivingDirection(LaneInterval const &laneInterval)
+{
+  if (isRouteDirectionPositive(laneInterval))
+  {
+    return lane::isLaneDirectionPositive(laneInterval.laneId);
+  }
+  else
+  {
+    return lane::isLaneDirectionNegative(laneInterval.laneId);
+  }
+}
+
 physics::ParametricValue getProjectedParametricOffsetOnNeighborLane(LaneInterval const &currentInterval,
                                                                     LaneInterval const &neighborInterval,
                                                                     physics::ParametricValue const &parametricOffset)
@@ -160,35 +184,79 @@ physics::Duration calcDuration(LaneInterval const &laneInterval)
 enum class EdgeType
 {
   LEFT,
-  RIGHT
+  RIGHT,
+  LEFT_PROJECTED,
+  RIGHT_PROJECTED
 };
 
 template <typename LaneEdge> void getEdge(LaneInterval const &laneInterval, EdgeType edgeType, LaneEdge &outputEdge)
 {
   auto currentLane = lane::getLane(laneInterval.laneId);
 
-  auto range = toParametricRange(laneInterval);
-
   if (isRouteDirectionPositive(laneInterval))
   {
     if (edgeType == EdgeType::LEFT)
     {
-      point::getParametricRange(currentLane.edgeLeft, range, outputEdge, false);
+      point::getParametricRange(currentLane.edgeLeft, toParametricRange(laneInterval), outputEdge, false);
+    }
+    else if (edgeType == EdgeType::LEFT_PROJECTED)
+    {
+      auto projectedInterval = laneInterval;
+      projectedInterval.start = point::findNearestPointOnEdge(
+        currentLane.edgeLeft,
+        lane::getProjectedParametricPoint(currentLane, laneInterval.start, physics::ParametricValue(0.)));
+      projectedInterval.end = point::findNearestPointOnEdge(
+        currentLane.edgeLeft,
+        lane::getProjectedParametricPoint(currentLane, laneInterval.end, physics::ParametricValue(0.)));
+      point::getParametricRange(currentLane.edgeLeft, toParametricRange(projectedInterval), outputEdge, false);
     }
     else if (edgeType == EdgeType::RIGHT)
     {
-      point::getParametricRange(currentLane.edgeRight, range, outputEdge, false);
+      point::getParametricRange(currentLane.edgeRight, toParametricRange(laneInterval), outputEdge, false);
+    }
+    else if (edgeType == EdgeType::RIGHT_PROJECTED)
+    {
+      auto projectedInterval = laneInterval;
+      projectedInterval.start = point::findNearestPointOnEdge(
+        currentLane.edgeRight,
+        lane::getProjectedParametricPoint(currentLane, laneInterval.start, physics::ParametricValue(1.)));
+      projectedInterval.end = point::findNearestPointOnEdge(
+        currentLane.edgeRight,
+        lane::getProjectedParametricPoint(currentLane, laneInterval.end, physics::ParametricValue(1.)));
+      point::getParametricRange(currentLane.edgeRight, toParametricRange(projectedInterval), outputEdge, false);
     }
   }
   else
   {
     if (edgeType == EdgeType::LEFT)
     {
-      point::getParametricRange(currentLane.edgeRight, range, outputEdge, true);
+      point::getParametricRange(currentLane.edgeRight, toParametricRange(laneInterval), outputEdge, true);
+    }
+    else if (edgeType == EdgeType::LEFT_PROJECTED)
+    {
+      auto projectedInterval = laneInterval;
+      projectedInterval.start = point::findNearestPointOnEdge(
+        currentLane.edgeRight,
+        lane::getProjectedParametricPoint(currentLane, laneInterval.start, physics::ParametricValue(1.)));
+      projectedInterval.end = point::findNearestPointOnEdge(
+        currentLane.edgeRight,
+        lane::getProjectedParametricPoint(currentLane, laneInterval.end, physics::ParametricValue(1.)));
+      point::getParametricRange(currentLane.edgeRight, toParametricRange(projectedInterval), outputEdge, true);
     }
     else if (edgeType == EdgeType::RIGHT)
     {
-      point::getParametricRange(currentLane.edgeLeft, range, outputEdge, true);
+      point::getParametricRange(currentLane.edgeLeft, toParametricRange(laneInterval), outputEdge, true);
+    }
+    else if (edgeType == EdgeType::RIGHT_PROJECTED)
+    {
+      auto projectedInterval = laneInterval;
+      projectedInterval.start = point::findNearestPointOnEdge(
+        currentLane.edgeLeft,
+        lane::getProjectedParametricPoint(currentLane, laneInterval.start, physics::ParametricValue(0.)));
+      projectedInterval.end = point::findNearestPointOnEdge(
+        currentLane.edgeLeft,
+        lane::getProjectedParametricPoint(currentLane, laneInterval.end, physics::ParametricValue(0.)));
+      point::getParametricRange(currentLane.edgeLeft, toParametricRange(projectedInterval), outputEdge, true);
     }
   }
 }
@@ -203,6 +271,16 @@ void getRightEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge)
   getEdge(laneInterval, EdgeType::RIGHT, enuEdge);
 }
 
+void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge)
+{
+  getEdge(laneInterval, EdgeType::LEFT_PROJECTED, enuEdge);
+}
+
+void getRightProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge)
+{
+  getEdge(laneInterval, EdgeType::RIGHT_PROJECTED, enuEdge);
+}
+
 void getLeftEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge)
 {
   getEdge(laneInterval, EdgeType::LEFT, geoEdge);
@@ -213,6 +291,16 @@ void getRightEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge)
   getEdge(laneInterval, EdgeType::RIGHT, geoEdge);
 }
 
+void getLeftProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge)
+{
+  getEdge(laneInterval, EdgeType::LEFT_PROJECTED, geoEdge);
+}
+
+void getRightProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge)
+{
+  getEdge(laneInterval, EdgeType::RIGHT_PROJECTED, geoEdge);
+}
+
 void getLeftEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge)
 {
   getEdge(laneInterval, EdgeType::LEFT, ecefEdge);
@@ -221,6 +309,16 @@ void getLeftEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge)
 void getRightEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge)
 {
   getEdge(laneInterval, EdgeType::RIGHT, ecefEdge);
+}
+
+void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge)
+{
+  getEdge(laneInterval, EdgeType::LEFT_PROJECTED, ecefEdge);
+}
+
+void getRightProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge)
+{
+  getEdge(laneInterval, EdgeType::RIGHT_PROJECTED, ecefEdge);
 }
 
 point::ENUEdge getRightENUEdge(LaneInterval const &laneInterval)
@@ -265,65 +363,46 @@ point::GeoEdge getLeftGeoEdge(LaneInterval const &laneInterval)
   return geoEdge;
 }
 
-point::ENUEdge getLeftProjectedENUEdge(LaneInterval const &laneInterval)
-{
-  point::ENUEdge enuEdge;
-  auto leftInterval = laneInterval;
-  auto lane = lane::getLane(laneInterval.laneId);
-
-  const auto startOffset = laneInterval.start;
-  const auto endOffset = laneInterval.end;
-  if (isRouteDirectionPositive(laneInterval))
-  {
-    leftInterval.start = point::findNearestPointOnEdge(
-      lane.edgeLeft, lane::getProjectedParametricPoint(lane, startOffset, physics::ParametricValue(0.)));
-    leftInterval.end = point::findNearestPointOnEdge(
-      lane.edgeLeft, lane::getProjectedParametricPoint(lane, endOffset, physics::ParametricValue(0.)));
-  }
-  else
-  {
-    leftInterval.start = point::findNearestPointOnEdge(
-      lane.edgeRight, lane::getProjectedParametricPoint(lane, startOffset, physics::ParametricValue(1.)));
-    leftInterval.end = point::findNearestPointOnEdge(
-      lane.edgeRight, lane::getProjectedParametricPoint(lane, endOffset, physics::ParametricValue(1.)));
-  }
-  if (isDegenerated(leftInterval))
-  {
-    leftInterval = laneInterval;
-  }
-
-  getLeftEdge(leftInterval, enuEdge);
-  return enuEdge;
-}
-
 point::ENUEdge getRightProjectedENUEdge(LaneInterval const &laneInterval)
 {
   point::ENUEdge enuEdge;
-  auto rightInterval = laneInterval;
-  auto lane = lane::getLane(laneInterval.laneId);
-
-  const auto startOffset = laneInterval.start;
-  const auto endOffset = laneInterval.end;
-  if (isRouteDirectionPositive(laneInterval))
-  {
-    rightInterval.start = point::findNearestPointOnEdge(
-      lane.edgeRight, lane::getProjectedParametricPoint(lane, startOffset, physics::ParametricValue(1.)));
-    rightInterval.end = point::findNearestPointOnEdge(
-      lane.edgeRight, lane::getProjectedParametricPoint(lane, endOffset, physics::ParametricValue(1.)));
-  }
-  else
-  {
-    rightInterval.start = point::findNearestPointOnEdge(
-      lane.edgeLeft, lane::getProjectedParametricPoint(lane, startOffset, physics::ParametricValue(0.)));
-    rightInterval.end = point::findNearestPointOnEdge(
-      lane.edgeLeft, lane::getProjectedParametricPoint(lane, endOffset, physics::ParametricValue(0.)));
-  }
-  if (isDegenerated(rightInterval))
-  {
-    rightInterval = laneInterval;
-  }
-  getRightEdge(rightInterval, enuEdge);
+  getRightProjectedEdge(laneInterval, enuEdge);
   return enuEdge;
+}
+
+point::ECEFEdge getRightProjectedECEFEdge(LaneInterval const &laneInterval)
+{
+  point::ECEFEdge ecefEdge;
+  getRightProjectedEdge(laneInterval, ecefEdge);
+  return ecefEdge;
+}
+
+point::GeoEdge getRightProjectedGeoEdge(LaneInterval const &laneInterval)
+{
+  point::GeoEdge geoEdge;
+  getRightProjectedEdge(laneInterval, geoEdge);
+  return geoEdge;
+}
+
+point::ENUEdge getLeftProjectedENUEdge(LaneInterval const &laneInterval)
+{
+  point::ENUEdge enuEdge;
+  getLeftProjectedEdge(laneInterval, enuEdge);
+  return enuEdge;
+}
+
+point::ECEFEdge getLeftProjectedECEFEdge(LaneInterval const &laneInterval)
+{
+  point::ECEFEdge ecefEdge;
+  getLeftProjectedEdge(laneInterval, ecefEdge);
+  return ecefEdge;
+}
+
+point::GeoEdge getLeftProjectedGeoEdge(LaneInterval const &laneInterval)
+{
+  point::GeoEdge geoEdge;
+  getLeftProjectedEdge(laneInterval, geoEdge);
+  return geoEdge;
 }
 
 lane::GeoBorder getGeoBorder(LaneInterval const &laneInterval)
@@ -353,43 +432,8 @@ lane::ENUBorder getENUBorder(LaneInterval const &laneInterval)
 lane::ENUBorder getENUProjectedBorder(LaneInterval const &laneInterval)
 {
   lane::ENUBorder enuBorder;
-  auto leftInterval = laneInterval;
-  auto rightInterval = laneInterval;
-
-  auto lane = lane::getLane(laneInterval.laneId);
-
-  const auto startOffset = laneInterval.start;
-  const auto endOffset = laneInterval.end;
-
-  // if the lane interval is longer than 0.5 meters, perform projection
-  if (calcLength(laneInterval) > physics::Distance(0.5))
-  {
-    if (isRouteDirectionPositive(laneInterval))
-    {
-      leftInterval.start = point::findNearestPointOnEdge(
-        lane.edgeLeft, lane::getProjectedParametricPoint(lane, startOffset, physics::ParametricValue(0.)));
-      rightInterval.start = point::findNearestPointOnEdge(
-        lane.edgeRight, lane::getProjectedParametricPoint(lane, startOffset, physics::ParametricValue(1.)));
-      leftInterval.end = point::findNearestPointOnEdge(
-        lane.edgeLeft, lane::getProjectedParametricPoint(lane, endOffset, physics::ParametricValue(0.)));
-      rightInterval.end = point::findNearestPointOnEdge(
-        lane.edgeRight, lane::getProjectedParametricPoint(lane, endOffset, physics::ParametricValue(1.)));
-    }
-    else
-    {
-      leftInterval.start = point::findNearestPointOnEdge(
-        lane.edgeRight, lane::getProjectedParametricPoint(lane, startOffset, physics::ParametricValue(1.)));
-      rightInterval.start = point::findNearestPointOnEdge(
-        lane.edgeLeft, lane::getProjectedParametricPoint(lane, startOffset, physics::ParametricValue(0.)));
-      leftInterval.end = point::findNearestPointOnEdge(
-        lane.edgeRight, lane::getProjectedParametricPoint(lane, endOffset, physics::ParametricValue(1.)));
-      rightInterval.end = point::findNearestPointOnEdge(
-        lane.edgeLeft, lane::getProjectedParametricPoint(lane, endOffset, physics::ParametricValue(0.)));
-    }
-  }
-
-  getLeftEdge(leftInterval, enuBorder.left);
-  getRightEdge(rightInterval, enuBorder.right);
+  getLeftProjectedEdge(laneInterval, enuBorder.left);
+  getRightProjectedEdge(laneInterval, enuBorder.right);
   return enuBorder;
 }
 
@@ -541,6 +585,37 @@ restriction::SpeedLimitList getSpeedLimits(LaneInterval const &laneInterval)
 {
   auto lanePtr = lane::getLanePtr(laneInterval.laneId);
   return getSpeedLimits(*lanePtr, toParametricRange(laneInterval));
+}
+
+void getMetricRanges(LaneInterval const &laneInterval,
+                     physics::MetricRange &lengthRange,
+                     physics::MetricRange &widthRange)
+{
+  auto lanePtr = lane::getLanePtr(laneInterval.laneId);
+  if (std::fabs(laneInterval.end - laneInterval.start) == physics::ParametricValue(1.0))
+  {
+    lengthRange = lanePtr->lengthRange;
+    widthRange = lanePtr->widthRange;
+  }
+  else
+  {
+    auto const enuBorders = getENUProjectedBorder(laneInterval);
+    auto const leftLength = calcLength(enuBorders.left);
+    auto const rightLength = calcLength(enuBorders.right);
+    lengthRange.minimum = std::min(leftLength, rightLength);
+    lengthRange.maximum = std::max(leftLength, rightLength);
+
+    if ((lanePtr->widthRange.maximum - lanePtr->widthRange.minimum) <= physics::Distance(.1))
+    {
+      widthRange = lanePtr->widthRange;
+    }
+    else
+    {
+      // take the effort on with range calculation only if there is significant difference within the lane
+      auto const widthRangeResult = calculateWidthRange(enuBorders.left, leftLength, enuBorders.right, rightLength);
+      widthRange = widthRangeResult.first;
+    }
+  }
 }
 
 } // namespace route

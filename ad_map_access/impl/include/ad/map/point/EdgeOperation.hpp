@@ -8,11 +8,14 @@
 
 #pragma once
 
+#include <utility>
 #include <vector>
 #include "ad/map/point/PointOperation.hpp"
+#include "ad/physics/MetricRange.hpp"
 #include "ad/physics/Operation.hpp"
 #include "ad/physics/ParametricRange.hpp"
 #include "ad/physics/ParametricValueValidInputRange.hpp"
+#include "ad/physics/RangeOperation.hpp"
 
 /* @brief namespace ad */
 namespace ad {
@@ -263,6 +266,86 @@ template <typename PointType>
 physics::ParametricValue findNearestPointOnEdge(std::vector<PointType> const &edge, const PointType &pt)
 {
   return findNearestPointOnEdge(edge, calculateEdgeLength(edge), pt);
+}
+
+/**
+ * @brief Calculate the width range and the average width of a pair of edges
+ *
+ * At maximum 100 supporting points are taken into account to calculate this.
+ *
+ * @param[in] leftEdge the left-hand border edge as basis for the calculation
+ * @param[in] leftEdgeLength the length of the left-hand border edge
+ * @param[in] rightEdge the right-hand border edge as basis for the calculation
+ * @param[in] rightEdgeLength the length of the left-hand border edge
+ *
+ * @returns pair containing the range of the width and the average width between the two input edges.
+ */
+template <typename PointType>
+std::pair<physics::MetricRange, physics::Distance> calculateWidthRange(std::vector<PointType> const &edgeLeft,
+                                                                       physics::Distance const &edgeLeftLength,
+                                                                       std::vector<PointType> const &edgeRight,
+                                                                       physics::Distance const &edgeRightLength)
+{
+  physics::MetricRange widthRange;
+  widthRange.minimum = std::numeric_limits<physics::Distance>::max();
+  widthRange.maximum = physics::Distance(0.);
+  physics::Distance widthSum(0.);
+  size_t widthSumCount(0u);
+  physics::ParametricValue parametricStepsize(0.5);
+  auto length = (edgeLeftLength + edgeRightLength) * 0.5;
+  if (length > physics::Distance(1.))
+  {
+    parametricStepsize
+      = std::max(physics::ParametricValue(0.01), physics::ParametricValue(1. / static_cast<double>(length)));
+  }
+  physics::ParametricValue longitudinalOffset(0.);
+  bool endReached = false;
+  do
+  {
+    auto const pt0 = getParametricPoint(edgeLeft, edgeLeftLength, longitudinalOffset);
+    auto const pt1 = getParametricPoint(edgeRight, edgeRightLength, longitudinalOffset);
+    if (!isValid(pt1) || !isValid(pt1))
+    {
+      return std::make_pair(physics::MetricRange(), physics::Distance());
+    }
+    auto const centerPoint = point::vectorInterpolate(pt0, pt1, physics::ParametricValue(0.5));
+    if (!isValid(centerPoint))
+    {
+      return std::make_pair(physics::MetricRange(), physics::Distance());
+    }
+    auto const longTLeft = findNearestPointOnEdge(edgeLeft, edgeLeftLength, centerPoint);
+    auto const longTRight = findNearestPointOnEdge(edgeRight, edgeRightLength, centerPoint);
+    if (!isRangeValid(longTLeft) || !isRangeValid(longTRight))
+    {
+      return std::make_pair(physics::MetricRange(), physics::Distance());
+    }
+    auto const pointOnLeftEdge = getParametricPoint(edgeLeft, edgeLeftLength, longTLeft);
+    auto const pointOnRightEdge = getParametricPoint(edgeRight, edgeRightLength, longTRight);
+    if (!isValid(pointOnLeftEdge) || !isValid(pointOnRightEdge))
+    {
+      return std::make_pair(physics::MetricRange(), physics::Distance());
+    }
+    physics::Distance const width = distance(pointOnLeftEdge, pointOnRightEdge);
+    unionRangeWith(widthRange, width);
+    widthSum += width;
+    widthSumCount++;
+    if (longitudinalOffset < physics::ParametricValue(1.))
+    {
+      longitudinalOffset += parametricStepsize;
+      if (longitudinalOffset > physics::ParametricValue(1.))
+      {
+        longitudinalOffset = physics::ParametricValue(1.);
+      }
+    }
+    else
+    {
+      endReached = true;
+    }
+  } while (!endReached);
+
+  auto averageWidth = (widthSum / static_cast<double>(widthSumCount));
+
+  return std::make_pair(widthRange, averageWidth);
 }
 
 /**

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -19,7 +19,7 @@ namespace map {
  * Strictly speaking this is the base class for all traffic light related
  * tests located at Elfmorgenbruch-Ruschgraben ...
  */
-struct IntersectionTrafficLightTest : SyntheticIntersectionTestBase
+struct IntersectionTrafficLightTest : virtual SyntheticIntersectionTestBase
 {
   virtual void prepareMap() const override;
 
@@ -74,7 +74,7 @@ struct IntersectionTrafficLightTest : SyntheticIntersectionTestBase
 /**
  * @brief base class for traffic light intersection tests coming from west
  */
-struct IntersectionTrafficLightFromWestTest : IntersectionTrafficLightTest
+struct IntersectionTrafficLightFromWestTest : virtual IntersectionTrafficLightTest
 {
   virtual lane::LaneId getRouteStart() const override;
   virtual intersection::IntersectionType expectedIntersectionType() const override;
@@ -107,7 +107,7 @@ struct IntersectionTrafficLightWestToEastTest : IntersectionTrafficLightFromWest
 /**
  * @brief base class for traffic light intersection tests coming from west to south
  */
-struct IntersectionTrafficLightWestToSouthTest : IntersectionTrafficLightFromWestTest
+struct IntersectionTrafficLightWestToSouthTest : virtual IntersectionTrafficLightFromWestTest
 {
   virtual lane::LaneId getRouteEnd() const override;
   virtual lane::LaneIdSet expectedIncomingLanesWithHigherPriority() const override;

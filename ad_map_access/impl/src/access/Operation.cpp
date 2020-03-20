@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -91,10 +91,11 @@ bool init(std::string const &configFileName)
 
 bool initFromOpenDriveContent(std::string const &openDriveContent,
                               double const overlapMargin,
-                              intersection::IntersectionType const defaultIntersectionType)
+                              intersection::IntersectionType const defaultIntersectionType,
+                              landmark::TrafficLightType const defaultTrafficLightType)
 {
   return AdMapAccess::getAdMapAccessInstance().initializeFromOpenDriveContent(
-    openDriveContent, overlapMargin, defaultIntersectionType);
+    openDriveContent, overlapMargin, defaultIntersectionType, defaultTrafficLightType);
 }
 
 bool init(Store::Ptr store)

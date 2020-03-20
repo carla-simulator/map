@@ -14,7 +14,7 @@
 ##
 
 cmake_minimum_required(VERSION 3.5)
-project(ad_map_access VERSION 1.1.0)
+project(ad_map_access VERSION 2.0.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -74,7 +74,9 @@ add_library(${PROJECT_NAME}
   src/ad/map/point/Latitude.cpp
   src/ad/map/point/Longitude.cpp
   src/ad/map/restriction/RoadUserType.cpp
+  src/ad/map/route/ConnectingRouteType.cpp
   src/ad/map/route/LaneChangeDirection.cpp
+  src/ad/map/route/RouteCreationMode.cpp
 )
 
 if (DEFINED ad_map_access_TARGET_COMPILE_DEFINITIONS)

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -190,9 +190,15 @@ inline bool isLaneDirectionNegative(Lane const &lane)
 inline bool isRouteable(Lane const &lane)
 {
   return lane.type == LaneType::INTERSECTION || lane.type == LaneType::MULTI || lane.type == LaneType::NORMAL
-    || lane.type == LaneType::TURN
-    //* \todo Remove this later!
-    || lane.type == LaneType::UNKNOWN;
+    || lane.type == LaneType::TURN;
+}
+
+/**
+ * @returns true if lane is part of an intersection.
+ */
+inline bool isLanePartOfAnIntersection(Lane const &lane)
+{
+  return (lane.type == lane::LaneType::INTERSECTION);
 }
 
 /**
@@ -421,6 +427,10 @@ point::ENUPoint getENULanePoint(point::ParaPoint const parametricPoint,
  */
 physics::Distance calcLength(LaneId const &laneId);
 
+/** @brief calculate length of a lane occupied region
+ */
+physics::Distance calcLength(match::LaneOccupiedRegion const &laneOccupiedRegion);
+
 /** @brief calculate the width of the lane at the provided lanePoint
  */
 physics::Distance calcWidth(point::ParaPoint const &paraPoint);
@@ -435,6 +445,11 @@ physics::Distance calcWidth(LaneId const &laneId, physics::ParametricValue const
  * @return -1 in case the enuPoint could not be found on a lane
  */
 physics::Distance calcWidth(point::ENUPoint const &enuPoint);
+
+/** @brief calculate width of a lane occupied region
+ *  scales the with at the center of the occupied region by the lateral extend of the region
+ */
+physics::Distance calcWidth(match::LaneOccupiedRegion const &laneOccupiedRegion);
 
 } // namespace lane
 } // namespace map

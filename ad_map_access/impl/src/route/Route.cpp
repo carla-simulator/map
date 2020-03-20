@@ -14,13 +14,19 @@ namespace map {
 namespace route {
 namespace planning {
 
-Route::Route(const RoutingParaPoint &start, const RoutingParaPoint &dest, Type const &routingType)
-  : start_(start)
-  , dest_(dest)
-  , type_(routingType)
-  , valid_(false)
+Route::Route(const RoutingParaPoint &start,
+             const RoutingParaPoint &dest,
+             physics::Distance const &maxDistance,
+             physics::Duration const &maxDuration,
+             Type const &routingType)
+  : mStart(start)
+  , mDest(dest)
+  , mMaxDistance(maxDistance)
+  , mMaxDuration(maxDuration)
+  , mType(routingType)
+  , mValid(false)
 {
-  if (type_ == Type::INVALID)
+  if (mType == Type::INVALID)
   {
     throw std::runtime_error("type INVALID");
   }
@@ -28,7 +34,7 @@ Route::Route(const RoutingParaPoint &start, const RoutingParaPoint &dest, Type c
 
 bool Route::laneDirectionIsIgnored() const
 {
-  switch (type_)
+  switch (mType)
   {
     case Type::SHORTEST_IGNORE_DIRECTION:
       return true;
@@ -38,12 +44,12 @@ bool Route::laneDirectionIsIgnored() const
   }
 }
 
-const point::ParaPointList &Route::getRawRoute(size_t const routeIndex) const
+const Route::RawRoute &Route::getRawRoute(size_t const routeIndex) const
 {
-  static point::ParaPointList const emptyRoute;
-  if (raw_routes.size() > routeIndex)
+  static RawRoute const emptyRoute;
+  if (mRawRoutes.size() > routeIndex)
   {
-    return raw_routes[routeIndex];
+    return mRawRoutes[routeIndex];
   }
   return emptyRoute;
 }
@@ -52,40 +58,39 @@ Route::BasicRoute Route::getBasicRoute(size_t const routeIndex) const
 {
   auto rawRoute = getRawRoute(routeIndex);
   BasicRoute fr;
-  for (size_t i = 0; i < rawRoute.size(); i++)
+  for (size_t i = 0; i < rawRoute.paraPointList.size(); i++)
   {
-    const point::ParaPoint &para_point = rawRoute[i];
+    const point::ParaPoint &paraPoint = rawRoute.paraPointList[i];
     point::ParaPointList pps;
-    pps.push_back(para_point);
-    for (size_t k = 0; k < 2; k++)
+    pps.push_back(paraPoint);
+    for (auto contactLocation : {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT})
     {
-      for (lane::Lane::ConstPtr lane = lane::getLanePtr(para_point.laneId); lane;)
+      for (lane::Lane::ConstPtr lane = lane::getLanePtr(paraPoint.laneId); lane;)
       {
         lane::LaneDirection const direction = lane->direction;
-        lane::ContactLaneList const cl
-          = getContactLanes(*lane, k == 0 ? lane::ContactLocation::LEFT : lane::ContactLocation::RIGHT);
+        lane::ContactLaneList const cl = getContactLanes(*lane, contactLocation);
         lane = nullptr;
         for (auto contact : cl)
         {
-          lane::LaneId other_lane_id = contact.toLane;
-          bool is_prev = false;
+          lane::LaneId otherLaneId = contact.toLane;
+          bool isPrev = false;
           if (i > 0)
           {
-            is_prev = other_lane_id == rawRoute[i - 1].laneId;
+            isPrev = otherLaneId == rawRoute.paraPointList[i - 1].laneId;
           }
-          bool is_next = false;
-          if (i + 1 < rawRoute.size())
+          bool isNext = false;
+          if (i + 1 < rawRoute.paraPointList.size())
           {
-            is_next = other_lane_id == rawRoute[i + 1].laneId;
+            isNext = otherLaneId == rawRoute.paraPointList[i + 1].laneId;
           }
-          if (!is_next && !is_prev)
+          if (!isNext && !isPrev)
           {
-            lane::Lane::ConstPtr other_lane = lane::getLanePtr(other_lane_id);
+            lane::Lane::ConstPtr other_lane = lane::getLanePtr(otherLaneId);
             if ((direction == other_lane->direction) || laneDirectionIsIgnored())
             {
               point::ParaPoint ppt;
-              ppt.laneId = other_lane_id;
-              ppt.parametricOffset = para_point.parametricOffset;
+              ppt.laneId = otherLaneId;
+              ppt.parametricOffset = paraPoint.parametricOffset;
               pps.push_back(ppt);
               lane = other_lane;
             }
@@ -101,8 +106,8 @@ Route::BasicRoute Route::getBasicRoute(size_t const routeIndex) const
 std::vector<Route::BasicRoute> Route::getBasicRoutes() const
 {
   std::vector<BasicRoute> routeVector;
-  routeVector.resize(raw_routes.size());
-  for (size_t i = 0u; i < raw_routes.size(); ++i)
+  routeVector.resize(mRawRoutes.size());
+  for (size_t i = 0u; i < mRawRoutes.size(); ++i)
   {
     routeVector[i] = getBasicRoute(i);
   }

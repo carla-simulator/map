@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -55,7 +55,7 @@ physics::Distance signedDistanceToLane(lane::LaneId const checkLaneId,
                                        MapMatchedPositionConfidenceList const &mapMatchedPositions);
 
 /** @brief get the para point of the occupied Region in the middle of the longitudinal extend of it */
-inline point::ParaPoint getParaPoint(match::LaneOccupiedRegion const &occupiedRegion)
+inline point::ParaPoint getCenterParaPoint(match::LaneOccupiedRegion const &occupiedRegion)
 {
   point::ParaPoint paraPoint;
   paraPoint.laneId = occupiedRegion.laneId;
@@ -63,6 +63,7 @@ inline point::ParaPoint getParaPoint(match::LaneOccupiedRegion const &occupiedRe
     = 0.5 * (occupiedRegion.longitudinalRange.maximum + occupiedRegion.longitudinalRange.minimum);
   return paraPoint;
 }
+
 } // namespace match
 } // namespace map
 } // namespace ad

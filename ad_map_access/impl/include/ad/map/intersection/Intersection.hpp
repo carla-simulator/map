@@ -73,6 +73,18 @@ public:
   static IntersectionPtr getIntersectionForRoadSegment(route::RouteIterator const &routeIterator);
 
   /**
+   * @brief check if the road segment enters an intersection
+   *
+   * @param[in] routeIterator the route iterator of the road segment
+   * @param[out] routePreviousSegmentIter if an intersectin is entered,
+   *   this holds the previous route segment that is part of the transition
+   *
+   * @returns \c true if given routeIterator enters an intersection
+   */
+  static bool isRoadSegmentEnteringIntersection(route::RouteIterator const &routeIterator,
+                                                route::RoadSegmentList::const_iterator &routePreviousSegmentIter);
+
+  /**
    * @brief retrieve all intersections for the given route
    *
    * @param[in] route planned route
@@ -92,9 +104,27 @@ public:
   static IntersectionPtr getNextIntersectionOnRoute(route::FullRoute const &route);
 
   /**
+   * @brief check if there is an intersection for the given route
+   *
+   * @param[in] route planned route
+   *
+   * @return If there is an intersection within the route, \c true is returned.
+   */
+  static bool isIntersectionOnRoute(route::FullRoute const &route);
+
+  /**
    * @brief check if a lane is part of any intersection
    */
   static bool isLanePartOfAnIntersection(lane::LaneId const laneId);
+
+  /**
+   * @brief check if any lane in the route is part of any intersection
+   *
+   * @param[in] route planned route
+   *
+   * @return If there is an intersection within the route, \c true is returned.
+   */
+  static bool isRoutePartOfAnIntersection(route::FullRoute const &route);
 
   /** @return the type of this intersection */
   IntersectionType intersectionType() const;
@@ -278,6 +308,14 @@ public:
   bool objectRouteCrossesLanesWithHigherPriority(route::FullRoute const &objectRoute) const;
 
   /**
+   * @returns \c true if the provided \c objectRoute contains an internal lane
+   *
+   * This is the case if one of the internalLanes()
+   * is part of the objectRoute.
+   */
+  bool objectRouteCrossesIntersection(route::FullRoute const &objectRoute) const;
+
+  /**
    * @brief return the speed limit of this intersection
    */
   physics::Speed getSpeedLimit() const;
@@ -427,6 +465,10 @@ private:
   std::map<lane::LaneId, lane::LaneIdSet> mOverlapping;
   std::map<lane::LaneId, lane::LaneIdSet> mSuccessor;
   std::map<lane::LaneId, lane::LaneIdSet> mPredecessor;
+
+  void extractRightOfWayAndCollectTrafficLights(route::LaneInterval const &laneInterval,
+                                                lane::LaneIdSet const &successors,
+                                                lane::LaneId &toLaneId);
 
   void extractLanesOfIntersection(lane::LaneId const laneId);
 
@@ -584,7 +626,17 @@ private:
                                         route::RoadSegmentList::const_iterator const &roadSegmentIt,
                                         lane::LaneId laneId);
 
+  lane::LaneIdSet successorsOnRouteLeavingIntersection(route::LaneSegment const &laneSegment);
+
   void calculateSpeedLimit();
+
+  enum SuccessorMode
+  {
+    OwnIntersection,
+    AnyIntersection
+  };
+
+  bool isLanePartOfIntersection(lane::LaneId const laneId, SuccessorMode const successorMode) const;
 
   /**
    * @brief Provide the direct successor lane segments in lane direction within and outside of the intersection.
@@ -592,7 +644,8 @@ private:
    * @param laneId LaneId
    * @return a pair with <the laneID segments within the intersection, the laneID segments outside the intersection>
    */
-  std::pair<lane::LaneIdSet, lane::LaneIdSet> getDirectSuccessorsInLaneDirection(lane::LaneId const laneId) const;
+  std::pair<lane::LaneIdSet, lane::LaneIdSet>
+  getDirectSuccessorsInLaneDirection(lane::LaneId const laneId, SuccessorMode const successorMode) const;
 
   /**
    * @brief Provide the direct successor lane segments in lane direction within the intersection.
@@ -600,7 +653,8 @@ private:
    * @param laneId LaneId
    * @return the laneID segments within the intersection.
    */
-  lane::LaneIdSet getDirectSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId) const;
+  lane::LaneIdSet getDirectSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
+                                                                       SuccessorMode const successorMode) const;
 
   /**
    * @brief Provide the successor lane segments in lane direction within the intersection recursively until the
@@ -609,7 +663,8 @@ private:
    * @param laneId LaneId
    * @return the laneID segments within the intersection.
    */
-  lane::LaneIdSet getAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId) const;
+  lane::LaneIdSet getAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
+                                                                    SuccessorMode const successorMode) const;
 
   /**
    * @brief Provide the successor lane segments in lane direction within the intersection recursively until the
@@ -618,7 +673,8 @@ private:
    * @param laneId LaneId
    * @return the laneID segments within the intersection.
    */
-  lane::LaneIdSet getLaneAndAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId);
+  lane::LaneIdSet getLaneAndAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
+                                                                           SuccessorMode const successorMode) const;
 
   /**
    * @brief Provide the outgoing lane segments that are reachable in lane direction
@@ -626,7 +682,17 @@ private:
    * @param laneId LaneId
    * @return the outgoing laneID segments outside the intersection.
    */
-  lane::LaneIdSet getAllReachableOutgoingLanes(lane::LaneId const laneId);
+  lane::LaneIdSet getAllReachableOutgoingLanes(lane::LaneId const laneId, SuccessorMode const successorMode) const;
+
+  /**
+   * @brief Provide the outgoing lane segments that are reachable in lane direction as well as the intersection internal
+   * lanes
+   *
+   * @param laneId LaneId
+   * @return a pair with <the laneID segments within the intersection, the laneID segments outside the intersection>
+   */
+  std::pair<lane::LaneIdSet, lane::LaneIdSet>
+  getAllReachableInternalAndOutgoingLanes(lane::LaneId const laneId, SuccessorMode const successorMode) const;
 
   /**
    * @brief Add the lane and all successor of it within the intersection to the

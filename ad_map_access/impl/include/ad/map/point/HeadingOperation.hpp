@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -89,6 +89,16 @@ ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enuR
  *
  */
 ENUHeading createENUHeading(ECEFHeading const &ecefHeading, ECEFPoint const &enuReferencePoint);
+
+/**
+ * @brief create a ENUHeading from a directional vector
+ *
+ * @param[in] start point defining the start of the directional vector
+ * @param[in] end point defining the end of the directional vector
+ *
+ * @returns ENU heading of the resulting directional vector
+ */
+ENUHeading createENUHeading(ENUPoint const &start, ENUPoint const &end);
 
 /**
  * @returns normalized ENU heading

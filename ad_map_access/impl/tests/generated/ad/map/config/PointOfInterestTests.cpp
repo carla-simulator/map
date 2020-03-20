@@ -26,10 +26,10 @@ protected:
     ::ad::map::point::GeoPoint valueGeoPoint;
     ::ad::map::point::Longitude valueGeoPointLongitude(-180);
     valueGeoPoint.longitude = valueGeoPointLongitude;
-    ::ad::map::point::Altitude valueGeoPointAltitude(-11000);
-    valueGeoPoint.altitude = valueGeoPointAltitude;
     ::ad::map::point::Latitude valueGeoPointLatitude(-90);
     valueGeoPoint.latitude = valueGeoPointLatitude;
+    ::ad::map::point::Altitude valueGeoPointAltitude(-11000);
+    valueGeoPoint.altitude = valueGeoPointAltitude;
     value.geoPoint = valueGeoPoint;
     std::string valueName{"min"};
     value.name = valueName;
@@ -89,10 +89,10 @@ TEST_F(PointOfInterestTests, comparisonOperatorGeoPointDiffers)
   ::ad::map::point::GeoPoint geoPoint;
   ::ad::map::point::Longitude geoPointLongitude(180);
   geoPoint.longitude = geoPointLongitude;
-  ::ad::map::point::Altitude geoPointAltitude(9000);
-  geoPoint.altitude = geoPointAltitude;
   ::ad::map::point::Latitude geoPointLatitude(90);
   geoPoint.latitude = geoPointLatitude;
+  ::ad::map::point::Altitude geoPointAltitude(9000);
+  geoPoint.altitude = geoPointAltitude;
   valueA.geoPoint = geoPoint;
   ::ad::map::config::PointOfInterest valueB = mValue;
 

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -278,5 +278,5 @@ TEST_F(LaneChangeTest, find_lane_change_BL_to_F_start_at_BR)
 
   physics::Distance dis;
   dis = findLaneChangeResult.calcZoneLength();
-  ASSERT_NEAR((double)dis, 8.2212, 0.0001);
+  ASSERT_NEAR((double)dis, 8.2828, 0.0001);
 }

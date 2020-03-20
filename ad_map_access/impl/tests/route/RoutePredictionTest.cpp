@@ -7,12 +7,11 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include <ad/map/access/Operation.hpp>
+#include <ad/map/intersection/Intersection.hpp>
 #include <ad/map/match/Operation.hpp>
 #include <ad/map/route/Planning.hpp>
-//#include "ad/map/route/RouteAStar.hpp"
-//#include "ad/map/route/RouteOperation.hpp"
+#include <ad/map/route/RoutePrediction.hpp>
 #include <gtest/gtest.h>
-#include "ad/map/route/RoutePrediction.hpp"
 
 using namespace ::ad;
 using namespace map;
@@ -33,15 +32,23 @@ struct RoutePredictionTest : ::testing::Test
     {
       throw std::runtime_error("Unable to initialize with " + getTestMap());
     }
-    auto pois = access::getPointsOfInterest();
-    ASSERT_GE(pois.size(), 1u);
+
+    auto predictionStartGeo = getPredictionStartGeo();
+    ASSERT_TRUE(withinValidInputRange(predictionStartGeo));
     match::AdMapMatching mapMatching;
     auto mapMatchingResults
-      = mapMatching.getMapMatchedPositions(pois.front().geoPoint, physics::Distance(1.), physics::Probability(0.8));
+      = mapMatching.getMapMatchedPositions(predictionStartGeo, physics::Distance(1.), physics::Probability(0.8));
 
     ASSERT_GE(mapMatchingResults.size(), 1u);
     predictionStart.point = mapMatchingResults.front().lanePoint.paraPoint;
-    predictionStart.direction = route::planning::RoutingDirection::POSITIVE;
+    if (lane::isLaneDirectionPositive(lane::getLane(predictionStart.point.laneId)))
+    {
+      predictionStart.direction = route::planning::RoutingDirection::POSITIVE;
+    }
+    else
+    {
+      predictionStart.direction = route::planning::RoutingDirection::NEGATIVE;
+    }
   }
 
   virtual void TearDown()
@@ -50,6 +57,17 @@ struct RoutePredictionTest : ::testing::Test
   }
 
   virtual std::string getTestMap() = 0;
+
+  virtual point::GeoPoint getPredictionStartGeo()
+  {
+    point::GeoPoint resultPoint;
+    auto pois = access::getPointsOfInterest();
+    if (pois.size() > 0u)
+    {
+      resultPoint = pois.front().geoPoint;
+    }
+    return resultPoint;
+  }
 
   route::planning::RoutingParaPoint predictionStart;
 };
@@ -95,27 +113,27 @@ TEST_F(RoutePredictionTestTown03, route_prediction_positive)
   EXPECT_EQ(routePredictions.size(), 1u);
 
   routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(500.));
-  EXPECT_EQ(routePredictions.size(), 1u);
+  EXPECT_EQ(routePredictions.size(), 18u);
 }
 
 TEST_F(RoutePredictionTestTown03, route_prediction_dont_care)
 {
   predictionStart.direction = route::planning::RoutingDirection::DONT_CARE;
   auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(10.));
-  EXPECT_EQ(routePredictions.size(), 2u);
+  EXPECT_EQ(routePredictions.size(), 1u);
 
   routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(500.));
-  EXPECT_EQ(routePredictions.size(), 38u);
+  EXPECT_EQ(routePredictions.size(), 18u);
 }
 
 TEST_F(RoutePredictionTestTown03, route_prediction_constructor)
 {
   predictionStart.direction = route::planning::RoutingDirection::DONT_CARE;
-  auto routePredictions = route::planning::predictRoutesOnDuration(predictionStart, physics::Duration(500.));
-  ASSERT_EQ(routePredictions.size(), 167u);
+  auto routePredictions = route::planning::predictRoutesOnDuration(predictionStart, physics::Duration(1.));
+  ASSERT_EQ(routePredictions.size(), 1u);
 
   routePredictions = route::planning::predictRoutes(predictionStart, physics::Distance(500.), physics::Duration(500.));
-  ASSERT_EQ(routePredictions.size(), 38u);
+  ASSERT_EQ(routePredictions.size(), 18u);
 }
 
 TEST_F(RoutePredictionTestTown03, route_getBasicRoutes)
@@ -128,4 +146,55 @@ TEST_F(RoutePredictionTestTown03, route_getBasicRoutes)
   }
 }
 
-//@todo: create more meaningful test setups including some concrete situations
+struct RoutePredictionTestIntersection : public RoutePredictionTestTown01
+{
+  point::GeoPoint getPredictionStartGeo() override
+  {
+    return point::createGeoPoint(point::Longitude(8.0012071), point::Latitude(48.9971953), point::Altitude(0.));
+  }
+};
+
+TEST_F(RoutePredictionTestIntersection, route_prediction_dont_stop_within_intersections)
+{
+  auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(7.));
+  EXPECT_EQ(routePredictions.size(), 2u);
+
+  for (auto &routePrediction : routePredictions)
+  {
+    auto intersections = intersection::Intersection::getIntersectionsForRoute(routePrediction);
+    ASSERT_EQ(1u, intersections.size());
+  }
+}
+
+TEST_F(RoutePredictionTestIntersection, route_extension_dont_stop_within_intersections)
+{
+  auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(1.));
+  EXPECT_EQ(routePredictions.size(), 1u);
+
+  route::FullRoute route = routePredictions.front();
+  routePredictions.clear();
+
+  EXPECT_TRUE(route::extendRouteToDistance(route, physics::Distance(7.), routePredictions));
+
+  routePredictions.push_back(route);
+
+  for (auto &routePrediction : routePredictions)
+  {
+    auto intersections = intersection::Intersection::getIntersectionsForRoute(routePrediction);
+    ASSERT_EQ(1u, intersections.size());
+  }
+}
+
+struct RoutePredictionTestRoundabout : public RoutePredictionTestTown03
+{
+  point::GeoPoint getPredictionStartGeo() override
+  {
+    return point::createGeoPoint(point::Longitude(8.0004625), point::Latitude(49.0000714), point::Altitude(0.));
+  }
+};
+
+TEST_F(RoutePredictionTestRoundabout, route_prediction)
+{
+  auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(50.));
+  EXPECT_EQ(routePredictions.size(), 5u);
+}

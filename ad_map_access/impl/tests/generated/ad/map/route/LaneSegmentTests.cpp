@@ -45,6 +45,9 @@ protected:
     bool valueLaneIntervalWrongWay{true};
     valueLaneInterval.wrongWay = valueLaneIntervalWrongWay;
     value.laneInterval = valueLaneInterval;
+    ::ad::map::route::RouteLaneOffset valueRouteLaneOffset(
+      std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+    value.routeLaneOffset = valueRouteLaneOffset;
     mValue = value;
   }
 
@@ -156,6 +159,17 @@ TEST_F(LaneSegmentTests, comparisonOperatorLaneIntervalDiffers)
   bool laneIntervalWrongWay{false};
   laneInterval.wrongWay = laneIntervalWrongWay;
   valueA.laneInterval = laneInterval;
+  ::ad::map::route::LaneSegment valueB = mValue;
+
+  EXPECT_FALSE(valueA == valueB);
+  EXPECT_TRUE(valueA != valueB);
+}
+
+TEST_F(LaneSegmentTests, comparisonOperatorRouteLaneOffsetDiffers)
+{
+  ::ad::map::route::LaneSegment valueA = mValue;
+  ::ad::map::route::RouteLaneOffset routeLaneOffset(std::numeric_limits<::ad::map::route::RouteLaneOffset>::max());
+  valueA.routeLaneOffset = routeLaneOffset;
   ::ad::map::route::LaneSegment valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

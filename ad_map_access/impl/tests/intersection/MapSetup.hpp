@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -27,6 +27,6 @@ void prepareMapBasicYield();
 void prepareMapBasicYieldLefthand();
 void prepareMapSolidTrafficLights();
 void prepareMapTown01PrioRight();
-void prepareMapTown01Unknown();
+void prepareMapTown01TrafficLight();
 
 } /* namespace map_setup */

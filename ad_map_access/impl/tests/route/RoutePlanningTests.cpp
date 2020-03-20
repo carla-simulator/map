@@ -76,9 +76,22 @@ struct RoutePlanningTest : ::testing::Test
   }
 
   void eraseFirstSegment(route::FullRoute &route);
-  void compareRoutes(route::FullRoute &left, route::FullRoute &right);
-  void validateRouteConnections(route::FullRoute &route);
-  void validateRouteParaPoints(route::FullRoute &route);
+  enum AlignmentBehavior
+  {
+    Equal,
+    EndSegmentDiffers,
+  };
+  void compareRoutes(route::FullRoute const &left,
+                     route::FullRoute const &right,
+                     AlignmentBehavior const alignmentBehavior = Equal);
+  enum RouteBehaviour
+  {
+    RouteIsConstant,
+    RouteIsBroadening,
+    RouteIsNarrowing,
+  };
+  void validateRouteConnections(route::FullRoute const &route, RouteBehaviour const routeBehavior = RouteIsConstant);
+  void validateRouteParaPoints(route::FullRoute const &route);
 
   std::string mTestFile{"test_files/TPK.adm.txt"};
 
@@ -107,14 +120,45 @@ void RoutePlanningTest::eraseFirstSegment(route::FullRoute &route)
   }
 }
 
-void RoutePlanningTest::compareRoutes(route::FullRoute &left, route::FullRoute &right)
+void RoutePlanningTest::compareRoutes(route::FullRoute const &left,
+                                      route::FullRoute const &right,
+                                      AlignmentBehavior const alignmentBehavior)
 {
-  EXPECT_EQ(left.roadSegments, right.roadSegments);
+  EXPECT_EQ(left.roadSegments.size(), right.roadSegments.size());
+  for (std::size_t i = 0u; i < left.roadSegments.size(); ++i)
+  {
+    EXPECT_EQ(left.roadSegments[i].boundingSphere, right.roadSegments[i].boundingSphere);
+    EXPECT_EQ(left.roadSegments[i].segmentCountFromDestination, right.roadSegments[i].segmentCountFromDestination);
+    EXPECT_EQ(left.roadSegments[i].drivableLaneSegments.size(), right.roadSegments[i].drivableLaneSegments.size());
+    for (std::size_t j = 0u; j < left.roadSegments[i].drivableLaneSegments.size(); ++j)
+    {
+      EXPECT_EQ(left.roadSegments[i].drivableLaneSegments[j].laneInterval.laneId,
+                right.roadSegments[i].drivableLaneSegments[j].laneInterval.laneId);
+      EXPECT_EQ(left.roadSegments[i].drivableLaneSegments[j].laneInterval.wrongWay,
+                right.roadSegments[i].drivableLaneSegments[j].laneInterval.wrongWay);
+      EXPECT_EQ(left.roadSegments[i].drivableLaneSegments[j].laneInterval.start,
+                right.roadSegments[i].drivableLaneSegments[j].laneInterval.start);
+
+      if ((alignmentBehavior == EndSegmentDiffers) && (i + 1 == left.roadSegments.size()))
+      {
+        EXPECT_NE(left.roadSegments[i].drivableLaneSegments[j].laneInterval.end,
+                  right.roadSegments[i].drivableLaneSegments[j].laneInterval.end);
+        EXPECT_LE(std::fabs(left.roadSegments[i].drivableLaneSegments[j].laneInterval.end
+                            - right.roadSegments[i].drivableLaneSegments[j].laneInterval.end),
+                  physics::ParametricValue(0.1));
+      }
+      else
+      {
+        EXPECT_EQ(left.roadSegments[i].drivableLaneSegments[j].laneInterval.end,
+                  right.roadSegments[i].drivableLaneSegments[j].laneInterval.end);
+      }
+    }
+  }
   EXPECT_EQ(left.fullRouteSegmentCount, right.fullRouteSegmentCount);
   validateRouteParaPoints(left);
 }
 
-void RoutePlanningTest::validateRouteParaPoints(route::FullRoute &route)
+void RoutePlanningTest::validateRouteParaPoints(route::FullRoute const &route)
 {
   for (std::size_t i = 0u; i < route.roadSegments.size(); ++i)
   {
@@ -130,11 +174,14 @@ void RoutePlanningTest::validateRouteParaPoints(route::FullRoute &route)
           (physics::ParametricValue(0.) == route.roadSegments[i].drivableLaneSegments[j].laneInterval.end)
           || (physics::ParametricValue(1.) == route.roadSegments[i].drivableLaneSegments[j].laneInterval.end));
       }
+      EXPECT_NE(isRouteDirectionAlignedWithDrivingDirection(route.roadSegments[i].drivableLaneSegments[j].laneInterval),
+                route.roadSegments[i].drivableLaneSegments[j].laneInterval.wrongWay)
+        << route.roadSegments[i].drivableLaneSegments[j].laneInterval;
     }
   }
 }
 
-void RoutePlanningTest::validateRouteConnections(route::FullRoute &route)
+void RoutePlanningTest::validateRouteConnections(route::FullRoute const &route, RouteBehaviour const routeBehavior)
 {
   std::vector<std::set<lane::LaneId>> actualPresentLaneIds;
   std::vector<std::set<lane::LaneId>> listedPredecessors;
@@ -142,10 +189,37 @@ void RoutePlanningTest::validateRouteConnections(route::FullRoute &route)
   actualPresentLaneIds.resize(route.roadSegments.size());
   listedPredecessors.resize(route.roadSegments.size());
   listedSuccessors.resize(route.roadSegments.size());
+  bool maxLaneOffsetPresent = route.roadSegments.empty();
+  bool minLaneOffsetPresent = route.roadSegments.empty();
   for (std::size_t i = 0u; i < route.roadSegments.size(); ++i)
   {
+    if (route.roadSegments[i].drivableLaneSegments[0].routeLaneOffset < 0)
+    {
+      EXPECT_EQ(RouteIsBroadening, routeBehavior);
+    }
+    else if (route.roadSegments[i].drivableLaneSegments[0].routeLaneOffset > 0)
+    {
+      EXPECT_EQ(RouteIsNarrowing, routeBehavior);
+    }
     for (std::size_t j = 0u; j < route.roadSegments[i].drivableLaneSegments.size(); ++j)
     {
+      EXPECT_LE(route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset, route.maxLaneOffset)
+        << "i:" << i << " j:" << j << " route:" << route;
+      EXPECT_GE(route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset, route.minLaneOffset)
+        << "i:" << i << " j:" << j << " route:" << route;
+      maxLaneOffsetPresent |= route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset == route.maxLaneOffset;
+      minLaneOffsetPresent |= route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset == route.minLaneOffset;
+
+      EXPECT_EQ(j,
+                route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset
+                  - route.roadSegments[i].drivableLaneSegments[0].routeLaneOffset)
+        << "i:" << i << " j:" << j << " route:" << route;
+
+      if (j != static_cast<size_t>(route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset))
+      {
+        EXPECT_NE(RouteIsConstant, routeBehavior);
+      }
+
       actualPresentLaneIds[i].insert(route.roadSegments[i].drivableLaneSegments[j].laneInterval.laneId);
       listedPredecessors[i].insert(std::begin(route.roadSegments[i].drivableLaneSegments[j].predecessors),
                                    std::end(route.roadSegments[i].drivableLaneSegments[j].predecessors));
@@ -153,6 +227,8 @@ void RoutePlanningTest::validateRouteConnections(route::FullRoute &route)
                                  std::end(route.roadSegments[i].drivableLaneSegments[j].successors));
     }
   }
+  EXPECT_TRUE(maxLaneOffsetPresent);
+  EXPECT_TRUE(minLaneOffsetPresent);
 
   for (std::size_t i = 0u; i < route.roadSegments.size(); ++i)
   {
@@ -192,12 +268,42 @@ void RoutePlanningTest::validateRouteConnections(route::FullRoute &route)
     if (i > 0u)
     {
       // all previous lanes are listed as predecessor in this segment
-      ASSERT_EQ(actualPresentLaneIds[i - 1].size(), listedPredecessors[i].size());
+      if (actualPresentLaneIds[i - 1].size() > listedPredecessors[i].size())
+      {
+        // there are additional lanes in the previous segment,
+        ASSERT_EQ(RouteIsNarrowing, routeBehavior);
+        // ensure that at least all listed predecessors exist
+        ASSERT_GE(listedPredecessors[i].size(), 1u);
+        for (auto listedPredecessor : listedPredecessors[i])
+        {
+          auto findResult = actualPresentLaneIds[i - 1].find(listedPredecessor);
+          ASSERT_TRUE(findResult != actualPresentLaneIds[i - 1].end());
+        }
+      }
+      else
+      {
+        ASSERT_EQ(actualPresentLaneIds[i - 1].size(), listedPredecessors[i].size());
+      }
     }
     if (i < route.roadSegments.size() - 1u)
     {
       // all next lanes are listed as successors in this segment
-      ASSERT_EQ(actualPresentLaneIds[i + 1].size(), listedSuccessors[i].size());
+      if (actualPresentLaneIds[i + 1].size() > listedSuccessors[i].size())
+      {
+        // there are additional lanes in the successor segment,
+        ASSERT_EQ(RouteIsBroadening, routeBehavior);
+        // ensure that at least all listed successors exist
+        ASSERT_GE(listedSuccessors[i].size(), 1u);
+        for (auto listedSuccessor : listedSuccessors[i])
+        {
+          auto findResult = actualPresentLaneIds[i + 1].find(listedSuccessor);
+          ASSERT_TRUE(findResult != actualPresentLaneIds[i + 1].end());
+        }
+      }
+      else
+      {
+        ASSERT_EQ(actualPresentLaneIds[i + 1].size(), listedSuccessors[i].size());
+      }
     }
   }
 }
@@ -330,31 +436,36 @@ TEST_F(RoutePlanningTest, route_following)
   route::FullRoute compareRoute = routeResult;
 
   // position before the route: keep as is
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(startLaneId, physics::ParametricValue(0.1)), route));
+  ASSERT_EQ(route::ShortenRouteResult::SucceededBeforeRoute,
+            route::shortenRoute(createParaPoint(startLaneId, physics::ParametricValue(0.1)), route));
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   ASSERT_GT(compareRoute.roadSegments.size(), 0u);
   // position within the first segment: shorten first segment
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(startLaneId, physics::ParametricValue(0.4)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(startLaneId, physics::ParametricValue(0.4)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(0.4);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // position exactly at the end of the segment: first segment will degenerate, so drop it
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(startLaneId, physics::ParametricValue(1.)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(startLaneId, physics::ParametricValue(1.)), route));
   eraseFirstSegment(compareRoute);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // actually entering next segment
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(firstLaneId, physics::ParametricValue(.01)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(firstLaneId, physics::ParametricValue(.01)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.01);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // travel in the middle of the segment
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(firstLaneId, physics::ParametricValue(.5)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(firstLaneId, physics::ParametricValue(.5)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.5);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
@@ -363,7 +474,8 @@ TEST_F(RoutePlanningTest, route_following)
   routeResult = compareRoute;
 
   // jump into at the entering point
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(1.)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(1.)), route));
   eraseFirstSegment(compareRoute);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
@@ -371,30 +483,35 @@ TEST_F(RoutePlanningTest, route_following)
   // jump into at the middle point
   route = routeResult;
   compareRoute = routeResult;
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(.5)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(.5)), route));
   eraseFirstSegment(compareRoute);
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.5);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // jitter a bit back: no change
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.51)), route));
+  ASSERT_EQ(route::ShortenRouteResult::SucceededBeforeRoute,
+            route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.51)), route));
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // jitter further back: no change
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.6)), route));
+  ASSERT_EQ(route::ShortenRouteResult::SucceededBeforeRoute,
+            route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.6)), route));
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // jitter a bit forward:
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.49)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.49)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.49);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // jitter further forward:
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.4)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.4)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.4);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
@@ -402,47 +519,72 @@ TEST_F(RoutePlanningTest, route_following)
   // jump into the end point, old 3 segment points are removed
   route = routeResult;
   compareRoute = routeResult;
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.)), route));
   eraseFirstSegment(compareRoute);
   eraseFirstSegment(compareRoute);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // same real point, but start of the next lane
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.)), route));
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // normal forward
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.5)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.5)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.5);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // jitter a bit back: no change
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.49)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.49)), route));
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
-  // jitter further back: no change
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.4)), route));
+  // jitter further back: no change, but actually before route
+  ASSERT_EQ(route::ShortenRouteResult::SucceededBeforeRoute,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.4)), route));
+  compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
+
+  // jitter the same, but with PrependIfSucceededBeforeRoute shorten route mode, should adapt the route
+  // and expand to the front again
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.4)),
+                                route,
+                                route::ShortenRouteMode::PrependIfSucceededBeforeRoute));
+  compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.4);
+  compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
+
+  // normal forward to .5 again
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.5)), route));
+  compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.5);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // jitter a bit forward
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.51)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.51)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.51);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // jitter further forward
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.6)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.6)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.6);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // jump over one segment completely
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(fourthLaneId, physics::ParametricValue(0.5)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(fourthLaneId, physics::ParametricValue(0.5)), route));
   eraseFirstSegment(compareRoute);
   eraseFirstSegment(compareRoute);
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.5);
@@ -450,38 +592,104 @@ TEST_F(RoutePlanningTest, route_following)
   validateRouteConnections(route);
 
   // drive into the end segment
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.2)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.2)), route));
   eraseFirstSegment(compareRoute);
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.2);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // finishing nearby
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.69)), route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.69)), route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.69);
   compareRoutes(compareRoute, route);
   validateRouteConnections(route);
 
   // finishing exactly
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.7)), route));
+  ASSERT_EQ(route::ShortenRouteResult::SucceededRouteEmpty,
+            route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.7)), route));
   eraseFirstSegment(compareRoute);
   compareRoutes(compareRoute, route);
   ASSERT_TRUE(route.roadSegments.empty());
 
   // finishing directly after target
   route = routeResult;
-  ASSERT_TRUE(route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.71)), route));
+  ASSERT_EQ(route::ShortenRouteResult::SucceededRouteEmpty,
+            route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.71)), route));
   compareRoutes(compareRoute, route);
   ASSERT_TRUE(route.roadSegments.empty());
 
   // nothing left
-  ASSERT_FALSE(route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.7)), route));
+  ASSERT_EQ(route::ShortenRouteResult::FailedRouteEmpty,
+            route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.7)), route));
 
   // something totally outside
   route = routeResult;
   ASSERT_FALSE(route.roadSegments.empty());
-  ASSERT_FALSE(route::shortenRoute(createParaPoint(lane::LaneId(123456), physics::ParametricValue(0.7)), route));
+  ASSERT_EQ(route::ShortenRouteResult::FailedRouteEmpty,
+            route::shortenRoute(createParaPoint(lane::LaneId(123456), physics::ParametricValue(0.7)), route));
   ASSERT_TRUE(route.roadSegments.empty());
+
+  // DontCutIntersectionAndPrependIfSucceededBeforeRoute mode
+  // jump at end of second lane: ensure correct handling on degenerated handling at the beginning
+  route = routeResult;
+  compareRoute = routeResult;
+  ASSERT_EQ(route::ShortenRouteResult::SucceededIntersectionNotCut,
+            route::shortenRoute(createParaPoint(secondLaneId, physics::ParametricValue(0.)),
+                                route,
+                                ShortenRouteMode::DontCutIntersectionAndPrependIfSucceededBeforeRoute));
+  eraseFirstSegment(compareRoute);
+  compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(0.);
+  compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
+
+  // enter intersection
+  ASSERT_EQ(route::ShortenRouteResult::SucceededIntersectionNotCut,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.)),
+                                route,
+                                ShortenRouteMode::DontCutIntersectionAndPrependIfSucceededBeforeRoute));
+  compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
+
+  // further within intersection
+  ASSERT_EQ(route::ShortenRouteResult::SucceededIntersectionNotCut,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(0.5)),
+                                route,
+                                ShortenRouteMode::DontCutIntersectionAndPrependIfSucceededBeforeRoute));
+  compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
+
+  // end of intersection
+  ASSERT_EQ(route::ShortenRouteResult::SucceededIntersectionNotCut,
+            route::shortenRoute(createParaPoint(thirdLaneId, physics::ParametricValue(1.)),
+                                route,
+                                ShortenRouteMode::DontCutIntersectionAndPrependIfSucceededBeforeRoute));
+  compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
+
+  // now actually leaving the intersection, but jump into the second one
+  ASSERT_EQ(route::ShortenRouteResult::SucceededIntersectionNotCut,
+            route::shortenRoute(createParaPoint(fourthLaneId, physics::ParametricValue(0.5)),
+                                route,
+                                ShortenRouteMode::DontCutIntersectionAndPrependIfSucceededBeforeRoute));
+  eraseFirstSegment(compareRoute);
+  eraseFirstSegment(compareRoute);
+  compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start
+    = compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.end;
+  compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
+
+  // finally leaving also the second intersection
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(createParaPoint(endLaneId, physics::ParametricValue(0.5)),
+                                route,
+                                ShortenRouteMode::DontCutIntersectionAndPrependIfSucceededBeforeRoute));
+  eraseFirstSegment(compareRoute);
+  eraseFirstSegment(compareRoute);
+  compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(0.5);
+  compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
 }
 
 TEST_F(RoutePlanningTest, route_following_multiple_choices)
@@ -490,21 +698,27 @@ TEST_F(RoutePlanningTest, route_following_multiple_choices)
   route::FullRoute route = routeResult;
   route::FullRoute compareRoute = routeResult;
 
+  validateRouteConnections(route);
+
   // entering next segment, second choice is nearer
-  ASSERT_TRUE(route::shortenRoute(std::vector<ParaPoint>{createParaPoint(firstLaneId, physics::ParametricValue(.8)),
-                                                         createParaPoint(firstLaneId, physics::ParametricValue(.5))},
-                                  route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(std::vector<ParaPoint>{createParaPoint(firstLaneId, physics::ParametricValue(.8)),
+                                                       createParaPoint(firstLaneId, physics::ParametricValue(.5))},
+                                route));
   ASSERT_GT(compareRoute.roadSegments.size(), 0u);
   eraseFirstSegment(compareRoute);
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.5);
   compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
 
   // entering next segment with the second choice, first choice keeps segment and is therefore nearer
-  ASSERT_TRUE(route::shortenRoute(std::vector<ParaPoint>{createParaPoint(firstLaneId, physics::ParametricValue(.98)),
-                                                         createParaPoint(secondLaneId, physics::ParametricValue(.01))},
-                                  route));
+  ASSERT_EQ(route::ShortenRouteResult::Succeeded,
+            route::shortenRoute(std::vector<ParaPoint>{createParaPoint(firstLaneId, physics::ParametricValue(.98)),
+                                                       createParaPoint(secondLaneId, physics::ParametricValue(.01))},
+                                route));
   compareRoute.roadSegments[0].drivableLaneSegments[0].laneInterval.start = physics::ParametricValue(.98);
   compareRoutes(compareRoute, route);
+  validateRouteConnections(route);
 #if 0
   // entering future segments with multiple choices: nearest is 138, 0.5
   ASSERT_TRUE(route::shortenRoute(std::vector<ParaPoint>{createParaPoint(fifthLaneId, physics::ParametricValue(0.5)),
@@ -645,10 +859,16 @@ TEST_F(RoutePlanningTest, route_planning_multi_lane_changes_OstringKaeppelstr)
   route::FullRoute routeRight = route::planning::planRoute(createParaPoint(startLaneId, physics::ParametricValue(0.2)),
                                                            createParaPoint(rightLaneId, physics::ParametricValue(.5)));
 
-  compareRoutes(routeLeft, routeRight);
+  validateRouteConnections(routeLeft, RouteIsBroadening);
+  validateRouteConnections(routeRight, RouteIsBroadening);
+  compareRoutes(routeLeft, routeRight, EndSegmentDiffers);
+
+  auto routeLength = route::calcLength(routeLeft);
+
   std::vector<route::FullRoute> additionalRoutes;
-  additionalRoutes.push_back(routeRight);
-  ASSERT_TRUE(extendRouteToDistance(routeLeft, physics::Distance(30.), additionalRoutes));
+  ASSERT_TRUE(extendRouteToDistance(routeLeft, routeLength + physics::Distance(30.), additionalRoutes));
+
+  ASSERT_GT(routeLength + physics::Distance(30.), route::calcLength(routeLeft));
 }
 
 TEST_F(RoutePlanningTest, routing_point)
@@ -670,12 +890,12 @@ TEST_F(RoutePlanningTest, routing_point)
   RoutingParaPoint routingPoint1, routingPoint2;
   routingPoint1 = createRoutingPoint(occupiedRegion, RoutingDirection::POSITIVE);
   ASSERT_EQ(routingPoint1.point.laneId, x11);
-  ASSERT_DOUBLE_EQ((double)routingPoint1.point.parametricOffset, 0.5);
+  ASSERT_DOUBLE_EQ((double)routingPoint1.point.parametricOffset, 0.2);
   ASSERT_EQ(routingPoint1.direction, RoutingDirection::POSITIVE);
 
   routingPoint2 = createRoutingPoint(occupiedRegion, point::createENUHeading(M_PI_2));
   ASSERT_EQ(routingPoint2.point.laneId, x11);
-  ASSERT_DOUBLE_EQ((double)routingPoint2.point.parametricOffset, 0.5);
+  ASSERT_DOUBLE_EQ((double)routingPoint2.point.parametricOffset, 0.8);
   ASSERT_EQ(routingPoint2.direction, RoutingDirection::NEGATIVE);
 }
 
@@ -695,6 +915,7 @@ TEST_F(RoutePlanningTest, route_para_point)
   route::FullRoute routeLeft, routeEmpty;
 
   routeLeft = route::planning::planRoute(paraPoint1, paraPoint2);
+  validateRouteConnections(routeLeft, RouteIsBroadening);
   RouteParaPoint routeParaPoint1, routeParaPoint2;
   ASSERT_TRUE(getRouteParaPointFromParaPoint(paraPoint1, routeLeft, routeParaPoint1));
   ASSERT_TRUE(getRouteParaPointFromParaPoint(paraPoint2, routeLeft, routeParaPoint2));
@@ -744,6 +965,7 @@ TEST_F(RoutePlanningTest, route_para_point)
   ASSERT_TRUE(calculateBypassingRoute(routeLeft, bypassingRoute));
   duration = calcDuration(bypassingRoute);
   ASSERT_NEAR((double)duration, 3.3136, 0.0001);
+  validateRouteConnections(bypassingRoute);
 
   RouteParaPoint resultingPoint;
   ASSERT_FALSE(
@@ -754,17 +976,20 @@ TEST_F(RoutePlanningTest, route_para_point)
   ASSERT_EQ(routeParaPoint2.segmentCountFromDestination, resultingPoint.segmentCountFromDestination);
   ASSERT_NEAR((double)routeParaPoint2.parametricOffset, (double)resultingPoint.parametricOffset, 0.0001);
 
-  route::FullRoute get_route1, get_route2;
-  get_route1 = getRouteExpandedToAllNeighborLanes(routeLeft);
+  route::FullRoute expandedRoute;
+  expandedRoute = getRouteExpandedToAllNeighborLanes(routeLeft);
   dis = ad::map::route::calcLength(routeParaPoint1, routeParaPoint2, routeLeft);
   ASSERT_NEAR((double)dis, 22.1776, 0.0001);
+  validateRouteConnections(expandedRoute, RouteIsBroadening);
 
   shortenRouteToDistance(routeLeft, physics::Distance(19.1776));
   dis = ad::map::route::calcLength(routeParaPoint1, routeParaPoint2, routeLeft);
-  ASSERT_NEAR((double)dis, 17.9368, 0.0001);
+  ASSERT_NEAR((double)dis, 18.0002, 0.0001);
+  validateRouteConnections(routeLeft, RouteIsBroadening);
 
-  dis = addOpposingLaneSegmentToRoadSegment(paraPoint1, physics::Distance(1.), routeLeft.roadSegments[0]);
-  ASSERT_NEAR((double)dis, 1., 0.0001);
+  dis = addOpposingLaneSegmentToRoadSegment(paraPoint1, physics::Distance(1.), routeLeft.roadSegments[0], routeLeft);
+  ASSERT_NEAR((double)dis, -1., 0.0001);
+  validateRouteConnections(routeLeft, RouteIsBroadening);
 
   RoadSegment roadSegment;
   EXPECT_THROW(shortenSegmentFromBegin(roadSegment, dis), std::runtime_error);
@@ -788,6 +1013,7 @@ TEST_F(RoutePlanningTest, route_match_position)
   paraPoint2 = createParaPoint(leftLaneId, physics::ParametricValue(.5));
 
   routeLeft = route::planning::planRoute(paraPoint1, paraPoint2);
+  validateRouteConnections(routeLeft, RouteIsBroadening);
 
   point::GeoPoint point_geo1, point_geo2;
   point_geo1 = point::createGeoPoint(Longitude(8.4396445), Latitude(49.0186033), Altitude(0.));
@@ -826,22 +1052,32 @@ TEST_F(RoutePlanningTest, route_match_position)
   mObjectPosition2.enuReferencePoint = access::getENUReferencePoint();
 
   match::MapMatchedObjectBoundingBox boundBox1, boundBox2;
-  boundBox1 = mapMatching.getMapMatchedBoundingBox(mObjectPosition1, physics::Distance(1), physics::Probability(0.5));
-  boundBox2 = mapMatching.getMapMatchedBoundingBox(mObjectPosition2, physics::Distance(1), physics::Probability(0.5));
+  boundBox1 = mapMatching.getMapMatchedBoundingBox(mObjectPosition1, physics::Distance(1));
+  boundBox2 = mapMatching.getMapMatchedBoundingBox(mObjectPosition2, physics::Distance(1));
   ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0u);
   ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0u);
 
   std::vector<FullRoute> fullRouteVec;
   fullRouteVec = predictRoutesOnDistance(boundBox1, physics::Distance(22.1776));
   ASSERT_GT(fullRouteVec.size(), 0u);
+  for (auto const &route : fullRouteVec)
+  {
+    validateRouteConnections(route, RouteIsBroadening);
+  }
+
   fullRouteVec = predictRoutesOnDuration(boundBox1, physics::Duration(3.33));
   ASSERT_GT(fullRouteVec.size(), 0u);
+  for (auto const &route : fullRouteVec)
+  {
+    validateRouteConnections(route, RouteIsBroadening);
+  }
 
   auto findWaypointResult2 = route::objectOnRoute(boundBox1, fullRouteVec[0]);
   ASSERT_TRUE(findWaypointResult2.isValid());
 
   route::FullRoute routeResult;
   routeResult = getRouteExpandedToOppositeLanes(routeLeft);
+  validateRouteConnections(routeResult, RouteIsBroadening);
   ASSERT_FALSE(addOpposingLaneToRoute(paraPoint1, physics::Distance(1.), routeResult, dis));
   ASSERT_FALSE(addOpposingLaneToRoute(paraPoint2, physics::Distance(10.), routeResult, dis));
 
@@ -853,8 +1089,10 @@ TEST_F(RoutePlanningTest, route_match_position)
   paraPoint1 = createParaPoint(startLaneId1, physics::ParametricValue(0.2));
   paraPoint2 = createParaPoint(rightLaneId1, physics::ParametricValue(.5));
   routeLeft = route::planning::planRoute(paraPoint1, paraPoint2);
+  validateRouteConnections(routeLeft);
   paraOppoPoint1 = createParaPoint(oppositeLaneId, physics::ParametricValue(0.9));
   ASSERT_TRUE(addOpposingLaneToRoute(paraOppoPoint1, physics::Distance(100.), routeLeft, dis));
+  validateRouteConnections(routeLeft, RouteIsNarrowing);
   auto findWaypointResultOppo1 = route::findWaypoint(oppositeLaneId, routeLeft);
   ASSERT_TRUE(findWaypointResultOppo1.isValid());
   dis = calcLength(findWaypointResultOppo1);
@@ -863,60 +1101,6 @@ TEST_F(RoutePlanningTest, route_match_position)
   ASSERT_TRUE(findWaypointResultRight.isValid());
   dis = calcLength(findWaypointResultRight);
   ASSERT_NEAR((double)dis, 15.4080, 0.0001);
-
-  ConnectingRoute conRoute1;
-  conRoute1 = calculateConnectingRoute(boundBox1, boundBox2);
-  ASSERT_GT(conRoute1.connectingSegments.size(), 0u);
-  dis = calcLength(conRoute1);
-  ASSERT_NEAR((double)dis, 26.7761, 0.0001);
-
-  duration = calcDuration(conRoute1);
-  ASSERT_NEAR((double)duration, 3.2131, 0.0001);
-
-  restriction::SpeedLimitList speedLimits;
-  speedLimits = getSpeedLimits(conRoute1);
-  ASSERT_EQ(speedLimits.size(), 2);
-  for (auto const &speedLimit : speedLimits)
-  {
-    ASSERT_NEAR((double)speedLimit.speedLimit, 8.3333, 0.0001);
-    ASSERT_NEAR((double)speedLimit.lanePiece.minimum, 0., 0.0001);
-    ASSERT_NEAR((double)speedLimit.lanePiece.maximum, 1., 0.0001);
-  }
-
-  ASSERT_FALSE(intersectionOnConnectedRoute(conRoute1));
-
-  mObjectPosition1.centerPoint = point::toENU(createGeoPoint(Longitude(8.4404330), Latitude(49.0195249), Altitude(0.)));
-  mObjectPosition2.centerPoint = point::toENU(createGeoPoint(Longitude(8.4408261), Latitude(49.0200051), Altitude(0.)));
-  boundBox1 = mapMatching.getMapMatchedBoundingBox(mObjectPosition1, physics::Distance(1), physics::Probability(0.5));
-  boundBox2 = mapMatching.getMapMatchedBoundingBox(mObjectPosition2, physics::Distance(1), physics::Probability(0.5));
-  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0u);
-  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0u);
-  conRoute1 = calculateConnectingRoute(boundBox1, boundBox2);
-  ASSERT_GT(conRoute1.connectingSegments.size(), 0u);
-  dis = calcLength(conRoute1);
-  ASSERT_NEAR((double)dis, 613.9365, 0.0001);
-
-  mObjectPosition1.centerPoint = point::toENU(createGeoPoint(Longitude(8.4404330), Latitude(49.0195249), Altitude(0.)));
-  mObjectPosition2.centerPoint = point::toENU(createGeoPoint(Longitude(8.4408261), Latitude(49.0200051), Altitude(0.)));
-  boundBox1 = mapMatching.getMapMatchedBoundingBox(mObjectPosition1, physics::Distance(1), physics::Probability(0.5));
-  boundBox2 = mapMatching.getMapMatchedBoundingBox(mObjectPosition2, physics::Distance(1), physics::Probability(0.5));
-  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0u);
-  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0u);
-  conRoute1 = calculateConnectingRoute(boundBox1, boundBox2);
-  ASSERT_GT(conRoute1.connectingSegments.size(), 0u);
-  dis = calcLength(conRoute1);
-  ASSERT_NEAR((double)dis, 613.9365, 0.0001);
-
-  mObjectPosition1.centerPoint = point::toENU(createGeoPoint(Longitude(8.4404752), Latitude(49.0195518), Altitude(0.)));
-  mObjectPosition2.centerPoint = point::toENU(createGeoPoint(Longitude(8.4404534), Latitude(49.0199487), Altitude(0.)));
-  boundBox1 = mapMatching.getMapMatchedBoundingBox(mObjectPosition1, physics::Distance(1), physics::Probability(0.5));
-  boundBox2 = mapMatching.getMapMatchedBoundingBox(mObjectPosition2, physics::Distance(1), physics::Probability(0.5));
-  ASSERT_GT(boundBox1.laneOccupiedRegions.size(), 0u);
-  ASSERT_GT(boundBox2.laneOccupiedRegions.size(), 0u);
-  conRoute1 = calculateConnectingRoute(boundBox1, boundBox2);
-  ASSERT_GT(conRoute1.connectingSegments.size(), 0u);
-  dis = calcLength(conRoute1);
-  ASSERT_NEAR((double)dis, 579.9489, 0.0001);
 }
 
 TEST_F(RoutePlanningTest, route_plan_given_geo)
@@ -983,4 +1167,188 @@ TEST_F(RoutePlanningTest, route_plan_given_geo)
   ASSERT_TRUE(findWaypointResult3.isValid());
   dis = ad::map::route::calcLength(findWaypointResult3);
   ASSERT_NEAR((double)dis, 71.7440, 0.0001);
+}
+
+TEST_F(RoutePlanningTest, connecting_route)
+{
+  ASSERT_TRUE(access::init("test_files/TPK_PFZ.adm.txt"));
+
+  match::AdMapMatching mapMatching;
+
+  physics::Dimension3D vehicleDimension;
+  vehicleDimension.length = physics::Distance(5.0);
+  vehicleDimension.width = physics::Distance(2.0);
+  vehicleDimension.height = physics::Distance(1.5);
+
+  // Emmy-Noether last section before intersection to Ada-Lovelace
+  auto const emmyToAda = lane::uniqueLaneId(createGeoPoint(Longitude(8.4381157), Latitude(49.0208767), Altitude(0.)));
+  auto const opositeToEmmyToAda = getContactLanes(lane::getLane(emmyToAda), lane::ContactLocation::LEFT).front().toLane;
+
+  // Hirtenweg to Haid-und-Neu Str.
+  auto const hirtToHaid = lane::uniqueLaneId(createGeoPoint(Longitude(8.4401012), Latitude(49.0181061), Altitude(0.)));
+  // Haid-und-Neu Str. crossing Hirtenweg to Haid-und-Neu Str.
+  auto const haidXhirtXHaid
+    = lane::uniqueLaneId(createGeoPoint(Longitude(8.4404876), Latitude(49.0179614), Altitude(0.)));
+
+  enum
+  {
+    EGO_LANEID,
+    EGO_LANE_OFFSET_LON,
+    EGO_LANE_OFFSET_LAT,
+    EGO_HEADING_OFFSET,
+    OTHER_LANEID,
+    OTHER_LANE_OFFSET_LON,
+    OTHER_LANE_OFFSET_LAT,
+    OTHER_HEADING_OFFSET,
+    MAX_DIST_TOO_SHORT,
+    MAX_DIST_NORMAL,
+    RESULT_TYPE,
+    RESULT_ROUTE_EGO_LENGTH,
+    RESULT_ROUTE_OTHER_LENGTH
+  };
+
+  std::vector<std::tuple<
+    // ego positioning within the lane (paraPoint, lateralOffset, delta lane heading)
+    lane::LaneId,
+    physics::ParametricValue,
+    physics::ParametricValue,
+    double,
+    // object positioning within the lane (paraPoint, lateralOffset, delta lane heading)
+    lane::LaneId,
+    physics::ParametricValue,
+    physics::ParametricValue,
+    double,
+    // calculate connected route distances: too short (invalid result), normal
+    physics::Distance,
+    physics::Distance,
+    // expected connecting route results: type, routeA length, routeB length
+    route::ConnectingRouteType,
+    physics::Distance,
+    physics::Distance>>
+    testEntries{
+      // simple standard: directly in front same direction, same lane
+      std::make_tuple(emmyToAda,
+                      physics::ParametricValue(0.5),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      emmyToAda,
+                      physics::ParametricValue(0.8),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      physics::Distance(0.),
+                      physics::Distance(50.),
+                      route::ConnectingRouteType::Following,
+                      physics::Distance(9.34047),
+                      physics::Distance(0.)),
+      // simple standard: directly at back same direction, same lane
+      std::make_tuple(emmyToAda,
+                      physics::ParametricValue(0.5),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      emmyToAda,
+                      physics::ParametricValue(0.2),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      physics::Distance(0.),
+                      physics::Distance(50.),
+                      route::ConnectingRouteType::Following,
+                      physics::Distance(0.),
+                      physics::Distance(9.33094)),
+      // simple standard: directly in front other direction, other lane
+      std::make_tuple(emmyToAda,
+                      physics::ParametricValue(0.5),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      opositeToEmmyToAda,
+                      physics::ParametricValue(0.8),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      physics::Distance(0.),
+                      physics::Distance(50.),
+                      route::ConnectingRouteType::Opposing,
+                      physics::Distance(14.3601),
+                      physics::Distance(14.3601)),
+      // simple standard: already at back other direction, other lane
+      std::make_tuple(emmyToAda,
+                      physics::ParametricValue(0.5),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      opositeToEmmyToAda,
+                      physics::ParametricValue(0.2),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      physics::Distance(0.),
+                      physics::Distance(50.),
+                      route::ConnectingRouteType::Invalid,
+                      physics::Distance(0.),
+                      physics::Distance(0.)),
+      // simple standard: Y connected route
+      std::make_tuple(hirtToHaid,
+                      physics::ParametricValue(0.2),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      haidXhirtXHaid,
+                      physics::ParametricValue(0.2),
+                      physics::ParametricValue(0.5),
+                      0.,
+                      physics::Distance(5.),
+                      physics::Distance(50.),
+                      route::ConnectingRouteType::Merging,
+                      physics::Distance(53.5544),
+                      physics::Distance(35.5292)),
+    };
+
+  for (auto const &testEntry : testEntries)
+  {
+    match::Object egoObject;
+    point::ParaPoint egoParaPoint
+      = point::createParaPoint(std::get<EGO_LANEID>(testEntry), std::get<EGO_LANE_OFFSET_LON>(testEntry));
+    egoObject.enuPosition.centerPoint = lane::getENULanePoint(egoParaPoint, std::get<EGO_LANE_OFFSET_LAT>(testEntry));
+    egoObject.enuPosition.heading = point::createENUHeading(static_cast<double>(lane::getLaneENUHeading(egoParaPoint))
+                                                            + std::get<EGO_HEADING_OFFSET>(testEntry));
+    egoObject.enuPosition.dimension = vehicleDimension;
+    egoObject.enuPosition.enuReferencePoint = access::getENUReferencePoint();
+    egoObject.mapMatchedBoundingBox
+      = mapMatching.getMapMatchedBoundingBox(egoObject.enuPosition, physics::Distance(1.));
+
+    match::Object otherObject;
+    point::ParaPoint otherParaPoint
+      = point::createParaPoint(std::get<OTHER_LANEID>(testEntry), std::get<OTHER_LANE_OFFSET_LON>(testEntry));
+    otherObject.enuPosition.centerPoint
+      = lane::getENULanePoint(otherParaPoint, std::get<OTHER_LANE_OFFSET_LAT>(testEntry));
+    otherObject.enuPosition.heading = point::createENUHeading(
+      static_cast<double>(lane::getLaneENUHeading(otherParaPoint)) + std::get<OTHER_HEADING_OFFSET>(testEntry));
+    otherObject.enuPosition.dimension = vehicleDimension;
+    otherObject.enuPosition.enuReferencePoint = access::getENUReferencePoint();
+    otherObject.mapMatchedBoundingBox
+      = mapMatching.getMapMatchedBoundingBox(otherObject.enuPosition, physics::Distance(2.));
+
+    auto const tooShortDistance = std::get<MAX_DIST_TOO_SHORT>(testEntry);
+    ConnectingRoute connRoute = route::planning::calculateConnectingRoute(egoObject, otherObject, tooShortDistance);
+    EXPECT_EQ(route::ConnectingRouteType::Invalid, connRoute.type);
+    EXPECT_EQ(physics::Distance::getMax(), calcLength(connRoute));
+
+    auto const standardDistance = std::get<MAX_DIST_NORMAL>(testEntry);
+    connRoute = route::planning::calculateConnectingRoute(egoObject, otherObject, standardDistance);
+    EXPECT_EQ(std::get<RESULT_TYPE>(testEntry), connRoute.type);
+    RouteBehaviour routeBehavior = RouteBehaviour::RouteIsConstant;
+    if (route::ConnectingRouteType::Merging == connRoute.type)
+    {
+      EXPECT_EQ(connRoute.routeA.roadSegments.back().drivableLaneSegments.size(),
+                connRoute.routeB.roadSegments.back().drivableLaneSegments.size());
+      for (auto i = 0u; i < connRoute.routeA.roadSegments.back().drivableLaneSegments.size(); i++)
+      {
+        EXPECT_TRUE(route::isDegenerated(connRoute.routeA.roadSegments.back().drivableLaneSegments[i].laneInterval));
+        EXPECT_EQ(connRoute.routeA.roadSegments.back().drivableLaneSegments[i].laneInterval,
+                  connRoute.routeB.roadSegments.back().drivableLaneSegments[i].laneInterval);
+      }
+      routeBehavior = RouteBehaviour::RouteIsBroadening;
+    }
+    EXPECT_EQ(std::get<RESULT_ROUTE_EGO_LENGTH>(testEntry), calcLength(connRoute.routeA));
+    EXPECT_EQ(std::get<RESULT_ROUTE_OTHER_LENGTH>(testEntry), calcLength(connRoute.routeB));
+    validateRouteConnections(connRoute.routeA, routeBehavior);
+    validateRouteConnections(connRoute.routeB, routeBehavior);
+    validateRouteParaPoints(connRoute.routeA);
+    validateRouteParaPoints(connRoute.routeB);
+  }
 }

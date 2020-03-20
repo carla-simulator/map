@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2019 Intel Corporation
+// Copyright (C) 2019-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -47,12 +47,15 @@ public:
    *
    * @param[in] overlapMargin margin the lanes are narrowed when calculating overlaps.
    * @param[in] defaultIntersectionType default type of intersections to be used
+   * @param[in] defaultTrafficLightType default type of traffic light to be used in case of traffic light intersection
    *
    * @returns \c true if a map was generated, false otherwise.
    */
   bool createAdMap(std::string const &mapFilePath,
                    double const overlapMargin,
-                   intersection::IntersectionType const defaultIntersectionType);
+                   intersection::IntersectionType const defaultIntersectionType,
+                   landmark::TrafficLightType const defaultTrafficLightType
+                   = landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN);
 
   /**
    * @brief Parses OpenDRIVE map content string, generates a lane map and populates the AdMap store with it via admap
@@ -60,12 +63,15 @@ public:
    *
    * @param[in] overlapMargin margin the lanes are narrowed when calculating overlaps.
    * @param[in] defaultIntersectionType default type of intersections to be used
+   * @param[in] defaultTrafficLightType default type of traffic light to be used in case of traffic light intersection
    *
    * @returns \c true if a map was generated, false otherwise.
    */
   bool createAdMapFromString(std::string const &mapContent,
                              double const overlapMargin,
-                             intersection::IntersectionType const defaultIntersectionType);
+                             intersection::IntersectionType const defaultIntersectionType,
+                             landmark::TrafficLightType const defaultTrafficLightType
+                             = landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN);
 
   /**
    * @brief Returns true if the given file matches an OpenDRIVE map file.
@@ -80,20 +86,26 @@ private:
    *
    * @param[in] overlapMargin margin the lanes are narrowed when calculating overlaps.
    * @param[in] defaultIntersectionType default type of intersections to be used
+   * @param[in] defaultTrafficLightType default type of traffic light to be used in case of traffic light intersection
    *
    * @returns \c true if a map was generated, false otherwise.
    */
   bool createAdMap(::opendrive::OpenDriveData &openDriveData,
                    double const overlapMargin,
-                   intersection::IntersectionType const defaultIntersectionType);
+                   intersection::IntersectionType const defaultIntersectionType,
+                   landmark::TrafficLightType const defaultTrafficLightType);
 
   /**
    * @brief Generates an AdMap using the extended map data generated from the openDrive data.
    * @param[in,out] mapData The OpenDRIVE map data container
+   * @param[in] defaultIntersectionType default type of intersections to be used
+   * @param[in] defaultTrafficLightType default type of traffic light to be used in case of traffic light intersection
+   *
    * @returns \c true if the map is generated in the AdMap store without any fatal error
    */
   bool convertToAdMap(::opendrive::OpenDriveData &mapData,
-                      intersection::IntersectionType const defaultIntersectionType);
+                      intersection::IntersectionType const defaultIntersectionType,
+                      landmark::TrafficLightType const defaultTrafficLightType);
 
   /**
    * @brief Creates default access restrictions, i.e. all vehicles are allowed.
@@ -150,9 +162,14 @@ private:
   /**
    * @brief Adds the successor, predecessor and neighbor contacts to the admap store for the given lane
    * @param[in] lane The lane to be modified
+   * @param[in] defaultIntersectionType default type of intersections to be used
+   * @param[in] defaultTrafficLightType default type of traffic light to be used in case of traffic light intersection
+   *
    * @returns \c true if successfully added to the store
    */
-  bool addContactLanes(::opendrive::Lane const &lane, intersection::IntersectionType const defaultIntersectionType);
+  bool addContactLanes(::opendrive::Lane const &lane,
+                       intersection::IntersectionType const defaultIntersectionType,
+                       landmark::TrafficLightType const defaultTrafficLightType);
 };
 
 } // namespace opendrive

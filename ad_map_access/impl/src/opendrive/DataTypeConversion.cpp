@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2019 Intel Corporation
+// Copyright (C) 2019-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -239,8 +239,8 @@ lane::LaneType toLaneType(::opendrive::LaneType const &laneType)
   switch (laneType)
   {
     case ::opendrive::LaneType::Driving:
-      return lane::LaneType::NORMAL;
     case ::opendrive::LaneType::Bidirectional:
+      return lane::LaneType::NORMAL;
     case ::opendrive::LaneType::Shoulder:
     case ::opendrive::LaneType::Border:
     case ::opendrive::LaneType::Parking:

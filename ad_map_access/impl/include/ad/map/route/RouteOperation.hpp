@@ -13,6 +13,7 @@
 #include "ad/map/point/Types.hpp"
 #include "ad/map/route/LaneIntervalOperation.hpp"
 #include "ad/map/route/Types.hpp"
+#include "ad/physics/Types.hpp"
 
 /* @brief namespace ad */
 namespace ad {
@@ -130,21 +131,10 @@ inline physics::Distance calcLength(LaneSegment const &laneSegment)
 }
 
 /** @brief calculate the length of the provided connecting route
+ *
+ * For length calculations the longest route section of this is used as reference.
  */
 physics::Distance calcLength(ConnectingRoute const &connectingRoute);
-
-/** @brief calculate the length of the provided connecting segment
- *
- * For length calculations the shortest road segment of this is used as reference.
- */
-physics::Distance calcLength(ConnectingSegment const &connectingSegment);
-
-/** @brief calculate the length of the provided connecting interval
- */
-inline physics::Distance calcLength(ConnectingInterval const &connectingInterval)
-{
-  return calcLength(connectingInterval.laneInterval);
-}
 
 /** @brief calculate the length between the two given iterators
  */
@@ -171,21 +161,10 @@ inline physics::Duration calcDuration(LaneSegment const &laneSegment)
 }
 
 /** @brief calculate the Duration of the provided connecting route
+ *
+ * For Duration calculations the longest route section of this is used as reference.
  */
 physics::Duration calcDuration(ConnectingRoute const &connectingRoute);
-
-/** @brief calculate the Duration of the provided connecting segment
- *
- * For Duration calculations the shortest connecting segment of this is used as reference.
- */
-physics::Duration calcDuration(ConnectingSegment const &connectingSegment);
-
-/** @brief calculate the Duration of the provided connecting interval
- */
-inline physics::Duration calcDuration(ConnectingInterval const &connectingInterval)
-{
-  return calcDuration(connectingInterval.laneInterval);
-}
 
 /**
  * @brief get the speed limits of the road segment
@@ -206,11 +185,6 @@ restriction::SpeedLimitList getSpeedLimits(RouteIterator const &startIterator, R
  * @brief get the speed limits of a complete route
  */
 restriction::SpeedLimitList getSpeedLimits(FullRoute const &fullRoute);
-
-/**
- * @brief get the speed limits of a connecting segment
- */
-restriction::SpeedLimitList getSpeedLimits(ConnectingSegment const &connectingSegment);
 
 /**
  * @brief get the speed limits of a connecting route
@@ -381,6 +355,24 @@ FindWaypointResult findNearestWaypoint(match::MapMatchedPositionConfidenceList c
                                        route::FullRoute const &route);
 
 /**
+ * @brief find waypoint on the route of the given object, preferable the object center
+ *
+ * This function first calls findNearestWayPoint on the map matched position
+ * confidence list of the center position.
+ * If this doesn't lead to a result, the center points of the respective occupied regions are
+ * used to find a waypoint. The search starts with the longest region and continues in decreasing order.
+ * If this still doesn't lead to a match findNearestWayPoint of the other map matched confidence list positions
+ * is taken.
+ *
+ *  @param[in] object the object which should be searched for within the route
+ *  @param[in] route the route to search in
+ *
+ *  @returns waypoint result containing an iterator pointing to the route segment the lane of
+ *   the position is part of and the corresponding route interval having that lane id.
+ */
+FindWaypointResult findCenterWaypoint(match::Object const &object, route::FullRoute const &route);
+
+/**
  * @brief find nearest waypoint on the route containing the given mapmatched bounding box
  *
  * This function will return the nearest waypoint along the route
@@ -412,17 +404,68 @@ FindWaypointResult intersectionOnRoute(intersection::Intersection const &interse
 /**
  * @returns \c true if the connecting route contains road segments which are part of an intersection
  */
-bool intersectionOnConnectedRoute(route::ConnectingRoute const &connectingRoute);
+bool isConnectedRoutePartOfAnIntersection(route::ConnectingRoute const &connectingRoute);
+
+/** @brief enumeration providing more insights into the actual shorten route result
+ */
+enum class ShortenRouteResult
+{
+  /** Shortening succeeded
+   */
+  Succeeded,
+  /** Shortening succeeded: the actual provided position(s) were not found with the
+   *   findNearestWaypoint() function, but at least one position is on a lane of the
+   *   route start lane segments, just before the route interval starts
+   */
+  SucceededBeforeRoute,
+  /** Shortening succeeded, but the resulting route is empty (i.e. crossed the end of the route)
+   */
+  SucceededRouteEmpty,
+  /** Shortening succeeded: the shortening would cut the current intersection within route.
+   *  Therefore, actually not cut.
+   */
+  SucceededIntersectionNotCut,
+  /** Shortening failed, the resulting (or already the input) route is empty
+   */
+  FailedRouteEmpty
+};
+
+/** @brief enumeration defining the mode of operation of the shortenRoute() functions
+ */
+enum class ShortenRouteMode
+{
+  /** Standard behavior
+   */
+  Normal,
+  /** If shorten route result would be: ShortenRouteResult::SucceededBeforeRoute, the route is extended
+   *  at the beginning so that the result actually becomes ShortenRouteResult::Succeeded
+   */
+  PrependIfSucceededBeforeRoute,
+  /**
+   * If the shorten route operation would cut an intersection in between,
+   * the route is not shortened further, before the intersection is actually left.
+   *
+   * If shorten route result would be: ShortenRouteResult::SucceededBeforeRoute, the route is extended
+   *  at the beginning so that the result actually becomes ShortenRouteResult::Succeeded
+   */
+  DontCutIntersectionAndPrependIfSucceededBeforeRoute
+};
 
 /** @brief follow the route up to a certain position and shorten the route accordingly
  *
  * @param[in] currentPosition the position which should mark the start of the route after shortening
  * @param[in/out] route the route to be shortened
+ * @param[in] extendIfSucceededBeforeRoute if this flag is set @c true,
  *
- * @returns @c true if the shortening request was accepted resulting in a valid route.
- *          If @c false is returned the resulting route is empty.
+ * @retval ShortenRouteResult::Succeeded, SucceededBeforeRoute::SucceededBeforeRoute if the shortening request was
+ * accepted resulting in a valid route.
+ * @retval ShortenRouteResult::SucceededRouteEmpty if the shortening request was accepted resulting in an empty route
+ * (i.e. end of route just crossed).
+ * @retval ShortenRouteResult::FailedRouteEmpty if the shortening failed and resulting route is empty.
  */
-bool shortenRoute(point::ParaPoint const &currentPosition, route::FullRoute &route);
+ShortenRouteResult shortenRoute(point::ParaPoint const &currentPosition,
+                                route::FullRoute &route,
+                                ShortenRouteMode const shortenRouteMode = ShortenRouteMode::Normal);
 
 /** @brief follow the route up to a certain position and shorten the route accordingly
  *
@@ -433,10 +476,34 @@ bool shortenRoute(point::ParaPoint const &currentPosition, route::FullRoute &rou
  * @param[in] currentPositions the vector of positions which should mark the start of the route after shortening
  * @param[in/out] route the route to be shortened
  *
- * @returns @c true if the shortening request was accepted resulting in a valid route.
- *          If @c false is returned the resulting route is empty.
+ * @retval ShortenRouteResult::Succeeded, SucceededBeforeRoute::SucceededBeforeRoute if the shortening request was
+ * accepted resulting in a valid route.
+ * @retval ShortenRouteResult::SucceededRouteEmpty if the shortening request was accepted resulting in an empty route
+ * (i.e. end of route just crossed).
+ * @retval ShortenRouteResult::FailedRouteEmpty if the shortening failed and resulting route is empty.
  */
-bool shortenRoute(point::ParaPointList const &currentPositions, route::FullRoute &route);
+ShortenRouteResult shortenRoute(point::ParaPointList const &currentPositions,
+                                route::FullRoute &route,
+                                ShortenRouteMode const shortenRouteMode = ShortenRouteMode::Normal);
+
+/** @brief follow the route up to a certain position and shorten the route accordingly
+ *
+ * Overloaded version of shortenRoute() allow the position to be a list of mapmatched positions to consider.
+ * If multiple of the positions were actually present within the route, the one is selected providing the
+ * longest resulting route.
+ *
+ * @param[in] mapMatchedPositions the map matched positions which should mark the start of the route after shortening
+ * @param[in/out] route the route to be shortened
+ *
+ * @retval ShortenRouteResult::Succeeded, SucceededBeforeRoute::SucceededBeforeRoute if the shortening request was
+ * accepted resulting in a valid route.
+ * @retval ShortenRouteResult::SucceededRouteEmpty if the shortening request was accepted resulting in an empty route
+ * (i.e. end of route just crossed).
+ * @retval ShortenRouteResult::FailedRouteEmpty if the shortening failed and resulting route is empty.
+ */
+ShortenRouteResult shortenRoute(match::MapMatchedPositionConfidenceList const &mapMatchedPositions,
+                                route::FullRoute &route,
+                                ShortenRouteMode const shortenRouteMode = ShortenRouteMode::Normal);
 
 /**
  * @brief calculate the RouteParaPoint at a given distance to a given RouteParaPoint
@@ -467,6 +534,40 @@ bool getRouteParaPointFromParaPoint(point::ParaPoint const &paraPoint,
                                     route::RouteParaPoint &routeParaPoint);
 
 /**
+ * @brief the mode how the route section will be created
+ */
+enum class RouteSectionCreationMode
+{
+  SingleLane,   /**< In the resulting route section the LaneSegments contain on single lane interval */
+  AllRouteLanes /**< In the resulting route section the LaneSegments contain all the lanes of the original route */
+};
+
+/**
+ * @brief Return a section of the route that is within the given distance around the given LanePoint
+ *
+ * This section will contain the LaneInterval that the center point is located at and all
+ * the predecessors & successors of this lane up to the given distances or the start / end of the route
+ * The length of the resulting route will be distanceFront + distanceEnd except the start / end of the route is within
+ * the delta region.
+ *
+ * @param[in] currentLane specifying the origin of the delta section as FindWaypointResult
+ * @param[in] distance to be included in the delta region towards begin of the route
+ * @param[in] distance to be included in the delta region towards end of the route
+ * @param[in] the route
+ * @param[in] routeSectionCreationMode the creation mode for the route section.
+ *
+ * return the extracted route (will be empty if the centerPoint is not found in the route)
+ *
+ * @throws std::runtime_error if the route is inconsistent
+ */
+FullRoute getRouteSection(FindWaypointResult const &currentLane,
+                          physics::Distance const &distanceFront,
+                          physics::Distance const &distanceEnd,
+                          FullRoute const &route,
+                          RouteSectionCreationMode const routeSectionCreationMode
+                          = RouteSectionCreationMode::SingleLane);
+
+/**
  * @brief Return a section of the route that is within the given distance around the given LanePoint
  *
  * This section will contain the LaneInterval that the center point is located at and all
@@ -478,15 +579,39 @@ bool getRouteParaPointFromParaPoint(point::ParaPoint const &paraPoint,
  * @param[in] distance to be included in the delta region towards begin of the route
  * @param[in] distance to be included in the delta region towards end of the route
  * @param[in] the route
+ * @param[in] routeSectionCreationMode the creation mode for the route section.
  *
- * return the extracted route
+ * return the extracted route (will be empty if the centerPoint is not found in the route)
  *
  * @throws std::runtime_error if the route is inconsistent
  */
 route::FullRoute getRouteSection(point::ParaPoint const &centerPoint,
                                  physics::Distance const &distanceFront,
                                  physics::Distance const &distanceEnd,
-                                 route::FullRoute const &route);
+                                 route::FullRoute const &route,
+                                 RouteSectionCreationMode const routeSectionCreationMode
+                                 = RouteSectionCreationMode::SingleLane);
+
+/**
+ * @brief Return a section of the route that is around the given object
+ *
+ * This section will contain the LaneInterval that the center point of the object is located at and all
+ * the predecessors & successors of this lane up to half of the objects length or the start / end of the route
+ * The length of the resulting route will be object's length except the start / end of the route is within
+ * the delta region.
+ *
+ * @param[in] object specifying the object as the origin and dimension of the delta section
+ * @param[in] the route
+ * @param[in] routeSectionCreationMode the creation mode for the route section.
+ *
+ * return the extracted route (will be empty if the object is not found in the route)
+ *
+ * @throws std::runtime_error if the route is inconsistent
+ */
+route::FullRoute getRouteSection(match::Object const &object,
+                                 route::FullRoute const &route,
+                                 RouteSectionCreationMode const routeSectionCreationMode
+                                 = RouteSectionCreationMode::SingleLane);
 
 /**
  * @brief struct defining the result type of findFirstLaneChange()
@@ -569,21 +694,6 @@ struct FindLaneChangeResult
 FindLaneChangeResult findFirstLaneChange(match::MapMatchedPosition const &currentPositionEgoVehicle,
                                          route::FullRoute const &route);
 
-/**
- * @brief extends route to have at least the given length
- *
- * @param[in/out] route the route to check and to extend
- * @param[in] length the minimum length
- * @param[in/out] additional routes in case of intersections on the extension
- *
- * @returns @c true if the route has sufficient length or was extended.
- *          If @c false is returned the route is/was empty.
-
- */
-bool extendRouteToDistance(route::FullRoute &route,
-                           physics::Distance const &length,
-                           std::vector<route::FullRoute> &additionalRoutes);
-
 /** @brief shorten the route from the end to have at maximum the given length
  *
  * A cut of the route is not performed within an intersection, the intersection is kept fully within the route.
@@ -598,32 +708,30 @@ void shortenRouteToDistance(route::FullRoute &route, const physics::Distance &le
  * In contrast to appendRoadSegmentToRoute() here only the lane interval without any neighbors is added
  *
  * @param[in] laneInterval the new lane interval to be append
- * @param[in] roadSegmentList the list of road segments the interval has to be appended
+ * @param[in] route the route the interval has to be appended
  * @param[in] segmentCountFromDestination the segment count for the new road segment to be created
  *
  */
 void appendLaneSegmentToRoute(route::LaneInterval const &laneInterval,
-                              route::RoadSegmentList &roadSegmentList,
+                              route::FullRoute &route,
                               route::SegmentCounter const segmentCountFromDestination = 0u);
 
 /**
- * @brief the mode on how the full route is created
+ * @brief extends route to have at least the given length
+ *
+ * @param[in/out] route the route to check and to extend
+ * @param[in] length the minimum length
+ * @param[in/out] additionalRoutes additional routes in case of intersections on the extension
+ *
+ * @returns pair of bool and vector
+ *
+ *  @c true if the route has sufficient length or was extended.
+ *          If @c false is returned the route is/was empty/degenerated or the additional routes were not empty.
+
  */
-enum class RouteCreationMode
-{
-  /**
-   * @brief only add lanes having the same driving direction to the route
-   */
-  SameDrivingDirection,
-  /**
-   * @brief include also lanes in opposite driving direction
-   */
-  AllRoutableLanes,
-  /**
-   * @brief include all neighbors, which might include not explicitly routeable shoulder lanes
-   */
-  AllNeighborLanes
-};
+bool extendRouteToDistance(route::FullRoute &route,
+                           physics::Distance const &length,
+                           std::vector<route::FullRoute> &additionalRoutes);
 
 /** @brief function to append a new lane interval to a road segment list
  *
@@ -631,16 +739,17 @@ enum class RouteCreationMode
  * The lane interval is expanded by it's left and right neighbor lanes (with same driving direction) to a complete
  * road segment; which is then appended to the provided road segment list.
  *
+ * After the route is finished, planning::updateRoutePlanningCounters() should be called to update the planning
+ * counters.
+ *
  * @param[in] laneInterval the new lane interval to be append
- * @param[in] roadSegmentList the list of road segments the interval has to be appended
- * @param[in] segmentCountFromDestination the segment count for the new road segment to be created
- * @param[in] includeOppositeLanes if \c true, lanes in opposite driving direction are added, too.
+ * @param[in] laneOffset the lane offset of the new lane interval to be append
+ * @param[in] route the route the interval has to be appended
  *
  */
 void appendRoadSegmentToRoute(route::LaneInterval const &laneInverval,
-                              route::RoadSegmentList &roadSegmentList,
-                              route::SegmentCounter const segmentCountFromDestination = 0u,
-                              RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection);
+                              route::RouteLaneOffset const &laneOffset,
+                              route::FullRoute &route);
 
 /**
  * @brief add an opposing lane segment to an existing (and not empty) road segment with at most the given length
@@ -654,12 +763,14 @@ void appendRoadSegmentToRoute(route::LaneInterval const &laneInverval,
  * @param[in] startPoint is the start point where the opposing lane segment will start
  * @param[in] distance is the maximum distance of the newly added lane segment
  * @param[in/out] roadSegment is the road segment which is updated with the opposing lane segment
+ * @param[in/out] route is the route the road segment belons to
  *
  * @return -1 on failure, otherwise the length of the new lane segment is added
  */
 physics::Distance addOpposingLaneSegmentToRoadSegment(point::ParaPoint const &startpoint,
                                                       physics::Distance const &distance,
-                                                      route::RoadSegment &roadSegment);
+                                                      route::RoadSegment &roadSegment,
+                                                      route::FullRoute &route);
 
 /**
  * @brief add a part of the opposing lane to an existing route. The part is at most distanceOnWrongLane long,
@@ -680,14 +791,16 @@ bool addOpposingLaneToRoute(point::ParaPoint const &pointOnOppositeLane,
 /**
  * @returns the input route expanded by all lanes in opposite driving direction
  *
- * Internally recreates the route by calling appendRoadSegmentToRoute(RouteCreationMode::AllRoutableLanes)
+ * Internally recreates the route by calling appendRoadSegmentToRoute() with a new route
+ * having RouteCreationMode::AllRoutableLanes
  */
 route::FullRoute getRouteExpandedToOppositeLanes(route::FullRoute const &route);
 
 /**
  * @returns the input route expanded by all neighbor lanes
  *
- * Internally recreates the route by calling appendRoadSegmentToRoute(RouteCreationMode::AllAllNeighbors)
+ * Internally recreates the route by calling appendRoadSegmentToRoute()  with a new route
+ * having RouteCreationMode::AllAllNeighbors
  */
 route::FullRoute getRouteExpandedToAllNeighborLanes(route::FullRoute const &route);
 
@@ -767,6 +880,34 @@ inline lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &roadSegment)
 {
   return getGeoBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));
 }
+
+/** @brief get borders of a full route
+ *
+ * The order of the points within the LaneGeometries are ordered according to the route direction.
+ * The borders of successive road segments are collected in the result vector.
+ *
+ * @param[in] route the route to extract the borders from
+ */
+std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRoute const &route);
+
+/**
+ * @brief get the ENU heading of a route at the location of the object
+ *
+ * @param object the object on the route
+ * @param route the route
+ *
+ * @throws std::runtime_error if the objects map matched bounding box is not on the route
+ */
+point::ENUHeading getENUHeadingOfRoute(match::Object const &object, FullRoute const &route);
+
+/**
+ * @brief compare the ENU heading of the route at the location of the object with the ENU heading of the object
+ *
+ * @returns \c true if the difference between object heading and route heading at the object position
+ * is not larger than 90°
+ * @throws std::runtime_error if the objects map matched bounding box is not on the route
+ */
+bool isObjectHeadingInRouteDirection(match::Object const &object, FullRoute const &route);
 
 /**
  * @brief Shorten the provided road segment by a certain distance from the begin

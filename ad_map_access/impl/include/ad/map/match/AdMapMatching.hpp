@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -217,17 +217,15 @@ public:
    * @param[in] enuObjectPosition object position, orientation, dimensions and ENRReferencePoint
    *  to match against the map in ENU coordinate frame
    * @param[in] distance search radius around geoPoint to select a lane as a match
-   * @param[in] minProbabilty A probability threshold to be considered for the results.
    * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
    *   This parameter is heavily influencing the performance of this function:
-   *   A samplingDistance of 0.1 at a car (3x5m) means 150x map matching. With a distance of 1. we get only 15x map
-   * matching.
+   *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
+   * matching. To ensure the correctness of the LaneOccupiedRegions, this parameter is set <= distance!
    *
    * @returns the map matched bounding box of the object
    */
   MapMatchedObjectBoundingBox getMapMatchedBoundingBox(ENUObjectPosition const &enuObjectPosition,
                                                        physics::Distance const &distance,
-                                                       physics::Probability const &minProbability,
                                                        physics::Distance const &samplingDistance
                                                        = physics::Distance(1.));
 
@@ -236,20 +234,19 @@ public:
    *
    * Merge the lane occupied regions of the getMapMatchedBoundingBox() results of all
    * position entries. See getMapMatchedBoundingBox() for a detailed description.
+   * For a correct handling of the inner borders crossed on matching a bigger object, this function
+   * only works as expected if the the provided enuObjectPositionList covers the whole object.
    *
    * @param[in] enuObjectPositionList list of ENUObjectPosition entries
    * @param[in] distance search radius around geoPoint to select a lane as a match
-   * @param[in] minProbabilty A probability threshold to be considered for the results.
    * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
-   *   This parameter is heavily influencing the performance of this function:
-   *   A samplingDistance of 0.1 at a car (3x5m) means 150x map matching. With a distance of 1. we get only 15x map
-   * matching.
+   *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
+   * matching. To ensure the correctness of the LaneOccupiedRegions, this parameter is set <= distance!
    *
    * @returns the map matched bounding box of the object
    */
   LaneOccupiedRegionList getLaneOccupiedRegions(ENUObjectPositionList enuObjectPositionList,
                                                 physics::Distance const &distance,
-                                                physics::Probability const &minProbability,
                                                 physics::Distance const &samplingDistance = physics::Distance(1.));
 
   /**
@@ -293,6 +290,14 @@ private:
 
   static match::MapMatchedPositionConfidenceList findLanesInputChecked(point::ECEFPoint const &ecefPoint,
                                                                        physics::Distance const &distance);
+
+  static match::MapMatchedPositionConfidenceList
+  findLanesInputChecked(std::vector<lane::Lane::ConstPtr> const &relevantLanes,
+                        point::ECEFPoint const &ecefPoint,
+                        physics::Distance const &distance);
+
+  static std::vector<lane::Lane::ConstPtr> getRelevantLanesInputChecked(point::ECEFPoint const &ecefPoint,
+                                                                        physics::Distance const &distance);
 
   /**
    * @brief extract the mapMatchedPositions and write them into a map of occuppied regions

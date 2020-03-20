@@ -24,6 +24,7 @@
 #include "ad/map/lane/LaneId.hpp"
 #include "ad/map/lane/LaneIdList.hpp"
 #include "ad/map/route/LaneInterval.hpp"
+#include "ad/map/route/RouteLaneOffset.hpp"
 /*!
  * @brief namespace ad
  */
@@ -110,7 +111,7 @@ struct LaneSegment
   {
     return (leftNeighbor == other.leftNeighbor) && (rightNeighbor == other.rightNeighbor)
       && (predecessors == other.predecessors) && (successors == other.successors)
-      && (laneInterval == other.laneInterval);
+      && (laneInterval == other.laneInterval) && (routeLaneOffset == other.routeLaneOffset);
   }
 
   /**
@@ -149,6 +150,11 @@ struct LaneSegment
    * The interval of the lane
    */
   ::ad::map::route::LaneInterval laneInterval;
+
+  /*!
+   * The offset of the lane in number of lane changes left (--) or right (++) from start of the route planning.
+   */
+  ::ad::map::route::RouteLaneOffset routeLaneOffset{0};
 };
 
 } // namespace route
@@ -201,6 +207,9 @@ inline std::ostream &operator<<(std::ostream &os, LaneSegment const &_value)
   os << ",";
   os << "laneInterval:";
   os << _value.laneInterval;
+  os << ",";
+  os << "routeLaneOffset:";
+  os << _value.routeLaneOffset;
   os << ")";
   return os;
 }

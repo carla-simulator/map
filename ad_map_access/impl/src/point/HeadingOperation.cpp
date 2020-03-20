@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -95,6 +95,18 @@ ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enuR
   {
     result = ENUHeading(std::atan2(sinHeadingAbs, cosHeading));
   }
+  // atan2 seems to allow -M_PI, so normalize that one
+  if (result == ENUHeading(-M_PI))
+  {
+    result = ENUHeading(M_PI);
+  }
+  return result;
+}
+
+ENUHeading createENUHeading(ENUPoint const &start, ENUPoint const &end)
+{
+  ENUPoint const direction = end - start;
+  ENUHeading result{std::atan2(direction.y, direction.x)};
   // atan2 seems to allow -M_PI, so normalize that one
   if (result == ENUHeading(-M_PI))
   {

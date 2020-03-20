@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2019 Intel Corporation
+// Copyright (C) 2019-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -33,7 +33,8 @@ bool AdMapFactory::isOpenDriveMap(std::string const &mapName)
 
 bool AdMapFactory::createAdMap(std::string const &mapFilePath,
                                double const overlapMargin,
-                               intersection::IntersectionType const defaultIntersectionType)
+                               intersection::IntersectionType const defaultIntersectionType,
+                               landmark::TrafficLightType const defaultTrafficLightType)
 {
   // parse data from xml file
   ::opendrive::OpenDriveData openDriveData;
@@ -42,12 +43,13 @@ bool AdMapFactory::createAdMap(std::string const &mapFilePath,
     access::getLogger()->warn("Unable to open opendrive map for reading {}", mapFilePath);
     return false;
   }
-  return createAdMap(openDriveData, overlapMargin, defaultIntersectionType);
+  return createAdMap(openDriveData, overlapMargin, defaultIntersectionType, defaultTrafficLightType);
 }
 
 bool AdMapFactory::createAdMapFromString(std::string const &mapContent,
                                          double const overlapMargin,
-                                         intersection::IntersectionType const defaultIntersectionType)
+                                         intersection::IntersectionType const defaultIntersectionType,
+                                         landmark::TrafficLightType const defaultTrafficLightType)
 {
   // parse data from string
   ::opendrive::OpenDriveData openDriveData;
@@ -56,12 +58,13 @@ bool AdMapFactory::createAdMapFromString(std::string const &mapContent,
     access::getLogger()->warn("Unable to parse opendrive content");
     return false;
   }
-  return createAdMap(openDriveData, overlapMargin, defaultIntersectionType);
+  return createAdMap(openDriveData, overlapMargin, defaultIntersectionType, defaultTrafficLightType);
 }
 
 bool AdMapFactory::createAdMap(::opendrive::OpenDriveData &openDriveData,
                                double const overlapMargin,
-                               intersection::IntersectionType const defaultIntersectionType)
+                               intersection::IntersectionType const defaultIntersectionType,
+                               landmark::TrafficLightType const defaultTrafficLightType)
 {
   if (!::opendrive::GenerateLaneMap(openDriveData, overlapMargin))
   {
@@ -87,7 +90,7 @@ bool AdMapFactory::createAdMap(::opendrive::OpenDriveData &openDriveData,
 
   access::getLogger()->info("Using reference point {}", access::getENUReferencePoint());
 
-  return convertToAdMap(openDriveData, defaultIntersectionType);
+  return convertToAdMap(openDriveData, defaultIntersectionType, defaultTrafficLightType);
 }
 
 restriction::Restrictions AdMapFactory::createRoadRestrictions() const
@@ -283,7 +286,8 @@ bool AdMapFactory::addSpecialContacts(::opendrive::Lane const &lane, ::opendrive
 }
 
 bool AdMapFactory::addContactLanes(::opendrive::Lane const &lane,
-                                   intersection::IntersectionType const defaultIntersectionType)
+                                   intersection::IntersectionType const defaultIntersectionType,
+                                   landmark::TrafficLightType const defaultTrafficLightType)
 {
   bool ok = true;
 
@@ -330,16 +334,12 @@ bool AdMapFactory::addContactLanes(::opendrive::Lane const &lane,
     case intersection::IntersectionType::TrafficLight:
     {
       defaultIntersectionContact.push_back(lane::ContactType::TRAFFIC_LIGHT);
-      // fake a solid traffic light to get the basic logic to work for now
+      // fake a traffic light to get the basic logic to work for now
       point::Geometry boundingBox;
       auto position = adlane.edgeLeft.ecefEdge[0];
       auto orientation = adlane.edgeLeft.ecefEdge[1];
-      (void)addTrafficLight(access::PartitionId(0),
-                            fakeTrafficLightId,
-                            landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN,
-                            position,
-                            orientation,
-                            boundingBox);
+      (void)addTrafficLight(
+        access::PartitionId(0), fakeTrafficLightId, defaultTrafficLightType, position, orientation, boundingBox);
       break;
     }
     case intersection::IntersectionType::Unknown:
@@ -465,7 +465,8 @@ bool AdMapFactory::addContactLanes(::opendrive::Lane const &lane,
 }
 
 bool AdMapFactory::convertToAdMap(::opendrive::OpenDriveData &mapData,
-                                  intersection::IntersectionType const defaultIntersectionType)
+                                  intersection::IntersectionType const defaultIntersectionType,
+                                  landmark::TrafficLightType const defaultTrafficLightType)
 {
   bool ok = true;
 
@@ -501,7 +502,7 @@ bool AdMapFactory::convertToAdMap(::opendrive::OpenDriveData &mapData,
   for (auto const &element : mapData.laneMap)
   {
     auto &lane = element.second;
-    if (!addContactLanes(lane, defaultIntersectionType))
+    if (!addContactLanes(lane, defaultIntersectionType, defaultTrafficLightType))
     {
       contactGenerationOk = false;
     }

@@ -2,8 +2,6 @@
 #
 # Copyright (C) 2019 Intel Corporation
 #
-# SPDX-License-Identifier: MIT
-#
 # ----------------- END LICENSE BLOCK -----------------------------------
 
 if(NOT TARGET GTest::gtest)
@@ -22,7 +20,7 @@ if(NOT TARGET GTest::gtest)
       message(STATUS "Using gtest source build from: ${gtest_src_path}")
       set(BUILD_SHARED_LIBS_SAVED "${BUILD_SHARED_LIBS}")
       set(BUILD_SHARED_LIBS OFF)
-      SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
+      set(CMAKE_POSITION_INDEPENDENT_CODE ON)
       add_subdirectory(${gtest_src_path} gtest EXCLUDE_FROM_ALL)
       set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS_SAVED}")
       add_library(GTest::gtest ALIAS gtest)
