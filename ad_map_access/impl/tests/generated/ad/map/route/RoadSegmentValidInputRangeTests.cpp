@@ -45,6 +45,9 @@ TEST(RoadSegmentValidInputRangeTests, testValidInputRange)
   bool valueDrivableLaneSegmentsElementLaneIntervalWrongWay{true};
   valueDrivableLaneSegmentsElementLaneInterval.wrongWay = valueDrivableLaneSegmentsElementLaneIntervalWrongWay;
   valueDrivableLaneSegmentsElement.laneInterval = valueDrivableLaneSegmentsElementLaneInterval;
+  ::ad::map::route::RouteLaneOffset valueDrivableLaneSegmentsElementRouteLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+  valueDrivableLaneSegmentsElement.routeLaneOffset = valueDrivableLaneSegmentsElementRouteLaneOffset;
   valueDrivableLaneSegments.resize(1, valueDrivableLaneSegmentsElement);
   value.drivableLaneSegments = valueDrivableLaneSegments;
   ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
@@ -92,6 +95,9 @@ TEST(RoadSegmentValidInputRangeTests, testValidInputRangeBoundingSphereTooSmall)
   bool valueDrivableLaneSegmentsElementLaneIntervalWrongWay{true};
   valueDrivableLaneSegmentsElementLaneInterval.wrongWay = valueDrivableLaneSegmentsElementLaneIntervalWrongWay;
   valueDrivableLaneSegmentsElement.laneInterval = valueDrivableLaneSegmentsElementLaneInterval;
+  ::ad::map::route::RouteLaneOffset valueDrivableLaneSegmentsElementRouteLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+  valueDrivableLaneSegmentsElement.routeLaneOffset = valueDrivableLaneSegmentsElementRouteLaneOffset;
   valueDrivableLaneSegments.resize(1, valueDrivableLaneSegmentsElement);
   value.drivableLaneSegments = valueDrivableLaneSegments;
   ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
@@ -147,6 +153,9 @@ TEST(RoadSegmentValidInputRangeTests, testValidInputRangeBoundingSphereTooBig)
   bool valueDrivableLaneSegmentsElementLaneIntervalWrongWay{true};
   valueDrivableLaneSegmentsElementLaneInterval.wrongWay = valueDrivableLaneSegmentsElementLaneIntervalWrongWay;
   valueDrivableLaneSegmentsElement.laneInterval = valueDrivableLaneSegmentsElementLaneInterval;
+  ::ad::map::route::RouteLaneOffset valueDrivableLaneSegmentsElementRouteLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+  valueDrivableLaneSegmentsElement.routeLaneOffset = valueDrivableLaneSegmentsElementRouteLaneOffset;
   valueDrivableLaneSegments.resize(1, valueDrivableLaneSegmentsElement);
   value.drivableLaneSegments = valueDrivableLaneSegments;
   ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(

@@ -43,6 +43,9 @@ TEST(LaneSegmentValidInputRangeTests, testValidInputRange)
   bool valueLaneIntervalWrongWay{true};
   valueLaneInterval.wrongWay = valueLaneIntervalWrongWay;
   value.laneInterval = valueLaneInterval;
+  ::ad::map::route::RouteLaneOffset valueRouteLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+  value.routeLaneOffset = valueRouteLaneOffset;
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
@@ -71,6 +74,9 @@ TEST(LaneSegmentValidInputRangeTests, testValidInputRangeLaneIntervalTooSmall)
   bool valueLaneIntervalWrongWay{true};
   valueLaneInterval.wrongWay = valueLaneIntervalWrongWay;
   value.laneInterval = valueLaneInterval;
+  ::ad::map::route::RouteLaneOffset valueRouteLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+  value.routeLaneOffset = valueRouteLaneOffset;
 
   // override member with data type value below input range minimum
   ::ad::map::route::LaneInterval invalidInitializedMember;
@@ -105,6 +111,9 @@ TEST(LaneSegmentValidInputRangeTests, testValidInputRangeLaneIntervalTooBig)
   bool valueLaneIntervalWrongWay{true};
   valueLaneInterval.wrongWay = valueLaneIntervalWrongWay;
   value.laneInterval = valueLaneInterval;
+  ::ad::map::route::RouteLaneOffset valueRouteLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+  value.routeLaneOffset = valueRouteLaneOffset;
 
   // override member with data type value above input range maximum
   ::ad::map::route::LaneInterval invalidInitializedMember;

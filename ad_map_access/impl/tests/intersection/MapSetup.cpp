@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -81,7 +81,7 @@ void prepareMapTown01PrioRight()
   prepareMap("test_files/Town01.prioRight.txt");
 }
 
-void prepareMapTown01Unknown()
+void prepareMapTown01TrafficLight()
 {
   prepareMap("test_files/Town01.txt");
 }

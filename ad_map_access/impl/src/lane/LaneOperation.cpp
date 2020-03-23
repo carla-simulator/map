@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -13,6 +13,7 @@
 #include "ad/map/access/Operation.hpp"
 #include "ad/map/lane/BorderOperation.hpp"
 #include "ad/map/match/AdMapMatching.hpp"
+#include "ad/map/match/MapMatchedOperation.hpp"
 #include "ad/map/point/Operation.hpp"
 #include "ad/physics/RangeOperation.hpp"
 
@@ -41,25 +42,45 @@ LaneIdList getLanes()
   return access::getStore().getLanes();
 }
 
+void interpolateHeadingParametricPoints(physics::Distance const &length,
+                                        physics::ParametricValue const &headingT,
+                                        physics::ParametricValue &longTStart,
+                                        physics::ParametricValue &longTEnd)
+{
+  // we target an area of +- 5cm around the point to determine the heading
+  if (length < physics::Distance(0.1))
+  {
+    longTStart = physics::ParametricValue(0.);
+    longTEnd = physics::ParametricValue(1.);
+  }
+  else
+  {
+    physics::ParametricValue deltaOffset(physics::Distance(0.1) / length);
+    physics::ParametricValue deltaOffsetHalf = deltaOffset / 2.;
+    if (headingT > physics::ParametricValue(1.) - deltaOffsetHalf)
+    {
+      longTStart = physics::ParametricValue(1.) - deltaOffset;
+      longTEnd = physics::ParametricValue(1.);
+    }
+    else if (headingT < deltaOffsetHalf)
+    {
+      longTStart = physics::ParametricValue(0.);
+      longTEnd = deltaOffset;
+    }
+    else
+    {
+      longTStart = headingT - deltaOffsetHalf;
+      longTEnd = headingT + deltaOffsetHalf;
+    }
+  }
+}
+
 point::ECEFHeading getLaneECEFDirection(Lane const &lane, point::ParaPoint const &paraPoint)
 {
   physics::ParametricValue longTStart;
   physics::ParametricValue longTEnd;
-  if (paraPoint.parametricOffset > physics::ParametricValue(.98))
-  {
-    longTStart = physics::ParametricValue(.96);
-    longTEnd = physics::ParametricValue(1.);
-  }
-  else if (paraPoint.parametricOffset < physics::ParametricValue(.02))
-  {
-    longTStart = physics::ParametricValue(0.);
-    longTEnd = physics::ParametricValue(.04);
-  }
-  else
-  {
-    longTStart = paraPoint.parametricOffset - physics::ParametricValue(.02);
-    longTEnd = paraPoint.parametricOffset + physics::ParametricValue(.02);
-  }
+  interpolateHeadingParametricPoints(lane.length, paraPoint.parametricOffset, longTStart, longTEnd);
+
   point::ECEFPoint const laneDirStart = getParametricPoint(lane, longTStart, physics::ParametricValue(.5));
   point::ECEFPoint const laneDirEnd = getParametricPoint(lane, longTEnd, physics::ParametricValue(.5));
   point::ECEFHeading const laneDirection = point::createECEFHeading(laneDirStart, laneDirEnd);
@@ -110,11 +131,11 @@ LaneId uniqueLaneId(point::GeoPoint const &geoPoint)
 physics::Distance getWidth(Lane const &lane, physics::ParametricValue const &longitudinalOffset)
 {
   physics::Distance width(0.);
-  point::ECEFPoint point_on_left_edge;
-  point::ECEFPoint point_on_right_edge;
-  if (projectParametricPointToEdges(lane, longitudinalOffset, point_on_left_edge, point_on_right_edge))
+  point::ECEFPoint pointOnLeftEdge;
+  point::ECEFPoint pointOnRightEdge;
+  if (projectParametricPointToEdges(lane, longitudinalOffset, pointOnLeftEdge, pointOnRightEdge))
   {
-    width = distance(point_on_left_edge, point_on_right_edge);
+    width = distance(pointOnLeftEdge, pointOnRightEdge);
   }
   return width;
 }
@@ -236,20 +257,20 @@ point::ECEFPoint getParametricPoint(Lane const &lane,
 
 bool projectParametricPointToEdges(Lane const &lane,
                                    point::ECEFPoint const &referencePoint,
-                                   point::ECEFPoint &point_on_left_edge,
-                                   point::ECEFPoint &point_on_right_edge)
+                                   point::ECEFPoint &pointOnLeftEdge,
+                                   point::ECEFPoint &pointOnRightEdge)
 {
   if (isValid(referencePoint))
   {
-    auto const long_t_left = findNearestPointOnEdge(lane.edgeLeft, referencePoint);
-    if (isRangeValid(long_t_left))
+    auto const longTLeft = findNearestPointOnEdge(lane.edgeLeft, referencePoint);
+    if (isRangeValid(longTLeft))
     {
-      auto const long_t_right = findNearestPointOnEdge(lane.edgeRight, referencePoint);
-      if (isRangeValid(long_t_right))
+      auto const longTRight = findNearestPointOnEdge(lane.edgeRight, referencePoint);
+      if (isRangeValid(longTRight))
       {
-        point_on_left_edge = getParametricPoint(lane.edgeLeft, long_t_left);
-        point_on_right_edge = getParametricPoint(lane.edgeRight, long_t_right);
-        return isValid(point_on_left_edge) && isValid(point_on_right_edge);
+        pointOnLeftEdge = getParametricPoint(lane.edgeLeft, longTLeft);
+        pointOnRightEdge = getParametricPoint(lane.edgeRight, longTRight);
+        return isValid(pointOnLeftEdge) && isValid(pointOnRightEdge);
       }
     }
   }
@@ -258,11 +279,11 @@ bool projectParametricPointToEdges(Lane const &lane,
 
 bool projectParametricPointToEdges(Lane const &lane,
                                    physics::ParametricValue const &longitudinalOffset,
-                                   point::ECEFPoint &point_on_left_edge,
-                                   point::ECEFPoint &point_on_right_edge)
+                                   point::ECEFPoint &pointOnLeftEdge,
+                                   point::ECEFPoint &pointOnRightEdge)
 {
   point::ECEFPoint const centerPoint = getParametricPoint(lane, longitudinalOffset, physics::ParametricValue(0.5));
-  return projectParametricPointToEdges(lane, centerPoint, point_on_left_edge, point_on_right_edge);
+  return projectParametricPointToEdges(lane, centerPoint, pointOnLeftEdge, pointOnRightEdge);
 }
 
 point::ECEFPoint getProjectedParametricPoint(Lane const &lane,
@@ -390,39 +411,10 @@ void updateLaneLengths(Lane &lane)
       lane.lengthRange.maximum = std::max(lane.edgeLeft.length, lane.edgeRight.length);
       lane.length = (lane.edgeLeft.length + lane.edgeRight.length) * 0.5;
 
-      lane.widthRange.minimum = std::numeric_limits<physics::Distance>::max();
-      lane.widthRange.maximum = physics::Distance(0.);
-      physics::Distance width_sum(0.);
-      size_t width_sum_count(0u);
-      physics::ParametricValue parametricStepsize(0.5);
-      if (lane.length > physics::Distance(1.))
-      {
-        parametricStepsize
-          = std::max(physics::ParametricValue(0.01), physics::ParametricValue(1. / static_cast<double>(lane.length)));
-      }
-      physics::ParametricValue longitudinalOffset(0.);
-      bool laneEndReached = false;
-      do
-      {
-        physics::Distance const width = getWidth(lane, longitudinalOffset);
-        unionRangeWith(lane.widthRange, width);
-        width_sum += width;
-        width_sum_count++;
-        if (longitudinalOffset < physics::ParametricValue(1.))
-        {
-          longitudinalOffset += parametricStepsize;
-          if (longitudinalOffset > physics::ParametricValue(1.))
-          {
-            longitudinalOffset = physics::ParametricValue(1.);
-          }
-        }
-        else
-        {
-          laneEndReached = true;
-        }
-      } while (!laneEndReached);
-
-      lane.width = (width_sum / static_cast<double>(width_sum_count));
+      auto widthRangeResult = calculateWidthRange(
+        lane.edgeLeft.ecefEdge, lane.edgeLeft.length, lane.edgeRight.ecefEdge, lane.edgeRight.length);
+      lane.widthRange = widthRangeResult.first;
+      lane.width = widthRangeResult.second;
     }
     else
     {
@@ -537,14 +529,14 @@ bool projectPositionToLaneInHeadingDirection(point::ParaPoint const &position,
 
 bool findNearestPointOnLane(Lane const &lane, point::ECEFPoint const &pt, match::MapMatchedPosition &mmpos)
 {
-  auto const long_t_left = findNearestPointOnEdge(lane.edgeLeft, pt);
-  if (long_t_left.isValid())
+  auto const longTLeft = findNearestPointOnEdge(lane.edgeLeft, pt);
+  if (longTLeft.isValid())
   {
-    auto const long_t_right = findNearestPointOnEdge(lane.edgeRight, pt);
-    if (long_t_right.isValid())
+    auto const longTRight = findNearestPointOnEdge(lane.edgeRight, pt);
+    if (longTRight.isValid())
     {
-      point::ECEFPoint const pt_left = point::getParametricPoint(lane.edgeLeft, long_t_left);
-      point::ECEFPoint const pt_right = point::getParametricPoint(lane.edgeRight, long_t_right);
+      point::ECEFPoint const pt_left = point::getParametricPoint(lane.edgeLeft, longTLeft);
+      point::ECEFPoint const pt_right = point::getParametricPoint(lane.edgeRight, longTRight);
 
       mmpos.lanePoint.paraPoint.laneId = lane.id;
       mmpos.lanePoint.lateralT = point::findNearestPointOnEdge(pt, pt_left, pt_right);
@@ -574,7 +566,7 @@ bool findNearestPointOnLane(Lane const &lane, point::ECEFPoint const &pt, match:
       }
       mmpos.matchedPoint = point::vectorInterpolate(pt_left, pt_right, nearestT);
       mmpos.lanePoint.paraPoint.parametricOffset
-        = nearestT * long_t_left + (physics::ParametricValue(1.) - nearestT) * long_t_right;
+        = nearestT * longTLeft + (physics::ParametricValue(1.) - nearestT) * longTRight;
       mmpos.lanePoint.laneLength = lane.length;
       mmpos.lanePoint.laneWidth = point::distance(pt_left, pt_right);
       mmpos.queryPoint = pt;
@@ -639,6 +631,13 @@ physics::Distance calcLength(LaneId const &laneId)
   return lane->length;
 }
 
+physics::Distance calcLength(match::LaneOccupiedRegion const &laneOccupiedRegion)
+{
+  auto const rangeLength
+    = (laneOccupiedRegion.longitudinalRange.maximum - laneOccupiedRegion.longitudinalRange.minimum);
+  return rangeLength * calcLength(laneOccupiedRegion.laneId);
+}
+
 physics::Distance calcWidth(point::ParaPoint const &paraPoint)
 {
   return calcWidth(paraPoint.laneId, paraPoint.parametricOffset);
@@ -661,6 +660,12 @@ physics::Distance calcWidth(point::ENUPoint const &enuPoint)
     return physics::Distance(-1.0);
   }
   return calcWidth(mapMatchedPositions.front().lanePoint.paraPoint);
+}
+
+physics::Distance calcWidth(match::LaneOccupiedRegion const &laneOccupiedRegion)
+{
+  auto const rangeWidth = (laneOccupiedRegion.lateralRange.maximum - laneOccupiedRegion.lateralRange.minimum);
+  return rangeWidth * calcWidth(match::getCenterParaPoint(laneOccupiedRegion));
 }
 
 ContactLocation getDirectNeighborhoodRelation(LaneId const laneId, LaneId const checkLaneId)

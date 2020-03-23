@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -25,6 +25,10 @@ struct IndexPairs
 
 IndexPairs getIndexPairs(point::ENUEdge const &leftEdge, point::ENUEdge const &rightEdge);
 void updateLaneLengths(Lane &lane);
+void interpolateHeadingParametricPoints(physics::Distance const &length,
+                                        physics::ParametricValue const &headingT,
+                                        physics::ParametricValue &longTStart,
+                                        physics::ParametricValue &longTEnd);
 
 } // namespace lane
 } // namespace map

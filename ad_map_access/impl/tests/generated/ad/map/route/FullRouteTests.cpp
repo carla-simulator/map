@@ -60,6 +60,10 @@ protected:
       = valueRoadSegmentsElementDrivableLaneSegmentsElementLaneIntervalWrongWay;
     valueRoadSegmentsElementDrivableLaneSegmentsElement.laneInterval
       = valueRoadSegmentsElementDrivableLaneSegmentsElementLaneInterval;
+    ::ad::map::route::RouteLaneOffset valueRoadSegmentsElementDrivableLaneSegmentsElementRouteLaneOffset(
+      std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+    valueRoadSegmentsElementDrivableLaneSegmentsElement.routeLaneOffset
+      = valueRoadSegmentsElementDrivableLaneSegmentsElementRouteLaneOffset;
     valueRoadSegmentsElementDrivableLaneSegments.resize(1, valueRoadSegmentsElementDrivableLaneSegmentsElement);
     valueRoadSegmentsElement.drivableLaneSegments = valueRoadSegmentsElementDrivableLaneSegments;
     ::ad::map::route::SegmentCounter valueRoadSegmentsElementSegmentCountFromDestination(
@@ -85,6 +89,17 @@ protected:
     ::ad::map::route::SegmentCounter valueFullRouteSegmentCount(
       std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
     value.fullRouteSegmentCount = valueFullRouteSegmentCount;
+    ::ad::map::route::RouteLaneOffset valueDestinationLaneOffset(
+      std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+    value.destinationLaneOffset = valueDestinationLaneOffset;
+    ::ad::map::route::RouteLaneOffset valueMinLaneOffset(
+      std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+    value.minLaneOffset = valueMinLaneOffset;
+    ::ad::map::route::RouteLaneOffset valueMaxLaneOffset(
+      std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
+    value.maxLaneOffset = valueMaxLaneOffset;
+    ::ad::map::route::RouteCreationMode valueRouteCreationMode(::ad::map::route::RouteCreationMode::Undefined);
+    value.routeCreationMode = valueRouteCreationMode;
     mValue = value;
   }
 
@@ -179,6 +194,10 @@ TEST_F(FullRouteTests, comparisonOperatorRoadSegmentsDiffers)
     = roadSegmentsElementDrivableLaneSegmentsElementLaneIntervalWrongWay;
   roadSegmentsElementDrivableLaneSegmentsElement.laneInterval
     = roadSegmentsElementDrivableLaneSegmentsElementLaneInterval;
+  ::ad::map::route::RouteLaneOffset roadSegmentsElementDrivableLaneSegmentsElementRouteLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::max());
+  roadSegmentsElementDrivableLaneSegmentsElement.routeLaneOffset
+    = roadSegmentsElementDrivableLaneSegmentsElementRouteLaneOffset;
   roadSegmentsElementDrivableLaneSegments.resize(2, roadSegmentsElementDrivableLaneSegmentsElement);
   roadSegmentsElement.drivableLaneSegments = roadSegmentsElementDrivableLaneSegments;
   ::ad::map::route::SegmentCounter roadSegmentsElementSegmentCountFromDestination(
@@ -221,6 +240,51 @@ TEST_F(FullRouteTests, comparisonOperatorFullRouteSegmentCountDiffers)
   ::ad::map::route::FullRoute valueA = mValue;
   ::ad::map::route::SegmentCounter fullRouteSegmentCount(std::numeric_limits<::ad::map::route::SegmentCounter>::max());
   valueA.fullRouteSegmentCount = fullRouteSegmentCount;
+  ::ad::map::route::FullRoute valueB = mValue;
+
+  EXPECT_FALSE(valueA == valueB);
+  EXPECT_TRUE(valueA != valueB);
+}
+
+TEST_F(FullRouteTests, comparisonOperatorDestinationLaneOffsetDiffers)
+{
+  ::ad::map::route::FullRoute valueA = mValue;
+  ::ad::map::route::RouteLaneOffset destinationLaneOffset(
+    std::numeric_limits<::ad::map::route::RouteLaneOffset>::max());
+  valueA.destinationLaneOffset = destinationLaneOffset;
+  ::ad::map::route::FullRoute valueB = mValue;
+
+  EXPECT_FALSE(valueA == valueB);
+  EXPECT_TRUE(valueA != valueB);
+}
+
+TEST_F(FullRouteTests, comparisonOperatorMinLaneOffsetDiffers)
+{
+  ::ad::map::route::FullRoute valueA = mValue;
+  ::ad::map::route::RouteLaneOffset minLaneOffset(std::numeric_limits<::ad::map::route::RouteLaneOffset>::max());
+  valueA.minLaneOffset = minLaneOffset;
+  ::ad::map::route::FullRoute valueB = mValue;
+
+  EXPECT_FALSE(valueA == valueB);
+  EXPECT_TRUE(valueA != valueB);
+}
+
+TEST_F(FullRouteTests, comparisonOperatorMaxLaneOffsetDiffers)
+{
+  ::ad::map::route::FullRoute valueA = mValue;
+  ::ad::map::route::RouteLaneOffset maxLaneOffset(std::numeric_limits<::ad::map::route::RouteLaneOffset>::max());
+  valueA.maxLaneOffset = maxLaneOffset;
+  ::ad::map::route::FullRoute valueB = mValue;
+
+  EXPECT_FALSE(valueA == valueB);
+  EXPECT_TRUE(valueA != valueB);
+}
+
+TEST_F(FullRouteTests, comparisonOperatorRouteCreationModeDiffers)
+{
+  ::ad::map::route::FullRoute valueA = mValue;
+  ::ad::map::route::RouteCreationMode routeCreationMode(::ad::map::route::RouteCreationMode::AllNeighborLanes);
+  valueA.routeCreationMode = routeCreationMode;
   ::ad::map::route::FullRoute valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

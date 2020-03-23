@@ -9,8 +9,10 @@
 #include "ad/map/route/Planning.hpp"
 
 #include <algorithm>
+#include "RouteOperationPrivate.hpp"
 #include "ad/map/access/Logging.hpp"
 #include "ad/map/access/Operation.hpp"
+#include "ad/map/lane/BorderOperation.hpp"
 #include "ad/map/lane/LaneOperation.hpp"
 #include "ad/map/match/AdMapMatching.hpp"
 #include "ad/map/match/MapMatchedOperation.hpp"
@@ -22,6 +24,20 @@ namespace ad {
 namespace map {
 namespace route {
 namespace planning {
+
+void updateRoutePlanningCounters(route::FullRoute &route)
+{
+  static RoutePlanningCounter routePlanningCounter = 0u;
+
+  // post process the route counters
+  routePlanningCounter++;
+  route.routePlanningCounter = routePlanningCounter;
+  route.fullRouteSegmentCount = route.roadSegments.size();
+  for (size_t i = 0; i < route.roadSegments.size(); ++i)
+  {
+    route.roadSegments[i].segmentCountFromDestination = route.fullRouteSegmentCount - i;
+  }
+}
 
 RoutingParaPoint createRoutingPoint(lane::LaneId const &laneId,
                                     physics::ParametricValue const &parametricOffset,
@@ -44,40 +60,61 @@ RoutingParaPoint createRoutingPoint(point::ParaPoint const &paraPoint, RoutingDi
 RoutingParaPoint createRoutingPoint(match::LaneOccupiedRegion const &occupiedRegion,
                                     RoutingDirection const &routingDirection)
 {
-  return createRoutingPoint(match::getParaPoint(occupiedRegion), routingDirection);
+  point::ParaPoint paraPoint;
+  paraPoint.laneId = occupiedRegion.laneId;
+  bool const laneDirectionPositive = lane::isLaneDirectionPositive(paraPoint.laneId);
+  bool const routingDirectionPositive = (routingDirection != RoutingDirection::NEGATIVE);
+  if (laneDirectionPositive ^ routingDirectionPositive)
+  {
+    // both different
+    paraPoint.parametricOffset = occupiedRegion.longitudinalRange.maximum;
+  }
+  else
+  {
+    // both positive or both negative
+    paraPoint.parametricOffset = occupiedRegion.longitudinalRange.minimum;
+  }
+
+  return createRoutingPoint(paraPoint, routingDirection);
 }
 
-RoutingParaPoint createRoutingPoint(point::ParaPoint const &paraPoint, point::ENUHeading const &heading)
+RoutingDirection getNominalRoutingDirection(point::ParaPoint const &paraPoint, point::ENUHeading const &heading)
 {
-  RoutingParaPoint routingPoint;
+  RoutingDirection routingDirection;
   if (lane::isHeadingInLaneDirection(paraPoint, heading))
   {
     if (lane::isLaneDirectionPositive(paraPoint.laneId))
     {
-      routingPoint = createRoutingPoint(paraPoint, RoutingDirection::POSITIVE);
+      routingDirection = RoutingDirection::POSITIVE;
     }
     else
     {
-      routingPoint = createRoutingPoint(paraPoint, RoutingDirection::NEGATIVE);
+      routingDirection = RoutingDirection::NEGATIVE;
     }
   }
   else
   {
     if (lane::isLaneDirectionPositive(paraPoint.laneId))
     {
-      routingPoint = createRoutingPoint(paraPoint, RoutingDirection::NEGATIVE);
+      routingDirection = RoutingDirection::NEGATIVE;
     }
     else
     {
-      routingPoint = createRoutingPoint(paraPoint, RoutingDirection::POSITIVE);
+      routingDirection = RoutingDirection::POSITIVE;
     }
   }
-  return routingPoint;
+  return routingDirection;
+}
+
+RoutingParaPoint createRoutingPoint(point::ParaPoint const &paraPoint, point::ENUHeading const &heading)
+{
+  return createRoutingPoint(paraPoint, getNominalRoutingDirection(paraPoint, heading));
 }
 
 RoutingParaPoint createRoutingPoint(match::LaneOccupiedRegion const &occupiedRegion, point::ENUHeading const &heading)
 {
-  return createRoutingPoint(match::getParaPoint(occupiedRegion), heading);
+  return createRoutingPoint(occupiedRegion,
+                            getNominalRoutingDirection(match::getCenterParaPoint(occupiedRegion), heading));
 }
 
 void addParaPointToRouteDestList(point::ParaPoint const &paraPoint, std::vector<RoutingParaPoint> &routingDestList)
@@ -126,28 +163,41 @@ void addParaPointToRouteDestList(point::ParaPoint const &paraPoint, std::vector<
   return;
 }
 
-FullRoute createFullRoute(const point::ParaPointList rawRoute)
+FullRoute createFullRoute(const planning::Route::RawRoute &rawRoute, RouteCreationMode const routeCreationMode)
 {
-  static RoutePlanningCounter routePlanningCounter = 0u;
-
   FullRoute resultRoute;
+  resultRoute.routeCreationMode = routeCreationMode;
 
-  for (size_t i = 0u; i < rawRoute.size();)
+  RouteLaneOffset currentLaneOffset = 0;
+  for (size_t i = 0u; i < rawRoute.paraPointList.size();)
   {
     // first create a plain route containing no neighboring lanes
-    const point::ParaPoint &intervalStartPoint = rawRoute[i];
+    const point::ParaPoint &intervalStartPoint = rawRoute.paraPointList[i];
     LaneInterval newInterval;
     newInterval.laneId = intervalStartPoint.laneId;
     newInterval.start = intervalStartPoint.parametricOffset;
     newInterval.end = newInterval.start;
 
     // search the end: the last point of the last neighbor
-    for (++i; i < rawRoute.size(); ++i)
+    int32_t laneMovesRight = 0;
+    auto nextIntervalContact = lane::ContactLocation::INVALID;
+    for (++i; i < rawRoute.paraPointList.size(); ++i)
     {
-      if (lane::isSameOrDirectNeighbor(newInterval.laneId, rawRoute[i].laneId))
+      nextIntervalContact = getDirectNeighborhoodRelation(newInterval.laneId, rawRoute.paraPointList[i].laneId);
+      if ((nextIntervalContact == lane::ContactLocation::OVERLAP)
+          || (nextIntervalContact == lane::ContactLocation::LEFT)
+          || (nextIntervalContact == lane::ContactLocation::RIGHT))
       {
-        newInterval.laneId = rawRoute[i].laneId;
-        newInterval.end = rawRoute[i].parametricOffset;
+        newInterval.laneId = rawRoute.paraPointList[i].laneId;
+        newInterval.end = rawRoute.paraPointList[i].parametricOffset;
+        if (nextIntervalContact == lane::ContactLocation::RIGHT)
+        {
+          laneMovesRight++;
+        }
+        else if (nextIntervalContact == lane::ContactLocation::LEFT)
+        {
+          laneMovesRight--;
+        }
       }
       else
       {
@@ -155,42 +205,125 @@ FullRoute createFullRoute(const point::ParaPointList rawRoute)
       }
     }
 
-    // add the new interval
-    appendRoadSegmentToRoute(newInterval, resultRoute.roadSegments);
-  }
+    // determine wrong way flag
+    auto newLane = lane::getLane(newInterval.laneId);
+    if ((newLane.direction != lane::LaneDirection::POSITIVE) && (newLane.direction != lane::LaneDirection::NEGATIVE))
+    {
+      newInterval.wrongWay = false;
+    }
+    else
+    {
+      auto physicalRouteDirection = lane::LaneDirection::NONE;
+      if (newInterval.start < newInterval.end)
+      {
+        physicalRouteDirection = lane::LaneDirection::POSITIVE;
+      }
+      else if (newInterval.start > newInterval.end)
+      {
+        physicalRouteDirection = lane::LaneDirection::NEGATIVE;
+      }
+      else
+      {
+        // decide by the contact to the next route point
+        if (nextIntervalContact == lane::ContactLocation::SUCCESSOR)
+        {
+          physicalRouteDirection = lane::LaneDirection::POSITIVE;
+        }
+        else if (nextIntervalContact == lane::ContactLocation::PREDECESSOR)
+        {
+          physicalRouteDirection = lane::LaneDirection::NEGATIVE;
+        }
+        // reached the end of the route
+        // route only consists of this single degenerated segment
+        else if (resultRoute.roadSegments.empty())
+        {
+          // we actually cannot decide, the route is directionless
+        }
+        // reached the end of the route
+        // since this is degenerated, we know which physical end of the lane we reached
+        else if (intervalStartPoint.parametricOffset == physics::ParametricValue(0.))
+        {
+          // entered the lane from the beginning
+          physicalRouteDirection = lane::LaneDirection::POSITIVE;
+        }
+        else if (intervalStartPoint.parametricOffset == physics::ParametricValue(1.))
+        {
+          // entered the lane from the end
+          physicalRouteDirection = lane::LaneDirection::NEGATIVE;
+        }
+        else
+        {
+          // this should not happen, otherwise we jumped somehow in the middle
+          // => directionless
+        }
+      }
 
-  // post process the route counters
-  routePlanningCounter++;
-  resultRoute.routePlanningCounter = routePlanningCounter;
-  resultRoute.fullRouteSegmentCount = resultRoute.roadSegments.size();
-  for (size_t i = 0; i < resultRoute.roadSegments.size(); ++i)
+      if (physicalRouteDirection == lane::LaneDirection::NONE)
+      {
+        // decision is made based on the lane direction difference between
+        // interval start lane and this end lane
+        // Since in case we changed lanes sidewards the newInterval might
+        // have a different routing direction than the intervalStartPoint
+        auto intervalStartLane = lane::getLane(intervalStartPoint.laneId);
+        newInterval.wrongWay = intervalStartLane.direction != newLane.direction;
+      }
+      else
+      {
+        newInterval.wrongWay = physicalRouteDirection != newLane.direction;
+      }
+    }
+
+    // update route lane offset (has to be done after setting wrongWay flag!)
+    if (laneMovesRight != 0)
+    {
+      bool const rightNeighbor = isRouteDirectionPositive(newInterval) ^ (laneMovesRight < 0);
+      for (size_t laneMoves = static_cast<size_t>(std::abs(laneMovesRight)); laneMoves > 0u; laneMoves--)
+      {
+        updateRouteLaneOffset(rightNeighbor, currentLaneOffset, resultRoute);
+      }
+    }
+
+    // add the new interval
+    appendRoadSegmentToRoute(newInterval, currentLaneOffset, resultRoute);
+  }
+  resultRoute.destinationLaneOffset = currentLaneOffset;
+
+  updateRoutePlanningCounters(resultRoute);
+
+  if (!rawRoute.paraPointList.empty())
   {
-    resultRoute.roadSegments[i].segmentCountFromDestination = resultRoute.roadSegments.size() - i;
+    // ensure the route starting points are aligned
+    alignRouteStartingPoints(rawRoute.paraPointList.front(), resultRoute);
+    alignRouteEndingPoints(rawRoute.paraPointList.back(), resultRoute);
   }
 
   access::getLogger()->trace("createFullRoute result {}", resultRoute);
   return resultRoute;
 }
 
-FullRoute planRoute(const RoutingParaPoint &routingStart, const RoutingParaPoint &routingDest)
+FullRoute planRoute(const RoutingParaPoint &routingStart,
+                    const RoutingParaPoint &routingDest,
+                    RouteCreationMode const routeCreationMode)
 {
   RouteAstar routePlanning(routingStart, routingDest, Route::Type::SHORTEST);
-  point::ParaPointList rawRoute;
+  planning::Route::RawRoute rawRoute;
   if (routePlanning.calculate())
   {
     rawRoute = routePlanning.getRawRoute();
   }
-  return createFullRoute(rawRoute);
+  return createFullRoute(rawRoute, routeCreationMode);
 }
 
 FullRoute planRoute(const match::MapMatchedPositionConfidenceList &mapMatchingResults,
-                    const RoutingParaPoint &routingStart)
+                    const RoutingParaPoint &routingStart,
+                    RouteCreationMode const routeCreationMode)
 {
   FullRoute resultRoute;
   physics::Distance resultDistance = std::numeric_limits<physics::Distance>::max();
   for (const auto &mapMatchingResult : mapMatchingResults)
   {
-    FullRoute route = planRoute(routingStart, createRoutingPoint(mapMatchingResult.lanePoint.paraPoint));
+    FullRoute route
+      = planRoute(routingStart, createRoutingPoint(mapMatchingResult.lanePoint.paraPoint), routeCreationMode);
     physics::Distance const routeDistance = calcLength(route);
     if (routeDistance < resultDistance)
     {
@@ -201,23 +334,30 @@ FullRoute planRoute(const match::MapMatchedPositionConfidenceList &mapMatchingRe
   return resultRoute;
 }
 
-FullRoute planRoute(const RoutingParaPoint &routingStart, const point::GeoPoint &dest)
+template <typename T>
+FullRoute planRoutePoint(const RoutingParaPoint &routingStart, const T &dest, RouteCreationMode const routeCreationMode)
 {
   match::AdMapMatching mapMatching;
   auto mapMatchingResults = mapMatching.getMapMatchedPositions(dest, physics::Distance(1.), physics::Probability(.05));
 
-  return planRoute(mapMatchingResults, routingStart);
+  return planRoute(mapMatchingResults, routingStart, routeCreationMode);
 }
 
-FullRoute planRoute(const RoutingParaPoint &routingStart, const point::ENUPoint &dest)
+FullRoute
+planRoute(const RoutingParaPoint &routingStart, const point::GeoPoint &dest, RouteCreationMode const routeCreationMode)
 {
-  match::AdMapMatching mapMatching;
-  auto mapMatchingResults = mapMatching.getMapMatchedPositions(dest, physics::Distance(1.), physics::Probability(.05));
-
-  return planRoute(mapMatchingResults, routingStart);
+  return planRoutePoint(routingStart, dest, routeCreationMode);
 }
 
-FullRoute planRoute(const RoutingParaPoint &start, const std::vector<point::GeoPoint> &dest)
+FullRoute
+planRoute(const RoutingParaPoint &routingStart, const point::ENUPoint &dest, RouteCreationMode const routeCreationMode)
+{
+  return planRoutePoint(routingStart, dest, routeCreationMode);
+}
+
+template <typename T>
+FullRoute
+planRouteVector(const RoutingParaPoint &start, const std::vector<T> &dest, RouteCreationMode const routeCreationMode)
 {
   match::AdMapMatching mapMatching;
   std::vector<RoutingParaPoint> routingDestList;
@@ -251,20 +391,39 @@ FullRoute planRoute(const RoutingParaPoint &start, const std::vector<point::GeoP
       access::getLogger()->trace("planRoute ignoring ambiguous intermediate point {}", *destIter);
     }
   }
-  return planRoute(start, routingDestList);
+  return planRoute(start, routingDestList, routeCreationMode);
 }
 
-FullRoute planRoute(const RoutingParaPoint &start, std::vector<RoutingParaPoint> const &dest)
+FullRoute planRoute(const RoutingParaPoint &start,
+                    const std::vector<point::GeoPoint> &dest,
+                    RouteCreationMode const routeCreationMode)
+{
+  return planRouteVector(start, dest, routeCreationMode);
+}
+
+FullRoute planRoute(const RoutingParaPoint &start,
+                    const std::vector<point::ENUPoint> &dest,
+                    RouteCreationMode const routeCreationMode)
+{
+  return planRouteVector(start, dest, routeCreationMode);
+}
+
+FullRoute planRoute(const RoutingParaPoint &start,
+                    std::vector<RoutingParaPoint> const &dest,
+                    RouteCreationMode const routeCreationMode)
 {
   auto routingStart = start;
-  point::ParaPointList mergedRawRoute;
+  planning::Route::RawRoute mergedRawRoute;
   for (auto &routingDest : dest)
   {
     RouteAstar routePlanning(routingStart, routingDest, Route::Type::SHORTEST);
     if (routePlanning.calculate())
     {
       auto rawRoute = routePlanning.getRawRoute();
-      mergedRawRoute.insert(mergedRawRoute.end(), rawRoute.begin(), rawRoute.end());
+      mergedRawRoute.paraPointList.insert(
+        mergedRawRoute.paraPointList.end(), rawRoute.paraPointList.begin(), rawRoute.paraPointList.end());
+      mergedRawRoute.routeDistance += rawRoute.routeDistance;
+      mergedRawRoute.routeDuration += rawRoute.routeDuration;
       routingStart = routePlanning.getRoutingDest();
     }
     else
@@ -274,7 +433,7 @@ FullRoute planRoute(const RoutingParaPoint &start, std::vector<RoutingParaPoint>
       return FullRoute();
     }
   }
-  return createFullRoute(mergedRawRoute);
+  return createFullRoute(mergedRawRoute, routeCreationMode);
 }
 
 enum class CompareRouteResult
@@ -285,40 +444,172 @@ enum class CompareRouteResult
   Differ
 };
 
-CompareRouteResult compareRoutesOnIntervalLevel(FullRoute const &left, FullRoute const &right)
+enum class CheckMode
 {
-  // compare routes on laneInterval level
-  auto minSize = std::min(left.roadSegments.size(), right.roadSegments.size());
-  for (std::size_t i = 0u; i < minSize; i++)
+  Start,
+  Middle,
+  End,
+};
+
+CompareRouteResult
+compareRoadSegmentOnIntervalLevelOrdered(RoadSegment const &left, RoadSegment const &right, CheckMode checkMode)
+{
+  CompareRouteResult equalResult = CompareRouteResult::Equal;
+  if (left.drivableLaneSegments.size() == right.drivableLaneSegments.size())
   {
-    if (left.roadSegments[i].drivableLaneSegments.size() == right.roadSegments[i].drivableLaneSegments.size())
+    for (std::size_t j = 0u; j < left.drivableLaneSegments.size(); j++)
     {
-      for (std::size_t j = 0u; j < left.roadSegments[i].drivableLaneSegments.size(); j++)
+      if (left.drivableLaneSegments[j].laneInterval.laneId != right.drivableLaneSegments[j].laneInterval.laneId)
       {
-        if (left.roadSegments[i].drivableLaneSegments[j].laneInterval
-            != right.roadSegments[i].drivableLaneSegments[j].laneInterval)
+        return CompareRouteResult::Differ;
+      }
+
+      bool const startEqual
+        = left.drivableLaneSegments[j].laneInterval.start == right.drivableLaneSegments[j].laneInterval.start;
+
+      if (!startEqual)
+      {
+        if (checkMode != CheckMode::Start)
         {
           return CompareRouteResult::Differ;
         }
+        else if (isBeforeInterval(left.drivableLaneSegments[j].laneInterval,
+                                  right.drivableLaneSegments[j].laneInterval.start))
+        {
+          equalResult = CompareRouteResult::Smaller;
+        }
+        else
+        {
+          equalResult = CompareRouteResult::Larger;
+        }
       }
+
+      bool const endEqual
+        = left.drivableLaneSegments[j].laneInterval.end == right.drivableLaneSegments[j].laneInterval.end;
+      if (!endEqual)
+      {
+        if (checkMode != CheckMode::End)
+        {
+          return CompareRouteResult::Differ;
+        }
+        else if (isAfterInterval(left.drivableLaneSegments[j].laneInterval,
+                                 right.drivableLaneSegments[j].laneInterval.end))
+        {
+          equalResult = CompareRouteResult::Smaller;
+        }
+        else
+        {
+          equalResult = CompareRouteResult::Larger;
+        }
+      }
+    }
+  }
+  else
+  {
+    return CompareRouteResult::Differ;
+  }
+  return equalResult;
+}
+
+CompareRouteResult compareRoutesOnIntervalLevel(FullRoute const &left, FullRoute const &right)
+{
+  FullRoute const *smallRoute;
+  FullRoute const *largeRoute;
+  CompareRouteResult equalResult;
+  if (left.roadSegments.size() < right.roadSegments.size())
+  {
+    smallRoute = &left;
+    largeRoute = &right;
+    equalResult = CompareRouteResult::Smaller;
+  }
+  else if (left.roadSegments.size() > right.roadSegments.size())
+  {
+    smallRoute = &right;
+    largeRoute = &left;
+    equalResult = CompareRouteResult::Larger;
+  }
+  else
+  {
+    smallRoute = &left;
+    largeRoute = &right;
+    equalResult = CompareRouteResult::Equal;
+  }
+
+  // handle empty routes
+  if (smallRoute->roadSegments.size() == 0u)
+  {
+    if (largeRoute->roadSegments.size() == 0u)
+    {
+      return CompareRouteResult::Equal;
     }
     else
     {
       return CompareRouteResult::Differ;
     }
   }
-  if (left.roadSegments.size() == right.roadSegments.size())
+
+  std::size_t largeRouteIndexOffset = 0u;
+  std::size_t const maxIndexOffset = largeRoute->roadSegments.size() - smallRoute->roadSegments.size();
+  std::size_t smallRouteIndex = 0u;
+  // search for comparison begin
+  for (; largeRouteIndexOffset <= maxIndexOffset; largeRouteIndexOffset++)
   {
-    return CompareRouteResult::Equal;
+    auto const compareSegmentResult = compareRoadSegmentOnIntervalLevelOrdered(
+      smallRoute->roadSegments[smallRouteIndex], largeRoute->roadSegments[largeRouteIndexOffset], CheckMode::Start);
+    if (compareSegmentResult != CompareRouteResult::Differ)
+    {
+      if (equalResult == CompareRouteResult::Equal)
+      {
+        equalResult = compareSegmentResult;
+      }
+      else if (compareSegmentResult == CompareRouteResult::Larger)
+      {
+        // small route is larger!
+        return CompareRouteResult::Differ;
+      }
+      break;
+    }
   }
-  else if (left.roadSegments.size() < right.roadSegments.size())
+  // no identical start segment found
+  if (largeRouteIndexOffset > maxIndexOffset)
   {
-    return CompareRouteResult::Smaller;
+    return CompareRouteResult::Differ;
   }
-  else
+
+  // search for equality over the whole smaller route
+  for (smallRouteIndex++; smallRouteIndex < smallRoute->roadSegments.size(); smallRouteIndex++)
   {
-    return CompareRouteResult::Larger;
+    std::size_t const largeRouteIndex = smallRouteIndex + largeRouteIndexOffset;
+    auto checkMode{CheckMode::Middle};
+    if (smallRouteIndex + 1u == smallRoute->roadSegments.size())
+    {
+      checkMode = CheckMode::End;
+    }
+
+    auto const compareSegmentResult = compareRoadSegmentOnIntervalLevelOrdered(
+      smallRoute->roadSegments[smallRouteIndex], largeRoute->roadSegments[largeRouteIndex], checkMode);
+
+    if (compareSegmentResult != CompareRouteResult::Equal)
+    {
+      if (checkMode != CheckMode::End)
+      {
+        return CompareRouteResult::Differ;
+      }
+
+      // last segment allowed to be smaller
+      if (equalResult == CompareRouteResult::Equal)
+      {
+        equalResult = compareSegmentResult;
+      }
+      else if (compareSegmentResult == CompareRouteResult::Larger)
+      {
+        // small route is larger!
+        return CompareRouteResult::Differ;
+      }
+    }
   }
+
+  return equalResult;
 }
 
 std::vector<FullRoute> filterDuplicatedRoutes(const std::vector<FullRoute> fullRoutes)
@@ -340,12 +631,14 @@ std::vector<FullRoute> filterDuplicatedRoutes(const std::vector<FullRoute> fullR
         if (comparisonResult == CompareRouteResult::Larger)
         {
           // the new route is larger, and so overwrites the current filtered one
+          access::getLogger()->trace("filterDuplicatedRoutes: replacing route {} -> {}", filteredRoute, route);
           filteredRoute = route;
         }
         else
         {
           // the new route is either identical or smaller than the current filtered one
           // it is just skipped
+          access::getLogger()->trace("filterDuplicatedRoutes: skipping route {}", route);
         }
         // stop the inner loop on filteredRoutes
         break;
@@ -354,45 +647,17 @@ std::vector<FullRoute> filterDuplicatedRoutes(const std::vector<FullRoute> fullR
     // new route differs to all filtered ones, so we have to add it
     if (addRoute)
     {
+      access::getLogger()->trace("filterDuplicatedRoutes: adding route {}", route);
       filteredRoutes.push_back(route);
     }
   }
   return filteredRoutes;
 }
 
-std::vector<FullRoute> predictRoutesOnDuration(const RoutingParaPoint &start,
-                                               physics::Duration const &predictionDuration)
-{
-  std::vector<FullRoute> resultRoutes;
-  RoutePrediction routePrediction(start, predictionDuration);
-  if (routePrediction.calculate())
-  {
-    for (auto &rawRoute : routePrediction.getRawRoutes())
-    {
-      resultRoutes.push_back(createFullRoute(rawRoute));
-    }
-  }
-  return filterDuplicatedRoutes(resultRoutes);
-}
-
-std::vector<FullRoute> predictRoutesOnDistance(const RoutingParaPoint &start,
-                                               physics::Distance const &predictionDistance)
-{
-  std::vector<FullRoute> resultRoutes;
-  RoutePrediction routePrediction(start, predictionDistance);
-  if (routePrediction.calculate())
-  {
-    for (auto &rawRoute : routePrediction.getRawRoutes())
-    {
-      resultRoutes.push_back(createFullRoute(rawRoute));
-    }
-  }
-  return filterDuplicatedRoutes(resultRoutes);
-}
-
 std::vector<FullRoute> predictRoutes(const RoutingParaPoint &start,
                                      physics::Distance const &predictionDistance,
-                                     physics::Duration const &predictionDuration)
+                                     physics::Duration const &predictionDuration,
+                                     RouteCreationMode const routeCreationMode)
 {
   std::vector<FullRoute> resultRoutes;
   RoutePrediction routePrediction(start, predictionDistance, predictionDuration);
@@ -400,211 +665,320 @@ std::vector<FullRoute> predictRoutes(const RoutingParaPoint &start,
   {
     for (auto &rawRoute : routePrediction.getRawRoutes())
     {
-      resultRoutes.push_back(createFullRoute(rawRoute));
+      resultRoutes.push_back(createFullRoute(rawRoute, routeCreationMode));
     }
   }
   return filterDuplicatedRoutes(resultRoutes);
+}
+
+std::vector<FullRoute> predictRoutes(const match::MapMatchedObjectBoundingBox &startObject,
+                                     physics::Distance const &predictionDistance,
+                                     physics::Duration const &predictionDuration,
+                                     RouteCreationMode const routeCreationMode)
+{
+  std::vector<FullRoute> resultRoutes;
+  auto const enuHeading = match::getObjectENUHeading(startObject);
+  for (auto const &startMatchingResult : startObject.laneOccupiedRegions)
+  {
+    auto const routingStart = createRoutingPoint(startMatchingResult, enuHeading);
+    auto const routes = predictRoutes(routingStart, predictionDistance, predictionDuration, routeCreationMode);
+    resultRoutes.insert(resultRoutes.end(), routes.begin(), routes.end());
+  }
+  return filterDuplicatedRoutes(resultRoutes);
+}
+
+std::vector<FullRoute> predictRoutesOnDuration(const RoutingParaPoint &start,
+                                               physics::Duration const &predictionDuration,
+                                               RouteCreationMode const routeCreationMode)
+{
+  return predictRoutes(start, physics::Distance::getMax(), predictionDuration, routeCreationMode);
 }
 
 std::vector<FullRoute> predictRoutesOnDuration(const match::MapMatchedObjectBoundingBox &startObject,
-                                               physics::Duration const &predictionDuration)
+                                               physics::Duration const &predictionDuration,
+                                               RouteCreationMode const routeCreationMode)
 {
-  std::vector<FullRoute> resultRoutes;
-  auto const enuHeading = match::getObjectENUHeading(startObject);
-  for (auto const &startMatchingResult : startObject.laneOccupiedRegions)
-  {
-    auto const routingStart = createRoutingPoint(startMatchingResult, enuHeading);
-    auto const routes = predictRoutesOnDuration(routingStart, predictionDuration);
-    resultRoutes.insert(resultRoutes.end(), routes.begin(), routes.end());
-  }
-  return filterDuplicatedRoutes(resultRoutes);
+  return predictRoutes(startObject, physics::Distance::getMax(), predictionDuration, routeCreationMode);
+}
+
+std::vector<FullRoute> predictRoutesOnDistance(const RoutingParaPoint &start,
+                                               physics::Distance const &predictionDistance,
+                                               RouteCreationMode const routeCreationMode)
+{
+  return predictRoutes(start, predictionDistance, physics::Duration::getMax(), routeCreationMode);
 }
 
 std::vector<FullRoute> predictRoutesOnDistance(const match::MapMatchedObjectBoundingBox &startObject,
-                                               physics::Distance const &predictionDistance)
+                                               physics::Distance const &predictionDistance,
+                                               RouteCreationMode const routeCreationMode)
 {
-  std::vector<FullRoute> resultRoutes;
-  auto const enuHeading = match::getObjectENUHeading(startObject);
-  for (auto const &startMatchingResult : startObject.laneOccupiedRegions)
-  {
-    auto const routingStart = createRoutingPoint(startMatchingResult, enuHeading);
-    auto const routes = predictRoutesOnDistance(routingStart, predictionDistance);
-    resultRoutes.insert(resultRoutes.end(), routes.begin(), routes.end());
-  }
-  return filterDuplicatedRoutes(resultRoutes);
+  return predictRoutes(startObject, predictionDistance, physics::Duration::getMax(), routeCreationMode);
 }
 
-ConnectingRoute calculateConnectingBasicRoute(const RoutingParaPoint &routingStart, const RoutingParaPoint &routingDest)
+bool doRoadSegmentsHaveCommonLanes(route::RoadSegment const &roadSegmentA, route::RoadSegment const &roadSegmentB)
 {
-  ConnectingRoute route;
-  route.connectingRouteLength = physics::Distance(0.);
-  route.minLaneOffset = 0;
-  route.maxLaneOffset = 0;
-  RouteAstar routePlanning(routingStart, routingDest, Route::Type::SHORTEST_IGNORE_DIRECTION);
-  if (routePlanning.calculate())
+  for (route::LaneSegmentList::const_iterator laneSegmentIterA = roadSegmentA.drivableLaneSegments.begin();
+       laneSegmentIterA != roadSegmentA.drivableLaneSegments.end();
+       ++laneSegmentIterA)
   {
-    int32_t currentLaneOffset = 0;
-    auto rawRoute = routePlanning.getRawRoute();
-
-    for (size_t i = 0u; i < rawRoute.size();)
+    for (route::LaneSegmentList::const_iterator laneSegmentIterB = roadSegmentB.drivableLaneSegments.begin();
+         laneSegmentIterB != roadSegmentB.drivableLaneSegments.end();
+         ++laneSegmentIterB)
     {
-      // first create a ConnectingRoute containing only raw route lanes
-      const point::ParaPoint &intervalStartPoint = rawRoute[i];
-      ConnectingInterval newInterval;
-      newInterval.laneInterval.laneId = intervalStartPoint.laneId;
-      newInterval.laneInterval.start = intervalStartPoint.parametricOffset;
-      newInterval.laneInterval.end = newInterval.laneInterval.start;
-      // wrongWay flag will be handled in post processing
-      newInterval.laneInterval.wrongWay = false;
-      newInterval.laneOffset = currentLaneOffset;
-
-      // search the segment end and keep track on the lane offset
-      for (++i; i < rawRoute.size(); ++i)
+      if (laneSegmentIterA->laneInterval.laneId == laneSegmentIterB->laneInterval.laneId)
       {
-        auto const neighborhood
-          = lane::getDirectNeighborhoodRelation(newInterval.laneInterval.laneId, rawRoute[i].laneId);
-        if ((neighborhood == lane::ContactLocation::OVERLAP) || (neighborhood == lane::ContactLocation::LEFT)
-            || (neighborhood == lane::ContactLocation::RIGHT))
+        // found a common lane
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+route::RoadSegmentList::iterator
+findRoadSegmentWithCommonLanes(route::RoadSegment const &roadSegment,
+                               route::RoadSegmentList::iterator roadSegmentSearchIterStart,
+                               route::RoadSegmentList::iterator roadSegmentSearchIterEnd)
+{
+  for (auto iter = roadSegmentSearchIterStart; iter != roadSegmentSearchIterEnd; iter++)
+  {
+    if (doRoadSegmentsHaveCommonLanes(roadSegment, *iter))
+    {
+      return iter;
+    }
+  }
+  return roadSegmentSearchIterEnd;
+}
+
+ConnectingRoute
+calculateConnectingRouteCreateMergingRouteUpToPositions(route::FullRoute &objectARoute,
+                                                        route::RoadSegmentList::iterator roadSegmentIterA,
+                                                        route::FullRoute &objectBRoute,
+                                                        route::RoadSegmentList::iterator roadSegmentIterB)
+{
+  ConnectingRoute resultRoute;
+  resultRoute.type = ConnectingRouteType::Merging;
+  // cut the route at the beginning of the current road segments
+  for (route::LaneSegmentList::iterator laneSegmentIterA = roadSegmentIterA->drivableLaneSegments.begin();
+       laneSegmentIterA != roadSegmentIterA->drivableLaneSegments.end();
+       ++laneSegmentIterA)
+  {
+    laneSegmentIterA->laneInterval.start = laneSegmentIterA->laneInterval.end;
+    laneSegmentIterA->successors.clear();
+  }
+  roadSegmentIterA++;
+  roadSegmentIterA = objectARoute.roadSegments.erase(roadSegmentIterA, objectARoute.roadSegments.end());
+  resultRoute.routeA = objectARoute;
+
+  for (route::LaneSegmentList::iterator laneSegmentIterB = roadSegmentIterB->drivableLaneSegments.begin();
+       laneSegmentIterB != roadSegmentIterB->drivableLaneSegments.end();
+       ++laneSegmentIterB)
+  {
+    laneSegmentIterB->laneInterval.start = laneSegmentIterB->laneInterval.end;
+    laneSegmentIterB->successors.clear();
+  }
+  roadSegmentIterB++;
+  roadSegmentIterB = objectBRoute.roadSegments.erase(roadSegmentIterB, objectBRoute.roadSegments.end());
+  resultRoute.routeB = objectBRoute;
+  return resultRoute;
+}
+
+ConnectingRoute calculateConnectingRouteCheckForMergingRoute(route::FullRoute &objectARoute,
+                                                             route::FullRoute &objectBRoute)
+{
+  auto roadSegmentIterA = objectARoute.roadSegments.begin();
+  auto roadSegmentIterB = objectBRoute.roadSegments.begin();
+  physics::Distance routeADistanceCovered{0.};
+  physics::Distance routeBDistanceCovered{0.};
+
+  do
+  {
+    // we want to find the shortest connecting route
+    // therefore, increment the roadSegmentIter of the route with less distance covered
+    if (routeADistanceCovered <= routeBDistanceCovered)
+    {
+      if (roadSegmentIterA != objectARoute.roadSegments.end())
+      {
+        routeADistanceCovered += calcLength(*roadSegmentIterA);
+
+        // fix current segment A and search rest of B
+        auto findResultB
+          = findRoadSegmentWithCommonLanes(*roadSegmentIterA, roadSegmentIterB, objectBRoute.roadSegments.end());
+        if (findResultB != objectBRoute.roadSegments.end())
         {
-          newInterval.laneInterval.laneId = rawRoute[i].laneId;
-          newInterval.laneInterval.end = rawRoute[i].parametricOffset;
-          if (neighborhood == lane::ContactLocation::LEFT)
-          {
-            currentLaneOffset--;
-            if (currentLaneOffset < route.minLaneOffset)
-            {
-              route.minLaneOffset = currentLaneOffset;
-            }
-          }
-          else if (neighborhood == lane::ContactLocation::RIGHT)
-          {
-            currentLaneOffset++;
-            if (currentLaneOffset > route.maxLaneOffset)
-            {
-              route.maxLaneOffset = currentLaneOffset;
-            }
-          }
-          newInterval.laneOffset = currentLaneOffset;
+          return calculateConnectingRouteCreateMergingRouteUpToPositions(
+            objectARoute, roadSegmentIterA, objectBRoute, findResultB);
+        }
+
+        roadSegmentIterA++;
+      }
+    }
+    if (routeBDistanceCovered <= routeADistanceCovered)
+    {
+      if (roadSegmentIterB != objectBRoute.roadSegments.end())
+      {
+        routeBDistanceCovered += calcLength(*roadSegmentIterB);
+
+        // fix current segment B and search rest of A
+        auto findResultA
+          = findRoadSegmentWithCommonLanes(*roadSegmentIterB, roadSegmentIterA, objectARoute.roadSegments.end());
+        if (findResultA != objectARoute.roadSegments.end())
+        {
+          return calculateConnectingRouteCreateMergingRouteUpToPositions(
+            objectARoute, findResultA, objectBRoute, roadSegmentIterB);
+        }
+
+        roadSegmentIterB++;
+      }
+    }
+  } while ((roadSegmentIterA != objectARoute.roadSegments.end())
+           && (roadSegmentIterB != objectBRoute.roadSegments.end()));
+
+  ConnectingRoute resultRoute;
+  resultRoute.type = ConnectingRouteType::Invalid;
+  return resultRoute;
+}
+
+ConnectingRoute calculateConnectingRoute(const match::Object &objectA,
+                                         const match::Object &objectB,
+                                         physics::Distance const &maxDistance,
+                                         physics::Duration const &maxDuration)
+{
+  Route::RawRoute resultRawRoute;
+  physics::Distance resultDistance = std::numeric_limits<physics::Distance>::max();
+
+  for (auto const &startMatchingResult : objectA.mapMatchedBoundingBox.laneOccupiedRegions)
+  {
+    for (auto const &destMatchingResult : objectB.mapMatchedBoundingBox.laneOccupiedRegions)
+    {
+      auto const routingStart = createRoutingPoint(startMatchingResult);
+      auto const routingDest = createRoutingPoint(destMatchingResult);
+
+      RouteAstar routePlanning(
+        routingStart, routingDest, maxDistance, maxDuration, Route::Type::SHORTEST_IGNORE_DIRECTION);
+      if (routePlanning.calculate())
+      {
+        auto rawRoute = routePlanning.getRawRoute();
+        if ((rawRoute.routeDistance < resultDistance)
+            || ((rawRoute.routeDistance == resultDistance)
+                && (rawRoute.paraPointList.size() < resultRawRoute.paraPointList.size())))
+        {
+          resultDistance = rawRoute.routeDistance;
+          resultRawRoute = rawRoute;
+        }
+      }
+    }
+  }
+
+  ConnectingRoute resultRoute;
+  resultRoute.type = ConnectingRouteType::Invalid;
+  if (resultRawRoute.paraPointList.size() > 0u)
+  {
+    // create the full routes
+    auto const routeA = createFullRoute(resultRawRoute, RouteCreationMode::AllRoutableLanes);
+    auto const objectADrivingAlongRoute = isObjectHeadingInRouteDirection(objectA, routeA);
+
+    std::reverse(resultRawRoute.paraPointList.begin(), resultRawRoute.paraPointList.end());
+    auto const routeB = createFullRoute(resultRawRoute, RouteCreationMode::AllRoutableLanes);
+    auto const objectBDrivingAlongRoute = isObjectHeadingInRouteDirection(objectB, routeB);
+
+    // special handling for degenerated routes
+    if (route::calcLength(routeA) == physics::Distance(0.))
+    {
+      if (resultRawRoute.paraPointList.size() == 1u)
+      {
+        // same lane, same point longitudinally:
+        // define that A is following B
+        resultRoute.type = ConnectingRouteType::Following;
+        resultRoute.routeA = routeA;
+      }
+      else if (objectADrivingAlongRoute == objectBDrivingAlongRoute)
+      {
+        // opposite case
+        resultRoute.type = ConnectingRouteType::Opposing;
+        if (objectADrivingAlongRoute)
+        {
+          // both driving in positive route direction as usual
+          resultRoute.routeA = routeA;
+          resultRoute.routeB = routeB;
         }
         else
         {
-          break;
+          // switch the routes to have both again in proper direction if required
+          resultRoute.routeA = routeB;
+          resultRoute.routeB = routeA;
         }
       }
-
-      ConnectingSegment routeSegment;
-      routeSegment.push_back(newInterval);
-      route.connectingSegments.push_back(routeSegment);
-      route.connectingRouteLength += calcLength(newInterval.laneInterval);
     }
-    route.destinationLaneOffset = currentLaneOffset;
-  }
-  return route;
-}
 
-inline void addWrongWayFlag(lane::Lane const &lane, ConnectingInterval &connectingInverval)
-{
-  connectingInverval.laneInterval.wrongWay
-    = !((isRouteDirectionPositive(connectingInverval.laneInterval) && lane::isLaneDirectionPositive(lane))
-        || (isRouteDirectionNegative(connectingInverval.laneInterval) && lane::isLaneDirectionNegative(lane)));
-}
-
-ConnectingRoute calculateConnectingRoute(const match::MapMatchedObjectBoundingBox &startObject,
-                                         const match::MapMatchedObjectBoundingBox &destObject)
-{
-  ConnectingRoute resultRoute;
-  resultRoute.connectingRouteLength = std::numeric_limits<physics::Distance>::max();
-
-  auto const enuHeading = match::getObjectENUHeading(startObject);
-  for (auto const &startMatchingResult : startObject.laneOccupiedRegions)
-  {
-    for (auto const &destMatchingResult : destObject.laneOccupiedRegions)
+    if (resultRoute.type == ConnectingRouteType::Invalid)
     {
-      auto const routingStart = createRoutingPoint(startMatchingResult, enuHeading);
-      auto const routingDest = createRoutingPoint(destMatchingResult);
-
-      auto const route = calculateConnectingBasicRoute(routingStart, routingDest);
-      if ((!route.connectingSegments.empty()) && (route.connectingRouteLength < resultRoute.connectingRouteLength))
+      if (objectADrivingAlongRoute && objectBDrivingAlongRoute)
       {
-        resultRoute = route;
+        // opposite case
+        resultRoute.type = ConnectingRouteType::Opposing;
+        resultRoute.routeA = routeA;
+        resultRoute.routeB = routeB;
       }
-    }
-  }
-
-  // post process the result route:
-  // - expand relevant neighbors
-  // - fill wrong way flags
-  std::size_t numberOfLanesPerSegment = 1u;
-  if (resultRoute.maxLaneOffset > resultRoute.minLaneOffset)
-  {
-    auto deltaLaneOffset = resultRoute.maxLaneOffset - resultRoute.minLaneOffset;
-    numberOfLanesPerSegment += static_cast<std::size_t>(deltaLaneOffset);
-  }
-  for (auto &connectingSegment : resultRoute.connectingSegments)
-  {
-    if (connectingSegment.size() != 1u)
-    {
-      throw std::runtime_error("planning::calculateConnectingRoute unexpected size of connectingSegment");
-    }
-
-    // handle current interval
-    auto rawLane = lane::getLane(connectingSegment.front().laneInterval.laneId);
-    addWrongWayFlag(rawLane, connectingSegment.front());
-    auto const rawIntervalOffset = connectingSegment.front().laneOffset;
-
-    // reserve the space for the rest
-    connectingSegment.reserve(numberOfLanesPerSegment);
-
-    // add right neighbors
-    auto lane = rawLane;
-    for (int32_t offset = rawIntervalOffset + 1; offset <= resultRoute.maxLaneOffset; offset++)
-    {
-      lane::ContactLaneList contactLanes = getContactLanes(lane, lane::ContactLocation::RIGHT);
-      // we expect that per map model only one contact lane is possible in one direction
-      if (contactLanes.size() == 1u)
+      else if (objectADrivingAlongRoute)
       {
-        ConnectingInterval newInterval;
-        newInterval.laneInterval.laneId = contactLanes.front().toLane;
-        newInterval.laneInterval.start = connectingSegment.front().laneInterval.start;
-        newInterval.laneInterval.end = connectingSegment.front().laneInterval.end;
-        newInterval.laneOffset = offset;
-
-        lane = lane::getLane(newInterval.laneInterval.laneId);
-        addWrongWayFlag(lane, newInterval);
-        // sorting: right lanes are added at front, left lanes at back
-        connectingSegment.insert(connectingSegment.begin(), newInterval);
+        // A is following B
+        resultRoute.type = ConnectingRouteType::Following;
+        resultRoute.routeA = routeA;
+      }
+      else if (objectBDrivingAlongRoute)
+      {
+        // B is following A
+        resultRoute.type = ConnectingRouteType::Following;
+        resultRoute.routeB = routeB;
       }
       else
       {
-        break;
+        // both are driving away from each other
       }
     }
-    // add left neighbors
-    lane = rawLane;
-    for (int32_t offset = rawIntervalOffset - 1; offset >= resultRoute.minLaneOffset; offset--)
-    {
-      lane::ContactLaneList contactLanes = getContactLanes(lane, lane::ContactLocation::LEFT);
-      // we expect that per map model only one contact lane is possible in one direction
-      if (contactLanes.size() == 1u)
-      {
-        ConnectingInterval newInterval;
-        newInterval.laneInterval.laneId = contactLanes.front().toLane;
-        newInterval.laneInterval.start = connectingSegment.front().laneInterval.start;
-        newInterval.laneInterval.end = connectingSegment.front().laneInterval.end;
-        newInterval.laneOffset = offset;
+  }
+  else
+  {
+    // no direct connecting route between the two objects found
+    // check if we have a ConnectingRouteType::Merging case
+    // search if one of the route lanes of A is part of one of the route lanes of B
+    auto objectAPredictions = predictRoutes(objectA.mapMatchedBoundingBox, maxDistance, maxDuration);
+    auto objectBPredictions = predictRoutes(objectB.mapMatchedBoundingBox, maxDistance, maxDuration);
 
-        lane = lane::getLane(newInterval.laneInterval.laneId);
-        addWrongWayFlag(lane, newInterval);
-        // sorting: left lanes are added at back
-        connectingSegment.insert(connectingSegment.end(), newInterval);
-      }
-      else
+    resultDistance = std::numeric_limits<physics::Distance>::max();
+    for (auto &objectAPrediction : objectAPredictions)
+    {
+      for (auto &objectBPrediction : objectBPredictions)
       {
-        break;
+        auto mergingRouteResult = calculateConnectingRouteCheckForMergingRoute(objectAPrediction, objectBPrediction);
+        if (mergingRouteResult.type == ConnectingRouteType::Merging)
+        {
+          auto mergeDistance = std::min(calcLength(mergingRouteResult.routeA), calcLength(mergingRouteResult.routeB));
+          if (mergeDistance < resultDistance)
+          {
+            resultDistance = mergeDistance;
+            resultRoute = std::move(mergingRouteResult);
+          }
+        }
       }
     }
   }
   return resultRoute;
+}
+
+ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
+                                         const match::Object &destObject,
+                                         physics::Distance const &maxDistance)
+{
+  return calculateConnectingRoute(startObject, destObject, maxDistance, std::numeric_limits<physics::Duration>::max());
+}
+
+ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
+                                         const match::Object &destObject,
+                                         physics::Duration const &maxDuration)
+{
+  return calculateConnectingRoute(startObject, destObject, std::numeric_limits<physics::Distance>::max(), maxDuration);
 }
 
 } // namespace planning

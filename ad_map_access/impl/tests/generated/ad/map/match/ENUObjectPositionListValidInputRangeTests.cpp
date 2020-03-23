@@ -41,10 +41,10 @@ TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeValidInputRan
   ::ad::map::point::GeoPoint elementEnuReferencePoint;
   ::ad::map::point::Longitude elementEnuReferencePointLongitude(-180);
   elementEnuReferencePoint.longitude = elementEnuReferencePointLongitude;
-  ::ad::map::point::Altitude elementEnuReferencePointAltitude(-11000);
-  elementEnuReferencePoint.altitude = elementEnuReferencePointAltitude;
   ::ad::map::point::Latitude elementEnuReferencePointLatitude(-90);
   elementEnuReferencePoint.latitude = elementEnuReferencePointLatitude;
+  ::ad::map::point::Altitude elementEnuReferencePointAltitude(-11000);
+  elementEnuReferencePoint.altitude = elementEnuReferencePointAltitude;
   element.enuReferencePoint = elementEnuReferencePoint;
   ::ad::physics::Dimension3D elementDimension;
   ::ad::physics::Distance elementDimensionLength(0.);
@@ -87,10 +87,10 @@ TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementValid)
   ::ad::map::point::GeoPoint elementEnuReferencePoint;
   ::ad::map::point::Longitude elementEnuReferencePointLongitude(-180);
   elementEnuReferencePoint.longitude = elementEnuReferencePointLongitude;
-  ::ad::map::point::Altitude elementEnuReferencePointAltitude(-11000);
-  elementEnuReferencePoint.altitude = elementEnuReferencePointAltitude;
   ::ad::map::point::Latitude elementEnuReferencePointLatitude(-90);
   elementEnuReferencePoint.latitude = elementEnuReferencePointLatitude;
+  ::ad::map::point::Altitude elementEnuReferencePointAltitude(-11000);
+  elementEnuReferencePoint.altitude = elementEnuReferencePointAltitude;
   element.enuReferencePoint = elementEnuReferencePoint;
   ::ad::physics::Dimension3D elementDimension;
   ::ad::physics::Distance elementDimensionLength(0.);

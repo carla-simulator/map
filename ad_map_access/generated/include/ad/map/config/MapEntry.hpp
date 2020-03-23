@@ -23,6 +23,7 @@
 #include <sstream>
 #include <string>
 #include "ad/map/intersection/IntersectionType.hpp"
+#include "ad/map/landmark/TrafficLightType.hpp"
 #include "ad/physics/Distance.hpp"
 /*!
  * @brief namespace ad
@@ -104,7 +105,8 @@ struct MapEntry
   bool operator==(const MapEntry &other) const
   {
     return (filename == other.filename) && (openDriveOverlapMargin == other.openDriveOverlapMargin)
-      && (openDriveDefaultIntersectionType == other.openDriveDefaultIntersectionType);
+      && (openDriveDefaultIntersectionType == other.openDriveDefaultIntersectionType)
+      && (openDriveDefaultTrafficLightType == other.openDriveDefaultTrafficLightType);
   }
 
   /**
@@ -127,12 +129,15 @@ struct MapEntry
   /*!
    * optional parameter for open drive maps defining the margin to be used when calculating lane overlaps
    */
-  ::ad::physics::Distance openDriveOverlapMargin;
+  ::ad::physics::Distance openDriveOverlapMargin{0.};
 
   /*!
    * The default intersection type
    */
-  ::ad::map::intersection::IntersectionType openDriveDefaultIntersectionType;
+  ::ad::map::intersection::IntersectionType openDriveDefaultIntersectionType{
+    ::ad::map::intersection::IntersectionType::Unknown};
+  ::ad::map::landmark::TrafficLightType openDriveDefaultTrafficLightType{
+    ::ad::map::landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN};
 };
 
 } // namespace config
@@ -179,6 +184,9 @@ inline std::ostream &operator<<(std::ostream &os, MapEntry const &_value)
   os << ",";
   os << "openDriveDefaultIntersectionType:";
   os << _value.openDriveDefaultIntersectionType;
+  os << ",";
+  os << "openDriveDefaultTrafficLightType:";
+  os << _value.openDriveDefaultTrafficLightType;
   os << ")";
   return os;
 }

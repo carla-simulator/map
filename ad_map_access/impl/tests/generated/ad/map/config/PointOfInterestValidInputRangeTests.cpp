@@ -24,10 +24,10 @@ TEST(PointOfInterestValidInputRangeTests, testValidInputRange)
   ::ad::map::point::GeoPoint valueGeoPoint;
   ::ad::map::point::Longitude valueGeoPointLongitude(-180);
   valueGeoPoint.longitude = valueGeoPointLongitude;
-  ::ad::map::point::Altitude valueGeoPointAltitude(-11000);
-  valueGeoPoint.altitude = valueGeoPointAltitude;
   ::ad::map::point::Latitude valueGeoPointLatitude(-90);
   valueGeoPoint.latitude = valueGeoPointLatitude;
+  ::ad::map::point::Altitude valueGeoPointAltitude(-11000);
+  valueGeoPoint.altitude = valueGeoPointAltitude;
   value.geoPoint = valueGeoPoint;
   std::string valueName{"min"};
   value.name = valueName;
@@ -40,10 +40,10 @@ TEST(PointOfInterestValidInputRangeTests, testValidInputRangeGeoPointTooSmall)
   ::ad::map::point::GeoPoint valueGeoPoint;
   ::ad::map::point::Longitude valueGeoPointLongitude(-180);
   valueGeoPoint.longitude = valueGeoPointLongitude;
-  ::ad::map::point::Altitude valueGeoPointAltitude(-11000);
-  valueGeoPoint.altitude = valueGeoPointAltitude;
   ::ad::map::point::Latitude valueGeoPointLatitude(-90);
   valueGeoPoint.latitude = valueGeoPointLatitude;
+  ::ad::map::point::Altitude valueGeoPointAltitude(-11000);
+  valueGeoPoint.altitude = valueGeoPointAltitude;
   value.geoPoint = valueGeoPoint;
   std::string valueName{"min"};
   value.name = valueName;
@@ -62,10 +62,10 @@ TEST(PointOfInterestValidInputRangeTests, testValidInputRangeGeoPointTooBig)
   ::ad::map::point::GeoPoint valueGeoPoint;
   ::ad::map::point::Longitude valueGeoPointLongitude(-180);
   valueGeoPoint.longitude = valueGeoPointLongitude;
-  ::ad::map::point::Altitude valueGeoPointAltitude(-11000);
-  valueGeoPoint.altitude = valueGeoPointAltitude;
   ::ad::map::point::Latitude valueGeoPointLatitude(-90);
   valueGeoPoint.latitude = valueGeoPointLatitude;
+  ::ad::map::point::Altitude valueGeoPointAltitude(-11000);
+  valueGeoPoint.altitude = valueGeoPointAltitude;
   value.geoPoint = valueGeoPoint;
   std::string valueName{"min"};
   value.name = valueName;

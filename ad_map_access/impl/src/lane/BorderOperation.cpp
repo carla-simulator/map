@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -9,6 +9,9 @@
 #include "ad/map/lane/BorderOperation.hpp"
 #include <algorithm>
 #include "LaneOperationPrivate.hpp"
+#include "ad/map/access/Logging.hpp"
+#include "ad/map/point/HeadingOperation.hpp"
+#include "ad/map/point/Transform.hpp"
 
 namespace ad {
 namespace map {
@@ -231,6 +234,134 @@ IndexPairs getIndexPairs(point::ENUEdge const &leftEdge, point::ENUEdge const &r
 point::ENUEdge getLateralAlignmentEdge(ENUBorder const &border, physics::ParametricValue const lateralAlignment)
 {
   return point::getLateralAlignmentEdge(border.left, border.right, lateralAlignment);
+}
+
+inline bool isPointWithinBorderPoints(point::ENUPoint const &ptLeft,
+                                      point::ENUPoint const &ptRight,
+                                      point::ENUPoint const &enuPoint)
+{
+  // check if the point is actually located in between the border points
+  auto const towardsLeft = ptLeft - enuPoint;
+  auto const towardsRight = ptRight - enuPoint;
+  auto const dotProduct = point::vectorDotProduct(towardsLeft, towardsRight);
+  return (dotProduct < 0.);
+}
+
+inline point::ENUHeading createHeadingFromBorderPoints(point::ENUPoint const &ptLeft, point::ENUPoint const &ptRight)
+{
+  auto const headingLeftToRight = point::createENUHeading(ptLeft, ptRight);
+  auto const resultHeading = point::createENUHeading(static_cast<double>(headingLeftToRight) + M_PI_2);
+  return resultHeading;
+}
+
+point::ENUHeading getENUHeading(std::vector<ENUBorder> const &borderList, point::ENUPoint const &enuPoint)
+{
+  point::ENUHeading resultHeading(2. * M_PI);
+
+  auto firstBeforeBorderDetected = borderList.end();
+  auto lastAfterBorderDetected = borderList.end();
+  for (auto borderIter = borderList.begin(); borderIter != borderList.end(); borderIter++)
+  {
+    auto const edgeLeftLength = calcLength(borderIter->left);
+    auto const edgeRightLength = calcLength(borderIter->right);
+
+    // first of all we have to handle degenerated borders
+    if ((edgeLeftLength == physics::Distance(0.)) || (edgeRightLength == physics::Distance(0.)))
+    {
+      if ((borderIter->left.size() == 0u) || (borderIter->right.size() == 0u))
+      {
+        access::getLogger()->error(
+          "ad::map::lane::getENUHeading: invalid enu border of size border-left:{} border-rigth:{} query-point:{}!",
+          borderIter->left,
+          borderIter->right,
+          enuPoint);
+        return resultHeading;
+      }
+
+      // the question here is: are we actually before or after the border
+      auto const headingLeftToRight = point::createENUHeading(borderIter->left[0], borderIter->right[0]);
+      auto const headingLeftToPoint = point::createENUHeading(borderIter->left[0], enuPoint);
+      auto const headingDiff = point::createENUHeading(static_cast<double>(headingLeftToPoint - headingLeftToRight));
+      if (headingDiff < point::ENUHeading(0.))
+      {
+        if (firstBeforeBorderDetected == borderList.end())
+        {
+          firstBeforeBorderDetected = borderIter;
+        }
+      }
+      else
+      {
+        lastAfterBorderDetected = borderIter;
+      }
+    }
+    else
+    {
+      auto parametricOffsetLeft = point::findNearestPointOnEdge(borderIter->left, edgeLeftLength, enuPoint);
+      auto parametricOffsetRight = point::findNearestPointOnEdge(borderIter->right, edgeRightLength, enuPoint);
+
+      // catch errors
+      if ((!parametricOffsetLeft.isValid()) || (!parametricOffsetRight.isValid()))
+      {
+        access::getLogger()->error(
+          "ad::map::lane::getENUHeading: invalid input data border-left:{} border-rigth:{} query-point:{}",
+          borderIter->left,
+          borderIter->right,
+          enuPoint);
+        return resultHeading;
+      }
+
+      if ((parametricOffsetLeft == physics::ParametricValue(0.))
+          || (parametricOffsetRight == physics::ParametricValue(0.)))
+      {
+        if (firstBeforeBorderDetected == borderList.end())
+        {
+          firstBeforeBorderDetected = borderIter;
+        }
+      }
+      else if ((parametricOffsetLeft == physics::ParametricValue(1.))
+               || (parametricOffsetRight == physics::ParametricValue(1.)))
+      {
+        lastAfterBorderDetected = borderIter;
+      }
+      else
+      {
+        // looks as we have found a potential segment
+        auto const ptLeft = point::getParametricPoint(borderIter->left, parametricOffsetLeft);
+        auto const ptRight = point::getParametricPoint(borderIter->right, parametricOffsetRight);
+        bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);
+
+        if (withinBorder)
+        {
+          return createHeadingFromBorderPoints(ptLeft, ptRight);
+        }
+      }
+    }
+  }
+
+  // if we didn't find any actual match in between so far, use either the first before or the last after to create the
+  // heading
+  if (firstBeforeBorderDetected != borderList.end())
+  {
+    auto const ptLeft = firstBeforeBorderDetected->left.front();
+    auto const ptRight = firstBeforeBorderDetected->right.front();
+    bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);
+    if (withinBorder)
+    {
+      return createHeadingFromBorderPoints(ptLeft, ptRight);
+    }
+  }
+  if (lastAfterBorderDetected != borderList.end())
+  {
+    auto const ptLeft = lastAfterBorderDetected->left.back();
+    auto const ptRight = lastAfterBorderDetected->right.back();
+    bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);
+    if (withinBorder)
+    {
+      return createHeadingFromBorderPoints(ptLeft, ptRight);
+    }
+  }
+
+  return resultHeading;
 }
 
 physics::Distance getDistanceEnuPointToLateralAlignmentEdge(point::ENUPoint const &enuPoint,

@@ -30,6 +30,9 @@ protected:
     ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
       ::ad::map::intersection::IntersectionType::Unknown);
     value.openDriveDefaultIntersectionType = valueOpenDriveDefaultIntersectionType;
+    ::ad::map::landmark::TrafficLightType valueOpenDriveDefaultTrafficLightType(
+      ::ad::map::landmark::TrafficLightType::INVALID);
+    value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
     mValue = value;
   }
 
@@ -108,6 +111,18 @@ TEST_F(MapEntryTests, comparisonOperatorOpenDriveDefaultIntersectionTypeDiffers)
   ::ad::map::intersection::IntersectionType openDriveDefaultIntersectionType(
     ::ad::map::intersection::IntersectionType::TrafficLight);
   valueA.openDriveDefaultIntersectionType = openDriveDefaultIntersectionType;
+  ::ad::map::config::MapEntry valueB = mValue;
+
+  EXPECT_FALSE(valueA == valueB);
+  EXPECT_TRUE(valueA != valueB);
+}
+
+TEST_F(MapEntryTests, comparisonOperatorOpenDriveDefaultTrafficLightTypeDiffers)
+{
+  ::ad::map::config::MapEntry valueA = mValue;
+  ::ad::map::landmark::TrafficLightType openDriveDefaultTrafficLightType(
+    ::ad::map::landmark::TrafficLightType::BIKE_PEDESTRIAN_RED_YELLOW_GREEN);
+  valueA.openDriveDefaultTrafficLightType = openDriveDefaultTrafficLightType;
   ::ad::map::config::MapEntry valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

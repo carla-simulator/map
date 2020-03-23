@@ -30,10 +30,10 @@ TEST(GeoEdgeValidInputRangeTests, testValidInputRangeElementValid)
   ::ad::map::point::GeoPoint element;
   ::ad::map::point::Longitude elementLongitude(-180);
   element.longitude = elementLongitude;
-  ::ad::map::point::Altitude elementAltitude(-11000);
-  element.altitude = elementAltitude;
   ::ad::map::point::Latitude elementLatitude(-90);
   element.latitude = elementLatitude;
+  ::ad::map::point::Altitude elementAltitude(-11000);
+  element.altitude = elementAltitude;
   value.push_back(element);
   ASSERT_TRUE(withinValidInputRange(value));
 }

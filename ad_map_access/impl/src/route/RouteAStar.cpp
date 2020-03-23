@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -9,23 +9,24 @@
 #include "ad/map/route/RouteAStar.hpp"
 
 #include <algorithm>
+#include "ad/map/access/Logging.hpp"
 
 #define DEBUG_OUTPUT 0
 
 #if DEBUG_OUTPUT
 #include <iostream>
-inline std::ostream &operator<<(std::ostream &out, ad::map::point::ParaPoint const &value)
+
+namespace std {
+
+inline ostream &operator<<(ostream &out, ::ad::map::route::planning::RouteAstar::RoutingPoint const &value)
 {
-  out << "(" << static_cast<uint64_t>(value.laneId) << "|" << static_cast<double>(value.parametricOffset) << ")";
+  out << value.first.point << "|" << (int)value.first.direction << " ("
+      << static_cast<double>(value.second.routeDistance) << ","
+      << static_cast<double>(value.second.costData.estimatedDistanceToTarget) << ")";
   return out;
 }
 
-inline std::ostream &operator<<(std::ostream &out, ::ad::map::route::planning::RouteAstar::RoutingPoint const &value)
-{
-  out << value.first.point << "|" << (int)value.first.direction << " (" << static_cast<double>(value.second.g_score)
-      << "," << static_cast<double>(value.second.f_score) << ")";
-  return out;
-}
+} // namespace std
 #endif
 
 namespace ad {
@@ -33,18 +34,48 @@ namespace map {
 namespace route {
 namespace planning {
 
-static const physics::Distance COST_LONGITUDINAL(1.); ///< Cost of longitudinal lane change.
-static const physics::Distance COST_LATERAL(5.);      ///< Cost of lateral lane change.
+RouteAstar::RouteAstar(const RoutingParaPoint &start,
+                       const RoutingParaPoint &dest,
+                       physics::Distance const &maxDistance,
+                       physics::Duration const &maxDuration,
+                       Type typ)
+  : RouteExpander(start, dest, maxDistance, maxDuration, typ)
+{
+  initLanePointer();
+}
+
+RouteAstar::RouteAstar(const RoutingParaPoint &start,
+                       const RoutingParaPoint &dest,
+                       physics::Distance const &maxDistance,
+                       Type typ)
+  : RouteExpander(start, dest, maxDistance, physics::Duration::getMax(), typ)
+{
+  initLanePointer();
+}
+
+RouteAstar::RouteAstar(const RoutingParaPoint &start,
+                       const RoutingParaPoint &dest,
+                       physics::Duration const &maxDuration,
+                       Type typ)
+  : RouteExpander(start, dest, physics::Distance::getMax(), maxDuration, typ)
+{
+  initLanePointer();
+}
 
 RouteAstar::RouteAstar(const RoutingParaPoint &start, const RoutingParaPoint &dest, Type typ)
-  : RouteExpander(start, dest, typ)
+  : RouteExpander(start, dest, physics::Distance::getMax(), physics::Duration::getMax(), typ)
 {
-  mDestLane = lane::getLanePtr(dest.point.laneId);
+  initLanePointer();
+}
+
+void RouteAstar::initLanePointer()
+{
+  mDestLane = lane::getLanePtr(mDest.point.laneId);
   if (!mDestLane)
   {
     throw std::runtime_error("Dest lane not found!");
   }
-  mStartLane = lane::getLanePtr(start.point.laneId);
+  mStartLane = lane::getLanePtr(mStart.point.laneId);
   if (!mStartLane)
   {
     throw std::runtime_error("Start lane not found!");
@@ -57,17 +88,18 @@ bool RouteAstar::calculate()
   mProcessedPoints.clear();
   mProcessingMap.clear();
   mCameFrom.clear();
+  mRawRoutes.clear();
 
   // A* working structures.
   // Initial values.
-  RouteAstarScore cost;
-  cost.f_score = costEstimate(mStartLane, start_.point);
-  mProcessingMap.insert({start_, cost});
+  RoutingCost cost;
+  cost.costData.estimatedDistanceToTarget = costEstimate(mStartLane, mStart.point);
+  mProcessingMap.insert({mStart, cost});
   // Run
-  bool path_found = false;
+  bool pathFound = false;
 #if DEBUG_OUTPUT
-  std::cout << "######### (typ:" << (int)type_ << " #########"
-            << " start: " << start_.point << " dest: " << dest_.point << std::endl;
+  std::cout << "######### (typ:" << (int)mType << " #########"
+            << " start: " << mStart.point << " dest: " << mDest.point << std::endl;
 #endif
   while (!mProcessingMap.empty())
   {
@@ -76,19 +108,18 @@ bool RouteAstar::calculate()
     {
       bool operator()(RoutingPoint const &left, RoutingPoint const &right)
       {
-        return left.second.f_score < right.second.f_score;
+        return left.second.costData.estimatedDistanceToTarget < right.second.costData.estimatedDistanceToTarget;
       }
     };
-    auto minimum_cost_iterator = std::min_element(mProcessingMap.begin(), mProcessingMap.end(), FScoreCompare());
-    if (((dest_.direction == RoutingDirection::DONT_CARE)
-         || (dest_.direction == minimum_cost_iterator->first.direction))
-        && (minimum_cost_iterator->first.point == dest_.point))
+    auto minimumCostIterator = std::min_element(mProcessingMap.begin(), mProcessingMap.end(), FScoreCompare());
+    if (((mDest.direction == RoutingDirection::DONT_CARE) || (mDest.direction == minimumCostIterator->first.direction))
+        && (minimumCostIterator->first.point == mDest.point))
     {
-      reconstructPath(minimum_cost_iterator->first);
-      path_found = true;
+      reconstructPath(*minimumCostIterator);
+      pathFound = true;
 #if DEBUG_OUTPUT
-      std::cout << "Target reached " << *minimum_cost_iterator << std::endl;
-      for (auto const &point : getRawRoute())
+      std::cout << "Target reached " << *minimumCostIterator << std::endl;
+      for (auto const &point : getRawRoute().paraPointList)
       {
         std::cout << " " << point << std::endl;
       }
@@ -98,13 +129,13 @@ bool RouteAstar::calculate()
     }
     else
     {
-      RoutingPoint const minimum_value = *minimum_cost_iterator;
-      mProcessingMap.erase(minimum_cost_iterator);
-      mProcessedPoints.insert(minimum_value.first);
+      RoutingPoint const minimumValue = *minimumCostIterator;
+      mProcessingMap.erase(minimumCostIterator);
+      mProcessedPoints.insert(minimumValue.first);
 #if DEBUG_OUTPUT
-      std::cout << "Expanding: " << minimum_value << std::endl;
+      std::cout << "Expanding: " << minimumValue << std::endl;
 #endif
-      expandNeighbors(minimum_value);
+      expandNeighbors(minimumValue);
 #if DEBUG_OUTPUT
       std::cout << "Results in " << std::endl;
       for (auto &element : mProcessingMap)
@@ -120,7 +151,7 @@ bool RouteAstar::calculate()
   mProcessingMap.clear();
   mCameFrom.clear();
 
-  return path_found;
+  return pathFound;
 }
 
 physics::Distance RouteAstar::costEstimate(lane::Lane::ConstPtr neighborLane, point::ParaPoint const &neighbor)
@@ -134,67 +165,39 @@ physics::Distance RouteAstar::costEstimate(lane::Lane::ConstPtr neighborLane, po
 void RouteAstar::addNeighbor(lane::Lane::ConstPtr originLane,
                              RoutingPoint const &origin,
                              lane::Lane::ConstPtr neighborLane,
-                             RoutingParaPoint const &neighbor,
+                             RoutingPoint const &neighbor,
                              ExpandReason const &expandReason)
 {
-  if (mProcessedPoints.find(neighbor) == mProcessedPoints.end())
-  {
-    physics::Distance expand_g_score;
-    switch (expandReason)
-    {
-      case ExpandReason::Destination:
-      case ExpandReason::SameLaneNeighbor:
-      {
-        if (originLane != neighborLane)
-        {
-          throw std::runtime_error("Expected same lanes!");
-        }
-        auto const deltaTParam = std::fabs(origin.first.point.parametricOffset - neighbor.point.parametricOffset);
-        physics::Distance const laneLength = originLane->length;
-        expand_g_score = deltaTParam * laneLength;
-        break;
-      }
-      case ExpandReason::LongitudinalNeighbor:
-      {
-        expand_g_score = COST_LONGITUDINAL;
-        break;
-      }
-      case ExpandReason::LateralNeighbor:
-      {
-        expand_g_score = COST_LATERAL;
-        break;
-      }
-      default:
-        throw std::runtime_error("RouteAstar::AddNeighbor>> Unsupported expand reason!");
-        break;
-    }
+  (void)originLane;
+  (void)expandReason;
 
-    RouteAstarScore cost;
-    cost.g_score = origin.second.g_score + expand_g_score;
-    auto insert_result = mProcessingMap.insert({neighbor, cost});
+  if (mProcessedPoints.find(neighbor.first) == mProcessedPoints.end())
+  {
+    auto insertResult = mProcessingMap.insert(neighbor);
     if ( // insertion succeeded
-      insert_result.second ||
-      // g_score of new neighbor is smaller than the found duplicate
-      (cost.g_score < insert_result.first->second.g_score))
+      insertResult.second ||
+      // actual distance of new neighbor is smaller than the found duplicate
+      (neighbor.second.routeDistance < insertResult.first->second.routeDistance))
     {
-      cost.f_score = cost.g_score + costEstimate(neighborLane, neighbor.point);
-      insert_result.first->second = cost;
-      mCameFrom[neighbor] = origin.first;
+      auto const estimatedDestCost = costEstimate(neighborLane, neighbor.first.point);
+      insertResult.first->second.routeDistance = neighbor.second.routeDistance;
+      insertResult.first->second.costData.estimatedDistanceToTarget = neighbor.second.routeDistance + estimatedDestCost;
+      mCameFrom[neighbor.first] = origin.first;
 #if DEBUG_OUTPUT
-      std::cout << "Inserted: " << *insert_result.first << std::endl;
+      std::cout << "Inserted: " << *insertResult.first << std::endl;
 #endif
     }
   }
 }
 
-void RouteAstar::reconstructPath(RoutingParaPoint const &dest)
+void RouteAstar::reconstructPath(RoutingPoint const &dest)
 {
-  raw_routes.clear();
-
-  point::ParaPointList raw_route;
-  for (auto current = dest;;)
+  RawRoute rawRoute;
+  rawRoute.routeDistance = dest.second.routeDistance;
+  rawRoute.routeDuration = dest.second.routeDuration;
+  for (auto current = dest.first;;)
   {
-    raw_route.insert(raw_route.begin(), current.point);
+    rawRoute.paraPointList.insert(rawRoute.paraPointList.begin(), current.point);
     auto it = mCameFrom.find(current);
     if (it == mCameFrom.end())
     {
@@ -205,9 +208,9 @@ void RouteAstar::reconstructPath(RoutingParaPoint const &dest)
       current = it->second;
     }
   }
-  dest_ = dest;
-  valid_ = true;
-  raw_routes.push_back(raw_route);
+  mDest = dest.first;
+  mValid = true;
+  mRawRoutes.push_back(rawRoute);
 }
 
 } // namespace planning

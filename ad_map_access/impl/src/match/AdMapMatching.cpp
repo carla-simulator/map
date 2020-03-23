@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -9,6 +9,7 @@
 #include "ad/map/match/AdMapMatching.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <functional>
 #include "ad/map/access/Logging.hpp"
 #include "ad/map/access/Operation.hpp"
@@ -21,31 +22,22 @@ namespace ad {
 namespace map {
 namespace match {
 
-match::MapMatchedPositionConfidenceList AdMapMatching::findLanesInputChecked(point::ECEFPoint const &ecefPoint,
-                                                                             physics::Distance const &distance)
+match::MapMatchedPositionConfidenceList
+AdMapMatching::findLanesInputChecked(std::vector<lane::Lane::ConstPtr> const &relevantLanes,
+                                     point::ECEFPoint const &ecefPoint,
+                                     physics::Distance const &distance)
 {
   match::MapMatchedPositionConfidenceList mapMatchingResults;
-  point::BoundingSphere matchingSphere;
-  matchingSphere.center = ecefPoint;
-  matchingSphere.radius = distance;
   physics::Probability probabilitySum(0.);
-  for (auto laneId : access::getStore().getLanes())
+  for (auto lane : relevantLanes)
   {
-    auto lane = access::getStore().getLanePtr(laneId);
-
-    if (lane)
+    MapMatchedPosition mmpt;
+    if (lane::findNearestPointOnLane(*lane, ecefPoint, mmpt))
     {
-      if (lane::isNear(*lane, matchingSphere))
+      if (point::distance(mmpt.matchedPoint, ecefPoint) <= distance)
       {
-        MapMatchedPosition mmpt;
-        if (lane::findNearestPointOnLane(*lane, ecefPoint, mmpt))
-        {
-          if (point::distance(mmpt.matchedPoint, ecefPoint) <= distance)
-          {
-            mapMatchingResults.push_back(mmpt);
-            probabilitySum += mmpt.probability;
-          }
-        }
+        mapMatchingResults.push_back(mmpt);
+        probabilitySum += mmpt.probability;
       }
     }
   }
@@ -67,6 +59,35 @@ match::MapMatchedPositionConfidenceList AdMapMatching::findLanesInputChecked(poi
             });
 
   return mapMatchingResults;
+}
+
+std::vector<lane::Lane::ConstPtr> AdMapMatching::getRelevantLanesInputChecked(point::ECEFPoint const &ecefPoint,
+                                                                              physics::Distance const &distance)
+{
+  std::vector<lane::Lane::ConstPtr> relevantLanes;
+  point::BoundingSphere matchingSphere;
+  matchingSphere.center = ecefPoint;
+  matchingSphere.radius = distance;
+  for (auto laneId : access::getStore().getLanes())
+  {
+    auto lane = access::getStore().getLanePtr(laneId);
+
+    if (lane)
+    {
+      if (lane::isNear(*lane, matchingSphere))
+      {
+        relevantLanes.push_back(lane);
+      }
+    }
+  }
+
+  return relevantLanes;
+}
+
+match::MapMatchedPositionConfidenceList AdMapMatching::findLanesInputChecked(point::ECEFPoint const &ecefPoint,
+                                                                             physics::Distance const &distance)
+{
+  return findLanesInputChecked(getRelevantLanesInputChecked(ecefPoint, distance), ecefPoint, distance);
 }
 
 match::MapMatchedPositionConfidenceList AdMapMatching::findLanes(point::GeoPoint const &geoPoint,
@@ -261,77 +282,144 @@ AdMapMatching::considerMapMatchingHints(MapMatchedPositionConfidenceList const &
 
 MapMatchedObjectBoundingBox AdMapMatching::getMapMatchedBoundingBox(ENUObjectPosition const &enuObjectPosition,
                                                                     physics::Distance const &distance,
-                                                                    physics::Probability const &minProbability,
-                                                                    physics::Distance const &samplingDistance)
+                                                                    physics::Distance const &inSamplingDistance)
 {
   MapMatchedObjectBoundingBox mapMatchedObjectBoundingBox;
 
-  point::ENUPoint directionalVector;
-  point::ENUPoint orthogonalVector;
-  point::getDirectionVectorsZPlane(enuObjectPosition.heading, directionalVector, orthogonalVector);
+  // if the vehicle covers multiple lanes
+  // the occupied regions usually don't span up to the borders
+  // To ensure that longitudinally we don't miss parts of the lane in
+  // between the the sampling points, we have to reduce the sampling distance
+  // to be not bigger than the matching distance.
+  // Longitudinally we get then in-lane matches at the border also from sampling points before or after the lane
+  auto samplingDistance = inSamplingDistance;
+  if (distance < samplingDistance)
+  {
+    samplingDistance = distance;
+    access::getLogger()->info(
+      "AdMapMatching::getMapMatchedBoundingBox Sampling distance {} requested to be larger than matching distance {}."
+      "Reducing sampling distance to {} which might have impact the desired run-time. Consider to increase"
+      "the matching distance, if appropriate, to reduce run-time again",
+      inSamplingDistance,
+      distance,
+      samplingDistance);
+  }
 
-  point::ENUPoint directionalLength = directionalVector * (0.5 * enuObjectPosition.dimension.length);
-  point::ENUPoint directionalWidth = orthogonalVector * (0.5 * enuObjectPosition.dimension.width);
+  // directly calculate in ECEF to get rid of unnecessary coordinate transformations
+  point::ENUPoint directionalVectorENU;
+  point::ENUPoint orthogonalVectorENU;
+  point::getDirectionVectorsZPlane(enuObjectPosition.heading, directionalVectorENU, orthogonalVectorENU);
 
-  point::ENUPoint referencePoints[int32_t(ObjectReferencePoints::NumPoints)];
+  point::ECEFPoint const start = toECEF(enuObjectPosition.enuReferencePoint);
+  point::ECEFPoint const directionalVectorEnd = toECEF(directionalVectorENU, enuObjectPosition.enuReferencePoint);
+  point::ECEFPoint const directionalVector = vectorNorm(directionalVectorEnd - start);
+  point::ECEFPoint const orthogonalVectorEnd = toECEF(orthogonalVectorENU, enuObjectPosition.enuReferencePoint);
+  point::ECEFPoint const orthogonalVector = vectorNorm(orthogonalVectorEnd - start);
 
-  referencePoints[int32_t(ObjectReferencePoints::Center)] = enuObjectPosition.centerPoint;
+  point::ECEFPoint directionalLength = directionalVector * (0.5 * enuObjectPosition.dimension.length);
+  point::ECEFPoint directionalWidth = orthogonalVector * (0.5 * enuObjectPosition.dimension.width);
+
+  point::ECEFPoint referencePoints[int32_t(ObjectReferencePoints::NumPoints)];
+
+  referencePoints[int32_t(ObjectReferencePoints::Center)]
+    = toECEF(enuObjectPosition.centerPoint, enuObjectPosition.enuReferencePoint);
 
   referencePoints[int32_t(ObjectReferencePoints::FrontLeft)]
-    = (enuObjectPosition.centerPoint + directionalLength) + directionalWidth;
+    = (referencePoints[int32_t(ObjectReferencePoints::Center)] + directionalLength) + directionalWidth;
   referencePoints[int32_t(ObjectReferencePoints::FrontRight)]
-    = (enuObjectPosition.centerPoint + directionalLength) - directionalWidth;
+    = (referencePoints[int32_t(ObjectReferencePoints::Center)] + directionalLength) - directionalWidth;
   referencePoints[int32_t(ObjectReferencePoints::RearLeft)]
-    = (enuObjectPosition.centerPoint - directionalLength) + directionalWidth;
+    = (referencePoints[int32_t(ObjectReferencePoints::Center)] - directionalLength) + directionalWidth;
   referencePoints[int32_t(ObjectReferencePoints::RearRight)]
-    = (enuObjectPosition.centerPoint - directionalLength) - directionalWidth;
+    = (referencePoints[int32_t(ObjectReferencePoints::Center)] - directionalLength) - directionalWidth;
+
+  if (!distance.isValid())
+  {
+    access::getLogger()->error("Invalid distance passed to AdMapMatching::getMapMatchedBoundingBox(): {}", distance);
+    return mapMatchedObjectBoundingBox;
+  }
+  if (!inSamplingDistance.isValid())
+  {
+    access::getLogger()->error("Invalid sampling distance passed to AdMapMatching::getMapMatchedBoundingBox(): {}",
+                               inSamplingDistance);
+    return mapMatchedObjectBoundingBox;
+  }
+  for (size_t i = 0; i < size_t(ObjectReferencePoints::NumPoints); i++)
+  {
+    if (!isValid(referencePoints[i]))
+    {
+      access::getLogger()->error("Invalid reference point within AdMapMatching::getMapMatchedBoundingBox(): {}",
+                                 referencePoints[i]);
+      return mapMatchedObjectBoundingBox;
+    }
+  }
+
+  // filter lanes on large scale first
+  auto const relevantLanes = getRelevantLanesInputChecked(referencePoints[int32_t(ObjectReferencePoints::Center)],
+                                                          distance + (0.5 * enuObjectPosition.dimension.length)
+                                                            + (0.5 * enuObjectPosition.dimension.width));
 
   mapMatchedObjectBoundingBox.referencePointPositions.resize(size_t(ObjectReferencePoints::NumPoints));
 
+  // we have to ensure that the confidence list used for the calculation of the lane regions
+  // covers ALL matching samples at once!
+  // Otherwise the fill-up to inner borders of the region is not working properly
+  MapMatchedPositionConfidenceList regionConfidenceList;
   for (size_t i = 0; i < size_t(ObjectReferencePoints::NumPoints); i++)
   {
     mapMatchedObjectBoundingBox.referencePointPositions[i]
-      = getMapMatchedPositions(referencePoints[i], enuObjectPosition.enuReferencePoint, distance, minProbability);
-
-    addLaneRegions(mapMatchedObjectBoundingBox.laneOccupiedRegions,
-                   mapMatchedObjectBoundingBox.referencePointPositions[i]);
+      = findLanesInputChecked(relevantLanes, referencePoints[i], distance);
+    regionConfidenceList.insert(regionConfidenceList.end(),
+                                mapMatchedObjectBoundingBox.referencePointPositions[i].begin(),
+                                mapMatchedObjectBoundingBox.referencePointPositions[i].end());
   }
 
+  // calculate actual sampling stride
+  // stride below 10cm doesn't actually make sense
   physics::Distance const stride = std::max(samplingDistance, physics::Distance(0.1));
 
-  point::ENUPoint const lengthStrideVector = directionalVector * stride;
-  point::ENUPoint const widthStrideVector = orthogonalVector * stride;
+  auto const lengthStrideCount = std::ceil(enuObjectPosition.dimension.length / stride);
+  auto const lengthStrideCountUInt = static_cast<uint32_t>(lengthStrideCount);
+  auto const lengthStride = enuObjectPosition.dimension.length / lengthStrideCount;
+  point::ECEFPoint const lengthStrideVector = directionalVector * lengthStride;
 
-  point::ENUPoint widthStartPos = referencePoints[int32_t(ObjectReferencePoints::FrontLeft)];
+  auto const widthStrideCount = std::ceil(enuObjectPosition.dimension.width / stride);
+  auto const widthStrideCountUInt = static_cast<uint32_t>(widthStrideCount);
+  auto const widthStride = enuObjectPosition.dimension.width / widthStrideCount;
+  point::ECEFPoint const widthStrideVector = orthogonalVector * widthStride;
 
-  for (auto j = stride; j < enuObjectPosition.dimension.width; j += stride)
+  point::ECEFPoint widthStartPos = referencePoints[int32_t(ObjectReferencePoints::FrontLeft)];
+
+  for (uint32_t widthStrideNum = 0u; widthStrideNum <= widthStrideCountUInt; widthStrideNum++)
   {
-    point::ENUPoint currentPoint = widthStartPos;
-    for (auto i = stride; i < enuObjectPosition.dimension.length; i += stride)
+    point::ECEFPoint currentPoint = widthStartPos;
+    for (uint32_t lengthStrideNum = 0u; lengthStrideNum <= lengthStrideCountUInt; lengthStrideNum++)
     {
-      currentPoint = currentPoint - lengthStrideVector;
-
       MapMatchedPositionConfidenceList mapMatchedPositions
-        = getMapMatchedPositions(currentPoint, enuObjectPosition.enuReferencePoint, distance, minProbability);
-      addLaneRegions(mapMatchedObjectBoundingBox.laneOccupiedRegions, mapMatchedPositions);
+        = findLanesInputChecked(relevantLanes, currentPoint, distance);
+      regionConfidenceList.insert(regionConfidenceList.end(), mapMatchedPositions.begin(), mapMatchedPositions.end());
+
+      currentPoint = currentPoint - lengthStrideVector;
     }
     widthStartPos = widthStartPos - widthStrideVector;
   }
+
+  addLaneRegions(mapMatchedObjectBoundingBox.laneOccupiedRegions, regionConfidenceList);
+
+  access::getLogger()->trace("getMapMatchedBoundingBox result {}", mapMatchedObjectBoundingBox);
 
   return mapMatchedObjectBoundingBox;
 }
 
 LaneOccupiedRegionList AdMapMatching::getLaneOccupiedRegions(std::vector<ENUObjectPosition> enuObjectPositions,
                                                              physics::Distance const &distance,
-                                                             physics::Probability const &minProbability,
                                                              physics::Distance const &samplingDistance)
 {
   LaneOccupiedRegionList laneOccupiedRegions;
 
   for (auto const &objectPosition : enuObjectPositions)
   {
-    auto const mapMatchedBoundingBox
-      = getMapMatchedBoundingBox(objectPosition, distance, minProbability, samplingDistance);
+    auto const mapMatchedBoundingBox = getMapMatchedBoundingBox(objectPosition, distance, samplingDistance);
     addLaneRegions(laneOccupiedRegions, mapMatchedBoundingBox.laneOccupiedRegions);
   }
   return laneOccupiedRegions;
@@ -342,9 +430,9 @@ void AdMapMatching::addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
 {
   for (auto const &currentPosition : mapMatchedPositions)
   {
-    physics::ParametricValue const currentLaterOffset(static_cast<double>(currentPosition.lanePoint.lateralT));
+    physics::ParametricValue const currentLateralOffset(static_cast<double>(currentPosition.lanePoint.lateralT));
 
-    if (withinValidInputRange(currentLaterOffset, false))
+    if (withinValidInputRange(currentLateralOffset, false))
     {
       auto search = std::find_if(std::begin(laneOccupiedRegions),
                                  std::end(laneOccupiedRegions),
@@ -355,7 +443,7 @@ void AdMapMatching::addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
       if (search != laneOccupiedRegions.end())
       {
         unionRangeWith(search->longitudinalRange, currentPosition.lanePoint.paraPoint.parametricOffset);
-        unionRangeWith(search->lateralRange, currentLaterOffset);
+        unionRangeWith(search->lateralRange, currentLateralOffset);
       }
       else
       {
@@ -363,9 +451,41 @@ void AdMapMatching::addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
         laneRegion.laneId = currentPosition.lanePoint.paraPoint.laneId;
         laneRegion.longitudinalRange.maximum = currentPosition.lanePoint.paraPoint.parametricOffset;
         laneRegion.longitudinalRange.minimum = currentPosition.lanePoint.paraPoint.parametricOffset;
-        laneRegion.lateralRange.maximum = currentLaterOffset;
-        laneRegion.lateralRange.minimum = currentLaterOffset;
+        laneRegion.lateralRange.maximum = currentLateralOffset;
+        laneRegion.lateralRange.minimum = currentLateralOffset;
         laneOccupiedRegions.push_back(laneRegion);
+      }
+    }
+  }
+  // if the vehicle covers multiple lanes
+  // the occupied regions usually don't span up to the borders
+  // since in the above loop only (lateral) in-lane matches are considered.
+  // But the likelihood for a match exactly at the border is very low!
+  // Therefore, we have to enlarge the inner regions to cover also the space
+  // in between the map matching points in lateral direction
+  // This can be achieved by taking the out-of-lane matches into account
+  for (auto const &currentPosition : mapMatchedPositions)
+  {
+    physics::ParametricValue const currentLaterOffset(static_cast<double>(currentPosition.lanePoint.lateralT));
+
+    if (!withinValidInputRange(currentLaterOffset, false))
+    {
+      auto search = std::find_if(std::begin(laneOccupiedRegions),
+                                 std::end(laneOccupiedRegions),
+                                 [currentPosition](LaneOccupiedRegion const &region) {
+                                   return region.laneId == currentPosition.lanePoint.paraPoint.laneId;
+                                 });
+
+      if (search != laneOccupiedRegions.end())
+      {
+        if (currentLaterOffset > physics::ParametricValue(1.0))
+        {
+          unionRangeWith(search->lateralRange, physics::ParametricValue(1.0));
+        }
+        else if (currentLaterOffset < physics::ParametricValue(0.0))
+        {
+          unionRangeWith(search->lateralRange, physics::ParametricValue(0.0));
+        }
       }
     }
   }

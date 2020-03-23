@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <ad/physics/Distance.hpp>
+#include <ad/physics/Duration.hpp>
 #include <vector>
 #include "ad/map/point/ParaPointList.hpp"
 #include "ad/map/route/Routing.hpp"
@@ -33,6 +35,20 @@ public:
   /**
    * @brief Basic route description.
    */
+  struct RawRoute
+  {
+    /** @brief the list of ParaPoints that contain the route planning output
+     */
+    point::ParaPointList paraPointList;
+    /** @brief the distance covered by the route */
+    physics::Distance routeDistance{0.};
+    /** @brief the duration required by the route */
+    physics::Duration routeDuration{0.};
+  };
+
+  /**
+   * @brief Basic route description.
+   */
   typedef std::vector<point::ParaPointList> BasicRoute;
 
   /**
@@ -49,9 +65,15 @@ public:
    * @brief Constructor. Calculates route between two points.
    * @param[in] start Start point.
    * @param[in] dest  Destination point.
+   * @param[in] maxDistance maximum route search distance.
+   * @param[in] maxDuration maximum route search duration.
    * @param[in] routingType   Type of the route to be calculated.
    */
-  Route(const RoutingParaPoint &start, const RoutingParaPoint &dest, Type const &routingType);
+  Route(const RoutingParaPoint &start,
+        const RoutingParaPoint &dest,
+        physics::Distance const &maxDistance,
+        physics::Duration const &maxDuration,
+        Type const &routingType);
 
   Route(Route const &) = delete;
   Route(Route const &&) = delete;
@@ -66,31 +88,31 @@ public:
   /** @returns Start point as ParaPoint. */
   const point::ParaPoint &getStart() const
   {
-    return start_.point;
+    return mStart.point;
   }
 
   /** @returns Start point as RoutingParaPoint. */
   const RoutingParaPoint &getRoutingStart() const
   {
-    return start_;
+    return mStart;
   }
 
   /** @returns Destination point as ParaPoint. */
   const point::ParaPoint &getDest() const
   {
-    return dest_.point;
+    return mDest.point;
   }
 
   /** @returns Destination point as RoutingParaPoint. */
   const RoutingParaPoint &getRoutingDest() const
   {
-    return dest_;
+    return mDest;
   }
 
   /** @returns Type of the route to be calculated. */
   Type getType() const
   {
-    return type_;
+    return mType;
   }
 
   /**
@@ -109,16 +131,16 @@ public:
    */
   bool isValid() const
   {
-    return valid_;
+    return mValid;
   }
 
   /** @returns Raw calculated route. */
-  const point::ParaPointList &getRawRoute(size_t const routeIndex = 0u) const;
+  const RawRoute &getRawRoute(size_t const routeIndex = 0u) const;
 
   /** @returns Raw calculated route. */
-  const std::vector<point::ParaPointList> &getRawRoutes() const
+  const std::vector<RawRoute> &getRawRoutes() const
   {
-    return raw_routes;
+    return mRawRoutes;
   }
 
   /** @returns Calculated base route. */
@@ -128,12 +150,20 @@ public:
   std::vector<BasicRoute> getBasicRoutes() const;
 
 protected:
-  RoutingParaPoint start_; ///< Start point.
-  RoutingParaPoint dest_;  ///< Destination point.
-  Type type_;              ///< Type of the route to be calculated.
-
-  bool valid_;                                  ///< Indicates if calculation was successful.
-  std::vector<point::ParaPointList> raw_routes; ///< Calculated routes.
+  //! Start point.
+  RoutingParaPoint mStart;
+  //! Destination point.
+  RoutingParaPoint mDest;
+  //! prediction distance to be used
+  physics::Distance const mMaxDistance;
+  //! prediction duration to be used
+  physics::Duration const mMaxDuration;
+  //! Type of the route to be calculated.
+  Type mType;
+  //! Indicates if calculation was successful.
+  bool mValid;
+  ///< Calculated routes.
+  std::vector<RawRoute> mRawRoutes;
 };
 
 } // namespace planning

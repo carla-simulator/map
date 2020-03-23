@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -14,14 +14,9 @@
 #if DEBUG_OUTPUT
 #include <iostream>
 
-inline std::ostream &operator<<(std::ostream &out, ad::map::point::ParaPoint const &value)
-{
-  out << "(" << static_cast<uint64_t>(value.laneId) << "|" << static_cast<double>(value.parametricOffset) << ")";
-  return out;
-}
+namespace std {
 
-inline std::ostream &operator<<(std::ostream &out,
-                                ad::map::route::planning::RoutePrediction::RouteTreeElement const &value)
+inline ostream &operator<<(ostream &out, ad::map::route::planning::RoutePrediction::RouteTreeElement const &value)
 {
   out << value.routingPoint.first.point << "|" << static_cast<int16_t>(value.routingPoint.first.direction) << " ("
       << static_cast<double>(value.routingPoint.second.routeDistance) << "meters ,"
@@ -35,6 +30,8 @@ inline std::ostream &operator<<(std::ostream &out,
   out << "]";
   return out;
 }
+
+} // namespace std
 #endif
 
 namespace ad {
@@ -45,23 +42,17 @@ namespace planning {
 RoutePrediction::RoutePrediction(const RoutingParaPoint &start,
                                  physics::Distance const &predictionDistance,
                                  physics::Duration const &predictionDuration)
-  : RouteExpander(start, start, Route::Type::SHORTEST)
-  , mPredictionDistance(predictionDistance)
-  , mPredictionDuration(predictionDuration)
+  : RouteExpander(start, start, predictionDistance, predictionDuration, Route::Type::SHORTEST)
 {
 }
 
 RoutePrediction::RoutePrediction(const RoutingParaPoint &start, physics::Distance const &predictionDistance)
-  : RouteExpander(start, start, Route::Type::SHORTEST)
-  , mPredictionDistance(predictionDistance)
-  , mPredictionDuration(physics::Duration::getMax())
+  : RouteExpander(start, start, predictionDistance, physics::Duration::getMax(), Route::Type::SHORTEST)
 {
 }
 
 RoutePrediction::RoutePrediction(const RoutingParaPoint &start, physics::Duration const &predictionDuration)
-  : RouteExpander(start, start, Route::Type::SHORTEST)
-  , mPredictionDistance(physics::Distance::getMax())
-  , mPredictionDuration(predictionDuration)
+  : RouteExpander(start, start, physics::Distance::getMax(), predictionDuration, Route::Type::SHORTEST)
 {
 }
 
@@ -69,7 +60,12 @@ bool RoutePrediction::calculate()
 {
   mProcessedTransitions.clear();
   mElementsToProcess.clear();
-  mRouteTreeRoot = std::make_shared<RouteTreeElement>(nullptr, getRoutingStart());
+  mRawRoutes.clear();
+
+  RoutingPoint start;
+  start.first = getRoutingStart();
+  start.second = RoutingCost();
+  mRouteTreeRoot = std::make_shared<RouteTreeElement>(nullptr, start);
 
   mElementsToProcess.push_back(mRouteTreeRoot);
 
@@ -87,114 +83,80 @@ bool RoutePrediction::calculate()
 void RoutePrediction::addNeighbor(lane::Lane::ConstPtr originLane,
                                   RoutingPoint const &origin,
                                   lane::Lane::ConstPtr neighborLane,
-                                  RoutingParaPoint const &neighbor,
+                                  RoutingPoint const &neighbor,
                                   ExpandReason const &expandReason)
 {
+  (void)originLane;
+  (void)neighborLane;
+
   if (expandReason == ExpandReason::Destination)
   {
     return;
   }
 
-  auto insertResult = mProcessedTransitions[origin.first].insert(neighbor);
-  if (!insertResult.second)
-  {
-    return;
-  }
+  auto currentTreeElement = mElementsToProcess.front();
 
-  auto element = std::make_shared<RouteTreeElement>(mElementsToProcess.front().get(), neighbor, origin.second);
-
-  if (mElementsToProcess.front()->children.find(element) != mElementsToProcess.front()->children.end())
+  auto newChildElement = std::make_shared<RouteTreeElement>(currentTreeElement.get(), neighbor);
+  auto insertProcessedResult = mProcessedTransitions[origin.first].insert(newChildElement);
+  if (insertProcessedResult.second)
   {
-    return;
-  }
-
-  physics::Distance neighborDistance{0.};
-  physics::Duration neighborDuration{0.};
-  if ((expandReason == ExpandReason::SameLaneNeighbor) || (expandReason == ExpandReason::LateralNeighbor))
-  {
-    point::ECEFPoint pt_origin
-      = getParametricPoint(*originLane, origin.first.point.parametricOffset, physics::ParametricValue(0.5));
-    point::ECEFPoint pt_neighbor
-      = getParametricPoint(*neighborLane, neighbor.point.parametricOffset, physics::ParametricValue(0.5));
-    neighborDistance = point::distance(pt_neighbor, pt_origin);
-    physics::ParametricRange drivingRange;
-    if (origin.first.point.parametricOffset < neighbor.point.parametricOffset)
+    auto insertToProcessResult = currentTreeElement->children.insert(newChildElement);
+    if (!insertToProcessResult.second)
     {
-      drivingRange.minimum = origin.first.point.parametricOffset;
-      drivingRange.maximum = neighbor.point.parametricOffset;
-    }
-    else
-    {
-      drivingRange.minimum = neighbor.point.parametricOffset;
-      drivingRange.maximum = origin.first.point.parametricOffset;
-    }
-
-    if (expandReason == ExpandReason::SameLaneNeighbor)
-    {
-      neighborDuration = getDuration(*originLane, drivingRange);
-    }
-    else
-    {
-      neighborDuration = neighborDistance / getMaxSpeed(*originLane, drivingRange);
-    }
-  }
-  if (neighborDistance < physics::Distance(0.1))
-  {
-    neighborDistance = physics::Distance(0.1);
-  }
-  element->routingPoint.second.routeDistance += neighborDistance;
-  element->routingPoint.second.routeDuration += neighborDuration;
-  mElementsToProcess.front()->children.insert(element);
-
-#if DEBUG_OUTPUT
-  std::cout << "Adding neighbor" << *element.get() << std::endl;
-#endif
-  if ((element->routingPoint.second.routeDistance < mPredictionDistance)
-      && (element->routingPoint.second.routeDuration < mPredictionDuration))
-  {
-    mElementsToProcess.push_back(element);
-  }
-}
-
-void RoutePrediction::RouteTreeElement::addPaths(std::vector<point::ParaPointList> &paths)
-{
-  if (children.size() > 0u)
-  {
-    for (auto child : children)
-    {
-      child->addPaths(paths);
+      // this child is already in the current element, nothing to be done
+      return;
     }
   }
   else
   {
-    // a leaf in the route tree
-    point::ParaPointList raw_route;
-    RouteTreeElement const *current = this;
-    while (current != nullptr)
-    {
-      raw_route.insert(raw_route.begin(), current->routingPoint.first.point);
-      current = current->theParent;
-    }
-    paths.push_back(raw_route);
-#if DEBUG_OUTPUT
-    std::cout << "Leaf " << *this << std::endl;
-    std::cout << "Added path [" << paths.size() << "]" << std::endl;
-    for (auto &element : raw_route)
-    {
-      std::cout << " " << element << std::endl;
-    }
-    std::cout << "----------" << std::endl;
-#endif
+    // a similar child (a twin) was already already expanded, take that one as our child
+    currentTreeElement->children.insert(*insertProcessedResult.first);
+    // nothing further to be done since already processed
+    return;
   }
+
+#if DEBUG_OUTPUT
+  std::cout << "Adding neighbor" << *(newChildElement.get()) << std::endl;
+#endif
+  mElementsToProcess.push_back(newChildElement);
 }
 
 void RoutePrediction::reconstructPaths()
 {
-  raw_routes.clear();
-  valid_ = bool(mRouteTreeRoot);
-  if (valid_)
+  mValid = bool(mRouteTreeRoot);
+  if (mValid)
   {
-    mRouteTreeRoot->addPaths(raw_routes);
+    for (auto const &processedTransition : mProcessedTransitions)
+    {
+      for (auto const &element : processedTransition.second)
+      {
+        if (element->children.empty())
+        {
+          // a leaf in the route tree
+          RawRoute rawRoute;
+          rawRoute.routeDistance = element->routingPoint.second.routeDistance;
+          rawRoute.routeDuration = element->routingPoint.second.routeDuration;
+#if DEBUG_OUTPUT
+          std::cout << "Leaf " << *element << std::endl;
+#endif
+          RouteTreeElement const *parent = element.get();
+          while (parent != nullptr)
+          {
+            rawRoute.paraPointList.insert(rawRoute.paraPointList.begin(), parent->routingPoint.first.point);
+            parent = parent->theParent;
+          }
+          mRawRoutes.push_back(rawRoute);
+#if DEBUG_OUTPUT
+          std::cout << "Added path [" << mRawRoutes.size() << "]" << std::endl;
+          for (auto &point : rawRoute.paraPointList)
+          {
+            std::cout << " " << point << std::endl;
+          }
+          std::cout << "----------" << std::endl;
+#endif
+        }
+      }
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -65,7 +65,9 @@ bool init(std::string const &configFileName);
  */
 bool initFromOpenDriveContent(std::string const &openDriveContent,
                               double const overlapMargin,
-                              ::ad::map::intersection::IntersectionType const defaultIntersectionType);
+                              intersection::IntersectionType const defaultIntersectionType,
+                              landmark::TrafficLightType const defaultTrafficLightType
+                              = landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN);
 /**
  * @brief initialize singleton with given store
  *

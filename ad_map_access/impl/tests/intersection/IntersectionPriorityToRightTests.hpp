@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -16,7 +16,7 @@ namespace map {
 /**
  * @brief base class for PriorityToRight intersection tests
  */
-struct IntersectionPriorityToRightTest : SyntheticIntersectionTestBase
+struct IntersectionPriorityToRightTest : virtual SyntheticIntersectionTestBase
 {
   virtual void prepareMap() const override;
   virtual intersection::IntersectionType expectedIntersectionType() const override;

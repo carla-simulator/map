@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -12,6 +12,7 @@
 #include "ad/map/point/ECEFOperation.hpp"
 #include "ad/map/point/ENUOperation.hpp"
 #include "ad/map/point/GeoOperation.hpp"
+#include "ad/map/point/HeadingOperation.hpp"
 
 /** @brief namespace ad */
 namespace ad {
@@ -139,6 +140,13 @@ inline physics::Distance calcLength(GeoBorder const &border)
 {
   return (calcLength(border.left) + calcLength(border.right)) / 2.;
 }
+
+/** @brief calculate the ENUHeading of the vector<ENUBorder> at the given ENUPoint
+ *
+ *  If the given ENUPoint is not within the given borders,
+ *  an ENUHeading(2*M_PI) is returned.
+ */
+point::ENUHeading getENUHeading(std::vector<ENUBorder> const &borderList, point::ENUPoint const &enuPoint);
 
 } // namespace lane
 } // namespace map

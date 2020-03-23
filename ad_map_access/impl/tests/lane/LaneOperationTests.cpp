@@ -251,6 +251,16 @@ TEST_F(LaneOperationTest, LaneRelation)
   para1.parametricOffset = physics::ParametricValue(0.5);
   ASSERT_EQ(calcWidth(x12, physics::ParametricValue(0.5)), physics::Distance(2.));
   ASSERT_EQ(calcWidth(para1), physics::Distance(2.));
+
+  match::LaneOccupiedRegion occupiedRegion;
+  occupiedRegion.laneId = x12;
+  occupiedRegion.longitudinalRange.minimum = physics::ParametricValue(0.2);
+  occupiedRegion.longitudinalRange.maximum = physics::ParametricValue(0.8);
+  occupiedRegion.lateralRange.minimum = physics::ParametricValue(0.3);
+  occupiedRegion.lateralRange.maximum = physics::ParametricValue(0.7);
+  ASSERT_EQ(calcWidth(occupiedRegion), physics::Distance(2.) * 0.4);
+  ASSERT_EQ(calcLength(occupiedRegion), calcLength(x12) * 0.6);
+
   ECEFPoint ecef_pt1;
   ecef_pt1 = getProjectedParametricPoint(
     *(lane::getLanePtr(x12)), physics::ParametricValue(0.5), physics::ParametricValue(0.5));
@@ -530,19 +540,19 @@ TEST_F(LaneOperationTest, BoarderOperation)
 
   edge_enu1.clear();
   edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(1., 4., 0));
+  edge_enu1.push_back(createENUPoint(201., 4., 0));
   edge_enu1.push_back(createENUPoint(401., 4., 0));
   edge_enu1.push_back(createENUPoint(701., 4., 0));
-  edge_enu2.push_back(createENUPoint(1., 2., 0));
+  edge_enu2.push_back(createENUPoint(201., 2., 0));
   edge_enu2.push_back(createENUPoint(701., 2., 0));
   border_enu1.left = edge_enu1;
   border_enu1.right = edge_enu2;
   edge_enu1.clear();
   edge_enu2.clear();
   edge_enu1.push_back(createENUPoint(1, 4, 0));
-  edge_enu1.push_back(createENUPoint(401, 4, 0));
+  edge_enu1.push_back(createENUPoint(101, 4, 0));
   edge_enu2.push_back(createENUPoint(1, 2, 0));
-  edge_enu2.push_back(createENUPoint(401, 2, 0));
+  edge_enu2.push_back(createENUPoint(101, 2, 0));
   border_enu2.left = edge_enu1;
   border_enu2.right = edge_enu2;
   normalizeBorder(border_enu1, &border_enu2);

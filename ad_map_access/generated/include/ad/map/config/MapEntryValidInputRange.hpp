@@ -21,6 +21,7 @@
 #include <limits>
 #include "ad/map/config/MapEntry.hpp"
 #include "ad/map/intersection/IntersectionTypeValidInputRange.hpp"
+#include "ad/map/landmark/TrafficLightTypeValidInputRange.hpp"
 #include "ad/physics/DistanceValidInputRange.hpp"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/spdlog.h"
@@ -40,7 +41,8 @@ inline bool withinValidInputRange(::ad::map::config::MapEntry const &input, bool
   // check for generic member input ranges
   bool inValidInputRange = true;
   inValidInputRange = withinValidInputRange(input.openDriveOverlapMargin, logErrors)
-    && withinValidInputRange(input.openDriveDefaultIntersectionType, logErrors);
+    && withinValidInputRange(input.openDriveDefaultIntersectionType, logErrors)
+    && withinValidInputRange(input.openDriveDefaultTrafficLightType, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::config::MapEntry)>> {} has invalid member",

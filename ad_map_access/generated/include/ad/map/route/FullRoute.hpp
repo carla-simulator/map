@@ -22,6 +22,8 @@
 #include <memory>
 #include <sstream>
 #include "ad/map/route/RoadSegmentList.hpp"
+#include "ad/map/route/RouteCreationMode.hpp"
+#include "ad/map/route/RouteLaneOffset.hpp"
 #include "ad/map/route/RoutePlanningCounter.hpp"
 #include "ad/map/route/SegmentCounter.hpp"
 /*!
@@ -114,7 +116,9 @@ struct FullRoute
   bool operator==(const FullRoute &other) const
   {
     return (roadSegments == other.roadSegments) && (routePlanningCounter == other.routePlanningCounter)
-      && (fullRouteSegmentCount == other.fullRouteSegmentCount);
+      && (fullRouteSegmentCount == other.fullRouteSegmentCount)
+      && (destinationLaneOffset == other.destinationLaneOffset) && (minLaneOffset == other.minLaneOffset)
+      && (maxLaneOffset == other.maxLaneOffset) && (routeCreationMode == other.routeCreationMode);
   }
 
   /**
@@ -132,6 +136,27 @@ struct FullRoute
   ::ad::map::route::RoadSegmentList roadSegments;
   ::ad::map::route::RoutePlanningCounter routePlanningCounter{0u};
   ::ad::map::route::SegmentCounter fullRouteSegmentCount{0u};
+
+  /*!
+   * The lane offset of the planning destination.
+   */
+  ::ad::map::route::RouteLaneOffset destinationLaneOffset{0};
+
+  /*!
+   * The minimal lane offset of the route.
+   */
+  ::ad::map::route::RouteLaneOffset minLaneOffset{0};
+
+  /*!
+   * The maximal lane offset of the route.
+   */
+  ::ad::map::route::RouteLaneOffset maxLaneOffset{0};
+
+  /*!
+   * Store the information on how the route was initially created to be able to consider this when applying route
+   * operations.
+   */
+  ::ad::map::route::RouteCreationMode routeCreationMode{::ad::map::route::RouteCreationMode::Undefined};
 };
 
 } // namespace route
@@ -178,6 +203,18 @@ inline std::ostream &operator<<(std::ostream &os, FullRoute const &_value)
   os << ",";
   os << "fullRouteSegmentCount:";
   os << _value.fullRouteSegmentCount;
+  os << ",";
+  os << "destinationLaneOffset:";
+  os << _value.destinationLaneOffset;
+  os << ",";
+  os << "minLaneOffset:";
+  os << _value.minLaneOffset;
+  os << ",";
+  os << "maxLaneOffset:";
+  os << _value.maxLaneOffset;
+  os << ",";
+  os << "routeCreationMode:";
+  os << _value.routeCreationMode;
   os << ")";
   return os;
 }

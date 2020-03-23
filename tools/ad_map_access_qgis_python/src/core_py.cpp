@@ -424,10 +424,10 @@ static PyMethodDef s_ad_map_access_python_methods[]
 ///////////////////////////////
 // Python Module Initialization
 
-PyMODINIT_FUNC initad_map_access_python(void)
+PyMODINIT_FUNC initad_map_access_qgis_python(void)
 {
-  std::string desc("Intel ad_map_access for Python.\n");
+  std::string desc("Intel ad_map_access Python qgis.\n");
   desc += std::string("Version ") + AD_MAP_ACCESS_VERSION_STRING + "\n";
   desc += std::string("Copyright (c) 2017-2020 Intel Corp.");
-  Py_InitModule3("ad_map_access_python", s_ad_map_access_python_methods, desc.c_str());
+  Py_InitModule3("ad_map_access_qgis_python", s_ad_map_access_python_methods, desc.c_str());
 }

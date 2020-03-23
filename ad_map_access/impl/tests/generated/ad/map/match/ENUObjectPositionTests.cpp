@@ -36,10 +36,10 @@ protected:
     ::ad::map::point::GeoPoint valueEnuReferencePoint;
     ::ad::map::point::Longitude valueEnuReferencePointLongitude(-180);
     valueEnuReferencePoint.longitude = valueEnuReferencePointLongitude;
-    ::ad::map::point::Altitude valueEnuReferencePointAltitude(-11000);
-    valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
     ::ad::map::point::Latitude valueEnuReferencePointLatitude(-90);
     valueEnuReferencePoint.latitude = valueEnuReferencePointLatitude;
+    ::ad::map::point::Altitude valueEnuReferencePointAltitude(-11000);
+    valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
     value.enuReferencePoint = valueEnuReferencePoint;
     ::ad::physics::Dimension3D valueDimension;
     ::ad::physics::Distance valueDimensionLength(0.);
@@ -133,10 +133,10 @@ TEST_F(ENUObjectPositionTests, comparisonOperatorEnuReferencePointDiffers)
   ::ad::map::point::GeoPoint enuReferencePoint;
   ::ad::map::point::Longitude enuReferencePointLongitude(180);
   enuReferencePoint.longitude = enuReferencePointLongitude;
-  ::ad::map::point::Altitude enuReferencePointAltitude(9000);
-  enuReferencePoint.altitude = enuReferencePointAltitude;
   ::ad::map::point::Latitude enuReferencePointLatitude(90);
   enuReferencePoint.latitude = enuReferencePointLatitude;
+  ::ad::map::point::Altitude enuReferencePointAltitude(9000);
+  enuReferencePoint.altitude = enuReferencePointAltitude;
   valueA.enuReferencePoint = enuReferencePoint;
   ::ad::map::match::ENUObjectPosition valueB = mValue;
 

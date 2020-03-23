@@ -41,7 +41,7 @@ inline bool withinValidInputRange(::ad::map::point::GeoPoint const &input, bool 
   // check for generic member input ranges
   bool inValidInputRange = true;
   inValidInputRange = withinValidInputRange(input.longitude, logErrors)
-    && withinValidInputRange(input.altitude, logErrors) && withinValidInputRange(input.latitude, logErrors);
+    && withinValidInputRange(input.latitude, logErrors) && withinValidInputRange(input.altitude, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::point::GeoPoint)>> {} has invalid member",

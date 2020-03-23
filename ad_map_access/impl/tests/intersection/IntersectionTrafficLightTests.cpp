@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -9,6 +9,7 @@
 #include "IntersectionTrafficLightTests.hpp"
 #include <ad/map/landmark/LandmarkOperation.hpp>
 #include <ad/map/point/Operation.hpp>
+#include "IntersectionTown01Test.hpp"
 #include "MapSetup.hpp"
 
 namespace ad {
@@ -494,6 +495,60 @@ TEST_F(IntersectionTrafficLightSouthToNorthTest, basic_checks)
   geoPoint = point::createGeoPoint(point::Longitude(8.457664809), point::Latitude(49.02051672), point::Altitude(5.));
   id2 = landmark::uniqueLandmarkId(geoPoint);
   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id1), expectedTrafficLight((uint64_t)id2)});
+}
+
+struct IntersectionTrafficLightTown01WestToSouthTest : IntersectionTown01WestToSouthTest,
+                                                       IntersectionTrafficLightWestToSouthTest
+{
+  point::GeoPoint getGeoFromSouth() const override
+  {
+    return IntersectionTown01WestToSouthTest::getGeoFromSouth();
+  }
+
+  point::GeoPoint getGeoToSouth() const override
+  {
+    return IntersectionTown01WestToSouthTest::getGeoToSouth();
+  }
+
+  point::GeoPoint getGeoFromWest() const override
+  {
+    return IntersectionTown01WestToSouthTest::getGeoFromWest();
+  }
+
+  point::GeoPoint getGeoToWest() const override
+  {
+    return IntersectionTown01WestToSouthTest::getGeoToWest();
+  }
+
+  virtual point::GeoPoint getGeoFromNorth() const override
+  {
+    return IntersectionTown01WestToSouthTest::getGeoFromNorth();
+  }
+
+  virtual point::GeoPoint getGeoToNorth() const override
+  {
+    return IntersectionTown01WestToSouthTest::getGeoToNorth();
+  }
+
+  virtual point::GeoPoint getGeoFromEast() const override
+  {
+    return IntersectionTown01WestToSouthTest::getGeoFromEast();
+  }
+
+  virtual point::GeoPoint getGeoToEast() const override
+  {
+    return IntersectionTown01WestToSouthTest::getGeoToEast();
+  }
+
+  virtual void prepareMap() const override
+  {
+    ::map_setup::prepareMapTown01TrafficLight();
+  }
+};
+
+TEST_F(IntersectionTrafficLightTown01WestToSouthTest, basic_checks)
+{
+  IntersectionTown01WestToSouthTest::performBasicChecks();
 }
 
 } // namespace map

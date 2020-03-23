@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -113,6 +113,7 @@ bool MapConfigFileHandler::parseConfigFile(std::string const &configFileName)
   options.add_options()("ADMap.map", po::value<std::string>(), "AD map")
                        ("ADMap.openDriveOverlapMargin", po::value<std::string>(), "OpenDrive Map reader margin for overlap calculation")
                        ("ADMap.openDriveDefaultIntersectionType", po::value<std::string>(), "OpenDrive Map default intersection type")
+                       ("ADMap.openDriveDefaultTrafficLightType", po::value<std::string>(), "OpenDrive Map default traffic light type (only relevant for IntersectionType::TrafficLight)")
                        ("POI.poi", po::value<std::vector<std::string>>(), "Points of interest")
                        ("ENUReference.default", po::value<std::string>(), "Default ENU reference point");
   // clang-format on
@@ -172,6 +173,20 @@ bool MapConfigFileHandler::parseConfigFile(std::string const &configFileName)
           = fromString<intersection::IntersectionType>(openDriveDefaultIntersectionTypeString);
       }
       mapEntry.openDriveDefaultIntersectionType = openDriveDefaultIntersectionType;
+
+      if (mapEntry.openDriveDefaultIntersectionType == intersection::IntersectionType::TrafficLight)
+      {
+        landmark::TrafficLightType openDriveDefaultTrafficLightType
+          = landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN;
+        if (vm.count("ADMap.openDriveDefaultTrafficLightType"))
+        {
+          auto const openDriveDefaultTrafficLightTypeString
+            = vm["ADMap.openDriveDefaultTrafficLightType"].as<std::string>();
+          openDriveDefaultTrafficLightType
+            = fromString<landmark::TrafficLightType>(openDriveDefaultTrafficLightTypeString);
+        }
+        mapEntry.openDriveDefaultTrafficLightType = openDriveDefaultTrafficLightType;
+      }
 
       mAdMapEntry = mapEntry;
     }

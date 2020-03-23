@@ -3,8 +3,6 @@
 #
 # Copyright (c) 2019-2020 Intel Corporation
 #
-# SPDX-License-Identifier: MIT
-#
 # ----------------- END LICENSE BLOCK -----------------------------------
 
 import os

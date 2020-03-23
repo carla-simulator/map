@@ -250,6 +250,18 @@ TEST_F(IntersectionTest, create_intersections_all_way_stop)
   ASSERT_TRUE(intersection->objectOnCrossingLane(object));
 }
 
+TEST_F(IntersectionTest, create_intersection_from_route_ending_within_intersection)
+{
+  ASSERT_NO_THROW(::map_setup::prepareMapAllWayStop());
+  point::ParaPoint incomingLane(point::createParaPoint(lane::LaneId{268}, physics::ParametricValue(0.8)));
+  point::ParaPoint laneWithinIntersection(point::createParaPoint(lane::LaneId{110}, physics::ParametricValue(0.5)));
+  auto fullRoute = route::planning::planRoute(incomingLane, laneWithinIntersection);
+  ASSERT_GT(route::calcLength(fullRoute), physics::Distance(0.));
+  std::vector<intersection::IntersectionPtr> intersections;
+  ASSERT_NO_THROW(intersections = intersection::Intersection::getIntersectionsForRoute(fullRoute));
+  ASSERT_EQ(1u, intersections.size());
+}
+
 TEST_F(IntersectionTest, traffic_lights_pfz_elf_to_rusch)
 {
   using point::createGeoPoint;
@@ -424,7 +436,7 @@ TEST_F(IntersectionTest, traffic_lights_pfz_elf_to_rusch)
 
   route::RoutePlanningCounter routeCounter;
   routeCounter = intersection->getRoutePlanningCounter();
-  ASSERT_EQ(routeCounter, 2u);
+  ASSERT_EQ(fullRoute.routePlanningCounter, routeCounter);
   route::SegmentCounter segmentCounter;
   segmentCounter = intersection->getRouteSegmentCountFromDestination();
   ASSERT_EQ(segmentCounter, 4u);
@@ -608,7 +620,7 @@ TEST_F(IntersectionTest, traffic_lights_pfz_rusch_to_elf)
 
   route::RoutePlanningCounter routeCounter;
   routeCounter = intersection->getRoutePlanningCounter();
-  ASSERT_EQ(routeCounter, 3u);
+  ASSERT_EQ(fullRoute.routePlanningCounter, routeCounter);
   route::SegmentCounter segmentCounter;
   segmentCounter = intersection->getRouteSegmentCountFromDestination();
   ASSERT_EQ(segmentCounter, 4u);
@@ -770,7 +782,7 @@ TEST_F(IntersectionTest, validate_tpk_to_pfz_map)
   ASSERT_TRUE(findWaypoint1.isValid());
 
   ASSERT_FALSE(intersection->objectRouteCrossesIntersectionRoute(fullRoute));
-  ASSERT_FALSE(intersection->objectRouteFromSameArmAsIntersectionRoute(fullRoute));
+  ASSERT_TRUE(intersection->objectRouteFromSameArmAsIntersectionRoute(fullRoute));
   ASSERT_FALSE(intersection->objectRouteOppositeToIntersectionRoute(fullRoute));
   ASSERT_FALSE(intersection->objectRouteCrossesLanesWithHigherPriority(fullRoute));
 }

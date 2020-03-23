@@ -25,10 +25,10 @@ protected:
     ::ad::map::point::GeoPoint value;
     ::ad::map::point::Longitude valueLongitude(-180);
     value.longitude = valueLongitude;
-    ::ad::map::point::Altitude valueAltitude(-11000);
-    value.altitude = valueAltitude;
     ::ad::map::point::Latitude valueLatitude(-90);
     value.latitude = valueLatitude;
+    ::ad::map::point::Altitude valueAltitude(-11000);
+    value.altitude = valueAltitude;
     mValue = value;
   }
 
@@ -90,22 +90,22 @@ TEST_F(GeoPointTests, comparisonOperatorLongitudeDiffers)
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(GeoPointTests, comparisonOperatorAltitudeDiffers)
+TEST_F(GeoPointTests, comparisonOperatorLatitudeDiffers)
 {
   ::ad::map::point::GeoPoint valueA = mValue;
-  ::ad::map::point::Altitude altitude(9000);
-  valueA.altitude = altitude;
+  ::ad::map::point::Latitude latitude(90);
+  valueA.latitude = latitude;
   ::ad::map::point::GeoPoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(GeoPointTests, comparisonOperatorLatitudeDiffers)
+TEST_F(GeoPointTests, comparisonOperatorAltitudeDiffers)
 {
   ::ad::map::point::GeoPoint valueA = mValue;
-  ::ad::map::point::Latitude latitude(90);
-  valueA.latitude = latitude;
+  ::ad::map::point::Altitude altitude(9000);
+  valueA.altitude = altitude;
   ::ad::map::point::GeoPoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

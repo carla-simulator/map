@@ -63,7 +63,9 @@ public:
    */
   bool initializeFromOpenDriveContent(std::string const &openDriveContent,
                                       double const overlapMargin,
-                                      intersection::IntersectionType const defaultIntersectionType);
+                                      intersection::IntersectionType const defaultIntersectionType,
+                                      landmark::TrafficLightType const defaultTrafficLightType
+                                      = landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN);
 
   /**
    * @brief initialize singleton with given store

@@ -20,12 +20,12 @@
 /*!
  * The major version of ad_map_access_test_support
  */
-#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_MAJOR 1
+#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_MAJOR 2
 
 /*!
  * The minor version of ad_map_access_test_support
  */
-#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_MINOR 1
+#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_MINOR 0
 
 /*!
  * The revision of ad_map_access_test_support
@@ -35,4 +35,4 @@
 /*!
  * The version of ad_map_access_test_support as string
  */
-#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_STRING "1.1.0"
+#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_STRING "2.0.0"

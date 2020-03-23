@@ -21,7 +21,7 @@ namespace restriction {
  * @param[in] right SpeedLimit object.
  * @returns true if the attributes of the left SpeedLimit and right SpeedLimit can be considered to be equal.
  */
-bool areAttributesEqual(SpeedLimit const &left, SpeedLimit const &right)
+inline bool areAttributesEqual(SpeedLimit const &left, SpeedLimit const &right)
 {
   return left.speedLimit == right.speedLimit;
 }

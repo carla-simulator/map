@@ -35,10 +35,10 @@ TEST(ObjectValidInputRangeTests, testValidInputRange)
   ::ad::map::point::GeoPoint valueEnuPositionEnuReferencePoint;
   ::ad::map::point::Longitude valueEnuPositionEnuReferencePointLongitude(-180);
   valueEnuPositionEnuReferencePoint.longitude = valueEnuPositionEnuReferencePointLongitude;
-  ::ad::map::point::Altitude valueEnuPositionEnuReferencePointAltitude(-11000);
-  valueEnuPositionEnuReferencePoint.altitude = valueEnuPositionEnuReferencePointAltitude;
   ::ad::map::point::Latitude valueEnuPositionEnuReferencePointLatitude(-90);
   valueEnuPositionEnuReferencePoint.latitude = valueEnuPositionEnuReferencePointLatitude;
+  ::ad::map::point::Altitude valueEnuPositionEnuReferencePointAltitude(-11000);
+  valueEnuPositionEnuReferencePoint.altitude = valueEnuPositionEnuReferencePointAltitude;
   valueEnuPosition.enuReferencePoint = valueEnuPositionEnuReferencePoint;
   ::ad::physics::Dimension3D valueEnuPositionDimension;
   ::ad::physics::Distance valueEnuPositionDimensionLength(0.);
@@ -168,10 +168,10 @@ TEST(ObjectValidInputRangeTests, testValidInputRangeEnuPositionTooSmall)
   ::ad::map::point::GeoPoint valueEnuPositionEnuReferencePoint;
   ::ad::map::point::Longitude valueEnuPositionEnuReferencePointLongitude(-180);
   valueEnuPositionEnuReferencePoint.longitude = valueEnuPositionEnuReferencePointLongitude;
-  ::ad::map::point::Altitude valueEnuPositionEnuReferencePointAltitude(-11000);
-  valueEnuPositionEnuReferencePoint.altitude = valueEnuPositionEnuReferencePointAltitude;
   ::ad::map::point::Latitude valueEnuPositionEnuReferencePointLatitude(-90);
   valueEnuPositionEnuReferencePoint.latitude = valueEnuPositionEnuReferencePointLatitude;
+  ::ad::map::point::Altitude valueEnuPositionEnuReferencePointAltitude(-11000);
+  valueEnuPositionEnuReferencePoint.altitude = valueEnuPositionEnuReferencePointAltitude;
   valueEnuPosition.enuReferencePoint = valueEnuPositionEnuReferencePoint;
   ::ad::physics::Dimension3D valueEnuPositionDimension;
   ::ad::physics::Distance valueEnuPositionDimensionLength(0.);
@@ -309,10 +309,10 @@ TEST(ObjectValidInputRangeTests, testValidInputRangeEnuPositionTooBig)
   ::ad::map::point::GeoPoint valueEnuPositionEnuReferencePoint;
   ::ad::map::point::Longitude valueEnuPositionEnuReferencePointLongitude(-180);
   valueEnuPositionEnuReferencePoint.longitude = valueEnuPositionEnuReferencePointLongitude;
-  ::ad::map::point::Altitude valueEnuPositionEnuReferencePointAltitude(-11000);
-  valueEnuPositionEnuReferencePoint.altitude = valueEnuPositionEnuReferencePointAltitude;
   ::ad::map::point::Latitude valueEnuPositionEnuReferencePointLatitude(-90);
   valueEnuPositionEnuReferencePoint.latitude = valueEnuPositionEnuReferencePointLatitude;
+  ::ad::map::point::Altitude valueEnuPositionEnuReferencePointAltitude(-11000);
+  valueEnuPositionEnuReferencePoint.altitude = valueEnuPositionEnuReferencePointAltitude;
   valueEnuPosition.enuReferencePoint = valueEnuPositionEnuReferencePoint;
   ::ad::physics::Dimension3D valueEnuPositionDimension;
   ::ad::physics::Distance valueEnuPositionDimensionLength(0.);
