@@ -113,7 +113,7 @@ bool MapConfigFileHandler::parseConfigFile(std::string const &configFileName)
   options.add_options()("ADMap.map", po::value<std::string>(), "AD map")
                        ("ADMap.openDriveOverlapMargin", po::value<std::string>(), "OpenDrive Map reader margin for overlap calculation")
                        ("ADMap.openDriveDefaultIntersectionType", po::value<std::string>(), "OpenDrive Map default intersection type")
-                       ("ADMap.openDriveDefaultTrafficLightType", po::value<std::string>(), "OpenDrive Map default traffic light type (only relevant for ")
+                       ("ADMap.openDriveDefaultTrafficLightType", po::value<std::string>(), "OpenDrive Map default traffic light type (only relevant for IntersectionType::TrafficLight)")
                        ("POI.poi", po::value<std::vector<std::string>>(), "Points of interest")
                        ("ENUReference.default", po::value<std::string>(), "Default ENU reference point");
   // clang-format on
