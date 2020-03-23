@@ -45,7 +45,7 @@ matrix:
         - sudo apt-get install python3-colcon-common-extensions
       script:
         - git submodule update --init
-        - colcon build --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON
+        - travis_wait 60 colcon build --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON
         - colcon test --packages-select ad_map_access ad_physics
       after_failure:
         - tail --lines=2000 build.log
