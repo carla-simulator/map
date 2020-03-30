@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2019 Intel Corporation
+# Copyright (C) 2019-2020 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -61,12 +61,11 @@ endif()
 pkg_check_modules(PROJ REQUIRED proj)
 
 target_include_directories(${PROJECT_NAME}
-  PUBLIC
-  ${BOOST_INCLUDE_DIRS}
   PRIVATE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   ${PUGIXML_INCLUDE_DIRS}
   ${PROJ_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 target_link_libraries(${PROJECT_NAME}
