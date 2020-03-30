@@ -1,5 +1,9 @@
 ## Latest changes
 
+## Release 2.0.1
+#### :ghost: Maintenance
+* Fixed missing boost include
+
 ## Release 2.0.0
 #### :rocket: New Features
 * Support robust calculation of the ENUHeading of an object on a route getENUHeadingOfRoute(match::Object, route::FullRoute):
