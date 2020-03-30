@@ -1,0 +1,10 @@
+<map id="generated/include/ad/physics/Speed.hpp" name="generated/include/ad/physics/Speed.hpp">
+<area shape="rect" id="node2" href="$SpeedRange_8hpp.html" title="generated/include/ad\l/physics/SpeedRange.hpp" alt="" coords="15,95,202,136"/>
+<area shape="rect" id="node5" href="$SpeedValidInputRange_8hpp.html" title="generated/include/ad\l/physics/SpeedValidInputRange.hpp" alt="" coords="226,95,474,136"/>
+<area shape="rect" id="node7" href="$Velocity_8hpp.html" title="generated/include/ad\l/physics/Velocity.hpp" alt="" coords="498,95,655,136"/>
+<area shape="rect" id="node8" href="$Types_8hpp.html" title="impl/include/ad/physics\l/Types.hpp" alt="" coords="680,95,849,136"/>
+<area shape="rect" id="node3" href="$SpeedRangeValidInputRange_8hpp.html" title="generated/include/ad\l/physics/SpeedRangeValidInput\lRange.hpp" alt="" coords="5,184,225,240"/>
+<area shape="rect" id="node4" href="$RangeOperation_8hpp.html" title="impl/include/ad/physics\l/RangeOperation.hpp" alt="" coords="31,288,200,329"/>
+<area shape="rect" id="node6" href="$VelocityValidInputRange_8hpp.html" title="generated/include/ad\l/physics/VelocityValidInput\lRange.hpp" alt="" coords="361,184,549,240"/>
+<area shape="rect" id="node9" href="$Operation_8hpp.html" title="impl/include/ad/physics\l/Operation.hpp" alt="" coords="680,191,849,233"/>
+</map>

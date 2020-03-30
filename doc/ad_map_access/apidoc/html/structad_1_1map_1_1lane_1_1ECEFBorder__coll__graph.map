@@ -1,0 +1,4 @@
+<map id="ad::map::lane::ECEFBorder" name="ad::map::lane::ECEFBorder">
+<area shape="rect" id="node3" href="$structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint. " alt="" coords="25,124,211,151"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1point_1_1ECEFCoordinate.html" title="DataType ECEFCoordinate. " alt="" coords="5,5,231,32"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="ad::map::lane::ContactLane" name="ad::map::lane::ContactLane">
+<area shape="rect" id="node2" href="$classad_1_1map_1_1landmark_1_1LandmarkId.html" title="DataType LandmarkId. " alt="" coords="941,5,1091,47"/>
+<area shape="rect" id="node3" href="$structad_1_1map_1_1restriction_1_1Restrictions.html" title="DataType Restrictions. " alt="" coords="943,71,1089,112"/>
+<area shape="rect" id="node5" href="$structad_1_1map_1_1restriction_1_1Restriction.html" title="DataType Restriction. " alt="" coords="359,71,505,112"/>
+<area shape="rect" id="node7" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId. " alt="" coords="936,137,1096,163"/>
+</map>

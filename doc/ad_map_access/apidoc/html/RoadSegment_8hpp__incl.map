@@ -1,0 +1,12 @@
+<map id="generated/include/ad/map/route/RoadSegment.hpp" name="generated/include/ad/map/route/RoadSegment.hpp">
+<area shape="rect" id="node6" href="$BoundingSphere_8hpp.html" title="ad/map/point/BoundingSphere.hpp" alt="" coords="128,184,373,211"/>
+<area shape="rect" id="node14" href="$LaneSegmentList_8hpp.html" title="ad/map/route/LaneSegment\lList.hpp" alt="" coords="789,95,992,136"/>
+<area shape="rect" id="node23" href="$SegmentCounter_8hpp.html" title="ad/map/route/SegmentCounter.hpp" alt="" coords="2145,102,2396,129"/>
+<area shape="rect" id="node7" href="$ECEFPoint_8hpp.html" title="ad/map/point/ECEFPoint.hpp" alt="" coords="448,259,651,285"/>
+<area shape="rect" id="node8" href="$ECEFCoordinate_8hpp.html" title="ad/map/point/ECEFCoordinate.hpp" alt="" coords="998,333,1239,360"/>
+<area shape="rect" id="node16" href="$LaneSegment_8hpp.html" title="ad/map/route/LaneSegment.hpp" alt="" coords="973,184,1203,211"/>
+<area shape="rect" id="node17" href="$LaneId_8hpp.html" title="ad/map/lane/LaneId.hpp" alt="" coords="1264,333,1440,360"/>
+<area shape="rect" id="node19" href="$LaneIdList_8hpp.html" title="ad/map/lane/LaneIdList.hpp" alt="" coords="1222,259,1421,285"/>
+<area shape="rect" id="node20" href="$LaneInterval_8hpp.html" title="ad/map/route/LaneInterval.hpp" alt="" coords="979,259,1197,285"/>
+<area shape="rect" id="node22" href="$RouteLaneOffset_8hpp.html" title="ad/map/route/RouteLaneOffset.hpp" alt="" coords="2066,259,2313,285"/>
+</map>

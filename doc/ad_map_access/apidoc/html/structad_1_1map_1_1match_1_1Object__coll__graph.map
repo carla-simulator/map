@@ -1,0 +1,14 @@
+<map id="ad::map::match::Object" name="ad::map::match::Object">
+<area shape="rect" id="node2" href="$structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html" title="DataType MapMatchedObjectBoundingBox. " alt="" coords="1044,77,1259,119"/>
+<area shape="rect" id="node4" href="$structad_1_1map_1_1match_1_1LaneOccupiedRegion.html" title="DataType LaneOccupiedRegion. " alt="" coords="279,5,501,47"/>
+<area shape="rect" id="node5" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId. " alt="" coords="5,13,165,39"/>
+<area shape="rect" id="node7" title="STL class. " alt="" coords="327,79,453,106"/>
+<area shape="rect" id="node9" href="$structad_1_1map_1_1match_1_1ENUObjectPosition.html" title="DataType ENUObjectPosition. " alt="" coords="1051,187,1252,228"/>
+<area shape="rect" id="node10" href="$structad_1_1map_1_1point_1_1ENUPoint.html" title="DataType ENUPoint. " alt="" coords="637,154,819,181"/>
+<area shape="rect" id="node11" href="$classad_1_1map_1_1point_1_1ENUCoordinate.html" title="DataType ENUCoordinate. " alt="" coords="279,154,501,181"/>
+<area shape="rect" id="node12" href="$structad_1_1map_1_1point_1_1GeoPoint.html" title="DataType GeoPoint. " alt="" coords="637,205,819,231"/>
+<area shape="rect" id="node13" href="$classad_1_1map_1_1point_1_1Altitude.html" title="DataType Altitude. " alt="" coords="304,205,476,231"/>
+<area shape="rect" id="node14" href="$classad_1_1map_1_1point_1_1Latitude.html" title="DataType Latitude. " alt="" coords="303,255,477,282"/>
+<area shape="rect" id="node15" href="$classad_1_1map_1_1point_1_1Longitude.html" title="DataType Longitude. " alt="" coords="297,306,483,333"/>
+<area shape="rect" id="node16" href="$classad_1_1map_1_1point_1_1ENUHeading.html" title="DataType ENUHeading. " alt="" coords="626,255,830,282"/>
+</map>

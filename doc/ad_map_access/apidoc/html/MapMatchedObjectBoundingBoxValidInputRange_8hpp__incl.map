@@ -1,0 +1,13 @@
+<map id="generated/include/ad/map/match/MapMatchedObjectBoundingBoxValidInputRange.hpp" name="generated/include/ad/map/match/MapMatchedObjectBoundingBoxValidInputRange.hpp">
+<area shape="rect" id="node4" href="$MapMatchedObjectBoundingBox_8hpp.html" title="ad/map/match/MapMatchedObject\lBoundingBox.hpp" alt="" coords="2076,109,2319,151"/>
+<area shape="rect" id="node9" href="$LaneOccupiedRegionList_8hpp.html" title="ad/map/match/LaneOccupied\lRegionList.hpp" alt="" coords="2056,363,2267,404"/>
+<area shape="rect" id="node17" href="$MapMatchedPositionConfidenceList_8hpp.html" title="ad/map/match/MapMatchedPosition\lConfidenceList.hpp" alt="" coords="2125,199,2377,240"/>
+<area shape="rect" id="node10" href="$LaneOccupiedRegion_8hpp.html" title="ad/map/match/LaneOccupied\lRegion.hpp" alt="" coords="1639,452,1849,493"/>
+<area shape="rect" id="node11" href="$LaneId_8hpp.html" title="ad/map/lane/LaneId.hpp" alt="" coords="1236,541,1412,568"/>
+<area shape="rect" id="node18" href="$MapMatchedPosition_8hpp.html" title="ad/map/match/MapMatchedPosition.hpp" alt="" coords="809,288,1089,315"/>
+<area shape="rect" id="node19" href="$LanePoint_8hpp.html" title="ad/map/match/LanePoint.hpp" alt="" coords="701,370,912,397"/>
+<area shape="rect" id="node24" href="$MapMatchedPositionType_8hpp.html" title="ad/map/match/MapMatchedPosition\lType.hpp" alt="" coords="195,452,447,493"/>
+<area shape="rect" id="node26" href="$ECEFPoint_8hpp.html" title="ad/map/point/ECEFPoint.hpp" alt="" coords="1311,459,1513,486"/>
+<area shape="rect" id="node20" href="$ParaPoint_8hpp.html" title="ad/map/point/ParaPoint.hpp" alt="" coords="1087,459,1286,486"/>
+<area shape="rect" id="node27" href="$ECEFCoordinate_8hpp.html" title="ad/map/point/ECEFCoordinate.hpp" alt="" coords="970,541,1211,568"/>
+</map>

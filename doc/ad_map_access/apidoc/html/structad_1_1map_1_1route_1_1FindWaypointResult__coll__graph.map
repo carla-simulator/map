@@ -1,0 +1,12 @@
+<map id="ad::map::route::FindWaypointResult" name="ad::map::route::FindWaypointResult">
+<area shape="rect" id="node2" href="$structad_1_1map_1_1point_1_1ParaPoint.html" title="DataType ParaPoint. " alt="" coords="528,5,711,32"/>
+<area shape="rect" id="node3" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId. " alt="" coords="5,79,165,105"/>
+<area shape="rect" id="node12" href="$structad_1_1map_1_1route_1_1LaneSegment.html" title="DataType LaneSegment. " alt="" coords="735,107,949,133"/>
+<area shape="rect" id="node13" href="$structad_1_1map_1_1route_1_1LaneInterval.html" title="DataType LaneInterval. " alt="" coords="290,116,493,143"/>
+<area shape="rect" id="node4" title="STL iterator class. " alt="" coords="2104,145,2275,186"/>
+<area shape="rect" id="node5" href="$structad_1_1map_1_1route_1_1FullRoute.html" title="DataType FullRoute. " alt="" coords="2099,93,2280,120"/>
+<area shape="rect" id="node7" href="$structad_1_1map_1_1route_1_1RoadSegment.html" title="DataType RoadSegment. " alt="" coords="1445,107,1660,133"/>
+<area shape="rect" id="node8" href="$structad_1_1map_1_1point_1_1BoundingSphere.html" title="DataType BoundingSphere. " alt="" coords="1063,195,1245,237"/>
+<area shape="rect" id="node9" href="$structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint. " alt="" coords="749,236,935,263"/>
+<area shape="rect" id="node10" href="$classad_1_1map_1_1point_1_1ECEFCoordinate.html" title="DataType ECEFCoordinate. " alt="" coords="279,241,504,268"/>
+</map>

@@ -1,0 +1,18 @@
+<map id="impl/include/ad/physics/RangeOperation.hpp" name="impl/include/ad/physics/RangeOperation.hpp">
+<area shape="rect" id="node2" href="$AccelerationRangeValidInputRange_8hpp.html" title="ad/physics/AccelerationRange\lValidInputRange.hpp" alt="" coords="2378,95,2590,136"/>
+<area shape="rect" id="node14" href="$MetricRangeValidInputRange_8hpp.html" title="ad/physics/MetricRangeValid\lInputRange.hpp" alt="" coords="1666,95,1869,136"/>
+<area shape="rect" id="node18" href="$ParametricRangeValidInputRange_8hpp.html" title="ad/physics/ParametricRange\lValidInputRange.hpp" alt="" coords="2150,95,2353,136"/>
+<area shape="rect" id="node22" href="$SpeedRangeValidInputRange_8hpp.html" title="ad/physics/SpeedRangeValid\lInputRange.hpp" alt="" coords="1922,95,2126,136"/>
+<area shape="rect" id="node5" href="$AccelerationRange_8hpp.html" title="ad/physics/AccelerationRange.hpp" alt="" coords="942,191,1182,218"/>
+<area shape="rect" id="node13" href="$AccelerationValidInputRange_8hpp.html" title="ad/physics/AccelerationValid\lInputRange.hpp" alt="" coords="2476,184,2678,225"/>
+<area shape="rect" id="node9" href="$Acceleration_8hpp.html" title="ad/physics/Acceleration.hpp" alt="" coords="1740,273,1940,300"/>
+<area shape="rect" id="node15" href="$DistanceValidInputRange_8hpp.html" title="ad/physics/DistanceValid\lInputRange.hpp" alt="" coords="1678,184,1857,225"/>
+<area shape="rect" id="node17" href="$MetricRange_8hpp.html" title="ad/physics/MetricRange.hpp" alt="" coords="232,191,432,218"/>
+<area shape="rect" id="node16" href="$Distance_8hpp.html" title="ad/physics/Distance.hpp" alt="" coords="1102,273,1279,300"/>
+<area shape="rect" id="node19" href="$ParametricRange_8hpp.html" title="ad/physics/ParametricRange.hpp" alt="" coords="683,191,914,218"/>
+<area shape="rect" id="node21" href="$ParametricValueValidInputRange_8hpp.html" title="ad/physics/ParametricValue\lValidInputRange.hpp" alt="" coords="2153,184,2350,225"/>
+<area shape="rect" id="node20" href="$ParametricValue_8hpp.html" title="ad/physics/ParametricValue.hpp" alt="" coords="1491,273,1716,300"/>
+<area shape="rect" id="node23" href="$SpeedRange_8hpp.html" title="ad/physics/SpeedRange.hpp" alt="" coords="456,191,658,218"/>
+<area shape="rect" id="node25" href="$SpeedValidInputRange_8hpp.html" title="ad/physics/SpeedValidInput\lRange.hpp" alt="" coords="1932,184,2128,225"/>
+<area shape="rect" id="node24" href="$Speed_8hpp.html" title="ad/physics/Speed.hpp" alt="" coords="1304,273,1466,300"/>
+</map>

@@ -1,0 +1,31 @@
+<map id="generated/include/ad/map/match/ObjectValidInputRange.hpp" name="generated/include/ad/map/match/ObjectValidInputRange.hpp">
+<area shape="rect" id="node4" href="$ENUObjectPositionValidInputRange_8hpp.html" title="ad/map/match/ENUObjectPosition\lValidInputRange.hpp" alt="" coords="721,377,960,419"/>
+<area shape="rect" id="node28" href="$MapMatchedObjectBoundingBoxValidInputRange_8hpp.html" title="ad/map/match/MapMatchedObject\lBoundingBoxValidInputRange.hpp" alt="" coords="1582,109,1824,151"/>
+<area shape="rect" id="node48" href="$Object_8hpp.html" title="ad/map/match/Object.hpp" alt="" coords="4862,117,5051,143"/>
+<area shape="rect" id="node5" href="$ENUObjectPosition_8hpp.html" title="ad/map/match/ENUObjectPosition.hpp" alt="" coords="3463,474,3730,501"/>
+<area shape="rect" id="node20" href="$ENUHeadingValidInputRange_8hpp.html" title="ad/map/point/ENUHeadingValid\lInputRange.hpp" alt="" coords="549,556,772,597"/>
+<area shape="rect" id="node21" href="$ENUPointValidInputRange_8hpp.html" title="ad/map/point/ENUPointValid\lInputRange.hpp" alt="" coords="854,467,1056,508"/>
+<area shape="rect" id="node23" href="$GeoPointValidInputRange_8hpp.html" title="ad/map/point/GeoPointValid\lInputRange.hpp" alt="" coords="1178,467,1377,508"/>
+<area shape="rect" id="node9" href="$ENUHeading_8hpp.html" title="ad/map/point/ENUHeading.hpp" alt="" coords="1412,645,1632,672"/>
+<area shape="rect" id="node13" href="$ENUPoint_8hpp.html" title="ad/map/point/ENUPoint.hpp" alt="" coords="3405,563,3604,590"/>
+<area shape="rect" id="node15" href="$GeoPoint_8hpp.html" title="ad/map/point/GeoPoint.hpp" alt="" coords="3134,563,3331,590"/>
+<area shape="rect" id="node14" href="$ENUCoordinate_8hpp.html" title="ad/map/point/ENUCoordinate.hpp" alt="" coords="2310,645,2547,672"/>
+<area shape="rect" id="node16" href="$Altitude_8hpp.html" title="ad/map/point/Altitude.hpp" alt="" coords="1656,645,1844,672"/>
+<area shape="rect" id="node17" href="$Latitude_8hpp.html" title="ad/map/point/Latitude.hpp" alt="" coords="1868,645,2058,672"/>
+<area shape="rect" id="node18" href="$Longitude_8hpp.html" title="ad/map/point/Longitude.hpp" alt="" coords="2083,645,2286,672"/>
+<area shape="rect" id="node22" href="$ENUCoordinateValidInputRange_8hpp.html" title="ad/map/point/ENUCoordinate\lValidInputRange.hpp" alt="" coords="796,556,1005,597"/>
+<area shape="rect" id="node24" href="$AltitudeValidInputRange_8hpp.html" title="ad/map/point/AltitudeValid\lInputRange.hpp" alt="" coords="1182,556,1373,597"/>
+<area shape="rect" id="node25" href="$LatitudeValidInputRange_8hpp.html" title="ad/map/point/LatitudeValid\lInputRange.hpp" alt="" coords="1397,556,1590,597"/>
+<area shape="rect" id="node26" href="$LongitudeValidInputRange_8hpp.html" title="ad/map/point/LongitudeValid\lInputRange.hpp" alt="" coords="1614,556,1818,597"/>
+<area shape="rect" id="node29" href="$MapMatchedObjectBoundingBox_8hpp.html" title="ad/map/match/MapMatchedObject\lBoundingBox.hpp" alt="" coords="4552,199,4795,240"/>
+<area shape="rect" id="node31" href="$LaneOccupiedRegionList_8hpp.html" title="ad/map/match/LaneOccupied\lRegionList.hpp" alt="" coords="4324,467,4535,508"/>
+<area shape="rect" id="node36" href="$MapMatchedPositionConfidenceList_8hpp.html" title="ad/map/match/MapMatchedPosition\lConfidenceList.hpp" alt="" coords="5408,288,5660,329"/>
+<area shape="rect" id="node32" href="$LaneOccupiedRegion_8hpp.html" title="ad/map/match/LaneOccupied\lRegion.hpp" alt="" coords="4011,556,4222,597"/>
+<area shape="rect" id="node33" href="$LaneId_8hpp.html" title="ad/map/lane/LaneId.hpp" alt="" coords="3598,645,3774,672"/>
+<area shape="rect" id="node37" href="$MapMatchedPosition_8hpp.html" title="ad/map/match/MapMatchedPosition.hpp" alt="" coords="5394,385,5674,411"/>
+<area shape="rect" id="node38" href="$LanePoint_8hpp.html" title="ad/map/match/LanePoint.hpp" alt="" coords="4904,474,5115,501"/>
+<area shape="rect" id="node43" href="$MapMatchedPositionType_8hpp.html" title="ad/map/match/MapMatchedPosition\lType.hpp" alt="" coords="5602,556,5854,597"/>
+<area shape="rect" id="node45" href="$ECEFPoint_8hpp.html" title="ad/map/point/ECEFPoint.hpp" alt="" coords="5375,563,5578,590"/>
+<area shape="rect" id="node39" href="$ParaPoint_8hpp.html" title="ad/map/point/ParaPoint.hpp" alt="" coords="4536,563,4734,590"/>
+<area shape="rect" id="node46" href="$ECEFCoordinate_8hpp.html" title="ad/map/point/ECEFCoordinate.hpp" alt="" coords="2572,645,2813,672"/>
+</map>

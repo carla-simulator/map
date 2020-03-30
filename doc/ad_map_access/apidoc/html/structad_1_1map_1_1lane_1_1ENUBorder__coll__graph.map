@@ -1,0 +1,4 @@
+<map id="ad::map::lane::ENUBorder" name="ad::map::lane::ENUBorder">
+<area shape="rect" id="node3" href="$structad_1_1map_1_1point_1_1ENUPoint.html" title="DataType ENUPoint. " alt="" coords="25,124,207,151"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1point_1_1ENUCoordinate.html" title="DataType ENUCoordinate. " alt="" coords="5,5,227,32"/>
+</map>

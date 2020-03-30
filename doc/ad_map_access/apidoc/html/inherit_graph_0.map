@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classad_1_1map_1_1access_1_1Factory.html" title="Autonomus Driving Map Factory. Contains method to be used to initialize and modify content in the Sto..." alt="" coords="5,13,187,39"/>
+<area shape="rect" id="node2" href="$classad_1_1map_1_1opendrive_1_1AdMapFactory.html" title="Creates an AdMap from an OpenDRIVE map file. " alt="" coords="235,5,381,47"/>
+</map>

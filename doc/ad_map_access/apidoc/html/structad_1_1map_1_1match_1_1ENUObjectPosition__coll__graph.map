@@ -1,0 +1,9 @@
+<map id="ad::map::match::ENUObjectPosition" name="ad::map::match::ENUObjectPosition">
+<area shape="rect" id="node2" href="$structad_1_1map_1_1point_1_1ENUPoint.html" title="DataType ENUPoint. " alt="" coords="349,43,532,69"/>
+<area shape="rect" id="node3" href="$classad_1_1map_1_1point_1_1ENUCoordinate.html" title="DataType ENUCoordinate. " alt="" coords="5,29,227,56"/>
+<area shape="rect" id="node4" href="$structad_1_1map_1_1point_1_1GeoPoint.html" title="DataType GeoPoint. " alt="" coords="350,119,531,145"/>
+<area shape="rect" id="node5" href="$classad_1_1map_1_1point_1_1Altitude.html" title="DataType Altitude. " alt="" coords="30,80,202,107"/>
+<area shape="rect" id="node6" href="$classad_1_1map_1_1point_1_1Latitude.html" title="DataType Latitude. " alt="" coords="29,131,203,157"/>
+<area shape="rect" id="node7" href="$classad_1_1map_1_1point_1_1Longitude.html" title="DataType Longitude. " alt="" coords="23,181,209,208"/>
+<area shape="rect" id="node8" href="$classad_1_1map_1_1point_1_1ENUHeading.html" title="DataType ENUHeading. " alt="" coords="339,169,543,196"/>
+</map>

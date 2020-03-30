@@ -1,0 +1,5 @@
+<map id="ad::map::serialize::ChecksumCRC32" name="ad::map::serialize::ChecksumCRC32">
+<area shape="rect" id="node4" href="$classad_1_1map_1_1serialize_1_1SerializerFileCRC32.html" title="Serializer for files with CRC32. " alt="" coords="5,273,156,315"/>
+<area shape="rect" id="node2" href="$classad_1_1map_1_1serialize_1_1IChecksum.html" title="Interface for Checksum. " alt="" coords="67,95,201,136"/>
+<area shape="rect" id="node3" href="$classad_1_1map_1_1serialize_1_1IStorage.html" title="Storage Interface. " alt="" coords="13,5,148,47"/>
+</map>

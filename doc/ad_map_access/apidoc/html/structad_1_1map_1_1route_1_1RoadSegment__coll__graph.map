@@ -1,0 +1,8 @@
+<map id="ad::map::route::RoadSegment" name="ad::map::route::RoadSegment">
+<area shape="rect" id="node2" href="$structad_1_1map_1_1point_1_1BoundingSphere.html" title="DataType BoundingSphere. " alt="" coords="967,45,1149,86"/>
+<area shape="rect" id="node3" href="$structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint. " alt="" coords="653,36,839,63"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1point_1_1ECEFCoordinate.html" title="DataType ECEFCoordinate. " alt="" coords="279,35,504,61"/>
+<area shape="rect" id="node6" href="$structad_1_1map_1_1route_1_1LaneSegment.html" title="DataType LaneSegment. " alt="" coords="639,143,853,169"/>
+<area shape="rect" id="node7" href="$structad_1_1map_1_1route_1_1LaneInterval.html" title="DataType LaneInterval. " alt="" coords="290,163,493,189"/>
+<area shape="rect" id="node8" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId. " alt="" coords="5,163,165,189"/>
+</map>

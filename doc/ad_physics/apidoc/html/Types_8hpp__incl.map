@@ -1,0 +1,12 @@
+<map id="impl/include/ad/physics/Types.hpp" name="impl/include/ad/physics/Types.hpp">
+<area shape="rect" id="node3" href="$Acceleration_8hpp.html" title="ad/physics/Acceleration.hpp" alt="" coords="328,95,528,121"/>
+<area shape="rect" id="node11" href="$Distance_8hpp.html" title="ad/physics/Distance.hpp" alt="" coords="553,95,730,121"/>
+<area shape="rect" id="node12" href="$DistanceSquared_8hpp.html" title="ad/physics/DistanceSquared.hpp" alt="" coords="754,95,985,121"/>
+<area shape="rect" id="node13" href="$Duration_8hpp.html" title="ad/physics/Duration.hpp" alt="" coords="1009,95,1185,121"/>
+<area shape="rect" id="node14" href="$DurationSquared_8hpp.html" title="ad/physics/DurationSquared.hpp" alt="" coords="1210,95,1441,121"/>
+<area shape="rect" id="node15" href="$ParametricValue_8hpp.html" title="ad/physics/ParametricValue.hpp" alt="" coords="1465,95,1690,121"/>
+<area shape="rect" id="node16" href="$Probability_8hpp.html" title="ad/physics/Probability.hpp" alt="" coords="1714,95,1899,121"/>
+<area shape="rect" id="node17" href="$RatioValue_8hpp.html" title="ad/physics/RatioValue.hpp" alt="" coords="1923,95,2111,121"/>
+<area shape="rect" id="node18" href="$Speed_8hpp.html" title="ad/physics/Speed.hpp" alt="" coords="2136,95,2299,121"/>
+<area shape="rect" id="node19" href="$SpeedSquared_8hpp.html" title="ad/physics/SpeedSquared.hpp" alt="" coords="88,95,304,121"/>
+</map>

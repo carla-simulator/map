@@ -1,0 +1,9 @@
+<map id="generated/include/ad/map/match/MapMatchedPositionConfidenceList.hpp" name="generated/include/ad/map/match/MapMatchedPositionConfidenceList.hpp">
+<area shape="rect" id="node5" href="$MapMatchedPosition_8hpp.html" title="ad/map/match/MapMatchedPosition.hpp" alt="" coords="944,109,1224,136"/>
+<area shape="rect" id="node8" href="$LanePoint_8hpp.html" title="ad/map/match/LanePoint.hpp" alt="" coords="739,184,949,211"/>
+<area shape="rect" id="node19" href="$MapMatchedPositionType_8hpp.html" title="ad/map/match/MapMatchedPosition\lType.hpp" alt="" coords="94,259,346,300"/>
+<area shape="rect" id="node21" href="$ECEFPoint_8hpp.html" title="ad/map/point/ECEFPoint.hpp" alt="" coords="1261,266,1464,293"/>
+<area shape="rect" id="node9" href="$ParaPoint_8hpp.html" title="ad/map/point/ParaPoint.hpp" alt="" coords="735,266,934,293"/>
+<area shape="rect" id="node10" href="$LaneId_8hpp.html" title="ad/map/lane/LaneId.hpp" alt="" coords="1076,348,1252,375"/>
+<area shape="rect" id="node22" href="$ECEFCoordinate_8hpp.html" title="ad/map/point/ECEFCoordinate.hpp" alt="" coords="1277,348,1518,375"/>
+</map>

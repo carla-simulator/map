@@ -1,0 +1,4 @@
+<map id="ad::map::route::planning::RouteAstar" name="ad::map::route::planning::RouteAstar">
+<area shape="rect" id="node2" href="$classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html" title="ad::map::route::planning\l::RouteExpander\&lt; RouteAstarScore \&gt;" alt="" coords="5,95,268,136"/>
+<area shape="rect" id="node3" href="$classad_1_1map_1_1route_1_1planning_1_1Route.html" title="Implements routing on the lane network. " alt="" coords="47,5,226,47"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="ad::map::match::MapMatchedPosition" name="ad::map::match::MapMatchedPosition">
+<area shape="rect" id="node2" href="$structad_1_1map_1_1match_1_1LanePoint.html" title="DataType LanePoint. " alt="" coords="5,213,200,240"/>
+<area shape="rect" id="node3" href="$structad_1_1map_1_1point_1_1ParaPoint.html" title="DataType ParaPoint. " alt="" coords="6,95,189,121"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId. " alt="" coords="17,5,177,32"/>
+<area shape="rect" id="node5" href="$structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint. " alt="" coords="231,213,417,240"/>
+<area shape="rect" id="node6" href="$classad_1_1map_1_1point_1_1ECEFCoordinate.html" title="DataType ECEFCoordinate. " alt="" coords="213,95,438,121"/>
+</map>

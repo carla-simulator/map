@@ -1,0 +1,13 @@
+<map id="generated/include/ad/map/point/GeoPointValidInputRange.hpp" name="generated/include/ad/map/point/GeoPointValidInputRange.hpp">
+<area shape="rect" id="node2" href="$PointOfInterestValidInputRange_8hpp.html" title="generated/include/ad\l/map/config/PointOfInterest\lValidInputRange.hpp" alt="" coords="5,109,201,165"/>
+<area shape="rect" id="node3" href="$ENUObjectPositionValidInputRange_8hpp.html" title="generated/include/ad\l/map/match/ENUObjectPosition\lValidInputRange.hpp" alt="" coords="225,109,448,165"/>
+<area shape="rect" id="node6" href="$GeoEdgeValidInputRange_8hpp.html" title="generated/include/ad\l/map/point/GeoEdgeValidInput\lRange.hpp" alt="" coords="472,109,687,165"/>
+<area shape="rect" id="node7" href="$GeoOperation_8hpp_source.html" title="impl/include/ad/map\l/point/GeoOperation.hpp" alt="" coords="563,221,742,262"/>
+<area shape="rect" id="node4" href="$ENUObjectPositionListValidInputRange_8hpp.html" title="generated/include/ad\l/map/match/ENUObjectPosition\lListValidInputRange.hpp" alt="" coords="36,213,259,269"/>
+<area shape="rect" id="node5" href="$ObjectValidInputRange_8hpp.html" title="generated/include/ad\l/map/match/ObjectValidInput\lRange.hpp" alt="" coords="283,213,489,269"/>
+<area shape="rect" id="node8" href="$BorderOperation_8hpp_source.html" title="impl/include/ad/map\l/lane/BorderOperation.hpp" alt="" coords="457,317,648,359"/>
+<area shape="rect" id="node10" href="$point_2Operation_8hpp_source.html" title="impl/include/ad/map\l/point/Operation.hpp" alt="" coords="673,317,827,359"/>
+<area shape="rect" id="node9" href="$lane_2Operation_8hpp_source.html" title="impl/include/ad/map\l/lane/Operation.hpp" alt="" coords="476,407,627,448"/>
+<area shape="rect" id="node11" href="$AdMapMatching_8hpp_source.html" title="impl/include/ad/map\l/match/AdMapMatching.hpp" alt="" coords="651,407,852,448"/>
+<area shape="rect" id="node12" href="$match_2Operation_8hpp_source.html" title="impl/include/ad/map\l/match/Operation.hpp" alt="" coords="670,496,833,537"/>
+</map>

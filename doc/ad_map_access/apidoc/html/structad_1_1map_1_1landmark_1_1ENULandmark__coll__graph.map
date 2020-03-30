@@ -1,0 +1,6 @@
+<map id="ad::map::landmark::ENULandmark" name="ad::map::landmark::ENULandmark">
+<area shape="rect" id="node2" href="$structad_1_1map_1_1point_1_1ENUPoint.html" title="DataType ENUPoint. " alt="" coords="25,131,207,158"/>
+<area shape="rect" id="node3" href="$classad_1_1map_1_1point_1_1ENUCoordinate.html" title="DataType ENUCoordinate. " alt="" coords="5,5,227,32"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1landmark_1_1LandmarkId.html" title="DataType LandmarkId. " alt="" coords="231,124,382,165"/>
+<area shape="rect" id="node5" href="$classad_1_1map_1_1point_1_1ENUHeading.html" title="DataType ENUHeading. " alt="" coords="406,131,610,158"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classad_1_1map_1_1route_1_1planning_1_1Route.html" title="Implements routing on the lane network. " alt="" coords="5,71,184,112"/>
+<area shape="rect" id="node2" href="$classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html" title="Implements routing support functionality on the lane network. " alt="" coords="232,5,495,47"/>
+<area shape="rect" id="node3" href="$classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html" title="ad::map::route::planning\l::RouteExpander\&lt; RouteAstarScore \&gt;" alt="" coords="232,71,495,112"/>
+<area shape="rect" id="node5" href="$classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html" title="ad::map::route::planning\l::RouteExpander\&lt; RoutePrediction\lScore \&gt;" alt="" coords="243,135,483,191"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1route_1_1planning_1_1RouteAstar.html" title="Implements routing on the lane network. " alt="" coords="543,71,721,112"/>
+<area shape="rect" id="node6" href="$classad_1_1map_1_1route_1_1planning_1_1RoutePrediction.html" title="Implements route prediction on the lane network. " alt="" coords="543,143,721,184"/>
+</map>

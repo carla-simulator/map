@@ -1,0 +1,8 @@
+<map id="ad::map::config::PointOfInterest" name="ad::map::config::PointOfInterest">
+<area shape="rect" id="node2" href="$structad_1_1map_1_1point_1_1GeoPoint.html" title="DataType GeoPoint. " alt="" coords="304,81,485,108"/>
+<area shape="rect" id="node3" href="$classad_1_1map_1_1point_1_1Altitude.html" title="DataType Altitude. " alt="" coords="13,5,185,32"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1point_1_1Latitude.html" title="DataType Latitude. " alt="" coords="11,56,186,83"/>
+<area shape="rect" id="node5" href="$classad_1_1map_1_1point_1_1Longitude.html" title="DataType Longitude. " alt="" coords="5,107,192,133"/>
+<area shape="rect" id="node6" title="STL class. " alt="" coords="351,148,438,175"/>
+<area shape="rect" id="node7" title="STL class. " alt="" coords="30,158,167,199"/>
+</map>

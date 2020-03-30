@@ -1,0 +1,6 @@
+<map id="ad::map::lane::GeoBorder" name="ad::map::lane::GeoBorder">
+<area shape="rect" id="node3" href="$structad_1_1map_1_1point_1_1GeoPoint.html" title="DataType GeoPoint. " alt="" coords="198,95,379,121"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1point_1_1Altitude.html" title="DataType Altitude. " alt="" coords="5,5,177,32"/>
+<area shape="rect" id="node5" href="$classad_1_1map_1_1point_1_1Latitude.html" title="DataType Latitude. " alt="" coords="201,5,376,32"/>
+<area shape="rect" id="node6" href="$classad_1_1map_1_1point_1_1Longitude.html" title="DataType Longitude. " alt="" coords="401,5,587,32"/>
+</map>
