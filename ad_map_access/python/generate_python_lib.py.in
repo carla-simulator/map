@@ -46,7 +46,7 @@ def main():
     }
 
     generate_python_wrapper(library_name="libad_map_access_python",
-                            cpp_filename="AdMapAccessPythonWrapper.cpp",
+                            cpp_filename="AdMapAccessPythonWrapper.cpp.in",
                             header_directories=header_dirs,
                             include_paths=include_dirs,
                             declarations={
@@ -68,9 +68,19 @@ def main():
          "\"MapMatchedPositionConfidenceList\""),
     }
 
+    additional_replacements_python2=additional_replacements.copy()
+    additional_replacements_python2.add(("libad_map_access_python", "libad_map_access_python2"))
     post_process_python_wrapper(header_directories=header_dirs,
-                                cpp_filename="AdMapAccessPythonWrapper.cpp",
-                                additional_replacements=additional_replacements
+                                cpp_filename_in="AdMapAccessPythonWrapper.cpp.in",
+                                cpp_filename_out="AdMapAccessPythonWrapperPYTHON2.cpp",
+                                additional_replacements=additional_replacements_python2
+                                )
+    additional_replacements_python3=additional_replacements.copy()
+    additional_replacements_python3.add(("libad_map_access_python", "libad_map_access_python3"))
+    post_process_python_wrapper(header_directories=header_dirs,
+                                cpp_filename_in="AdMapAccessPythonWrapper.cpp.in",
+                                cpp_filename_out="AdMapAccessPythonWrapperPYTHON3.cpp",
+                                additional_replacements=additional_replacements_python3
                                 )
 
 if __name__ == '__main__':

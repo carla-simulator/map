@@ -13,11 +13,17 @@ Simple unittest module to ensure that the Python binding is functional
 """
 
 import unittest
+import xmlrunner
+import sys
+import os
 
-import libad_physics_python as physics
+if sys.version_info.major == 3:
+    import libad_physics_python3 as physics
+else:
+    import libad_physics_python2 as physics
 
 
-class InterfaceTest(unittest.TestCase):
+class AdPhysicsInterfaceTest(unittest.TestCase):
 
     """
     Test class for Python interface
@@ -46,4 +52,10 @@ class InterfaceTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    if os.environ['GTEST_OUTPUT'] and os.environ['GTEST_OUTPUT'].startswith('xml:'):
+        base_folder = os.environ['GTEST_OUTPUT'][4:]
+        result_filename = base_folder + 'ad_pyhsics_interface_test_python' + str(sys.version_info.major) + ".xml"
+        with open(result_filename, "w+") as result_file:
+            unittest.main(testRunner=xmlrunner.XMLTestRunner(output=result_file))
+    else:
+        unittest.main()
