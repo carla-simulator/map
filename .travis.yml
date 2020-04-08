@@ -47,6 +47,7 @@ matrix:
         - git submodule update --init
         - travis_wait 60 colcon build --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON
         - colcon test --packages-select ad_map_access ad_physics
+        - colcon test-result
       after_failure:
         - tail --lines=2000 build.log
 
