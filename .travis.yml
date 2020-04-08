@@ -49,7 +49,8 @@ matrix:
         - colcon test --packages-select ad_map_access ad_physics
         - colcon test-result
       after_failure:
-        - tail --lines=2000 build.log
+        - tail --lines=2000 log/latest_build/events.log
+        - tail --lines=2000 log/latest_test/events.log
 
 
     - env: TEST="Documentation Deployment"
@@ -96,7 +97,7 @@ matrix:
         - git remote add origin-doc https://${GITHUB_TOKEN}@github.com/carla-simulator/map.git > /dev/null 2>&1
         - git push --set-upstream origin-doc doc
       after_failure:
-        - tail --lines=2000 build.log
+        - tail --lines=2000 log/latest_build/events.log
 
 notifications:
   email: false
