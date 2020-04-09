@@ -14,7 +14,7 @@ dist: xenial
 sudo: false
 env:
   global:
-    - BUILDCMD="travis_wait 60 colcon build --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON -DCMAKE_BUILD_TYPE=Release && colcon test --packages-select ad_map_access ad_physics && colcon test-result"
+    - BUILDCMD="colcon build --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON -DCMAKE_BUILD_TYPE=Release && colcon test --packages-select ad_map_access ad_physics && colcon test-result"
 
 matrix:
   include:
@@ -39,9 +39,11 @@ matrix:
             - python
             - python-setuptools
             - python-pip
+            - python-wheel
             - python3
             - python3-setuptools
             - python3-pip
+            - python3-wheel
       before_install:
         - pip3 install --user -U colcon-common-extensions
         - pip3 install --user xmlrunner
@@ -68,7 +70,7 @@ matrix:
         - docker ps
       install:
         - $SH "apt-get update && apt-get -y -qq install build-essential cmake libboost-all-dev libgtest-dev liblapacke-dev libopenblas-dev libproj-dev libpugixml-dev libpython3-dev"
-        - $SH "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends castxml python python-setuptools python-pip python3 python3-setuptools python3-pip"
+        - $SH "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends castxml python python-setuptools python-pip python-wheel python3 python3-setuptools python3-pip python3-wheel"
         - $SH "pip3 install --user -U colcon-common-extensions"
         - $SH "pip3 install --user xmlrunner"
         - $SH "pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner"
