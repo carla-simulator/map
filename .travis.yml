@@ -71,7 +71,7 @@ matrix:
       install:
         - $SH "apt-get update && apt-get -y -qq install build-essential cmake libboost-all-dev libgtest-dev liblapacke-dev libopenblas-dev libproj-dev libpugixml-dev libpython3-dev"
         - $SH "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends castxml python python-setuptools python-pip python-wheel python3 python3-setuptools python3-pip python3-wheel"
-        - $SH "pip3 install --user -U colcon-common-extensions"
+        - $SH "pip3 install -U colcon-common-extensions"
         - $SH "pip3 install --user xmlrunner"
         - $SH "pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner"
       script:
