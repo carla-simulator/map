@@ -34,7 +34,7 @@ foreach(binding ${PYTHON_BINDINGS})
   list(APPEND targets ${target})
 
   add_library(${target}
-    ${CMAKE_CURRENT_BINARY_DIR}/AdPhysicsPythonWrapper.cpp
+     ${CMAKE_CURRENT_BINARY_DIR}/AdPhysicsPythonWrapper${binding}.cpp
   )
   target_compile_definitions(${target} PUBLIC ${TARGET_COMPILE_DEFINITIONS})
   target_compile_options(${target} PRIVATE ${TARGET_COMPILE_OPTIONS})
@@ -49,6 +49,16 @@ foreach(binding ${PYTHON_BINDINGS})
     ad_physics
     ${PYTHON_BINDING_PACKAGE_LIBRARIES_${binding}}
   )
+
+  if (BUILD_TESTING)
+    add_test(NAME ${target}_test
+      COMMAND ${lc_binding} -m interface_test
+      WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/tests
+    )
+    get_python_test_environment()
+    set_tests_properties(${target}_test PROPERTIES ENVIRONMENT "${PYTHON_TEST_ENVIRONMENT}")
+  endif()
+
 endforeach()
 
 ################################################################################

@@ -20,19 +20,19 @@
 /*!
  * The major version of ad_physics
  */
-#define AD_PHYSICS_VERSION_MAJOR 1
+#define AD_PHYSICS_VERSION_MAJOR 2
 
 /*!
  * The minor version of ad_physics
  */
-#define AD_PHYSICS_VERSION_MINOR 1
+#define AD_PHYSICS_VERSION_MINOR 0
 
 /*!
  * The revision of ad_physics
  */
-#define AD_PHYSICS_VERSION_REVISION 0
+#define AD_PHYSICS_VERSION_REVISION 2
 
 /*!
  * The version of ad_physics as string
  */
-#define AD_PHYSICS_VERSION_STRING "1.1.0"
+#define AD_PHYSICS_VERSION_STRING "2.0.2"

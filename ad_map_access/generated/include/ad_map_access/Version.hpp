@@ -30,9 +30,9 @@
 /*!
  * The revision of ad_map_access
  */
-#define AD_MAP_ACCESS_VERSION_REVISION 1
+#define AD_MAP_ACCESS_VERSION_REVISION 2
 
 /*!
  * The version of ad_map_access as string
  */
-#define AD_MAP_ACCESS_VERSION_STRING "2.0.1"
+#define AD_MAP_ACCESS_VERSION_STRING "2.0.2"

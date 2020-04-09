@@ -13,9 +13,10 @@ Python library as module and use it as any other Python module.
 ```bash
  map$>  export PYTHONPATH=$PYTHONPATH:<path/to/>install/ad_physics/lib
  map$>  python
- >>> import libad_physics_python as physics
+ >>> import libad_physics_python3 as physics
  >>> distance = physics.Distance(2.0)
  >>> print(distance)
 ```
 
+When using python2 you have to import libad_physics_python2 instead.
 For some simple examples, you might also want to spot into the ad_physics_python/tests folder.

@@ -1,5 +1,10 @@
 ## Latest changes
 
+## Release 2.0.2
+#### :ghost: Maintenance
+* Fixed python binding for multiple python version built
+* Added python interface test execution
+
 ## Release 2.0.1
 #### :ghost: Maintenance
 * Fixed missing boost include
