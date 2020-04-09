@@ -14,7 +14,7 @@ dist: xenial
 sudo: false
 env:
   global:
-    - BUILDCMD="colcon build --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON -DCMAKE_BUILD_TYPE=Release && colcon test --packages-select ad_map_access ad_physics && colcon test-result"
+    - BUILDCMD="colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON -DCMAKE_BUILD_TYPE=Release && colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics && colcon test-result"
 
 matrix:
   include:
@@ -50,9 +50,9 @@ matrix:
         - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner
       script:
         - git submodule update --init
-        - travis_wait 60 colcon build --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON
+        - colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON
         - export GTEST_OUTPUT='xml:test_results'
-        - colcon test --packages-select ad_map_access ad_physics
+        - colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics
         - colcon test-result
       after_failure:
         - tail --lines=2000 log/latest_build/events.log
