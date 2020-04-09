@@ -210,7 +210,7 @@ void RoutePlanningTest::validateRouteConnections(route::FullRoute const &route, 
       maxLaneOffsetPresent |= route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset == route.maxLaneOffset;
       minLaneOffsetPresent |= route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset == route.minLaneOffset;
 
-      EXPECT_EQ(j,
+      EXPECT_EQ(int(j),
                 route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset
                   - route.roadSegments[i].drivableLaneSegments[0].routeLaneOffset)
         << "i:" << i << " j:" << j << " route:" << route;
@@ -953,7 +953,7 @@ TEST_F(RoutePlanningTest, route_para_point)
   ASSERT_NEAR((double)speedLimits[0].lanePiece.maximum, 1., 0.0001);
 
   speedLimits = getSpeedLimits(routeLeft);
-  ASSERT_EQ(speedLimits.size(), 3);
+  ASSERT_EQ(speedLimits.size(), 3u);
   for (auto const &speedLimit : speedLimits)
   {
     ASSERT_NEAR((double)speedLimit.speedLimit, 8.3333, 0.0001);

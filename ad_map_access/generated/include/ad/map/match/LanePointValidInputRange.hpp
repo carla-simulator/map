@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
@@ -22,6 +22,7 @@
 #include "ad/map/match/LanePoint.hpp"
 #include "ad/map/point/ParaPointValidInputRange.hpp"
 #include "ad/physics/DistanceValidInputRange.hpp"
+#include "ad/physics/RatioValueValidInputRange.hpp"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/spdlog.h"
 
@@ -40,7 +41,8 @@ inline bool withinValidInputRange(::ad::map::match::LanePoint const &input, bool
   // check for generic member input ranges
   bool inValidInputRange = true;
   inValidInputRange = withinValidInputRange(input.paraPoint, logErrors)
-    && withinValidInputRange(input.laneLength, logErrors) && withinValidInputRange(input.laneWidth, logErrors);
+    && withinValidInputRange(input.lateralT, logErrors) && withinValidInputRange(input.laneLength, logErrors)
+    && withinValidInputRange(input.laneWidth, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::match::LanePoint)>> {} has invalid member",

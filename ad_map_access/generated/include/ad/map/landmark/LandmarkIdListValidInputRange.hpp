@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
@@ -20,6 +20,7 @@
 #include <cmath>
 #include <limits>
 #include "ad/map/landmark/LandmarkIdList.hpp"
+#include "ad/map/landmark/LandmarkIdValidInputRange.hpp"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/spdlog.h"
 
@@ -41,5 +42,19 @@ inline bool withinValidInputRange(::ad::map::landmark::LandmarkIdList const &inp
   (void)logErrors;
   bool inValidInputRange = true;
 
+  if (inValidInputRange)
+  {
+    for (auto const &member : input)
+    {
+      bool memberInValidInputRange = withinValidInputRange(member, logErrors);
+      inValidInputRange = inValidInputRange && memberInValidInputRange;
+      if (!memberInValidInputRange && logErrors)
+      {
+        spdlog::error("withinValidInputRange(::ad::map::landmark::LandmarkIdList)>> {}, invalid member {}",
+                      input,
+                      member); // LCOV_EXCL_BR_LINE
+      }
+    }
+  }
   return inValidInputRange;
 }

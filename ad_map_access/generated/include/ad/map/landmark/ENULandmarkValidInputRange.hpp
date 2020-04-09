@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
@@ -20,6 +20,7 @@
 #include <cmath>
 #include <limits>
 #include "ad/map/landmark/ENULandmark.hpp"
+#include "ad/map/landmark/LandmarkIdValidInputRange.hpp"
 #include "ad/map/landmark/LandmarkTypeValidInputRange.hpp"
 #include "ad/map/landmark/TrafficLightTypeValidInputRange.hpp"
 #include "ad/map/point/ENUHeadingValidInputRange.hpp"
@@ -41,8 +42,9 @@ inline bool withinValidInputRange(::ad::map::landmark::ENULandmark const &input,
 {
   // check for generic member input ranges
   bool inValidInputRange = true;
-  inValidInputRange = withinValidInputRange(input.type, logErrors) && withinValidInputRange(input.position, logErrors)
-    && withinValidInputRange(input.heading, logErrors) && withinValidInputRange(input.trafficLightType, logErrors);
+  inValidInputRange = withinValidInputRange(input.id, logErrors) && withinValidInputRange(input.type, logErrors)
+    && withinValidInputRange(input.position, logErrors) && withinValidInputRange(input.heading, logErrors)
+    && withinValidInputRange(input.trafficLightType, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::landmark::ENULandmark)>> {} has invalid member",

@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #include "ad/map/access/PartitionId.hpp"
@@ -32,7 +32,7 @@ namespace map {
  */
 namespace access {
 
-const uint64_t PartitionId::cMinValue = 0;
+const uint64_t PartitionId::cMinValue = 0u;
 
 const uint64_t PartitionId::cMaxValue = std::numeric_limits<uint64_t>::max();
 

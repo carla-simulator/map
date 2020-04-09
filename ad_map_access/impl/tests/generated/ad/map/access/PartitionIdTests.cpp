@@ -18,7 +18,7 @@
 
 TEST(PartitionIdTests, minIsDefinedAsExpected)
 {
-  EXPECT_EQ(0, ::ad::map::access::PartitionId::cMinValue);
+  EXPECT_EQ(0u, ::ad::map::access::PartitionId::cMinValue);
   EXPECT_EQ(::ad::map::access::PartitionId::cMinValue, static_cast<uint64_t>(::ad::map::access::PartitionId::getMin()));
 }
 

@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
@@ -20,6 +20,7 @@
 #include <cmath>
 #include <limits>
 #include "ad/map/landmark/Landmark.hpp"
+#include "ad/map/landmark/LandmarkIdValidInputRange.hpp"
 #include "ad/map/landmark/LandmarkTypeValidInputRange.hpp"
 #include "ad/map/landmark/TrafficLightTypeValidInputRange.hpp"
 #include "ad/map/landmark/TrafficSignTypeValidInputRange.hpp"
@@ -42,9 +43,9 @@ inline bool withinValidInputRange(::ad::map::landmark::Landmark const &input, bo
 {
   // check for generic member input ranges
   bool inValidInputRange = true;
-  inValidInputRange = withinValidInputRange(input.type, logErrors) && withinValidInputRange(input.position, logErrors)
-    && withinValidInputRange(input.orientation, logErrors) && withinValidInputRange(input.boundingBox, logErrors)
-    && withinValidInputRange(input.trafficLightType, logErrors)
+  inValidInputRange = withinValidInputRange(input.id, logErrors) && withinValidInputRange(input.type, logErrors)
+    && withinValidInputRange(input.position, logErrors) && withinValidInputRange(input.orientation, logErrors)
+    && withinValidInputRange(input.boundingBox, logErrors) && withinValidInputRange(input.trafficLightType, logErrors)
     && withinValidInputRange(input.trafficSignType, logErrors);
   if (!inValidInputRange && logErrors)
   {
