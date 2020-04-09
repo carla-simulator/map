@@ -37,7 +37,8 @@ matrix:
             - python-pip
             - castxml
       before_install:
-        - pip3 install setuptools xmlrunner
+        - pip3 install setuptools
+        - pip3 install --user xmlrunner
         - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner
       before_script:
         - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
