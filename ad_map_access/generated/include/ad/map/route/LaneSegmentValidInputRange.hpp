@@ -12,13 +12,14 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
 
 #include <cmath>
 #include <limits>
+#include "ad/map/lane/LaneIdListValidInputRange.hpp"
 #include "ad/map/lane/LaneIdValidInputRange.hpp"
 #include "ad/map/route/LaneIntervalValidInputRange.hpp"
 #include "ad/map/route/LaneSegment.hpp"
@@ -40,7 +41,8 @@ inline bool withinValidInputRange(::ad::map::route::LaneSegment const &input, bo
   // check for generic member input ranges
   bool inValidInputRange = true;
   inValidInputRange = withinValidInputRange(input.leftNeighbor, logErrors)
-    && withinValidInputRange(input.rightNeighbor, logErrors) && withinValidInputRange(input.laneInterval, logErrors);
+    && withinValidInputRange(input.rightNeighbor, logErrors) && withinValidInputRange(input.predecessors, logErrors)
+    && withinValidInputRange(input.successors, logErrors) && withinValidInputRange(input.laneInterval, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::route::LaneSegment)>> {} has invalid member",

@@ -12,15 +12,17 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
 
 #include <cmath>
 #include <limits>
+#include "ad/map/landmark/LandmarkIdValidInputRange.hpp"
 #include "ad/map/lane/ContactLane.hpp"
 #include "ad/map/lane/ContactLocationValidInputRange.hpp"
+#include "ad/map/lane/ContactTypeListValidInputRange.hpp"
 #include "ad/map/lane/LaneIdValidInputRange.hpp"
 #include "ad/map/restriction/RestrictionsValidInputRange.hpp"
 #include "spdlog/fmt/ostr.h"
@@ -41,7 +43,8 @@ inline bool withinValidInputRange(::ad::map::lane::ContactLane const &input, boo
   // check for generic member input ranges
   bool inValidInputRange = true;
   inValidInputRange = withinValidInputRange(input.toLane, logErrors) && withinValidInputRange(input.location, logErrors)
-    && withinValidInputRange(input.restrictions, logErrors);
+    && withinValidInputRange(input.types, logErrors) && withinValidInputRange(input.restrictions, logErrors)
+    && withinValidInputRange(input.trafficLightId, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::lane::ContactLane)>> {} has invalid member",

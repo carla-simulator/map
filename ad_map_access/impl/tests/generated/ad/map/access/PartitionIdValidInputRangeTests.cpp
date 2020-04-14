@@ -20,6 +20,6 @@
 
 TEST(PartitionIdValidInputRangeTests, testValidInputRangeMinOk)
 {
-  ::ad::map::access::PartitionId value(0);
+  ::ad::map::access::PartitionId value(0u);
   ASSERT_TRUE(withinValidInputRange(value));
 }

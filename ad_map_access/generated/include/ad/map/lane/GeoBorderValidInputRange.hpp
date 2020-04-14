@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
@@ -20,6 +20,7 @@
 #include <cmath>
 #include <limits>
 #include "ad/map/lane/GeoBorder.hpp"
+#include "ad/map/point/GeoEdgeValidInputRange.hpp"
 
 /*!
  * \brief check if the given GeoBorder is within valid input range

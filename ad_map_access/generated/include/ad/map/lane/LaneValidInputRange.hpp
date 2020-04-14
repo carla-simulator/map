@@ -12,13 +12,15 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
 
 #include <cmath>
 #include <limits>
+#include "ad/map/landmark/LandmarkIdListValidInputRange.hpp"
+#include "ad/map/lane/ContactLaneListValidInputRange.hpp"
 #include "ad/map/lane/Lane.hpp"
 #include "ad/map/lane/LaneDirectionValidInputRange.hpp"
 #include "ad/map/lane/LaneIdValidInputRange.hpp"
@@ -26,6 +28,7 @@
 #include "ad/map/point/BoundingSphereValidInputRange.hpp"
 #include "ad/map/point/GeometryValidInputRange.hpp"
 #include "ad/map/restriction/RestrictionsValidInputRange.hpp"
+#include "ad/map/restriction/SpeedLimitListValidInputRange.hpp"
 #include "ad/physics/DistanceValidInputRange.hpp"
 #include "ad/physics/MetricRangeValidInputRange.hpp"
 #include "spdlog/fmt/ostr.h"
@@ -49,8 +52,10 @@ inline bool withinValidInputRange(::ad::map::lane::Lane const &input, bool const
     && withinValidInputRange(input.direction, logErrors) && withinValidInputRange(input.restrictions, logErrors)
     && withinValidInputRange(input.length, logErrors) && withinValidInputRange(input.lengthRange, logErrors)
     && withinValidInputRange(input.width, logErrors) && withinValidInputRange(input.widthRange, logErrors)
-    && withinValidInputRange(input.edgeLeft, logErrors) && withinValidInputRange(input.edgeRight, logErrors)
-    && withinValidInputRange(input.boundingSphere, logErrors);
+    && withinValidInputRange(input.speedLimits, logErrors) && withinValidInputRange(input.edgeLeft, logErrors)
+    && withinValidInputRange(input.edgeRight, logErrors) && withinValidInputRange(input.contactLanes, logErrors)
+    && withinValidInputRange(input.boundingSphere, logErrors)
+    && withinValidInputRange(input.visibleLandmarks, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::lane::Lane)>> {} has invalid member", input); // LCOV_EXCL_BR_LINE

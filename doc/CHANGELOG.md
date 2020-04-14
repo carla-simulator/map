@@ -4,6 +4,7 @@
 #### :ghost: Maintenance
 * Fixed python binding for multiple python version built
 * Added python interface test execution
+* Fixed test built on Ubuntu18.04
 
 ## Release 2.0.1
 #### :ghost: Maintenance

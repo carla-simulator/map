@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
@@ -20,6 +20,7 @@
 #include <cmath>
 #include <limits>
 #include "ad/map/route/FullRoute.hpp"
+#include "ad/map/route/RoadSegmentListValidInputRange.hpp"
 #include "ad/map/route/RouteCreationModeValidInputRange.hpp"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/spdlog.h"
@@ -38,7 +39,8 @@ inline bool withinValidInputRange(::ad::map::route::FullRoute const &input, bool
 {
   // check for generic member input ranges
   bool inValidInputRange = true;
-  inValidInputRange = withinValidInputRange(input.routeCreationMode, logErrors);
+  inValidInputRange
+    = withinValidInputRange(input.roadSegments, logErrors) && withinValidInputRange(input.routeCreationMode, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::route::FullRoute)>> {} has invalid member",

@@ -12,14 +12,16 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
 
 #include <cmath>
 #include <limits>
+#include "ad/map/match/LaneOccupiedRegionListValidInputRange.hpp"
 #include "ad/map/match/MapMatchedObjectBoundingBox.hpp"
+#include "ad/map/match/MapMatchedPositionConfidenceListValidInputRange.hpp"
 
 /*!
  * \brief check if the given MapMatchedObjectBoundingBox is within valid input range

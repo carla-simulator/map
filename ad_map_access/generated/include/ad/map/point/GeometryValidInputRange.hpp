@@ -12,13 +12,14 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1917
+ * Generator Version : 11.0.0-1984
  */
 
 #pragma once
 
 #include <cmath>
 #include <limits>
+#include "ad/map/point/ECEFEdgeValidInputRange.hpp"
 #include "ad/map/point/ENUEdgeCacheValidInputRange.hpp"
 #include "ad/map/point/Geometry.hpp"
 #include "ad/physics/DistanceValidInputRange.hpp"
@@ -39,8 +40,8 @@ inline bool withinValidInputRange(::ad::map::point::Geometry const &input, bool 
 {
   // check for generic member input ranges
   bool inValidInputRange = true;
-  inValidInputRange
-    = withinValidInputRange(input.length, logErrors) && withinValidInputRange(input.private_enuEdgeCache, logErrors);
+  inValidInputRange = withinValidInputRange(input.ecefEdge, logErrors) && withinValidInputRange(input.length, logErrors)
+    && withinValidInputRange(input.private_enuEdgeCache, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::point::Geometry)>> {} has invalid member",
