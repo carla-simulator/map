@@ -12,14 +12,12 @@ compiler: gcc
 os: linux
 dist: xenial
 sudo: false
-env:
-  global:
-    - BUILDCMD="colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON -DCMAKE_BUILD_TYPE=Release && colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics && colcon test-result"
 
 matrix:
   include:
 
     - env: TEST="Build and Unit Tests (Ubuntu 16.04)"
+      dist: xenial
       addons:
         apt:
           packages:
@@ -58,24 +56,42 @@ matrix:
         - tail --lines=2000 log/latest_build/events.log
         - tail --lines=2000 log/latest_test/events.log
 
-    - env:
-        - TEST="Check Ubuntu 18.04"
-        - SH="docker exec -t ubuntu bash -c"
-      services:
-        - docker
-      sudo: true
+    - env: TEST="Build and Unit Tests (Ubuntu 18.04)"
+      dist: bionic
+      addons:
+        apt:
+          packages:
+            - build-essential
+            - castxml
+            - cmake
+            - doxygen
+            - graphviz
+            - lcov
+            - libboost-all-dev
+            - libgtest-dev
+            - liblapacke-dev
+            - libopenblas-dev
+            - libproj-dev
+            - libpugixml-dev
+            - libpython3-dev
+            - python
+            - python-setuptools
+            - python-pip
+            - python-wheel
+            - python3
+            - python3-setuptools
+            - python3-pip
+            - python3-wheel
       before_install:
-        - git submodule update --init
-        - docker run -d --name ubuntu -v $(pwd):/travis -w /travis ubuntu:bionic tail -f /dev/null
-        - docker ps
-      install:
-        - $SH "apt-get update && apt-get -y -qq install build-essential cmake libboost-all-dev libgtest-dev liblapacke-dev libopenblas-dev libproj-dev libpugixml-dev libpython3-dev"
-        - $SH "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends castxml python python-setuptools python-pip python-wheel python3 python3-setuptools python3-pip python3-wheel"
-        - $SH "pip3 install -U colcon-common-extensions"
-        - $SH "pip3 install --user xmlrunner"
-        - $SH "pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner"
+        - pip3 install --user -U colcon-common-extensions
+        - pip3 install --user xmlrunner
+        - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner
       script:
-        - $SH "eval $BUILDCMD"
+        - git submodule update --init
+        - colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON
+        - export GTEST_OUTPUT='xml:test_results'
+        - colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics
+        - colcon test-result
       after_failure:
         - tail --lines=2000 log/latest_build/events.log
         - tail --lines=2000 log/latest_test/events.log
