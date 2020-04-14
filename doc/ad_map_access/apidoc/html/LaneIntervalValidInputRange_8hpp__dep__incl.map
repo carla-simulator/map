@@ -1,4 +1,8 @@
 <map id="generated/include/ad/map/route/LaneIntervalValidInputRange.hpp" name="generated/include/ad/map/route/LaneIntervalValidInputRange.hpp">
 <area shape="rect" id="node2" href="$LaneSegmentValidInputRange_8hpp.html" title="generated/include/ad\l/map/route/LaneSegmentValid\lInputRange.hpp" alt="" coords="16,109,233,165"/>
 <area shape="rect" id="node3" href="$LaneSegmentListValidInputRange_8hpp.html" title="generated/include/ad\l/map/route/LaneSegmentListValid\lInputRange.hpp" alt="" coords="5,213,244,269"/>
+<area shape="rect" id="node4" href="$RoadSegmentValidInputRange_8hpp.html" title="generated/include/ad\l/map/route/RoadSegmentValid\lInputRange.hpp" alt="" coords="16,317,233,373"/>
+<area shape="rect" id="node5" href="$RoadSegmentListValidInputRange_8hpp.html" title="generated/include/ad\l/map/route/RoadSegmentListValid\lInputRange.hpp" alt="" coords="5,421,244,477"/>
+<area shape="rect" id="node6" href="$FullRouteValidInputRange_8hpp.html" title="generated/include/ad\l/map/route/FullRouteValidInput\lRange.hpp" alt="" coords="17,525,232,581"/>
+<area shape="rect" id="node7" href="$ConnectingRouteValidInputRange_8hpp.html" title="generated/include/ad\l/map/route/ConnectingRouteValid\lInputRange.hpp" alt="" coords="7,629,242,685"/>
 </map>
