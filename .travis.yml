@@ -74,9 +74,9 @@ jobs:
       dist: xenial
       compiler: clang
       env:
-        EXTRA_PACKAGES="clang-5 clang-8"
-        CC1=/usr/bin/clang-5
-        CXX1=/usr/bin/clang++-5
+        EXTRA_PACKAGES="clang-5.0 clang-8"
+        CC1=/usr/bin/clang-5.0
+        CXX1=/usr/bin/clang++-5.0
         CC1=/usr/bin/clang-8
         CXX1=/usr/bin/clang++-8
 
@@ -84,7 +84,7 @@ jobs:
       dist: bionic
       compiler: gcc
       env:
-        EXTRA_PACKAGES="g++-8 g++-9"
+        EXTRA_PACKAGES="g++-8 g++-9 gcc-9 libstdc++-9-dev"
         CC1=/usr/bin/gcc-8
         CXX1=/usr/bin/g++-8
         CC2=/usr/bin/gcc-9
@@ -94,9 +94,9 @@ jobs:
       dist: bionic
       compiler: clang
       env:
-        EXTRA_PACKAGES="clang-6 clang-8"
-        CC1=/usr/bin/clang-6
-        CXX1=/usr/bin/clang++-6
+        EXTRA_PACKAGES="clang-6.0 clang-8"
+        CC1=/usr/bin/clang-6.0
+        CXX1=/usr/bin/clang++-6.0
         CC2=/usr/bin/clang-8
         CXX2=/usr/bin/clang++-8
 
