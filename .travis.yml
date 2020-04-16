@@ -50,9 +50,9 @@ env:
 
 script:
   - git submodule update --init
-  - ${BUILDCMD}
-  - test "${CC1}" != "" && rm -rf log build install && CC=${CC1} CXX=${CXX1} ${BUILDCMD}
-  - test "${CC2}" != "" && rm -rf log build install && CC=${CC2} CXX=${CXX2} ${BUILDCMD}
+  - eval ${BUILDCMD}
+  - test "${CC1}" != "" && rm -rf log build install && eval CC=${CC1} CXX=${CXX1} ${BUILDCMD}
+  - test "${CC2}" != "" && rm -rf log build install && eval CC=${CC2} CXX=${CXX2} ${BUILDCMD}
 
 after_failure:
    - tail --lines=2000 log/latest_build/events.log
