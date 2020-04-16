@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -775,6 +775,10 @@ void autoConnectIntersectionLanes(opendrive::OpenDriveData &mapData, double cons
             laneMap[*rightIt].rightNeighbor = *leftIt;
             // lane needs inversion
             invertLane(mapData.laneMap[*rightIt]);
+            break;
+          case ContactPlace::Overlap:
+          case ContactPlace::None:
+            // nothing to be done
             break;
         }
       }

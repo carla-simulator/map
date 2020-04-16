@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -10,6 +10,8 @@
 
 #include <cmath>
 
+#include "ad/map/point/ECEFCoordinateOperation.hpp"
+#include "ad/map/point/ENUCoordinateOperation.hpp"
 #include "ad/physics/Distance.hpp"
 #include "ad/physics/ParametricValue.hpp"
 #include "ad/physics/RatioValue.hpp"
@@ -179,59 +181,6 @@ template <typename PointType> PointType vectorExtrapolate(PointType const &a, Po
   result.y = (1 - scalar) * a.y + scalar * b.y;
   result.z = (1 - scalar) * a.z + scalar * b.z;
   return result;
-}
-
-/**
-  * @brief Find point nearest to the line formed by two points.
-  *
-  * @param[in] a point to search for
-  * @param[in] pt0 First point of the line.
-  * @param[in] pt1 Second point of the line.
-  * @returns Value of t;  nearest point to a can be calculated as (1-t)*pt0+t*pt1.
-  */
-template <typename PointType>
-physics::RatioValue findNearestPointOnEdge(PointType const &a, const PointType &pt0, const PointType &pt1)
-{
-  PointType line = pt1 - pt0;
-  PointType pt02a = a - pt0;
-  auto const divisor = vectorDotProduct(line, line);
-  if (physics::Distance(divisor) > physics::Distance(0))
-  {
-    auto const dividend = vectorDotProduct(pt02a, line);
-    auto result = dividend / divisor;
-    return physics::RatioValue(result);
-  }
-  else
-  {
-    return physics::RatioValue(0.5);
-  }
-}
-
-/**
- * @brief Find point nearest to the segment formed by two points.
- *
- * @param[in] a point to search for
- * @param[in] pt0 First point of the segment.
- * @param[in] pt1 Second point of the segment.
- * @returns Value of 0<=t<=1;  nearest point to this can be calculated as (1-t)*pt0+t*pt1.
- *
- */
-template <typename PointType>
-physics::ParametricValue findNearestPointOnSegment(PointType const &a, const PointType &pt0, const PointType &pt1)
-{
-  auto const t = findNearestPointOnEdge(a, pt0, pt1);
-  if (t < physics::RatioValue(0.))
-  {
-    return physics::ParametricValue(0.);
-  }
-  else if (t > physics::RatioValue(1.))
-  {
-    return physics::ParametricValue(1.);
-  }
-  else
-  {
-    return physics::ParametricValue(static_cast<double>(t));
-  }
 }
 
 } // namespace point

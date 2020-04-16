@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/physics/ParametricValue.hpp"
@@ -141,8 +146,8 @@ TEST(ParametricValueTests, copyConstructionFromValidValue)
 
 TEST(ParametricValueTests, moveConstructionFromValidValue)
 {
-  ::ad::physics::ParametricValue value(
-    std::move(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMinValue)));
+  ::ad::physics::ParametricValue validValue(::ad::physics::ParametricValue::cMinValue);
+  ::ad::physics::ParametricValue value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cMinValue, static_cast<double>(value));
 }
@@ -158,8 +163,9 @@ TEST(ParametricValueTests, assignmentFromValidValue)
 
 TEST(ParametricValueTests, moveAssignmentFromValidValue)
 {
+  ::ad::physics::ParametricValue validValue(::ad::physics::ParametricValue::cMinValue);
   ::ad::physics::ParametricValue value;
-  value = std::move(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cMinValue, static_cast<double>(value));
 }
@@ -208,23 +214,23 @@ TEST(ParametricValueTests, comparisonOperatorsThrowOnInvalid)
   ::ad::physics::ParametricValue const value(::ad::physics::ParametricValue::cMinValue);
   ::ad::physics::ParametricValue const invalidValue;
 
-  EXPECT_THROW(invalidValue == value, std::out_of_range);
-  EXPECT_THROW(value == invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue == value), std::out_of_range);
+  EXPECT_THROW((void)(value == invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue != value, std::out_of_range);
-  EXPECT_THROW(value != invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue != value), std::out_of_range);
+  EXPECT_THROW((void)(value != invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue > value, std::out_of_range);
-  EXPECT_THROW(value > invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue > value), std::out_of_range);
+  EXPECT_THROW((void)(value > invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue < value, std::out_of_range);
-  EXPECT_THROW(value < invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue < value), std::out_of_range);
+  EXPECT_THROW((void)(value < invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue >= value, std::out_of_range);
-  EXPECT_THROW(value >= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue >= value), std::out_of_range);
+  EXPECT_THROW((void)(value >= invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue <= value, std::out_of_range);
-  EXPECT_THROW(value <= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue <= value), std::out_of_range);
+  EXPECT_THROW((void)(value <= invalidValue), std::out_of_range);
 }
 
 TEST(ParametricValueTests, arithmeticOperatorsThrowOnInvalid)
@@ -422,3 +428,7 @@ TEST(ParametricValueTests, arithmeticOperatorsComputeCorrectly)
     // not clear on how to trigger valid result if such small value is not working
   }
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

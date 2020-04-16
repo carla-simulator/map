@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/lane/ContactLane.hpp"
@@ -79,7 +84,8 @@ TEST_F(ContactLaneTests, copyConstruction)
 
 TEST_F(ContactLaneTests, moveConstruction)
 {
-  ::ad::map::lane::ContactLane value(std::move(::ad::map::lane::ContactLane(mValue)));
+  ::ad::map::lane::ContactLane tmpValue(mValue);
+  ::ad::map::lane::ContactLane value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -92,8 +98,9 @@ TEST_F(ContactLaneTests, copyAssignment)
 
 TEST_F(ContactLaneTests, moveAssignment)
 {
+  ::ad::map::lane::ContactLane tmpValue(mValue);
   ::ad::map::lane::ContactLane value;
-  value = std::move(::ad::map::lane::ContactLane(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -199,3 +206,7 @@ TEST_F(ContactLaneTests, comparisonOperatorTrafficLightIdDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

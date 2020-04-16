@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/lane/GeoBorder.hpp"
@@ -57,7 +62,8 @@ TEST_F(GeoBorderTests, copyConstruction)
 
 TEST_F(GeoBorderTests, moveConstruction)
 {
-  ::ad::map::lane::GeoBorder value(std::move(::ad::map::lane::GeoBorder(mValue)));
+  ::ad::map::lane::GeoBorder tmpValue(mValue);
+  ::ad::map::lane::GeoBorder value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -70,8 +76,9 @@ TEST_F(GeoBorderTests, copyAssignment)
 
 TEST_F(GeoBorderTests, moveAssignment)
 {
+  ::ad::map::lane::GeoBorder tmpValue(mValue);
   ::ad::map::lane::GeoBorder value;
-  value = std::move(::ad::map::lane::GeoBorder(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -130,3 +137,7 @@ TEST_F(GeoBorderTests, comparisonOperatorRightDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

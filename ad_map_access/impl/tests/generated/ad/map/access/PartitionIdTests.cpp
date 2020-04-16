@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/access/PartitionId.hpp"
@@ -80,8 +85,8 @@ TEST(PartitionIdTests, copyConstructionFromValidValue)
 
 TEST(PartitionIdTests, moveConstructionFromValidValue)
 {
-  ::ad::map::access::PartitionId value(
-    std::move(::ad::map::access::PartitionId(::ad::map::access::PartitionId::cMinValue)));
+  ::ad::map::access::PartitionId validValue(::ad::map::access::PartitionId::cMinValue);
+  ::ad::map::access::PartitionId value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_EQ(::ad::map::access::PartitionId::cMinValue, static_cast<uint64_t>(value));
 }
@@ -97,8 +102,9 @@ TEST(PartitionIdTests, assignmentFromValidValue)
 
 TEST(PartitionIdTests, moveAssignmentFromValidValue)
 {
+  ::ad::map::access::PartitionId validValue(::ad::map::access::PartitionId::cMinValue);
   ::ad::map::access::PartitionId value;
-  value = std::move(::ad::map::access::PartitionId(::ad::map::access::PartitionId::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_EQ(::ad::map::access::PartitionId::cMinValue, static_cast<uint64_t>(value));
 }
@@ -151,3 +157,7 @@ TEST(PartitionIdTests, arithmeticOperators)
   ASSERT_EQ(static_cast<uint64_t>(result),
             ::ad::map::access::PartitionId::cMaxValue - ::ad::map::access::PartitionId::cMinValue);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

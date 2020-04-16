@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/point/ENUCoordinate.hpp"
@@ -155,8 +160,8 @@ TEST(ENUCoordinateTests, copyConstructionFromValidValue)
 
 TEST(ENUCoordinateTests, moveConstructionFromValidValue)
 {
-  ::ad::map::point::ENUCoordinate value(
-    std::move(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMinValue)));
+  ::ad::map::point::ENUCoordinate validValue(::ad::map::point::ENUCoordinate::cMinValue);
+  ::ad::map::point::ENUCoordinate value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue, static_cast<double>(value));
 }
@@ -172,8 +177,9 @@ TEST(ENUCoordinateTests, assignmentFromValidValue)
 
 TEST(ENUCoordinateTests, moveAssignmentFromValidValue)
 {
+  ::ad::map::point::ENUCoordinate validValue(::ad::map::point::ENUCoordinate::cMinValue);
   ::ad::map::point::ENUCoordinate value;
-  value = std::move(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue, static_cast<double>(value));
 }
@@ -222,23 +228,23 @@ TEST(ENUCoordinateTests, comparisonOperatorsThrowOnInvalid)
   ::ad::map::point::ENUCoordinate const value(::ad::map::point::ENUCoordinate::cMinValue);
   ::ad::map::point::ENUCoordinate const invalidValue;
 
-  EXPECT_THROW(invalidValue == value, std::out_of_range);
-  EXPECT_THROW(value == invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue == value), std::out_of_range);
+  EXPECT_THROW((void)(value == invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue != value, std::out_of_range);
-  EXPECT_THROW(value != invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue != value), std::out_of_range);
+  EXPECT_THROW((void)(value != invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue > value, std::out_of_range);
-  EXPECT_THROW(value > invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue > value), std::out_of_range);
+  EXPECT_THROW((void)(value > invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue < value, std::out_of_range);
-  EXPECT_THROW(value < invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue < value), std::out_of_range);
+  EXPECT_THROW((void)(value < invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue >= value, std::out_of_range);
-  EXPECT_THROW(value >= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue >= value), std::out_of_range);
+  EXPECT_THROW((void)(value >= invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue <= value, std::out_of_range);
-  EXPECT_THROW(value <= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue <= value), std::out_of_range);
+  EXPECT_THROW((void)(value <= invalidValue), std::out_of_range);
 }
 
 TEST(ENUCoordinateTests, arithmeticOperatorsThrowOnInvalid)
@@ -436,3 +442,7 @@ TEST(ENUCoordinateTests, arithmeticOperatorsComputeCorrectly)
     // not clear on how to trigger valid result if such small value is not working
   }
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

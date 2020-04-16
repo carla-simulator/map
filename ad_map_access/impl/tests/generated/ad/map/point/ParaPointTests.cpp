@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/point/ParaPoint.hpp"
@@ -41,7 +46,8 @@ TEST_F(ParaPointTests, copyConstruction)
 
 TEST_F(ParaPointTests, moveConstruction)
 {
-  ::ad::map::point::ParaPoint value(std::move(::ad::map::point::ParaPoint(mValue)));
+  ::ad::map::point::ParaPoint tmpValue(mValue);
+  ::ad::map::point::ParaPoint value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -54,8 +60,9 @@ TEST_F(ParaPointTests, copyAssignment)
 
 TEST_F(ParaPointTests, moveAssignment)
 {
+  ::ad::map::point::ParaPoint tmpValue(mValue);
   ::ad::map::point::ParaPoint value;
-  value = std::move(::ad::map::point::ParaPoint(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -98,3 +105,7 @@ TEST_F(ParaPointTests, comparisonOperatorParametricOffsetDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

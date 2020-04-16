@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/match/MapMatchedPosition.hpp"
@@ -71,7 +76,8 @@ TEST_F(MapMatchedPositionTests, copyConstruction)
 
 TEST_F(MapMatchedPositionTests, moveConstruction)
 {
-  ::ad::map::match::MapMatchedPosition value(std::move(::ad::map::match::MapMatchedPosition(mValue)));
+  ::ad::map::match::MapMatchedPosition tmpValue(mValue);
+  ::ad::map::match::MapMatchedPosition value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -84,8 +90,9 @@ TEST_F(MapMatchedPositionTests, copyAssignment)
 
 TEST_F(MapMatchedPositionTests, moveAssignment)
 {
+  ::ad::map::match::MapMatchedPosition tmpValue(mValue);
   ::ad::map::match::MapMatchedPosition value;
-  value = std::move(::ad::map::match::MapMatchedPosition(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -185,3 +192,7 @@ TEST_F(MapMatchedPositionTests, comparisonOperatorQueryPointDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

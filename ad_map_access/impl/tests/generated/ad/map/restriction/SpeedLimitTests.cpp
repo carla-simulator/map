@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/restriction/SpeedLimit.hpp"
@@ -47,7 +52,8 @@ TEST_F(SpeedLimitTests, copyConstruction)
 
 TEST_F(SpeedLimitTests, moveConstruction)
 {
-  ::ad::map::restriction::SpeedLimit value(std::move(::ad::map::restriction::SpeedLimit(mValue)));
+  ::ad::map::restriction::SpeedLimit tmpValue(mValue);
+  ::ad::map::restriction::SpeedLimit value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -60,8 +66,9 @@ TEST_F(SpeedLimitTests, copyAssignment)
 
 TEST_F(SpeedLimitTests, moveAssignment)
 {
+  ::ad::map::restriction::SpeedLimit tmpValue(mValue);
   ::ad::map::restriction::SpeedLimit value;
-  value = std::move(::ad::map::restriction::SpeedLimit(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -110,3 +117,7 @@ TEST_F(SpeedLimitTests, comparisonOperatorLanePieceDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

@@ -1,14 +1,14 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "ad/map/point/GeoOperation.hpp"
-
-#include "ad/map/point/Operation.hpp"
+#include "ad/map/point/EdgeOperation.hpp"
+#include "ad/map/point/Transform.hpp"
 
 namespace ad {
 namespace map {

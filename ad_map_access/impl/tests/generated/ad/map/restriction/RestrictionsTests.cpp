@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/restriction/Restrictions.hpp"
@@ -65,7 +70,8 @@ TEST_F(RestrictionsTests, copyConstruction)
 
 TEST_F(RestrictionsTests, moveConstruction)
 {
-  ::ad::map::restriction::Restrictions value(std::move(::ad::map::restriction::Restrictions(mValue)));
+  ::ad::map::restriction::Restrictions tmpValue(mValue);
+  ::ad::map::restriction::Restrictions value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -78,8 +84,9 @@ TEST_F(RestrictionsTests, copyAssignment)
 
 TEST_F(RestrictionsTests, moveAssignment)
 {
+  ::ad::map::restriction::Restrictions tmpValue(mValue);
   ::ad::map::restriction::Restrictions value;
-  value = std::move(::ad::map::restriction::Restrictions(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -146,3 +153,7 @@ TEST_F(RestrictionsTests, comparisonOperatorDisjunctionsDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/physics/Duration.hpp"
@@ -149,7 +154,8 @@ TEST(DurationTests, copyConstructionFromValidValue)
 
 TEST(DurationTests, moveConstructionFromValidValue)
 {
-  ::ad::physics::Duration value(std::move(::ad::physics::Duration(::ad::physics::Duration::cMinValue)));
+  ::ad::physics::Duration validValue(::ad::physics::Duration::cMinValue);
+  ::ad::physics::Duration value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::Duration::cMinValue, static_cast<double>(value));
 }
@@ -165,8 +171,9 @@ TEST(DurationTests, assignmentFromValidValue)
 
 TEST(DurationTests, moveAssignmentFromValidValue)
 {
+  ::ad::physics::Duration validValue(::ad::physics::Duration::cMinValue);
   ::ad::physics::Duration value;
-  value = std::move(::ad::physics::Duration(::ad::physics::Duration::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::Duration::cMinValue, static_cast<double>(value));
 }
@@ -215,23 +222,23 @@ TEST(DurationTests, comparisonOperatorsThrowOnInvalid)
   ::ad::physics::Duration const value(::ad::physics::Duration::cMinValue);
   ::ad::physics::Duration const invalidValue;
 
-  EXPECT_THROW(invalidValue == value, std::out_of_range);
-  EXPECT_THROW(value == invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue == value), std::out_of_range);
+  EXPECT_THROW((void)(value == invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue != value, std::out_of_range);
-  EXPECT_THROW(value != invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue != value), std::out_of_range);
+  EXPECT_THROW((void)(value != invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue > value, std::out_of_range);
-  EXPECT_THROW(value > invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue > value), std::out_of_range);
+  EXPECT_THROW((void)(value > invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue < value, std::out_of_range);
-  EXPECT_THROW(value < invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue < value), std::out_of_range);
+  EXPECT_THROW((void)(value < invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue >= value, std::out_of_range);
-  EXPECT_THROW(value >= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue >= value), std::out_of_range);
+  EXPECT_THROW((void)(value >= invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue <= value, std::out_of_range);
-  EXPECT_THROW(value <= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue <= value), std::out_of_range);
+  EXPECT_THROW((void)(value <= invalidValue), std::out_of_range);
 }
 
 TEST(DurationTests, arithmeticOperatorsThrowOnInvalid)
@@ -437,3 +444,7 @@ TEST(DurationTests, arithmeticOperatorsComputeCorrectly)
     // not clear on how to trigger valid result if such small value is not working
   }
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

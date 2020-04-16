@@ -1,10 +1,14 @@
 ## Latest changes
 
+## Release 2.0.3
+#### :ghost: Maintenance
+* Added python interface test execution
+* Fixed test build on Ubuntu18.04
+* Fixed clang-8 and gcc-9 build
+
 ## Release 2.0.2
 #### :ghost: Maintenance
 * Fixed python binding for multiple python version built
-* Added python interface test execution
-* Fixed test built on Ubuntu18.04
 
 ## Release 2.0.1
 #### :ghost: Maintenance

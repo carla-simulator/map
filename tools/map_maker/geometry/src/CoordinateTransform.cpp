@@ -1,13 +1,17 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "ad/map/maker/geometry/CoordinateTransform.hpp"
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
 #include <osmium/geom/mercator_projection.hpp>
+#pragma GCC diagnostic pop
 
 namespace ad {
 namespace map {

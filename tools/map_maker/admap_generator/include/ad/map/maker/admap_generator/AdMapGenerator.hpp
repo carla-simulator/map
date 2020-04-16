@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -32,9 +32,9 @@ class LogFactory;
 
 namespace map_data {
 class MapDataStore;
-class PolyLine;
-class Landmark;
-class Lane;
+struct PolyLine;
+struct Landmark;
+struct Lane;
 } // namespace map_data
 
 namespace admap_generator {

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -112,7 +112,7 @@ geometry::Point2d Intersection::calculateLSQIntersectionPoint() const
   uint32_t const bCols = 1;
 
   // least squares solution of ||b - Ax||
-  uint32_t info = LAPACKE_dgels(LAPACK_ROW_MAJOR, 'N', m, n, bCols, matrixA.data(), m, vectorB.data(), bCols);
+  auto info = LAPACKE_dgels(LAPACK_ROW_MAJOR, 'N', m, n, bCols, matrixA.data(), m, vectorB.data(), bCols);
 
   if (info != 0)
   {
@@ -1213,11 +1213,11 @@ std::set<MapDataId> Intersection::roadsAtConnectionPoint(MapDataId const connect
 
 int32_t Intersection::indexOfArmForConnectionPoint(MapDataId const connectionPoint) const
 {
-  for (int32_t i = 0; i < static_cast<int32_t>(mArms.size()); ++i)
+  for (size_t i = 0u; i < mArms.size(); ++i)
   {
     if (mArms[i].connectionPoint == connectionPoint)
     {
-      return i;
+      return static_cast<int32_t>(i);
     }
   }
   return -1;
@@ -1225,11 +1225,11 @@ int32_t Intersection::indexOfArmForConnectionPoint(MapDataId const connectionPoi
 
 int32_t Intersection::indexOfArmForConnectedRoad(MapDataId const connectedRoadId, bool isEntry) const
 {
-  for (int32_t i = 0; i < static_cast<int32_t>(mArms.size()); ++i)
+  for (size_t i = 0u; i < mArms.size(); ++i)
   {
     if ((mArms[i].connectedRoad == connectedRoadId) && (mArms[i].isEntry == isEntry))
     {
-      return i;
+      return static_cast<int32_t>(i);
     }
   }
   return -1;

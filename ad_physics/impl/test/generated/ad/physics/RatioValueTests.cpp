@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/physics/RatioValue.hpp"
@@ -137,7 +142,8 @@ TEST(RatioValueTests, copyConstructionFromValidValue)
 
 TEST(RatioValueTests, moveConstructionFromValidValue)
 {
-  ::ad::physics::RatioValue value(std::move(::ad::physics::RatioValue(::ad::physics::RatioValue::cMinValue)));
+  ::ad::physics::RatioValue validValue(::ad::physics::RatioValue::cMinValue);
+  ::ad::physics::RatioValue value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::RatioValue::cMinValue, static_cast<double>(value));
 }
@@ -153,8 +159,9 @@ TEST(RatioValueTests, assignmentFromValidValue)
 
 TEST(RatioValueTests, moveAssignmentFromValidValue)
 {
+  ::ad::physics::RatioValue validValue(::ad::physics::RatioValue::cMinValue);
   ::ad::physics::RatioValue value;
-  value = std::move(::ad::physics::RatioValue(::ad::physics::RatioValue::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::RatioValue::cMinValue, static_cast<double>(value));
 }
@@ -203,23 +210,23 @@ TEST(RatioValueTests, comparisonOperatorsThrowOnInvalid)
   ::ad::physics::RatioValue const value(::ad::physics::RatioValue::cMinValue);
   ::ad::physics::RatioValue const invalidValue;
 
-  EXPECT_THROW(invalidValue == value, std::out_of_range);
-  EXPECT_THROW(value == invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue == value), std::out_of_range);
+  EXPECT_THROW((void)(value == invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue != value, std::out_of_range);
-  EXPECT_THROW(value != invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue != value), std::out_of_range);
+  EXPECT_THROW((void)(value != invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue > value, std::out_of_range);
-  EXPECT_THROW(value > invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue > value), std::out_of_range);
+  EXPECT_THROW((void)(value > invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue < value, std::out_of_range);
-  EXPECT_THROW(value < invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue < value), std::out_of_range);
+  EXPECT_THROW((void)(value < invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue >= value, std::out_of_range);
-  EXPECT_THROW(value >= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue >= value), std::out_of_range);
+  EXPECT_THROW((void)(value >= invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue <= value, std::out_of_range);
-  EXPECT_THROW(value <= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue <= value), std::out_of_range);
+  EXPECT_THROW((void)(value <= invalidValue), std::out_of_range);
 }
 
 TEST(RatioValueTests, arithmeticOperatorsThrowOnInvalid)
@@ -417,3 +424,7 @@ TEST(RatioValueTests, arithmeticOperatorsComputeCorrectly)
     // not clear on how to trigger valid result if such small value is not working
   }
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

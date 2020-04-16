@@ -7,11 +7,11 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "ad/map/point/HeadingOperation.hpp"
-#include <ad/map/point/ECEFOperation.hpp>
 
 #include <cmath>
 
 #include "ad/map/access/Operation.hpp"
+#include "ad/map/point/ECEFOperation.hpp"
 #include "ad/map/point/ENUOperation.hpp"
 #include "ad/map/point/Transform.hpp"
 
@@ -106,7 +106,7 @@ ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enuR
 ENUHeading createENUHeading(ENUPoint const &start, ENUPoint const &end)
 {
   ENUPoint const direction = end - start;
-  ENUHeading result{std::atan2(direction.y, direction.x)};
+  ENUHeading result{std::atan2(static_cast<double>(direction.y), static_cast<double>(direction.x))};
   // atan2 seems to allow -M_PI, so normalize that one
   if (result == ENUHeading(-M_PI))
   {

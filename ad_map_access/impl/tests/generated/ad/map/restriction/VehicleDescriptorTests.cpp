@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/restriction/VehicleDescriptor.hpp"
@@ -50,7 +55,8 @@ TEST_F(VehicleDescriptorTests, copyConstruction)
 
 TEST_F(VehicleDescriptorTests, moveConstruction)
 {
-  ::ad::map::restriction::VehicleDescriptor value(std::move(::ad::map::restriction::VehicleDescriptor(mValue)));
+  ::ad::map::restriction::VehicleDescriptor tmpValue(mValue);
+  ::ad::map::restriction::VehicleDescriptor value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -63,8 +69,9 @@ TEST_F(VehicleDescriptorTests, copyAssignment)
 
 TEST_F(VehicleDescriptorTests, moveAssignment)
 {
+  ::ad::map::restriction::VehicleDescriptor tmpValue(mValue);
   ::ad::map::restriction::VehicleDescriptor value;
-  value = std::move(::ad::map::restriction::VehicleDescriptor(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -151,3 +158,7 @@ TEST_F(VehicleDescriptorTests, comparisonOperatorWeightDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

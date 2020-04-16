@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/route/RoadSegment.hpp"
@@ -81,7 +86,8 @@ TEST_F(RoadSegmentTests, copyConstruction)
 
 TEST_F(RoadSegmentTests, moveConstruction)
 {
-  ::ad::map::route::RoadSegment value(std::move(::ad::map::route::RoadSegment(mValue)));
+  ::ad::map::route::RoadSegment tmpValue(mValue);
+  ::ad::map::route::RoadSegment value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -94,8 +100,9 @@ TEST_F(RoadSegmentTests, copyAssignment)
 
 TEST_F(RoadSegmentTests, moveAssignment)
 {
+  ::ad::map::route::RoadSegment tmpValue(mValue);
   ::ad::map::route::RoadSegment value;
-  value = std::move(::ad::map::route::RoadSegment(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -190,3 +197,7 @@ TEST_F(RoadSegmentTests, comparisonOperatorBoundingSphereDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

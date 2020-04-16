@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2017-2019 Intel Corporation
+// Copyright (C) 2017-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -16,7 +16,7 @@ namespace map {
 namespace maker {
 namespace common {
 
-static void printException(std::exception const &e, int level = 0)
+static void printException(std::exception const &e, size_t level = 0)
 {
   std::cerr << std::string(level, '\t') << "Unhandled exception: " << e.what() << std::endl;
   try

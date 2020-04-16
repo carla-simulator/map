@@ -12,6 +12,7 @@
 
 #include "ad/map/lane/LaneOperation.hpp"
 #include "ad/map/route/Route.hpp"
+#include "ad/physics/Operation.hpp"
 
 /* @brief namespace ad */
 namespace ad {

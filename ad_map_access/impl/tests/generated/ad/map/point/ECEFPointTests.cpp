@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/point/ECEFPoint.hpp"
@@ -43,7 +48,8 @@ TEST_F(ECEFPointTests, copyConstruction)
 
 TEST_F(ECEFPointTests, moveConstruction)
 {
-  ::ad::map::point::ECEFPoint value(std::move(::ad::map::point::ECEFPoint(mValue)));
+  ::ad::map::point::ECEFPoint tmpValue(mValue);
+  ::ad::map::point::ECEFPoint value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -56,8 +62,9 @@ TEST_F(ECEFPointTests, copyAssignment)
 
 TEST_F(ECEFPointTests, moveAssignment)
 {
+  ::ad::map::point::ECEFPoint tmpValue(mValue);
   ::ad::map::point::ECEFPoint value;
-  value = std::move(::ad::map::point::ECEFPoint(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -111,3 +118,7 @@ TEST_F(ECEFPointTests, comparisonOperatorZDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

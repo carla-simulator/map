@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -88,13 +88,11 @@ TEST_F(GeoOperationTest, geoPointapproxAltitude)
     const Altitude dh(100.123); // Invented altitude difference.
     // Position of Intel Office
     GeoPoint pt1_geo = createGeoPoint(Longitude(-121.935549), Latitude(37.401336), h);
-    // Position of San Jose Fire Department Station 29
-    GeoPoint pt2_geo = createGeoPoint(Longitude(-121.933886), Latitude(37.401112), h);
     // Position of San Jose Fire Department Station 29 + altitude difference
-    GeoPoint pt3_geo = createGeoPoint(Longitude(-121.933886), Latitude(37.401112), h + dh);
+    GeoPoint pt2_geo = createGeoPoint(Longitude(-121.933886), Latitude(37.401112), h + dh);
 
     GeoEdge edge1_geo;
-    edge1_geo.push_back(pt3_geo);
+    edge1_geo.push_back(pt2_geo);
     GeoPoint ret;
     ret = approxAltitude(pt1_geo, edge1_geo);
     ASSERT_EQ(createGeoPoint(Longitude(-121.935549), Latitude(37.401336), h + dh), ret);

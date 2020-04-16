@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/access/GeometryStoreItem.hpp"
@@ -45,7 +50,8 @@ TEST_F(GeometryStoreItemTests, copyConstruction)
 
 TEST_F(GeometryStoreItemTests, moveConstruction)
 {
-  ::ad::map::access::GeometryStoreItem value(std::move(::ad::map::access::GeometryStoreItem(mValue)));
+  ::ad::map::access::GeometryStoreItem tmpValue(mValue);
+  ::ad::map::access::GeometryStoreItem value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -58,8 +64,9 @@ TEST_F(GeometryStoreItemTests, copyAssignment)
 
 TEST_F(GeometryStoreItemTests, moveAssignment)
 {
+  ::ad::map::access::GeometryStoreItem tmpValue(mValue);
   ::ad::map::access::GeometryStoreItem value;
-  value = std::move(::ad::map::access::GeometryStoreItem(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -124,3 +131,7 @@ TEST_F(GeometryStoreItemTests, comparisonOperatorRightEdgePointsDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

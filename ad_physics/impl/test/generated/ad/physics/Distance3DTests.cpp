@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/physics/Distance3D.hpp"
@@ -43,7 +48,8 @@ TEST_F(Distance3DTests, copyConstruction)
 
 TEST_F(Distance3DTests, moveConstruction)
 {
-  ::ad::physics::Distance3D value(std::move(::ad::physics::Distance3D(mValue)));
+  ::ad::physics::Distance3D tmpValue(mValue);
+  ::ad::physics::Distance3D value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -56,8 +62,9 @@ TEST_F(Distance3DTests, copyAssignment)
 
 TEST_F(Distance3DTests, moveAssignment)
 {
+  ::ad::physics::Distance3D tmpValue(mValue);
   ::ad::physics::Distance3D value;
-  value = std::move(::ad::physics::Distance3D(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -111,3 +118,7 @@ TEST_F(Distance3DTests, comparisonOperatorZDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

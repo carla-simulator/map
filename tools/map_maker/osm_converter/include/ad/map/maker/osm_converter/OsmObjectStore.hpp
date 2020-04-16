@@ -1,17 +1,8 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// INTEL CONFIDENTIAL
+// Copyright (C) 2017-2020 Intel Corporation
 //
-// Copyright (c) 2017-2019 Intel Corporation
-//
-// This software and the related documents are Intel copyrighted materials, and
-// your use of them is governed by the express license under which they were
-// provided to you (License). Unless the License provides otherwise, you may not
-// use, modify, copy, publish, distribute, disclose or transmit this software or
-// the related documents without Intel's prior written permission.
-//
-// This software and the related documents are provided as is, with no express or
-// implied warranties, other than those that are expressly stated in the License.
+// SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
 
@@ -24,6 +15,9 @@
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
+#if defined(__clang__) && (__clang_major__ >= 8)
+#pragma GCC diagnostic ignored "-Wdefaulted-function-deleted"
+#endif
 #include <osmium/io/xml_output.hpp>
 #include <osmium/osm/types.hpp>
 #include <osmium/storage/item_stash.hpp>

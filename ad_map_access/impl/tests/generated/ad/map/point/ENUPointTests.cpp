@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/point/ENUPoint.hpp"
@@ -43,7 +48,8 @@ TEST_F(ENUPointTests, copyConstruction)
 
 TEST_F(ENUPointTests, moveConstruction)
 {
-  ::ad::map::point::ENUPoint value(std::move(::ad::map::point::ENUPoint(mValue)));
+  ::ad::map::point::ENUPoint tmpValue(mValue);
+  ::ad::map::point::ENUPoint value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -56,8 +62,9 @@ TEST_F(ENUPointTests, copyAssignment)
 
 TEST_F(ENUPointTests, moveAssignment)
 {
+  ::ad::map::point::ENUPoint tmpValue(mValue);
   ::ad::map::point::ENUPoint value;
-  value = std::move(::ad::map::point::ENUPoint(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -111,3 +118,7 @@ TEST_F(ENUPointTests, comparisonOperatorZDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

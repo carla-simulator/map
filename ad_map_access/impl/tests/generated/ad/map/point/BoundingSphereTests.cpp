@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/point/BoundingSphere.hpp"
@@ -47,7 +52,8 @@ TEST_F(BoundingSphereTests, copyConstruction)
 
 TEST_F(BoundingSphereTests, moveConstruction)
 {
-  ::ad::map::point::BoundingSphere value(std::move(::ad::map::point::BoundingSphere(mValue)));
+  ::ad::map::point::BoundingSphere tmpValue(mValue);
+  ::ad::map::point::BoundingSphere value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -60,8 +66,9 @@ TEST_F(BoundingSphereTests, copyAssignment)
 
 TEST_F(BoundingSphereTests, moveAssignment)
 {
+  ::ad::map::point::BoundingSphere tmpValue(mValue);
   ::ad::map::point::BoundingSphere value;
-  value = std::move(::ad::map::point::BoundingSphere(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -110,3 +117,7 @@ TEST_F(BoundingSphereTests, comparisonOperatorRadiusDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif
