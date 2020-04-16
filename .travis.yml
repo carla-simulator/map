@@ -50,7 +50,8 @@ env:
 
 script:
   - git submodule update --init
-  - eval ${BUILDCMD}
+  - test "${CC0}" == "" && ${BUILDCMD}
+  - test "${CC0}" != "" && eval CC=${CC0} CXX=${CXX0} ${BUILDCMD}
   - test "${CC1}" != "" && rm -rf log build install && eval CC=${CC1} CXX=${CXX1} ${BUILDCMD}
   - test "${CC2}" != "" && rm -rf log build install && eval CC=${CC2} CXX=${CXX2} ${BUILDCMD}
 
@@ -84,11 +85,17 @@ jobs:
       dist: bionic
       compiler: gcc
       env:
-        EXTRA_PACKAGES="g++-8 g++-9 gcc-9 libstdc++-9-dev"
+        EXTRA_PACKAGES="g++-8"
         CC1=/usr/bin/gcc-8
         CXX1=/usr/bin/g++-8
-        CC2=/usr/bin/gcc-9
-        CXX2=/usr/bin/g++-9
+
+    - name: "Build and Unit Tests GCC-9 (Ubuntu 18.04)"
+      dist: bionic
+      compiler: gcc
+      env:
+        EXTRA_PACKAGES="g++-9"
+        CC0=/usr/bin/gcc-9
+        CXX0=/usr/bin/g++-9
 
     - name: "Build and Unit Tests Clang (Ubuntu 18.04)"
       dist: bionic
