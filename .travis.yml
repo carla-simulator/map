@@ -38,7 +38,7 @@ addons:
       - python3-wheel
 
 before_install:
-  - test "${EXTRA_PACKAGES}" != "" && sudo apt-get -y install ${EXTRA_PACKAGES}
+  - test "${EXTRA_PACKAGES}" != "" && sudo apt-get -f -y install ${EXTRA_PACKAGES}
   - pip3 install --user -U colcon-common-extensions
   - pip3 install --user xmlrunner
   - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner
