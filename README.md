@@ -68,11 +68,11 @@ Development systems are Ubuntu 16.04 and Ubuntu 18.04 supporting the following c
 |:---------------:|:------------:|:------------:|
 |  Clang 5.0      |      x       |              |
 |  Clang 6.0      |              |       x      |
-|  Clang 7        |              |       x      |
+|  Clang 7        |      x       |       x      |
 |  Clang 8        |      x       |       x      |
 |   GCC 5         |      x       |              |
 |   GCC 6         |      x       |              |
-|   GCC 7         |              |       x      |
+|   GCC 7         |      x       |       x      |
 |   GCC 8         |              |       x      |
 |   GCC 9         |              |       x      |
 

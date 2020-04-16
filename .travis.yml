@@ -38,7 +38,7 @@ addons:
       - python3-wheel
 
 before_install:
-  - test "${EXTRA_PACKAGES}" != "" && sudo apt-get -y -qq install ${EXTRA_PACKAGES}
+  - test "${EXTRA_PACKAGES}" != "" && sudo apt-get -y install ${EXTRA_PACKAGES}
   - pip3 install --user -U colcon-common-extensions
   - pip3 install --user xmlrunner
   - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner
@@ -46,7 +46,7 @@ before_install:
 env:
   global:
     GTEST_OUTPUT="xml:test_results"
-    BUILDCMD="colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON && colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics && colcon test-result"
+    BUILDCMD="colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON && colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics && colcon test-result"
 
 script:
   - git submodule update --init
@@ -64,15 +64,19 @@ jobs:
       dist: xenial
       compiler: gcc
       env:
-        EXTRA_PACKAGES="g++-6"
+        EXTRA_PACKAGES="g++-6 g++-7"
         CC1=/usr/bin/gcc-6
         CXX1=/usr/bin/g++-6
+        CC2=/usr/bin/gcc-7
+        CXX2=/usr/bin/g++-7
 
     - name: "Build and Unit Tests Clang (Ubuntu 16.04)"
       dist: xenial
       compiler: clang
       env:
-        EXTRA_PACKAGES="clang-8"
+        EXTRA_PACKAGES="clang-5 clang-8"
+        CC1=/usr/bin/clang-5
+        CXX1=/usr/bin/clang++-5
         CC1=/usr/bin/clang-8
         CXX1=/usr/bin/clang++-8
 
@@ -90,9 +94,9 @@ jobs:
       dist: bionic
       compiler: clang
       env:
-        EXTRA_PACKAGES="clang-7 clang-8"
-        CC1=/usr/bin/clang-7
-        CXX1=/usr/bin/clang++-7
+        EXTRA_PACKAGES="clang-6 clang-8"
+        CC1=/usr/bin/clang-6
+        CXX1=/usr/bin/clang++-6
         CC2=/usr/bin/clang-8
         CXX2=/usr/bin/clang++-8
 
