@@ -106,7 +106,7 @@ jobs:
         apt:
           packages:
             - clang-format-3.9
-      before_instal:
+      before_install:
       script:
         - res=`find -iname *.cpp -o -iname *.hpp | xargs clang-format-3.9 -output-replacements-xml | grep -c "<replacement "`; if [ $res -ne 0 ]; then echo "Your code does not comply to clang-format"; exit 1; fi
       after_failure:
@@ -127,7 +127,7 @@ jobs:
         - bash .github/.travis/code_coverage.sh
         - bash .github/.travis/deploy.sh false
 
-   - name: "Documentation Deployment"
+    - name: "Documentation Deployment"
       if: branch = master AND type != pull_request
       git:
         depth: false
