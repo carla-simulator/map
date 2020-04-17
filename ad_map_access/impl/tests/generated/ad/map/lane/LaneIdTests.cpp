@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/lane/LaneId.hpp"
@@ -74,7 +79,8 @@ TEST(LaneIdTests, copyConstructionFromValidValue)
 
 TEST(LaneIdTests, moveConstructionFromValidValue)
 {
-  ::ad::map::lane::LaneId value(std::move(::ad::map::lane::LaneId(::ad::map::lane::LaneId::cMinValue)));
+  ::ad::map::lane::LaneId validValue(::ad::map::lane::LaneId::cMinValue);
+  ::ad::map::lane::LaneId value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_EQ(::ad::map::lane::LaneId::cMinValue, static_cast<uint64_t>(value));
 }
@@ -90,8 +96,9 @@ TEST(LaneIdTests, assignmentFromValidValue)
 
 TEST(LaneIdTests, moveAssignmentFromValidValue)
 {
+  ::ad::map::lane::LaneId validValue(::ad::map::lane::LaneId::cMinValue);
   ::ad::map::lane::LaneId value;
-  value = std::move(::ad::map::lane::LaneId(::ad::map::lane::LaneId::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_EQ(::ad::map::lane::LaneId::cMinValue, static_cast<uint64_t>(value));
 }
@@ -142,3 +149,7 @@ TEST(LaneIdTests, arithmeticOperators)
   result -= minValue;
   ASSERT_EQ(static_cast<uint64_t>(result), ::ad::map::lane::LaneId::cMaxValue - ::ad::map::lane::LaneId::cMinValue);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/physics/AccelerationRange.hpp"
@@ -43,7 +48,8 @@ TEST_F(AccelerationRangeTests, copyConstruction)
 
 TEST_F(AccelerationRangeTests, moveConstruction)
 {
-  ::ad::physics::AccelerationRange value(std::move(::ad::physics::AccelerationRange(mValue)));
+  ::ad::physics::AccelerationRange tmpValue(mValue);
+  ::ad::physics::AccelerationRange value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -56,8 +62,9 @@ TEST_F(AccelerationRangeTests, copyAssignment)
 
 TEST_F(AccelerationRangeTests, moveAssignment)
 {
+  ::ad::physics::AccelerationRange tmpValue(mValue);
   ::ad::physics::AccelerationRange value;
-  value = std::move(::ad::physics::AccelerationRange(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -100,3 +107,7 @@ TEST_F(AccelerationRangeTests, comparisonOperatorMaximumDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/match/Object.hpp"
@@ -168,7 +173,8 @@ TEST_F(ObjectTests, copyConstruction)
 
 TEST_F(ObjectTests, moveConstruction)
 {
-  ::ad::map::match::Object value(std::move(::ad::map::match::Object(mValue)));
+  ::ad::map::match::Object tmpValue(mValue);
+  ::ad::map::match::Object value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -181,8 +187,9 @@ TEST_F(ObjectTests, copyAssignment)
 
 TEST_F(ObjectTests, moveAssignment)
 {
+  ::ad::map::match::Object tmpValue(mValue);
   ::ad::map::match::Object value;
-  value = std::move(::ad::map::match::Object(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -346,3 +353,7 @@ TEST_F(ObjectTests, comparisonOperatorMapMatchedBoundingBoxDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

@@ -1,17 +1,8 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// INTEL CONFIDENTIAL
+// Copyright (C) 2017-2020 Intel Corporation
 //
-// Copyright (c) 2017-2019 Intel Corporation
-//
-// This software and the related documents are Intel copyrighted materials, and
-// your use of them is governed by the express license under which they were
-// provided to you (License). Unless the License provides otherwise, you may not
-// use, modify, copy, publish, distribute, disclose or transmit this software or
-// the related documents without Intel's prior written permission.
-//
-// This software and the related documents are provided as is, with no express or
-// implied warranties, other than those that are expressly stated in the License.
+// SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
 
@@ -59,8 +50,8 @@ template <> struct hash<::ad::map::maker::osm_converter::OsmJunctionArm>
     // replicate boost hash, see
     // https://stackoverflow.com/questions/5889238/why-is-xor-the-default-way-to-combine-hashes#comment54810251_27952689
     std::size_t const hash = 0x9E3779B97F4A7C15;
-    std::size_t lhs = t.mArmId;
-    std::size_t rhs = t.mCenterId;
+    std::size_t lhs = static_cast<std::size_t>(t.mArmId);
+    std::size_t rhs = static_cast<std::size_t>(t.mCenterId);
     lhs ^= rhs + hash + (lhs << 6) + (lhs >> 2);
     return lhs;
   }

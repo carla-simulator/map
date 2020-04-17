@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/point/ENUHeading.hpp"
@@ -141,7 +146,8 @@ TEST(ENUHeadingTests, copyConstructionFromValidValue)
 
 TEST(ENUHeadingTests, moveConstructionFromValidValue)
 {
-  ::ad::map::point::ENUHeading value(std::move(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMinValue)));
+  ::ad::map::point::ENUHeading validValue(::ad::map::point::ENUHeading::cMinValue);
+  ::ad::map::point::ENUHeading value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cMinValue, static_cast<double>(value));
 }
@@ -157,8 +163,9 @@ TEST(ENUHeadingTests, assignmentFromValidValue)
 
 TEST(ENUHeadingTests, moveAssignmentFromValidValue)
 {
+  ::ad::map::point::ENUHeading validValue(::ad::map::point::ENUHeading::cMinValue);
   ::ad::map::point::ENUHeading value;
-  value = std::move(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cMinValue, static_cast<double>(value));
 }
@@ -207,23 +214,23 @@ TEST(ENUHeadingTests, comparisonOperatorsThrowOnInvalid)
   ::ad::map::point::ENUHeading const value(::ad::map::point::ENUHeading::cMinValue);
   ::ad::map::point::ENUHeading const invalidValue;
 
-  EXPECT_THROW(invalidValue == value, std::out_of_range);
-  EXPECT_THROW(value == invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue == value), std::out_of_range);
+  EXPECT_THROW((void)(value == invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue != value, std::out_of_range);
-  EXPECT_THROW(value != invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue != value), std::out_of_range);
+  EXPECT_THROW((void)(value != invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue > value, std::out_of_range);
-  EXPECT_THROW(value > invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue > value), std::out_of_range);
+  EXPECT_THROW((void)(value > invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue < value, std::out_of_range);
-  EXPECT_THROW(value < invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue < value), std::out_of_range);
+  EXPECT_THROW((void)(value < invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue >= value, std::out_of_range);
-  EXPECT_THROW(value >= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue >= value), std::out_of_range);
+  EXPECT_THROW((void)(value >= invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue <= value, std::out_of_range);
-  EXPECT_THROW(value <= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue <= value), std::out_of_range);
+  EXPECT_THROW((void)(value <= invalidValue), std::out_of_range);
 }
 
 TEST(ENUHeadingTests, arithmeticOperatorsThrowOnInvalid)
@@ -421,3 +428,7 @@ TEST(ENUHeadingTests, arithmeticOperatorsComputeCorrectly)
     // not clear on how to trigger valid result if such small value is not working
   }
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

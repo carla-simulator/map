@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/route/RouteParaPoint.hpp"
@@ -45,7 +50,8 @@ TEST_F(RouteParaPointTests, copyConstruction)
 
 TEST_F(RouteParaPointTests, moveConstruction)
 {
-  ::ad::map::route::RouteParaPoint value(std::move(::ad::map::route::RouteParaPoint(mValue)));
+  ::ad::map::route::RouteParaPoint tmpValue(mValue);
+  ::ad::map::route::RouteParaPoint value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -58,8 +64,9 @@ TEST_F(RouteParaPointTests, copyAssignment)
 
 TEST_F(RouteParaPointTests, moveAssignment)
 {
+  ::ad::map::route::RouteParaPoint tmpValue(mValue);
   ::ad::map::route::RouteParaPoint value;
-  value = std::move(::ad::map::route::RouteParaPoint(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -115,3 +122,7 @@ TEST_F(RouteParaPointTests, comparisonOperatorParametricOffsetDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

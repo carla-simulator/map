@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/route/LaneInterval.hpp"
@@ -45,7 +50,8 @@ TEST_F(LaneIntervalTests, copyConstruction)
 
 TEST_F(LaneIntervalTests, moveConstruction)
 {
-  ::ad::map::route::LaneInterval value(std::move(::ad::map::route::LaneInterval(mValue)));
+  ::ad::map::route::LaneInterval tmpValue(mValue);
+  ::ad::map::route::LaneInterval value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -58,8 +64,9 @@ TEST_F(LaneIntervalTests, copyAssignment)
 
 TEST_F(LaneIntervalTests, moveAssignment)
 {
+  ::ad::map::route::LaneInterval tmpValue(mValue);
   ::ad::map::route::LaneInterval value;
-  value = std::move(::ad::map::route::LaneInterval(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -124,3 +131,7 @@ TEST_F(LaneIntervalTests, comparisonOperatorWrongWayDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

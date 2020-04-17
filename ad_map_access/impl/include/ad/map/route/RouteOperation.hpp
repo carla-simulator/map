@@ -228,6 +228,11 @@ struct FindWaypointResult
   {
   }
 
+  /**
+   * @brief copy constructor
+   */
+  FindWaypointResult(FindWaypointResult const &other) = default;
+
   /** @brief reference to the route */
   FullRoute const &queryRoute;
   /** @brief iterator referencing an element of the queryRoute */

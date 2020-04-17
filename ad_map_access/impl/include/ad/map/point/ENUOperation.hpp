@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -10,7 +10,6 @@
 
 #include "ad/map/point/ENUEdgeValidInputRange.hpp"
 #include "ad/map/point/ENUPointValidInputRange.hpp"
-#include "ad/map/point/EdgeOperation.hpp"
 #include "ad/map/point/PointOperation.hpp"
 
 namespace ad {
@@ -135,50 +134,6 @@ physics::Distance calcLength(ENUEdge const &edge);
 inline double operator*(::ad::map::point::ENUPoint const &a, ::ad::map::point::ENUPoint const &b)
 {
   return ::ad::map::point::vectorDotProduct(a, b);
-}
-
-/**
- * @brief multiplies a ENUCoordinate with a scalar
- * @param[in] a coordinate a
- * @param[in] b scalar b
- */
-inline ::ad::map::point::ENUCoordinate operator*(::ad::map::point::ENUCoordinate const &a,
-                                                 ::ad::physics::Distance const &b)
-{
-  return ::ad::map::point::ENUCoordinate(static_cast<double>(a) * static_cast<double>(b));
-}
-
-/**
- * @brief multiplies a ENUCoordinate with a scalar
- * @param[in] b scalar b
- * @param[in] a coordinate a
- */
-inline ::ad::map::point::ENUCoordinate operator*(::ad::physics::Distance const &b,
-                                                 ::ad::map::point::ENUCoordinate const &a)
-{
-  return ::ad::map::point::ENUCoordinate(static_cast<double>(a) * static_cast<double>(b));
-}
-
-/**
- * @brief division of a ECEFCoordinate by a scalar
- * @param[in] a coordinate a
- * @param[in] b scalar b
- */
-inline ::ad::map::point::ENUCoordinate operator/(::ad::map::point::ENUCoordinate const &a,
-                                                 ::ad::physics::Distance const &b)
-{
-  return a / static_cast<double>(b);
-}
-
-/**
- * @brief multiplies ENUCoordinate
- * @param[in] a coordinate a
- * @param[in] b coordinate b
- */
-inline ::ad::map::point::ENUCoordinate operator*(::ad::map::point::ENUCoordinate const &a,
-                                                 ::ad::map::point::ENUCoordinate const &b)
-{
-  return ::ad::map::point::ENUCoordinate(static_cast<double>(a) * static_cast<double>(b));
 }
 
 /**

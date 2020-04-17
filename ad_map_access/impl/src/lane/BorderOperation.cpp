@@ -10,8 +10,7 @@
 #include <algorithm>
 #include "LaneOperationPrivate.hpp"
 #include "ad/map/access/Logging.hpp"
-#include "ad/map/point/HeadingOperation.hpp"
-#include "ad/map/point/Transform.hpp"
+#include "ad/map/point/Operation.hpp"
 
 namespace ad {
 namespace map {

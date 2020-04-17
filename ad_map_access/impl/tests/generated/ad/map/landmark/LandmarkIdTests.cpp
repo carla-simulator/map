@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/landmark/LandmarkId.hpp"
@@ -74,8 +79,8 @@ TEST(LandmarkIdTests, copyConstructionFromValidValue)
 
 TEST(LandmarkIdTests, moveConstructionFromValidValue)
 {
-  ::ad::map::landmark::LandmarkId value(
-    std::move(::ad::map::landmark::LandmarkId(::ad::map::landmark::LandmarkId::cMinValue)));
+  ::ad::map::landmark::LandmarkId validValue(::ad::map::landmark::LandmarkId::cMinValue);
+  ::ad::map::landmark::LandmarkId value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_EQ(::ad::map::landmark::LandmarkId::cMinValue, static_cast<uint64_t>(value));
 }
@@ -91,8 +96,9 @@ TEST(LandmarkIdTests, assignmentFromValidValue)
 
 TEST(LandmarkIdTests, moveAssignmentFromValidValue)
 {
+  ::ad::map::landmark::LandmarkId validValue(::ad::map::landmark::LandmarkId::cMinValue);
   ::ad::map::landmark::LandmarkId value;
-  value = std::move(::ad::map::landmark::LandmarkId(::ad::map::landmark::LandmarkId::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_EQ(::ad::map::landmark::LandmarkId::cMinValue, static_cast<uint64_t>(value));
 }
@@ -145,3 +151,7 @@ TEST(LandmarkIdTests, arithmeticOperators)
   ASSERT_EQ(static_cast<uint64_t>(result),
             ::ad::map::landmark::LandmarkId::cMaxValue - ::ad::map::landmark::LandmarkId::cMinValue);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

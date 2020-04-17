@@ -7,123 +7,104 @@
 ##
 
 language: cpp
-compiler: gcc
-
-os: linux
 dist: xenial
-sudo: false
+os: linux
 
-matrix:
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - build-essential
+      - castxml
+      - cmake
+      - doxygen
+      - graphviz
+      - lcov
+      - libboost-all-dev
+      - libgtest-dev
+      - liblapacke-dev
+      - libopenblas-dev
+      - libproj-dev
+      - libpugixml-dev
+      - libpython3-dev
+      - python
+      - python-setuptools
+      - python-pip
+      - python-wheel
+      - python3
+      - python3-setuptools
+      - python3-pip
+      - python3-wheel
+
+before_install:
+  - test "${EXTRA_PACKAGES}" != "" && sudo apt-get -f -y install ${EXTRA_PACKAGES}
+  - pip3 install --user -U colcon-common-extensions
+  - pip3 install --user xmlrunner
+  - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner
+
+env:
+  global:
+    GTEST_OUTPUT="xml:test_results"
+    BUILDCMD="colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON && colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics && colcon test-result"
+
+script:
+  - git submodule update --init
+  - if [ "${CC0}" == "" ]; then eval ${BUILDCMD}; else eval CC=${CC0} CXX=${CXX0} ${BUILDCMD}; fi
+  - if [ "${CC1}" != "" ]; then rm -rf log build install && eval CC=${CC1} CXX=${CXX1} ${BUILDCMD}; fi
+
+after_failure:
+   - tail --lines=2000 log/latest_build/events.log
+   - tail --lines=2000 log/latest_test/events.log
+
+jobs:
   include:
-
-    - env: TEST="Build and Unit Tests (Ubuntu 16.04)"
+    - name: "Build and Unit Tests gcc-5, gcc-6 (Ubuntu 16.04)"
       dist: xenial
-      addons:
-        apt:
-          packages:
-            - build-essential
-            - castxml
-            - cmake
-            - doxygen
-            - graphviz
-            - lcov
-            - libboost-all-dev
-            - libgtest-dev
-            - liblapacke-dev
-            - libopenblas-dev
-            - libproj-dev
-            - libpugixml-dev
-            - libpython3-dev
-            - python
-            - python-setuptools
-            - python-pip
-            - python-wheel
-            - python3
-            - python3-setuptools
-            - python3-pip
-            - python3-wheel
-      before_install:
-        - pip3 install --user -U colcon-common-extensions
-        - pip3 install --user xmlrunner
-        - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner
-      script:
-        - git submodule update --init
-        - colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON
-        - export GTEST_OUTPUT='xml:test_results'
-        - colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics
-        - colcon test-result
-      after_failure:
-        - tail --lines=2000 log/latest_build/events.log
-        - tail --lines=2000 log/latest_test/events.log
+      compiler: gcc
+      env:
+        EXTRA_PACKAGES="g++-6"
+        CC1=/usr/bin/gcc-6
+        CXX1=/usr/bin/g++-6
 
-    - env: TEST="Build and Unit Tests (Ubuntu 18.04)"
+    - name: "Build and Unit Tests clang-5.0, clang-6.0 (Ubuntu 16.04)"
+      dist: xenial
+      compiler: clang
+      env:
+        EXTRA_PACKAGES="clang-5.0 clang-6.0"
+        CC0=/usr/bin/clang-5.0
+        CXX0=/usr/bin/clang++-5.0
+        CC1=/usr/bin/clang-6.0
+        CXX1=/usr/bin/clang++-6.0
+
+    - name: "Build and Unit Tests gcc-7, gcc-8 (Ubuntu 18.04)"
       dist: bionic
-      addons:
-        apt:
-          packages:
-            - build-essential
-            - castxml
-            - cmake
-            - doxygen
-            - graphviz
-            - lcov
-            - libboost-all-dev
-            - libgtest-dev
-            - liblapacke-dev
-            - libopenblas-dev
-            - libproj-dev
-            - libpugixml-dev
-            - libpython3-dev
-            - python
-            - python-setuptools
-            - python-pip
-            - python-wheel
-            - python3
-            - python3-setuptools
-            - python3-pip
-            - python3-wheel
-      before_install:
-        - pip3 install --user -U colcon-common-extensions
-        - pip3 install --user xmlrunner
-        - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner
-      script:
-        - git submodule update --init
-        - colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_APIDOC=ON -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_PYTHON_BINDING=ON
-        - export GTEST_OUTPUT='xml:test_results'
-        - colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics
-        - colcon test-result
-      after_failure:
-        - tail --lines=2000 log/latest_build/events.log
-        - tail --lines=2000 log/latest_test/events.log
+      compiler: gcc
+      env:
+        EXTRA_PACKAGES="g++-8"
+        CC1=/usr/bin/gcc-8
+        CXX1=/usr/bin/g++-8
 
-    - env: TEST="Documentation Deployment"
+    - name: "Build and Unit Tests gcc-9 (Ubuntu 18.04)"
+      dist: bionic
+      compiler: gcc
+      env:
+        EXTRA_PACKAGES="g++-9 gcc-9 libstdc++-9-dev"
+        CC0=/usr/bin/gcc-9
+        CXX0=/usr/bin/g++-9
+
+    - name: "Build and Unit Tests clang-7, clang-8 (Ubuntu 18.04)"
+      dist: bionic
+      compiler: clang
+      env:
+        EXTRA_PACKAGES="clang-8"
+        CC1=/usr/bin/clang-8
+        CXX1=/usr/bin/clang++-8
+
+    - name: "Documentation Deployment"
       if: branch = master AND type != pull_request
       git:
         depth: false
-      addons:
-        apt:
-          packages:
-            - cmake
-            - build-essential
-            - libpugixml-dev
-            - libproj-dev
-            - doxygen
-            - graphviz
-            - git
-            - python3
-            - python3-pip
-            - libpython3-dev
-            - libboost-all-dev
-            - libgtest-dev
-            - libopenblas-dev
-            - liblapacke-dev
-      before_install:
-        - pip3 install setuptools
-      before_script:
-        - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-        - sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
-        - sudo apt-get update
-        - sudo apt-get install python3-colcon-common-extensions
       script:
         - git submodule update --init
         - colcon build --cmake-args -DBUILD_APIDOC=ON

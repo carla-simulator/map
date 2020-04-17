@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/route/ConnectingRoute.hpp"
@@ -201,7 +206,8 @@ TEST_F(ConnectingRouteTests, copyConstruction)
 
 TEST_F(ConnectingRouteTests, moveConstruction)
 {
-  ::ad::map::route::ConnectingRoute value(std::move(::ad::map::route::ConnectingRoute(mValue)));
+  ::ad::map::route::ConnectingRoute tmpValue(mValue);
+  ::ad::map::route::ConnectingRoute value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -214,8 +220,9 @@ TEST_F(ConnectingRouteTests, copyAssignment)
 
 TEST_F(ConnectingRouteTests, moveAssignment)
 {
+  ::ad::map::route::ConnectingRoute tmpValue(mValue);
   ::ad::map::route::ConnectingRoute value;
-  value = std::move(::ad::map::route::ConnectingRoute(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -429,3 +436,7 @@ TEST_F(ConnectingRouteTests, comparisonOperatorRouteBDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

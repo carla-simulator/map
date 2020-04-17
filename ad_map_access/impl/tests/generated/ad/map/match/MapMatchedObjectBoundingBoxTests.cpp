@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/match/MapMatchedObjectBoundingBox.hpp"
@@ -107,7 +112,8 @@ TEST_F(MapMatchedObjectBoundingBoxTests, copyConstruction)
 
 TEST_F(MapMatchedObjectBoundingBoxTests, moveConstruction)
 {
-  ::ad::map::match::MapMatchedObjectBoundingBox value(std::move(::ad::map::match::MapMatchedObjectBoundingBox(mValue)));
+  ::ad::map::match::MapMatchedObjectBoundingBox tmpValue(mValue);
+  ::ad::map::match::MapMatchedObjectBoundingBox value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -120,8 +126,9 @@ TEST_F(MapMatchedObjectBoundingBoxTests, copyAssignment)
 
 TEST_F(MapMatchedObjectBoundingBoxTests, moveAssignment)
 {
+  ::ad::map::match::MapMatchedObjectBoundingBox tmpValue(mValue);
   ::ad::map::match::MapMatchedObjectBoundingBox value;
-  value = std::move(::ad::map::match::MapMatchedObjectBoundingBox(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -173,3 +180,7 @@ TEST_F(MapMatchedObjectBoundingBoxTests, comparisonOperatorLaneOccupiedRegionsDi
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

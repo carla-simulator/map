@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -96,7 +96,7 @@ void setupMatrix(const std::vector<Point2d> &points, std::vector<double> &matrix
  * @param[in,out] solution (x) as output, and b as input
  * @return true on success, false on failure
  */
-bool solveLinearSystem(const int32_t size, double *matrix, double *solution)
+bool solveLinearSystem(const size_t size, double *matrix, double *solution)
 {
   if ((matrix == nullptr) || (solution == nullptr))
   {
@@ -233,7 +233,7 @@ bool CubicSpline::interpolate(bool linearAlongXAxis)
 
   std::vector<double> coefficients(rhs);
 
-  if (!solveLinearSystem(static_cast<int32_t>(coefficients.size()), &matrix[0], &coefficients[0]))
+  if (!solveLinearSystem(coefficients.size(), &matrix[0], &coefficients[0]))
   {
     return false;
   }

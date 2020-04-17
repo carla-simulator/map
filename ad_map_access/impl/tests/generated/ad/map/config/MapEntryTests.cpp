@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/config/MapEntry.hpp"
@@ -47,7 +52,8 @@ TEST_F(MapEntryTests, copyConstruction)
 
 TEST_F(MapEntryTests, moveConstruction)
 {
-  ::ad::map::config::MapEntry value(std::move(::ad::map::config::MapEntry(mValue)));
+  ::ad::map::config::MapEntry tmpValue(mValue);
+  ::ad::map::config::MapEntry value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -60,8 +66,9 @@ TEST_F(MapEntryTests, copyAssignment)
 
 TEST_F(MapEntryTests, moveAssignment)
 {
+  ::ad::map::config::MapEntry tmpValue(mValue);
   ::ad::map::config::MapEntry value;
-  value = std::move(::ad::map::config::MapEntry(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -128,3 +135,7 @@ TEST_F(MapEntryTests, comparisonOperatorOpenDriveDefaultTrafficLightTypeDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

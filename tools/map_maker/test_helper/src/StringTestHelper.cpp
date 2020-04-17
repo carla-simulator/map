@@ -180,7 +180,7 @@ bool readFile(char const *fileName, std::string &fileContent)
     return false;
   }
 
-  size_t fileSize = ftell(input);
+  size_t fileSize = static_cast<size_t>(ftell(input));
   rewind(input);
 
   char *content = new char[fileSize + 1];

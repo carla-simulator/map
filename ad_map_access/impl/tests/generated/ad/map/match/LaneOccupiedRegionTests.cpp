@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/match/LaneOccupiedRegion.hpp"
@@ -55,7 +60,8 @@ TEST_F(LaneOccupiedRegionTests, copyConstruction)
 
 TEST_F(LaneOccupiedRegionTests, moveConstruction)
 {
-  ::ad::map::match::LaneOccupiedRegion value(std::move(::ad::map::match::LaneOccupiedRegion(mValue)));
+  ::ad::map::match::LaneOccupiedRegion tmpValue(mValue);
+  ::ad::map::match::LaneOccupiedRegion value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -68,8 +74,9 @@ TEST_F(LaneOccupiedRegionTests, copyAssignment)
 
 TEST_F(LaneOccupiedRegionTests, moveAssignment)
 {
+  ::ad::map::match::LaneOccupiedRegion tmpValue(mValue);
   ::ad::map::match::LaneOccupiedRegion value;
-  value = std::move(::ad::map::match::LaneOccupiedRegion(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -135,3 +142,7 @@ TEST_F(LaneOccupiedRegionTests, comparisonOperatorLateralRangeDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

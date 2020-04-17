@@ -1,3 +1,10 @@
+# ----------------- BEGIN LICENSE BLOCK ---------------------------------
+#
+# Copyright (C) 2017-2020 Intel Corporation
+#
+# SPDX-License-Identifier: MIT
+#
+# ----------------- END LICENSE BLOCK -----------------------------------
 cmake_minimum_required(VERSION 3.5)
 
 project(libosmium-download NONE)

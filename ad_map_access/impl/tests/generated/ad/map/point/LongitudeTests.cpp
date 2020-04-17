@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/point/Longitude.hpp"
@@ -139,7 +144,8 @@ TEST(LongitudeTests, copyConstructionFromValidValue)
 
 TEST(LongitudeTests, moveConstructionFromValidValue)
 {
-  ::ad::map::point::Longitude value(std::move(::ad::map::point::Longitude(::ad::map::point::Longitude::cMinValue)));
+  ::ad::map::point::Longitude validValue(::ad::map::point::Longitude::cMinValue);
+  ::ad::map::point::Longitude value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMinValue, static_cast<double>(value));
 }
@@ -155,8 +161,9 @@ TEST(LongitudeTests, assignmentFromValidValue)
 
 TEST(LongitudeTests, moveAssignmentFromValidValue)
 {
+  ::ad::map::point::Longitude validValue(::ad::map::point::Longitude::cMinValue);
   ::ad::map::point::Longitude value;
-  value = std::move(::ad::map::point::Longitude(::ad::map::point::Longitude::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMinValue, static_cast<double>(value));
 }
@@ -205,23 +212,23 @@ TEST(LongitudeTests, comparisonOperatorsThrowOnInvalid)
   ::ad::map::point::Longitude const value(::ad::map::point::Longitude::cMinValue);
   ::ad::map::point::Longitude const invalidValue;
 
-  EXPECT_THROW(invalidValue == value, std::out_of_range);
-  EXPECT_THROW(value == invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue == value), std::out_of_range);
+  EXPECT_THROW((void)(value == invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue != value, std::out_of_range);
-  EXPECT_THROW(value != invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue != value), std::out_of_range);
+  EXPECT_THROW((void)(value != invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue > value, std::out_of_range);
-  EXPECT_THROW(value > invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue > value), std::out_of_range);
+  EXPECT_THROW((void)(value > invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue < value, std::out_of_range);
-  EXPECT_THROW(value < invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue < value), std::out_of_range);
+  EXPECT_THROW((void)(value < invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue >= value, std::out_of_range);
-  EXPECT_THROW(value >= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue >= value), std::out_of_range);
+  EXPECT_THROW((void)(value >= invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue <= value, std::out_of_range);
-  EXPECT_THROW(value <= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue <= value), std::out_of_range);
+  EXPECT_THROW((void)(value <= invalidValue), std::out_of_range);
 }
 
 TEST(LongitudeTests, arithmeticOperatorsThrowOnInvalid)
@@ -419,3 +426,7 @@ TEST(LongitudeTests, arithmeticOperatorsComputeCorrectly)
     // not clear on how to trigger valid result if such small value is not working
   }
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

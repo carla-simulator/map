@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/point/GeoPoint.hpp"
@@ -43,7 +48,8 @@ TEST_F(GeoPointTests, copyConstruction)
 
 TEST_F(GeoPointTests, moveConstruction)
 {
-  ::ad::map::point::GeoPoint value(std::move(::ad::map::point::GeoPoint(mValue)));
+  ::ad::map::point::GeoPoint tmpValue(mValue);
+  ::ad::map::point::GeoPoint value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -56,8 +62,9 @@ TEST_F(GeoPointTests, copyAssignment)
 
 TEST_F(GeoPointTests, moveAssignment)
 {
+  ::ad::map::point::GeoPoint tmpValue(mValue);
   ::ad::map::point::GeoPoint value;
-  value = std::move(::ad::map::point::GeoPoint(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -111,3 +118,7 @@ TEST_F(GeoPointTests, comparisonOperatorAltitudeDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

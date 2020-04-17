@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/access/MapMetaData.hpp"
@@ -39,7 +44,8 @@ TEST_F(MapMetaDataTests, copyConstruction)
 
 TEST_F(MapMetaDataTests, moveConstruction)
 {
-  ::ad::map::access::MapMetaData value(std::move(::ad::map::access::MapMetaData(mValue)));
+  ::ad::map::access::MapMetaData tmpValue(mValue);
+  ::ad::map::access::MapMetaData value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -52,8 +58,9 @@ TEST_F(MapMetaDataTests, copyAssignment)
 
 TEST_F(MapMetaDataTests, moveAssignment)
 {
+  ::ad::map::access::MapMetaData tmpValue(mValue);
   ::ad::map::access::MapMetaData value;
-  value = std::move(::ad::map::access::MapMetaData(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -85,3 +92,7 @@ TEST_F(MapMetaDataTests, comparisonOperatorTrafficTypeDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

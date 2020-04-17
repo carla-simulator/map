@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/config/PointOfInterest.hpp"
@@ -47,7 +52,8 @@ TEST_F(PointOfInterestTests, copyConstruction)
 
 TEST_F(PointOfInterestTests, moveConstruction)
 {
-  ::ad::map::config::PointOfInterest value(std::move(::ad::map::config::PointOfInterest(mValue)));
+  ::ad::map::config::PointOfInterest tmpValue(mValue);
+  ::ad::map::config::PointOfInterest value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -60,8 +66,9 @@ TEST_F(PointOfInterestTests, copyAssignment)
 
 TEST_F(PointOfInterestTests, moveAssignment)
 {
+  ::ad::map::config::PointOfInterest tmpValue(mValue);
   ::ad::map::config::PointOfInterest value;
-  value = std::move(::ad::map::config::PointOfInterest(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -110,3 +117,7 @@ TEST_F(PointOfInterestTests, comparisonOperatorNameDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

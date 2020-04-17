@@ -244,7 +244,7 @@ bool AdMapFactory::addSpecialContact(::opendrive::Lane const &lane,
     return false;
   }
 
-  auto const contacts = lane::ContactTypeList{{contact}};
+  auto const contacts = lane::ContactTypeList{contact};
   auto const restrictions = createRoadRestrictions(); // to do generate restrictions from traffic signs
   auto const &laneContacts = (location == lane::ContactLocation::SUCCESSOR) ? lane.successors : lane.predecessors;
 

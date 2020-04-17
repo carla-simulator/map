@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/lane/ECEFBorder.hpp"
@@ -57,7 +62,8 @@ TEST_F(ECEFBorderTests, copyConstruction)
 
 TEST_F(ECEFBorderTests, moveConstruction)
 {
-  ::ad::map::lane::ECEFBorder value(std::move(::ad::map::lane::ECEFBorder(mValue)));
+  ::ad::map::lane::ECEFBorder tmpValue(mValue);
+  ::ad::map::lane::ECEFBorder value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -70,8 +76,9 @@ TEST_F(ECEFBorderTests, copyAssignment)
 
 TEST_F(ECEFBorderTests, moveAssignment)
 {
+  ::ad::map::lane::ECEFBorder tmpValue(mValue);
   ::ad::map::lane::ECEFBorder value;
-  value = std::move(::ad::map::lane::ECEFBorder(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -130,3 +137,7 @@ TEST_F(ECEFBorderTests, comparisonOperatorRightDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

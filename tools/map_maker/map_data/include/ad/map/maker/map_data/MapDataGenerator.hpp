@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -15,7 +15,7 @@ namespace map {
 namespace maker {
 namespace common {
 struct MapGenerationConfig;
-class LogChannel;
+struct LogChannel;
 class LogFactory;
 } // namespace common
 

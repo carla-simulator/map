@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/landmark/Landmark.hpp"
@@ -95,7 +100,8 @@ TEST_F(LandmarkTests, copyConstruction)
 
 TEST_F(LandmarkTests, moveConstruction)
 {
-  ::ad::map::landmark::Landmark value(std::move(::ad::map::landmark::Landmark(mValue)));
+  ::ad::map::landmark::Landmark tmpValue(mValue);
+  ::ad::map::landmark::Landmark value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -108,8 +114,9 @@ TEST_F(LandmarkTests, copyAssignment)
 
 TEST_F(LandmarkTests, moveAssignment)
 {
+  ::ad::map::landmark::Landmark tmpValue(mValue);
   ::ad::map::landmark::Landmark value;
-  value = std::move(::ad::map::landmark::Landmark(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -261,3 +268,7 @@ TEST_F(LandmarkTests, comparisonOperatorTrafficSignTypeDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

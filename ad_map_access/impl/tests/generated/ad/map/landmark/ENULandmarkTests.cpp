@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/landmark/ENULandmark.hpp"
@@ -53,7 +58,8 @@ TEST_F(ENULandmarkTests, copyConstruction)
 
 TEST_F(ENULandmarkTests, moveConstruction)
 {
-  ::ad::map::landmark::ENULandmark value(std::move(::ad::map::landmark::ENULandmark(mValue)));
+  ::ad::map::landmark::ENULandmark tmpValue(mValue);
+  ::ad::map::landmark::ENULandmark value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -66,8 +72,9 @@ TEST_F(ENULandmarkTests, copyAssignment)
 
 TEST_F(ENULandmarkTests, moveAssignment)
 {
+  ::ad::map::landmark::ENULandmark tmpValue(mValue);
   ::ad::map::landmark::ENULandmark value;
-  value = std::move(::ad::map::landmark::ENULandmark(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -150,3 +157,7 @@ TEST_F(ENULandmarkTests, comparisonOperatorTrafficLightTypeDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

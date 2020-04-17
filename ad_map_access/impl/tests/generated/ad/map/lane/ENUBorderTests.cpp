@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/lane/ENUBorder.hpp"
@@ -57,7 +62,8 @@ TEST_F(ENUBorderTests, copyConstruction)
 
 TEST_F(ENUBorderTests, moveConstruction)
 {
-  ::ad::map::lane::ENUBorder value(std::move(::ad::map::lane::ENUBorder(mValue)));
+  ::ad::map::lane::ENUBorder tmpValue(mValue);
+  ::ad::map::lane::ENUBorder value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -70,8 +76,9 @@ TEST_F(ENUBorderTests, copyAssignment)
 
 TEST_F(ENUBorderTests, moveAssignment)
 {
+  ::ad::map::lane::ENUBorder tmpValue(mValue);
   ::ad::map::lane::ENUBorder value;
-  value = std::move(::ad::map::lane::ENUBorder(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -130,3 +137,7 @@ TEST_F(ENUBorderTests, comparisonOperatorRightDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

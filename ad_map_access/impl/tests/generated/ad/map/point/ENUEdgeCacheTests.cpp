@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/map/point/ENUEdgeCache.hpp"
@@ -49,7 +54,8 @@ TEST_F(ENUEdgeCacheTests, copyConstruction)
 
 TEST_F(ENUEdgeCacheTests, moveConstruction)
 {
-  ::ad::map::point::ENUEdgeCache value(std::move(::ad::map::point::ENUEdgeCache(mValue)));
+  ::ad::map::point::ENUEdgeCache tmpValue(mValue);
+  ::ad::map::point::ENUEdgeCache value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -62,8 +68,9 @@ TEST_F(ENUEdgeCacheTests, copyAssignment)
 
 TEST_F(ENUEdgeCacheTests, moveAssignment)
 {
+  ::ad::map::point::ENUEdgeCache tmpValue(mValue);
   ::ad::map::point::ENUEdgeCache value;
-  value = std::move(::ad::map::point::ENUEdgeCache(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -114,3 +121,7 @@ TEST_F(ENUEdgeCacheTests, comparisonOperatorEnuVersionDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

@@ -1,17 +1,8 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// INTEL CONFIDENTIAL
+// Copyright (C) 2017-2020 Intel Corporation
 //
-// Copyright (c) 2017-2019 Intel Corporation
-//
-// This software and the related documents are Intel copyrighted materials, and
-// your use of them is governed by the express license under which they were
-// provided to you (License). Unless the License provides otherwise, you may not
-// use, modify, copy, publish, distribute, disclose or transmit this software or
-// the related documents without Intel's prior written permission.
-//
-// This software and the related documents are provided as is, with no express or
-// implied warranties, other than those that are expressly stated in the License.
+// SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
 
@@ -39,8 +30,7 @@ OsmWayTraveler::OsmWayTraveler(std::shared_ptr<OsmObjectStore> store,
                                std::shared_ptr<PointStore> pointStore,
                                OsmJunctionArm const &osmArm,
                                common::LogChannel &logging)
-  : mLog(logging)
-  , mPointStore(pointStore)
+  : mPointStore(pointStore)
   , mIterator(OsmWayIterator::setupWayIteratorForJunctionArm(store, junctionProcessor, osmArm, logging))
 {
   mPreviousNode = mIterator.currentNode();

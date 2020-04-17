@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/physics/Speed.hpp"
@@ -148,7 +153,8 @@ TEST(SpeedTests, copyConstructionFromValidValue)
 
 TEST(SpeedTests, moveConstructionFromValidValue)
 {
-  ::ad::physics::Speed value(std::move(::ad::physics::Speed(::ad::physics::Speed::cMinValue)));
+  ::ad::physics::Speed validValue(::ad::physics::Speed::cMinValue);
+  ::ad::physics::Speed value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::Speed::cMinValue, static_cast<double>(value));
 }
@@ -164,8 +170,9 @@ TEST(SpeedTests, assignmentFromValidValue)
 
 TEST(SpeedTests, moveAssignmentFromValidValue)
 {
+  ::ad::physics::Speed validValue(::ad::physics::Speed::cMinValue);
   ::ad::physics::Speed value;
-  value = std::move(::ad::physics::Speed(::ad::physics::Speed::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::Speed::cMinValue, static_cast<double>(value));
 }
@@ -214,23 +221,23 @@ TEST(SpeedTests, comparisonOperatorsThrowOnInvalid)
   ::ad::physics::Speed const value(::ad::physics::Speed::cMinValue);
   ::ad::physics::Speed const invalidValue;
 
-  EXPECT_THROW(invalidValue == value, std::out_of_range);
-  EXPECT_THROW(value == invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue == value), std::out_of_range);
+  EXPECT_THROW((void)(value == invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue != value, std::out_of_range);
-  EXPECT_THROW(value != invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue != value), std::out_of_range);
+  EXPECT_THROW((void)(value != invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue > value, std::out_of_range);
-  EXPECT_THROW(value > invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue > value), std::out_of_range);
+  EXPECT_THROW((void)(value > invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue < value, std::out_of_range);
-  EXPECT_THROW(value < invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue < value), std::out_of_range);
+  EXPECT_THROW((void)(value < invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue >= value, std::out_of_range);
-  EXPECT_THROW(value >= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue >= value), std::out_of_range);
+  EXPECT_THROW((void)(value >= invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue <= value, std::out_of_range);
-  EXPECT_THROW(value <= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue <= value), std::out_of_range);
+  EXPECT_THROW((void)(value <= invalidValue), std::out_of_range);
 }
 
 TEST(SpeedTests, arithmeticOperatorsThrowOnInvalid)
@@ -436,3 +443,7 @@ TEST(SpeedTests, arithmeticOperatorsComputeCorrectly)
     // not clear on how to trigger valid result if such small value is not working
   }
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

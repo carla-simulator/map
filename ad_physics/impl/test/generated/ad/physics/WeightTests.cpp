@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/physics/Weight.hpp"
@@ -135,7 +140,8 @@ TEST(WeightTests, copyConstructionFromValidValue)
 
 TEST(WeightTests, moveConstructionFromValidValue)
 {
-  ::ad::physics::Weight value(std::move(::ad::physics::Weight(::ad::physics::Weight::cMinValue)));
+  ::ad::physics::Weight validValue(::ad::physics::Weight::cMinValue);
+  ::ad::physics::Weight value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::Weight::cMinValue, static_cast<double>(value));
 }
@@ -151,8 +157,9 @@ TEST(WeightTests, assignmentFromValidValue)
 
 TEST(WeightTests, moveAssignmentFromValidValue)
 {
+  ::ad::physics::Weight validValue(::ad::physics::Weight::cMinValue);
   ::ad::physics::Weight value;
-  value = std::move(::ad::physics::Weight(::ad::physics::Weight::cMinValue));
+  value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
   EXPECT_DOUBLE_EQ(::ad::physics::Weight::cMinValue, static_cast<double>(value));
 }
@@ -201,23 +208,23 @@ TEST(WeightTests, comparisonOperatorsThrowOnInvalid)
   ::ad::physics::Weight const value(::ad::physics::Weight::cMinValue);
   ::ad::physics::Weight const invalidValue;
 
-  EXPECT_THROW(invalidValue == value, std::out_of_range);
-  EXPECT_THROW(value == invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue == value), std::out_of_range);
+  EXPECT_THROW((void)(value == invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue != value, std::out_of_range);
-  EXPECT_THROW(value != invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue != value), std::out_of_range);
+  EXPECT_THROW((void)(value != invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue > value, std::out_of_range);
-  EXPECT_THROW(value > invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue > value), std::out_of_range);
+  EXPECT_THROW((void)(value > invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue < value, std::out_of_range);
-  EXPECT_THROW(value < invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue < value), std::out_of_range);
+  EXPECT_THROW((void)(value < invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue >= value, std::out_of_range);
-  EXPECT_THROW(value >= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue >= value), std::out_of_range);
+  EXPECT_THROW((void)(value >= invalidValue), std::out_of_range);
 
-  EXPECT_THROW(invalidValue <= value, std::out_of_range);
-  EXPECT_THROW(value <= invalidValue, std::out_of_range);
+  EXPECT_THROW((void)(invalidValue <= value), std::out_of_range);
+  EXPECT_THROW((void)(value <= invalidValue), std::out_of_range);
 }
 
 TEST(WeightTests, arithmeticOperatorsThrowOnInvalid)
@@ -415,3 +422,7 @@ TEST(WeightTests, arithmeticOperatorsComputeCorrectly)
     // not clear on how to trigger valid result if such small value is not working
   }
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif

@@ -12,6 +12,11 @@
  * Generated file
  */
 
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-assign-overloaded"
+#endif
+
 #include <gtest/gtest.h>
 #include <limits>
 #include "ad/physics/MetricRange.hpp"
@@ -43,7 +48,8 @@ TEST_F(MetricRangeTests, copyConstruction)
 
 TEST_F(MetricRangeTests, moveConstruction)
 {
-  ::ad::physics::MetricRange value(std::move(::ad::physics::MetricRange(mValue)));
+  ::ad::physics::MetricRange tmpValue(mValue);
+  ::ad::physics::MetricRange value(std::move(tmpValue));
   EXPECT_EQ(mValue, value);
 }
 
@@ -56,8 +62,9 @@ TEST_F(MetricRangeTests, copyAssignment)
 
 TEST_F(MetricRangeTests, moveAssignment)
 {
+  ::ad::physics::MetricRange tmpValue(mValue);
   ::ad::physics::MetricRange value;
-  value = std::move(::ad::physics::MetricRange(mValue));
+  value = std::move(tmpValue);
   EXPECT_EQ(mValue, value);
 }
 
@@ -100,3 +107,7 @@ TEST_F(MetricRangeTests, comparisonOperatorMaximumDiffers)
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
+
+#if defined(__clang__) && (__clang_major__ >= 7)
+#pragma GCC diagnostic pop
+#endif
