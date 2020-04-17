@@ -10,6 +10,9 @@ language: cpp
 dist: xenial
 os: linux
 
+git:
+  submodules: false
+
 addons:
   apt:
     sources:
@@ -38,7 +41,7 @@ addons:
       - python3-wheel
 
 before_install:
-  - test "${EXTRA_PACKAGES}" != "" && sudo apt-get -f -y install ${EXTRA_PACKAGES}
+  - if [ "${EXTRA_PACKAGES}" != "" ]; then sudo apt-get -f -y install ${EXTRA_PACKAGES}; fi
   - pip3 install --user -U colcon-common-extensions
   - pip3 install --user xmlrunner
   - pip2 install --user pygccxml https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip xmlrunner
@@ -101,28 +104,46 @@ jobs:
         CC1=/usr/bin/clang-8
         CXX1=/usr/bin/clang++-8
 
-    - name: "Documentation Deployment"
+    - name: "Check Code Formatting"
+      addons:
+        apt:
+          packages:
+            - clang-format-3.9
+      before_instal:
+      script:
+        - res=`find -iname *.cpp -o -iname *.hpp | xargs clang-format-3.9 -output-replacements-xml | grep -c "<replacement "`; if [ $res -ne 0 ]; then echo "Your code does not comply to clang-format"; exit 1; fi
+      after_failure:
+
+    - name: "Build Documentation"
+      env:
+        EXTRA_PACKAGES="lcov"
+      before_script:
+        - pip install --user mkdocs>=1.0 markdown-include pymdown-extensions==6.2 pygments mdx_truly_sane_lists
+      script:
+        - git submodule update --init
+        - colcon build --event-handlers console_direct+ --executor sequential --packages-up-to ad_map_access ad_physics --cmake-args -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_APIDOC=ON
+        - colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics
+        - colcon test-result
+        - export PATH=$PATH:~/.local/lib/python2.7/site-packages/mkdocs/
+        - mkdocs build
+      after_script:
+        - bash .github/.travis/code_coverage.sh
+        - bash .github/.travis/deploy.sh false
+
+   - name: "Documentation Deployment"
       if: branch = master AND type != pull_request
       git:
         depth: false
+      env:
+        EXTRA_PACKAGES="lcov"
       script:
         - git submodule update --init
-        - colcon build --cmake-args -DBUILD_APIDOC=ON
-        - cp -r doc/ doctmp/ && cp README.md README.md.tmp
-        - git checkout origin/doc
-        - git checkout -b doc
-        - cp -r doctmp/* doc/. && cp README.md.tmp README.md
-        - rm -rf doc/ad_map_access/apidoc
-        - rm -rf doc/ad_physics/apidoc
-        - cp -r build/ad_map_access/apidoc doc/ad_map_access/.
-        - cp -r build/ad_physics/apidoc doc/ad_physics/.
-        - rm -rf build install log doctmp README.md.tmp
-        - git add doc/ README.md
-        - git commit -m "Updated documentation" --no-edit || true
-        - git remote add origin-doc https://${GITHUB_TOKEN}@github.com/carla-simulator/map.git > /dev/null 2>&1
-        - git push --set-upstream origin-doc doc
-      after_failure:
-        - tail --lines=2000 log/latest_build/events.log
+        - colcon build --event-handlers console_direct+ --executor sequential --packages-up-to ad_map_access ad_physics --cmake-args -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_APIDOC=ON
+        - colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics
+        - colcon test-result
+      after_script:
+        - bash .github/.travis/code_coverage.sh
+        - bash .github/.travis/deploy.sh true
 
 notifications:
   email: false
