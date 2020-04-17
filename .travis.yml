@@ -21,9 +21,6 @@ addons:
       - build-essential
       - castxml
       - cmake
-      - doxygen
-      - graphviz
-      - lcov
       - libboost-all-dev
       - libgtest-dev
       - liblapacke-dev
@@ -116,7 +113,7 @@ jobs:
 
     - name: "Build Documentation"
       env:
-        EXTRA_PACKAGES="lcov"
+        EXTRA_PACKAGES="doxygen graphviz lcov"
       before_script:
         - pip install --user mkdocs>=1.0 markdown-include pymdown-extensions==6.2 pygments mdx_truly_sane_lists
       script:
@@ -135,7 +132,7 @@ jobs:
       git:
         depth: false
       env:
-        EXTRA_PACKAGES="lcov"
+        EXTRA_PACKAGES="doxygen graphviz lcov"
       script:
         - git submodule update --init
         - colcon build --event-handlers console_direct+ --executor sequential --packages-up-to ad_map_access ad_physics --cmake-args -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_APIDOC=ON
