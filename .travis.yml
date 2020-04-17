@@ -52,7 +52,6 @@ script:
   - git submodule update --init
   - if [ "${CC0}" == "" ]; then eval ${BUILDCMD}; else eval CC=${CC0} CXX=${CXX0} ${BUILDCMD}; fi
   - if [ "${CC1}" != "" ]; then rm -rf log build install && eval CC=${CC1} CXX=${CXX1} ${BUILDCMD}; fi
-  - if [ "${CC2}" != "" ]; then rm -rf log build install && eval CC=${CC2} CXX=${CXX2} ${BUILDCMD}; fi
 
 after_failure:
    - tail --lines=2000 log/latest_build/events.log
@@ -60,27 +59,25 @@ after_failure:
 
 jobs:
   include:
-    - name: "Build and Unit Tests GCC (Ubuntu 16.04)"
+    - name: "Build and Unit Tests gcc-5, gcc-6 (Ubuntu 16.04)"
       dist: xenial
       compiler: gcc
       env:
-        EXTRA_PACKAGES="g++-6 g++-7"
+        EXTRA_PACKAGES="g++-6"
         CC1=/usr/bin/gcc-6
         CXX1=/usr/bin/g++-6
-        CC2=/usr/bin/gcc-7
-        CXX2=/usr/bin/g++-7
 
-    - name: "Build and Unit Tests Clang (Ubuntu 16.04)"
+    - name: "Build and Unit Tests clang-5.0, clang-6.0 (Ubuntu 16.04)"
       dist: xenial
       compiler: clang
       env:
-        EXTRA_PACKAGES="clang-5.0 clang-8"
-        CC1=/usr/bin/clang-5.0
-        CXX1=/usr/bin/clang++-5.0
-        CC1=/usr/bin/clang-8
-        CXX1=/usr/bin/clang++-8
+        EXTRA_PACKAGES="clang-5.0 clang-6.0"
+        CC0=/usr/bin/clang-5.0
+        CXX0=/usr/bin/clang++-5.0
+        CC1=/usr/bin/clang-6.0
+        CXX1=/usr/bin/clang++-6.0
 
-    - name: "Build and Unit Tests GCC (Ubuntu 18.04)"
+    - name: "Build and Unit Tests gcc-7, gcc-8 (Ubuntu 18.04)"
       dist: bionic
       compiler: gcc
       env:
@@ -88,23 +85,21 @@ jobs:
         CC1=/usr/bin/gcc-8
         CXX1=/usr/bin/g++-8
 
-    - name: "Build and Unit Tests GCC-9 (Ubuntu 18.04)"
+    - name: "Build and Unit Tests gcc-9 (Ubuntu 18.04)"
       dist: bionic
       compiler: gcc
       env:
-        EXTRA_PACKAGES="g++-9"
+        EXTRA_PACKAGES="g++-9 gcc-9 libstdc++-9-dev"
         CC0=/usr/bin/gcc-9
         CXX0=/usr/bin/g++-9
 
-    - name: "Build and Unit Tests Clang (Ubuntu 18.04)"
+    - name: "Build and Unit Tests clang-7, clang-8 (Ubuntu 18.04)"
       dist: bionic
       compiler: clang
       env:
-        EXTRA_PACKAGES="clang-6.0 clang-8"
-        CC1=/usr/bin/clang-6.0
-        CXX1=/usr/bin/clang++-6.0
-        CC2=/usr/bin/clang-8
-        CXX2=/usr/bin/clang++-8
+        EXTRA_PACKAGES="clang-8"
+        CC1=/usr/bin/clang-8
+        CXX1=/usr/bin/clang++-8
 
     - name: "Documentation Deployment"
       if: branch = master AND type != pull_request
