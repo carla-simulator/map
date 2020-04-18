@@ -7,23 +7,33 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 ##
 
+# prepare
 cp -r doc/ doctmp/ && cp README.md README.md.tmp
 git checkout origin/doc
 git checkout -b doc
+
+# clean old
+rm -rf doc
+mkdir doc
+
+# copy new doc
 cp -r doctmp/* doc/. && cp README.md.tmp README.md
+
 # apidoc
-rm -rf doc/ad_physics/apidoc
-rm -rf doc/ad_map_access/apidoc
 cp -r build/ad_physics/apidoc doc/ad_physics/.
 cp -r build/ad_map_access/apidoc doc/ad_map_access/.
+
 # coverage
-rm -rf doc/ad_physics/coverage
-rm -rf doc/ad_map_access/coverage
 mv coverage/ad_physics doc/ad_physics/coverage
 mv coverage/ad_map_access doc/ad_map_access/coverage
+
 # cleanup
-rm -rf build install log doctmp README.md.tmp coverage
+rm -rf build install log doctmp README.md.tmp
+
+# commit
 git add doc/ README.md
+git status
+
 git commit -m "Updated documentation" --no-edit || true
 git remote add origin-doc https://${GITHUB_TOKEN}@github.com/carla-simulator/map.git > /dev/null 2>&1
 
