@@ -12,15 +12,15 @@ git checkout origin/doc
 git checkout -b doc
 cp -r doctmp/* doc/. && cp README.md.tmp README.md
 # apidoc
-rm -rf doc/ad_map_access/apidoc
 rm -rf doc/ad_physics/apidoc
-cp -r build/ad_map_access/apidoc doc/ad_map_access/.
+rm -rf doc/ad_map_access/apidoc
 cp -r build/ad_physics/apidoc doc/ad_physics/.
+cp -r build/ad_map_access/apidoc doc/ad_map_access/.
 # coverage
 rm -rf doc/ad_physics/coverage
 rm -rf doc/ad_map_access/coverage
-cp -r coverage/ad_physics doc/ad_physics/coverage
-cp -r coverage/ad_map_access doc/ad_map_access/coverage
+mv coverage/ad_physics doc/ad_physics/coverage
+mv coverage/ad_map_access doc/ad_map_access/coverage
 # cleanup
 rm -rf build install log doctmp README.md.tmp coverage
 git add doc/ README.md
