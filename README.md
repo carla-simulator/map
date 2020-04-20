@@ -62,7 +62,21 @@ To download the library, you may run:
 ```
 
 #### Supported systems <a name="systems"></a>
-Currently Ubuntu 16.04 is the supported system. Other Linux OS and compiler combinations might also work.
+Development systems are Ubuntu 16.04 and Ubuntu 18.04.
+Following compiler combinations are [tested continously](https://github.com/carla-simulator/map/blob/master/.travis.yml):
+
+|                 | Ubuntu 16.04 | Ubuntu 18.04 |
+|:---------------:|:------------:|:------------:|
+|  Clang 5.0      |      x       |              |
+|  Clang 6.0      |      x       |              |
+|  Clang 7        |              |       x      |
+|  Clang 8        |              |       x      |
+|   GCC 5         |      x       |              |
+|   GCC 6         |      x       |              |
+|   GCC 7         |              |       x      |
+|   GCC 8         |              |       x      |
+|   GCC 9         |              |       x      |
+
 Important: cmake is required to be at least version 3.5!
 
 ## Building the library <a name="building"></a>

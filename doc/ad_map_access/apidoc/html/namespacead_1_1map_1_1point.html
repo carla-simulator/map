@@ -234,6 +234,14 @@ Functions</h2></td></tr>
 <tr class="memitem:aeb2f9ad109a29ddca7b443d37bf5af9f"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#aeb2f9ad109a29ddca7b443d37bf5af9f">calcLength</a> (<a class="el" href="namespacead_1_1map_1_1point.html#a8863c8cb673ac5fa734926b328272b3d">ECEFEdge</a> const &amp;edge)</td></tr>
 <tr class="memdesc:aeb2f9ad109a29ddca7b443d37bf5af9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the length of the provided border as distance value  <a href="#aeb2f9ad109a29ddca7b443d37bf5af9f">More...</a><br /></td></tr>
 <tr class="separator:aeb2f9ad109a29ddca7b443d37bf5af9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3f86c67753bd89a322629b4994e3ef5"><td class="memTemplParams" colspan="2">template&lt;typename PointType &gt; </td></tr>
+<tr class="memitem:ab3f86c67753bd89a322629b4994e3ef5"><td class="memTemplItemLeft" align="right" valign="top">physics::RatioValue&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#ab3f86c67753bd89a322629b4994e3ef5">findNearestPointOnEdge</a> (PointType const &amp;a, const PointType &amp;pt0, const PointType &amp;pt1)</td></tr>
+<tr class="memdesc:ab3f86c67753bd89a322629b4994e3ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find point nearest to the line formed by two points.  <a href="#ab3f86c67753bd89a322629b4994e3ef5">More...</a><br /></td></tr>
+<tr class="separator:ab3f86c67753bd89a322629b4994e3ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad35cded1239247ac5cfa7788e114c7c7"><td class="memTemplParams" colspan="2">template&lt;typename PointType &gt; </td></tr>
+<tr class="memitem:ad35cded1239247ac5cfa7788e114c7c7"><td class="memTemplItemLeft" align="right" valign="top">physics::ParametricValue&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#ad35cded1239247ac5cfa7788e114c7c7">findNearestPointOnSegment</a> (PointType const &amp;a, const PointType &amp;pt0, const PointType &amp;pt1)</td></tr>
+<tr class="memdesc:ad35cded1239247ac5cfa7788e114c7c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find point nearest to the segment formed by two points.  <a href="#ad35cded1239247ac5cfa7788e114c7c7">More...</a><br /></td></tr>
+<tr class="separator:ad35cded1239247ac5cfa7788e114c7c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4b2893d6a92667c5b1db39ff365744c"><td class="memTemplParams" colspan="2">template&lt;typename PointType &gt; </td></tr>
 <tr class="memitem:aa4b2893d6a92667c5b1db39ff365744c"><td class="memTemplItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#aa4b2893d6a92667c5b1db39ff365744c">calculateEdgeLength</a> (std::vector&lt; PointType &gt; const &amp;edge)</td></tr>
 <tr class="memdesc:aa4b2893d6a92667c5b1db39ff365744c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the length of an edge.  <a href="#aa4b2893d6a92667c5b1db39ff365744c">More...</a><br /></td></tr>
@@ -461,14 +469,6 @@ template&lt;&gt; </td></tr>
 <tr class="memitem:ac62111e3bad28e8b6927c1cb41b5793a"><td class="memTemplItemLeft" align="right" valign="top">PointType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#ac62111e3bad28e8b6927c1cb41b5793a">vectorExtrapolate</a> (PointType const &amp;a, PointType const &amp;b, double const &amp;scalar)</td></tr>
 <tr class="memdesc:ac62111e3bad28e8b6927c1cb41b5793a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extrapolate point based on line defined by two points.  <a href="#ac62111e3bad28e8b6927c1cb41b5793a">More...</a><br /></td></tr>
 <tr class="separator:ac62111e3bad28e8b6927c1cb41b5793a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3f86c67753bd89a322629b4994e3ef5"><td class="memTemplParams" colspan="2">template&lt;typename PointType &gt; </td></tr>
-<tr class="memitem:ab3f86c67753bd89a322629b4994e3ef5"><td class="memTemplItemLeft" align="right" valign="top">physics::RatioValue&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#ab3f86c67753bd89a322629b4994e3ef5">findNearestPointOnEdge</a> (PointType const &amp;a, const PointType &amp;pt0, const PointType &amp;pt1)</td></tr>
-<tr class="memdesc:ab3f86c67753bd89a322629b4994e3ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find point nearest to the line formed by two points.  <a href="#ab3f86c67753bd89a322629b4994e3ef5">More...</a><br /></td></tr>
-<tr class="separator:ab3f86c67753bd89a322629b4994e3ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad35cded1239247ac5cfa7788e114c7c7"><td class="memTemplParams" colspan="2">template&lt;typename PointType &gt; </td></tr>
-<tr class="memitem:ad35cded1239247ac5cfa7788e114c7c7"><td class="memTemplItemLeft" align="right" valign="top">physics::ParametricValue&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#ad35cded1239247ac5cfa7788e114c7c7">findNearestPointOnSegment</a> (PointType const &amp;a, const PointType &amp;pt0, const PointType &amp;pt1)</td></tr>
-<tr class="memdesc:ad35cded1239247ac5cfa7788e114c7c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find point nearest to the segment formed by two points.  <a href="#ad35cded1239247ac5cfa7788e114c7c7">More...</a><br /></td></tr>
-<tr class="separator:ad35cded1239247ac5cfa7788e114c7c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa38981d8404569c45b1cd6f8c521ca6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa38981d8404569c45b1cd6f8c521ca6e"></a>
 <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">ECEFPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#aa38981d8404569c45b1cd6f8c521ca6e">toECEF</a> (<a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">GeoPoint</a> const &amp;point)</td></tr>
 <tr class="memdesc:aa38981d8404569c45b1cd6f8c521ca6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">perform coordinate transformation from <a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html" title="DataType GeoPoint. ">GeoPoint</a> to <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint. ">ECEFPoint</a> <br /></td></tr>
@@ -1404,41 +1404,6 @@ template&lt;typename PointType &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a8d219350c5189418dd2690102f3b21dd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">physics::ParametricValue ad::map::point::findNearestPointOnEdge </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1Geometry.html">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname"><em>geometry</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;&#160;</td>
-          <td class="paramname"><em>pt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Finds point on geometry nearest to given point. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pt</td><td>Point of interest. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Parametric point on geometry nearest to the pt. Can be invalid (if pt is Invalid(), geometry is empty etc.). </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="ab3f86c67753bd89a322629b4994e3ef5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1481,6 +1446,41 @@ template&lt;typename PointType &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Value of t; nearest point to a can be calculated as (1-t)*pt0+t*pt1. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8d219350c5189418dd2690102f3b21dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::ParametricValue ad::map::point::findNearestPointOnEdge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1Geometry.html">Geometry</a> const &amp;&#160;</td>
+          <td class="paramname"><em>geometry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>pt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finds point on geometry nearest to given point. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pt</td><td>Point of interest. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Parametric point on geometry nearest to the pt. Can be invalid (if pt is Invalid(), geometry is empty etc.). </dd></dl>
 
 </div>
 </div>
@@ -2014,6 +2014,41 @@ template&lt;typename PointType &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="afe315d88833635d444274254a71035ae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> ad::map::point::getParametricPoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1Geometry.html">Geometry</a> const &amp;&#160;</td>
+          <td class="paramname"><em>geometry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const physics::ParametricValue &amp;&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates parametric point on the geometry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">t</td><td>Parameter. 0 will return first point, and 1 last point on the geometry. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Parameteric point on the geometry. Can be invalid. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a3c089daa10e9a4e732fdb1edd1ad11f6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2055,41 +2090,6 @@ template&lt;typename PointType &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Parametric point on the edge. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="afe315d88833635d444274254a71035ae"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> ad::map::point::getParametricPoint </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1Geometry.html">Geometry</a> const &amp;&#160;</td>
-          <td class="paramname"><em>geometry</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const physics::ParametricValue &amp;&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calculates parametric point on the geometry. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">t</td><td>Parameter. 0 will return first point, and 1 last point on the geometry. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Parameteric point on the geometry. Can be invalid. </dd></dl>
 
 </div>
 </div>
