@@ -1,6 +1,0 @@
-[ADMap]
-map=Town01copy.xodr
-openDriveOverlapMargin=
-
-[POI]
-poi=T1 48.997026667 8.0026912 0.1
