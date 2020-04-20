@@ -18,7 +18,7 @@ get_coverage() {
     lcov -q -r coverage.info "impl/test*" -o coverage.info --rc lcov_branch_coverage=1
     grep -v -E 'D0Ev|D1Ev|C1Ev|C1Eb' coverage.info > cleanedCoverage.info
     lcov --summary cleanedCoverage.info --rc lcov_branch_coverage=1
-    genhtml -q -t ${PACKAGE_NAME} -p ${SRC_DIR} --branch-coverage -o coverage/$2 cleanedCoverage.info
+    genhtml -t ${PACKAGE_NAME} -p ${SRC_DIR} --branch-coverage -o coverage/${SRC_DIR} cleanedCoverage.info
     bash <(curl -s https://codecov.io/bash) -f cleanedCoverage.info || echo "Codecov did not collect coverage reports"
 }
 
