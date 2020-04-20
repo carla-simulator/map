@@ -1,0 +1,878 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad-map-access - /home/travis/build/carla-simulator/map/ad_map_access/generated/src/ad/map/landmark/TrafficSignType.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../../../../../../index.html">top level</a> - <a href="index.html">home/travis/build/carla-simulator/map/ad_map_access/generated/src/ad/map/landmark</a> - TrafficSignType.cpp<span style="font-size: 80%;"> (source / <a href="TrafficSignType.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad-map-access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">375</td>
+            <td class="headerCovTableEntry">375</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2020-04-20 14:52:26</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">94</td>
+            <td class="headerCovTableEntry">100</td>
+            <td class="headerCovTableEntryHi">94.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
+<span class="lineNum">       3 </span>                :            :  *
+<span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       5 </span>                :            :  *
+<span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT
+<span class="lineNum">       7 </span>                :            :  *
+<span class="lineNum">       8 </span>                :            :  * ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       9 </span>                :            :  */
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : /**
+<span class="lineNum">      12 </span>                :            :  * Generated file
+<span class="lineNum">      13 </span>                :            :  * @file
+<span class="lineNum">      14 </span>                :            :  *
+<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1988
+<span class="lineNum">      16 </span>                :            :  */
+<span class="lineNum">      17 </span>                :            : 
+<span class="lineNum">      18 </span>                :            : #include &quot;ad/map/landmark/TrafficSignType.hpp&quot;
+<a name="19"><span class="lineNum">      19 </span>                :            : #include &lt;stdexcept&gt;</a>
+<span class="lineNum">      20 </span>                :            : 
+<span class="lineNum">      21 </span>                :<span class="lineCov">         93 : std::string toString(::ad::map::landmark::TrafficSignType const e)</span>
+<span class="lineNum">      22 </span>                :            : {
+<span class="lineNum">      23 </span>  [<span class="branchCov" title="Branch 0 was taken 14 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">         93 :   switch (e)</span>
+<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span><span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 9 was taken 1 time"> + </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span><span class="branchCov" title="Branch 13 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 14 was taken 1 time"> + </span><span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchCov" title="Branch 16 was taken 1 time"> + </span><span class="branchCov" title="Branch 17 was taken 1 time"> + </span><span class="branchCov" title="Branch 18 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 19 was taken 1 time"> + </span><span class="branchCov" title="Branch 20 was taken 1 time"> + </span><span class="branchCov" title="Branch 21 was taken 1 time"> + </span><span class="branchCov" title="Branch 22 was taken 1 time"> + </span><span class="branchCov" title="Branch 23 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 24 was taken 1 time"> + </span><span class="branchCov" title="Branch 25 was taken 1 time"> + </span><span class="branchCov" title="Branch 26 was taken 1 time"> + </span><span class="branchCov" title="Branch 27 was taken 1 time"> + </span><span class="branchCov" title="Branch 28 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 29 was taken 1 time"> + </span><span class="branchCov" title="Branch 30 was taken 1 time"> + </span><span class="branchCov" title="Branch 31 was taken 1 time"> + </span><span class="branchCov" title="Branch 32 was taken 1 time"> + </span><span class="branchCov" title="Branch 33 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 34 was taken 1 time"> + </span><span class="branchCov" title="Branch 35 was taken 1 time"> + </span><span class="branchCov" title="Branch 36 was taken 1 time"> + </span><span class="branchCov" title="Branch 37 was taken 1 time"> + </span><span class="branchCov" title="Branch 38 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 39 was taken 1 time"> + </span><span class="branchCov" title="Branch 40 was taken 1 time"> + </span><span class="branchCov" title="Branch 41 was taken 1 time"> + </span><span class="branchCov" title="Branch 42 was taken 1 time"> + </span><span class="branchCov" title="Branch 43 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 44 was taken 1 time"> + </span><span class="branchCov" title="Branch 45 was taken 1 time"> + </span><span class="branchCov" title="Branch 46 was taken 1 time"> + </span><span class="branchCov" title="Branch 47 was taken 1 time"> + </span><span class="branchCov" title="Branch 48 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 49 was taken 1 time"> + </span><span class="branchCov" title="Branch 50 was taken 1 time"> + </span><span class="branchCov" title="Branch 51 was taken 1 time"> + </span><span class="branchCov" title="Branch 52 was taken 1 time"> + </span><span class="branchCov" title="Branch 53 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 54 was taken 1 time"> + </span><span class="branchCov" title="Branch 55 was taken 1 time"> + </span><span class="branchCov" title="Branch 56 was taken 1 time"> + </span><span class="branchCov" title="Branch 57 was taken 1 time"> + </span><span class="branchCov" title="Branch 58 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 59 was taken 1 time"> + </span><span class="branchCov" title="Branch 60 was taken 1 time"> + </span><span class="branchCov" title="Branch 61 was taken 1 time"> + </span><span class="branchCov" title="Branch 62 was taken 1 time"> + </span><span class="branchCov" title="Branch 63 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 64 was taken 1 time"> + </span><span class="branchCov" title="Branch 65 was taken 1 time"> + </span><span class="branchCov" title="Branch 66 was taken 1 time"> + </span><span class="branchCov" title="Branch 67 was taken 1 time"> + </span><span class="branchCov" title="Branch 68 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>   <span class="branchCov" title="Branch 69 was taken 1 time"> + </span><span class="branchCov" title="Branch 70 was taken 1 time"> + </span><span class="branchCov" title="Branch 71 was taken 1 time"> + </span><span class="branchCov" title="Branch 72 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchCov" title="Branch 73 was taken 7 times"> + </span>]
+<span class="lineNum">      24 </span>                :            :   {
+<span class="lineNum">      25 </span>                :            :     case ::ad::map::landmark::TrafficSignType::INVALID:
+<span class="lineNum">      26 </span>                :<span class="lineCov">         14 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::INVALID&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      27 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT:
+<span class="lineNum">      28 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      29 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_RIGHT:
+<span class="lineNum">      30 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_RIGHT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      31 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT:
+<span class="lineNum">      32 </span>                :            :       return std::string(
+<span class="lineNum">      33 </span>                :<span class="lineCov">          1 :         &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      34 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN:
+<span class="lineNum">      35 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      36 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE:
+<span class="lineNum">      37 </span>                :            :       return std::string(
+<span class="lineNum">      38 </span>                :<span class="lineCov">          1 :         &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      39 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE:
+<span class="lineNum">      40 </span>                :            :       return std::string(
+<span class="lineNum">      41 </span>                :<span class="lineCov">          1 :         &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      42 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_NEXT_N_KM_TIME:
+<span class="lineNum">      43 </span>                :            :       return std::string(
+<span class="lineNum">      44 </span>                :<span class="lineCov">          1 :         &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_NEXT_N_KM_TIME&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      45 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENDS:
+<span class="lineNum">      46 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENDS&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      47 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_RESIDENTS_ALLOWED:
+<span class="lineNum">      48 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_RESIDENTS_ALLOWED&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      49 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_BICYCLE_ALLOWED:
+<span class="lineNum">      50 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_BICYCLE_ALLOWED&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      51 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_MOPED_ALLOWED:
+<span class="lineNum">      52 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_MOPED_ALLOWED&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      53 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_TRAM_ALLOWED:
+<span class="lineNum">      54 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_TRAM_ALLOWED&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      55 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_FORESTAL_ALLOWED:
+<span class="lineNum">      56 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_FORESTAL_ALLOWED&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      57 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED:
+<span class="lineNum">      58 </span>                :            :       return std::string(
+<span class="lineNum">      59 </span>                :<span class="lineCov">          1 :         &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      60 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN:
+<span class="lineNum">      61 </span>                :            :       return std::string(
+<span class="lineNum">      62 </span>                :<span class="lineCov">          1 :         &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      63 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_RAILWAY_ONLY:
+<span class="lineNum">      64 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_RAILWAY_ONLY&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      65 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_FOR_WEIGHT:
+<span class="lineNum">      66 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_FOR_WEIGHT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      67 </span>                :            :     case ::ad::map::landmark::TrafficSignType::DANGER:
+<span class="lineNum">      68 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::DANGER&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      69 </span>                :            :     case ::ad::map::landmark::TrafficSignType::LANES_MERGING:
+<span class="lineNum">      70 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::LANES_MERGING&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      71 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CAUTION_PEDESTRIAN:
+<span class="lineNum">      72 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_PEDESTRIAN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      73 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CAUTION_CHILDREN:
+<span class="lineNum">      74 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_CHILDREN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      75 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CAUTION_BICYCLE:
+<span class="lineNum">      76 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_BICYCLE&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      77 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CAUTION_ANIMALS:
+<span class="lineNum">      78 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_ANIMALS&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      79 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING_WITH_BARRIER:
+<span class="lineNum">      80 </span>                :            :       return std::string(
+<span class="lineNum">      81 </span>                :<span class="lineCov">          1 :         &quot;::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING_WITH_BARRIER&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      82 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING:
+<span class="lineNum">      83 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      84 </span>                :            :     case ::ad::map::landmark::TrafficSignType::YIELD_TRAIN:
+<span class="lineNum">      85 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::YIELD_TRAIN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      86 </span>                :            :     case ::ad::map::landmark::TrafficSignType::YIELD:
+<span class="lineNum">      87 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::YIELD&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      88 </span>                :            :     case ::ad::map::landmark::TrafficSignType::STOP:
+<span class="lineNum">      89 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::STOP&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      90 </span>                :            :     case ::ad::map::landmark::TrafficSignType::REQUIRED_RIGHT_TURN:
+<span class="lineNum">      91 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_RIGHT_TURN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      92 </span>                :            :     case ::ad::map::landmark::TrafficSignType::REQUIRED_LEFT_TURN:
+<span class="lineNum">      93 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_LEFT_TURN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      94 </span>                :            :     case ::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT:
+<span class="lineNum">      95 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      96 </span>                :            :     case ::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_RIGHT_TURN:
+<span class="lineNum">      97 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_RIGHT_TURN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      98 </span>                :            :     case ::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_LEFT_TURN:
+<span class="lineNum">      99 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_LEFT_TURN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     100 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ROUNDABOUT:
+<span class="lineNum">     101 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ROUNDABOUT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     102 </span>                :            :     case ::ad::map::landmark::TrafficSignType::PASS_RIGHT:
+<span class="lineNum">     103 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::PASS_RIGHT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     104 </span>                :            :     case ::ad::map::landmark::TrafficSignType::PASS_LEFT:
+<span class="lineNum">     105 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::PASS_LEFT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     106 </span>                :            :     case ::ad::map::landmark::TrafficSignType::BYBICLE_PATH:
+<span class="lineNum">     107 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::BYBICLE_PATH&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     108 </span>                :            :     case ::ad::map::landmark::TrafficSignType::FOOTWALK:
+<span class="lineNum">     109 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::FOOTWALK&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     110 </span>                :            :     case ::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SHARED:
+<span class="lineNum">     111 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SHARED&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     112 </span>                :            :     case ::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_RIGHT:
+<span class="lineNum">     113 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_RIGHT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     114 </span>                :            :     case ::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_LEFT:
+<span class="lineNum">     115 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_LEFT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     116 </span>                :            :     case ::ad::map::landmark::TrafficSignType::PEDESTRIAN_AREA_BEGIN:
+<span class="lineNum">     117 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::PEDESTRIAN_AREA_BEGIN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     118 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN:
+<span class="lineNum">     119 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     120 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_TRUCKS:
+<span class="lineNum">     121 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_TRUCKS&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     122 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_BICYCLE:
+<span class="lineNum">     123 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_BICYCLE&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     124 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_MOTORVEHICLES:
+<span class="lineNum">     125 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_MOTORVEHICLES&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     126 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WEIGHT:
+<span class="lineNum">     127 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WEIGHT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     128 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WIDTH:
+<span class="lineNum">     129 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WIDTH&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     130 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_HEIGHT:
+<span class="lineNum">     131 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_HEIGHT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     132 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WRONG_DIR:
+<span class="lineNum">     133 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WRONG_DIR&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     134 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_BEGIN:
+<span class="lineNum">     135 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_BEGIN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     136 </span>                :            :     case ::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_END:
+<span class="lineNum">     137 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_END&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     138 </span>                :            :     case ::ad::map::landmark::TrafficSignType::MAX_SPEED:
+<span class="lineNum">     139 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::MAX_SPEED&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     140 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_BEGIN:
+<span class="lineNum">     141 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_BEGIN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     142 </span>                :            :     case ::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_END:
+<span class="lineNum">     143 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_END&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     144 </span>                :            :     case ::ad::map::landmark::TrafficSignType::HAS_WAY_NEXT_INTERSECTION:
+<span class="lineNum">     145 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::HAS_WAY_NEXT_INTERSECTION&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     146 </span>                :            :     case ::ad::map::landmark::TrafficSignType::PRIORITY_WAY:
+<span class="lineNum">     147 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::PRIORITY_WAY&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     148 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CITY_BEGIN:
+<span class="lineNum">     149 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::CITY_BEGIN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     150 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CITY_END:
+<span class="lineNum">     151 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::CITY_END&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     152 </span>                :            :     case ::ad::map::landmark::TrafficSignType::MOTORWAY_BEGIN:
+<span class="lineNum">     153 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::MOTORWAY_BEGIN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     154 </span>                :            :     case ::ad::map::landmark::TrafficSignType::MOTORWAY_END:
+<span class="lineNum">     155 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::MOTORWAY_END&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     156 </span>                :            :     case ::ad::map::landmark::TrafficSignType::MOTORVEHICLE_BEGIN:
+<span class="lineNum">     157 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::MOTORVEHICLE_BEGIN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     158 </span>                :            :     case ::ad::map::landmark::TrafficSignType::MOTORVEHICLE_END:
+<span class="lineNum">     159 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::MOTORVEHICLE_END&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     160 </span>                :            :     case ::ad::map::landmark::TrafficSignType::INFO_MOTORWAY_INFO:
+<span class="lineNum">     161 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::INFO_MOTORWAY_INFO&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     162 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CUL_DE_SAC:
+<span class="lineNum">     163 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::CUL_DE_SAC&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     164 </span>                :            :     case ::ad::map::landmark::TrafficSignType::CUL_DE_SAC_EXCEPT_PED_BICYCLE:
+<span class="lineNum">     165 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::CUL_DE_SAC_EXCEPT_PED_BICYCLE&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     166 </span>                :            :     case ::ad::map::landmark::TrafficSignType::INFO_NUMBER_OF_AUTOBAHN:
+<span class="lineNum">     167 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::INFO_NUMBER_OF_AUTOBAHN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     168 </span>                :            :     case ::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_AUTOBAHN:
+<span class="lineNum">     169 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_AUTOBAHN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     170 </span>                :            :     case ::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_LOCAL:
+<span class="lineNum">     171 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_LOCAL&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     172 </span>                :            :     case ::ad::map::landmark::TrafficSignType::DESTINATION_BOARD:
+<span class="lineNum">     173 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::DESTINATION_BOARD&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     174 </span>                :            :     case ::ad::map::landmark::TrafficSignType::FREE_TEXT:
+<span class="lineNum">     175 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::FREE_TEXT&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     176 </span>                :            :     case ::ad::map::landmark::TrafficSignType::UNKNOWN:
+<span class="lineNum">     177 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::landmark::TrafficSignType::UNKNOWN&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     178 </span>                :            :     default:
+<span class="lineNum">     179 </span>                :<span class="lineCov">         93 :       return std::string(&quot;UNKNOWN ENUM VALUE&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     180 </span>                :            :   }
+<a name="181"><span class="lineNum">     181 </span>                :            : }</a>
+<span class="lineNum">     182 </span>                :            : 
+<span class="lineNum">     183 </span>                :<span class="lineCov">        147 : template &lt;&gt;::ad::map::landmark::TrafficSignType fromString(std::string const &amp;str)</span>
+<span class="lineNum">     184 </span>                :            : {
+<span class="lineNum">     185 </span>                :<span class="lineCov">        147 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::INVALID&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     186 </span>                :            :   {
+<span class="lineNum">     187 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::INVALID;</span>
+<span class="lineNum">     188 </span>                :            :   }
+<span class="lineNum">     189 </span>                :<span class="lineCov">        146 :   if (str == std::string(&quot;INVALID&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     190 </span>                :            :   {
+<span class="lineNum">     191 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::INVALID;</span>
+<span class="lineNum">     192 </span>                :            :   }
+<span class="lineNum">     193 </span>                :<span class="lineCov">        145 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     194 </span>                :            :   {
+<span class="lineNum">     195 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT;</span>
+<span class="lineNum">     196 </span>                :            :   }
+<span class="lineNum">     197 </span>                :<span class="lineCov">        144 :   if (str == std::string(&quot;SUPPLEMENT_ARROW_APPLIES_LEFT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     198 </span>                :            :   {
+<span class="lineNum">     199 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT;</span>
+<span class="lineNum">     200 </span>                :            :   }
+<span class="lineNum">     201 </span>                :<span class="lineCov">        143 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_RIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     202 </span>                :            :   {
+<span class="lineNum">     203 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_RIGHT;</span>
+<span class="lineNum">     204 </span>                :            :   }
+<span class="lineNum">     205 </span>                :<span class="lineCov">        142 :   if (str == std::string(&quot;SUPPLEMENT_ARROW_APPLIES_RIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     206 </span>                :            :   {
+<span class="lineNum">     207 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_RIGHT;</span>
+<span class="lineNum">     208 </span>                :            :   }
+<span class="lineNum">     209 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 140 times"> + </span>]:<span class="lineCov">        282 :   if (str</span>
+<span class="lineNum">     210 </span>                :<span class="lineCov">        282 :       == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     211 </span>                :            :   {
+<span class="lineNum">     212 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT;</span>
+<span class="lineNum">     213 </span>                :            :   }
+<span class="lineNum">     214 </span>                :<span class="lineCov">        140 :   if (str == std::string(&quot;SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     215 </span>                :            :   {
+<span class="lineNum">     216 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT;</span>
+<span class="lineNum">     217 </span>                :            :   }
+<span class="lineNum">     218 </span>                :<span class="lineCov">        139 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     219 </span>                :            :   {
+<span class="lineNum">     220 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN;</span>
+<span class="lineNum">     221 </span>                :            :   }
+<span class="lineNum">     222 </span>                :<span class="lineCov">        138 :   if (str == std::string(&quot;SUPPLEMENT_ARROW_APPLIES_UP_DOWN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     223 </span>                :            :   {
+<span class="lineNum">     224 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN;</span>
+<span class="lineNum">     225 </span>                :            :   }
+<span class="lineNum">     226 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 136 times"> + </span>]:<span class="lineCov">        274 :   if (str</span>
+<span class="lineNum">     227 </span>        [<span class="branchCov" title="Branch 2 was taken 137 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        274 :       == std::string(</span>
+<span class="lineNum">     228 </span>                :            :            &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE
+<span class="lineNum">     229 </span>                :            :   {
+<span class="lineNum">     230 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE;</span>
+<span class="lineNum">     231 </span>                :            :   }
+<span class="lineNum">     232 </span>                :<span class="lineCov">        136 :   if (str == std::string(&quot;SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     233 </span>                :            :   {
+<span class="lineNum">     234 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE;</span>
+<span class="lineNum">     235 </span>                :            :   }
+<span class="lineNum">     236 </span>[<span class="branchCov" title="Branch 2 was taken 135 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 134 times"> + </span>]:<span class="lineCov">        135 :   if (str == std::string(</span>
+<span class="lineNum">     237 </span>                :            :                &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE
+<span class="lineNum">     238 </span>                :            :   {
+<span class="lineNum">     239 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE;</span>
+<span class="lineNum">     240 </span>                :            :   }
+<span class="lineNum">     241 </span>                :<span class="lineCov">        134 :   if (str == std::string(&quot;SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     242 </span>                :            :   {
+<span class="lineNum">     243 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE;</span>
+<span class="lineNum">     244 </span>                :            :   }
+<span class="lineNum">     245 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 132 times"> + </span>]:<span class="lineCov">        266 :   if (str</span>
+<span class="lineNum">     246 </span>                :<span class="lineCov">        266 :       == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_NEXT_N_KM_TIME&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     247 </span>                :            :   {
+<span class="lineNum">     248 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_NEXT_N_KM_TIME;</span>
+<span class="lineNum">     249 </span>                :            :   }
+<span class="lineNum">     250 </span>                :<span class="lineCov">        132 :   if (str == std::string(&quot;SUPPLEMENT_APPLIES_NEXT_N_KM_TIME&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     251 </span>                :            :   {
+<span class="lineNum">     252 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_NEXT_N_KM_TIME;</span>
+<span class="lineNum">     253 </span>                :            :   }
+<span class="lineNum">     254 </span>                :<span class="lineCov">        131 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENDS&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     255 </span>                :            :   {
+<span class="lineNum">     256 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENDS;</span>
+<span class="lineNum">     257 </span>                :            :   }
+<span class="lineNum">     258 </span>                :<span class="lineCov">        130 :   if (str == std::string(&quot;SUPPLEMENT_ENDS&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     259 </span>                :            :   {
+<span class="lineNum">     260 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENDS;</span>
+<span class="lineNum">     261 </span>                :            :   }
+<span class="lineNum">     262 </span>                :<span class="lineCov">        129 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_RESIDENTS_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     263 </span>                :            :   {
+<span class="lineNum">     264 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_RESIDENTS_ALLOWED;</span>
+<span class="lineNum">     265 </span>                :            :   }
+<span class="lineNum">     266 </span>                :<span class="lineCov">        128 :   if (str == std::string(&quot;SUPPLEMENT_RESIDENTS_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     267 </span>                :            :   {
+<span class="lineNum">     268 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_RESIDENTS_ALLOWED;</span>
+<span class="lineNum">     269 </span>                :            :   }
+<span class="lineNum">     270 </span>                :<span class="lineCov">        127 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_BICYCLE_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     271 </span>                :            :   {
+<span class="lineNum">     272 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_BICYCLE_ALLOWED;</span>
+<span class="lineNum">     273 </span>                :            :   }
+<span class="lineNum">     274 </span>                :<span class="lineCov">        126 :   if (str == std::string(&quot;SUPPLEMENT_BICYCLE_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     275 </span>                :            :   {
+<span class="lineNum">     276 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_BICYCLE_ALLOWED;</span>
+<span class="lineNum">     277 </span>                :            :   }
+<span class="lineNum">     278 </span>                :<span class="lineCov">        125 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_MOPED_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     279 </span>                :            :   {
+<span class="lineNum">     280 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_MOPED_ALLOWED;</span>
+<span class="lineNum">     281 </span>                :            :   }
+<span class="lineNum">     282 </span>                :<span class="lineCov">        124 :   if (str == std::string(&quot;SUPPLEMENT_MOPED_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     283 </span>                :            :   {
+<span class="lineNum">     284 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_MOPED_ALLOWED;</span>
+<span class="lineNum">     285 </span>                :            :   }
+<span class="lineNum">     286 </span>                :<span class="lineCov">        123 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_TRAM_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     287 </span>                :            :   {
+<span class="lineNum">     288 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_TRAM_ALLOWED;</span>
+<span class="lineNum">     289 </span>                :            :   }
+<span class="lineNum">     290 </span>                :<span class="lineCov">        122 :   if (str == std::string(&quot;SUPPLEMENT_TRAM_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     291 </span>                :            :   {
+<span class="lineNum">     292 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_TRAM_ALLOWED;</span>
+<span class="lineNum">     293 </span>                :            :   }
+<span class="lineNum">     294 </span>                :<span class="lineCov">        121 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_FORESTAL_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     295 </span>                :            :   {
+<span class="lineNum">     296 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_FORESTAL_ALLOWED;</span>
+<span class="lineNum">     297 </span>                :            :   }
+<span class="lineNum">     298 </span>                :<span class="lineCov">        120 :   if (str == std::string(&quot;SUPPLEMENT_FORESTAL_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     299 </span>                :            :   {
+<span class="lineNum">     300 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_FORESTAL_ALLOWED;</span>
+<span class="lineNum">     301 </span>                :            :   }
+<span class="lineNum">     302 </span>[<span class="branchCov" title="Branch 2 was taken 119 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 118 times"> + </span>]:<span class="lineCov">        119 :   if (str == std::string(</span>
+<span class="lineNum">     303 </span>                :            :                &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE
+<span class="lineNum">     304 </span>                :            :   {
+<span class="lineNum">     305 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED;</span>
+<span class="lineNum">     306 </span>                :            :   }
+<span class="lineNum">     307 </span>                :<span class="lineCov">        118 :   if (str == std::string(&quot;SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     308 </span>                :            :   {
+<span class="lineNum">     309 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED;</span>
+<span class="lineNum">     310 </span>                :            :   }
+<span class="lineNum">     311 </span>[<span class="branchCov" title="Branch 2 was taken 117 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 116 times"> + </span>]:<span class="lineCov">        117 :   if (str == std::string(</span>
+<span class="lineNum">     312 </span>                :            :                &quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN&quot;)) // LCOV_EXCL_BR_LINE
+<span class="lineNum">     313 </span>                :            :   {
+<span class="lineNum">     314 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN;</span>
+<span class="lineNum">     315 </span>                :            :   }
+<span class="lineNum">     316 </span>                :<span class="lineCov">        116 :   if (str == std::string(&quot;SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     317 </span>                :            :   {
+<span class="lineNum">     318 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN;</span>
+<span class="lineNum">     319 </span>                :            :   }
+<span class="lineNum">     320 </span>                :<span class="lineCov">        115 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_RAILWAY_ONLY&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     321 </span>                :            :   {
+<span class="lineNum">     322 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_RAILWAY_ONLY;</span>
+<span class="lineNum">     323 </span>                :            :   }
+<span class="lineNum">     324 </span>                :<span class="lineCov">        114 :   if (str == std::string(&quot;SUPPLEMENT_RAILWAY_ONLY&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     325 </span>                :            :   {
+<span class="lineNum">     326 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_RAILWAY_ONLY;</span>
+<span class="lineNum">     327 </span>                :            :   }
+<span class="lineNum">     328 </span>                :<span class="lineCov">        113 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_FOR_WEIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     329 </span>                :            :   {
+<span class="lineNum">     330 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_FOR_WEIGHT;</span>
+<span class="lineNum">     331 </span>                :            :   }
+<span class="lineNum">     332 </span>                :<span class="lineCov">        112 :   if (str == std::string(&quot;SUPPLEMENT_APPLIES_FOR_WEIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     333 </span>                :            :   {
+<span class="lineNum">     334 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_APPLIES_FOR_WEIGHT;</span>
+<span class="lineNum">     335 </span>                :            :   }
+<span class="lineNum">     336 </span>                :<span class="lineCov">        111 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::DANGER&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     337 </span>                :            :   {
+<span class="lineNum">     338 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::DANGER;</span>
+<span class="lineNum">     339 </span>                :            :   }
+<span class="lineNum">     340 </span>                :<span class="lineCov">        110 :   if (str == std::string(&quot;DANGER&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     341 </span>                :            :   {
+<span class="lineNum">     342 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::DANGER;</span>
+<span class="lineNum">     343 </span>                :            :   }
+<span class="lineNum">     344 </span>                :<span class="lineCov">        109 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::LANES_MERGING&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     345 </span>                :            :   {
+<span class="lineNum">     346 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::LANES_MERGING;</span>
+<span class="lineNum">     347 </span>                :            :   }
+<span class="lineNum">     348 </span>                :<span class="lineCov">        108 :   if (str == std::string(&quot;LANES_MERGING&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     349 </span>                :            :   {
+<span class="lineNum">     350 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::LANES_MERGING;</span>
+<span class="lineNum">     351 </span>                :            :   }
+<span class="lineNum">     352 </span>                :<span class="lineCov">        107 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_PEDESTRIAN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     353 </span>                :            :   {
+<span class="lineNum">     354 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_PEDESTRIAN;</span>
+<span class="lineNum">     355 </span>                :            :   }
+<span class="lineNum">     356 </span>                :<span class="lineCov">        106 :   if (str == std::string(&quot;CAUTION_PEDESTRIAN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     357 </span>                :            :   {
+<span class="lineNum">     358 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_PEDESTRIAN;</span>
+<span class="lineNum">     359 </span>                :            :   }
+<span class="lineNum">     360 </span>                :<span class="lineCov">        105 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_CHILDREN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     361 </span>                :            :   {
+<span class="lineNum">     362 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_CHILDREN;</span>
+<span class="lineNum">     363 </span>                :            :   }
+<span class="lineNum">     364 </span>                :<span class="lineCov">        104 :   if (str == std::string(&quot;CAUTION_CHILDREN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     365 </span>                :            :   {
+<span class="lineNum">     366 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_CHILDREN;</span>
+<span class="lineNum">     367 </span>                :            :   }
+<span class="lineNum">     368 </span>                :<span class="lineCov">        103 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     369 </span>                :            :   {
+<span class="lineNum">     370 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_BICYCLE;</span>
+<span class="lineNum">     371 </span>                :            :   }
+<span class="lineNum">     372 </span>                :<span class="lineCov">        102 :   if (str == std::string(&quot;CAUTION_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     373 </span>                :            :   {
+<span class="lineNum">     374 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_BICYCLE;</span>
+<span class="lineNum">     375 </span>                :            :   }
+<span class="lineNum">     376 </span>                :<span class="lineCov">        101 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_ANIMALS&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     377 </span>                :            :   {
+<span class="lineNum">     378 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_ANIMALS;</span>
+<span class="lineNum">     379 </span>                :            :   }
+<span class="lineNum">     380 </span>                :<span class="lineCov">        100 :   if (str == std::string(&quot;CAUTION_ANIMALS&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     381 </span>                :            :   {
+<span class="lineNum">     382 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_ANIMALS;</span>
+<span class="lineNum">     383 </span>                :            :   }
+<span class="lineNum">     384 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 98 times"> + </span>]:<span class="lineCov">        198 :   if (str</span>
+<span class="lineNum">     385 </span>                :<span class="lineCov">        198 :       == std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING_WITH_BARRIER&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     386 </span>                :            :   {
+<span class="lineNum">     387 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING_WITH_BARRIER;</span>
+<span class="lineNum">     388 </span>                :            :   }
+<span class="lineNum">     389 </span>                :<span class="lineCov">         98 :   if (str == std::string(&quot;CAUTION_RAIL_CROSSING_WITH_BARRIER&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     390 </span>                :            :   {
+<span class="lineNum">     391 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING_WITH_BARRIER;</span>
+<span class="lineNum">     392 </span>                :            :   }
+<span class="lineNum">     393 </span>                :<span class="lineCov">         97 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     394 </span>                :            :   {
+<span class="lineNum">     395 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING;</span>
+<span class="lineNum">     396 </span>                :            :   }
+<span class="lineNum">     397 </span>                :<span class="lineCov">         96 :   if (str == std::string(&quot;CAUTION_RAIL_CROSSING&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     398 </span>                :            :   {
+<span class="lineNum">     399 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CAUTION_RAIL_CROSSING;</span>
+<span class="lineNum">     400 </span>                :            :   }
+<span class="lineNum">     401 </span>                :<span class="lineCov">         95 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::YIELD_TRAIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     402 </span>                :            :   {
+<span class="lineNum">     403 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::YIELD_TRAIN;</span>
+<span class="lineNum">     404 </span>                :            :   }
+<span class="lineNum">     405 </span>                :<span class="lineCov">         94 :   if (str == std::string(&quot;YIELD_TRAIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     406 </span>                :            :   {
+<span class="lineNum">     407 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::YIELD_TRAIN;</span>
+<span class="lineNum">     408 </span>                :            :   }
+<span class="lineNum">     409 </span>                :<span class="lineCov">         93 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::YIELD&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     410 </span>                :            :   {
+<span class="lineNum">     411 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::YIELD;</span>
+<span class="lineNum">     412 </span>                :            :   }
+<span class="lineNum">     413 </span>                :<span class="lineCov">         92 :   if (str == std::string(&quot;YIELD&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     414 </span>                :            :   {
+<span class="lineNum">     415 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::YIELD;</span>
+<span class="lineNum">     416 </span>                :            :   }
+<span class="lineNum">     417 </span>                :<span class="lineCov">         91 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::STOP&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     418 </span>                :            :   {
+<span class="lineNum">     419 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::STOP;</span>
+<span class="lineNum">     420 </span>                :            :   }
+<span class="lineNum">     421 </span>                :<span class="lineCov">         90 :   if (str == std::string(&quot;STOP&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     422 </span>                :            :   {
+<span class="lineNum">     423 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::STOP;</span>
+<span class="lineNum">     424 </span>                :            :   }
+<span class="lineNum">     425 </span>                :<span class="lineCov">         89 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_RIGHT_TURN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     426 </span>                :            :   {
+<span class="lineNum">     427 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_RIGHT_TURN;</span>
+<span class="lineNum">     428 </span>                :            :   }
+<span class="lineNum">     429 </span>                :<span class="lineCov">         88 :   if (str == std::string(&quot;REQUIRED_RIGHT_TURN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     430 </span>                :            :   {
+<span class="lineNum">     431 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_RIGHT_TURN;</span>
+<span class="lineNum">     432 </span>                :            :   }
+<span class="lineNum">     433 </span>                :<span class="lineCov">         87 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_LEFT_TURN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     434 </span>                :            :   {
+<span class="lineNum">     435 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_LEFT_TURN;</span>
+<span class="lineNum">     436 </span>                :            :   }
+<span class="lineNum">     437 </span>                :<span class="lineCov">         86 :   if (str == std::string(&quot;REQUIRED_LEFT_TURN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     438 </span>                :            :   {
+<span class="lineNum">     439 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_LEFT_TURN;</span>
+<span class="lineNum">     440 </span>                :            :   }
+<span class="lineNum">     441 </span>                :<span class="lineCov">         85 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     442 </span>                :            :   {
+<span class="lineNum">     443 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT;</span>
+<span class="lineNum">     444 </span>                :            :   }
+<span class="lineNum">     445 </span>                :<span class="lineCov">         84 :   if (str == std::string(&quot;REQUIRED_STRAIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     446 </span>                :            :   {
+<span class="lineNum">     447 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT;</span>
+<span class="lineNum">     448 </span>                :            :   }
+<span class="lineNum">     449 </span>                :<span class="lineCov">         83 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_RIGHT_TURN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     450 </span>                :            :   {
+<span class="lineNum">     451 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_RIGHT_TURN;</span>
+<span class="lineNum">     452 </span>                :            :   }
+<span class="lineNum">     453 </span>                :<span class="lineCov">         82 :   if (str == std::string(&quot;REQUIRED_STRAIGHT_OR_RIGHT_TURN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     454 </span>                :            :   {
+<span class="lineNum">     455 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_RIGHT_TURN;</span>
+<span class="lineNum">     456 </span>                :            :   }
+<span class="lineNum">     457 </span>                :<span class="lineCov">         81 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_LEFT_TURN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     458 </span>                :            :   {
+<span class="lineNum">     459 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_LEFT_TURN;</span>
+<span class="lineNum">     460 </span>                :            :   }
+<span class="lineNum">     461 </span>                :<span class="lineCov">         80 :   if (str == std::string(&quot;REQUIRED_STRAIGHT_OR_LEFT_TURN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     462 </span>                :            :   {
+<span class="lineNum">     463 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::REQUIRED_STRAIGHT_OR_LEFT_TURN;</span>
+<span class="lineNum">     464 </span>                :            :   }
+<span class="lineNum">     465 </span>                :<span class="lineCov">         79 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ROUNDABOUT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     466 </span>                :            :   {
+<span class="lineNum">     467 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ROUNDABOUT;</span>
+<span class="lineNum">     468 </span>                :            :   }
+<span class="lineNum">     469 </span>                :<span class="lineCov">         78 :   if (str == std::string(&quot;ROUNDABOUT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     470 </span>                :            :   {
+<span class="lineNum">     471 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ROUNDABOUT;</span>
+<span class="lineNum">     472 </span>                :            :   }
+<span class="lineNum">     473 </span>                :<span class="lineCov">         77 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::PASS_RIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     474 </span>                :            :   {
+<span class="lineNum">     475 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::PASS_RIGHT;</span>
+<span class="lineNum">     476 </span>                :            :   }
+<span class="lineNum">     477 </span>                :<span class="lineCov">         76 :   if (str == std::string(&quot;PASS_RIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     478 </span>                :            :   {
+<span class="lineNum">     479 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::PASS_RIGHT;</span>
+<span class="lineNum">     480 </span>                :            :   }
+<span class="lineNum">     481 </span>                :<span class="lineCov">         75 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::PASS_LEFT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     482 </span>                :            :   {
+<span class="lineNum">     483 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::PASS_LEFT;</span>
+<span class="lineNum">     484 </span>                :            :   }
+<span class="lineNum">     485 </span>                :<span class="lineCov">         74 :   if (str == std::string(&quot;PASS_LEFT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     486 </span>                :            :   {
+<span class="lineNum">     487 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::PASS_LEFT;</span>
+<span class="lineNum">     488 </span>                :            :   }
+<span class="lineNum">     489 </span>                :<span class="lineCov">         73 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::BYBICLE_PATH&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     490 </span>                :            :   {
+<span class="lineNum">     491 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::BYBICLE_PATH;</span>
+<span class="lineNum">     492 </span>                :            :   }
+<span class="lineNum">     493 </span>                :<span class="lineCov">         72 :   if (str == std::string(&quot;BYBICLE_PATH&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     494 </span>                :            :   {
+<span class="lineNum">     495 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::BYBICLE_PATH;</span>
+<span class="lineNum">     496 </span>                :            :   }
+<span class="lineNum">     497 </span>                :<span class="lineCov">         71 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::FOOTWALK&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     498 </span>                :            :   {
+<span class="lineNum">     499 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FOOTWALK;</span>
+<span class="lineNum">     500 </span>                :            :   }
+<span class="lineNum">     501 </span>                :<span class="lineCov">         70 :   if (str == std::string(&quot;FOOTWALK&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     502 </span>                :            :   {
+<span class="lineNum">     503 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FOOTWALK;</span>
+<span class="lineNum">     504 </span>                :            :   }
+<span class="lineNum">     505 </span>                :<span class="lineCov">         69 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SHARED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     506 </span>                :            :   {
+<span class="lineNum">     507 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SHARED;</span>
+<span class="lineNum">     508 </span>                :            :   }
+<span class="lineNum">     509 </span>                :<span class="lineCov">         68 :   if (str == std::string(&quot;FOOTWALK_BICYCLE_SHARED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     510 </span>                :            :   {
+<span class="lineNum">     511 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SHARED;</span>
+<span class="lineNum">     512 </span>                :            :   }
+<span class="lineNum">     513 </span>                :<span class="lineCov">         67 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_RIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     514 </span>                :            :   {
+<span class="lineNum">     515 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_RIGHT;</span>
+<span class="lineNum">     516 </span>                :            :   }
+<span class="lineNum">     517 </span>                :<span class="lineCov">         66 :   if (str == std::string(&quot;FOOTWALK_BICYCLE_SEP_RIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     518 </span>                :            :   {
+<span class="lineNum">     519 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_RIGHT;</span>
+<span class="lineNum">     520 </span>                :            :   }
+<span class="lineNum">     521 </span>                :<span class="lineCov">         65 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_LEFT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     522 </span>                :            :   {
+<span class="lineNum">     523 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_LEFT;</span>
+<span class="lineNum">     524 </span>                :            :   }
+<span class="lineNum">     525 </span>                :<span class="lineCov">         64 :   if (str == std::string(&quot;FOOTWALK_BICYCLE_SEP_LEFT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     526 </span>                :            :   {
+<span class="lineNum">     527 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FOOTWALK_BICYCLE_SEP_LEFT;</span>
+<span class="lineNum">     528 </span>                :            :   }
+<span class="lineNum">     529 </span>                :<span class="lineCov">         63 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::PEDESTRIAN_AREA_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     530 </span>                :            :   {
+<span class="lineNum">     531 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::PEDESTRIAN_AREA_BEGIN;</span>
+<span class="lineNum">     532 </span>                :            :   }
+<span class="lineNum">     533 </span>                :<span class="lineCov">         62 :   if (str == std::string(&quot;PEDESTRIAN_AREA_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     534 </span>                :            :   {
+<span class="lineNum">     535 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::PEDESTRIAN_AREA_BEGIN;</span>
+<span class="lineNum">     536 </span>                :            :   }
+<span class="lineNum">     537 </span>                :<span class="lineCov">         61 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     538 </span>                :            :   {
+<span class="lineNum">     539 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN;</span>
+<span class="lineNum">     540 </span>                :            :   }
+<span class="lineNum">     541 </span>                :<span class="lineCov">         60 :   if (str == std::string(&quot;ACCESS_FORBIDDEN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     542 </span>                :            :   {
+<span class="lineNum">     543 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN;</span>
+<span class="lineNum">     544 </span>                :            :   }
+<span class="lineNum">     545 </span>                :<span class="lineCov">         59 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_TRUCKS&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     546 </span>                :            :   {
+<span class="lineNum">     547 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_TRUCKS;</span>
+<span class="lineNum">     548 </span>                :            :   }
+<span class="lineNum">     549 </span>                :<span class="lineCov">         58 :   if (str == std::string(&quot;ACCESS_FORBIDDEN_TRUCKS&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     550 </span>                :            :   {
+<span class="lineNum">     551 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_TRUCKS;</span>
+<span class="lineNum">     552 </span>                :            :   }
+<span class="lineNum">     553 </span>                :<span class="lineCov">         57 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     554 </span>                :            :   {
+<span class="lineNum">     555 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_BICYCLE;</span>
+<span class="lineNum">     556 </span>                :            :   }
+<span class="lineNum">     557 </span>                :<span class="lineCov">         56 :   if (str == std::string(&quot;ACCESS_FORBIDDEN_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     558 </span>                :            :   {
+<span class="lineNum">     559 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_BICYCLE;</span>
+<span class="lineNum">     560 </span>                :            :   }
+<span class="lineNum">     561 </span>                :<span class="lineCov">         55 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_MOTORVEHICLES&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     562 </span>                :            :   {
+<span class="lineNum">     563 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_MOTORVEHICLES;</span>
+<span class="lineNum">     564 </span>                :            :   }
+<span class="lineNum">     565 </span>                :<span class="lineCov">         54 :   if (str == std::string(&quot;ACCESS_FORBIDDEN_MOTORVEHICLES&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     566 </span>                :            :   {
+<span class="lineNum">     567 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_MOTORVEHICLES;</span>
+<span class="lineNum">     568 </span>                :            :   }
+<span class="lineNum">     569 </span>                :<span class="lineCov">         53 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WEIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     570 </span>                :            :   {
+<span class="lineNum">     571 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WEIGHT;</span>
+<span class="lineNum">     572 </span>                :            :   }
+<span class="lineNum">     573 </span>                :<span class="lineCov">         52 :   if (str == std::string(&quot;ACCESS_FORBIDDEN_WEIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     574 </span>                :            :   {
+<span class="lineNum">     575 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WEIGHT;</span>
+<span class="lineNum">     576 </span>                :            :   }
+<span class="lineNum">     577 </span>                :<span class="lineCov">         51 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WIDTH&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     578 </span>                :            :   {
+<span class="lineNum">     579 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WIDTH;</span>
+<span class="lineNum">     580 </span>                :            :   }
+<span class="lineNum">     581 </span>                :<span class="lineCov">         50 :   if (str == std::string(&quot;ACCESS_FORBIDDEN_WIDTH&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     582 </span>                :            :   {
+<span class="lineNum">     583 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WIDTH;</span>
+<span class="lineNum">     584 </span>                :            :   }
+<span class="lineNum">     585 </span>                :<span class="lineCov">         49 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_HEIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     586 </span>                :            :   {
+<span class="lineNum">     587 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_HEIGHT;</span>
+<span class="lineNum">     588 </span>                :            :   }
+<span class="lineNum">     589 </span>                :<span class="lineCov">         48 :   if (str == std::string(&quot;ACCESS_FORBIDDEN_HEIGHT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     590 </span>                :            :   {
+<span class="lineNum">     591 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_HEIGHT;</span>
+<span class="lineNum">     592 </span>                :            :   }
+<span class="lineNum">     593 </span>                :<span class="lineCov">         47 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WRONG_DIR&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     594 </span>                :            :   {
+<span class="lineNum">     595 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WRONG_DIR;</span>
+<span class="lineNum">     596 </span>                :            :   }
+<span class="lineNum">     597 </span>                :<span class="lineCov">         46 :   if (str == std::string(&quot;ACCESS_FORBIDDEN_WRONG_DIR&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     598 </span>                :            :   {
+<span class="lineNum">     599 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ACCESS_FORBIDDEN_WRONG_DIR;</span>
+<span class="lineNum">     600 </span>                :            :   }
+<span class="lineNum">     601 </span>                :<span class="lineCov">         45 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     602 </span>                :            :   {
+<span class="lineNum">     603 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_BEGIN;</span>
+<span class="lineNum">     604 </span>                :            :   }
+<span class="lineNum">     605 </span>                :<span class="lineCov">         44 :   if (str == std::string(&quot;ENVIORNMENT_ZONE_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     606 </span>                :            :   {
+<span class="lineNum">     607 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_BEGIN;</span>
+<span class="lineNum">     608 </span>                :            :   }
+<span class="lineNum">     609 </span>                :<span class="lineCov">         43 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     610 </span>                :            :   {
+<span class="lineNum">     611 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_END;</span>
+<span class="lineNum">     612 </span>                :            :   }
+<span class="lineNum">     613 </span>                :<span class="lineCov">         42 :   if (str == std::string(&quot;ENVIORNMENT_ZONE_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     614 </span>                :            :   {
+<span class="lineNum">     615 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::ENVIORNMENT_ZONE_END;</span>
+<span class="lineNum">     616 </span>                :            :   }
+<span class="lineNum">     617 </span>                :<span class="lineCov">         41 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::MAX_SPEED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     618 </span>                :            :   {
+<span class="lineNum">     619 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MAX_SPEED;</span>
+<span class="lineNum">     620 </span>                :            :   }
+<span class="lineNum">     621 </span>                :<span class="lineCov">         40 :   if (str == std::string(&quot;MAX_SPEED&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     622 </span>                :            :   {
+<span class="lineNum">     623 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MAX_SPEED;</span>
+<span class="lineNum">     624 </span>                :            :   }
+<span class="lineNum">     625 </span>                :<span class="lineCov">         39 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     626 </span>                :            :   {
+<span class="lineNum">     627 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_BEGIN;</span>
+<span class="lineNum">     628 </span>                :            :   }
+<span class="lineNum">     629 </span>                :<span class="lineCov">         38 :   if (str == std::string(&quot;SPEED_ZONE_30_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     630 </span>                :            :   {
+<span class="lineNum">     631 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_BEGIN;</span>
+<span class="lineNum">     632 </span>                :            :   }
+<span class="lineNum">     633 </span>                :<span class="lineCov">         37 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     634 </span>                :            :   {
+<span class="lineNum">     635 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_END;</span>
+<span class="lineNum">     636 </span>                :            :   }
+<span class="lineNum">     637 </span>                :<span class="lineCov">         36 :   if (str == std::string(&quot;SPEED_ZONE_30_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     638 </span>                :            :   {
+<span class="lineNum">     639 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::SPEED_ZONE_30_END;</span>
+<span class="lineNum">     640 </span>                :            :   }
+<span class="lineNum">     641 </span>                :<span class="lineCov">         35 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::HAS_WAY_NEXT_INTERSECTION&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     642 </span>                :            :   {
+<span class="lineNum">     643 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::HAS_WAY_NEXT_INTERSECTION;</span>
+<span class="lineNum">     644 </span>                :            :   }
+<span class="lineNum">     645 </span>                :<span class="lineCov">         34 :   if (str == std::string(&quot;HAS_WAY_NEXT_INTERSECTION&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     646 </span>                :            :   {
+<span class="lineNum">     647 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::HAS_WAY_NEXT_INTERSECTION;</span>
+<span class="lineNum">     648 </span>                :            :   }
+<span class="lineNum">     649 </span>                :<span class="lineCov">         33 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::PRIORITY_WAY&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     650 </span>                :            :   {
+<span class="lineNum">     651 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::PRIORITY_WAY;</span>
+<span class="lineNum">     652 </span>                :            :   }
+<span class="lineNum">     653 </span>                :<span class="lineCov">         32 :   if (str == std::string(&quot;PRIORITY_WAY&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     654 </span>                :            :   {
+<span class="lineNum">     655 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::PRIORITY_WAY;</span>
+<span class="lineNum">     656 </span>                :            :   }
+<span class="lineNum">     657 </span>                :<span class="lineCov">         31 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::CITY_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     658 </span>                :            :   {
+<span class="lineNum">     659 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CITY_BEGIN;</span>
+<span class="lineNum">     660 </span>                :            :   }
+<span class="lineNum">     661 </span>                :<span class="lineCov">         30 :   if (str == std::string(&quot;CITY_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     662 </span>                :            :   {
+<span class="lineNum">     663 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CITY_BEGIN;</span>
+<span class="lineNum">     664 </span>                :            :   }
+<span class="lineNum">     665 </span>                :<span class="lineCov">         29 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::CITY_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     666 </span>                :            :   {
+<span class="lineNum">     667 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CITY_END;</span>
+<span class="lineNum">     668 </span>                :            :   }
+<span class="lineNum">     669 </span>                :<span class="lineCov">         28 :   if (str == std::string(&quot;CITY_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     670 </span>                :            :   {
+<span class="lineNum">     671 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CITY_END;</span>
+<span class="lineNum">     672 </span>                :            :   }
+<span class="lineNum">     673 </span>                :<span class="lineCov">         27 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::MOTORWAY_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     674 </span>                :            :   {
+<span class="lineNum">     675 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MOTORWAY_BEGIN;</span>
+<span class="lineNum">     676 </span>                :            :   }
+<span class="lineNum">     677 </span>                :<span class="lineCov">         26 :   if (str == std::string(&quot;MOTORWAY_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     678 </span>                :            :   {
+<span class="lineNum">     679 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MOTORWAY_BEGIN;</span>
+<span class="lineNum">     680 </span>                :            :   }
+<span class="lineNum">     681 </span>                :<span class="lineCov">         25 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::MOTORWAY_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     682 </span>                :            :   {
+<span class="lineNum">     683 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MOTORWAY_END;</span>
+<span class="lineNum">     684 </span>                :            :   }
+<span class="lineNum">     685 </span>                :<span class="lineCov">         24 :   if (str == std::string(&quot;MOTORWAY_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     686 </span>                :            :   {
+<span class="lineNum">     687 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MOTORWAY_END;</span>
+<span class="lineNum">     688 </span>                :            :   }
+<span class="lineNum">     689 </span>                :<span class="lineCov">         23 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::MOTORVEHICLE_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     690 </span>                :            :   {
+<span class="lineNum">     691 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MOTORVEHICLE_BEGIN;</span>
+<span class="lineNum">     692 </span>                :            :   }
+<span class="lineNum">     693 </span>                :<span class="lineCov">         22 :   if (str == std::string(&quot;MOTORVEHICLE_BEGIN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     694 </span>                :            :   {
+<span class="lineNum">     695 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MOTORVEHICLE_BEGIN;</span>
+<span class="lineNum">     696 </span>                :            :   }
+<span class="lineNum">     697 </span>                :<span class="lineCov">         21 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::MOTORVEHICLE_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     698 </span>                :            :   {
+<span class="lineNum">     699 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MOTORVEHICLE_END;</span>
+<span class="lineNum">     700 </span>                :            :   }
+<span class="lineNum">     701 </span>                :<span class="lineCov">         20 :   if (str == std::string(&quot;MOTORVEHICLE_END&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     702 </span>                :            :   {
+<span class="lineNum">     703 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::MOTORVEHICLE_END;</span>
+<span class="lineNum">     704 </span>                :            :   }
+<span class="lineNum">     705 </span>                :<span class="lineCov">         19 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::INFO_MOTORWAY_INFO&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     706 </span>                :            :   {
+<span class="lineNum">     707 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::INFO_MOTORWAY_INFO;</span>
+<span class="lineNum">     708 </span>                :            :   }
+<span class="lineNum">     709 </span>                :<span class="lineCov">         18 :   if (str == std::string(&quot;INFO_MOTORWAY_INFO&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     710 </span>                :            :   {
+<span class="lineNum">     711 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::INFO_MOTORWAY_INFO;</span>
+<span class="lineNum">     712 </span>                :            :   }
+<span class="lineNum">     713 </span>                :<span class="lineCov">         17 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::CUL_DE_SAC&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     714 </span>                :            :   {
+<span class="lineNum">     715 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CUL_DE_SAC;</span>
+<span class="lineNum">     716 </span>                :            :   }
+<span class="lineNum">     717 </span>                :<span class="lineCov">         16 :   if (str == std::string(&quot;CUL_DE_SAC&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     718 </span>                :            :   {
+<span class="lineNum">     719 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CUL_DE_SAC;</span>
+<span class="lineNum">     720 </span>                :            :   }
+<span class="lineNum">     721 </span>                :<span class="lineCov">         15 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::CUL_DE_SAC_EXCEPT_PED_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     722 </span>                :            :   {
+<span class="lineNum">     723 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CUL_DE_SAC_EXCEPT_PED_BICYCLE;</span>
+<span class="lineNum">     724 </span>                :            :   }
+<span class="lineNum">     725 </span>                :<span class="lineCov">         14 :   if (str == std::string(&quot;CUL_DE_SAC_EXCEPT_PED_BICYCLE&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     726 </span>                :            :   {
+<span class="lineNum">     727 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::CUL_DE_SAC_EXCEPT_PED_BICYCLE;</span>
+<span class="lineNum">     728 </span>                :            :   }
+<span class="lineNum">     729 </span>                :<span class="lineCov">         13 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::INFO_NUMBER_OF_AUTOBAHN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     730 </span>                :            :   {
+<span class="lineNum">     731 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::INFO_NUMBER_OF_AUTOBAHN;</span>
+<span class="lineNum">     732 </span>                :            :   }
+<span class="lineNum">     733 </span>                :<span class="lineCov">         12 :   if (str == std::string(&quot;INFO_NUMBER_OF_AUTOBAHN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     734 </span>                :            :   {
+<span class="lineNum">     735 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::INFO_NUMBER_OF_AUTOBAHN;</span>
+<span class="lineNum">     736 </span>                :            :   }
+<span class="lineNum">     737 </span>                :<span class="lineCov">         11 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_AUTOBAHN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     738 </span>                :            :   {
+<span class="lineNum">     739 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_AUTOBAHN;</span>
+<span class="lineNum">     740 </span>                :            :   }
+<span class="lineNum">     741 </span>                :<span class="lineCov">         10 :   if (str == std::string(&quot;DIRECTION_TURN_TO_AUTOBAHN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     742 </span>                :            :   {
+<span class="lineNum">     743 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_AUTOBAHN;</span>
+<span class="lineNum">     744 </span>                :            :   }
+<span class="lineNum">     745 </span>                :<span class="lineCov">          9 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_LOCAL&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     746 </span>                :            :   {
+<span class="lineNum">     747 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_LOCAL;</span>
+<span class="lineNum">     748 </span>                :            :   }
+<span class="lineNum">     749 </span>                :<span class="lineCov">          8 :   if (str == std::string(&quot;DIRECTION_TURN_TO_LOCAL&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     750 </span>                :            :   {
+<span class="lineNum">     751 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::DIRECTION_TURN_TO_LOCAL;</span>
+<span class="lineNum">     752 </span>                :            :   }
+<span class="lineNum">     753 </span>                :<span class="lineCov">          7 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::DESTINATION_BOARD&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     754 </span>                :            :   {
+<span class="lineNum">     755 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::DESTINATION_BOARD;</span>
+<span class="lineNum">     756 </span>                :            :   }
+<span class="lineNum">     757 </span>                :<span class="lineCov">          6 :   if (str == std::string(&quot;DESTINATION_BOARD&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     758 </span>                :            :   {
+<span class="lineNum">     759 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::DESTINATION_BOARD;</span>
+<span class="lineNum">     760 </span>                :            :   }
+<span class="lineNum">     761 </span>                :<span class="lineCov">          5 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::FREE_TEXT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     762 </span>                :            :   {
+<span class="lineNum">     763 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FREE_TEXT;</span>
+<span class="lineNum">     764 </span>                :            :   }
+<span class="lineNum">     765 </span>                :<span class="lineCov">          4 :   if (str == std::string(&quot;FREE_TEXT&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     766 </span>                :            :   {
+<span class="lineNum">     767 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::FREE_TEXT;</span>
+<span class="lineNum">     768 </span>                :            :   }
+<span class="lineNum">     769 </span>                :<span class="lineCov">          3 :   if (str == std::string(&quot;::ad::map::landmark::TrafficSignType::UNKNOWN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     770 </span>                :            :   {
+<span class="lineNum">     771 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::UNKNOWN;</span>
+<span class="lineNum">     772 </span>                :            :   }
+<span class="lineNum">     773 </span>                :<span class="lineCov">          2 :   if (str == std::string(&quot;UNKNOWN&quot;)) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     774 </span>                :            :   {
+<span class="lineNum">     775 </span>                :<span class="lineCov">          1 :     return ::ad::map::landmark::TrafficSignType::UNKNOWN;</span>
+<a name="776"><span class="lineNum">     776 </span>                :            :   }</a>
+<span class="lineNum">     777 </span>                :<span class="lineCov">        147 :   throw std::out_of_range(&quot;Invalid enum literal&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     778 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

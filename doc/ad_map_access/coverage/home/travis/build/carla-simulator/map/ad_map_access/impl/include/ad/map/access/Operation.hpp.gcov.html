@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad-map-access - /home/travis/build/carla-simulator/map/ad_map_access/impl/include/ad/map/access/Operation.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../../../../../../index.html">top level</a> - <a href="index.html">home/travis/build/carla-simulator/map/ad_map_access/impl/include/ad/map/access</a> - Operation.hpp<span style="font-size: 80%;"> (source / <a href="Operation.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad-map-access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2020-04-20 14:52:26</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryHi">90.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
+<span class="lineNum">       2 </span>                :            : //
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       4 </span>                :            : //
+<span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
+<span class="lineNum">       6 </span>                :            : //
+<span class="lineNum">       7 </span>                :            : // ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : #pragma once
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : #include &lt;memory&gt;
+<span class="lineNum">      12 </span>                :            : #include &quot;ad/map/access/MapMetaDataValidInputRange.hpp&quot;
+<span class="lineNum">      13 </span>                :            : #include &quot;ad/map/access/Store.hpp&quot;
+<span class="lineNum">      14 </span>                :            : #include &quot;ad/map/config/PointOfInterest.hpp&quot;
+<span class="lineNum">      15 </span>                :            : #include &quot;ad/map/intersection/IntersectionType.hpp&quot;
+<span class="lineNum">      16 </span>                :            : #include &quot;ad/map/lane/Types.hpp&quot;
+<span class="lineNum">      17 </span>                :            : #include &quot;ad/map/route/Types.hpp&quot;
+<span class="lineNum">      18 </span>                :            : 
+<span class="lineNum">      19 </span>                :            : /** @brief namespace ad */
+<span class="lineNum">      20 </span>                :            : namespace ad {
+<span class="lineNum">      21 </span>                :            : /** @brief namespace map */
+<span class="lineNum">      22 </span>                :            : namespace map {
+<span class="lineNum">      23 </span>                :            : 
+<span class="lineNum">      24 </span>                :            : namespace point {
+<span class="lineNum">      25 </span>                :            : class CoordinateTransform;
+<span class="lineNum">      26 </span>                :            : } // namespace point
+<span class="lineNum">      27 </span>                :            : 
+<span class="lineNum">      28 </span>                :            : /** @brief namespace access */
+<span class="lineNum">      29 </span>                :            : namespace access {
+<span class="lineNum">      30 </span>                :            : 
+<span class="lineNum">      31 </span>                :            : /**
+<span class="lineNum">      32 </span>                :            :  * @brief checks if the given MapMetaData is valid
+<span class="lineNum">      33 </span>                :            :  *
+<a name="34"><span class="lineNum">      34 </span>                :            :  * The metaData is valid if it's within valid input range.</a>
+<span class="lineNum">      35 </span>                :            :  */
+<span class="lineNum">      36 </span>                :<span class="lineCov">         31 : inline bool isValid(MapMetaData const &amp;metaData, bool const logErrors = true)</span>
+<span class="lineNum">      37 </span>                :            : {
+<span class="lineNum">      38 </span>[<span class="branchCov" title="Branch 1 was taken 30 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 3 was taken 29 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">         31 :   bool isValidInputRange = withinValidInputRange(metaData, logErrors) &amp;&amp; (metaData.trafficType != TrafficType::INVALID);</span>
+<span class="lineNum">      39 </span>[<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 29 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">         31 :   if (!isValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      40 </span>                :            :   {
+<span class="lineNum">      41 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     spdlog::error(&quot;withinValidInputRange(::ad::map::access::MapMetaData)&gt;&gt; {} not valid&quot;, metaData);</span>
+<span class="lineNum">      42 </span>                :            :   }
+<span class="lineNum">      43 </span>                :<span class="lineCov">         31 :   return isValidInputRange;</span>
+<span class="lineNum">      44 </span>                :            : }
+<span class="lineNum">      45 </span>                :            : 
+<span class="lineNum">      46 </span>                :            : /**
+<span class="lineNum">      47 </span>                :            :  * @brief get the coordinate transformation object
+<span class="lineNum">      48 </span>                :            :  */
+<span class="lineNum">      49 </span>                :            : std::shared_ptr&lt;point::CoordinateTransform&gt; getCoordinateTransform();
+<span class="lineNum">      50 </span>                :            : 
+<span class="lineNum">      51 </span>                :            : /**
+<span class="lineNum">      52 </span>                :            :  * @brief initialize singleton with given configuration file
+<span class="lineNum">      53 </span>                :            :  *
+<span class="lineNum">      54 </span>                :            :  * The configuration file specifies all available maps, see ConfigFileHandler for details of the semantics
+<span class="lineNum">      55 </span>                :            :  * @return true if initialization was successful (i.e. config file exists or singleton was already initialized)
+<span class="lineNum">      56 </span>                :            :  * @return false if config file doesn't exist or the singleton was already initialized with a different config file
+<span class="lineNum">      57 </span>                :            :  */
+<span class="lineNum">      58 </span>                :            : bool init(std::string const &amp;configFileName);
+<span class="lineNum">      59 </span>                :            : 
+<span class="lineNum">      60 </span>                :            : /**
+<span class="lineNum">      61 </span>                :            :  * @brief initialize singleton with OpenDRIVE content
+<span class="lineNum">      62 </span>                :            :  *
+<span class="lineNum">      63 </span>                :            :  * @return true if initialization was successful (i.e. map content was valid or singleton was already initialized)
+<span class="lineNum">      64 </span>                :            :  * @return false if map content was invalid or the singleton was already initialized with a different config file
+<span class="lineNum">      65 </span>                :            :  */
+<span class="lineNum">      66 </span>                :            : bool initFromOpenDriveContent(std::string const &amp;openDriveContent,
+<span class="lineNum">      67 </span>                :            :                               double const overlapMargin,
+<span class="lineNum">      68 </span>                :            :                               intersection::IntersectionType const defaultIntersectionType,
+<span class="lineNum">      69 </span>                :            :                               landmark::TrafficLightType const defaultTrafficLightType
+<span class="lineNum">      70 </span>                :            :                               = landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN);
+<span class="lineNum">      71 </span>                :            : /**
+<span class="lineNum">      72 </span>                :            :  * @brief initialize singleton with given store
+<span class="lineNum">      73 </span>                :            :  *
+<span class="lineNum">      74 </span>                :            :  * No map files will be read. The store has to be filled by other means.
+<span class="lineNum">      75 </span>                :            :  */
+<span class="lineNum">      76 </span>                :            : bool init(Store::Ptr store);
+<span class="lineNum">      77 </span>                :            : 
+<span class="lineNum">      78 </span>                :            : /**
+<span class="lineNum">      79 </span>                :            :  * @brief remove all loaded maps and configuration
+<span class="lineNum">      80 </span>                :            :  */
+<span class="lineNum">      81 </span>                :            : void cleanup();
+<span class="lineNum">      82 </span>                :            : 
+<span class="lineNum">      83 </span>                :            : /**
+<span class="lineNum">      84 </span>                :            :  * @brief set the current ENU reference point
+<span class="lineNum">      85 </span>                :            :  *
+<span class="lineNum">      86 </span>                :            :  * @param[in] point the geo point defining the reference point
+<span class="lineNum">      87 </span>                :            :  */
+<span class="lineNum">      88 </span>                :            : void setENUReferencePoint(point::GeoPoint const &amp;point);
+<span class="lineNum">      89 </span>                :            : 
+<span class="lineNum">      90 </span>                :            : /**
+<span class="lineNum">      91 </span>                :            :  * @brief get the current ENU reference point set in the map
+<span class="lineNum">      92 </span>                :            :  *
+<span class="lineNum">      93 </span>                :            :  * @returns Set ENU reference point in Geo coordinates
+<span class="lineNum">      94 </span>                :            :  */
+<span class="lineNum">      95 </span>                :            : point::GeoPoint getENUReferencePoint();
+<span class="lineNum">      96 </span>                :            : 
+<span class="lineNum">      97 </span>                :            : /**
+<span class="lineNum">      98 </span>                :            :  * @brief check if ENU Reference Point is set
+<span class="lineNum">      99 </span>                :            :  */
+<span class="lineNum">     100 </span>                :            : bool isENUReferencePointSet();
+<span class="lineNum">     101 </span>                :            : 
+<span class="lineNum">     102 </span>                :            : /**
+<span class="lineNum">     103 </span>                :            :  * @brief get points of interest in the surrounding of a given geoPoint
+<span class="lineNum">     104 </span>                :            :  *
+<span class="lineNum">     105 </span>                :            :  * @param[in] geoPoint GeoPoint to be used to query the POIs
+<span class="lineNum">     106 </span>                :            :  * @param[in] radius radius to be use for the query
+<span class="lineNum">     107 </span>                :            :  *
+<span class="lineNum">     108 </span>                :            :  * @returns the list with the PointOfInterest within the queried region.
+<span class="lineNum">     109 </span>                :            :  */
+<span class="lineNum">     110 </span>                :            : std::vector&lt;config::PointOfInterest&gt; getPointsOfInterest(point::GeoPoint const &amp;geoPoint,
+<span class="lineNum">     111 </span>                :            :                                                          physics::Distance const &amp;radius);
+<span class="lineNum">     112 </span>                :            : 
+<span class="lineNum">     113 </span>                :            : /**
+<span class="lineNum">     114 </span>                :            :  * @brief get all points of interest
+<span class="lineNum">     115 </span>                :            :  *
+<span class="lineNum">     116 </span>                :            :  * @returns the complete list of PointOfInterest currently available
+<span class="lineNum">     117 </span>                :            :  */
+<span class="lineNum">     118 </span>                :            : std::vector&lt;config::PointOfInterest&gt; const &amp;getPointsOfInterest();
+<span class="lineNum">     119 </span>                :            : 
+<span class="lineNum">     120 </span>                :            : /**
+<span class="lineNum">     121 </span>                :            :  * @brief get a certain point of interest if exists
+<span class="lineNum">     122 </span>                :            :  *
+<span class="lineNum">     123 </span>                :            :  * Calls getPointsOfInterest() and searches for the point with the given name.
+<span class="lineNum">     124 </span>                :            :  *
+<span class="lineNum">     125 </span>                :            :  * @param[in] name the name of the POI to query
+<span class="lineNum">     126 </span>                :            :  * @param[out] poi the found PointOfInterest
+<span class="lineNum">     127 </span>                :            :  *
+<span class="lineNum">     128 </span>                :            :  * @returns \c true if the PointOfInterest with the given \a name if exits
+<span class="lineNum">     129 </span>                :            :  */
+<span class="lineNum">     130 </span>                :            : bool getPointOfInterest(std::string const &amp;name, config::PointOfInterest &amp;poi);
+<span class="lineNum">     131 </span>                :            : 
+<span class="lineNum">     132 </span>                :            : /**
+<span class="lineNum">     133 </span>                :            :  * @returns \c true if the map is a left hand traffic map
+<span class="lineNum">     134 </span>                :            :  */
+<span class="lineNum">     135 </span>                :            : bool isLeftHandedTraffic();
+<span class="lineNum">     136 </span>                :            : 
+<span class="lineNum">     137 </span>                :            : /**
+<span class="lineNum">     138 </span>                :            :  * @returns \c true if the map is a left hand traffic map
+<span class="lineNum">     139 </span>                :            :  */
+<span class="lineNum">     140 </span>                :            : bool isRightHandedTraffic();
+<span class="lineNum">     141 </span>                :            : 
+<span class="lineNum">     142 </span>                :            : /**
+<span class="lineNum">     143 </span>                :            :  * @returns reference to the map store object
+<span class="lineNum">     144 </span>                :            :  */
+<span class="lineNum">     145 </span>                :            : Store &amp;getStore();
+<span class="lineNum">     146 </span>                :            : 
+<span class="lineNum">     147 </span>                :            : } // namespace access
+<span class="lineNum">     148 </span>                :            : } // namespace map
+<span class="lineNum">     149 </span>                :            : } // namespace ad
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
