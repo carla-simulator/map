@@ -1,5 +1,3 @@
-build/
-install/
-log/
-*.bak
-*.pyc
+/build/
+/install/
+/log/
