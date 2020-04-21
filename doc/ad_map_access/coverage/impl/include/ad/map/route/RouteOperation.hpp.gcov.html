@@ -1,0 +1,1023 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - impl/include/ad/map/route/RouteOperation.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">impl/include/ad/map/route</a> - RouteOperation.hpp<span style="font-size: 80%;"> (source / <a href="RouteOperation.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">23</td>
+            <td class="headerCovTableEntry">23</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2020-04-21 11:01:25</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">28</td>
+            <td class="headerCovTableEntryLo">71.4 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
+<span class="lineNum">       2 </span>                :            : //
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       4 </span>                :            : //
+<span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
+<span class="lineNum">       6 </span>                :            : //
+<span class="lineNum">       7 </span>                :            : // ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : #pragma once
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : #include &quot;ad/map/lane/Types.hpp&quot;
+<span class="lineNum">      12 </span>                :            : #include &quot;ad/map/match/Types.hpp&quot;
+<span class="lineNum">      13 </span>                :            : #include &quot;ad/map/point/Types.hpp&quot;
+<span class="lineNum">      14 </span>                :            : #include &quot;ad/map/route/LaneIntervalOperation.hpp&quot;
+<span class="lineNum">      15 </span>                :            : #include &quot;ad/map/route/Types.hpp&quot;
+<span class="lineNum">      16 </span>                :            : #include &quot;ad/physics/Types.hpp&quot;
+<span class="lineNum">      17 </span>                :            : 
+<span class="lineNum">      18 </span>                :            : /* @brief namespace ad */
+<span class="lineNum">      19 </span>                :            : namespace ad {
+<span class="lineNum">      20 </span>                :            : /* @brief namespace map */
+<span class="lineNum">      21 </span>                :            : namespace map {
+<span class="lineNum">      22 </span>                :            : 
+<span class="lineNum">      23 </span>                :            : /** @brief namespace intersection */
+<span class="lineNum">      24 </span>                :            : namespace intersection {
+<span class="lineNum">      25 </span>                :            : /**
+<span class="lineNum">      26 </span>                :            :  * @brief forward declaration of Intersection class
+<span class="lineNum">      27 </span>                :            :  */
+<span class="lineNum">      28 </span>                :            : class Intersection;
+<span class="lineNum">      29 </span>                :            : }
+<span class="lineNum">      30 </span>                :            : 
+<span class="lineNum">      31 </span>                :            : /* @brief namespace route */
+<span class="lineNum">      32 </span>                :            : namespace route {
+<span class="lineNum">      33 </span>                :            : 
+<span class="lineNum">      34 </span>                :            : /**
+<span class="lineNum">      35 </span>                :            :  * @brief struct defining iterator information on a route
+<span class="lineNum">      36 </span>                :            :  */
+<a name="37"><span class="lineNum">      37 </span>                :            : struct RouteIterator</a>
+<span class="lineNum">      38 </span>                :            : {
+<span class="lineNum">      39 </span>                :<span class="lineCov">        395 :   RouteIterator(FullRoute const &amp;iRoute, RoadSegmentList::const_iterator const &amp;iRoadSegmentIterator)</span>
+<span class="lineNum">      40 </span>                :            :     : route(iRoute)
+<span class="lineNum">      41 </span>                :<span class="lineCov">        395 :     , roadSegmentIterator(iRoadSegmentIterator)</span>
+<span class="lineNum">      42 </span>                :            :   {
+<span class="lineNum">      43 </span>                :<span class="lineCov">        395 :   }</span>
+<span class="lineNum">      44 </span>                :            : 
+<span class="lineNum">      45 </span>                :            :   /**
+<a name="46"><span class="lineNum">      46 </span>                :            :    * @brief check for validity of the iterator</a>
+<span class="lineNum">      47 </span>                :            :    */
+<span class="lineNum">      48 </span>                :<span class="lineCov">         16 :   bool isValid() const</span>
+<span class="lineNum">      49 </span>                :            :   {
+<span class="lineNum">      50 </span>                :<span class="lineCov">         16 :     return roadSegmentIterator != std::end(route.roadSegments);</span>
+<span class="lineNum">      51 </span>                :            :   }
+<span class="lineNum">      52 </span>                :            : 
+<span class="lineNum">      53 </span>                :            :   /** @brief reference to the route */
+<span class="lineNum">      54 </span>                :            :   FullRoute const &amp;route;
+<span class="lineNum">      55 </span>                :            :   /** @brief iterator referencing an element of the queryRoute */
+<span class="lineNum">      56 </span>                :            :   RoadSegmentList::const_iterator roadSegmentIterator;
+<span class="lineNum">      57 </span>                :            : };
+<span class="lineNum">      58 </span>                :            : 
+<span class="lineNum">      59 </span>                :            : /**
+<span class="lineNum">      60 </span>                :            :  * @brief get the route iterator from a given route position
+<span class="lineNum">      61 </span>                :            :  *
+<span class="lineNum">      62 </span>                :            :  * @param[in] routePosition the route position to find
+<span class="lineNum">      63 </span>                :            :  * @param[in] route the route to check for the position
+<span class="lineNum">      64 </span>                :            :  *
+<span class="lineNum">      65 </span>                :            :  * @returns the RouteIterator pointing to the corresponding route segment.
+<span class="lineNum">      66 </span>                :            :  *  If the routePosition is not found an invalid RouteIterator is returned.
+<span class="lineNum">      67 </span>                :            :  */
+<span class="lineNum">      68 </span>                :            : RouteIterator getRouteIterator(route::RouteParaPoint const &amp;routePosition, route::FullRoute const &amp;route);
+<span class="lineNum">      69 </span>                :            : 
+<span class="lineNum">      70 </span>                :            : /**
+<span class="lineNum">      71 </span>                :            :  * @brief get the lane para points in respect to the given route parametric offset
+<span class="lineNum">      72 </span>                :            :  *
+<span class="lineNum">      73 </span>                :            :  * @param[in] routeParametricOffset the parametric offset in respect to the route
+<span class="lineNum">      74 </span>                :            :  * @param[in] laneInterval the laneInterval to consider, the whole lane interval is considered to be a full segment
+<span class="lineNum">      75 </span>                :            :  *   of a route.
+<span class="lineNum">      76 </span>                :            :  *
+<span class="lineNum">      77 </span>                :            :  * @returns the parametric point within the corresponding lane interval in respect to the given route parametric offset.
+<span class="lineNum">      78 </span>                :            :  */
+<span class="lineNum">      79 </span>                :            : point::ParaPoint getLaneParaPoint(physics::ParametricValue const &amp;routeParametricOffset,
+<span class="lineNum">      80 </span>                :            :                                   route::LaneInterval const &amp;laneInterval);
+<span class="lineNum">      81 </span>                :            : 
+<span class="lineNum">      82 </span>                :            : /**
+<span class="lineNum">      83 </span>                :            :  * @brief get the signed distance to a lane w.r.t to a given route (direction) for the map matched positions
+<span class="lineNum">      84 </span>                :            :  *
+<span class="lineNum">      85 </span>                :            :  * This check searches the mapMatchedPositions for the given \a checkLaneId and returns a signed distance value to the
+<span class="lineNum">      86 </span>                :            :  * lane.
+<span class="lineNum">      87 </span>                :            :  *
+<span class="lineNum">      88 </span>                :            :  * @param[in] checkLaneId the lane id to find
+<span class="lineNum">      89 </span>                :            :  * @param[in] route in which the lane should be in
+<span class="lineNum">      90 </span>                :            :  * @param[in] mapMatchedPositions the map matched positions to check
+<span class="lineNum">      91 </span>                :            :  *
+<span class="lineNum">      92 </span>                :            :  * @returns:
+<span class="lineNum">      93 </span>                :            :  * If not part of the mapMatchedPositions:  distance = std::numeric_limits&lt;physics::Distance&gt;::max()
+<span class="lineNum">      94 </span>                :            :  * If it's found and map matched type is:
+<span class="lineNum">      95 </span>                :            :  * - map matched position is on the lane: distance = 0
+<span class="lineNum">      96 </span>                :            :  * - map matched position is left of lane: distance &lt; 0
+<span class="lineNum">      97 </span>                :            :  * - map matched position is right of lane: distance &gt; 0
+<span class="lineNum">      98 </span>                :            :  *
+<span class="lineNum">      99 </span>                :            :  * @throws std::runtime_error if the lane is not found inside the route
+<span class="lineNum">     100 </span>                :            :  */
+<span class="lineNum">     101 </span>                :            : physics::Distance signedDistanceToLane(lane::LaneId const &amp;checkLaneId,
+<span class="lineNum">     102 </span>                :            :                                        FullRoute const &amp;route,
+<span class="lineNum">     103 </span>                :            :                                        match::MapMatchedPositionConfidenceList const &amp;mapMatchedPositions);
+<span class="lineNum">     104 </span>                :            : 
+<span class="lineNum">     105 </span>                :            : /**
+<span class="lineNum">     106 </span>                :            :  * @brief get the lane para points in respect to the given route position
+<span class="lineNum">     107 </span>                :            :  *
+<span class="lineNum">     108 </span>                :            :  * @param[in] routePosition the route position to find
+<span class="lineNum">     109 </span>                :            :  * @param[in] route the route to check for the position
+<span class="lineNum">     110 </span>                :            :  *
+<span class="lineNum">     111 </span>                :            :  * @returns the lane segment para points within the corresponding route segment.
+<span class="lineNum">     112 </span>                :            :  * If the routePosition is not found an empty list is returned.
+<span class="lineNum">     113 </span>                :            :  */
+<span class="lineNum">     114 </span>                :            : point::ParaPointList getLaneParaPoints(route::RouteParaPoint const &amp;routePosition, route::FullRoute const &amp;route);
+<span class="lineNum">     115 </span>                :            : 
+<span class="lineNum">     116 </span>                :            : /** @brief calculate the length of the provided full route
+<span class="lineNum">     117 </span>                :            :  */
+<span class="lineNum">     118 </span>                :            : physics::Distance calcLength(FullRoute const &amp;fullRoute);
+<span class="lineNum">     119 </span>                :            : 
+<span class="lineNum">     120 </span>                :            : /** @brief calculate the length of the provided road segment
+<span class="lineNum">     121 </span>                :            :  *
+<span class="lineNum">     122 </span>                :            :  * For length calculations the shortest road segment of this is used as reference.
+<span class="lineNum">     123 </span>                :            :  */
+<span class="lineNum">     124 </span>                :            : physics::Distance calcLength(RoadSegment const &amp;roadSegment);
+<span class="lineNum">     125 </span>                :            : 
+<a name="126"><span class="lineNum">     126 </span>                :            : /** @brief calculate the length of the provided lane segment</a>
+<span class="lineNum">     127 </span>                :            :  */
+<span class="lineNum">     128 </span>                :<span class="lineCov">        191 : inline physics::Distance calcLength(LaneSegment const &amp;laneSegment)</span>
+<span class="lineNum">     129 </span>                :            : {
+<span class="lineNum">     130 </span>                :<span class="lineCov">        191 :   return calcLength(laneSegment.laneInterval);</span>
+<span class="lineNum">     131 </span>                :            : }
+<span class="lineNum">     132 </span>                :            : 
+<span class="lineNum">     133 </span>                :            : /** @brief calculate the length of the provided connecting route
+<span class="lineNum">     134 </span>                :            :  *
+<span class="lineNum">     135 </span>                :            :  * For length calculations the longest route section of this is used as reference.
+<span class="lineNum">     136 </span>                :            :  */
+<span class="lineNum">     137 </span>                :            : physics::Distance calcLength(ConnectingRoute const &amp;connectingRoute);
+<span class="lineNum">     138 </span>                :            : 
+<span class="lineNum">     139 </span>                :            : /** @brief calculate the length between the two given iterators
+<span class="lineNum">     140 </span>                :            :  */
+<span class="lineNum">     141 </span>                :            : physics::Distance calcLength(RouteIterator const &amp;startIterator, RouteIterator const &amp;endIterator);
+<span class="lineNum">     142 </span>                :            : 
+<span class="lineNum">     143 </span>                :            : physics::Distance
+<span class="lineNum">     144 </span>                :            : calcLength(RouteParaPoint const &amp;startRouteParaPoint, RouteParaPoint const &amp;endRouteParaPoint, FullRoute const &amp;route);
+<span class="lineNum">     145 </span>                :            : 
+<span class="lineNum">     146 </span>                :            : /** @brief calculate the Duration of the provided full route
+<span class="lineNum">     147 </span>                :            :  */
+<span class="lineNum">     148 </span>                :            : physics::Duration calcDuration(FullRoute const &amp;fullRoute);
+<span class="lineNum">     149 </span>                :            : 
+<span class="lineNum">     150 </span>                :            : /** @brief calculate the Duration of the provided road segment
+<span class="lineNum">     151 </span>                :            :  *
+<span class="lineNum">     152 </span>                :            :  * For Duration calculations the shortest road segment of this is used as reference.
+<span class="lineNum">     153 </span>                :            :  */
+<span class="lineNum">     154 </span>                :            : physics::Duration calcDuration(RoadSegment const &amp;roadSegment);
+<span class="lineNum">     155 </span>                :            : 
+<a name="156"><span class="lineNum">     156 </span>                :            : /** @brief calculate the Duration of the provided lane segment</a>
+<span class="lineNum">     157 </span>                :            :  */
+<span class="lineNum">     158 </span>                :<span class="lineCov">          5 : inline physics::Duration calcDuration(LaneSegment const &amp;laneSegment)</span>
+<span class="lineNum">     159 </span>                :            : {
+<span class="lineNum">     160 </span>                :<span class="lineCov">          5 :   return calcDuration(laneSegment.laneInterval);</span>
+<span class="lineNum">     161 </span>                :            : }
+<span class="lineNum">     162 </span>                :            : 
+<span class="lineNum">     163 </span>                :            : /** @brief calculate the Duration of the provided connecting route
+<span class="lineNum">     164 </span>                :            :  *
+<span class="lineNum">     165 </span>                :            :  * For Duration calculations the longest route section of this is used as reference.
+<span class="lineNum">     166 </span>                :            :  */
+<span class="lineNum">     167 </span>                :            : physics::Duration calcDuration(ConnectingRoute const &amp;connectingRoute);
+<span class="lineNum">     168 </span>                :            : 
+<span class="lineNum">     169 </span>                :            : /**
+<span class="lineNum">     170 </span>                :            :  * @brief get the speed limits of the road segment
+<span class="lineNum">     171 </span>                :            :  */
+<span class="lineNum">     172 </span>                :            : restriction::SpeedLimitList getSpeedLimits(RoadSegment const &amp;roadSegment);
+<span class="lineNum">     173 </span>                :            : 
+<span class="lineNum">     174 </span>                :            : /**
+<span class="lineNum">     175 </span>                :            :  * @brief get the speed limits of the lane segment
+<span class="lineNum">     176 </span>                :            :  */
+<span class="lineNum">     177 </span>                :            : restriction::SpeedLimitList getSpeedLimits(LaneSegment const &amp;laneSegment);
+<span class="lineNum">     178 </span>                :            : 
+<span class="lineNum">     179 </span>                :            : /**
+<span class="lineNum">     180 </span>                :            :  * @brief get the speed limits between the two given iterators
+<span class="lineNum">     181 </span>                :            :  */
+<span class="lineNum">     182 </span>                :            : restriction::SpeedLimitList getSpeedLimits(RouteIterator const &amp;startIterator, RouteIterator const &amp;endIterator);
+<span class="lineNum">     183 </span>                :            : 
+<span class="lineNum">     184 </span>                :            : /**
+<span class="lineNum">     185 </span>                :            :  * @brief get the speed limits of a complete route
+<span class="lineNum">     186 </span>                :            :  */
+<span class="lineNum">     187 </span>                :            : restriction::SpeedLimitList getSpeedLimits(FullRoute const &amp;fullRoute);
+<span class="lineNum">     188 </span>                :            : 
+<span class="lineNum">     189 </span>                :            : /**
+<span class="lineNum">     190 </span>                :            :  * @brief get the speed limits of a connecting route
+<span class="lineNum">     191 </span>                :            :  */
+<span class="lineNum">     192 </span>                :            : restriction::SpeedLimitList getSpeedLimits(ConnectingRoute const &amp;connectingRoute);
+<span class="lineNum">     193 </span>                :            : 
+<span class="lineNum">     194 </span>                :            : /**
+<span class="lineNum">     195 </span>                :            :  * @brief checks if the point is within the roadSegment
+<span class="lineNum">     196 </span>                :            :  *
+<span class="lineNum">     197 </span>                :            :  * @param[in] point parametric point to be checked against the road segment
+<span class="lineNum">     198 </span>                :            :  *
+<span class="lineNum">     199 </span>                :            :  * @returns \c true if the point is within one of the segments lane intervals
+<span class="lineNum">     200 </span>                :            :  */
+<span class="lineNum">     201 </span>                :            : bool isWithinInterval(RoadSegment const &amp;roadSegment, point::ParaPoint const &amp;point);
+<span class="lineNum">     202 </span>                :            : 
+<span class="lineNum">     203 </span>                :            : /**
+<span class="lineNum">     204 </span>                :            :  * @brief struct defining the result type of findWaypoint() and findNearestWaypoint()
+<span class="lineNum">     205 </span>                :            :  */
+<span class="lineNum">     206 </span>                :            : struct FindWaypointResult
+<span class="lineNum">     207 </span>                :            : {
+<span class="lineNum">     208 </span>                :            :   /**
+<span class="lineNum">     209 </span>                :            :    * @brief constructor
+<span class="lineNum">     210 </span>                :            :    *
+<span class="lineNum">     211 </span>                :            :    * constructs a result that is invalid
+<span class="lineNum">     212 </span>                :            :    */
+<span class="lineNum">     213 </span>                :            :   FindWaypointResult(FullRoute const &amp;route);
+<span class="lineNum">     214 </span>                :            : 
+<span class="lineNum">     215 </span>                :            :   /**
+<span class="lineNum">     216 </span>                :            :    * @brief constructor
+<span class="lineNum">     217 </span>                :            :    *
+<a name="218"><span class="lineNum">     218 </span>                :            :    * constructs a result with the provided data</a>
+<span class="lineNum">     219 </span>                :            :    */
+<span class="lineNum">     220 </span>                :<span class="lineCov">         86 :   FindWaypointResult(FullRoute const &amp;route,</span>
+<span class="lineNum">     221 </span>                :            :                      point::ParaPoint const &amp;iQueryPosition,
+<span class="lineNum">     222 </span>                :            :                      RoadSegmentList::const_iterator roadSegmentIter,
+<span class="lineNum">     223 </span>                :            :                      LaneSegmentList::const_iterator laneIntervalIter)
+<span class="lineNum">     224 </span>                :            :     : queryRoute(route)
+<span class="lineNum">     225 </span>                :            :     , roadSegmentIterator(roadSegmentIter)
+<span class="lineNum">     226 </span>                :            :     , laneSegmentIterator(laneIntervalIter)
+<span class="lineNum">     227 </span>                :<span class="lineCov">         86 :     , queryPosition(iQueryPosition)</span>
+<span class="lineNum">     228 </span>                :            :   {
+<span class="lineNum">     229 </span>                :<span class="lineCov">         86 :   }</span>
+<span class="lineNum">     230 </span>                :            : 
+<span class="lineNum">     231 </span>                :            :   /**
+<span class="lineNum">     232 </span>                :            :    * @brief copy constructor
+<span class="lineNum">     233 </span>                :            :    */
+<span class="lineNum">     234 </span>                :            :   FindWaypointResult(FindWaypointResult const &amp;other) = default;
+<span class="lineNum">     235 </span>                :            : 
+<span class="lineNum">     236 </span>                :            :   /** @brief reference to the route */
+<span class="lineNum">     237 </span>                :            :   FullRoute const &amp;queryRoute;
+<span class="lineNum">     238 </span>                :            :   /** @brief iterator referencing an element of the queryRoute */
+<span class="lineNum">     239 </span>                :            :   RoadSegmentList::const_iterator roadSegmentIterator;
+<span class="lineNum">     240 </span>                :            :   /** @brief iterator referencing an element of the routeIterator content; only valid if routeIterator !=
+<span class="lineNum">     241 </span>                :            :    * queryRoute.end() */
+<span class="lineNum">     242 </span>                :            :   LaneSegmentList::const_iterator laneSegmentIterator;
+<span class="lineNum">     243 </span>                :            :   /** @brief copy of the query position this waypoint result refers to */
+<span class="lineNum">     244 </span>                :            :   point::ParaPoint queryPosition;
+<span class="lineNum">     245 </span>                :            : 
+<span class="lineNum">     246 </span>                :            :   /**
+<a name="247"><span class="lineNum">     247 </span>                :            :    * @brief checks whether the FindWaypointResult contains valid data</a>
+<span class="lineNum">     248 </span>                :            :    */
+<span class="lineNum">     249 </span>                :<span class="lineCov">        430 :   bool isValid() const</span>
+<span class="lineNum">     250 </span>                :            :   {
+<span class="lineNum">     251 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 430 times"> + </span>]:<span class="lineCov">       1290 :     return roadSegmentIterator != queryRoute.roadSegments.end()</span>
+<span class="lineNum">     252 </span>[<span class="branchCov" title="Branch 0 was taken 317 times"> + </span><span class="branchCov" title="Branch 1 was taken 113 times"> + </span>][<span class="branchCov" title="Branch 5 was taken 317 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        860 :       &amp;&amp; laneSegmentIterator != roadSegmentIterator-&gt;drivableLaneSegments.end();</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 317 times"> + </span><span class="branchCov" title="Branch 8 was taken 113 times"> + </span>]
+<span class="lineNum">     253 </span>                :            :   }
+<span class="lineNum">     254 </span>                :            :   /**
+<span class="lineNum">     255 </span>                :            :    * @brief assignment operator
+<span class="lineNum">     256 </span>                :            :    *
+<span class="lineNum">     257 </span>                :            :    * The assignment is only possible if the other refers to the same query route as this.
+<span class="lineNum">     258 </span>                :            :    * If there is a miss match a std::invalid_argument exception is thrown
+<span class="lineNum">     259 </span>                :            :    */
+<span class="lineNum">     260 </span>                :            :   FindWaypointResult &amp;operator=(FindWaypointResult const &amp;other);
+<span class="lineNum">     261 </span>                :            : 
+<span class="lineNum">     262 </span>                :            :   /**
+<span class="lineNum">     263 </span>                :            :    * @brief return a FindWayPointResult that is iterated to the left lane of this
+<span class="lineNum">     264 </span>                :            :    *
+<span class="lineNum">     265 </span>                :            :    * If there is no left lane, the result is invalid (see isValid())
+<span class="lineNum">     266 </span>                :            :    * @throws std::runtime_error() in case of an inconsistent route
+<span class="lineNum">     267 </span>                :            :    */
+<span class="lineNum">     268 </span>                :            :   FindWaypointResult getLeftLane() const;
+<span class="lineNum">     269 </span>                :            : 
+<span class="lineNum">     270 </span>                :            :   /**
+<span class="lineNum">     271 </span>                :            :    * @brief return a FindWayPointResult that is iterated to the right lane of this
+<span class="lineNum">     272 </span>                :            :    *
+<span class="lineNum">     273 </span>                :            :    * If there is no right lane, the result is invalid (see isValid())
+<span class="lineNum">     274 </span>                :            :    * @throws std::runtime_error() in case of an inconsistent route
+<span class="lineNum">     275 </span>                :            :    */
+<span class="lineNum">     276 </span>                :            :   FindWaypointResult getRightLane() const;
+<span class="lineNum">     277 </span>                :            : 
+<span class="lineNum">     278 </span>                :            :   /**
+<span class="lineNum">     279 </span>                :            :    * @brief return a vector of FindWayPointResult that is iterated to the successor lanes of this
+<span class="lineNum">     280 </span>                :            :    *
+<span class="lineNum">     281 </span>                :            :    * If there are no successor lanes, the result is empty.
+<span class="lineNum">     282 </span>                :            :    * @throws std::runtime_error() in case of an inconsistent route
+<span class="lineNum">     283 </span>                :            :    */
+<span class="lineNum">     284 </span>                :            :   std::vector&lt;FindWaypointResult&gt; getSuccessorLanes() const;
+<span class="lineNum">     285 </span>                :            : 
+<span class="lineNum">     286 </span>                :            :   /**
+<span class="lineNum">     287 </span>                :            :    * @brief return a vector of FindWayPointResult that is iterated to the predecessor lanes of this
+<span class="lineNum">     288 </span>                :            :    *
+<span class="lineNum">     289 </span>                :            :    * If there are no predecessor lanes, the result is empty.
+<span class="lineNum">     290 </span>                :            :    * @throws std::runtime_error() in case of an inconsistent route
+<span class="lineNum">     291 </span>                :            :    */
+<span class="lineNum">     292 </span>                :            :   std::vector&lt;FindWaypointResult&gt; getPredecessorLanes() const;
+<span class="lineNum">     293 </span>                :            : };
+<span class="lineNum">     294 </span>                :            : 
+<span class="lineNum">     295 </span>                :            : /** @brief calculate the length of the route in respect to FindWaypointResult
+<span class="lineNum">     296 </span>                :            :  *
+<span class="lineNum">     297 </span>                :            :  *  calculate the length of the route up to the queryPosition of the FindWaypointResult
+<span class="lineNum">     298 </span>                :            :  */
+<span class="lineNum">     299 </span>                :            : physics::Distance calcLength(FindWaypointResult const &amp;findWaypointResult);
+<span class="lineNum">     300 </span>                :            : 
+<span class="lineNum">     301 </span>                :            : /** @brief find a waypoint on the route containing the given position
+<span class="lineNum">     302 </span>                :            :  *
+<span class="lineNum">     303 </span>                :            :  *  The position is searched within the given full route. If the position's LaneId is present in the route,
+<span class="lineNum">     304 </span>                :            :  *  and the position's offset is within the route (i.e. the point lies within the route),
+<span class="lineNum">     305 </span>                :            :  *  an iterator of the route is returned in conjunction with the RouteInterval defining the interval of the route
+<span class="lineNum">     306 </span>                :            :  *  covering the corresponding lane.
+<span class="lineNum">     307 </span>                :            :  *
+<span class="lineNum">     308 </span>                :            :  *  @param[in] position the position defining the lane id which should be searched for within the route
+<span class="lineNum">     309 </span>                :            :  *  @param[in] route the route to search in
+<span class="lineNum">     310 </span>                :            :  *
+<span class="lineNum">     311 </span>                :            :  *  @returns waypoint result containing an iterator pointing to the route segment the lane of
+<span class="lineNum">     312 </span>                :            :  *   the position is part of and the corresponding route interval having that lane id.
+<span class="lineNum">     313 </span>                :            :  *   The query position is the provided \a position.
+<span class="lineNum">     314 </span>                :            :  */
+<span class="lineNum">     315 </span>                :            : FindWaypointResult findWaypoint(point::ParaPoint const &amp;position, route::FullRoute const &amp;route);
+<span class="lineNum">     316 </span>                :            : 
+<span class="lineNum">     317 </span>                :            : /** @brief find a waypoint on the route containing the given laneId
+<span class="lineNum">     318 </span>                :            :  *
+<span class="lineNum">     319 </span>                :            :  *  The position is searched within the given full route. If the position's LaneId is present in the route,
+<span class="lineNum">     320 </span>                :            :  *  an iterator of the route is returned in conjunction with the RouteInterval defining the interval of the route
+<span class="lineNum">     321 </span>                :            :  *  covering the corresponding lane.
+<span class="lineNum">     322 </span>                :            :  *
+<span class="lineNum">     323 </span>                :            :  *  @param[in] laneId the lane id which should be searched for within the route
+<span class="lineNum">     324 </span>                :            :  *  @param[in] route the route to search in
+<span class="lineNum">     325 </span>                :            :  *
+<span class="lineNum">     326 </span>                :            :  *  @returns waypoint result containing an iterator pointing to the route segment the lane of
+<span class="lineNum">     327 </span>                :            :  *   the position is part of and the corresponding route interval having that lane id.
+<span class="lineNum">     328 </span>                :            :  *   The query position is (on success) the start of the lane interval within the route.
+<span class="lineNum">     329 </span>                :            :  */
+<span class="lineNum">     330 </span>                :            : FindWaypointResult findWaypoint(lane::LaneId const &amp;laneId, route::FullRoute const &amp;route);
+<span class="lineNum">     331 </span>                :            : 
+<span class="lineNum">     332 </span>                :            : /** @brief find waypoint on the route containing the given positions
+<span class="lineNum">     333 </span>                :            :  *
+<span class="lineNum">     334 </span>                :            :  *  A version of findWaypoint() allowing the position to be a vector of positions to consider
+<span class="lineNum">     335 </span>                :            :  *  and select the result near to the begin of the route.
+<span class="lineNum">     336 </span>                :            :  *  All the given positions are searched using the findWaypoint(); therefore @see findWaypoint() for further details.
+<span class="lineNum">     337 </span>                :            :  *
+<span class="lineNum">     338 </span>                :            :  *  @param[in] positions the position vector which should be searched for within the route
+<span class="lineNum">     339 </span>                :            :  *  @param[in] route the route to search in
+<span class="lineNum">     340 </span>                :            :  *
+<span class="lineNum">     341 </span>                :            :  *  @returns waypoint result  containing an iterator pointing to the route segment the lane of
+<span class="lineNum">     342 </span>                :            :  *    the position is part of and the corresponding route interval having that lane id.
+<span class="lineNum">     343 </span>                :            :  *    If multiple are matching the one nearest the begin of the route is selected.
+<span class="lineNum">     344 </span>                :            :  */
+<span class="lineNum">     345 </span>                :            : FindWaypointResult findNearestWaypoint(point::ParaPointList const &amp;positions, route::FullRoute const &amp;route);
+<span class="lineNum">     346 </span>                :            : 
+<span class="lineNum">     347 </span>                :            : /**
+<span class="lineNum">     348 </span>                :            :  * @brief find nearest waypoint on the route containing the given mapmatched positions
+<span class="lineNum">     349 </span>                :            :  *
+<span class="lineNum">     350 </span>                :            :  * This function will return the nearest waypoint along the route
+<span class="lineNum">     351 </span>                :            :  *
+<span class="lineNum">     352 </span>                :            :  *  @param[in] mapMatchedPositions the map matched positions which should be searched for within the route
+<span class="lineNum">     353 </span>                :            :  *  @param[in] route the route to search in
+<span class="lineNum">     354 </span>                :            :  *
+<span class="lineNum">     355 </span>                :            :  *  @returns waypoint result containing an iterator pointing to the route segment the lane of
+<span class="lineNum">     356 </span>                :            :  *   the position is part of and the corresponding route interval having that lane id.
+<span class="lineNum">     357 </span>                :            :  *   If multiple are matching the one nearest the begin of the route is selected.
+<span class="lineNum">     358 </span>                :            :  */
+<span class="lineNum">     359 </span>                :            : FindWaypointResult findNearestWaypoint(match::MapMatchedPositionConfidenceList const &amp;mapMatchedPositions,
+<span class="lineNum">     360 </span>                :            :                                        route::FullRoute const &amp;route);
+<span class="lineNum">     361 </span>                :            : 
+<span class="lineNum">     362 </span>                :            : /**
+<span class="lineNum">     363 </span>                :            :  * @brief find waypoint on the route of the given object, preferable the object center
+<span class="lineNum">     364 </span>                :            :  *
+<span class="lineNum">     365 </span>                :            :  * This function first calls findNearestWayPoint on the map matched position
+<span class="lineNum">     366 </span>                :            :  * confidence list of the center position.
+<span class="lineNum">     367 </span>                :            :  * If this doesn't lead to a result, the center points of the respective occupied regions are
+<span class="lineNum">     368 </span>                :            :  * used to find a waypoint. The search starts with the longest region and continues in decreasing order.
+<span class="lineNum">     369 </span>                :            :  * If this still doesn't lead to a match findNearestWayPoint of the other map matched confidence list positions
+<span class="lineNum">     370 </span>                :            :  * is taken.
+<span class="lineNum">     371 </span>                :            :  *
+<span class="lineNum">     372 </span>                :            :  *  @param[in] object the object which should be searched for within the route
+<span class="lineNum">     373 </span>                :            :  *  @param[in] route the route to search in
+<span class="lineNum">     374 </span>                :            :  *
+<span class="lineNum">     375 </span>                :            :  *  @returns waypoint result containing an iterator pointing to the route segment the lane of
+<span class="lineNum">     376 </span>                :            :  *   the position is part of and the corresponding route interval having that lane id.
+<span class="lineNum">     377 </span>                :            :  */
+<span class="lineNum">     378 </span>                :            : FindWaypointResult findCenterWaypoint(match::Object const &amp;object, route::FullRoute const &amp;route);
+<span class="lineNum">     379 </span>                :            : 
+<span class="lineNum">     380 </span>                :            : /**
+<span class="lineNum">     381 </span>                :            :  * @brief find nearest waypoint on the route containing the given mapmatched bounding box
+<span class="lineNum">     382 </span>                :            :  *
+<span class="lineNum">     383 </span>                :            :  * This function will return the nearest waypoint along the route
+<span class="lineNum">     384 </span>                :            :  *
+<span class="lineNum">     385 </span>                :            :  *  @param[in] object which position which should be searched for within the route
+<span class="lineNum">     386 </span>                :            :  *  @param[in] route the route to search in
+<span class="lineNum">     387 </span>                :            :  *
+<span class="lineNum">     388 </span>                :            :  *  @returns waypoint result  containing an iterator pointing to the route segment the lane of
+<span class="lineNum">     389 </span>                :            :  *   the position is part of and the corresponding route interval having that lane id.
+<span class="lineNum">     390 </span>                :            :  *   If multiple are matching the one nearest the begin of the route is selected.
+<span class="lineNum">     391 </span>                :            :  */
+<span class="lineNum">     392 </span>                :            : FindWaypointResult objectOnRoute(match::MapMatchedObjectBoundingBox const &amp;object, route::FullRoute const &amp;route);
+<span class="lineNum">     393 </span>                :            : 
+<span class="lineNum">     394 </span>                :            : /**
+<span class="lineNum">     395 </span>                :            :  * @brief find waypoint on the route containing a lane of the given intersection
+<span class="lineNum">     396 </span>                :            :  *
+<span class="lineNum">     397 </span>                :            :  * This function will return the nearest waypoint along the route
+<span class="lineNum">     398 </span>                :            :  *
+<span class="lineNum">     399 </span>                :            :  *  @param[in] intersection which inner lanes should be searched for within the route
+<span class="lineNum">     400 </span>                :            :  *  @param[in] route the route to search in
+<span class="lineNum">     401 </span>                :            :  *
+<span class="lineNum">     402 </span>                :            :  *  @returns waypoint result  containing an iterator pointing to the route segment the lane of the intersection
+<span class="lineNum">     403 </span>                :            :  *  is part of and the corresponding route interval having that lane id.
+<span class="lineNum">     404 </span>                :            :  *  If multiple are matching the one nearest the begin of the route is selected.
+<span class="lineNum">     405 </span>                :            :  *
+<span class="lineNum">     406 </span>                :            :  */
+<span class="lineNum">     407 </span>                :            : FindWaypointResult intersectionOnRoute(intersection::Intersection const &amp;intersection, route::FullRoute const &amp;route);
+<span class="lineNum">     408 </span>                :            : 
+<span class="lineNum">     409 </span>                :            : /**
+<span class="lineNum">     410 </span>                :            :  * @returns \c true if the connecting route contains road segments which are part of an intersection
+<span class="lineNum">     411 </span>                :            :  */
+<span class="lineNum">     412 </span>                :            : bool isConnectedRoutePartOfAnIntersection(route::ConnectingRoute const &amp;connectingRoute);
+<span class="lineNum">     413 </span>                :            : 
+<span class="lineNum">     414 </span>                :            : /** @brief enumeration providing more insights into the actual shorten route result
+<span class="lineNum">     415 </span>                :            :  */
+<span class="lineNum">     416 </span>                :            : enum class ShortenRouteResult
+<span class="lineNum">     417 </span>                :            : {
+<span class="lineNum">     418 </span>                :            :   /** Shortening succeeded
+<span class="lineNum">     419 </span>                :            :    */
+<span class="lineNum">     420 </span>                :            :   Succeeded,
+<span class="lineNum">     421 </span>                :            :   /** Shortening succeeded: the actual provided position(s) were not found with the
+<span class="lineNum">     422 </span>                :            :    *   findNearestWaypoint() function, but at least one position is on a lane of the
+<span class="lineNum">     423 </span>                :            :    *   route start lane segments, just before the route interval starts
+<span class="lineNum">     424 </span>                :            :    */
+<span class="lineNum">     425 </span>                :            :   SucceededBeforeRoute,
+<span class="lineNum">     426 </span>                :            :   /** Shortening succeeded, but the resulting route is empty (i.e. crossed the end of the route)
+<span class="lineNum">     427 </span>                :            :    */
+<span class="lineNum">     428 </span>                :            :   SucceededRouteEmpty,
+<span class="lineNum">     429 </span>                :            :   /** Shortening succeeded: the shortening would cut the current intersection within route.
+<span class="lineNum">     430 </span>                :            :    *  Therefore, actually not cut.
+<span class="lineNum">     431 </span>                :            :    */
+<span class="lineNum">     432 </span>                :            :   SucceededIntersectionNotCut,
+<span class="lineNum">     433 </span>                :            :   /** Shortening failed, the resulting (or already the input) route is empty
+<span class="lineNum">     434 </span>                :            :    */
+<span class="lineNum">     435 </span>                :            :   FailedRouteEmpty
+<span class="lineNum">     436 </span>                :            : };
+<span class="lineNum">     437 </span>                :            : 
+<span class="lineNum">     438 </span>                :            : /** @brief enumeration defining the mode of operation of the shortenRoute() functions
+<span class="lineNum">     439 </span>                :            :  */
+<span class="lineNum">     440 </span>                :            : enum class ShortenRouteMode
+<span class="lineNum">     441 </span>                :            : {
+<span class="lineNum">     442 </span>                :            :   /** Standard behavior
+<span class="lineNum">     443 </span>                :            :    */
+<span class="lineNum">     444 </span>                :            :   Normal,
+<span class="lineNum">     445 </span>                :            :   /** If shorten route result would be: ShortenRouteResult::SucceededBeforeRoute, the route is extended
+<span class="lineNum">     446 </span>                :            :    *  at the beginning so that the result actually becomes ShortenRouteResult::Succeeded
+<span class="lineNum">     447 </span>                :            :    */
+<span class="lineNum">     448 </span>                :            :   PrependIfSucceededBeforeRoute,
+<span class="lineNum">     449 </span>                :            :   /**
+<span class="lineNum">     450 </span>                :            :    * If the shorten route operation would cut an intersection in between,
+<span class="lineNum">     451 </span>                :            :    * the route is not shortened further, before the intersection is actually left.
+<span class="lineNum">     452 </span>                :            :    *
+<span class="lineNum">     453 </span>                :            :    * If shorten route result would be: ShortenRouteResult::SucceededBeforeRoute, the route is extended
+<span class="lineNum">     454 </span>                :            :    *  at the beginning so that the result actually becomes ShortenRouteResult::Succeeded
+<span class="lineNum">     455 </span>                :            :    */
+<span class="lineNum">     456 </span>                :            :   DontCutIntersectionAndPrependIfSucceededBeforeRoute
+<span class="lineNum">     457 </span>                :            : };
+<span class="lineNum">     458 </span>                :            : 
+<span class="lineNum">     459 </span>                :            : /** @brief follow the route up to a certain position and shorten the route accordingly
+<span class="lineNum">     460 </span>                :            :  *
+<span class="lineNum">     461 </span>                :            :  * @param[in] currentPosition the position which should mark the start of the route after shortening
+<span class="lineNum">     462 </span>                :            :  * @param[in/out] route the route to be shortened
+<span class="lineNum">     463 </span>                :            :  * @param[in] extendIfSucceededBeforeRoute if this flag is set @c true,
+<span class="lineNum">     464 </span>                :            :  *
+<span class="lineNum">     465 </span>                :            :  * @retval ShortenRouteResult::Succeeded, SucceededBeforeRoute::SucceededBeforeRoute if the shortening request was
+<span class="lineNum">     466 </span>                :            :  * accepted resulting in a valid route.
+<span class="lineNum">     467 </span>                :            :  * @retval ShortenRouteResult::SucceededRouteEmpty if the shortening request was accepted resulting in an empty route
+<span class="lineNum">     468 </span>                :            :  * (i.e. end of route just crossed).
+<span class="lineNum">     469 </span>                :            :  * @retval ShortenRouteResult::FailedRouteEmpty if the shortening failed and resulting route is empty.
+<span class="lineNum">     470 </span>                :            :  */
+<span class="lineNum">     471 </span>                :            : ShortenRouteResult shortenRoute(point::ParaPoint const &amp;currentPosition,
+<span class="lineNum">     472 </span>                :            :                                 route::FullRoute &amp;route,
+<span class="lineNum">     473 </span>                :            :                                 ShortenRouteMode const shortenRouteMode = ShortenRouteMode::Normal);
+<span class="lineNum">     474 </span>                :            : 
+<span class="lineNum">     475 </span>                :            : /** @brief follow the route up to a certain position and shorten the route accordingly
+<span class="lineNum">     476 </span>                :            :  *
+<span class="lineNum">     477 </span>                :            :  * Overloaded version of shortenRoute() allow the position to be a vector of positions to consider.
+<span class="lineNum">     478 </span>                :            :  * If multiple of the positions were actually present within the route, the one is selected providing the
+<span class="lineNum">     479 </span>                :            :  * longest resulting route.
+<span class="lineNum">     480 </span>                :            :  *
+<span class="lineNum">     481 </span>                :            :  * @param[in] currentPositions the vector of positions which should mark the start of the route after shortening
+<span class="lineNum">     482 </span>                :            :  * @param[in/out] route the route to be shortened
+<span class="lineNum">     483 </span>                :            :  *
+<span class="lineNum">     484 </span>                :            :  * @retval ShortenRouteResult::Succeeded, SucceededBeforeRoute::SucceededBeforeRoute if the shortening request was
+<span class="lineNum">     485 </span>                :            :  * accepted resulting in a valid route.
+<span class="lineNum">     486 </span>                :            :  * @retval ShortenRouteResult::SucceededRouteEmpty if the shortening request was accepted resulting in an empty route
+<span class="lineNum">     487 </span>                :            :  * (i.e. end of route just crossed).
+<span class="lineNum">     488 </span>                :            :  * @retval ShortenRouteResult::FailedRouteEmpty if the shortening failed and resulting route is empty.
+<span class="lineNum">     489 </span>                :            :  */
+<span class="lineNum">     490 </span>                :            : ShortenRouteResult shortenRoute(point::ParaPointList const &amp;currentPositions,
+<span class="lineNum">     491 </span>                :            :                                 route::FullRoute &amp;route,
+<span class="lineNum">     492 </span>                :            :                                 ShortenRouteMode const shortenRouteMode = ShortenRouteMode::Normal);
+<span class="lineNum">     493 </span>                :            : 
+<span class="lineNum">     494 </span>                :            : /** @brief follow the route up to a certain position and shorten the route accordingly
+<span class="lineNum">     495 </span>                :            :  *
+<span class="lineNum">     496 </span>                :            :  * Overloaded version of shortenRoute() allow the position to be a list of mapmatched positions to consider.
+<span class="lineNum">     497 </span>                :            :  * If multiple of the positions were actually present within the route, the one is selected providing the
+<span class="lineNum">     498 </span>                :            :  * longest resulting route.
+<span class="lineNum">     499 </span>                :            :  *
+<span class="lineNum">     500 </span>                :            :  * @param[in] mapMatchedPositions the map matched positions which should mark the start of the route after shortening
+<span class="lineNum">     501 </span>                :            :  * @param[in/out] route the route to be shortened
+<span class="lineNum">     502 </span>                :            :  *
+<span class="lineNum">     503 </span>                :            :  * @retval ShortenRouteResult::Succeeded, SucceededBeforeRoute::SucceededBeforeRoute if the shortening request was
+<span class="lineNum">     504 </span>                :            :  * accepted resulting in a valid route.
+<span class="lineNum">     505 </span>                :            :  * @retval ShortenRouteResult::SucceededRouteEmpty if the shortening request was accepted resulting in an empty route
+<span class="lineNum">     506 </span>                :            :  * (i.e. end of route just crossed).
+<span class="lineNum">     507 </span>                :            :  * @retval ShortenRouteResult::FailedRouteEmpty if the shortening failed and resulting route is empty.
+<span class="lineNum">     508 </span>                :            :  */
+<span class="lineNum">     509 </span>                :            : ShortenRouteResult shortenRoute(match::MapMatchedPositionConfidenceList const &amp;mapMatchedPositions,
+<span class="lineNum">     510 </span>                :            :                                 route::FullRoute &amp;route,
+<span class="lineNum">     511 </span>                :            :                                 ShortenRouteMode const shortenRouteMode = ShortenRouteMode::Normal);
+<span class="lineNum">     512 </span>                :            : 
+<span class="lineNum">     513 </span>                :            : /**
+<span class="lineNum">     514 </span>                :            :  * @brief calculate the RouteParaPoint at a given distance to a given RouteParaPoint
+<span class="lineNum">     515 </span>                :            :  *
+<span class="lineNum">     516 </span>                :            :  * @param[in] route
+<span class="lineNum">     517 </span>                :            :  * @param[in] origin the reference point to this the distance should be calculated
+<span class="lineNum">     518 </span>                :            :  * @param[in] distance: Negative value is towards begin of the route. Positive values is towards end of the route
+<span class="lineNum">     519 </span>                :            :  * @param[out] resultingPoint: the point at distance to the origin RouteParaPoint
+<span class="lineNum">     520 </span>                :            :  *
+<span class="lineNum">     521 </span>                :            :  * returns @c true if the resultingParaPoint was found in the route
+<span class="lineNum">     522 </span>                :            :  */
+<span class="lineNum">     523 </span>                :            : bool calculateRouteParaPointAtDistance(route::FullRoute const &amp;route,
+<span class="lineNum">     524 </span>                :            :                                        route::RouteParaPoint const &amp;origin,
+<span class="lineNum">     525 </span>                :            :                                        physics::Distance const &amp;distance,
+<span class="lineNum">     526 </span>                :            :                                        route::RouteParaPoint &amp;resultingPoint);
+<span class="lineNum">     527 </span>                :            : 
+<span class="lineNum">     528 </span>                :            : /**
+<span class="lineNum">     529 </span>                :            :  * @brief calculate the RouteParaPoint for a given ParaPoint and FullRoute
+<span class="lineNum">     530 </span>                :            :  *
+<span class="lineNum">     531 </span>                :            :  * @param[in] paraPoint is the point under consideration
+<span class="lineNum">     532 </span>                :            :  * @param[in] route
+<span class="lineNum">     533 </span>                :            :  * @param[out] routeParaPoint: the converted result
+<span class="lineNum">     534 </span>                :            :  *
+<span class="lineNum">     535 </span>                :            :  * returns @c true if the paraPoint was found in the route
+<span class="lineNum">     536 </span>                :            :  */
+<span class="lineNum">     537 </span>                :            : bool getRouteParaPointFromParaPoint(point::ParaPoint const &amp;paraPoint,
+<span class="lineNum">     538 </span>                :            :                                     FullRoute const &amp;route,
+<span class="lineNum">     539 </span>                :            :                                     route::RouteParaPoint &amp;routeParaPoint);
+<span class="lineNum">     540 </span>                :            : 
+<span class="lineNum">     541 </span>                :            : /**
+<span class="lineNum">     542 </span>                :            :  * @brief the mode how the route section will be created
+<span class="lineNum">     543 </span>                :            :  */
+<span class="lineNum">     544 </span>                :            : enum class RouteSectionCreationMode
+<span class="lineNum">     545 </span>                :            : {
+<span class="lineNum">     546 </span>                :            :   SingleLane,   /**&lt; In the resulting route section the LaneSegments contain on single lane interval */
+<span class="lineNum">     547 </span>                :            :   AllRouteLanes /**&lt; In the resulting route section the LaneSegments contain all the lanes of the original route */
+<span class="lineNum">     548 </span>                :            : };
+<span class="lineNum">     549 </span>                :            : 
+<span class="lineNum">     550 </span>                :            : /**
+<span class="lineNum">     551 </span>                :            :  * @brief Return a section of the route that is within the given distance around the given LanePoint
+<span class="lineNum">     552 </span>                :            :  *
+<span class="lineNum">     553 </span>                :            :  * This section will contain the LaneInterval that the center point is located at and all
+<span class="lineNum">     554 </span>                :            :  * the predecessors &amp; successors of this lane up to the given distances or the start / end of the route
+<span class="lineNum">     555 </span>                :            :  * The length of the resulting route will be distanceFront + distanceEnd except the start / end of the route is within
+<span class="lineNum">     556 </span>                :            :  * the delta region.
+<span class="lineNum">     557 </span>                :            :  *
+<span class="lineNum">     558 </span>                :            :  * @param[in] currentLane specifying the origin of the delta section as FindWaypointResult
+<span class="lineNum">     559 </span>                :            :  * @param[in] distance to be included in the delta region towards begin of the route
+<span class="lineNum">     560 </span>                :            :  * @param[in] distance to be included in the delta region towards end of the route
+<span class="lineNum">     561 </span>                :            :  * @param[in] the route
+<span class="lineNum">     562 </span>                :            :  * @param[in] routeSectionCreationMode the creation mode for the route section.
+<span class="lineNum">     563 </span>                :            :  *
+<span class="lineNum">     564 </span>                :            :  * return the extracted route (will be empty if the centerPoint is not found in the route)
+<span class="lineNum">     565 </span>                :            :  *
+<span class="lineNum">     566 </span>                :            :  * @throws std::runtime_error if the route is inconsistent
+<span class="lineNum">     567 </span>                :            :  */
+<span class="lineNum">     568 </span>                :            : FullRoute getRouteSection(FindWaypointResult const &amp;currentLane,
+<span class="lineNum">     569 </span>                :            :                           physics::Distance const &amp;distanceFront,
+<span class="lineNum">     570 </span>                :            :                           physics::Distance const &amp;distanceEnd,
+<span class="lineNum">     571 </span>                :            :                           FullRoute const &amp;route,
+<span class="lineNum">     572 </span>                :            :                           RouteSectionCreationMode const routeSectionCreationMode
+<span class="lineNum">     573 </span>                :            :                           = RouteSectionCreationMode::SingleLane);
+<span class="lineNum">     574 </span>                :            : 
+<span class="lineNum">     575 </span>                :            : /**
+<span class="lineNum">     576 </span>                :            :  * @brief Return a section of the route that is within the given distance around the given LanePoint
+<span class="lineNum">     577 </span>                :            :  *
+<span class="lineNum">     578 </span>                :            :  * This section will contain the LaneInterval that the center point is located at and all
+<span class="lineNum">     579 </span>                :            :  * the predecessors &amp; successors of this lane up to the given distances or the start / end of the route
+<span class="lineNum">     580 </span>                :            :  * The length of the resulting route will be distanceFront + distanceEnd except the start / end of the route is within
+<span class="lineNum">     581 </span>                :            :  * the delta region.
+<span class="lineNum">     582 </span>                :            :  *
+<span class="lineNum">     583 </span>                :            :  * @param[in] centerPoint specifying the origin of the delta section
+<span class="lineNum">     584 </span>                :            :  * @param[in] distance to be included in the delta region towards begin of the route
+<span class="lineNum">     585 </span>                :            :  * @param[in] distance to be included in the delta region towards end of the route
+<span class="lineNum">     586 </span>                :            :  * @param[in] the route
+<span class="lineNum">     587 </span>                :            :  * @param[in] routeSectionCreationMode the creation mode for the route section.
+<span class="lineNum">     588 </span>                :            :  *
+<span class="lineNum">     589 </span>                :            :  * return the extracted route (will be empty if the centerPoint is not found in the route)
+<span class="lineNum">     590 </span>                :            :  *
+<span class="lineNum">     591 </span>                :            :  * @throws std::runtime_error if the route is inconsistent
+<span class="lineNum">     592 </span>                :            :  */
+<span class="lineNum">     593 </span>                :            : route::FullRoute getRouteSection(point::ParaPoint const &amp;centerPoint,
+<span class="lineNum">     594 </span>                :            :                                  physics::Distance const &amp;distanceFront,
+<span class="lineNum">     595 </span>                :            :                                  physics::Distance const &amp;distanceEnd,
+<span class="lineNum">     596 </span>                :            :                                  route::FullRoute const &amp;route,
+<span class="lineNum">     597 </span>                :            :                                  RouteSectionCreationMode const routeSectionCreationMode
+<span class="lineNum">     598 </span>                :            :                                  = RouteSectionCreationMode::SingleLane);
+<span class="lineNum">     599 </span>                :            : 
+<span class="lineNum">     600 </span>                :            : /**
+<span class="lineNum">     601 </span>                :            :  * @brief Return a section of the route that is around the given object
+<span class="lineNum">     602 </span>                :            :  *
+<span class="lineNum">     603 </span>                :            :  * This section will contain the LaneInterval that the center point of the object is located at and all
+<span class="lineNum">     604 </span>                :            :  * the predecessors &amp; successors of this lane up to half of the objects length or the start / end of the route
+<span class="lineNum">     605 </span>                :            :  * The length of the resulting route will be object's length except the start / end of the route is within
+<span class="lineNum">     606 </span>                :            :  * the delta region.
+<span class="lineNum">     607 </span>                :            :  *
+<span class="lineNum">     608 </span>                :            :  * @param[in] object specifying the object as the origin and dimension of the delta section
+<span class="lineNum">     609 </span>                :            :  * @param[in] the route
+<span class="lineNum">     610 </span>                :            :  * @param[in] routeSectionCreationMode the creation mode for the route section.
+<span class="lineNum">     611 </span>                :            :  *
+<span class="lineNum">     612 </span>                :            :  * return the extracted route (will be empty if the object is not found in the route)
+<span class="lineNum">     613 </span>                :            :  *
+<span class="lineNum">     614 </span>                :            :  * @throws std::runtime_error if the route is inconsistent
+<span class="lineNum">     615 </span>                :            :  */
+<span class="lineNum">     616 </span>                :            : route::FullRoute getRouteSection(match::Object const &amp;object,
+<span class="lineNum">     617 </span>                :            :                                  route::FullRoute const &amp;route,
+<span class="lineNum">     618 </span>                :            :                                  RouteSectionCreationMode const routeSectionCreationMode
+<span class="lineNum">     619 </span>                :            :                                  = RouteSectionCreationMode::SingleLane);
+<span class="lineNum">     620 </span>                :            : 
+<span class="lineNum">     621 </span>                :            : /**
+<span class="lineNum">     622 </span>                :            :  * @brief struct defining the result type of findFirstLaneChange()
+<span class="lineNum">     623 </span>                :            :  */
+<span class="lineNum">     624 </span>                :            : struct FindLaneChangeResult
+<span class="lineNum">     625 </span>                :            : {
+<span class="lineNum">     626 </span>                :            :   /**
+<span class="lineNum">     627 </span>                :            :    * @brief constructor
+<span class="lineNum">     628 </span>                :            :    *
+<span class="lineNum">     629 </span>                :            :    * constructs a result that is invalid
+<span class="lineNum">     630 </span>                :            :    */
+<span class="lineNum">     631 </span>                :            :   explicit FindLaneChangeResult(FullRoute const &amp;route);
+<span class="lineNum">     632 </span>                :            : 
+<span class="lineNum">     633 </span>                :            :   /** @brief reference to the route */
+<span class="lineNum">     634 </span>                :            :   FullRoute const &amp;queryRoute;
+<span class="lineNum">     635 </span>                :            : 
+<span class="lineNum">     636 </span>                :            :   /** @brief iterator referencing to route index where the lane change can start at the earliest */
+<span class="lineNum">     637 </span>                :            :   RoadSegmentList::const_iterator laneChangeStartRouteIterator;
+<span class="lineNum">     638 </span>                :            : 
+<span class="lineNum">     639 </span>                :            :   /** @brief iterator referencing an element of the laneChangeStartRouteIterator content; only valid if
+<span class="lineNum">     640 </span>                :            :    * laneChangeStartRouteIterator !=
+<span class="lineNum">     641 </span>                :            :    * queryRoute.routeSegments.end() */
+<span class="lineNum">     642 </span>                :            :   LaneSegmentList::const_iterator laneChangeStartLaneSegmentIterator;
+<span class="lineNum">     643 </span>                :            : 
+<span class="lineNum">     644 </span>                :            :   /** @brief iterator referencing to route index where the lane change needs to be ended at the latest */
+<span class="lineNum">     645 </span>                :            :   RoadSegmentList::const_iterator laneChangeEndRouteIterator;
+<span class="lineNum">     646 </span>                :            : 
+<span class="lineNum">     647 </span>                :            :   /** @brief iterator referencing an element of the laneChangeEndRouteIterator content; only valid if
+<span class="lineNum">     648 </span>                :            :    * laneChangeEndRouteIterator !=
+<span class="lineNum">     649 </span>                :            :    * queryRoute.routeSegments.end() */
+<span class="lineNum">     650 </span>                :            :   LaneSegmentList::const_iterator laneChangeEndLaneSegmentIterator;
+<span class="lineNum">     651 </span>                :            : 
+<span class="lineNum">     652 </span>                :            :   /** @brief the lane change direction */
+<span class="lineNum">     653 </span>                :            :   LaneChangeDirection laneChangeDirection;
+<span class="lineNum">     654 </span>                :            : 
+<span class="lineNum">     655 </span>                :            :   /** @brief the number of connected lane changes to reach the desired target lane from the current position */
+<span class="lineNum">     656 </span>                :            :   uint32_t numberOfConnectedLaneChanges{0u};
+<span class="lineNum">     657 </span>                :            : 
+<a name="658"><span class="lineNum">     658 </span>                :            :   /** @brief returns true, if the routeIteratorLaneChangeStart and the routeIteratorLaneChangeEnd, as well as the lane</a>
+<span class="lineNum">     659 </span>                :            :    * change direction are set */
+<span class="lineNum">     660 </span>                :<span class="lineCov">          8 :   bool isValid() const</span>
+<span class="lineNum">     661 </span>                :            :   {
+<span class="lineNum">     662 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 8 times"> + </span>]:<span class="lineCov">         24 :     return laneChangeStartRouteIterator != std::end(queryRoute.roadSegments)</span>
+<span class="lineNum">     663 </span>[<span class="branchCov" title="Branch 3 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 5 times"> + </span><span class="branchCov" title="Branch 6 was taken 3 times"> + </span>]:<span class="lineCov">         13 :       &amp;&amp; laneChangeStartLaneSegmentIterator != std::end(laneChangeStartRouteIterator-&gt;drivableLaneSegments)</span>
+<span class="lineNum">     664 </span>[<span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 5 times"> + </span><span class="branchCov" title="Branch 5 was taken 3 times"> + </span>]:<span class="lineCov">         13 :       &amp;&amp; laneChangeEndRouteIterator != std::end(queryRoute.roadSegments)</span>
+<span class="lineNum">     665 </span>[<span class="branchCov" title="Branch 3 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 5 times"> + </span><span class="branchCov" title="Branch 6 was taken 3 times"> + </span>]:<span class="lineCov">         13 :       &amp;&amp; laneChangeEndLaneSegmentIterator != std::end(laneChangeEndRouteIterator-&gt;drivableLaneSegments)</span>
+<span class="lineNum">     666 </span>[<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         21 :       &amp;&amp; laneChangeDirection != LaneChangeDirection::Invalid;</span>
+<span class="lineNum">     667 </span>                :            :   }
+<span class="lineNum">     668 </span>                :            : 
+<span class="lineNum">     669 </span>                :            :   /**
+<span class="lineNum">     670 </span>                :            :    * @brief calculate the length of the zone of the lane change
+<span class="lineNum">     671 </span>                :            :    *
+<span class="lineNum">     672 </span>                :            :    * @returns the length of the lane change zone on the route including start and end lane change segment
+<span class="lineNum">     673 </span>                :            :    */
+<span class="lineNum">     674 </span>                :            :   physics::Distance calcZoneLength() const;
+<span class="lineNum">     675 </span>                :            : };
+<span class="lineNum">     676 </span>                :            : 
+<span class="lineNum">     677 </span>                :            : /** @brief finds the first route interval on a given route where a lane change is necessary to travel the given
+<span class="lineNum">     678 </span>                :            :  * route from start to end. The function finds the first lane change only.
+<span class="lineNum">     679 </span>                :            :  *
+<span class="lineNum">     680 </span>                :            :  * The result is returned by an FindLaneChangeResult which holds
+<span class="lineNum">     681 </span>                :            :  * - the routeIteratorLaneChangeStart as the pointer to the route index on where the lane change can start at the
+<span class="lineNum">     682 </span>                :            :  *   earliest. A valid routeIteratorLaneChangeStart can be in the range [std::begin(route), std::end(route)[.
+<span class="lineNum">     683 </span>                :            :  * - the routeIteratorLaneChangeEnd as the point on the route where the lane change needs to be finished at the
+<span class="lineNum">     684 </span>                :            :  *   latest. A valid routeIteratorLaneChangeEnd can be in the range [std::begin(route), std::end(route)[
+<span class="lineNum">     685 </span>                :            :  * - the laneChangeDirection specifying if the lane change goes from left to right or right to left.
+<span class="lineNum">     686 </span>                :            :  *
+<span class="lineNum">     687 </span>                :            :  * This function uses the logger of the AdMapAccess::instance() singleton.
+<span class="lineNum">     688 </span>                :            :  *
+<span class="lineNum">     689 </span>                :            :  * @param[in] currentPositionEgoVehicle the currentPosition of the ego vehicle
+<span class="lineNum">     690 </span>                :            :  * @param[in] route the route on which the first lane change is searched
+<span class="lineNum">     691 </span>                :            :  *
+<span class="lineNum">     692 </span>                :            :  * @returns a valid lane change result as described above if the route contains a lane change. Returns an invalid
+<span class="lineNum">     693 </span>                :            :  * FindLaneChangeResult if there is no lane change on the route.
+<span class="lineNum">     694 </span>                :            :  *
+<span class="lineNum">     695 </span>                :            :  * @throws std::runtime_error if the route contains invalid transitions.
+<span class="lineNum">     696 </span>                :            :  * @throws std::runtime_error if the map is not initialized or the road network could not be obtained
+<span class="lineNum">     697 </span>                :            :  *
+<span class="lineNum">     698 </span>                :            :  */
+<span class="lineNum">     699 </span>                :            : FindLaneChangeResult findFirstLaneChange(match::MapMatchedPosition const &amp;currentPositionEgoVehicle,
+<span class="lineNum">     700 </span>                :            :                                          route::FullRoute const &amp;route);
+<span class="lineNum">     701 </span>                :            : 
+<span class="lineNum">     702 </span>                :            : /** @brief shorten the route from the end to have at maximum the given length
+<span class="lineNum">     703 </span>                :            :  *
+<span class="lineNum">     704 </span>                :            :  * A cut of the route is not performed within an intersection, the intersection is kept fully within the route.
+<span class="lineNum">     705 </span>                :            :  *
+<span class="lineNum">     706 </span>                :            :  * @param[in/out] route the route to check and to shorten at the end
+<span class="lineNum">     707 </span>                :            :  * @param[in] length the maximum length
+<span class="lineNum">     708 </span>                :            :  */
+<span class="lineNum">     709 </span>                :            : void shortenRouteToDistance(route::FullRoute &amp;route, const physics::Distance &amp;length);
+<span class="lineNum">     710 </span>                :            : 
+<span class="lineNum">     711 </span>                :            : /** @brief function to append a new lane interval to a road segment list
+<span class="lineNum">     712 </span>                :            :  *
+<span class="lineNum">     713 </span>                :            :  * In contrast to appendRoadSegmentToRoute() here only the lane interval without any neighbors is added
+<span class="lineNum">     714 </span>                :            :  *
+<span class="lineNum">     715 </span>                :            :  * @param[in] laneInterval the new lane interval to be append
+<span class="lineNum">     716 </span>                :            :  * @param[in] route the route the interval has to be appended
+<span class="lineNum">     717 </span>                :            :  * @param[in] segmentCountFromDestination the segment count for the new road segment to be created
+<span class="lineNum">     718 </span>                :            :  *
+<span class="lineNum">     719 </span>                :            :  */
+<span class="lineNum">     720 </span>                :            : void appendLaneSegmentToRoute(route::LaneInterval const &amp;laneInterval,
+<span class="lineNum">     721 </span>                :            :                               route::FullRoute &amp;route,
+<span class="lineNum">     722 </span>                :            :                               route::SegmentCounter const segmentCountFromDestination = 0u);
+<span class="lineNum">     723 </span>                :            : 
+<span class="lineNum">     724 </span>                :            : /**
+<span class="lineNum">     725 </span>                :            :  * @brief extends route to have at least the given length
+<span class="lineNum">     726 </span>                :            :  *
+<span class="lineNum">     727 </span>                :            :  * @param[in/out] route the route to check and to extend
+<span class="lineNum">     728 </span>                :            :  * @param[in] length the minimum length
+<span class="lineNum">     729 </span>                :            :  * @param[in/out] additionalRoutes additional routes in case of intersections on the extension
+<span class="lineNum">     730 </span>                :            :  *
+<span class="lineNum">     731 </span>                :            :  * @returns pair of bool and vector
+<span class="lineNum">     732 </span>                :            :  *
+<span class="lineNum">     733 </span>                :            :  *  @c true if the route has sufficient length or was extended.
+<span class="lineNum">     734 </span>                :            :  *          If @c false is returned the route is/was empty/degenerated or the additional routes were not empty.
+<span class="lineNum">     735 </span>                :            : 
+<span class="lineNum">     736 </span>                :            :  */
+<span class="lineNum">     737 </span>                :            : bool extendRouteToDistance(route::FullRoute &amp;route,
+<span class="lineNum">     738 </span>                :            :                            physics::Distance const &amp;length,
+<span class="lineNum">     739 </span>                :            :                            std::vector&lt;route::FullRoute&gt; &amp;additionalRoutes);
+<span class="lineNum">     740 </span>                :            : 
+<span class="lineNum">     741 </span>                :            : /** @brief function to append a new lane interval to a road segment list
+<span class="lineNum">     742 </span>                :            :  *
+<span class="lineNum">     743 </span>                :            :  * This function is mainly used while creation of a FullRoute object.
+<span class="lineNum">     744 </span>                :            :  * The lane interval is expanded by it's left and right neighbor lanes (with same driving direction) to a complete
+<span class="lineNum">     745 </span>                :            :  * road segment; which is then appended to the provided road segment list.
+<span class="lineNum">     746 </span>                :            :  *
+<span class="lineNum">     747 </span>                :            :  * After the route is finished, planning::updateRoutePlanningCounters() should be called to update the planning
+<span class="lineNum">     748 </span>                :            :  * counters.
+<span class="lineNum">     749 </span>                :            :  *
+<span class="lineNum">     750 </span>                :            :  * @param[in] laneInterval the new lane interval to be append
+<span class="lineNum">     751 </span>                :            :  * @param[in] laneOffset the lane offset of the new lane interval to be append
+<span class="lineNum">     752 </span>                :            :  * @param[in] route the route the interval has to be appended
+<span class="lineNum">     753 </span>                :            :  *
+<span class="lineNum">     754 </span>                :            :  */
+<span class="lineNum">     755 </span>                :            : void appendRoadSegmentToRoute(route::LaneInterval const &amp;laneInverval,
+<span class="lineNum">     756 </span>                :            :                               route::RouteLaneOffset const &amp;laneOffset,
+<span class="lineNum">     757 </span>                :            :                               route::FullRoute &amp;route);
+<span class="lineNum">     758 </span>                :            : 
+<span class="lineNum">     759 </span>                :            : /**
+<span class="lineNum">     760 </span>                :            :  * @brief add an opposing lane segment to an existing (and not empty) road segment with at most the given length
+<span class="lineNum">     761 </span>                :            :  *
+<span class="lineNum">     762 </span>                :            :  * This function must only be used, if an existing route should be extended with an opposing lane.
+<span class="lineNum">     763 </span>                :            :  * Note, the length of the lane segment can be less than the provided distance, in case the neighboring lane segment
+<span class="lineNum">     764 </span>                :            :  * is shorter as well.
+<span class="lineNum">     765 </span>                :            :  *
+<span class="lineNum">     766 </span>                :            :  * The function is used by addOpposingLaneToRoute
+<span class="lineNum">     767 </span>                :            :  *
+<span class="lineNum">     768 </span>                :            :  * @param[in] startPoint is the start point where the opposing lane segment will start
+<span class="lineNum">     769 </span>                :            :  * @param[in] distance is the maximum distance of the newly added lane segment
+<span class="lineNum">     770 </span>                :            :  * @param[in/out] roadSegment is the road segment which is updated with the opposing lane segment
+<span class="lineNum">     771 </span>                :            :  * @param[in/out] route is the route the road segment belons to
+<span class="lineNum">     772 </span>                :            :  *
+<span class="lineNum">     773 </span>                :            :  * @return -1 on failure, otherwise the length of the new lane segment is added
+<span class="lineNum">     774 </span>                :            :  */
+<span class="lineNum">     775 </span>                :            : physics::Distance addOpposingLaneSegmentToRoadSegment(point::ParaPoint const &amp;startpoint,
+<span class="lineNum">     776 </span>                :            :                                                       physics::Distance const &amp;distance,
+<span class="lineNum">     777 </span>                :            :                                                       route::RoadSegment &amp;roadSegment,
+<span class="lineNum">     778 </span>                :            :                                                       route::FullRoute &amp;route);
+<span class="lineNum">     779 </span>                :            : 
+<span class="lineNum">     780 </span>                :            : /**
+<span class="lineNum">     781 </span>                :            :  * @brief add a part of the opposing lane to an existing route. The part is at most distanceOnWrongLane long,
+<span class="lineNum">     782 </span>                :            :  *        but may be shorter (e.g. intersections stop adding more segments of the opposing lane)
+<span class="lineNum">     783 </span>                :            :  *
+<span class="lineNum">     784 </span>                :            :  * Note the starting point of adding the opposing lane must be in the first segment of the route
+<span class="lineNum">     785 </span>                :            :  *
+<span class="lineNum">     786 </span>                :            :  * @param[in] pointOnOppositeLane is the starting point at which the opposite lane should be added
+<span class="lineNum">     787 </span>                :            :  * @param[in] distanceOnWrongLane maximum distance on the opposite lane
+<span class="lineNum">     788 </span>                :            :  * @param[in/out] route to be updated
+<span class="lineNum">     789 </span>                :            :  * @param[out] coveredDistance is the actually covered distance of the opposing lane segment(s)
+<span class="lineNum">     790 </span>                :            :  */
+<span class="lineNum">     791 </span>                :            : bool addOpposingLaneToRoute(point::ParaPoint const &amp;pointOnOppositeLane,
+<span class="lineNum">     792 </span>                :            :                             physics::Distance const &amp;distanceOnWrongLane,
+<span class="lineNum">     793 </span>                :            :                             route::FullRoute &amp;route,
+<span class="lineNum">     794 </span>                :            :                             physics::Distance &amp;coveredDistance);
+<span class="lineNum">     795 </span>                :            : 
+<span class="lineNum">     796 </span>                :            : /**
+<span class="lineNum">     797 </span>                :            :  * @returns the input route expanded by all lanes in opposite driving direction
+<span class="lineNum">     798 </span>                :            :  *
+<span class="lineNum">     799 </span>                :            :  * Internally recreates the route by calling appendRoadSegmentToRoute() with a new route
+<span class="lineNum">     800 </span>                :            :  * having RouteCreationMode::AllRoutableLanes
+<span class="lineNum">     801 </span>                :            :  */
+<span class="lineNum">     802 </span>                :            : route::FullRoute getRouteExpandedToOppositeLanes(route::FullRoute const &amp;route);
+<span class="lineNum">     803 </span>                :            : 
+<span class="lineNum">     804 </span>                :            : /**
+<span class="lineNum">     805 </span>                :            :  * @returns the input route expanded by all neighbor lanes
+<span class="lineNum">     806 </span>                :            :  *
+<span class="lineNum">     807 </span>                :            :  * Internally recreates the route by calling appendRoadSegmentToRoute()  with a new route
+<span class="lineNum">     808 </span>                :            :  * having RouteCreationMode::AllAllNeighbors
+<span class="lineNum">     809 </span>                :            :  */
+<span class="lineNum">     810 </span>                :            : route::FullRoute getRouteExpandedToAllNeighborLanes(route::FullRoute const &amp;route);
+<span class="lineNum">     811 </span>                :            : 
+<span class="lineNum">     812 </span>                :            : /**
+<span class="lineNum">     813 </span>                :            :  * @brief calculate a bypassing route for a given (blocked) route
+<span class="lineNum">     814 </span>                :            :  *
+<span class="lineNum">     815 </span>                :            :  * This function is designed to by used to get a route around parking vehicles or for overtaking
+<span class="lineNum">     816 </span>                :            :  * The output route makes use of neighboring lanes and respects left-hand/right-hand traffic flow
+<span class="lineNum">     817 </span>                :            :  * The calculation fails when reaching an intersection
+<span class="lineNum">     818 </span>                :            :  *
+<span class="lineNum">     819 </span>                :            :  * @param[in] route is the input route, which should not be used
+<span class="lineNum">     820 </span>                :            :  * @param[out] bypassingRoute is the new route, making use of neighboring lanes
+<span class="lineNum">     821 </span>                :            :  *
+<span class="lineNum">     822 </span>                :            :  * @return false if no valid bypassing route was found
+<span class="lineNum">     823 </span>                :            :  */
+<span class="lineNum">     824 </span>                :            : bool calculateBypassingRoute(::ad::map::route::FullRoute const &amp;route, ::ad::map::route::FullRoute &amp;bypassingRoute);
+<span class="lineNum">     825 </span>                :            : 
+<span class="lineNum">     826 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
+<span class="lineNum">     827 </span>                :            :  *
+<span class="lineNum">     828 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     829 </span>                :            :  *
+<span class="lineNum">     830 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<span class="lineNum">     831 </span>                :            :  * @param[in] parametricOffset parametric offset the borders are cut
+<span class="lineNum">     832 </span>                :            :  */
+<span class="lineNum">     833 </span>                :            : lane::ECEFBorder getECEFBorderOfRoadSegment(RoadSegment const &amp;roadSegment,
+<span class="lineNum">     834 </span>                :            :                                             physics::ParametricValue const parametricOffset);
+<span class="lineNum">     835 </span>                :            : 
+<span class="lineNum">     836 </span>                :            : /** @brief get borders of a road segment
+<span class="lineNum">     837 </span>                :            :  *
+<span class="lineNum">     838 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     839 </span>                :            :  *
+<span class="lineNum">     840 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<span class="lineNum">     841 </span>                :            :  */
+<span class="lineNum">     842 </span>                :            : inline lane::ECEFBorder getECEFBorderOfRoadSegment(RoadSegment const &amp;roadSegment)
+<span class="lineNum">     843 </span>                :            : {
+<span class="lineNum">     844 </span>                :            :   return getECEFBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));
+<span class="lineNum">     845 </span>                :            : }
+<span class="lineNum">     846 </span>                :            : 
+<span class="lineNum">     847 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
+<span class="lineNum">     848 </span>                :            :  *
+<span class="lineNum">     849 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     850 </span>                :            :  *
+<span class="lineNum">     851 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<span class="lineNum">     852 </span>                :            :  * @param[in] parametricOffset parametric offset the borders are cut
+<span class="lineNum">     853 </span>                :            :  */
+<span class="lineNum">     854 </span>                :            : lane::ENUBorder getENUBorderOfRoadSegment(RoadSegment const &amp;roadSegment,
+<span class="lineNum">     855 </span>                :            :                                           physics::ParametricValue const parametricOffset);
+<span class="lineNum">     856 </span>                :            : 
+<span class="lineNum">     857 </span>                :            : /** @brief get borders of a road segment
+<span class="lineNum">     858 </span>                :            :  *
+<span class="lineNum">     859 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     860 </span>                :            :  *
+<a name="861"><span class="lineNum">     861 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from</a>
+<span class="lineNum">     862 </span>                :            :  */
+<span class="lineNum">     863 </span>                :<span class="lineCov">          8 : inline lane::ENUBorder getENUBorderOfRoadSegment(RoadSegment const &amp;roadSegment)</span>
+<span class="lineNum">     864 </span>                :            : {
+<span class="lineNum">     865 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :   return getENUBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));</span>
+<span class="lineNum">     866 </span>                :            : }
+<span class="lineNum">     867 </span>                :            : 
+<span class="lineNum">     868 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
+<span class="lineNum">     869 </span>                :            :  *
+<span class="lineNum">     870 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     871 </span>                :            :  *
+<span class="lineNum">     872 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<span class="lineNum">     873 </span>                :            :  * @param[in] parametricOffset parametric offset the borders are cut
+<span class="lineNum">     874 </span>                :            :  */
+<span class="lineNum">     875 </span>                :            : lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &amp;roadSegment,
+<span class="lineNum">     876 </span>                :            :                                           physics::ParametricValue const parametricOffset);
+<span class="lineNum">     877 </span>                :            : 
+<span class="lineNum">     878 </span>                :            : /** @brief get borders of a road segment
+<span class="lineNum">     879 </span>                :            :  *
+<span class="lineNum">     880 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     881 </span>                :            :  *
+<span class="lineNum">     882 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<span class="lineNum">     883 </span>                :            :  */
+<span class="lineNum">     884 </span>                :            : inline lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &amp;roadSegment)
+<span class="lineNum">     885 </span>                :            : {
+<span class="lineNum">     886 </span>                :            :   return getGeoBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));
+<span class="lineNum">     887 </span>                :            : }
+<span class="lineNum">     888 </span>                :            : 
+<span class="lineNum">     889 </span>                :            : /** @brief get borders of a full route
+<span class="lineNum">     890 </span>                :            :  *
+<span class="lineNum">     891 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     892 </span>                :            :  * The borders of successive road segments are collected in the result vector.
+<span class="lineNum">     893 </span>                :            :  *
+<span class="lineNum">     894 </span>                :            :  * @param[in] route the route to extract the borders from
+<span class="lineNum">     895 </span>                :            :  */
+<span class="lineNum">     896 </span>                :            : std::vector&lt;lane::ENUBorder&gt; getENUBorderOfRoute(FullRoute const &amp;route);
+<span class="lineNum">     897 </span>                :            : 
+<span class="lineNum">     898 </span>                :            : /**
+<span class="lineNum">     899 </span>                :            :  * @brief get the ENU heading of a route at the location of the object
+<span class="lineNum">     900 </span>                :            :  *
+<span class="lineNum">     901 </span>                :            :  * @param object the object on the route
+<span class="lineNum">     902 </span>                :            :  * @param route the route
+<span class="lineNum">     903 </span>                :            :  *
+<span class="lineNum">     904 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
+<span class="lineNum">     905 </span>                :            :  */
+<span class="lineNum">     906 </span>                :            : point::ENUHeading getENUHeadingOfRoute(match::Object const &amp;object, FullRoute const &amp;route);
+<span class="lineNum">     907 </span>                :            : 
+<span class="lineNum">     908 </span>                :            : /**
+<span class="lineNum">     909 </span>                :            :  * @brief compare the ENU heading of the route at the location of the object with the ENU heading of the object
+<span class="lineNum">     910 </span>                :            :  *
+<span class="lineNum">     911 </span>                :            :  * @returns \c true if the difference between object heading and route heading at the object position
+<span class="lineNum">     912 </span>                :            :  * is not larger than 90°
+<span class="lineNum">     913 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
+<span class="lineNum">     914 </span>                :            :  */
+<span class="lineNum">     915 </span>                :            : bool isObjectHeadingInRouteDirection(match::Object const &amp;object, FullRoute const &amp;route);
+<span class="lineNum">     916 </span>                :            : 
+<span class="lineNum">     917 </span>                :            : /**
+<span class="lineNum">     918 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the begin
+<span class="lineNum">     919 </span>                :            :  *
+<span class="lineNum">     920 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromBegin()
+<span class="lineNum">     921 </span>                :            :  *
+<span class="lineNum">     922 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
+<span class="lineNum">     923 </span>                :            :  */
+<span class="lineNum">     924 </span>                :            : void shortenSegmentFromBegin(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
+<span class="lineNum">     925 </span>                :            : 
+<span class="lineNum">     926 </span>                :            : /**
+<span class="lineNum">     927 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the end
+<span class="lineNum">     928 </span>                :            :  *
+<span class="lineNum">     929 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromEnd()
+<span class="lineNum">     930 </span>                :            :  *
+<span class="lineNum">     931 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
+<span class="lineNum">     932 </span>                :            :  */
+<span class="lineNum">     933 </span>                :            : void shortenSegmentFromEnd(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
+<span class="lineNum">     934 </span>                :            : 
+<span class="lineNum">     935 </span>                :            : } // namespace route
+<span class="lineNum">     936 </span>                :            : } // namespace map
+<span class="lineNum">     937 </span>                :            : } // namespace ad
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

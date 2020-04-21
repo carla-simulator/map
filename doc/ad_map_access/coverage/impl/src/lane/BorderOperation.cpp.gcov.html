@@ -1,0 +1,675 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - impl/src/lane/BorderOperation.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">impl/src/lane</a> - BorderOperation.cpp<span style="font-size: 80%;"> (source / <a href="BorderOperation.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">220</td>
+            <td class="headerCovTableEntry">265</td>
+            <td class="headerCovTableEntryMed">83.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2020-04-21 11:01:25</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">19</td>
+            <td class="headerCovTableEntry">19</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">223</td>
+            <td class="headerCovTableEntry">470</td>
+            <td class="headerCovTableEntryLo">47.4 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
+<span class="lineNum">       2 </span>                :            : //
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       4 </span>                :            : //
+<span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
+<span class="lineNum">       6 </span>                :            : //
+<span class="lineNum">       7 </span>                :            : // ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : #include &quot;ad/map/lane/BorderOperation.hpp&quot;
+<span class="lineNum">      10 </span>                :            : #include &lt;algorithm&gt;
+<span class="lineNum">      11 </span>                :            : #include &quot;LaneOperationPrivate.hpp&quot;
+<span class="lineNum">      12 </span>                :            : #include &quot;ad/map/access/Logging.hpp&quot;
+<span class="lineNum">      13 </span>                :            : #include &quot;ad/map/point/Operation.hpp&quot;
+<span class="lineNum">      14 </span>                :            : 
+<span class="lineNum">      15 </span>                :            : namespace ad {
+<span class="lineNum">      16 </span>                :            : namespace map {
+<a name="17"><span class="lineNum">      17 </span>                :            : namespace lane {</a>
+<span class="lineNum">      18 </span>                :            : 
+<span class="lineNum">      19 </span>                :<span class="lineCov">          6 : void removeDegeneratedEdgePoints(point::ENUEdge &amp;edge, point::ENUEdge const *previousEdge = nullptr)</span>
+<span class="lineNum">      20 </span>                :            : {
+<span class="lineNum">      21 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 6 times"> + </span>]:<span class="lineCov">          6 :   if (edge.size() &lt; 2u)</span>
+<span class="lineNum">      22 </span>                :            :   {
+<span class="lineNum">      23 </span>                :<span class="lineCov">          6 :     return;</span>
+<span class="lineNum">      24 </span>                :            :   }
+<span class="lineNum">      25 </span>                :            : 
+<span class="lineNum">      26 </span>        [<span class="branchCov" title="Branch 1 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          6 :   point::ENUPoint previousEdgeDir;</span>
+<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          6 :   if (previousEdge != nullptr)</span>
+<span class="lineNum">      28 </span>                :            :   {
+<span class="lineNum">      29 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (previousEdge-&gt;size() &lt; 2u)</span>
+<span class="lineNum">      30 </span>                :            :     {
+<span class="lineNum">      31 </span>                :<span class="lineNoCov">          0 :       return;</span>
+<span class="lineNum">      32 </span>                :            :     }
+<span class="lineNum">      33 </span>                :            :     // decide if edge start point has to be adapted
+<span class="lineNum">      34 </span>[<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          2 :     previousEdgeDir = previousEdge-&gt;at(previousEdge-&gt;size() - 1u) - previousEdge-&gt;at(previousEdge-&gt;size() - 2u);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<span class="lineNum">      35 </span>[<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          2 :     auto nextEdgeDir = edge[0] - previousEdge-&gt;at(previousEdge-&gt;size() - 1u);</span>
+<span class="lineNum">      36 </span>                :            : 
+<span class="lineNum">      37 </span>                :            :     // if the two edges are near to each other or the direction is dramatically different,
+<span class="lineNum">      38 </span>                :            :     // the start point is overwritten by the end of the previous edge
+<span class="lineNum">      39 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          4 :     if ((point::vectorLength(nextEdgeDir) &gt; point::cEdgePointBorderDistance)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 8 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">      40 </span>[<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>]:<span class="lineCov">          2 :         || (point::vectorDotProduct(previousEdgeDir, nextEdgeDir) &lt; 0.))</span>
+<span class="lineNum">      41 </span>                :            :     {
+<span class="lineNum">      42 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :       edge[0] = previousEdge-&gt;at(previousEdge-&gt;size() - 1u);</span>
+<span class="lineNum">      43 </span>                :            :     }
+<span class="lineNum">      44 </span>                :            :     else
+<span class="lineNum">      45 </span>                :            :     {
+<span class="lineNum">      46 </span>                :<span class="lineCov">          2 :       previousEdgeDir = nextEdgeDir;</span>
+<span class="lineNum">      47 </span>                :            :     }
+<span class="lineNum">      48 </span>                :            :   }
+<span class="lineNum">      49 </span>                :            :   else
+<span class="lineNum">      50 </span>                :            :   {
+<span class="lineNum">      51 </span>        [<span class="branchCov" title="Branch 3 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          4 :     previousEdgeDir = edge[1] - edge[0];</span>
+<span class="lineNum">      52 </span>                :            :   }
+<span class="lineNum">      53 </span>                :            : 
+<span class="lineNum">      54 </span>                :<span class="lineCov">          6 :   std::size_t pointsToDrop = 0u;</span>
+<span class="lineNum">      55 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchCov" title="Branch 2 was taken 6 times"> + </span>]:<span class="lineCov">         14 :   for (std::size_t i = 1u; i &lt; edge.size(); ++i)</span>
+<span class="lineNum">      56 </span>                :            :   {
+<span class="lineNum">      57 </span>                :            :     // i-pointsToDrop &gt; 0
+<span class="lineNum">      58 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 8 times"> + </span>]:<span class="lineCov">          8 :     if (pointsToDrop &gt; 0u)</span>
+<span class="lineNum">      59 </span>                :            :     {
+<span class="lineNum">      60 </span>                :<span class="lineNoCov">          0 :       edge[i - pointsToDrop] = edge[i];</span>
+<span class="lineNum">      61 </span>                :            :     }
+<span class="lineNum">      62 </span>        [<span class="branchCov" title="Branch 3 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 :     auto nextEdgeDir = edge[i - pointsToDrop] - edge[i - pointsToDrop - 1];</span>
+<span class="lineNum">      63 </span>                :<span class="lineCov">          8 :     auto dotProduct = point::vectorDotProduct(previousEdgeDir, nextEdgeDir);</span>
+<span class="lineNum">      64 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 8 times"> + </span>]:<span class="lineCov">          8 :     if (dotProduct &lt; 0.)</span>
+<span class="lineNum">      65 </span>                :            :     {
+<span class="lineNum">      66 </span>                :<span class="lineNoCov">          0 :       pointsToDrop++;</span>
+<span class="lineNum">      67 </span>                :            :     }
+<span class="lineNum">      68 </span>                :            :     else
+<span class="lineNum">      69 </span>                :            :     {
+<span class="lineNum">      70 </span>                :<span class="lineCov">          8 :       previousEdgeDir = nextEdgeDir;</span>
+<span class="lineNum">      71 </span>                :            :     }
+<span class="lineNum">      72 </span>                :            :   }
+<span class="lineNum">      73 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">          6 :   if (pointsToDrop &gt; 0u)</span>
+<span class="lineNum">      74 </span>                :            :   {
+<span class="lineNum">      75 </span>                :<span class="lineNoCov">          0 :     std::size_t const newEdgeSize = std::max(std::size_t(2u), edge.size() - pointsToDrop);</span>
+<span class="lineNum">      76 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineCov">          6 :     edge.resize(newEdgeSize);</span>
+<span class="lineNum">      77 </span>                :            :   }
+<span class="lineNum">      78 </span>                :            : }
+<a name="79"><span class="lineNum">      79 </span>                :            : </a>
+<span class="lineNum">      80 </span>                :            : std::vector&lt;std::size_t&gt;
+<span class="lineNum">      81 </span>                :<span class="lineCov">          3 : calcSmallerEdgeIndexPairs(std::vector&lt;physics::ParametricValue&gt; const &amp;biggerEdgeParametricPoints,</span>
+<span class="lineNum">      82 </span>                :            :                           std::vector&lt;physics::ParametricValue&gt; const &amp;smallerEdgeParametricPoints)
+<span class="lineNum">      83 </span>                :            : {
+<span class="lineNum">      84 </span>                :<span class="lineCov">          3 :   std::vector&lt;std::size_t&gt; indexPairs;</span>
+<span class="lineNum">      85 </span>        [<span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          3 :   indexPairs.reserve(biggerEdgeParametricPoints.size());</span>
+<span class="lineNum">      86 </span>        [<span class="branchCov" title="Branch 1 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          3 :   indexPairs.push_back(0u);</span>
+<span class="lineNum">      87 </span>                :<span class="lineCov">          3 :   std::size_t matchingSmallerIndex = 0u;</span>
+<span class="lineNum">      88 </span>        [<span class="branchCov" title="Branch 1 was taken 6 times"> + </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">          9 :   for (std::size_t biggerIndex = 1u; biggerIndex &lt; biggerEdgeParametricPoints.size(); biggerIndex++)</span>
+<span class="lineNum">      89 </span>                :            :   {
+<span class="lineNum">      90 </span>                :<span class="lineCov">          6 :     physics::ParametricValue minParametricDistance(1.);</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">          6 :     bool matchingIndexFound = false;</span>
+<span class="lineNum">      92 </span>                :            :     // since both lists are sorted in ascending, it's ok to start search at last found index
+<span class="lineNum">      93 </span>        [<span class="branchCov" title="Branch 0 was taken 9 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">         30 :     for (std::size_t smallerIndex = matchingSmallerIndex;</span>
+<span class="lineNum">      94 </span>[<span class="branchCov" title="Branch 0 was taken 15 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 9 times"> + </span><span class="branchCov" title="Branch 4 was taken 6 times"> + </span>]:<span class="lineCov">         15 :          (!matchingIndexFound) &amp;&amp; (smallerIndex &lt; smallerEdgeParametricPoints.size());</span>
+<span class="lineNum">      95 </span>                :            :          smallerIndex++)
+<span class="lineNum">      96 </span>                :            :     {
+<span class="lineNum">      97 </span>                :            :       auto const parametricDistance
+<span class="lineNum">      98 </span>        [<span class="branchCov" title="Branch 3 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          9 :         = std::fabs(smallerEdgeParametricPoints[smallerIndex] - biggerEdgeParametricPoints[biggerIndex]);</span>
+<span class="lineNum">      99 </span>[<span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 9 times"> + </span>]:<span class="lineCov">          9 :       if (parametricDistance &gt; minParametricDistance)</span>
+<span class="lineNum">     100 </span>                :            :       {
+<span class="lineNum">     101 </span>                :            :         // the best matching edge point is the one we have seen last
+<span class="lineNum">     102 </span>                :<span class="lineNoCov">          0 :         matchingSmallerIndex = smallerIndex - 1u;</span>
+<span class="lineNum">     103 </span>                :<span class="lineNoCov">          0 :         matchingIndexFound = true;</span>
+<span class="lineNum">     104 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :         indexPairs.push_back(matchingSmallerIndex);</span>
+<span class="lineNum">     105 </span>                :            :       }
+<span class="lineNum">     106 </span>                :            :       else
+<span class="lineNum">     107 </span>                :            :       {
+<span class="lineNum">     108 </span>                :<span class="lineCov">          9 :         minParametricDistance = parametricDistance;</span>
+<span class="lineNum">     109 </span>                :            :       }
+<span class="lineNum">     110 </span>                :            :     }
+<span class="lineNum">     111 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          6 :     if (!matchingIndexFound)</span>
+<span class="lineNum">     112 </span>                :            :     {
+<span class="lineNum">     113 </span>                :            :       // if not yet found, the last is the best matching one
+<span class="lineNum">     114 </span>                :<span class="lineCov">          6 :       matchingSmallerIndex = smallerEdgeParametricPoints.size() - 1u;</span>
+<span class="lineNum">     115 </span>        [<span class="branchCov" title="Branch 1 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          6 :       indexPairs.push_back(matchingSmallerIndex);</span>
+<span class="lineNum">     116 </span>                :            :     }
+<span class="lineNum">     117 </span>                :            :   }
+<span class="lineNum">     118 </span>                :<span class="lineCov">          3 :   return indexPairs;</span>
+<a name="119"><span class="lineNum">     119 </span>                :            : }</a>
+<span class="lineNum">     120 </span>                :            : 
+<span class="lineNum">     121 </span>                :<span class="lineCov">         14 : point::ENUPoint interpolatePoint(point::ENUPoint const &amp;pointBefore,</span>
+<span class="lineNum">     122 </span>                :            :                                  point::ENUPoint const &amp;pointAfter,
+<span class="lineNum">     123 </span>                :            :                                  physics::ParametricValue const pointBeforeParametricEdgeOffset,
+<span class="lineNum">     124 </span>                :            :                                  physics::ParametricValue const pointInterpolatedParametricEdgeOffset,
+<span class="lineNum">     125 </span>                :            :                                  physics::ParametricValue const pointAfterParametricEdgeOffset)
+<span class="lineNum">     126 </span>                :            : {
+<span class="lineNum">     127 </span>                :            :   physics::ParametricValue const parametricOffset(
+<span class="lineNum">     128 </span>        [<span class="branchCov" title="Branch 1 was taken 14 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         14 :     (pointInterpolatedParametricEdgeOffset - pointBeforeParametricEdgeOffset)</span>
+<span class="lineNum">     129 </span>[<span class="branchCov" title="Branch 1 was taken 14 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 14 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">         28 :     / (pointAfterParametricEdgeOffset - pointBeforeParametricEdgeOffset));</span>
+<span class="lineNum">     130 </span>        [<span class="branchCov" title="Branch 1 was taken 14 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         14 :   return point::vectorInterpolate(pointBefore, pointAfter, parametricOffset);</span>
+<a name="131"><span class="lineNum">     131 </span>                :            : }</a>
+<span class="lineNum">     132 </span>                :            : 
+<span class="lineNum">     133 </span>                :<span class="lineCov">          2 : void fillSmallerEdge(point::ENUEdge const &amp;biggerEdge, point::ENUEdge &amp;smallerEdge)</span>
+<span class="lineNum">     134 </span>                :            : {
+<span class="lineNum">     135 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :   auto const biggerEdgeParametricPoints = getParametricEdgePoints(biggerEdge);</span>
+<span class="lineNum">     136 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :   auto const smallerEdgeParametricPoints = getParametricEdgePoints(smallerEdge);</span>
+<span class="lineNum">     137 </span>                :            : 
+<span class="lineNum">     138 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :   auto const smallerEdgeIndices = calcSmallerEdgeIndexPairs(biggerEdgeParametricPoints, smallerEdgeParametricPoints);</span>
+<span class="lineNum">     139 </span>                :            : 
+<span class="lineNum">     140 </span>                :<span class="lineCov">          4 :   point::ENUEdge newSmallerEdge;</span>
+<span class="lineNum">     141 </span>        [<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   newSmallerEdge.reserve(biggerEdge.size());</span>
+<span class="lineNum">     142 </span>        [<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   newSmallerEdge.push_back(smallerEdge.front());</span>
+<span class="lineNum">     143 </span>                :<span class="lineCov">          2 :   std::size_t lastWrittenSmallerEdgeIndex = 0u;</span>
+<span class="lineNum">     144 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">          4 :   for (std::size_t i = 1u; i &lt; smallerEdgeIndices.size() - 1u; ++i)</span>
+<span class="lineNum">     145 </span>                :            :   {
+<span class="lineNum">     146 </span>                :            :     // i-1, i, i+1 indices are valid for smallerEdgeIndices and biggerEdgeParametricPoints
+<span class="lineNum">     147 </span>                :            : 
+<span class="lineNum">     148 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :     if ( // smaller point already processed, insert an interpolated</span>
+<span class="lineNum">     149 </span>                :<span class="lineCov">          2 :       (smallerEdgeIndices[i] == lastWrittenSmallerEdgeIndex)</span>
+<span class="lineNum">     150 </span>                :            :       // the point before the last point of the smaller edge is already written, so we have to interpolate till the end
+<span class="lineNum">     151 </span>[<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :       || (lastWrittenSmallerEdgeIndex == (smallerEdge.size() - 2u)))</span>
+<span class="lineNum">     152 </span>                :            :     {
+<span class="lineNum">     153 </span>                :<span class="lineCov">          2 :       auto interpolatedPoint = interpolatePoint(smallerEdge[lastWrittenSmallerEdgeIndex],</span>
+<span class="lineNum">     154 </span>                :<span class="lineCov">          2 :                                                 smallerEdge[lastWrittenSmallerEdgeIndex + 1u],</span>
+<span class="lineNum">     155 </span>                :<span class="lineCov">          2 :                                                 biggerEdgeParametricPoints[i - 1],</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">          2 :                                                 biggerEdgeParametricPoints[i],</span>
+<span class="lineNum">     157 </span>        [<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :                                                 biggerEdgeParametricPoints[i + 1]);</span>
+<span class="lineNum">     158 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :       newSmallerEdge.push_back(interpolatedPoint);</span>
+<span class="lineNum">     159 </span>                :            :     }
+<span class="lineNum">     160 </span>                :            :     else
+<span class="lineNum">     161 </span>                :            :     {
+<span class="lineNum">     162 </span>                :<span class="lineNoCov">          0 :       lastWrittenSmallerEdgeIndex = smallerEdgeIndices[i];</span>
+<span class="lineNum">     163 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       newSmallerEdge.push_back(smallerEdge[lastWrittenSmallerEdgeIndex]);</span>
+<span class="lineNum">     164 </span>                :            :     }
+<span class="lineNum">     165 </span>                :            :   }
+<span class="lineNum">     166 </span>        [<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   newSmallerEdge.push_back(smallerEdge.back());</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">          2 :   smallerEdge.swap(newSmallerEdge);</span>
+<a name="168"><span class="lineNum">     168 </span>                :<span class="lineCov">          2 : }</span></a>
+<span class="lineNum">     169 </span>                :            : 
+<span class="lineNum">     170 </span>                :<span class="lineCov">          3 : void normalizeBorder(ENUBorder &amp;border, ENUBorder const *previousBorder)</span>
+<span class="lineNum">     171 </span>                :            : {
+<span class="lineNum">     172 </span>[<span class="branchCov" title="Branch 1 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 3 times"> + </span>]:<span class="lineCov">          3 :   if ((border.left.size() &lt; 2u) || (border.right.size() &lt; 2u))</span>
+<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 3 times"> + </span>]
+<span class="lineNum">     173 </span>                :            :   {
+<span class="lineNum">     174 </span>                :<span class="lineCov">          3 :     return;</span>
+<span class="lineNum">     175 </span>                :            :   }
+<span class="lineNum">     176 </span>[<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">          3 :   if ((previousBorder != nullptr) &amp;&amp; (previousBorder-&gt;left.size() &gt;= 2u) &amp;&amp; (previousBorder-&gt;right.size() &gt;= 2u))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 1 time"> + </span><span class="branchCov" title="Branch 9 was taken 2 times"> + </span>]
+<span class="lineNum">     177 </span>                :            :   {
+<span class="lineNum">     178 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :     removeDegeneratedEdgePoints(border.left, &amp;previousBorder-&gt;left);</span>
+<span class="lineNum">     179 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :     removeDegeneratedEdgePoints(border.right, &amp;previousBorder-&gt;right);</span>
+<span class="lineNum">     180 </span>                :            :   }
+<span class="lineNum">     181 </span>                :            :   else
+<span class="lineNum">     182 </span>                :            :   {
+<span class="lineNum">     183 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :     removeDegeneratedEdgePoints(border.left);</span>
+<span class="lineNum">     184 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :     removeDegeneratedEdgePoints(border.right);</span>
+<span class="lineNum">     185 </span>                :            :   }
+<span class="lineNum">     186 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">          3 :   if (border.left.size() == border.right.size())</span>
+<span class="lineNum">     187 </span>                :            :   {
+<span class="lineNum">     188 </span>                :<span class="lineCov">          1 :     return;</span>
+<span class="lineNum">     189 </span>                :            :   }
+<span class="lineNum">     190 </span>                :            : 
+<span class="lineNum">     191 </span>                :<span class="lineCov">          4 :   std::vector&lt;std::size_t&gt; smallerEdgeIndices;</span>
+<span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   if (border.left.size() &gt; border.right.size())</span>
+<span class="lineNum">     193 </span>                :            :   {
+<span class="lineNum">     194 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :     fillSmallerEdge(border.left, border.right);</span>
+<span class="lineNum">     195 </span>                :            :   }
+<span class="lineNum">     196 </span>                :            :   else
+<span class="lineNum">     197 </span>                :            :   {
+<span class="lineNum">     198 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :     fillSmallerEdge(border.right, border.left);</span>
+<span class="lineNum">     199 </span>                :            :   }
+<a name="200"><span class="lineNum">     200 </span>                :            : }</a>
+<span class="lineNum">     201 </span>                :            : 
+<span class="lineNum">     202 </span>                :<span class="lineCov">          2 : IndexPairs getIndexPairs(point::ENUEdge const &amp;leftEdge, point::ENUEdge const &amp;rightEdge)</span>
+<span class="lineNum">     203 </span>                :            : {
+<span class="lineNum">     204 </span>                :<span class="lineCov">          2 :   std::size_t const maxSize = std::max(leftEdge.size(), rightEdge.size());</span>
+<span class="lineNum">     205 </span>                :<span class="lineCov">          4 :   std::vector&lt;std::size_t&gt; equalIndices;</span>
+<span class="lineNum">     206 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   equalIndices.reserve(maxSize);</span>
+<span class="lineNum">     207 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          7 :   for (size_t i = 0u; i &lt; maxSize; ++i)</span>
+<span class="lineNum">     208 </span>                :            :   {
+<span class="lineNum">     209 </span>        [<span class="branchCov" title="Branch 1 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          5 :     equalIndices.push_back(i);</span>
+<span class="lineNum">     210 </span>                :            :   }
+<span class="lineNum">     211 </span>                :            : 
+<span class="lineNum">     212 </span>                :<span class="lineCov">          2 :   IndexPairs indexPairs;</span>
+<span class="lineNum">     213 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">          2 :   if (leftEdge.size() == rightEdge.size())</span>
+<span class="lineNum">     214 </span>                :            :   {
+<span class="lineNum">     215 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :     indexPairs.leftEdgeIndices = equalIndices;</span>
+<span class="lineNum">     216 </span>                :<span class="lineCov">          1 :     indexPairs.rightEdgeIndices.swap(equalIndices);</span>
+<span class="lineNum">     217 </span>                :            :   }
+<span class="lineNum">     218 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   else if (leftEdge.size() &gt; rightEdge.size())</span>
+<span class="lineNum">     219 </span>                :            :   {
+<span class="lineNum">     220 </span>                :<span class="lineCov">          1 :     indexPairs.leftEdgeIndices.swap(equalIndices);</span>
+<span class="lineNum">     221 </span>                :            :     indexPairs.rightEdgeIndices
+<span class="lineNum">     222 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :       = calcSmallerEdgeIndexPairs(getParametricEdgePoints(leftEdge), getParametricEdgePoints(rightEdge));</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">     223 </span>                :            :   }
+<span class="lineNum">     224 </span>                :            :   else
+<span class="lineNum">     225 </span>                :            :   {
+<span class="lineNum">     226 </span>                :            :     indexPairs.leftEdgeIndices
+<span class="lineNum">     227 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]:<span class="lineNoCov">          0 :       = calcSmallerEdgeIndexPairs(getParametricEdgePoints(rightEdge), getParametricEdgePoints(leftEdge));</span>
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>]
+<span class="lineNum">     228 </span>                :<span class="lineNoCov">          0 :     indexPairs.rightEdgeIndices.swap(equalIndices);</span>
+<span class="lineNum">     229 </span>                :            :   }
+<span class="lineNum">     230 </span>                :<span class="lineCov">          4 :   return indexPairs;</span>
+<a name="231"><span class="lineNum">     231 </span>                :            : }</a>
+<span class="lineNum">     232 </span>                :            : 
+<span class="lineNum">     233 </span>                :<span class="lineCov">          1 : point::ENUEdge getLateralAlignmentEdge(ENUBorder const &amp;border, physics::ParametricValue const lateralAlignment)</span>
+<span class="lineNum">     234 </span>                :            : {
+<span class="lineNum">     235 </span>                :<span class="lineCov">          1 :   return point::getLateralAlignmentEdge(border.left, border.right, lateralAlignment);</span>
+<a name="236"><span class="lineNum">     236 </span>                :            : }</a>
+<span class="lineNum">     237 </span>                :            : 
+<span class="lineNum">     238 </span>                :<span class="lineCov">          8 : inline bool isPointWithinBorderPoints(point::ENUPoint const &amp;ptLeft,</span>
+<span class="lineNum">     239 </span>                :            :                                       point::ENUPoint const &amp;ptRight,
+<span class="lineNum">     240 </span>                :            :                                       point::ENUPoint const &amp;enuPoint)
+<span class="lineNum">     241 </span>                :            : {
+<span class="lineNum">     242 </span>                :            :   // check if the point is actually located in between the border points
+<span class="lineNum">     243 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const towardsLeft = ptLeft - enuPoint;</span>
+<span class="lineNum">     244 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const towardsRight = ptRight - enuPoint;</span>
+<span class="lineNum">     245 </span>                :<span class="lineCov">          8 :   auto const dotProduct = point::vectorDotProduct(towardsLeft, towardsRight);</span>
+<span class="lineNum">     246 </span>                :<span class="lineCov">          8 :   return (dotProduct &lt; 0.);</span>
+<a name="247"><span class="lineNum">     247 </span>                :            : }</a>
+<span class="lineNum">     248 </span>                :            : 
+<span class="lineNum">     249 </span>                :<span class="lineCov">          8 : inline point::ENUHeading createHeadingFromBorderPoints(point::ENUPoint const &amp;ptLeft, point::ENUPoint const &amp;ptRight)</span>
+<span class="lineNum">     250 </span>                :            : {
+<span class="lineNum">     251 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const headingLeftToRight = point::createENUHeading(ptLeft, ptRight);</span>
+<span class="lineNum">     252 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const resultHeading = point::createENUHeading(static_cast&lt;double&gt;(headingLeftToRight) + M_PI_2);</span>
+<span class="lineNum">     253 </span>                :<span class="lineCov">          8 :   return resultHeading;</span>
+<a name="254"><span class="lineNum">     254 </span>                :            : }</a>
+<span class="lineNum">     255 </span>                :            : 
+<span class="lineNum">     256 </span>                :<span class="lineCov">          8 : point::ENUHeading getENUHeading(std::vector&lt;ENUBorder&gt; const &amp;borderList, point::ENUPoint const &amp;enuPoint)</span>
+<span class="lineNum">     257 </span>                :            : {
+<span class="lineNum">     258 </span>                :<span class="lineCov">          8 :   point::ENUHeading resultHeading(2. * M_PI);</span>
+<span class="lineNum">     259 </span>                :            : 
+<span class="lineNum">     260 </span>                :<span class="lineCov">          8 :   auto firstBeforeBorderDetected = borderList.end();</span>
+<span class="lineNum">     261 </span>                :<span class="lineCov">          8 :   auto lastAfterBorderDetected = borderList.end();</span>
+<span class="lineNum">     262 </span>        [<span class="branchCov" title="Branch 3 was taken 8 times"> + </span><span class="branchCov" title="Branch 4 was taken 4 times"> + </span>]:<span class="lineCov">         16 :   for (auto borderIter = borderList.begin(); borderIter != borderList.end(); borderIter++)</span>
+<span class="lineNum">     263 </span>                :            :   {
+<span class="lineNum">     264 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :     auto const edgeLeftLength = calcLength(borderIter-&gt;left);</span>
+<span class="lineNum">     265 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :     auto const edgeRightLength = calcLength(borderIter-&gt;right);</span>
+<span class="lineNum">     266 </span>                :            : 
+<span class="lineNum">     267 </span>                :            :     // first of all we have to handle degenerated borders
+<span class="lineNum">     268 </span>[<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :     if ((edgeLeftLength == physics::Distance(0.)) || (edgeRightLength == physics::Distance(0.)))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 8 times"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 13 was not taken"> - </span>][<span class="branchCov" title="Branch 14 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchNoCov" title="Branch 16 was not taken"> - </span><span class="branchCov" title="Branch 17 was taken 8 times"> + </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span><span class="branchNoExec" title="Branch 19 was not executed"> # </span> 
+<span class="lineNum">         </span>         <span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>]
+<span class="lineNum">     269 </span>                :            :     {
+<span class="lineNum">     270 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]:<span class="lineNoCov">          0 :       if ((borderIter-&gt;left.size() == 0u) || (borderIter-&gt;right.size() == 0u))</span>
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 8 was not executed"> # </span><span class="branchNoExec" title="Branch 9 was not executed"> # </span>]
+<span class="lineNum">     271 </span>                :            :       {
+<span class="lineNum">     272 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :         access::getLogger()-&gt;error(</span>
+<span class="lineNum">     273 </span>                :            :           &quot;ad::map::lane::getENUHeading: invalid enu border of size border-left:{} border-rigth:{} query-point:{}!&quot;,
+<span class="lineNum">     274 </span>                :<span class="lineNoCov">          0 :           borderIter-&gt;left,</span>
+<span class="lineNum">     275 </span>                :<span class="lineNoCov">          0 :           borderIter-&gt;right,</span>
+<span class="lineNum">     276 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :           enuPoint);</span>
+<span class="lineNum">     277 </span>                :<span class="lineNoCov">          0 :         return resultHeading;</span>
+<span class="lineNum">     278 </span>                :            :       }
+<span class="lineNum">     279 </span>                :            : 
+<span class="lineNum">     280 </span>                :            :       // the question here is: are we actually before or after the border
+<span class="lineNum">     281 </span>        [<span class="branchNoExec" title="Branch 5 was not executed"> # </span><span class="branchNoExec" title="Branch 6 was not executed"> # </span>]:<span class="lineNoCov">          0 :       auto const headingLeftToRight = point::createENUHeading(borderIter-&gt;left[0], borderIter-&gt;right[0]);</span>
+<span class="lineNum">     282 </span>        [<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>]:<span class="lineNoCov">          0 :       auto const headingLeftToPoint = point::createENUHeading(borderIter-&gt;left[0], enuPoint);</span>
+<span class="lineNum">     283 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 5 was not executed"> # </span><span class="branchNoExec" title="Branch 6 was not executed"> # </span>]:<span class="lineNoCov">          0 :       auto const headingDiff = point::createENUHeading(static_cast&lt;double&gt;(headingLeftToPoint - headingLeftToRight));</span>
+<span class="lineNum">     284 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]:<span class="lineNoCov">          0 :       if (headingDiff &lt; point::ENUHeading(0.))</span>
+<span class="lineNum">     285 </span>                :            :       {
+<span class="lineNum">     286 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (firstBeforeBorderDetected == borderList.end())</span>
+<span class="lineNum">     287 </span>                :            :         {
+<span class="lineNum">     288 </span>                :<span class="lineNoCov">          0 :           firstBeforeBorderDetected = borderIter;</span>
+<span class="lineNum">     289 </span>                :            :         }
+<span class="lineNum">     290 </span>                :            :       }
+<span class="lineNum">     291 </span>                :            :       else
+<span class="lineNum">     292 </span>                :            :       {
+<span class="lineNum">     293 </span>                :<span class="lineNoCov">          0 :         lastAfterBorderDetected = borderIter;</span>
+<span class="lineNum">     294 </span>                :            :       }
+<span class="lineNum">     295 </span>                :            :     }
+<span class="lineNum">     296 </span>                :            :     else
+<span class="lineNum">     297 </span>                :            :     {
+<span class="lineNum">     298 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :       auto parametricOffsetLeft = point::findNearestPointOnEdge(borderIter-&gt;left, edgeLeftLength, enuPoint);</span>
+<span class="lineNum">     299 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :       auto parametricOffsetRight = point::findNearestPointOnEdge(borderIter-&gt;right, edgeRightLength, enuPoint);</span>
+<span class="lineNum">     300 </span>                :            : 
+<span class="lineNum">     301 </span>                :            :       // catch errors
+<span class="lineNum">     302 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 8 times"> + </span>]:<span class="lineCov">          8 :       if ((!parametricOffsetLeft.isValid()) || (!parametricOffsetRight.isValid()))</span>
+<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 8 times"> + </span>]
+<span class="lineNum">     303 </span>                :            :       {
+<span class="lineNum">     304 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :         access::getLogger()-&gt;error(</span>
+<span class="lineNum">     305 </span>                :            :           &quot;ad::map::lane::getENUHeading: invalid input data border-left:{} border-rigth:{} query-point:{}&quot;,
+<span class="lineNum">     306 </span>                :<span class="lineNoCov">          0 :           borderIter-&gt;left,</span>
+<span class="lineNum">     307 </span>                :<span class="lineNoCov">          0 :           borderIter-&gt;right,</span>
+<span class="lineNum">     308 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :           enuPoint);</span>
+<span class="lineNum">     309 </span>                :<span class="lineCov">          4 :         return resultHeading;</span>
+<span class="lineNum">     310 </span>                :            :       }
+<span class="lineNum">     311 </span>                :            : 
+<span class="lineNum">     312 </span>[<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">         16 :       if ((parametricOffsetLeft == physics::ParametricValue(0.))</span>
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 6 was taken 4 times"> + </span><span class="branchCov" title="Branch 7 was taken 4 times"> + </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span><span class="branchNoExec" title="Branch 9 was not executed"> # </span>]
+<span class="lineNum">     313 </span>[<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :           || (parametricOffsetRight == physics::ParametricValue(0.)))</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 8 was taken 4 times"> + </span><span class="branchCov" title="Branch 9 was taken 4 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">     314 </span>                :            :       {
+<span class="lineNum">     315 </span>        [<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :         if (firstBeforeBorderDetected == borderList.end())</span>
+<span class="lineNum">     316 </span>                :            :         {
+<span class="lineNum">     317 </span>                :<span class="lineCov">          4 :           firstBeforeBorderDetected = borderIter;</span>
+<span class="lineNum">     318 </span>                :            :         }
+<span class="lineNum">     319 </span>                :            :       }
+<span class="lineNum">     320 </span>[<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :       else if ((parametricOffsetLeft == physics::ParametricValue(1.))</span>
+<span class="lineNum">         </span>  [<span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 4 times"> + </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span><span class="branchNoExec" title="Branch 9 was not executed"> # </span>]
+<span class="lineNum">     321 </span>[<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          4 :                || (parametricOffsetRight == physics::ParametricValue(1.)))</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 8 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">     322 </span>                :            :       {
+<span class="lineNum">     323 </span>                :<span class="lineNoCov">          0 :         lastAfterBorderDetected = borderIter;</span>
+<span class="lineNum">     324 </span>                :            :       }
+<span class="lineNum">     325 </span>                :            :       else
+<span class="lineNum">     326 </span>                :            :       {
+<span class="lineNum">     327 </span>                :            :         // looks as we have found a potential segment
+<span class="lineNum">     328 </span>        [<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :         auto const ptLeft = point::getParametricPoint(borderIter-&gt;left, parametricOffsetLeft);</span>
+<span class="lineNum">     329 </span>        [<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :         auto const ptRight = point::getParametricPoint(borderIter-&gt;right, parametricOffsetRight);</span>
+<span class="lineNum">     330 </span>        [<span class="branchCov" title="Branch 1 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :         bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);</span>
+<span class="lineNum">     331 </span>                :            : 
+<span class="lineNum">     332 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          4 :         if (withinBorder)</span>
+<span class="lineNum">     333 </span>                :            :         {
+<span class="lineNum">     334 </span>        [<span class="branchCov" title="Branch 1 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :           return createHeadingFromBorderPoints(ptLeft, ptRight);</span>
+<span class="lineNum">     335 </span>                :            :         }
+<span class="lineNum">     336 </span>                :            :       }
+<span class="lineNum">     337 </span>                :            :     }
+<span class="lineNum">     338 </span>                :            :   }
+<span class="lineNum">     339 </span>                :            : 
+<span class="lineNum">     340 </span>                :            :   // if we didn't find any actual match in between so far, use either the first before or the last after to create the
+<span class="lineNum">     341 </span>                :            :   // heading
+<span class="lineNum">     342 </span>        [<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :   if (firstBeforeBorderDetected != borderList.end())</span>
+<span class="lineNum">     343 </span>                :            :   {
+<span class="lineNum">     344 </span>                :<span class="lineCov">          4 :     auto const ptLeft = firstBeforeBorderDetected-&gt;left.front();</span>
+<span class="lineNum">     345 </span>                :<span class="lineCov">          4 :     auto const ptRight = firstBeforeBorderDetected-&gt;right.front();</span>
+<span class="lineNum">     346 </span>        [<span class="branchCov" title="Branch 1 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :     bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);</span>
+<span class="lineNum">     347 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          4 :     if (withinBorder)</span>
+<span class="lineNum">     348 </span>                :            :     {
+<span class="lineNum">     349 </span>        [<span class="branchCov" title="Branch 1 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :       return createHeadingFromBorderPoints(ptLeft, ptRight);</span>
+<span class="lineNum">     350 </span>                :            :     }
+<span class="lineNum">     351 </span>                :            :   }
+<span class="lineNum">     352 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   if (lastAfterBorderDetected != borderList.end())</span>
+<span class="lineNum">     353 </span>                :            :   {
+<span class="lineNum">     354 </span>                :<span class="lineNoCov">          0 :     auto const ptLeft = lastAfterBorderDetected-&gt;left.back();</span>
+<span class="lineNum">     355 </span>                :<span class="lineNoCov">          0 :     auto const ptRight = lastAfterBorderDetected-&gt;right.back();</span>
+<span class="lineNum">     356 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :     bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);</span>
+<span class="lineNum">     357 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     if (withinBorder)</span>
+<span class="lineNum">     358 </span>                :            :     {
+<span class="lineNum">     359 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :       return createHeadingFromBorderPoints(ptLeft, ptRight);</span>
+<span class="lineNum">     360 </span>                :            :     }
+<span class="lineNum">     361 </span>                :            :   }
+<span class="lineNum">     362 </span>                :            : 
+<span class="lineNum">     363 </span>                :<span class="lineCov">          8 :   return resultHeading;</span>
+<a name="364"><span class="lineNum">     364 </span>                :            : }</a>
+<span class="lineNum">     365 </span>                :            : 
+<span class="lineNum">     366 </span>                :<span class="lineCov">          1 : physics::Distance getDistanceEnuPointToLateralAlignmentEdge(point::ENUPoint const &amp;enuPoint,</span>
+<span class="lineNum">     367 </span>                :            :                                                             point::ENUEdge const &amp;lateralAlignmentEdge)
+<span class="lineNum">     368 </span>                :            : {
+<span class="lineNum">     369 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   auto const edgeLength = calcLength(lateralAlignmentEdge);</span>
+<span class="lineNum">     370 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   auto const parametricOffset = point::findNearestPointOnEdge(lateralAlignmentEdge, edgeLength, enuPoint);</span>
+<span class="lineNum">     371 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   auto const projectedPoint = point::getParametricPoint(lateralAlignmentEdge, edgeLength, parametricOffset);</span>
+<span class="lineNum">     372 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   auto const distance = point::distance(projectedPoint, enuPoint);</span>
+<span class="lineNum">     373 </span>                :<span class="lineCov">          1 :   return distance;</span>
+<a name="374"><span class="lineNum">     374 </span>                :            : }</a>
+<span class="lineNum">     375 </span>                :            : 
+<span class="lineNum">     376 </span>                :<span class="lineCov">         12 : bool areEdgesContinuous(point::ENUEdge const &amp;first, point::ENUEdge const &amp;second)</span>
+<span class="lineNum">     377 </span>                :            : {
+<span class="lineNum">     378 </span>[<span class="branchCov" title="Branch 1 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 12 times"> + </span>]:<span class="lineCov">         12 :   if ((first.size() &lt; 2u) || (second.size() &lt; 2u))</span>
+<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 12 times"> + </span>]
+<span class="lineNum">     379 </span>                :            :   {
+<span class="lineNum">     380 </span>                :<span class="lineNoCov">          0 :     return true;</span>
+<span class="lineNum">     381 </span>                :            :   }
+<span class="lineNum">     382 </span>                :            : 
+<span class="lineNum">     383 </span>        [<span class="branchCov" title="Branch 3 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">         12 :   auto const firstToSecondDistance = point::distance(second.front(), first.back());</span>
+<span class="lineNum">     384 </span>[<span class="branchCov" title="Branch 1 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 12 times"> + </span>]:<span class="lineCov">         12 :   if (firstToSecondDistance &lt; point::cEdgePointBorderDistance)</span>
+<span class="lineNum">     385 </span>                :            :   {
+<span class="lineNum">     386 </span>                :<span class="lineNoCov">          0 :     return true;</span>
+<span class="lineNum">     387 </span>                :            :   }
+<span class="lineNum">     388 </span>                :<span class="lineCov">         12 :   return false;</span>
+<a name="389"><span class="lineNum">     389 </span>                :            : }</a>
+<span class="lineNum">     390 </span>                :            : 
+<span class="lineNum">     391 </span>                :<span class="lineCov">          8 : void performMakeTransitionToSecondEdgeContinuous(point::ENUEdge const &amp;first,</span>
+<span class="lineNum">     392 </span>                :            :                                                  point::ENUEdge &amp;second,
+<span class="lineNum">     393 </span>                :            :                                                  point::ENUEdge *secondOtherLane = nullptr)
+<span class="lineNum">     394 </span>                :            : {
+<span class="lineNum">     395 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 8 times"> + </span>]:<span class="lineCov">          8 :   if (areEdgesContinuous(first, second))</span>
+<span class="lineNum">     396 </span>                :            :   {
+<span class="lineNum">     397 </span>                :<span class="lineNoCov">          0 :     return;</span>
+<span class="lineNum">     398 </span>                :            :   }
+<span class="lineNum">     399 </span>        [<span class="branchCov" title="Branch 3 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const firstToSecondVec = second.front() - first.back();</span>
+<span class="lineNum">     400 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const firstToSecondDistance = point::vectorLength(firstToSecondVec);</span>
+<span class="lineNum">     401 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const firstToSecondDir = point::vectorNorm(firstToSecondVec);</span>
+<span class="lineNum">     402 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const firstEndDir = getEdgeEndDirectionalVector(first);</span>
+<span class="lineNum">     403 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const secondStartDir = getEdgeStartDirectionalVector(second);</span>
+<span class="lineNum">     404 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const averageEdgeDir = 0.5 * (firstEndDir + secondStartDir);</span>
+<span class="lineNum">     405 </span>                :            :   double const sinAngle
+<span class="lineNum">     406 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :     = static_cast&lt;double&gt;(point::vectorLength(point::vectorCrossProduct(averageEdgeDir, firstToSecondDir)));</span>
+<span class="lineNum">     407 </span>                :            :   // the distance of our interpolation changes depend on the offset of the two edges ends and the lateral offset
+<span class="lineNum">     408 </span>                :            :   // (given by the sine of the angle between the general edge direction and the offset direction)
+<span class="lineNum">     409 </span>                :            :   // e.g. if the offset is 3m and orthogonal we get a 6m interpolating distance
+<span class="lineNum">     410 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const interpolatingDistance = sinAngle * 2.0 * firstToSecondDistance;</span>
+<span class="lineNum">     411 </span>                :            : 
+<span class="lineNum">     412 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const secondLength = calcLength(second);</span>
+<span class="lineNum">     413 </span>                :            : 
+<span class="lineNum">     414 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   physics::ParametricValue const parametricInterpolatingDistance(std::min(.95, interpolatingDistance / secondLength));</span>
+<span class="lineNum">     415 </span>                :            : 
+<span class="lineNum">     416 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         16 :   auto const secondParametricEdgePoints = getParametricEdgePoints(second);</span>
+<span class="lineNum">     417 </span>                :            : 
+<span class="lineNum">     418 </span>                :<span class="lineCov">          8 :   std::size_t const newSecondSize = second.size() + 1u;</span>
+<span class="lineNum">     419 </span>                :<span class="lineCov">         16 :   point::ENUEdge newSecond;</span>
+<span class="lineNum">     420 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   newSecond.reserve(newSecondSize);</span>
+<span class="lineNum">     421 </span>                :<span class="lineCov">         16 :   point::ENUEdge newOtherSecond;</span>
+<span class="lineNum">     422 </span>[<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :   if ((secondOtherLane != nullptr) &amp;&amp; (secondOtherLane-&gt;size() == second.size()))</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 4 times"> + </span><span class="branchCov" title="Branch 7 was taken 4 times"> + </span>]
+<span class="lineNum">     423 </span>                :            :   {
+<span class="lineNum">     424 </span>        [<span class="branchCov" title="Branch 1 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :     newOtherSecond.resize(newSecondSize);</span>
+<span class="lineNum">     425 </span>                :            :   }
+<span class="lineNum">     426 </span>        [<span class="branchCov" title="Branch 1 was taken 10 times"> + </span><span class="branchCov" title="Branch 2 was taken 8 times"> + </span>]:<span class="lineCov">         18 :   for (std::size_t i = 1u; i &lt; secondParametricEdgePoints.size(); ++i)</span>
+<span class="lineNum">     427 </span>                :            :   {
+<span class="lineNum">     428 </span>[<span class="branchCov" title="Branch 2 was taken 10 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 10 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">         10 :     if (secondParametricEdgePoints[i] &gt;= parametricInterpolatingDistance)</span>
+<span class="lineNum">     429 </span>                :            :     {
+<span class="lineNum">     430 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">         10 :       if (newSecond.empty())</span>
+<span class="lineNum">     431 </span>                :            :       {
+<span class="lineNum">     432 </span>                :            :         // first point found
+<span class="lineNum">     433 </span>                :            : 
+<span class="lineNum">     434 </span>                :            :         // take the last point of the first edge
+<span class="lineNum">     435 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :         newSecond.push_back(first.back());</span>
+<span class="lineNum">     436 </span>                :            : 
+<span class="lineNum">     437 </span>                :            :         // calculate the interpolated point
+<span class="lineNum">     438 </span>                :<span class="lineCov">          8 :         point::ENUPoint interpolatedPoint = interpolatePoint(second[i - 1],</span>
+<span class="lineNum">     439 </span>                :<span class="lineCov">          8 :                                                              second[i],</span>
+<span class="lineNum">     440 </span>                :<span class="lineCov">          8 :                                                              secondParametricEdgePoints[i - 1],</span>
+<span class="lineNum">     441 </span>                :            :                                                              parametricInterpolatingDistance,
+<span class="lineNum">     442 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         16 :                                                              secondParametricEdgePoints[i]);</span>
+<span class="lineNum">     443 </span>                :            : 
+<span class="lineNum">     444 </span>                :            :         //@todo: one potential issue is not considered in here yet:
+<span class="lineNum">     445 </span>                :            :         // if second curvature is extreme, the newly created linear edge segment by the above two points could
+<span class="lineNum">     446 </span>                :            :         // potentially intersect with the old second border and by that enlarging a driving area beyond the
+<span class="lineNum">     447 </span>                :            :         // allowed borders. To prevent from this one would have to implement 'point::vectorIntersects':
+<span class="lineNum">     448 </span>                :            :         //
+<span class="lineNum">     449 </span>                :            :         // auto const newEdgeSegment = interpolatedPoint-newSecond[0];
+<span class="lineNum">     450 </span>                :            :         // for (std::size_t j=1u; j&lt;i; j++ )
+<span class="lineNum">     451 </span>                :            :         // {
+<span class="lineNum">     452 </span>                :            :         //     auto const checkSegment = second[j] - second[j-1u];
+<span class="lineNum">     453 </span>                :            :         //     if ( point::vectorIntersects(checkSegment, newEdgeSegment) )
+<span class="lineNum">     454 </span>                :            :         //     {
+<span class="lineNum">     455 </span>                :            :         //        i = j;
+<span class="lineNum">     456 </span>                :            :         //        std::size_t const newSecondSize = secondParametricEdgePoints.size()-i + 1u;
+<span class="lineNum">     457 </span>                :            :         //        newSecond.reserve(newSecondSize);
+<span class="lineNum">     458 </span>                :            :         //        interpolatedPoint = secondParametricEdgePoints[i-1];
+<span class="lineNum">     459 </span>                :            :         //        break;
+<span class="lineNum">     460 </span>                :            :         //     }
+<span class="lineNum">     461 </span>                :            :         // }
+<span class="lineNum">     462 </span>                :            : 
+<span class="lineNum">     463 </span>                :            :         // before adding the interpolated point we have to add also some interpolated points on the vector
+<span class="lineNum">     464 </span>                :            :         // newSecond[0] -&gt; interpolatedPoint if there have been others skipped
+<span class="lineNum">     465 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 8 times"> + </span>]:<span class="lineCov">          8 :         for (std::size_t j = 1u; j &lt; i; ++j)</span>
+<span class="lineNum">     466 </span>                :            :         {
+<span class="lineNum">     467 </span>                :<span class="lineNoCov">          0 :           auto innerInterpolatedPoint = interpolatePoint(newSecond[0],</span>
+<span class="lineNum">     468 </span>                :            :                                                          interpolatedPoint,
+<span class="lineNum">     469 </span>                :            :                                                          physics::ParametricValue(0.),
+<span class="lineNum">     470 </span>                :<span class="lineNoCov">          0 :                                                          secondParametricEdgePoints[j],</span>
+<span class="lineNum">     471 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :                                                          parametricInterpolatingDistance);</span>
+<span class="lineNum">     472 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :           newSecond.push_back(innerInterpolatedPoint);</span>
+<span class="lineNum">     473 </span>                :            :         }
+<span class="lineNum">     474 </span>                :            : 
+<span class="lineNum">     475 </span>                :            :         // then we add the interpolated point
+<span class="lineNum">     476 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :         newSecond.push_back(interpolatedPoint);</span>
+<span class="lineNum">     477 </span>                :            : 
+<span class="lineNum">     478 </span>                :            :         // fill the newOtherSecond lane if available
+<span class="lineNum">     479 </span>        [<span class="branchCov" title="Branch 1 was taken 4 times"> + </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span>]:<span class="lineCov">          8 :         if (newOtherSecond.size() &gt; 0u)</span>
+<span class="lineNum">     480 </span>                :            :         {
+<span class="lineNum">     481 </span>                :<span class="lineCov">          4 :           std::size_t j = 0u;</span>
+<span class="lineNum">     482 </span>[<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 :           for (; (j &lt; i) &amp;&amp; (j &lt; newOtherSecond.size()) &amp;&amp; (j &lt; secondOtherLane-&gt;size()); ++j)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 4 times"> + </span><span class="branchCov" title="Branch 9 was taken 4 times"> + </span>]
+<span class="lineNum">     483 </span>                :            :           {
+<span class="lineNum">     484 </span>        [<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :             newOtherSecond[j] = secondOtherLane-&gt;at(j);</span>
+<span class="lineNum">     485 </span>                :            :           }
+<span class="lineNum">     486 </span>[<span class="branchCov" title="Branch 1 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          4 :           if ((j &lt; newOtherSecond.size()) &amp;&amp; (j &lt; secondOtherLane-&gt;size()))</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
+<span class="lineNum">     487 </span>                :            :           {
+<span class="lineNum">     488 </span>                :            :             // same parametric range than the interpolated point
+<span class="lineNum">     489 </span>        [<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :             newOtherSecond[j] = interpolatePoint(secondOtherLane-&gt;at(j - 1u),</span>
+<span class="lineNum">     490 </span>        [<span class="branchCov" title="Branch 1 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :                                                  secondOtherLane-&gt;at(j),</span>
+<span class="lineNum">     491 </span>                :<span class="lineCov">          4 :                                                  secondParametricEdgePoints[i - 1],</span>
+<span class="lineNum">     492 </span>                :            :                                                  parametricInterpolatingDistance,
+<span class="lineNum">     493 </span>        [<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :                                                  secondParametricEdgePoints[i]);</span>
+<span class="lineNum">     494 </span>                :            :           }
+<span class="lineNum">     495 </span>[<span class="branchCov" title="Branch 1 was taken 6 times"> + </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">         14 :           for (; ((j + 1u) &lt; newOtherSecond.size()) &amp;&amp; (j &lt; secondOtherLane-&gt;size()); j++)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 6 times"> + </span><span class="branchCov" title="Branch 7 was taken 4 times"> + </span>]
+<span class="lineNum">     496 </span>                :            :           {
+<span class="lineNum">     497 </span>        [<span class="branchCov" title="Branch 2 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          6 :             newOtherSecond[j + 1u] = secondOtherLane-&gt;at(j);</span>
+<span class="lineNum">     498 </span>                :            :           }
+<span class="lineNum">     499 </span>                :            :         }
+<span class="lineNum">     500 </span>                :            :       }
+<span class="lineNum">     501 </span>                :            :       // add this one
+<span class="lineNum">     502 </span>        [<span class="branchCov" title="Branch 2 was taken 10 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         10 :       newSecond.push_back(second[i]);</span>
+<span class="lineNum">     503 </span>                :            :     }
+<span class="lineNum">     504 </span>                :            :   }
+<span class="lineNum">     505 </span>                :<span class="lineCov">          8 :   second.swap(newSecond);</span>
+<span class="lineNum">     506 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          8 :   if (secondOtherLane != nullptr)</span>
+<span class="lineNum">     507 </span>                :            :   {
+<span class="lineNum">     508 </span>                :<span class="lineCov">          4 :     secondOtherLane-&gt;swap(newOtherSecond);</span>
+<span class="lineNum">     509 </span>                :            :   }
+<a name="510"><span class="lineNum">     510 </span>                :            : }</a>
+<span class="lineNum">     511 </span>                :            : 
+<span class="lineNum">     512 </span>                :<span class="lineCov">          2 : void makeTransitionToSecondEdgeContinuous(point::ENUEdge const &amp;first, point::ENUEdge &amp;second)</span>
+<span class="lineNum">     513 </span>                :            : {
+<span class="lineNum">     514 </span>                :<span class="lineCov">          2 :   performMakeTransitionToSecondEdgeContinuous(first, second);</span>
+<a name="515"><span class="lineNum">     515 </span>                :<span class="lineCov">          2 : }</span></a>
+<span class="lineNum">     516 </span>                :            : 
+<span class="lineNum">     517 </span>                :<span class="lineCov">          2 : void makeTransitionFromFirstEdgeContinuous(point::ENUEdge &amp;first, point::ENUEdge const &amp;second)</span>
+<span class="lineNum">     518 </span>                :            : {
+<span class="lineNum">     519 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">          2 :   if (areEdgesContinuous(first, second))</span>
+<span class="lineNum">     520 </span>                :            :   {
+<span class="lineNum">     521 </span>                :<span class="lineNoCov">          0 :     return;</span>
+<span class="lineNum">     522 </span>                :            :   }
+<span class="lineNum">     523 </span>                :            :   // if actually something has to be calculated, we reverse the edge and let the other function do the job
+<span class="lineNum">     524 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :   point::ENUEdge invertedFirstEdge = first;</span>
+<span class="lineNum">     525 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :   std::reverse(invertedFirstEdge.begin(), invertedFirstEdge.end());</span>
+<span class="lineNum">     526 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          4 :   point::ENUEdge invertedSecondEdge = second;</span>
+<span class="lineNum">     527 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :   std::reverse(invertedSecondEdge.begin(), invertedSecondEdge.end());</span>
+<span class="lineNum">     528 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   performMakeTransitionToSecondEdgeContinuous(invertedSecondEdge, invertedFirstEdge);</span>
+<span class="lineNum">     529 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   first = invertedFirstEdge;</span>
+<span class="lineNum">     530 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :   std::reverse(first.begin(), first.end());</span>
+<a name="531"><span class="lineNum">     531 </span>                :            : }</a>
+<span class="lineNum">     532 </span>                :            : 
+<span class="lineNum">     533 </span>                :<span class="lineCov">          2 : void makeTransitionToSecondBorderContinuous(ENUBorder const &amp;first, ENUBorder &amp;second)</span>
+<span class="lineNum">     534 </span>                :            : {
+<span class="lineNum">     535 </span>                :<span class="lineCov">          2 :   performMakeTransitionToSecondEdgeContinuous(first.left, second.left, &amp;second.right);</span>
+<span class="lineNum">     536 </span>                :<span class="lineCov">          2 :   performMakeTransitionToSecondEdgeContinuous(first.right, second.right, &amp;second.left);</span>
+<a name="537"><span class="lineNum">     537 </span>                :<span class="lineCov">          2 : }</span></a>
+<span class="lineNum">     538 </span>                :            : 
+<span class="lineNum">     539 </span>                :<span class="lineCov">          2 : void makeTransitionFromFirstBorderContinuous(ENUBorder &amp;first, ENUBorder const &amp;second)</span>
+<span class="lineNum">     540 </span>                :            : {
+<span class="lineNum">     541 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">          2 :   if (areEdgesContinuous(first.left, second.left) &amp;&amp; areEdgesContinuous(first.right, second.right))</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>][<span class="branchNoExec" title="Branch 8 was not executed"> # </span><span class="branchNoExec" title="Branch 9 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 2 times"> + </span>]
+<span class="lineNum">     542 </span>                :            :   {
+<span class="lineNum">     543 </span>                :<span class="lineNoCov">          0 :     return;</span>
+<span class="lineNum">     544 </span>                :            :   }
+<span class="lineNum">     545 </span>                :            :   // if actually something has to be calculated, we reverse the borders and let the other function do the job
+<span class="lineNum">     546 </span>                :<span class="lineCov">          4 :   ENUBorder invertedFirstBorder;</span>
+<span class="lineNum">     547 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   invertedFirstBorder.left = first.left;</span>
+<span class="lineNum">     548 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   invertedFirstBorder.right = first.right;</span>
+<span class="lineNum">     549 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :   std::reverse(invertedFirstBorder.left.begin(), invertedFirstBorder.left.end());</span>
+<span class="lineNum">     550 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :   std::reverse(invertedFirstBorder.right.begin(), invertedFirstBorder.right.end());</span>
+<span class="lineNum">     551 </span>                :<span class="lineCov">          4 :   ENUBorder invertedSecondBorder;</span>
+<span class="lineNum">     552 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   invertedSecondBorder.left = second.left;</span>
+<span class="lineNum">     553 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   invertedSecondBorder.right = second.right;</span>
+<span class="lineNum">     554 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :   std::reverse(invertedSecondBorder.left.begin(), invertedSecondBorder.left.end());</span>
+<span class="lineNum">     555 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :   std::reverse(invertedSecondBorder.right.begin(), invertedSecondBorder.right.end());</span>
+<span class="lineNum">     556 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   makeTransitionToSecondBorderContinuous(invertedSecondBorder, invertedFirstBorder);</span>
+<span class="lineNum">     557 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   first = invertedFirstBorder;</span>
+<span class="lineNum">     558 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :   std::reverse(first.left.begin(), first.left.end());</span>
+<span class="lineNum">     559 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :   std::reverse(first.right.begin(), first.right.end());</span>
+<span class="lineNum">     560 </span>                :            : }
+<span class="lineNum">     561 </span>                :            : 
+<a name="562"><span class="lineNum">     562 </span>                :            : } // namespace lane</a>
+<span class="lineNum">     563 </span>                :            : } // namespace map
+<span class="lineNum">     564 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 : } // namespace ad</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

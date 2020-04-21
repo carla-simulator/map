@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_physics - generated/include/ad/physics/AngularVelocityValidInputRange.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../index.html">top level</a> - <a href="index.html">generated/include/ad/physics</a> - AngularVelocityValidInputRange.hpp<span style="font-size: 80%;"> (source / <a href="AngularVelocityValidInputRange.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_physics</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2020-04-21 10:58:57</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">27</td>
+            <td class="headerCovTableEntry">44</td>
+            <td class="headerCovTableEntryLo">61.4 %</td>
+          </tr>
+          <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
+<span class="lineNum">       3 </span>                :            :  *
+<span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       5 </span>                :            :  *
+<span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT
+<span class="lineNum">       7 </span>                :            :  *
+<span class="lineNum">       8 </span>                :            :  * ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       9 </span>                :            :  */
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : /**
+<span class="lineNum">      12 </span>                :            :  * Generated file
+<span class="lineNum">      13 </span>                :            :  * @file
+<span class="lineNum">      14 </span>                :            :  *
+<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1988
+<span class="lineNum">      16 </span>                :            :  */
+<span class="lineNum">      17 </span>                :            : 
+<span class="lineNum">      18 </span>                :            : #pragma once
+<span class="lineNum">      19 </span>                :            : 
+<span class="lineNum">      20 </span>                :            : #include &lt;cmath&gt;
+<span class="lineNum">      21 </span>                :            : #include &lt;limits&gt;
+<span class="lineNum">      22 </span>                :            : #include &quot;ad/physics/AngularVelocity.hpp&quot;
+<span class="lineNum">      23 </span>                :            : #include &quot;spdlog/fmt/ostr.h&quot;
+<span class="lineNum">      24 </span>                :            : #include &quot;spdlog/spdlog.h&quot;
+<span class="lineNum">      25 </span>                :            : 
+<span class="lineNum">      26 </span>                :            : /*!
+<span class="lineNum">      27 </span>                :            :  * \brief check if the given AngularVelocity is within valid input range
+<span class="lineNum">      28 </span>                :            :  *
+<span class="lineNum">      29 </span>                :            :  * \param[in] input the AngularVelocity as an input value
+<span class="lineNum">      30 </span>                :            :  * \param[in] logErrors enables error logging
+<span class="lineNum">      31 </span>                :            :  *
+<span class="lineNum">      32 </span>                :            :  * \returns \c true if AngularVelocity is considered to be within the specified input range
+<span class="lineNum">      33 </span>                :            :  *
+<span class="lineNum">      34 </span>                :            :  * \note the specified input range is defined by
+<span class="lineNum">      35 </span>                :            :  *       std::numeric_limits&lt;::ad::physics::AngularVelocity&gt;::lowest() &lt;= \c input &lt;=
+<span class="lineNum">      36 </span>                :            :  * std::numeric_limits&lt;::ad::physics::AngularVelocity&gt;::max()
+<a name="37"><span class="lineNum">      37 </span>                :            :  *       -100. &lt;= \c input &lt;= 100.</a>
+<span class="lineNum">      38 </span>                :            :  */
+<span class="lineNum">      39 </span>                :<span class="lineCov">         27 : inline bool withinValidInputRange(::ad::physics::AngularVelocity const &amp;input, bool const logErrors = true)</span>
+<span class="lineNum">      40 </span>                :            : {
+<span class="lineNum">      41 </span>                :            :   // check for generic numeric limits of the type
+<span class="lineNum">      42 </span>[<span class="branchCov" title="Branch 3 was taken 21 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 21 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         96 :   bool inValidInputRange = input.isValid() &amp;&amp; (std::numeric_limits&lt;::ad::physics::AngularVelocity&gt;::lowest() &lt;= input)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 6 times"> + </span><span class="branchCov" title="Branch 8 was taken 21 times"> + </span>][<span class="branchNoExec" title="Branch 9 was not executed"> # </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span>]
+<span class="lineNum">      43 </span>[<span class="branchCov" title="Branch 0 was taken 21 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 21 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">         75 :     &amp;&amp; (input &lt;= std::numeric_limits&lt;::ad::physics::AngularVelocity&gt;::max());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 21 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 21 times"> + </span><span class="branchCov" title="Branch 9 was taken 6 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">      44 </span>[<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 21 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         27 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      45 </span>                :            :   {
+<span class="lineNum">      46 </span>                :<span class="lineCov">          6 :     spdlog::error(&quot;withinValidInputRange(::ad::physics::AngularVelocity)&gt;&gt; {} out of numerical limits [{}, {}]&quot;,</span>
+<span class="lineNum">      47 </span>                :            :                   input,
+<span class="lineNum">      48 </span>                :<span class="lineCov">          6 :                   std::numeric_limits&lt;::ad::physics::AngularVelocity&gt;::lowest(),</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">         12 :                   std::numeric_limits&lt;::ad::physics::AngularVelocity&gt;::max()); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      50 </span>                :            :   }
+<span class="lineNum">      51 </span>                :            :   // check for individual input range
+<span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 0 was taken 21 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">         27 :   if (inValidInputRange)</span>
+<span class="lineNum">      53 </span>                :            :   {
+<span class="lineNum">      54 </span>                :            :     inValidInputRange
+<span class="lineNum">      55 </span>[<span class="branchCov" title="Branch 2 was taken 21 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 16 times"> + </span><span class="branchCov" title="Branch 5 was taken 5 times"> + </span>]:<span class="lineCov">         21 :       = (::ad::physics::AngularVelocity(-100.) &lt;= input) &amp;&amp; (input &lt;= ::ad::physics::AngularVelocity(100.));</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 16 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 10 was taken 11 times"> + </span><span class="branchCov" title="Branch 11 was taken 5 times"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 16 times"> + </span><span class="branchCov" title="Branch 13 was taken 5 times"> + </span>][<span class="branchCov" title="Branch 14 was taken 21 times"> + </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span><span class="branchNoExec" title="Branch 19 was not executed"> # </span>]
+<span class="lineNum">      56 </span>[<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchCov" title="Branch 1 was taken 11 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 10 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         21 :     if (!inValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      57 </span>                :            :     {
+<span class="lineNum">      58 </span>                :<span class="lineCov">         20 :       spdlog::error(&quot;withinValidInputRange(::ad::physics::AngularVelocity)&gt;&gt; {} out of valid input range [{}, {}]&quot;,</span>
+<span class="lineNum">      59 </span>                :            :                     input,
+<span class="lineNum">      60 </span>                :            :                     ::ad::physics::AngularVelocity(-100.),
+<span class="lineNum">      61 </span>                :<span class="lineCov">         10 :                     ::ad::physics::AngularVelocity(100.)); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      62 </span>                :            :     }
+<span class="lineNum">      63 </span>                :            :   }
+<span class="lineNum">      64 </span>                :<span class="lineCov">         27 :   return inValidInputRange;</span>
+<span class="lineNum">      65 </span>                :            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - impl/include/ad/map/config/MapConfigFileHandler.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">impl/include/ad/map/config</a> - MapConfigFileHandler.hpp<span style="font-size: 80%;"> (source / <a href="MapConfigFileHandler.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2020-04-21 11:01:25</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
+<span class="lineNum">       2 </span>                :            : //
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2019 Intel Corporation
+<span class="lineNum">       4 </span>                :            : //
+<span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
+<span class="lineNum">       6 </span>                :            : //
+<span class="lineNum">       7 </span>                :            : // ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : #pragma once
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : #include &lt;vector&gt;
+<span class="lineNum">      12 </span>                :            : #include &quot;ad/map/config/MapEntry.hpp&quot;
+<span class="lineNum">      13 </span>                :            : #include &quot;ad/map/config/PointOfInterest.hpp&quot;
+<span class="lineNum">      14 </span>                :            : #include &quot;ad/map/point/GeoPoint.hpp&quot;
+<span class="lineNum">      15 </span>                :            : 
+<span class="lineNum">      16 </span>                :            : /** @brief namespace ad */
+<span class="lineNum">      17 </span>                :            : namespace ad {
+<span class="lineNum">      18 </span>                :            : /** @brief namespace map */
+<span class="lineNum">      19 </span>                :            : namespace map {
+<span class="lineNum">      20 </span>                :            : /** @brief namespace config */
+<span class="lineNum">      21 </span>                :            : namespace config {
+<span class="lineNum">      22 </span>                :            : 
+<span class="lineNum">      23 </span>                :            : /**
+<span class="lineNum">      24 </span>                :            :  * @class MapConfigFileHandler
+<span class="lineNum">      25 </span>                :            :  * @brief Parse config file that specifies all known maps
+<span class="lineNum">      26 </span>                :            :  *
+<span class="lineNum">      27 </span>                :            :  * The config file specifies which maps to use by the AdMapAccess class.
+<span class="lineNum">      28 </span>                :            :  * It has three sections:
+<span class="lineNum">      29 </span>                :            :  * - ADMap
+<span class="lineNum">      30 </span>                :            :  * - POI
+<span class="lineNum">      31 </span>                :            :  * - ENUReference
+<span class="lineNum">      32 </span>                :            :  *
+<span class="lineNum">      33 </span>                :            :  * ADMap specifies a map and optional parameters for loading. An entry is given with
+<span class="lineNum">      34 </span>                :            :  * - map (mandatory): filename of the adm or OpenDrive map file, relative path below in the directory of the config file
+<span class="lineNum">      35 </span>                :            :  * itself. The filename must not have blanks.
+<span class="lineNum">      36 </span>                :            :  * - openDriveOverlapMargin (optional): OpenDrive Map reader margin for overlap calculation
+<span class="lineNum">      37 </span>                :            :  * - openDriveDefaultIntersectionType (optional): OpenDrive Map default intersection type
+<span class="lineNum">      38 </span>                :            :  *
+<span class="lineNum">      39 </span>                :            :  * The positions define the covered area of the file. Example:
+<span class="lineNum">      40 </span>                :            :  * [ADMap]
+<span class="lineNum">      41 </span>                :            :  * map=filename
+<span class="lineNum">      42 </span>                :            :  *
+<span class="lineNum">      43 </span>                :            :  * POI specifies a [list of] point[s] of interest. An entry can provide one or more POI descriptions.
+<span class="lineNum">      44 </span>                :            :  * Whereas a POI is given with:
+<span class="lineNum">      45 </span>                :            :  * - a name of the poi
+<span class="lineNum">      46 </span>                :            :  * - latitude, longitude and altitude values of the POI
+<span class="lineNum">      47 </span>                :            :  *
+<span class="lineNum">      48 </span>                :            :  * Example:
+<span class="lineNum">      49 </span>                :            :  * [POI]
+<span class="lineNum">      50 </span>                :            :  * poi=One 49.0189305 8.4399515 0.
+<span class="lineNum">      51 </span>                :            :  * poi=Two 49.0191653 8.4401407 0.
+<span class="lineNum">      52 </span>                :            :  * poi=Three 49.0192038 8.4401582 0.
+<span class="lineNum">      53 </span>                :            :  * poi=Four 49.0192092 8.4401439 0.
+<span class="lineNum">      54 </span>                :            :  *
+<span class="lineNum">      55 </span>                :            :  * All values are given in decimal degrees, e.g. 48.405
+<span class="lineNum">      56 </span>                :            :  *
+<span class="lineNum">      57 </span>                :            :  * In addition there is the possibility to provide a default ENUReference point to be set automatically when loading the
+<span class="lineNum">      58 </span>                :            :  * map file.
+<span class="lineNum">      59 </span>                :            :  * The default ENU Reference point is given by:
+<span class="lineNum">      60 </span>                :            :  * - latitude, longitude and altitude values of the reference point
+<span class="lineNum">      61 </span>                :            :  *
+<span class="lineNum">      62 </span>                :            :  * Example
+<span class="lineNum">      63 </span>                :            :  * [ENUReference]
+<span class="lineNum">      64 </span>                :            :  * default=49.0192671 8.4421163 0
+<span class="lineNum">      65 </span>                :            :  *
+<a name="66"><span class="lineNum">      66 </span>                :            :  * When parsing the config file, the existance/correctness of the map file itself will not be checked.</a>
+<span class="lineNum">      67 </span>                :            :  */
+<span class="lineNum">      68 </span>                :<span class="lineCov">         20 : class MapConfigFileHandler</span>
+<a name="69"><span class="lineNum">      69 </span>                :            : {</a>
+<span class="lineNum">      70 </span>                :            : public:
+<span class="lineNum">      71 </span>[<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>][<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>]:<span class="lineCov">         20 :   MapConfigFileHandler() = default;</span>
+<span class="lineNum">      72 </span>                :            : 
+<span class="lineNum">      73 </span>                :            :   // Copy operators and constructors are deleted to avoid accidential copies
+<span class="lineNum">      74 </span>                :            :   MapConfigFileHandler(MapConfigFileHandler const &amp;) = delete;
+<span class="lineNum">      75 </span>                :            :   MapConfigFileHandler(MapConfigFileHandler &amp;&amp;) = delete;
+<span class="lineNum">      76 </span>                :            :   MapConfigFileHandler &amp;operator=(MapConfigFileHandler &amp;&amp;) = delete;
+<span class="lineNum">      77 </span>                :            :   MapConfigFileHandler &amp;operator=(MapConfigFileHandler const &amp;) = delete;
+<span class="lineNum">      78 </span>                :            : 
+<span class="lineNum">      79 </span>                :            :   /**
+<span class="lineNum">      80 </span>                :            :    * @brief read configuration from given configFileName
+<span class="lineNum">      81 </span>                :            :    *
+<span class="lineNum">      82 </span>                :            :    * @return true on successful completion
+<span class="lineNum">      83 </span>                :            :    * @return false if configFileName cannot be opened or has invalid syntax
+<span class="lineNum">      84 </span>                :            :    */
+<span class="lineNum">      85 </span>                :            :   bool readConfig(std::string const &amp;configFileName);
+<span class="lineNum">      86 </span>                :            : 
+<span class="lineNum">      87 </span>                :            :   //! @return true if a valid configuration was read
+<span class="lineNum">      88 </span>                :            :   bool isInitialized() const;
+<span class="lineNum">      89 </span>                :            : 
+<span class="lineNum">      90 </span>                :            :   //! @return true if configuration was done with given file name
+<span class="lineNum">      91 </span>                :            :   bool isInitializedWithFilename(std::string const &amp;configFileName) const;
+<span class="lineNum">      92 </span>                :            : 
+<span class="lineNum">      93 </span>                :            :   //! @return name of loaded config file
+<span class="lineNum">      94 </span>                :            :   std::string const &amp;configFileName() const;
+<span class="lineNum">      95 </span>                :            : 
+<span class="lineNum">      96 </span>                :            :   //! @return configured MapEntry
+<span class="lineNum">      97 </span>                :            :   MapEntry const &amp;adMapEntry() const;
+<span class="lineNum">      98 </span>                :            : 
+<span class="lineNum">      99 </span>                :            :   //! @return list of POIs
+<span class="lineNum">     100 </span>                :            :   std::vector&lt;PointOfInterest&gt; const &amp;pointsOfInterest() const;
+<span class="lineNum">     101 </span>                :            : 
+<span class="lineNum">     102 </span>                :            :   //! @return the default Enu reference point
+<span class="lineNum">     103 </span>                :            :   point::GeoPoint defaultEnuReference() const;
+<span class="lineNum">     104 </span>                :            : 
+<span class="lineNum">     105 </span>                :            :   //! @return \c 'true' if the default Enu reference point is existing
+<span class="lineNum">     106 </span>                :            :   bool defaultEnuReferenceAvailable() const;
+<span class="lineNum">     107 </span>                :            : 
+<span class="lineNum">     108 </span>                :            :   void reset();
+<span class="lineNum">     109 </span>                :            : 
+<span class="lineNum">     110 </span>                :            : private:
+<span class="lineNum">     111 </span>                :            :   std::string mConfigFileName{}; //!&lt; name of the loaded config file
+<span class="lineNum">     112 </span>                :            :   std::string mBaseDir{};        //!&lt; name of directory where config file is located
+<span class="lineNum">     113 </span>                :            : 
+<span class="lineNum">     114 </span>                :            :   MapEntry mAdMapEntry;
+<span class="lineNum">     115 </span>                :            :   std::vector&lt;PointOfInterest&gt; mPointsOfInterest;
+<span class="lineNum">     116 </span>                :            :   point::GeoPoint mDefaultEnuReference;
+<span class="lineNum">     117 </span>                :            : 
+<span class="lineNum">     118 </span>                :            :   void updateFilenameAndPath(std::string const &amp;configFileName);
+<span class="lineNum">     119 </span>                :            :   bool parseConfigFile(std::string const &amp;configFileName);
+<span class="lineNum">     120 </span>                :            :   bool parsePointOfIntereset(std::string const &amp;entry);
+<span class="lineNum">     121 </span>                :            :   bool parseENUReference(std::string const &amp;entry);
+<span class="lineNum">     122 </span>                :            : };
+<span class="lineNum">     123 </span>                :            : 
+<span class="lineNum">     124 </span>                :            : } // namespace config
+<span class="lineNum">     125 </span>                :            : } // namespace map
+<span class="lineNum">     126 </span>                :            : } // namespace ad
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

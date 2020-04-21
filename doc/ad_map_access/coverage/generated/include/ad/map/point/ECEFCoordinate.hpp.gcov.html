@@ -1,0 +1,666 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - generated/include/ad/map/point/ECEFCoordinate.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">generated/include/ad/map/point</a> - ECEFCoordinate.hpp<span style="font-size: 80%;"> (source / <a href="ECEFCoordinate.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">108</td>
+            <td class="headerCovTableEntry">108</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2020-04-21 11:01:25</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">29</td>
+            <td class="headerCovTableEntry">29</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">48</td>
+            <td class="headerCovTableEntry">48</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
+<span class="lineNum">       3 </span>                :            :  *
+<span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       5 </span>                :            :  *
+<span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT
+<span class="lineNum">       7 </span>                :            :  *
+<span class="lineNum">       8 </span>                :            :  * ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       9 </span>                :            :  */
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : /**
+<span class="lineNum">      12 </span>                :            :  * Generated file
+<span class="lineNum">      13 </span>                :            :  * @file
+<span class="lineNum">      14 </span>                :            :  *
+<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1988
+<span class="lineNum">      16 </span>                :            :  */
+<span class="lineNum">      17 </span>                :            : 
+<span class="lineNum">      18 </span>                :            : #pragma once
+<span class="lineNum">      19 </span>                :            : 
+<span class="lineNum">      20 </span>                :            : #include &lt;cmath&gt;
+<span class="lineNum">      21 </span>                :            : #include &lt;iostream&gt;
+<span class="lineNum">      22 </span>                :            : #include &lt;limits&gt;
+<span class="lineNum">      23 </span>                :            : #include &lt;sstream&gt;
+<span class="lineNum">      24 </span>                :            : #include &lt;stdexcept&gt;
+<span class="lineNum">      25 </span>                :            : #include &quot;spdlog/fmt/ostr.h&quot;
+<span class="lineNum">      26 </span>                :            : #include &quot;spdlog/spdlog.h&quot;
+<span class="lineNum">      27 </span>                :            : /*!
+<span class="lineNum">      28 </span>                :            :  * @brief namespace ad
+<span class="lineNum">      29 </span>                :            :  */
+<span class="lineNum">      30 </span>                :            : namespace ad {
+<span class="lineNum">      31 </span>                :            : /*!
+<span class="lineNum">      32 </span>                :            :  * @brief namespace map
+<span class="lineNum">      33 </span>                :            :  */
+<span class="lineNum">      34 </span>                :            : namespace map {
+<span class="lineNum">      35 </span>                :            : /*!
+<span class="lineNum">      36 </span>                :            :  * @brief namespace point
+<span class="lineNum">      37 </span>                :            :  *
+<span class="lineNum">      38 </span>                :            :  * Handling geographic positions in different coordinate systems
+<span class="lineNum">      39 </span>                :            :  */
+<span class="lineNum">      40 </span>                :            : namespace point {
+<span class="lineNum">      41 </span>                :            : 
+<span class="lineNum">      42 </span>                :            : /*!
+<span class="lineNum">      43 </span>                :            :  * \brief Define to indicate whether throwing exceptions is enabled
+<span class="lineNum">      44 </span>                :            :  */
+<span class="lineNum">      45 </span>                :            : #define AD_MAP_POINT_ECEFCOORDINATE_THROWS_EXCEPTION 1
+<span class="lineNum">      46 </span>                :            : 
+<span class="lineNum">      47 </span>                :            : #if SAFE_DATATYPES_EXPLICIT_CONVERSION
+<span class="lineNum">      48 </span>                :            : /*!
+<span class="lineNum">      49 </span>                :            : * \brief Enable/Disable explicit conversion. Currently set to &quot;only explicit conversion&quot;.
+<span class="lineNum">      50 </span>                :            : */
+<span class="lineNum">      51 </span>                :            : #define _AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION_ explicit
+<span class="lineNum">      52 </span>                :            : #else
+<span class="lineNum">      53 </span>                :            : /*!
+<span class="lineNum">      54 </span>                :            : * \brief Enable/Disable explicit conversion. Currently set to &quot;implicit conversion allowed&quot;.
+<span class="lineNum">      55 </span>                :            : */
+<span class="lineNum">      56 </span>                :            : #define _AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION_
+<span class="lineNum">      57 </span>                :            : #endif
+<span class="lineNum">      58 </span>                :            : 
+<span class="lineNum">      59 </span>                :            : /*!
+<span class="lineNum">      60 </span>                :            :  * \brief DataType ECEFCoordinate
+<span class="lineNum">      61 </span>                :            :  *
+<span class="lineNum">      62 </span>                :            :  * equatorial WGS-84 earth radius [m]= 6378137
+<span class="lineNum">      63 </span>                :            :  * Height of the Mount Everest [m]= 8848;
+<span class="lineNum">      64 </span>                :            :  * Maximum ECEF Coordinate:
+<span class="lineNum">      65 </span>                :            :  * WGS84_R + MOUNT_EVEREST ~ 6400000
+<span class="lineNum">      66 </span>                :            :  * The unit is: Meter
+<span class="lineNum">      67 </span>                :            :  */
+<span class="lineNum">      68 </span>                :            : class ECEFCoordinate
+<span class="lineNum">      69 </span>                :            : {
+<span class="lineNum">      70 </span>                :            : public:
+<span class="lineNum">      71 </span>                :            :   /*!
+<span class="lineNum">      72 </span>                :            :    * \brief constant defining the minimum valid ECEFCoordinate value (used in isValid())
+<span class="lineNum">      73 </span>                :            :    */
+<span class="lineNum">      74 </span>                :            :   static const double cMinValue;
+<span class="lineNum">      75 </span>                :            : 
+<span class="lineNum">      76 </span>                :            :   /*!
+<span class="lineNum">      77 </span>                :            :    * \brief constant defining the maximum valid ECEFCoordinate value (used in isValid())
+<span class="lineNum">      78 </span>                :            :    */
+<span class="lineNum">      79 </span>                :            :   static const double cMaxValue;
+<span class="lineNum">      80 </span>                :            : 
+<span class="lineNum">      81 </span>                :            :   /*!
+<span class="lineNum">      82 </span>                :            :    * \brief constant defining the assumed ECEFCoordinate value accuracy
+<span class="lineNum">      83 </span>                :            :    *   (used in comparison operator==(), operator!=())
+<span class="lineNum">      84 </span>                :            :    */
+<span class="lineNum">      85 </span>                :            :   static const double cPrecisionValue;
+<span class="lineNum">      86 </span>                :            : 
+<span class="lineNum">      87 </span>                :            :   /*!
+<span class="lineNum">      88 </span>                :            :    * \brief default constructor
+<span class="lineNum">      89 </span>                :            :    *
+<span class="lineNum">      90 </span>                :            :    * The default value of ECEFCoordinate is:
+<a name="91"><span class="lineNum">      91 </span>                :            :    * std::numeric_limits&lt;double&gt;::quiet_NaN()</a>
+<span class="lineNum">      92 </span>                :            :    */
+<span class="lineNum">      93 </span>                :<span class="lineCov">         20 :   ECEFCoordinate()</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">         20 :     : mECEFCoordinate(std::numeric_limits&lt;double&gt;::quiet_NaN())</span>
+<span class="lineNum">      95 </span>                :            :   {
+<span class="lineNum">      96 </span>                :<span class="lineCov">         20 :   }</span>
+<span class="lineNum">      97 </span>                :            : 
+<span class="lineNum">      98 </span>                :            :   /*!
+<span class="lineNum">      99 </span>                :            :    * \brief standard constructor
+<span class="lineNum">     100 </span>                :            :    *
+<a name="101"><span class="lineNum">     101 </span>                :            :    * \note \ref \_AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
+<span class="lineNum">     102 </span>                :            :    */
+<span class="lineNum">     103 </span>                :<span class="lineCov">  779269072 :   _AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION_ ECEFCoordinate(double const iECEFCoordinate)</span>
+<span class="lineNum">     104 </span>                :<span class="lineCov">  779269072 :     : mECEFCoordinate(iECEFCoordinate)</span>
+<span class="lineNum">     105 </span>                :            :   {
+<span class="lineNum">     106 </span>                :<span class="lineCov">  779269072 :   }</span>
+<span class="lineNum">     107 </span>                :            : 
+<span class="lineNum">     108 </span>                :            :   /*!
+<span class="lineNum">     109 </span>                :            :    * \brief standard copy constructor
+<span class="lineNum">     110 </span>                :            :    */
+<span class="lineNum">     111 </span>                :            :   ECEFCoordinate(const ECEFCoordinate &amp;other) = default;
+<span class="lineNum">     112 </span>                :            : 
+<span class="lineNum">     113 </span>                :            :   /*!
+<span class="lineNum">     114 </span>                :            :    * \brief standard move constructor
+<span class="lineNum">     115 </span>                :            :    */
+<span class="lineNum">     116 </span>                :            :   ECEFCoordinate(ECEFCoordinate &amp;&amp;other) = default;
+<span class="lineNum">     117 </span>                :            : 
+<span class="lineNum">     118 </span>                :            :   /**
+<span class="lineNum">     119 </span>                :            :    * \brief standard assignment operator
+<span class="lineNum">     120 </span>                :            :    *
+<span class="lineNum">     121 </span>                :            :    * \param[in] other Other ECEFCoordinate
+<span class="lineNum">     122 </span>                :            :    *
+<span class="lineNum">     123 </span>                :            :    * \returns Reference to this ECEFCoordinate.
+<span class="lineNum">     124 </span>                :            :    */
+<span class="lineNum">     125 </span>                :            :   ECEFCoordinate &amp;operator=(const ECEFCoordinate &amp;other) = default;
+<span class="lineNum">     126 </span>                :            : 
+<span class="lineNum">     127 </span>                :            :   /**
+<span class="lineNum">     128 </span>                :            :    * \brief standard move operator
+<span class="lineNum">     129 </span>                :            :    *
+<span class="lineNum">     130 </span>                :            :    * \param[in] other Other ECEFCoordinate
+<span class="lineNum">     131 </span>                :            :    *
+<span class="lineNum">     132 </span>                :            :    * \returns Reference to this ECEFCoordinate.
+<span class="lineNum">     133 </span>                :            :    */
+<span class="lineNum">     134 </span>                :            :   ECEFCoordinate &amp;operator=(ECEFCoordinate &amp;&amp;other) = default;
+<span class="lineNum">     135 </span>                :            : 
+<span class="lineNum">     136 </span>                :            :   /**
+<span class="lineNum">     137 </span>                :            :    * \brief standard comparison operator
+<span class="lineNum">     138 </span>                :            :    *
+<span class="lineNum">     139 </span>                :            :    * \param[in] other Other ECEFCoordinate
+<span class="lineNum">     140 </span>                :            :    *
+<a name="141"><span class="lineNum">     141 </span>                :            :    * \returns \c true if both ECEFCoordinate are valid and can be taken as numerically equal</a>
+<span class="lineNum">     142 </span>                :            :    */
+<span class="lineNum">     143 </span>                :<span class="lineCov">    1527068 :   bool operator==(const ECEFCoordinate &amp;other) const</span>
+<span class="lineNum">     144 </span>                :            :   {
+<span class="lineNum">     145 </span>                :<span class="lineCov">    1527068 :     ensureValid();</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">    1527066 :     other.ensureValid();</span>
+<span class="lineNum">     147 </span>                :<span class="lineCov">    1527064 :     return std::fabs(mECEFCoordinate - other.mECEFCoordinate) &lt; cPrecisionValue;</span>
+<span class="lineNum">     148 </span>                :            :   }
+<span class="lineNum">     149 </span>                :            : 
+<span class="lineNum">     150 </span>                :            :   /**
+<span class="lineNum">     151 </span>                :            :    * \brief standard comparison operator
+<span class="lineNum">     152 </span>                :            :    *
+<span class="lineNum">     153 </span>                :            :    * \param[in] other Other ECEFCoordinate.
+<span class="lineNum">     154 </span>                :            :    *
+<a name="155"><span class="lineNum">     155 </span>                :            :    * \returns \c true if one of the ECEFCoordinate is not valid or they can be taken as numerically different</a>
+<span class="lineNum">     156 </span>                :            :    */
+<span class="lineNum">     157 </span>                :<span class="lineCov">     971479 :   bool operator!=(const ECEFCoordinate &amp;other) const</span>
+<span class="lineNum">     158 </span>                :            :   {
+<span class="lineNum">     159 </span>                :<span class="lineCov">     971479 :     return !operator==(other);</span>
+<span class="lineNum">     160 </span>                :            :   }
+<span class="lineNum">     161 </span>                :            : 
+<span class="lineNum">     162 </span>                :            :   /**
+<span class="lineNum">     163 </span>                :            :    * \brief standard comparison operator
+<span class="lineNum">     164 </span>                :            :    *
+<span class="lineNum">     165 </span>                :            :    * \param[in] other Other ECEFCoordinate.
+<span class="lineNum">     166 </span>                :            :    *
+<span class="lineNum">     167 </span>                :            :    * \returns \c true if both ECEFCoordinate are valid and
+<span class="lineNum">     168 </span>                :            :    *   this ECEFCoordinate is strictly numerically greater than other.
+<a name="169"><span class="lineNum">     169 </span>                :            :    * \note the precision of ECEFCoordinate is considered</a>
+<span class="lineNum">     170 </span>                :            :    */
+<span class="lineNum">     171 </span>                :<span class="lineCov">          5 :   bool operator&gt;(const ECEFCoordinate &amp;other) const</span>
+<span class="lineNum">     172 </span>                :            :   {
+<span class="lineNum">     173 </span>                :<span class="lineCov">          5 :     ensureValid();</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">          4 :     other.ensureValid();</span>
+<span class="lineNum">     175 </span>[<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">          3 :     return (mECEFCoordinate &gt; other.mECEFCoordinate) &amp;&amp; operator!=(other);</span>
+<span class="lineNum">     176 </span>                :            :   }
+<span class="lineNum">     177 </span>                :            : 
+<span class="lineNum">     178 </span>                :            :   /**
+<span class="lineNum">     179 </span>                :            :    * \brief standard comparison operator
+<span class="lineNum">     180 </span>                :            :    *
+<span class="lineNum">     181 </span>                :            :    * \param[in] other Other ECEFCoordinate.
+<span class="lineNum">     182 </span>                :            :    *
+<span class="lineNum">     183 </span>                :            :    * \returns \c true if both ECEFCoordinate are valid and
+<span class="lineNum">     184 </span>                :            :    *   this ECEFCoordinate is strictly numerically smaller than other.
+<a name="185"><span class="lineNum">     185 </span>                :            :    * \note the precision of ECEFCoordinate is considered</a>
+<span class="lineNum">     186 </span>                :            :    */
+<span class="lineNum">     187 </span>                :<span class="lineCov">    3681881 :   bool operator&lt;(const ECEFCoordinate &amp;other) const</span>
+<span class="lineNum">     188 </span>                :            :   {
+<span class="lineNum">     189 </span>                :<span class="lineCov">    3681881 :     ensureValid();</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">    3681880 :     other.ensureValid();</span>
+<span class="lineNum">     191 </span>[<span class="branchCov" title="Branch 0 was taken 971470 times"> + </span><span class="branchCov" title="Branch 1 was taken 2710409 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 960704 times"> + </span><span class="branchCov" title="Branch 4 was taken 10766 times"> + </span>]:<span class="lineCov">    3681879 :     return (mECEFCoordinate &lt; other.mECEFCoordinate) &amp;&amp; operator!=(other);</span>
+<span class="lineNum">     192 </span>                :            :   }
+<span class="lineNum">     193 </span>                :            : 
+<span class="lineNum">     194 </span>                :            :   /**
+<span class="lineNum">     195 </span>                :            :    * \brief standard comparison operator
+<span class="lineNum">     196 </span>                :            :    *
+<span class="lineNum">     197 </span>                :            :    * \param[in] other Other ECEFCoordinate.
+<span class="lineNum">     198 </span>                :            :    *
+<span class="lineNum">     199 </span>                :            :    * \returns \c true if both ECEFCoordinate are valid and
+<span class="lineNum">     200 </span>                :            :    *   this ECEFCoordinate is numerically greater than other.
+<a name="201"><span class="lineNum">     201 </span>                :            :    * \note the precision of ECEFCoordinate is considered</a>
+<span class="lineNum">     202 </span>                :            :    */
+<span class="lineNum">     203 </span>                :<span class="lineCov">          7 :   bool operator&gt;=(const ECEFCoordinate &amp;other) const</span>
+<span class="lineNum">     204 </span>                :            :   {
+<span class="lineNum">     205 </span>                :<span class="lineCov">          7 :     ensureValid();</span>
+<span class="lineNum">     206 </span>                :<span class="lineCov">          6 :     other.ensureValid();</span>
+<span class="lineNum">     207 </span>[<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">          5 :     return ((mECEFCoordinate &gt; other.mECEFCoordinate) || operator==(other));</span>
+<span class="lineNum">     208 </span>                :            :   }
+<span class="lineNum">     209 </span>                :            : 
+<span class="lineNum">     210 </span>                :            :   /**
+<span class="lineNum">     211 </span>                :            :    * \brief standard comparison operator
+<span class="lineNum">     212 </span>                :            :    *
+<span class="lineNum">     213 </span>                :            :    * \param[in] other Other ECEFCoordinate
+<span class="lineNum">     214 </span>                :            :    *
+<span class="lineNum">     215 </span>                :            :    * \returns \c true if both ECEFCoordinate are valid and
+<span class="lineNum">     216 </span>                :            :    *   this ECEFCoordinate is numerically smaller than other.
+<a name="217"><span class="lineNum">     217 </span>                :            :    * \note the precision of ECEFCoordinate is considered</a>
+<span class="lineNum">     218 </span>                :            :    */
+<span class="lineNum">     219 </span>                :<span class="lineCov">   64388982 :   bool operator&lt;=(const ECEFCoordinate &amp;other) const</span>
+<span class="lineNum">     220 </span>                :            :   {
+<span class="lineNum">     221 </span>                :<span class="lineCov">   64388982 :     ensureValid();</span>
+<span class="lineNum">     222 </span>                :<span class="lineCov">   64388981 :     other.ensureValid();</span>
+<span class="lineNum">     223 </span>[<span class="branchCov" title="Branch 0 was taken 219 times"> + </span><span class="branchCov" title="Branch 1 was taken 64388761 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 186 times"> + </span><span class="branchCov" title="Branch 4 was taken 33 times"> + </span>]:<span class="lineCov">   64388980 :     return ((mECEFCoordinate &lt; other.mECEFCoordinate) || operator==(other));</span>
+<span class="lineNum">     224 </span>                :            :   }
+<span class="lineNum">     225 </span>                :            : 
+<span class="lineNum">     226 </span>                :            :   /**
+<span class="lineNum">     227 </span>                :            :    * \brief standard arithmetic operator
+<span class="lineNum">     228 </span>                :            :    *
+<span class="lineNum">     229 </span>                :            :    * \param[in] other Other ECEFCoordinate
+<span class="lineNum">     230 </span>                :            :    *
+<span class="lineNum">     231 </span>                :            :    * \returns Result of arithmetic operation.
+<span class="lineNum">     232 </span>                :            :    *
+<span class="lineNum">     233 </span>                :            :    * \note throws a std::out_of_range exception if one of the two operands or the result of
+<a name="234"><span class="lineNum">     234 </span>                :            :    *   the operation is not valid</a>
+<span class="lineNum">     235 </span>                :            :    */
+<span class="lineNum">     236 </span>                :<span class="lineCov">   53467648 :   ECEFCoordinate operator+(const ECEFCoordinate &amp;other) const</span>
+<span class="lineNum">     237 </span>                :            :   {
+<span class="lineNum">     238 </span>        [<span class="branchCov" title="Branch 1 was taken 53467647 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">   53467648 :     ensureValid();</span>
+<span class="lineNum">     239 </span>        [<span class="branchCov" title="Branch 1 was taken 53467646 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">   53467647 :     other.ensureValid();</span>
+<span class="lineNum">     240 </span>                :<span class="lineCov">   53467646 :     ECEFCoordinate const result(mECEFCoordinate + other.mECEFCoordinate);</span>
+<span class="lineNum">     241 </span>        [<span class="branchCov" title="Branch 1 was taken 53467645 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">   53467646 :     result.ensureValid();</span>
+<span class="lineNum">     242 </span>                :<span class="lineCov">   53467645 :     return result;</span>
+<span class="lineNum">     243 </span>                :            :   }
+<span class="lineNum">     244 </span>                :            : 
+<span class="lineNum">     245 </span>                :            :   /**
+<span class="lineNum">     246 </span>                :            :    * \brief standard arithmetic operator
+<span class="lineNum">     247 </span>                :            :    *
+<span class="lineNum">     248 </span>                :            :    * \param[in] other Other ECEFCoordinate
+<span class="lineNum">     249 </span>                :            :    *
+<span class="lineNum">     250 </span>                :            :    * \returns Result of arithmetic operation.
+<span class="lineNum">     251 </span>                :            :    *
+<span class="lineNum">     252 </span>                :            :    * \note throws a std::out_of_range exception if one of the two operands or the result of
+<a name="253"><span class="lineNum">     253 </span>                :            :    *   the operation is not valid</a>
+<span class="lineNum">     254 </span>                :            :    */
+<span class="lineNum">     255 </span>                :<span class="lineCov">          4 :   ECEFCoordinate &amp;operator+=(const ECEFCoordinate &amp;other)</span>
+<span class="lineNum">     256 </span>                :            :   {
+<span class="lineNum">     257 </span>                :<span class="lineCov">          4 :     ensureValid();</span>
+<span class="lineNum">     258 </span>                :<span class="lineCov">          3 :     other.ensureValid();</span>
+<span class="lineNum">     259 </span>                :<span class="lineCov">          2 :     mECEFCoordinate += other.mECEFCoordinate;</span>
+<span class="lineNum">     260 </span>                :<span class="lineCov">          2 :     ensureValid();</span>
+<span class="lineNum">     261 </span>                :<span class="lineCov">          1 :     return *this;</span>
+<span class="lineNum">     262 </span>                :            :   }
+<span class="lineNum">     263 </span>                :            : 
+<span class="lineNum">     264 </span>                :            :   /**
+<span class="lineNum">     265 </span>                :            :    * \brief standard arithmetic operator
+<span class="lineNum">     266 </span>                :            :    *
+<span class="lineNum">     267 </span>                :            :    * \param[in] other Other ECEFCoordinate
+<span class="lineNum">     268 </span>                :            :    *
+<span class="lineNum">     269 </span>                :            :    * \returns Result of arithmetic operation.
+<span class="lineNum">     270 </span>                :            :    *
+<span class="lineNum">     271 </span>                :            :    * \note throws a std::out_of_range exception if one of the two operands or the result of
+<a name="272"><span class="lineNum">     272 </span>                :            :    *   the operation is not valid</a>
+<span class="lineNum">     273 </span>                :            :    */
+<span class="lineNum">     274 </span>                :<span class="lineCov">  245625493 :   ECEFCoordinate operator-(const ECEFCoordinate &amp;other) const</span>
+<span class="lineNum">     275 </span>                :            :   {
+<span class="lineNum">     276 </span>        [<span class="branchCov" title="Branch 1 was taken 245625492 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">  245625493 :     ensureValid();</span>
+<span class="lineNum">     277 </span>        [<span class="branchCov" title="Branch 1 was taken 245625491 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">  245625492 :     other.ensureValid();</span>
+<span class="lineNum">     278 </span>                :<span class="lineCov">  245625491 :     ECEFCoordinate const result(mECEFCoordinate - other.mECEFCoordinate);</span>
+<span class="lineNum">     279 </span>        [<span class="branchCov" title="Branch 1 was taken 245625490 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">  245625491 :     result.ensureValid();</span>
+<span class="lineNum">     280 </span>                :<span class="lineCov">  245625490 :     return result;</span>
+<span class="lineNum">     281 </span>                :            :   }
+<span class="lineNum">     282 </span>                :            : 
+<span class="lineNum">     283 </span>                :            :   /**
+<span class="lineNum">     284 </span>                :            :    * \brief standard arithmetic operator
+<span class="lineNum">     285 </span>                :            :    *
+<span class="lineNum">     286 </span>                :            :    * \param[in] other Other ECEFCoordinate
+<span class="lineNum">     287 </span>                :            :    *
+<span class="lineNum">     288 </span>                :            :    * \returns Result of arithmetic operation.
+<span class="lineNum">     289 </span>                :            :    *
+<span class="lineNum">     290 </span>                :            :    * \note throws a std::out_of_range exception if one of the two operands or the result of
+<a name="291"><span class="lineNum">     291 </span>                :            :    *   the operation is not valid</a>
+<span class="lineNum">     292 </span>                :            :    */
+<span class="lineNum">     293 </span>                :<span class="lineCov">          4 :   ECEFCoordinate operator-=(const ECEFCoordinate &amp;other)</span>
+<span class="lineNum">     294 </span>                :            :   {
+<span class="lineNum">     295 </span>                :<span class="lineCov">          4 :     ensureValid();</span>
+<span class="lineNum">     296 </span>                :<span class="lineCov">          3 :     other.ensureValid();</span>
+<span class="lineNum">     297 </span>                :<span class="lineCov">          2 :     mECEFCoordinate -= other.mECEFCoordinate;</span>
+<span class="lineNum">     298 </span>                :<span class="lineCov">          2 :     ensureValid();</span>
+<span class="lineNum">     299 </span>                :<span class="lineCov">          1 :     return *this;</span>
+<span class="lineNum">     300 </span>                :            :   }
+<span class="lineNum">     301 </span>                :            : 
+<span class="lineNum">     302 </span>                :            :   /**
+<span class="lineNum">     303 </span>                :            :    * \brief standard arithmetic operator
+<span class="lineNum">     304 </span>                :            :    *
+<span class="lineNum">     305 </span>                :            :    * \param[in] scalar Scalar double value
+<span class="lineNum">     306 </span>                :            :    *
+<span class="lineNum">     307 </span>                :            :    * \returns Result of arithmetic operation.
+<span class="lineNum">     308 </span>                :            :    *
+<span class="lineNum">     309 </span>                :            :    * \note throws a std::out_of_range exception if \c value or the result of
+<a name="310"><span class="lineNum">     310 </span>                :            :    *   the operation is not valid</a>
+<span class="lineNum">     311 </span>                :            :    */
+<span class="lineNum">     312 </span>                :<span class="lineCov">  106929244 :   ECEFCoordinate operator*(const double &amp;scalar) const</span>
+<span class="lineNum">     313 </span>                :            :   {
+<span class="lineNum">     314 </span>        [<span class="branchCov" title="Branch 1 was taken 106929243 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">  106929244 :     ensureValid();</span>
+<span class="lineNum">     315 </span>                :<span class="lineCov">  106929243 :     ECEFCoordinate const result(mECEFCoordinate * scalar);</span>
+<span class="lineNum">     316 </span>        [<span class="branchCov" title="Branch 1 was taken 106929242 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">  106929243 :     result.ensureValid();</span>
+<span class="lineNum">     317 </span>                :<span class="lineCov">  106929242 :     return result;</span>
+<span class="lineNum">     318 </span>                :            :   }
+<span class="lineNum">     319 </span>                :            : 
+<span class="lineNum">     320 </span>                :            :   /**
+<span class="lineNum">     321 </span>                :            :    * \brief standard arithmetic operator
+<span class="lineNum">     322 </span>                :            :    *
+<span class="lineNum">     323 </span>                :            :    * \param[in] scalar Scalar double value
+<span class="lineNum">     324 </span>                :            :    *
+<span class="lineNum">     325 </span>                :            :    * \returns Result of arithmetic operation.
+<span class="lineNum">     326 </span>                :            :    *
+<span class="lineNum">     327 </span>                :            :    * \note throws a std::out_of_range exception if this or the result of
+<a name="328"><span class="lineNum">     328 </span>                :            :    *   the operation is not valid or other is zero</a>
+<span class="lineNum">     329 </span>                :            :    */
+<span class="lineNum">     330 </span>                :<span class="lineCov">     456602 :   ECEFCoordinate operator/(const double &amp;scalar) const</span>
+<span class="lineNum">     331 </span>                :            :   {
+<span class="lineNum">     332 </span>                :<span class="lineCov">     456602 :     ECEFCoordinate const scalarECEFCoordinate(scalar);</span>
+<span class="lineNum">     333 </span>        [<span class="branchCov" title="Branch 1 was taken 456599 times"> + </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">     456602 :     ECEFCoordinate const result(operator/(scalarECEFCoordinate));</span>
+<span class="lineNum">     334 </span>        [<span class="branchCov" title="Branch 1 was taken 456598 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">     456599 :     result.ensureValid();</span>
+<span class="lineNum">     335 </span>                :<span class="lineCov">     456598 :     return result;</span>
+<span class="lineNum">     336 </span>                :            :   }
+<span class="lineNum">     337 </span>                :            : 
+<span class="lineNum">     338 </span>                :            :   /**
+<span class="lineNum">     339 </span>                :            :    * \brief standard arithmetic operator
+<span class="lineNum">     340 </span>                :            :    *
+<span class="lineNum">     341 </span>                :            :    * \param[in] other Other ECEFCoordinate
+<span class="lineNum">     342 </span>                :            :    *
+<span class="lineNum">     343 </span>                :            :    * \returns Result of arithmetic operation.
+<span class="lineNum">     344 </span>                :            :    *
+<span class="lineNum">     345 </span>                :            :    * \note throws a std::out_of_range exception if one of the two operands or the result of
+<span class="lineNum">     346 </span>                :            :    *   the operation is not valid or other is zero
+<a name="347"><span class="lineNum">     347 </span>                :            :    * \note since ECEFCoordinate is a type with physical unit, the division results in the dimensionless type.</a>
+<span class="lineNum">     348 </span>                :            :    */
+<span class="lineNum">     349 </span>                :<span class="lineCov">     456606 :   double operator/(const ECEFCoordinate &amp;other) const</span>
+<span class="lineNum">     350 </span>                :            :   {
+<span class="lineNum">     351 </span>                :<span class="lineCov">     456606 :     ensureValid();</span>
+<span class="lineNum">     352 </span>                :<span class="lineCov">     456604 :     other.ensureValidNonZero();</span>
+<span class="lineNum">     353 </span>                :<span class="lineCov">     456600 :     double const result = mECEFCoordinate / other.mECEFCoordinate;</span>
+<span class="lineNum">     354 </span>                :<span class="lineCov">     456600 :     return result;</span>
+<span class="lineNum">     355 </span>                :            :   }
+<span class="lineNum">     356 </span>                :            : 
+<span class="lineNum">     357 </span>                :            :   /**
+<span class="lineNum">     358 </span>                :            :    * \brief standard arithmetic operator
+<span class="lineNum">     359 </span>                :            :    *
+<span class="lineNum">     360 </span>                :            :    * \returns Result of arithmetic operation.
+<span class="lineNum">     361 </span>                :            :    *
+<span class="lineNum">     362 </span>                :            :    * \note throws a std::out_of_range exception if this or the result of
+<a name="363"><span class="lineNum">     363 </span>                :            :    *   the operation is not valid</a>
+<span class="lineNum">     364 </span>                :            :    */
+<span class="lineNum">     365 </span>                :<span class="lineCov">          2 :   ECEFCoordinate operator-() const</span>
+<span class="lineNum">     366 </span>                :            :   {
+<span class="lineNum">     367 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">          2 :     ensureValid();</span>
+<span class="lineNum">     368 </span>                :<span class="lineCov">          1 :     ECEFCoordinate const result(-mECEFCoordinate);</span>
+<span class="lineNum">     369 </span>                :<span class="lineCov">          1 :     result.ensureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception</span>
+<span class="lineNum">     370 </span>                :<span class="lineCov">          1 :     return result;</span>
+<span class="lineNum">     371 </span>                :            :   }
+<span class="lineNum">     372 </span>                :            : 
+<span class="lineNum">     373 </span>                :            :   /*!
+<span class="lineNum">     374 </span>                :            :    * \brief conversion to base type: double
+<span class="lineNum">     375 </span>                :            :    *
+<span class="lineNum">     376 </span>                :            :    * \note the conversion to the base type removes the physical unit.
+<a name="377"><span class="lineNum">     377 </span>                :            :    *       \ref \_AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.</a>
+<span class="lineNum">     378 </span>                :            :    */
+<span class="lineNum">     379 </span>                :<span class="lineCov">  491543039 :   _AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION_ operator double() const</span>
+<span class="lineNum">     380 </span>                :            :   {
+<span class="lineNum">     381 </span>                :<span class="lineCov">  491543039 :     return mECEFCoordinate;</span>
+<span class="lineNum">     382 </span>                :            :   }
+<span class="lineNum">     383 </span>                :            : 
+<span class="lineNum">     384 </span>                :            :   /*!
+<span class="lineNum">     385 </span>                :            :    * \returns \c true if the ECEFCoordinate in a valid range
+<span class="lineNum">     386 </span>                :            :    *
+<span class="lineNum">     387 </span>                :            :    * An ECEFCoordinate value is defined to be valid if:
+<span class="lineNum">     388 </span>                :            :    * - It is normal or zero (see std::fpclassify())
+<a name="389"><span class="lineNum">     389 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
+<span class="lineNum">     390 </span>                :            :    */
+<span class="lineNum">     391 </span>                :<span class="lineCov"> 1267800913 :   bool isValid() const</span>
+<span class="lineNum">     392 </span>                :            :   {
+<span class="lineNum">     393 </span>                :<span class="lineCov"> 1267800913 :     auto const valueClass = std::fpclassify(mECEFCoordinate);</span>
+<span class="lineNum">     394 </span>[<span class="branchCov" title="Branch 0 was taken 74175491 times"> + </span><span class="branchCov" title="Branch 1 was taken 61 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1267800848 times"> + </span><span class="branchCov" title="Branch 3 was taken 4 times"> + </span>]:<span class="lineCov"> 1267800913 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mECEFCoordinate)</span>
+<span class="lineNum">     395 </span>[<span class="branchCov" title="Branch 0 was taken 74175552 times"> + </span><span class="branchCov" title="Branch 1 was taken 1193625361 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1267800842 times"> + </span><span class="branchCov" title="Branch 3 was taken 6 times"> + </span>]:<span class="lineCov"> 2535601826 :       &amp;&amp; (mECEFCoordinate &lt;= cMaxValue);</span>
+<span class="lineNum">     396 </span>                :            :   }
+<span class="lineNum">     397 </span>                :            : 
+<span class="lineNum">     398 </span>                :            :   /*!
+<span class="lineNum">     399 </span>                :            :    * \brief ensure that the ECEFCoordinate is valid
+<span class="lineNum">     400 </span>                :            :    *
+<span class="lineNum">     401 </span>                :            :    * Throws an std::out_of_range() exception if the ECEFCoordinate
+<a name="402"><span class="lineNum">     402 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
+<span class="lineNum">     403 </span>                :            :    */
+<span class="lineNum">     404 </span>                :<span class="lineCov"> 1251703617 :   void ensureValid() const</span>
+<span class="lineNum">     405 </span>                :            :   {
+<span class="lineNum">     406 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 1251703583 times"> + </span>]:<span class="lineCov"> 1251703617 :     if (!isValid())</span>
+<span class="lineNum">     407 </span>                :            :     {
+<span class="lineNum">     408 </span>                :<span class="lineCov">         34 :       spdlog::info(&quot;ensureValid(::ad::map::point::ECEFCoordinate)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     409 </span>                :            : #if (AD_MAP_POINT_ECEFCOORDINATE_THROWS_EXCEPTION == 1)
+<span class="lineNum">     410 </span>                :<span class="lineCov">         34 :       throw std::out_of_range(&quot;ECEFCoordinate value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     411 </span>                :            : #endif
+<span class="lineNum">     412 </span>                :            :     }
+<span class="lineNum">     413 </span>                :<span class="lineCov"> 1251703583 :   }</span>
+<span class="lineNum">     414 </span>                :            : 
+<span class="lineNum">     415 </span>                :            :   /*!
+<span class="lineNum">     416 </span>                :            :    * \brief ensure that the ECEFCoordinate is valid and non zero
+<span class="lineNum">     417 </span>                :            :    *
+<span class="lineNum">     418 </span>                :            :    * Throws an std::out_of_range() exception if the ECEFCoordinate
+<a name="419"><span class="lineNum">     419 </span>                :            :    * in not valid or zero (i.e. isValid() returns false)</a>
+<span class="lineNum">     420 </span>                :            :    */
+<span class="lineNum">     421 </span>                :<span class="lineCov">     456606 :   void ensureValidNonZero() const</span>
+<span class="lineNum">     422 </span>                :            :   {
+<span class="lineNum">     423 </span>                :<span class="lineCov">     456606 :     ensureValid();</span>
+<span class="lineNum">     424 </span>                :<span class="lineCov">     456603 :     if (operator==(ECEFCoordinate(0.))) // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     425 </span>                :            :     {
+<span class="lineNum">     426 </span>                :<span class="lineCov">          3 :       spdlog::info(&quot;ensureValid(::ad::map::point::ECEFCoordinate)&gt;&gt; {} value is zero&quot;, *this); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     427 </span>                :            : #if (AD_MAP_POINT_ECEFCOORDINATE_THROWS_EXCEPTION == 1)
+<span class="lineNum">     428 </span>                :<span class="lineCov">          3 :       throw std::out_of_range(&quot;ECEFCoordinate value is zero&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">     429 </span>                :            : #endif
+<span class="lineNum">     430 </span>                :            :     }
+<span class="lineNum">     431 </span>                :<span class="lineCov">     456600 :   }</span>
+<span class="lineNum">     432 </span>                :            : 
+<span class="lineNum">     433 </span>                :            :   /*!
+<a name="434"><span class="lineNum">     434 </span>                :            :    * \brief get minimum valid ECEFCoordinate (i.e. \ref cMinValue)</a>
+<span class="lineNum">     435 </span>                :            :    */
+<span class="lineNum">     436 </span>                :<span class="lineCov">   16097267 :   static ECEFCoordinate getMin()</span>
+<span class="lineNum">     437 </span>                :            :   {
+<span class="lineNum">     438 </span>                :<span class="lineCov">   16097267 :     return ECEFCoordinate(cMinValue);</span>
+<span class="lineNum">     439 </span>                :            :   }
+<span class="lineNum">     440 </span>                :            : 
+<span class="lineNum">     441 </span>                :            :   /*!
+<a name="442"><span class="lineNum">     442 </span>                :            :    * \brief get maximum valid ECEFCoordinate (i.e. \ref cMaxValue)</a>
+<span class="lineNum">     443 </span>                :            :    */
+<span class="lineNum">     444 </span>                :<span class="lineCov">   16097267 :   static ECEFCoordinate getMax()</span>
+<span class="lineNum">     445 </span>                :            :   {
+<span class="lineNum">     446 </span>                :<span class="lineCov">   16097267 :     return ECEFCoordinate(cMaxValue);</span>
+<span class="lineNum">     447 </span>                :            :   }
+<span class="lineNum">     448 </span>                :            : 
+<span class="lineNum">     449 </span>                :            :   /*!
+<a name="450"><span class="lineNum">     450 </span>                :            :    * \brief get assumed accuracy of ECEFCoordinate (i.e. \ref cPrecisionValue)</a>
+<span class="lineNum">     451 </span>                :            :    */
+<span class="lineNum">     452 </span>                :<span class="lineCov">          3 :   static ECEFCoordinate getPrecision()</span>
+<span class="lineNum">     453 </span>                :            :   {
+<span class="lineNum">     454 </span>                :<span class="lineCov">          3 :     return ECEFCoordinate(cPrecisionValue);</span>
+<span class="lineNum">     455 </span>                :            :   }
+<span class="lineNum">     456 </span>                :            : 
+<span class="lineNum">     457 </span>                :            : private:
+<span class="lineNum">     458 </span>                :            :   /*!
+<span class="lineNum">     459 </span>                :            :    * \brief the actual value of the type
+<span class="lineNum">     460 </span>                :            :    */
+<span class="lineNum">     461 </span>                :            :   double mECEFCoordinate;
+<span class="lineNum">     462 </span>                :            : };
+<span class="lineNum">     463 </span>                :            : 
+<span class="lineNum">     464 </span>                :            : } // namespace point
+<span class="lineNum">     465 </span>                :            : } // namespace map
+<span class="lineNum">     466 </span>                :            : } // namespace ad
+<span class="lineNum">     467 </span>                :            : /**
+<span class="lineNum">     468 </span>                :            :  * \brief standard arithmetic operator
+<span class="lineNum">     469 </span>                :            :  *
+<span class="lineNum">     470 </span>                :            :  * \param[in] other Other ECEFCoordinate as double value
+<span class="lineNum">     471 </span>                :            :  * \param[in] value ECEFCoordinate value
+<span class="lineNum">     472 </span>                :            :  *
+<span class="lineNum">     473 </span>                :            :  * \returns Result of arithmetic operation.
+<span class="lineNum">     474 </span>                :            :  *
+<span class="lineNum">     475 </span>                :            :  * \note throws a std::out_of_range exception if \c value or the result of
+<a name="476"><span class="lineNum">     476 </span>                :            :  *   the operation is not valid</a>
+<span class="lineNum">     477 </span>                :            :  */
+<span class="lineNum">     478 </span>                :<span class="lineCov">  106507111 : inline ::ad::map::point::ECEFCoordinate operator*(const double &amp;other, ::ad::map::point::ECEFCoordinate const &amp;value)</span>
+<span class="lineNum">     479 </span>                :            : {
+<span class="lineNum">     480 </span>                :<span class="lineCov">  106507111 :   return value.operator*(other);</span>
+<span class="lineNum">     481 </span>                :            : }
+<span class="lineNum">     482 </span>                :            : 
+<span class="lineNum">     483 </span>                :            : /*!
+<span class="lineNum">     484 </span>                :            :  * \brief namespace std
+<span class="lineNum">     485 </span>                :            :  */
+<span class="lineNum">     486 </span>                :            : namespace std {
+<span class="lineNum">     487 </span>                :            : 
+<span class="lineNum">     488 </span>                :            : /*!
+<a name="489"><span class="lineNum">     489 </span>                :            :  * \brief overload of the std::fabs for ECEFCoordinate</a>
+<span class="lineNum">     490 </span>                :            :  */
+<span class="lineNum">     491 </span>                :<span class="lineCov">          7 : inline ::ad::map::point::ECEFCoordinate fabs(const ::ad::map::point::ECEFCoordinate other)</span>
+<span class="lineNum">     492 </span>                :            : {
+<span class="lineNum">     493 </span>                :<span class="lineCov">          7 :   ::ad::map::point::ECEFCoordinate const result(std::fabs(static_cast&lt;double&gt;(other)));</span>
+<span class="lineNum">     494 </span>                :<span class="lineCov">          7 :   return result;</span>
+<span class="lineNum">     495 </span>                :            : }
+<span class="lineNum">     496 </span>                :            : 
+<span class="lineNum">     497 </span>                :            : /*!
+<span class="lineNum">     498 </span>                :            :  * \brief specialization of the std::numeric_limits for ECEFCoordinate
+<span class="lineNum">     499 </span>                :            :  *
+<span class="lineNum">     500 </span>                :            :  * Derived from std::numeric_limits&lt;double&gt; with overloaded functions:
+<span class="lineNum">     501 </span>                :            :  * std::numeric_limits&lt;ECEFCoordinate&gt;::lowest()  (\see ECEFCoordinate::getMin())
+<span class="lineNum">     502 </span>                :            :  * std::numeric_limits&lt;ECEFCoordinate&gt;::max()  (\see ECEFCoordinate::getMax())
+<span class="lineNum">     503 </span>                :            :  * std::numeric_limits&lt;ECEFCoordinate&gt;::epsilon()  (\see ECEFCoordinate::getPrecision())
+<span class="lineNum">     504 </span>                :            :  */
+<span class="lineNum">     505 </span>                :            : template &lt;&gt; class numeric_limits&lt;::ad::map::point::ECEFCoordinate&gt; : public numeric_limits&lt;double&gt;
+<span class="lineNum">     506 </span>                :            : {
+<span class="lineNum">     507 </span>                :            : public:
+<span class="lineNum">     508 </span>                :            :   /*!
+<a name="509"><span class="lineNum">     509 </span>                :            :    * \see std::numeric_limits::lowest()</a>
+<span class="lineNum">     510 </span>                :            :    */
+<span class="lineNum">     511 </span>                :<span class="lineCov">   16097264 :   static inline ::ad::map::point::ECEFCoordinate lowest()</span>
+<span class="lineNum">     512 </span>                :            :   {
+<span class="lineNum">     513 </span>                :<span class="lineCov">   16097264 :     return ::ad::map::point::ECEFCoordinate::getMin();</span>
+<span class="lineNum">     514 </span>                :            :   }
+<span class="lineNum">     515 </span>                :            :   /*!
+<a name="516"><span class="lineNum">     516 </span>                :            :    * \see std::numeric_limits::max()</a>
+<span class="lineNum">     517 </span>                :            :    */
+<span class="lineNum">     518 </span>                :<span class="lineCov">   16097264 :   static inline ::ad::map::point::ECEFCoordinate max()</span>
+<span class="lineNum">     519 </span>                :            :   {
+<span class="lineNum">     520 </span>                :<span class="lineCov">   16097264 :     return ::ad::map::point::ECEFCoordinate::getMax();</span>
+<span class="lineNum">     521 </span>                :            :   }
+<span class="lineNum">     522 </span>                :            : 
+<span class="lineNum">     523 </span>                :            :   /*!
+<a name="524"><span class="lineNum">     524 </span>                :            :    * \see std::numeric_limits::epsilon()</a>
+<span class="lineNum">     525 </span>                :            :    */
+<span class="lineNum">     526 </span>                :<span class="lineCov">          1 :   static inline ::ad::map::point::ECEFCoordinate epsilon()</span>
+<span class="lineNum">     527 </span>                :            :   {
+<span class="lineNum">     528 </span>                :<span class="lineCov">          1 :     return ::ad::map::point::ECEFCoordinate::getPrecision();</span>
+<span class="lineNum">     529 </span>                :            :   }
+<span class="lineNum">     530 </span>                :            : };
+<span class="lineNum">     531 </span>                :            : 
+<span class="lineNum">     532 </span>                :            : } // namespace std
+<span class="lineNum">     533 </span>                :            : 
+<span class="lineNum">     534 </span>                :            : /*!
+<span class="lineNum">     535 </span>                :            :  * \brief protect the definition of functions from duplicates by typedef usage within other data types
+<span class="lineNum">     536 </span>                :            :  */
+<span class="lineNum">     537 </span>                :            : #ifndef GEN_GUARD_AD_MAP_POINT_ECEFCOORDINATE
+<span class="lineNum">     538 </span>                :            : #define GEN_GUARD_AD_MAP_POINT_ECEFCOORDINATE
+<span class="lineNum">     539 </span>                :            : /*!
+<span class="lineNum">     540 </span>                :            :  * @brief namespace ad
+<span class="lineNum">     541 </span>                :            :  */
+<span class="lineNum">     542 </span>                :            : namespace ad {
+<span class="lineNum">     543 </span>                :            : /*!
+<span class="lineNum">     544 </span>                :            :  * @brief namespace map
+<span class="lineNum">     545 </span>                :            :  */
+<span class="lineNum">     546 </span>                :            : namespace map {
+<span class="lineNum">     547 </span>                :            : /*!
+<span class="lineNum">     548 </span>                :            :  * @brief namespace point
+<span class="lineNum">     549 </span>                :            :  *
+<span class="lineNum">     550 </span>                :            :  * Handling geographic positions in different coordinate systems
+<span class="lineNum">     551 </span>                :            :  */
+<span class="lineNum">     552 </span>                :            : namespace point {
+<span class="lineNum">     553 </span>                :            : 
+<span class="lineNum">     554 </span>                :            : /**
+<span class="lineNum">     555 </span>                :            :  * \brief standard ostream operator
+<span class="lineNum">     556 </span>                :            :  *
+<span class="lineNum">     557 </span>                :            :  * \param[in] os The output stream to write to
+<span class="lineNum">     558 </span>                :            :  * \param[in] _value ECEFCoordinate value
+<span class="lineNum">     559 </span>                :            :  *
+<span class="lineNum">     560 </span>                :            :  * \returns The stream object.
+<a name="561"><span class="lineNum">     561 </span>                :            :  *</a>
+<span class="lineNum">     562 </span>                :            :  */
+<span class="lineNum">     563 </span>                :<span class="lineCov">        896 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, ECEFCoordinate const &amp;_value)</span>
+<span class="lineNum">     564 </span>                :            : {
+<span class="lineNum">     565 </span>                :<span class="lineCov">        896 :   return os &lt;&lt; double(_value);</span>
+<span class="lineNum">     566 </span>                :            : }
+<span class="lineNum">     567 </span>                :            : 
+<span class="lineNum">     568 </span>                :            : } // namespace point
+<span class="lineNum">     569 </span>                :            : } // namespace map
+<span class="lineNum">     570 </span>                :            : } // namespace ad
+<span class="lineNum">     571 </span>                :            : 
+<span class="lineNum">     572 </span>                :            : namespace std {
+<span class="lineNum">     573 </span>                :            : /*!
+<span class="lineNum">     574 </span>                :            :  * \brief overload of the std::to_string for ECEFCoordinate
+<span class="lineNum">     575 </span>                :            :  */
+<span class="lineNum">     576 </span>                :            : inline std::string to_string(::ad::map::point::ECEFCoordinate const &amp;value)
+<span class="lineNum">     577 </span>                :            : {
+<span class="lineNum">     578 </span>                :            :   return to_string(static_cast&lt;double&gt;(value));
+<span class="lineNum">     579 </span>                :            : }
+<span class="lineNum">     580 </span>                :            : } // namespace std
+<span class="lineNum">     581 </span>                :            : #endif // GEN_GUARD_AD_MAP_POINT_ECEFCOORDINATE
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

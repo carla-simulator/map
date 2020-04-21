@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - generated/include/ad/map/route/RoadSegment.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">generated/include/ad/map/route</a> - RoadSegment.hpp<span style="font-size: 80%;"> (source / <a href="RoadSegment.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">26</td>
+            <td class="headerCovTableEntry">26</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2020-04-21 11:01:25</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryLo">64.3 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
+<span class="lineNum">       3 </span>                :            :  *
+<span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       5 </span>                :            :  *
+<span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT
+<span class="lineNum">       7 </span>                :            :  *
+<span class="lineNum">       8 </span>                :            :  * ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       9 </span>                :            :  */
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : /**
+<span class="lineNum">      12 </span>                :            :  * Generated file
+<span class="lineNum">      13 </span>                :            :  * @file
+<span class="lineNum">      14 </span>                :            :  *
+<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1988
+<span class="lineNum">      16 </span>                :            :  */
+<span class="lineNum">      17 </span>                :            : 
+<span class="lineNum">      18 </span>                :            : #pragma once
+<span class="lineNum">      19 </span>                :            : 
+<span class="lineNum">      20 </span>                :            : #include &lt;iostream&gt;
+<span class="lineNum">      21 </span>                :            : #include &lt;limits&gt;
+<span class="lineNum">      22 </span>                :            : #include &lt;memory&gt;
+<span class="lineNum">      23 </span>                :            : #include &lt;sstream&gt;
+<span class="lineNum">      24 </span>                :            : #include &quot;ad/map/point/BoundingSphere.hpp&quot;
+<span class="lineNum">      25 </span>                :            : #include &quot;ad/map/route/LaneSegmentList.hpp&quot;
+<span class="lineNum">      26 </span>                :            : #include &quot;ad/map/route/SegmentCounter.hpp&quot;
+<span class="lineNum">      27 </span>                :            : /*!
+<span class="lineNum">      28 </span>                :            :  * @brief namespace ad
+<span class="lineNum">      29 </span>                :            :  */
+<span class="lineNum">      30 </span>                :            : namespace ad {
+<span class="lineNum">      31 </span>                :            : /*!
+<span class="lineNum">      32 </span>                :            :  * @brief namespace map
+<span class="lineNum">      33 </span>                :            :  */
+<span class="lineNum">      34 </span>                :            : namespace map {
+<span class="lineNum">      35 </span>                :            : /*!
+<span class="lineNum">      36 </span>                :            :  * @brief namespace route
+<span class="lineNum">      37 </span>                :            :  *
+<span class="lineNum">      38 </span>                :            :  * Handling of routes
+<span class="lineNum">      39 </span>                :            :  */
+<span class="lineNum">      40 </span>                :            : namespace route {
+<span class="lineNum">      41 </span>                :            : 
+<span class="lineNum">      42 </span>                :            : /*!
+<span class="lineNum">      43 </span>                :            :  * \brief DataType RoadSegment
+<span class="lineNum">      44 </span>                :            :  *
+<span class="lineNum">      45 </span>                :            :  * Defines a segment of a road containing parallel lanes that are allowed to be used.
+<span class="lineNum">      46 </span>                :            :  * The segment consists of an ordered list of RouteLaneInterval entries and a counter
+<span class="lineNum">      47 </span>                :            :  * of the road segment.
+<span class="lineNum">      48 </span>                :            :  * The RouteLaneIntervals are ordered from right most lane at index 0 up to left most
+<span class="lineNum">      49 </span>                :            :  * lane in the sense of the route traveling direction.
+<span class="lineNum">      50 </span>                :            :  * The counter is assigned once on route planning indicating the segment count from
+<span class="lineNum">      51 </span>                :            :  * destination.
+<span class="lineNum">      52 </span>                :            :  * The first segment of the initially planned route should have a segmentCountFromDestination
+<span class="lineNum">      53 </span>                :            :  * == 'number of route segments' and
+<span class="lineNum">      54 </span>                :            :  * the last segment a segmentCountFromDestination == 1.
+<span class="lineNum">      55 </span>                :            :  * If the stack transports only route previews or is shortening the route while traveling
+<span class="lineNum">      56 </span>                :            :  * along one gains information on how the route changed.
+<span class="lineNum">      57 </span>                :            :  * In addition the road segments bounding sphere is provided.
+<span class="lineNum">      58 </span>                :            :  *
+<a name="59"><span class="lineNum">      59 </span>                :            :  *</a>
+<span class="lineNum">      60 </span>                :            :  */
+<span class="lineNum">      61 </span>                :<span class="lineCov">        294 : struct RoadSegment</span>
+<span class="lineNum">      62 </span>                :            : {
+<span class="lineNum">      63 </span>                :            :   /*!
+<span class="lineNum">      64 </span>                :            :    * \brief Smart pointer on RoadSegment
+<span class="lineNum">      65 </span>                :            :    */
+<span class="lineNum">      66 </span>                :            :   typedef std::shared_ptr&lt;RoadSegment&gt; Ptr;
+<span class="lineNum">      67 </span>                :            : 
+<span class="lineNum">      68 </span>                :            :   /*!
+<span class="lineNum">      69 </span>                :            :    * \brief Smart pointer on constant RoadSegment
+<span class="lineNum">      70 </span>                :            :    */
+<span class="lineNum">      71 </span>                :            :   typedef std::shared_ptr&lt;RoadSegment const&gt; ConstPtr;
+<span class="lineNum">      72 </span>                :            : 
+<span class="lineNum">      73 </span>                :            :   /*!
+<a name="74"><span class="lineNum">      74 </span>                :            :    * \brief standard constructor</a>
+<span class="lineNum">      75 </span>                :            :    */
+<span class="lineNum">      76 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineCov">      22996 :   RoadSegment() = default;</span>
+<span class="lineNum">      77 </span>                :            : 
+<span class="lineNum">      78 </span>                :            :   /*!
+<a name="79"><span class="lineNum">      79 </span>                :            :    * \brief standard destructor</a>
+<span class="lineNum">      80 </span>                :            :    */
+<span class="lineNum">      81 </span>                :<span class="lineCov">      77044 :   ~RoadSegment() = default;</span>
+<span class="lineNum">      82 </span>                :            : 
+<span class="lineNum">      83 </span>                :            :   /*!
+<a name="84"><span class="lineNum">      84 </span>                :            :    * \brief standard copy constructor</a>
+<span class="lineNum">      85 </span>                :            :    */
+<span class="lineNum">      86 </span>                :<span class="lineCov">      31554 :   RoadSegment(const RoadSegment &amp;other) = default;</span>
+<span class="lineNum">      87 </span>                :            : 
+<span class="lineNum">      88 </span>                :            :   /*!
+<a name="89"><span class="lineNum">      89 </span>                :            :    * \brief standard move constructor</a>
+<span class="lineNum">      90 </span>                :            :    */
+<span class="lineNum">      91 </span>                :<span class="lineCov">      22494 :   RoadSegment(RoadSegment &amp;&amp;other) = default;</span>
+<span class="lineNum">      92 </span>                :            : 
+<span class="lineNum">      93 </span>                :            :   /**
+<span class="lineNum">      94 </span>                :            :    * \brief standard assignment operator
+<span class="lineNum">      95 </span>                :            :    *
+<span class="lineNum">      96 </span>                :            :    * \param[in] other Other RoadSegment
+<span class="lineNum">      97 </span>                :            :    *
+<span class="lineNum">      98 </span>                :            :    * \returns Reference to this RoadSegment.
+<span class="lineNum">      99 </span>                :            :    */
+<span class="lineNum">     100 </span>                :            :   RoadSegment &amp;operator=(const RoadSegment &amp;other) = default;
+<span class="lineNum">     101 </span>                :            : 
+<span class="lineNum">     102 </span>                :            :   /**
+<span class="lineNum">     103 </span>                :            :    * \brief standard move operator
+<span class="lineNum">     104 </span>                :            :    *
+<span class="lineNum">     105 </span>                :            :    * \param[in] other Other RoadSegment
+<span class="lineNum">     106 </span>                :            :    *
+<span class="lineNum">     107 </span>                :            :    * \returns Reference to this RoadSegment.
+<span class="lineNum">     108 </span>                :            :    */
+<span class="lineNum">     109 </span>                :            :   RoadSegment &amp;operator=(RoadSegment &amp;&amp;other) = default;
+<span class="lineNum">     110 </span>                :            : 
+<span class="lineNum">     111 </span>                :            :   /**
+<span class="lineNum">     112 </span>                :            :    * \brief standard comparison operator
+<span class="lineNum">     113 </span>                :            :    *
+<span class="lineNum">     114 </span>                :            :    * \param[in] other Other RoadSegment
+<span class="lineNum">     115 </span>                :            :    *
+<a name="116"><span class="lineNum">     116 </span>                :            :    * \returns \c true if both RoadSegment are equal</a>
+<span class="lineNum">     117 </span>                :            :    */
+<span class="lineNum">     118 </span>                :<span class="lineCov">         44 :   bool operator==(const RoadSegment &amp;other) const</span>
+<span class="lineNum">     119 </span>                :            :   {
+<span class="lineNum">     120 </span>                :<span class="lineCov">         44 :     return (drivableLaneSegments == other.drivableLaneSegments)</span>
+<span class="lineNum">     121 </span>[<span class="branchCov" title="Branch 0 was taken 42 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 40 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">         44 :       &amp;&amp; (segmentCountFromDestination == other.segmentCountFromDestination) &amp;&amp; (boundingSphere == other.boundingSphere);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 5 was taken 38 times"> + </span><span class="branchCov" title="Branch 6 was taken 2 times"> + </span>]
+<span class="lineNum">     122 </span>                :            :   }
+<span class="lineNum">     123 </span>                :            : 
+<span class="lineNum">     124 </span>                :            :   /**
+<span class="lineNum">     125 </span>                :            :    * \brief standard comparison operator
+<span class="lineNum">     126 </span>                :            :    *
+<span class="lineNum">     127 </span>                :            :    * \param[in] other Other RoadSegment.
+<span class="lineNum">     128 </span>                :            :    *
+<a name="129"><span class="lineNum">     129 </span>                :            :    * \returns \c true if both RoadSegment are different</a>
+<span class="lineNum">     130 </span>                :            :    */
+<span class="lineNum">     131 </span>                :<span class="lineCov">          4 :   bool operator!=(const RoadSegment &amp;other) const</span>
+<span class="lineNum">     132 </span>                :            :   {
+<span class="lineNum">     133 </span>                :<span class="lineCov">          4 :     return !operator==(other);</span>
+<span class="lineNum">     134 </span>                :            :   }
+<span class="lineNum">     135 </span>                :            : 
+<span class="lineNum">     136 </span>                :            :   ::ad::map::route::LaneSegmentList drivableLaneSegments;
+<span class="lineNum">     137 </span>                :            :   ::ad::map::route::SegmentCounter segmentCountFromDestination{0};
+<span class="lineNum">     138 </span>                :            : 
+<span class="lineNum">     139 </span>                :            :   /*!
+<span class="lineNum">     140 </span>                :            :    * Bounding sphere of the road segment
+<span class="lineNum">     141 </span>                :            :    */
+<span class="lineNum">     142 </span>                :            :   ::ad::map::point::BoundingSphere boundingSphere;
+<span class="lineNum">     143 </span>                :            : };
+<span class="lineNum">     144 </span>                :            : 
+<span class="lineNum">     145 </span>                :            : } // namespace route
+<span class="lineNum">     146 </span>                :            : } // namespace map
+<span class="lineNum">     147 </span>                :            : } // namespace ad
+<span class="lineNum">     148 </span>                :            : 
+<span class="lineNum">     149 </span>                :            : /*!
+<span class="lineNum">     150 </span>                :            :  * \brief protect the definition of functions from duplicates by typedef usage within other data types
+<span class="lineNum">     151 </span>                :            :  */
+<span class="lineNum">     152 </span>                :            : #ifndef GEN_GUARD_AD_MAP_ROUTE_ROADSEGMENT
+<span class="lineNum">     153 </span>                :            : #define GEN_GUARD_AD_MAP_ROUTE_ROADSEGMENT
+<span class="lineNum">     154 </span>                :            : /*!
+<span class="lineNum">     155 </span>                :            :  * @brief namespace ad
+<span class="lineNum">     156 </span>                :            :  */
+<span class="lineNum">     157 </span>                :            : namespace ad {
+<span class="lineNum">     158 </span>                :            : /*!
+<span class="lineNum">     159 </span>                :            :  * @brief namespace map
+<span class="lineNum">     160 </span>                :            :  */
+<span class="lineNum">     161 </span>                :            : namespace map {
+<span class="lineNum">     162 </span>                :            : /*!
+<span class="lineNum">     163 </span>                :            :  * @brief namespace route
+<span class="lineNum">     164 </span>                :            :  *
+<span class="lineNum">     165 </span>                :            :  * Handling of routes
+<span class="lineNum">     166 </span>                :            :  */
+<span class="lineNum">     167 </span>                :            : namespace route {
+<span class="lineNum">     168 </span>                :            : 
+<span class="lineNum">     169 </span>                :            : /**
+<span class="lineNum">     170 </span>                :            :  * \brief standard ostream operator
+<span class="lineNum">     171 </span>                :            :  *
+<span class="lineNum">     172 </span>                :            :  * \param[in] os The output stream to write to
+<span class="lineNum">     173 </span>                :            :  * \param[in] _value RoadSegment value
+<span class="lineNum">     174 </span>                :            :  *
+<span class="lineNum">     175 </span>                :            :  * \returns The stream object.
+<a name="176"><span class="lineNum">     176 </span>                :            :  *</a>
+<span class="lineNum">     177 </span>                :            :  */
+<span class="lineNum">     178 </span>                :<span class="lineCov">         35 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, RoadSegment const &amp;_value)</span>
+<span class="lineNum">     179 </span>                :            : {
+<span class="lineNum">     180 </span>                :<span class="lineCov">         35 :   os &lt;&lt; &quot;RoadSegment(&quot;;</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">         35 :   os &lt;&lt; &quot;drivableLaneSegments:&quot;;</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">         35 :   os &lt;&lt; _value.drivableLaneSegments;</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">         35 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     184 </span>                :<span class="lineCov">         35 :   os &lt;&lt; &quot;segmentCountFromDestination:&quot;;</span>
+<span class="lineNum">     185 </span>                :<span class="lineCov">         35 :   os &lt;&lt; _value.segmentCountFromDestination;</span>
+<span class="lineNum">     186 </span>                :<span class="lineCov">         35 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     187 </span>                :<span class="lineCov">         35 :   os &lt;&lt; &quot;boundingSphere:&quot;;</span>
+<span class="lineNum">     188 </span>                :<span class="lineCov">         35 :   os &lt;&lt; _value.boundingSphere;</span>
+<span class="lineNum">     189 </span>                :<span class="lineCov">         35 :   os &lt;&lt; &quot;)&quot;;</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">         35 :   return os;</span>
+<span class="lineNum">     191 </span>                :            : }
+<span class="lineNum">     192 </span>                :            : 
+<span class="lineNum">     193 </span>                :            : } // namespace route
+<span class="lineNum">     194 </span>                :            : } // namespace map
+<span class="lineNum">     195 </span>                :            : } // namespace ad
+<span class="lineNum">     196 </span>                :            : 
+<span class="lineNum">     197 </span>                :            : namespace std {
+<span class="lineNum">     198 </span>                :            : /*!
+<a name="199"><span class="lineNum">     199 </span>                :            :  * \brief overload of the std::to_string for RoadSegment</a>
+<span class="lineNum">     200 </span>                :            :  */
+<span class="lineNum">     201 </span>                :<span class="lineCov">          1 : inline std::string to_string(::ad::map::route::RoadSegment const &amp;value)</span>
+<span class="lineNum">     202 </span>                :            : {
+<span class="lineNum">     203 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   stringstream sstream;</span>
+<span class="lineNum">     204 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   sstream &lt;&lt; value;</span>
+<span class="lineNum">     205 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   return sstream.str();</span>
+<span class="lineNum">     206 </span>                :            : }
+<span class="lineNum">     207 </span>                :            : } // namespace std
+<span class="lineNum">     208 </span>                :            : #endif // GEN_GUARD_AD_MAP_ROUTE_ROADSEGMENT
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
