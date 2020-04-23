@@ -1,4 +1,7 @@
 ## Latest changes
+#### :ghost: Maintenance
+* Improved BUILDING documentation
+* Added qgis plugin static build colcon meta file
 
 ## Release 2.0.3
 #### :ghost: Maintenance

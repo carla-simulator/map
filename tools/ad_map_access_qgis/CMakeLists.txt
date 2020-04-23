@@ -24,7 +24,9 @@ if ( ad_map_access_qgis_python_FOUND )
 else()
   get_filename_component(AD_MAP_ACCESS_PYTHON_HINT_BASE ${CMAKE_INSTALL_PREFIX} DIRECTORY)
   find_library(AD_MAP_ACCESS_PYTHON_LIBRARY ad_map_access_qgis_python.so
-    HINTS ${AD_MAP_ACCESS_PYTHON_HINT_BASE}/ad_map_access_qgis_python/lib/python2.7 )
+    HINTS
+    ${AD_MAP_ACCESS_PYTHON_HINT_BASE}/ad_map_access_qgis_python/lib/python2.7
+    ${CMAKE_INSTALL_PREFIX}/lib/python2.7 )
 endif()
 if (AD_MAP_ACCESS_PYTHON_LIBRARY)
   get_filename_component(CURRENT_DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
