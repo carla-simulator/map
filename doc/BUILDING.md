@@ -57,7 +57,7 @@ Remaining dependencies:
 
  - spdlog
 
-## Building all libraries
+## Building
 For compiling all libraries (and potentially also some dependencies), it is suggested to use [colcon](https://colcon.readthedocs.io/).
 Please use the link above for installation instructions.
 
@@ -66,6 +66,8 @@ Those dependencies are part of the __dependencies__ folder as GIT submodules. To
 ```bash
  map$>  git submodule update --init
 ```
+
+### Colcon build
 Once this is done, the full set of dependencies and components can be built calling:
 ```bash
  map$> colcon build
@@ -88,14 +90,67 @@ colcon meta file:
  map$> colcon build --metas colcon_python.meta
 ```
 
-## Building a single library
-The ad_map_access (same applies to the other libraries) library is built with a standard cmake toolchain. Simply run the following commands to build the library:
+Furthermore, building the QGIS Plugin with static libraries eases the usage of it because the LD_LIBRARY_PATH is not required (see also next section). To build this one you might want to call:
 ```bash
- ad_map_access$> mkdir build
- ad_map_access$> cd build
- build$>  cmake ..
- build$>  make
+ map$> colcon build --metas colcon_static_qgis.meta --packages-up-to ad_map_access_qgis --build-base build-qgis --install-base install-qgis
+ map$> echo "QGIS plugin built! Let's test it out:"
+ map$> export QGIS_PLUGINPATH=<path/to/>map/install-qgis/ad_map_access_qgis/share/qgis/python/plugins
+ map$> qgis
 ```
+You should have seen 'Intel AD Map Plug-in loaded' on successful loading of the plugin by qgis.
+
+### Plain CMake build
+The ad_map_access (same applies to the other libraries) library is built with a standard cmake toolchain.
+Therefore, a full list of step by step calls could look like e.g.:
+```bash
+ map$> mkdir install
+ map$> mkdir -p build/{spdlog,ad_physics,ad_map_opendrive_reader,ad_map_access}
+ map$> cd build/spdlog
+ map/build/spdlog$> cmake ../../dependencies/spdlog -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_EXAMPLE=Off
+ map/build/spdlog$> make install
+ map/build/spdlog$> cd ../ad_physics
+ map/build/ad_physics$> cmake ../../ad_physics -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_physics$> make install
+ map/build/ad_physics$> cd ../ad_map_opendrive_reader
+ map/build/ad_map_opendrive_reader$> cmake ../../ad_map_opendrive_reader -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_map_opendrive_reader$> make install
+ map/build/ad_map_opendrive_reader$> cd ../../build/ad_map_access
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_map_access$> make install
+ map/build/ad_map_access$> cd ../..
+ map$> echo "Hurray, all built!"
+```
+
+#### map_maker tools
+Building the map_maker tools in addition then looks like:
+```bash
+ map$> mkdir -p build/map_maker
+ map$> cd build/map_maker
+ map/build/map_maker$> cmake ../../tools/map_maker -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/map_maker$> make install
+ map/build/map_maker$> cd ../..
+ map$> echo "Hurray, map maker tools built!"
+```
+
+#### QGIS plugin
+Building the QGIS plugin in addition then looks like:
+```bash
+ map$> mkdir -p build/{ad_map_access_qgis_python,ad_map_access_qgis}
+ map$> cd build/ad_map_access_qgis_python
+ map/build/ad_map_access_qgis_python$> cmake ../../tools/ad_map_access_qgis_python -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_map_access_qgis_python$> make install
+ map/build/ad_map_access_qgis_python$> cd ../ad_map_access_qgis
+ map/build/ad_map_access_qgis$> cmake ../../tools/ad_map_access_qgis -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_map_access_qgis$> make install
+ map/build/ad_map_access_qgis$> cd ../..
+ map$> echo "Hurray, QGIS plugin built! Let's try to run it:"
+ map$> export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<path/to/>map/install/lib
+ map$> export QGIS_PLUGINPATH=<path/to/>map/install/share/qgis/python/plugins
+ map$> qgis
+ map$> echo "We should have seen 'Intel AD Map Plug-in loaded' on success"
+```
+
+If building all libraries (ad_physics,ad_map_opendrive_reader,ad_map_access) with static build option "-DBUILD_SHARED_LIBS=OFF", the LD_LIBRARY_PATH can be left out. Sometimes we observed that the integrated copy step of the 'ad_map_access_qgis_python.so' fails, so that in addition setting of the 'export PYTHONPATH=$PYTHONPATH:<path/to/>map/install/lib/python2.7/' coud become necessary.
 
 ## CMake options
 There are some build options available:
@@ -112,15 +167,15 @@ e.g. "-DBUILD_TESTING=ON -DBUILD_APIDOC=ON".
 When BUILD_TESTING is enabled, the "make" call will automatically compile the Unit tests.
 They can be executed using CMake's ctest application.
 ```bash
- build$>  cmake -DBUILD_TESTING=ON ..
- build$>  make
- build$>  ctest
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install -DBUILD_TESTING=ON
+ map/build/ad_map_access$> make install
+ map/build/ad_map_access$> ctest
 ```
 #### API documentation
 When BUILD_APIDOC is enabled, the "make" call will automatically generate the API documentation.
 ```bash
- build$>  cmake -BUILD_APIDOC=ON ..
- build$>  make
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install -DBUILD_APIDOC=ON
+ map/build/ad_map_access$> make install
 ```
 The API documentation is written to the _apidoc_ folder within the _build_ directory.
 
@@ -128,13 +183,13 @@ The API documentation is written to the _apidoc_ folder within the _build_ direc
 Usually, build hardening is injected by the surrounding build system. Nevertheless, the CMakeLists.txt defines
 hardening flags to ensure the code is compatible to respective flags. To enable hardening compiler and linker flags:
 ```bash
- build$>  cmake -DBUILD_HARDENING=ON ..
- build$>  make
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install -DBUILD_HARDENING=ON
+ map/build/ad_map_access$> make install
 ```
 
 #### Python binding
 With this option enabled, Python bindings are generated and compiled. This option is disabled by default.
 ```bash
- build$>  cmake -DBUILD_PYTHON_BINDING=ON ..
- build$>  make
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install -DBUILD_PYTHON_BINDING=ON
+ map/build/ad_map_access$> make install
 ```
