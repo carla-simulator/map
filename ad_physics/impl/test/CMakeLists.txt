@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2019 Intel Corporation
+# Copyright (C) 2019-2020 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -16,6 +16,7 @@ include(generated/testfiles.cmake)
 
 set(TEST_SOURCES
   main.cpp
+  AngleTests.cpp
   ${GENERATED_TEST_SOURCES}
 )
 

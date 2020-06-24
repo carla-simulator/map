@@ -32,16 +32,6 @@ namespace route {
  */
 
 /**
- * @brief get the start point of a LaneInterval considering the route direction
- */
-point::ParaPoint getRouteIntervalStart(LaneInterval const &laneInterval);
-
-/**
- * @brief get the end point of a LaneInterval considering the route direction
- */
-point::ParaPoint getRouteIntervalEnd(LaneInterval const &laneInterval);
-
-/**
  * @brief get interval start as ParaPoint
  */
 inline point::ParaPoint getIntervalStart(LaneInterval const &laneInterval)

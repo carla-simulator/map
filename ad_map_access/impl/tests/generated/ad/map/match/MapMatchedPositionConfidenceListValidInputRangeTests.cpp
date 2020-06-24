@@ -37,9 +37,9 @@ TEST(MapMatchedPositionConfidenceListValidInputRangeTests, testValidInputRangeEl
   elementLanePoint.paraPoint = elementLanePointParaPoint;
   ::ad::physics::RatioValue elementLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   elementLanePoint.lateralT = elementLanePointLateralT;
-  ::ad::physics::Distance elementLanePointLaneLength(0.);
+  ::ad::physics::Distance elementLanePointLaneLength(-1e9);
   elementLanePoint.laneLength = elementLanePointLaneLength;
-  ::ad::physics::Distance elementLanePointLaneWidth(0.);
+  ::ad::physics::Distance elementLanePointLaneWidth(-1e9);
   elementLanePoint.laneWidth = elementLanePointLaneWidth;
   element.lanePoint = elementLanePoint;
   ::ad::map::match::MapMatchedPositionType elementType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -62,6 +62,8 @@ TEST(MapMatchedPositionConfidenceListValidInputRangeTests, testValidInputRangeEl
   ::ad::map::point::ECEFCoordinate elementQueryPointZ(-6400000);
   elementQueryPoint.z = elementQueryPointZ;
   element.queryPoint = elementQueryPoint;
+  ::ad::physics::Distance elementMatchedPointDistance(-1e9);
+  element.matchedPointDistance = elementMatchedPointDistance;
   value.push_back(element);
   ASSERT_TRUE(withinValidInputRange(value));
 }

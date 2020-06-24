@@ -30,9 +30,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRange)
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -55,6 +55,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRange)
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
@@ -70,9 +72,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeLanePointTooSmal
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -95,6 +97,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeLanePointTooSmal
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value below input range minimum
   ::ad::map::match::LanePoint invalidInitializedMember;
@@ -119,9 +123,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeLanePointTooBig)
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -144,6 +148,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeLanePointTooBig)
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value above input range maximum
   ::ad::map::match::LanePoint invalidInitializedMember;
@@ -167,9 +173,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeTypeTooSmall)
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -192,6 +198,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeTypeTooSmall)
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value below input range minimum
   ::ad::map::match::MapMatchedPositionType invalidInitializedMember(
@@ -212,9 +220,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeTypeTooBig)
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -237,6 +245,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeTypeTooBig)
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value above input range maximum
   ::ad::map::match::MapMatchedPositionType invalidInitializedMember(
@@ -257,9 +267,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeMatchedPointTooS
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -282,6 +292,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeMatchedPointTooS
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value below input range minimum
   ::ad::map::point::ECEFPoint invalidInitializedMember;
@@ -303,9 +315,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeMatchedPointTooB
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -328,6 +340,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeMatchedPointTooB
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value above input range maximum
   ::ad::map::point::ECEFPoint invalidInitializedMember;
@@ -349,9 +363,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeProbabilityTooSm
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -374,6 +388,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeProbabilityTooSm
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value below input range minimum
   ::ad::physics::Probability invalidInitializedMember(0. - ::ad::physics::Probability::cPrecisionValue);
@@ -393,9 +409,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeProbabilityTooBi
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -418,6 +434,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeProbabilityTooBi
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value above input range maximum
   ::ad::physics::Probability invalidInitializedMember(1. * 1.1);
@@ -445,9 +463,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeQueryPointTooSma
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -470,6 +488,8 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeQueryPointTooSma
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value below input range minimum
   ::ad::map::point::ECEFPoint invalidInitializedMember;
@@ -491,9 +511,9 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeQueryPointTooBig
   valueLanePoint.paraPoint = valueLanePointParaPoint;
   ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueLanePoint.lateralT = valueLanePointLateralT;
-  ::ad::physics::Distance valueLanePointLaneLength(0.);
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
   valueLanePoint.laneLength = valueLanePointLaneLength;
-  ::ad::physics::Distance valueLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
   valueLanePoint.laneWidth = valueLanePointLaneWidth;
   value.lanePoint = valueLanePoint;
   ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -516,11 +536,113 @@ TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeQueryPointTooBig
   ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
   valueQueryPoint.z = valueQueryPointZ;
   value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
 
   // override member with data type value above input range maximum
   ::ad::map::point::ECEFPoint invalidInitializedMember;
   ::ad::map::point::ECEFCoordinate invalidInitializedMemberX(6400000 * 1.1);
   invalidInitializedMember.x = invalidInitializedMemberX;
   value.queryPoint = invalidInitializedMember;
+  ASSERT_FALSE(withinValidInputRange(value));
+}
+
+TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeMatchedPointDistanceTooSmall)
+{
+  ::ad::map::match::MapMatchedPosition value;
+  ::ad::map::match::LanePoint valueLanePoint;
+  ::ad::map::point::ParaPoint valueLanePointParaPoint;
+  ::ad::map::lane::LaneId valueLanePointParaPointLaneId(1);
+  valueLanePointParaPoint.laneId = valueLanePointParaPointLaneId;
+  ::ad::physics::ParametricValue valueLanePointParaPointParametricOffset(0.);
+  valueLanePointParaPoint.parametricOffset = valueLanePointParaPointParametricOffset;
+  valueLanePoint.paraPoint = valueLanePointParaPoint;
+  ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
+  valueLanePoint.lateralT = valueLanePointLateralT;
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
+  valueLanePoint.laneLength = valueLanePointLaneLength;
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
+  valueLanePoint.laneWidth = valueLanePointLaneWidth;
+  value.lanePoint = valueLanePoint;
+  ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
+  value.type = valueType;
+  ::ad::map::point::ECEFPoint valueMatchedPoint;
+  ::ad::map::point::ECEFCoordinate valueMatchedPointX(-6400000);
+  valueMatchedPoint.x = valueMatchedPointX;
+  ::ad::map::point::ECEFCoordinate valueMatchedPointY(-6400000);
+  valueMatchedPoint.y = valueMatchedPointY;
+  ::ad::map::point::ECEFCoordinate valueMatchedPointZ(-6400000);
+  valueMatchedPoint.z = valueMatchedPointZ;
+  value.matchedPoint = valueMatchedPoint;
+  ::ad::physics::Probability valueProbability(0.);
+  value.probability = valueProbability;
+  ::ad::map::point::ECEFPoint valueQueryPoint;
+  ::ad::map::point::ECEFCoordinate valueQueryPointX(-6400000);
+  valueQueryPoint.x = valueQueryPointX;
+  ::ad::map::point::ECEFCoordinate valueQueryPointY(-6400000);
+  valueQueryPoint.y = valueQueryPointY;
+  ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
+  valueQueryPoint.z = valueQueryPointZ;
+  value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
+
+  // override member with data type value below input range minimum
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
+  value.matchedPointDistance = invalidInitializedMember;
+  ASSERT_FALSE(withinValidInputRange(value));
+}
+
+TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangeMatchedPointDistanceTooBig)
+{
+  ::ad::map::match::MapMatchedPosition value;
+  ::ad::map::match::LanePoint valueLanePoint;
+  ::ad::map::point::ParaPoint valueLanePointParaPoint;
+  ::ad::map::lane::LaneId valueLanePointParaPointLaneId(1);
+  valueLanePointParaPoint.laneId = valueLanePointParaPointLaneId;
+  ::ad::physics::ParametricValue valueLanePointParaPointParametricOffset(0.);
+  valueLanePointParaPoint.parametricOffset = valueLanePointParaPointParametricOffset;
+  valueLanePoint.paraPoint = valueLanePointParaPoint;
+  ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
+  valueLanePoint.lateralT = valueLanePointLateralT;
+  ::ad::physics::Distance valueLanePointLaneLength(-1e9);
+  valueLanePoint.laneLength = valueLanePointLaneLength;
+  ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
+  valueLanePoint.laneWidth = valueLanePointLaneWidth;
+  value.lanePoint = valueLanePoint;
+  ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
+  value.type = valueType;
+  ::ad::map::point::ECEFPoint valueMatchedPoint;
+  ::ad::map::point::ECEFCoordinate valueMatchedPointX(-6400000);
+  valueMatchedPoint.x = valueMatchedPointX;
+  ::ad::map::point::ECEFCoordinate valueMatchedPointY(-6400000);
+  valueMatchedPoint.y = valueMatchedPointY;
+  ::ad::map::point::ECEFCoordinate valueMatchedPointZ(-6400000);
+  valueMatchedPoint.z = valueMatchedPointZ;
+  value.matchedPoint = valueMatchedPoint;
+  ::ad::physics::Probability valueProbability(0.);
+  value.probability = valueProbability;
+  ::ad::map::point::ECEFPoint valueQueryPoint;
+  ::ad::map::point::ECEFCoordinate valueQueryPointX(-6400000);
+  valueQueryPoint.x = valueQueryPointX;
+  ::ad::map::point::ECEFCoordinate valueQueryPointY(-6400000);
+  valueQueryPoint.y = valueQueryPointY;
+  ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
+  valueQueryPoint.z = valueQueryPointZ;
+  value.queryPoint = valueQueryPoint;
+  ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+  value.matchedPointDistance = valueMatchedPointDistance;
+
+  // override member with data type value above input range maximum
+  ::ad::physics::Distance invalidInitializedMember(1e9 * 1.1);
+  value.matchedPointDistance = invalidInitializedMember;
+  ASSERT_FALSE(withinValidInputRange(value));
+}
+
+TEST(MapMatchedPositionValidInputRangeTests, testValidInputRangematchedPointDistanceDefault)
+{
+  ::ad::map::match::MapMatchedPosition value;
+  ::ad::physics::Distance valueDefault;
+  value.matchedPointDistance = valueDefault;
   ASSERT_FALSE(withinValidInputRange(value));
 }

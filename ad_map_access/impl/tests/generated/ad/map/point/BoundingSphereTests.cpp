@@ -36,7 +36,7 @@ protected:
     ::ad::map::point::ECEFCoordinate valueCenterZ(-6400000);
     valueCenter.z = valueCenterZ;
     value.center = valueCenter;
-    ::ad::physics::Distance valueRadius(0.);
+    ::ad::physics::Distance valueRadius(-1e9);
     value.radius = valueRadius;
     mValue = value;
   }

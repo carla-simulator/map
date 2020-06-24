@@ -88,7 +88,7 @@ protected:
     ::ad::map::point::ECEFCoordinate valueRouteARoadSegmentsElementBoundingSphereCenterZ(-6400000);
     valueRouteARoadSegmentsElementBoundingSphereCenter.z = valueRouteARoadSegmentsElementBoundingSphereCenterZ;
     valueRouteARoadSegmentsElementBoundingSphere.center = valueRouteARoadSegmentsElementBoundingSphereCenter;
-    ::ad::physics::Distance valueRouteARoadSegmentsElementBoundingSphereRadius(0.);
+    ::ad::physics::Distance valueRouteARoadSegmentsElementBoundingSphereRadius(-1e9);
     valueRouteARoadSegmentsElementBoundingSphere.radius = valueRouteARoadSegmentsElementBoundingSphereRadius;
     valueRouteARoadSegmentsElement.boundingSphere = valueRouteARoadSegmentsElementBoundingSphere;
     valueRouteARoadSegments.resize(1, valueRouteARoadSegmentsElement);
@@ -169,7 +169,7 @@ protected:
     ::ad::map::point::ECEFCoordinate valueRouteBRoadSegmentsElementBoundingSphereCenterZ(-6400000);
     valueRouteBRoadSegmentsElementBoundingSphereCenter.z = valueRouteBRoadSegmentsElementBoundingSphereCenterZ;
     valueRouteBRoadSegmentsElementBoundingSphere.center = valueRouteBRoadSegmentsElementBoundingSphereCenter;
-    ::ad::physics::Distance valueRouteBRoadSegmentsElementBoundingSphereRadius(0.);
+    ::ad::physics::Distance valueRouteBRoadSegmentsElementBoundingSphereRadius(-1e9);
     valueRouteBRoadSegmentsElementBoundingSphere.radius = valueRouteBRoadSegmentsElementBoundingSphereRadius;
     valueRouteBRoadSegmentsElement.boundingSphere = valueRouteBRoadSegmentsElementBoundingSphere;
     valueRouteBRoadSegments.resize(1, valueRouteBRoadSegmentsElement);

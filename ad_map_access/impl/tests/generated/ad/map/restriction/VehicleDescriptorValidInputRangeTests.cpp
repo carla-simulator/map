@@ -26,11 +26,11 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRange)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
@@ -45,11 +45,11 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeTypeTooSmall)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
@@ -68,11 +68,11 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeTypeTooBig)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
@@ -91,17 +91,17 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeWidthTooSmall)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.width = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -114,11 +114,11 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeWidthTooBig)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
@@ -145,17 +145,17 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeHeightTooSmall)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.height = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -168,11 +168,11 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeHeightTooBig)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
@@ -199,17 +199,17 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeLengthTooSmall)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.length = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -222,11 +222,11 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeLengthTooBig)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
@@ -253,11 +253,11 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeWeightTooSmall)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;
@@ -276,11 +276,11 @@ TEST(VehicleDescriptorValidInputRangeTests, testValidInputRangeWeightTooBig)
   value.passengers = valuePassengers;
   ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
   value.type = valueType;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
-  ::ad::physics::Distance valueHeight(0.);
+  ::ad::physics::Distance valueHeight(-1e9);
   value.height = valueHeight;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
   value.weight = valueWeight;

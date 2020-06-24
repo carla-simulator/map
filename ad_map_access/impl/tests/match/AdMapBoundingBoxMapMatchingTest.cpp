@@ -30,7 +30,7 @@ struct AdMapBoundingBoxMapMatchingTest : ::testing::Test
     access::init("test_files/TPK.adm.txt");
 
     mMinProbabilty = physics::Probability(0.05);
-    mDistance = physics::Distance(1.);
+    mSamplingDistance = physics::Distance(1.);
 
     config::PointOfInterest poi;
     ASSERT_TRUE(access::getPointOfInterest("T1", poi));
@@ -49,14 +49,14 @@ struct AdMapBoundingBoxMapMatchingTest : ::testing::Test
   }
 
   physics::Probability mMinProbabilty;
-  physics::Distance mDistance;
+  physics::Distance mSamplingDistance;
   match::ENUObjectPosition mObjectPosition;
 };
 
 TEST_F(AdMapBoundingBoxMapMatchingTest, box_within_single_lane)
 {
   match::AdMapMatching mapMatching;
-  auto centerMapMatched = mapMatching.getMapMatchedPositions(mObjectPosition, mDistance, mMinProbabilty);
+  auto centerMapMatched = mapMatching.getMapMatchedPositions(mObjectPosition, mSamplingDistance, mMinProbabilty);
 
   point::ParaPointList para = getParaPoints(centerMapMatched);
   ASSERT_EQ(para.size(), 2u);
@@ -68,7 +68,7 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_within_single_lane)
   mObjectPosition.dimension.width = physics::Distance(1.5);
   mObjectPosition.dimension.length = physics::Distance(3);
 
-  auto result = mapMatching.getMapMatchedBoundingBox(mObjectPosition, mDistance);
+  auto result = mapMatching.getMapMatchedBoundingBox(mObjectPosition, mSamplingDistance);
 
   ASSERT_EQ(result.laneOccupiedRegions.size(), 1u);
   for (auto centerMatch : centerMapMatched)
@@ -110,7 +110,7 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_within_single_lane)
 
   std::vector<ENUObjectPosition> enuObjs;
   enuObjs.push_back(mObjectPosition);
-  LaneOccupiedRegionList occRegion = mapMatching.getLaneOccupiedRegions(enuObjs, mDistance);
+  LaneOccupiedRegionList occRegion = mapMatching.getLaneOccupiedRegions(enuObjs, mSamplingDistance);
 
   lane::LaneId x11;
   ASSERT_EQ(occRegion.size(), 1u);
@@ -174,7 +174,7 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_within_single_lane)
 TEST_F(AdMapBoundingBoxMapMatchingTest, rotated_box_within_two_lateral_lanes)
 {
   match::AdMapMatching mapMatching;
-  auto centerMapMatched = mapMatching.getMapMatchedPositions(mObjectPosition, mDistance, mMinProbabilty);
+  auto centerMapMatched = mapMatching.getMapMatchedPositions(mObjectPosition, mSamplingDistance, mMinProbabilty);
 
   ASSERT_EQ(centerMapMatched.size(), 2u);
   auto heading = mapMatching.getLaneENUHeading(centerMapMatched.front());
@@ -183,7 +183,7 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, rotated_box_within_two_lateral_lanes)
   mObjectPosition.dimension.width = physics::Distance(4.);
   mObjectPosition.dimension.length = physics::Distance(1.5);
 
-  auto result = mapMatching.getMapMatchedBoundingBox(mObjectPosition, mDistance);
+  auto result = mapMatching.getMapMatchedBoundingBox(mObjectPosition, mSamplingDistance);
 
   ASSERT_EQ(result.laneOccupiedRegions.size(), 2u);
 
@@ -240,13 +240,13 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, rotated_box_within_two_lateral_lanes)
   ASSERT_GE(vehicleWidth * 1.1, mObjectPosition.dimension.width);
 }
 
-TEST_F(AdMapBoundingBoxMapMatchingTest, box_covering_three_lane_longitudinal)
+TEST_F(AdMapBoundingBoxMapMatchingTest, box_covering_three_lanes_longitudinal)
 {
   auto objectCenter = point::toENU(
     point::createGeoPoint(point::Longitude(8.439497056), point::Latitude(49.018312553), point::Altitude(0.)));
 
   match::AdMapMatching mapMatching;
-  auto centerMapMatched = mapMatching.getMapMatchedPositions(objectCenter, mDistance, mMinProbabilty);
+  auto centerMapMatched = mapMatching.getMapMatchedPositions(objectCenter, mSamplingDistance, mMinProbabilty);
 
   ASSERT_EQ(centerMapMatched.size(), 1u);
 
@@ -259,7 +259,7 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_covering_three_lane_longitudinal)
   objectPosition.dimension.width = physics::Distance(2.5);
   objectPosition.dimension.length = physics::Distance(6.);
 
-  auto result = mapMatching.getMapMatchedBoundingBox(objectPosition, mDistance);
+  auto result = mapMatching.getMapMatchedBoundingBox(objectPosition, mSamplingDistance);
 
   ASSERT_EQ(result.laneOccupiedRegions.size(), 3u);
 
@@ -305,4 +305,25 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_covering_three_lane_longitudinal)
 
   ASSERT_LE(vehicleLength * 0.9, objectPosition.dimension.length);
   ASSERT_GE(vehicleLength * 1.1, objectPosition.dimension.length);
+}
+
+TEST_F(AdMapBoundingBoxMapMatchingTest, box_not_touching_second_lane_within_sampling_distance)
+{
+  auto objectCenter = point::toENU(
+    point::createGeoPoint(point::Longitude(8.4394653), point::Latitude(49.0182735), point::Altitude(0.)));
+
+  match::AdMapMatching mapMatching;
+  auto centerMapMatched = mapMatching.getMapMatchedPositions(objectCenter, mSamplingDistance, mMinProbabilty);
+
+  ASSERT_EQ(centerMapMatched.size(), 1u);
+
+  auto objectPosition = mObjectPosition;
+  objectPosition.heading = mapMatching.getLaneENUHeading(centerMapMatched.front());
+  objectPosition.centerPoint = objectCenter;
+  objectPosition.dimension.width = physics::Distance(2.5);
+  objectPosition.dimension.length = physics::Distance(6.);
+
+  auto result = mapMatching.getMapMatchedBoundingBox(objectPosition, mSamplingDistance);
+
+  ASSERT_EQ(result.laneOccupiedRegions.size(), 1u);
 }

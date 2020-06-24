@@ -40,11 +40,11 @@ TEST(ENUObjectPositionValidInputRangeTests, testValidInputRange)
   valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
   value.enuReferencePoint = valueEnuReferencePoint;
   ::ad::physics::Dimension3D valueDimension;
-  ::ad::physics::Distance valueDimensionLength(0.);
+  ::ad::physics::Distance valueDimensionLength(-1e9);
   valueDimension.length = valueDimensionLength;
-  ::ad::physics::Distance valueDimensionWidth(0.);
+  ::ad::physics::Distance valueDimensionWidth(-1e9);
   valueDimension.width = valueDimensionWidth;
-  ::ad::physics::Distance valueDimensionHeight(0.);
+  ::ad::physics::Distance valueDimensionHeight(-1e9);
   valueDimension.height = valueDimensionHeight;
   value.dimension = valueDimension;
   ASSERT_TRUE(withinValidInputRange(value));
@@ -72,11 +72,11 @@ TEST(ENUObjectPositionValidInputRangeTests, testValidInputRangeCenterPointTooSma
   valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
   value.enuReferencePoint = valueEnuReferencePoint;
   ::ad::physics::Dimension3D valueDimension;
-  ::ad::physics::Distance valueDimensionLength(0.);
+  ::ad::physics::Distance valueDimensionLength(-1e9);
   valueDimension.length = valueDimensionLength;
-  ::ad::physics::Distance valueDimensionWidth(0.);
+  ::ad::physics::Distance valueDimensionWidth(-1e9);
   valueDimension.width = valueDimensionWidth;
-  ::ad::physics::Distance valueDimensionHeight(0.);
+  ::ad::physics::Distance valueDimensionHeight(-1e9);
   valueDimension.height = valueDimensionHeight;
   value.dimension = valueDimension;
 
@@ -110,11 +110,11 @@ TEST(ENUObjectPositionValidInputRangeTests, testValidInputRangeCenterPointTooBig
   valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
   value.enuReferencePoint = valueEnuReferencePoint;
   ::ad::physics::Dimension3D valueDimension;
-  ::ad::physics::Distance valueDimensionLength(0.);
+  ::ad::physics::Distance valueDimensionLength(-1e9);
   valueDimension.length = valueDimensionLength;
-  ::ad::physics::Distance valueDimensionWidth(0.);
+  ::ad::physics::Distance valueDimensionWidth(-1e9);
   valueDimension.width = valueDimensionWidth;
-  ::ad::physics::Distance valueDimensionHeight(0.);
+  ::ad::physics::Distance valueDimensionHeight(-1e9);
   valueDimension.height = valueDimensionHeight;
   value.dimension = valueDimension;
 
@@ -148,11 +148,11 @@ TEST(ENUObjectPositionValidInputRangeTests, testValidInputRangeHeadingTooSmall)
   valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
   value.enuReferencePoint = valueEnuReferencePoint;
   ::ad::physics::Dimension3D valueDimension;
-  ::ad::physics::Distance valueDimensionLength(0.);
+  ::ad::physics::Distance valueDimensionLength(-1e9);
   valueDimension.length = valueDimensionLength;
-  ::ad::physics::Distance valueDimensionWidth(0.);
+  ::ad::physics::Distance valueDimensionWidth(-1e9);
   valueDimension.width = valueDimensionWidth;
-  ::ad::physics::Distance valueDimensionHeight(0.);
+  ::ad::physics::Distance valueDimensionHeight(-1e9);
   valueDimension.height = valueDimensionHeight;
   value.dimension = valueDimension;
 
@@ -184,11 +184,11 @@ TEST(ENUObjectPositionValidInputRangeTests, testValidInputRangeHeadingTooBig)
   valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
   value.enuReferencePoint = valueEnuReferencePoint;
   ::ad::physics::Dimension3D valueDimension;
-  ::ad::physics::Distance valueDimensionLength(0.);
+  ::ad::physics::Distance valueDimensionLength(-1e9);
   valueDimension.length = valueDimensionLength;
-  ::ad::physics::Distance valueDimensionWidth(0.);
+  ::ad::physics::Distance valueDimensionWidth(-1e9);
   valueDimension.width = valueDimensionWidth;
-  ::ad::physics::Distance valueDimensionHeight(0.);
+  ::ad::physics::Distance valueDimensionHeight(-1e9);
   valueDimension.height = valueDimensionHeight;
   value.dimension = valueDimension;
 
@@ -228,11 +228,11 @@ TEST(ENUObjectPositionValidInputRangeTests, testValidInputRangeEnuReferencePoint
   valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
   value.enuReferencePoint = valueEnuReferencePoint;
   ::ad::physics::Dimension3D valueDimension;
-  ::ad::physics::Distance valueDimensionLength(0.);
+  ::ad::physics::Distance valueDimensionLength(-1e9);
   valueDimension.length = valueDimensionLength;
-  ::ad::physics::Distance valueDimensionWidth(0.);
+  ::ad::physics::Distance valueDimensionWidth(-1e9);
   valueDimension.width = valueDimensionWidth;
-  ::ad::physics::Distance valueDimensionHeight(0.);
+  ::ad::physics::Distance valueDimensionHeight(-1e9);
   valueDimension.height = valueDimensionHeight;
   value.dimension = valueDimension;
 
@@ -266,11 +266,11 @@ TEST(ENUObjectPositionValidInputRangeTests, testValidInputRangeEnuReferencePoint
   valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
   value.enuReferencePoint = valueEnuReferencePoint;
   ::ad::physics::Dimension3D valueDimension;
-  ::ad::physics::Distance valueDimensionLength(0.);
+  ::ad::physics::Distance valueDimensionLength(-1e9);
   valueDimension.length = valueDimensionLength;
-  ::ad::physics::Distance valueDimensionWidth(0.);
+  ::ad::physics::Distance valueDimensionWidth(-1e9);
   valueDimension.width = valueDimensionWidth;
-  ::ad::physics::Distance valueDimensionHeight(0.);
+  ::ad::physics::Distance valueDimensionHeight(-1e9);
   valueDimension.height = valueDimensionHeight;
   value.dimension = valueDimension;
 
@@ -304,17 +304,17 @@ TEST(ENUObjectPositionValidInputRangeTests, testValidInputRangeDimensionTooSmall
   valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
   value.enuReferencePoint = valueEnuReferencePoint;
   ::ad::physics::Dimension3D valueDimension;
-  ::ad::physics::Distance valueDimensionLength(0.);
+  ::ad::physics::Distance valueDimensionLength(-1e9);
   valueDimension.length = valueDimensionLength;
-  ::ad::physics::Distance valueDimensionWidth(0.);
+  ::ad::physics::Distance valueDimensionWidth(-1e9);
   valueDimension.width = valueDimensionWidth;
-  ::ad::physics::Distance valueDimensionHeight(0.);
+  ::ad::physics::Distance valueDimensionHeight(-1e9);
   valueDimension.height = valueDimensionHeight;
   value.dimension = valueDimension;
 
   // override member with data type value below input range minimum
   ::ad::physics::Dimension3D invalidInitializedMember;
-  ::ad::physics::Distance invalidInitializedMemberLength(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMemberLength(-1e9 * 1.1);
   invalidInitializedMember.length = invalidInitializedMemberLength;
   value.dimension = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
@@ -342,11 +342,11 @@ TEST(ENUObjectPositionValidInputRangeTests, testValidInputRangeDimensionTooBig)
   valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
   value.enuReferencePoint = valueEnuReferencePoint;
   ::ad::physics::Dimension3D valueDimension;
-  ::ad::physics::Distance valueDimensionLength(0.);
+  ::ad::physics::Distance valueDimensionLength(-1e9);
   valueDimension.length = valueDimensionLength;
-  ::ad::physics::Distance valueDimensionWidth(0.);
+  ::ad::physics::Distance valueDimensionWidth(-1e9);
   valueDimension.width = valueDimensionWidth;
-  ::ad::physics::Distance valueDimensionHeight(0.);
+  ::ad::physics::Distance valueDimensionHeight(-1e9);
   valueDimension.height = valueDimensionHeight;
   value.dimension = valueDimension;
 

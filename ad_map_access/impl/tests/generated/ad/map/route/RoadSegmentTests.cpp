@@ -69,7 +69,7 @@ protected:
     ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
     valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
     valueBoundingSphere.center = valueBoundingSphereCenter;
-    ::ad::physics::Distance valueBoundingSphereRadius(0.);
+    ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
     valueBoundingSphere.radius = valueBoundingSphereRadius;
     value.boundingSphere = valueBoundingSphere;
     mValue = value;

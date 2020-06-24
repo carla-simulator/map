@@ -14,6 +14,7 @@
 #include "ad/map/point/ENUPoint.hpp"
 #include "ad/map/point/GeoPoint.hpp"
 #include "ad/map/point/PointOperation.hpp"
+#include "ad/physics/Angle.hpp"
 #include "ad/physics/Distance.hpp"
 
 namespace ad {
@@ -48,9 +49,19 @@ ECEFHeading createECEFHeading(ENUHeading const &yaw, GeoPoint const &enuReferenc
  * @param[in] yawAngleRadian heading provided as yaw angle in radians
  *
  * @returns heading with given yaw angle is normalized in the range -M_PI < heading <= M_PI
- *
  */
 ENUHeading createENUHeading(double yawAngleRadian);
+
+/**
+ * @brief create a ENUHeading from angle
+ *
+ * Heading in ENU coordinate system as angle measured from East to North axis (yaw) in radians
+ *
+ * @param[in] angle heading provided as yaw angle in radians
+ *
+ * @returns heading with given yaw angle is normalized in the range -M_PI < heading <= M_PI
+ */
+ENUHeading createENUHeading(physics::Angle const &angle);
 
 /**
  * @brief create a ENUHeading from ECEFHeading value

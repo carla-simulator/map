@@ -23,7 +23,7 @@ TEST(MapEntryValidInputRangeTests, testValidInputRange)
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(0.);
+  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
   value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
   ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
     ::ad::map::intersection::IntersectionType::Unknown);
@@ -39,7 +39,7 @@ TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveOverlapMarginTooS
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(0.);
+  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
   value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
   ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
     ::ad::map::intersection::IntersectionType::Unknown);
@@ -49,7 +49,7 @@ TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveOverlapMarginTooS
   value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.openDriveOverlapMargin = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -59,7 +59,7 @@ TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveOverlapMarginTooB
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(0.);
+  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
   value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
   ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
     ::ad::map::intersection::IntersectionType::Unknown);
@@ -87,7 +87,7 @@ TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveDefaultIntersecti
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(0.);
+  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
   value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
   ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
     ::ad::map::intersection::IntersectionType::Unknown);
@@ -108,7 +108,7 @@ TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveDefaultIntersecti
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(0.);
+  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
   value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
   ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
     ::ad::map::intersection::IntersectionType::Unknown);
@@ -129,7 +129,7 @@ TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveDefaultTrafficLig
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(0.);
+  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
   value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
   ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
     ::ad::map::intersection::IntersectionType::Unknown);
@@ -150,7 +150,7 @@ TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveDefaultTrafficLig
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(0.);
+  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
   value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
   ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
     ::ad::map::intersection::IntersectionType::Unknown);

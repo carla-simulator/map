@@ -40,15 +40,14 @@ class AdPhysicsPythonTest(unittest.TestCase):
         self.assertEqual(speed_c, 30.)
 
         t = physics.Duration(2.)
-
-        a_2 = speed_a / t
-        self.assertEqual(a_2, 5.)
-
         a = physics.Acceleration(10.)
 
         speed_c = t * a
 
         self.assertEqual(speed_c, 20.)
+
+        t = speed_c / a
+        self.assertEqual(t, 2.)
 
 
 if __name__ == '__main__':

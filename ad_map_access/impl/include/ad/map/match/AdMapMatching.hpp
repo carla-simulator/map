@@ -216,16 +216,14 @@ public:
    *
    * @param[in] enuObjectPosition object position, orientation, dimensions and ENRReferencePoint
    *  to match against the map in ENU coordinate frame
-   * @param[in] distance search radius around geoPoint to select a lane as a match
    * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
    *   This parameter is heavily influencing the performance of this function:
    *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
-   * matching. To ensure the correctness of the LaneOccupiedRegions, this parameter is set <= distance!
+   * matching.
    *
    * @returns the map matched bounding box of the object
    */
   MapMatchedObjectBoundingBox getMapMatchedBoundingBox(ENUObjectPosition const &enuObjectPosition,
-                                                       physics::Distance const &distance,
                                                        physics::Distance const &samplingDistance
                                                        = physics::Distance(1.));
 
@@ -238,15 +236,13 @@ public:
    * only works as expected if the the provided enuObjectPositionList covers the whole object.
    *
    * @param[in] enuObjectPositionList list of ENUObjectPosition entries
-   * @param[in] distance search radius around geoPoint to select a lane as a match
    * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
    *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
-   * matching. To ensure the correctness of the LaneOccupiedRegions, this parameter is set <= distance!
+   * matching.
    *
    * @returns the map matched bounding box of the object
    */
   LaneOccupiedRegionList getLaneOccupiedRegions(ENUObjectPositionList enuObjectPositionList,
-                                                physics::Distance const &distance,
                                                 physics::Distance const &samplingDistance = physics::Distance(1.));
 
   /**

@@ -27,7 +27,7 @@ TEST(DistanceValidInputRangeTests, testValidInputRangeUninitialized)
 TEST(DistanceValidInputRangeTests, testValidInputRangeMinOk)
 {
   ::ad::physics::Distance value(-1e9);
-  ASSERT_FALSE(withinValidInputRange(value));
+  ASSERT_TRUE(withinValidInputRange(value));
 }
 
 TEST(DistanceValidInputRangeTests, testValidInputRangeMaxOk)
@@ -50,7 +50,7 @@ TEST(DistanceValidInputRangeTests, testValidInputRangeExceedsMax)
 
 TEST(DistanceValidInputRangeTests, testValidInputRangeInputMinOk)
 {
-  ::ad::physics::Distance value(0.);
+  ::ad::physics::Distance value(-1e9);
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
@@ -62,7 +62,7 @@ TEST(DistanceValidInputRangeTests, testValidInputRangeInputMaxOk)
 
 TEST(DistanceValidInputRangeTests, testValidInputRangeBelowInputMin)
 {
-  ::ad::physics::Distance value(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance value(-1e9 * 1.1);
   ASSERT_FALSE(withinValidInputRange(value));
 }
 

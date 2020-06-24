@@ -33,11 +33,11 @@ protected:
     value.passengers = valuePassengers;
     ::ad::map::restriction::RoadUserType valueType(::ad::map::restriction::RoadUserType::INVALID);
     value.type = valueType;
-    ::ad::physics::Distance valueWidth(0.);
+    ::ad::physics::Distance valueWidth(-1e9);
     value.width = valueWidth;
-    ::ad::physics::Distance valueHeight(0.);
+    ::ad::physics::Distance valueHeight(-1e9);
     value.height = valueHeight;
-    ::ad::physics::Distance valueLength(0.);
+    ::ad::physics::Distance valueLength(-1e9);
     value.length = valueLength;
     ::ad::physics::Weight valueWeight(std::numeric_limits<::ad::physics::Weight>::lowest());
     value.weight = valueWeight;

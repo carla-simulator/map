@@ -37,9 +37,9 @@ protected:
     valueLanePoint.paraPoint = valueLanePointParaPoint;
     ::ad::physics::RatioValue valueLanePointLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
     valueLanePoint.lateralT = valueLanePointLateralT;
-    ::ad::physics::Distance valueLanePointLaneLength(0.);
+    ::ad::physics::Distance valueLanePointLaneLength(-1e9);
     valueLanePoint.laneLength = valueLanePointLaneLength;
-    ::ad::physics::Distance valueLanePointLaneWidth(0.);
+    ::ad::physics::Distance valueLanePointLaneWidth(-1e9);
     valueLanePoint.laneWidth = valueLanePointLaneWidth;
     value.lanePoint = valueLanePoint;
     ::ad::map::match::MapMatchedPositionType valueType(::ad::map::match::MapMatchedPositionType::INVALID);
@@ -62,6 +62,8 @@ protected:
     ::ad::map::point::ECEFCoordinate valueQueryPointZ(-6400000);
     valueQueryPoint.z = valueQueryPointZ;
     value.queryPoint = valueQueryPoint;
+    ::ad::physics::Distance valueMatchedPointDistance(-1e9);
+    value.matchedPointDistance = valueMatchedPointDistance;
     mValue = value;
   }
 
@@ -187,6 +189,17 @@ TEST_F(MapMatchedPositionTests, comparisonOperatorQueryPointDiffers)
   ::ad::map::point::ECEFCoordinate queryPointZ(6400000);
   queryPoint.z = queryPointZ;
   valueA.queryPoint = queryPoint;
+  ::ad::map::match::MapMatchedPosition valueB = mValue;
+
+  EXPECT_FALSE(valueA == valueB);
+  EXPECT_TRUE(valueA != valueB);
+}
+
+TEST_F(MapMatchedPositionTests, comparisonOperatorMatchedPointDistanceDiffers)
+{
+  ::ad::map::match::MapMatchedPosition valueA = mValue;
+  ::ad::physics::Distance matchedPointDistance(1e9);
+  valueA.matchedPointDistance = matchedPointDistance;
   ::ad::map::match::MapMatchedPosition valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

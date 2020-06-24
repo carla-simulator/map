@@ -41,11 +41,11 @@ TEST(ObjectValidInputRangeTests, testValidInputRange)
   valueEnuPositionEnuReferencePoint.altitude = valueEnuPositionEnuReferencePointAltitude;
   valueEnuPosition.enuReferencePoint = valueEnuPositionEnuReferencePoint;
   ::ad::physics::Dimension3D valueEnuPositionDimension;
-  ::ad::physics::Distance valueEnuPositionDimensionLength(0.);
+  ::ad::physics::Distance valueEnuPositionDimensionLength(-1e9);
   valueEnuPositionDimension.length = valueEnuPositionDimensionLength;
-  ::ad::physics::Distance valueEnuPositionDimensionWidth(0.);
+  ::ad::physics::Distance valueEnuPositionDimensionWidth(-1e9);
   valueEnuPositionDimension.width = valueEnuPositionDimensionWidth;
-  ::ad::physics::Distance valueEnuPositionDimensionHeight(0.);
+  ::ad::physics::Distance valueEnuPositionDimensionHeight(-1e9);
   valueEnuPositionDimension.height = valueEnuPositionDimensionHeight;
   valueEnuPosition.dimension = valueEnuPositionDimension;
   value.enuPosition = valueEnuPosition;
@@ -101,10 +101,10 @@ TEST(ObjectValidInputRangeTests, testValidInputRange)
     std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint.lateralT
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLateralT;
-  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneLength(0.);
+  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneLength(-1e9);
   valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint.laneLength
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneLength;
-  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneWidth(-1e9);
   valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint.laneWidth
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneWidth;
   valueMapMatchedBoundingBoxReferencePointPositionsElementElement.lanePoint
@@ -143,6 +143,9 @@ TEST(ObjectValidInputRangeTests, testValidInputRange)
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementQueryPointZ;
   valueMapMatchedBoundingBoxReferencePointPositionsElementElement.queryPoint
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementQueryPoint;
+  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementMatchedPointDistance(-1e9);
+  valueMapMatchedBoundingBoxReferencePointPositionsElementElement.matchedPointDistance
+    = valueMapMatchedBoundingBoxReferencePointPositionsElementElementMatchedPointDistance;
   valueMapMatchedBoundingBoxReferencePointPositionsElement.resize(
     1, valueMapMatchedBoundingBoxReferencePointPositionsElementElement);
   valueMapMatchedBoundingBoxReferencePointPositions.push_back(valueMapMatchedBoundingBoxReferencePointPositionsElement);
@@ -174,11 +177,11 @@ TEST(ObjectValidInputRangeTests, testValidInputRangeEnuPositionTooSmall)
   valueEnuPositionEnuReferencePoint.altitude = valueEnuPositionEnuReferencePointAltitude;
   valueEnuPosition.enuReferencePoint = valueEnuPositionEnuReferencePoint;
   ::ad::physics::Dimension3D valueEnuPositionDimension;
-  ::ad::physics::Distance valueEnuPositionDimensionLength(0.);
+  ::ad::physics::Distance valueEnuPositionDimensionLength(-1e9);
   valueEnuPositionDimension.length = valueEnuPositionDimensionLength;
-  ::ad::physics::Distance valueEnuPositionDimensionWidth(0.);
+  ::ad::physics::Distance valueEnuPositionDimensionWidth(-1e9);
   valueEnuPositionDimension.width = valueEnuPositionDimensionWidth;
-  ::ad::physics::Distance valueEnuPositionDimensionHeight(0.);
+  ::ad::physics::Distance valueEnuPositionDimensionHeight(-1e9);
   valueEnuPositionDimension.height = valueEnuPositionDimensionHeight;
   valueEnuPosition.dimension = valueEnuPositionDimension;
   value.enuPosition = valueEnuPosition;
@@ -234,10 +237,10 @@ TEST(ObjectValidInputRangeTests, testValidInputRangeEnuPositionTooSmall)
     std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint.lateralT
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLateralT;
-  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneLength(0.);
+  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneLength(-1e9);
   valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint.laneLength
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneLength;
-  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneWidth(-1e9);
   valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint.laneWidth
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneWidth;
   valueMapMatchedBoundingBoxReferencePointPositionsElementElement.lanePoint
@@ -276,6 +279,9 @@ TEST(ObjectValidInputRangeTests, testValidInputRangeEnuPositionTooSmall)
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementQueryPointZ;
   valueMapMatchedBoundingBoxReferencePointPositionsElementElement.queryPoint
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementQueryPoint;
+  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementMatchedPointDistance(-1e9);
+  valueMapMatchedBoundingBoxReferencePointPositionsElementElement.matchedPointDistance
+    = valueMapMatchedBoundingBoxReferencePointPositionsElementElementMatchedPointDistance;
   valueMapMatchedBoundingBoxReferencePointPositionsElement.resize(
     1, valueMapMatchedBoundingBoxReferencePointPositionsElementElement);
   valueMapMatchedBoundingBoxReferencePointPositions.push_back(valueMapMatchedBoundingBoxReferencePointPositionsElement);
@@ -315,11 +321,11 @@ TEST(ObjectValidInputRangeTests, testValidInputRangeEnuPositionTooBig)
   valueEnuPositionEnuReferencePoint.altitude = valueEnuPositionEnuReferencePointAltitude;
   valueEnuPosition.enuReferencePoint = valueEnuPositionEnuReferencePoint;
   ::ad::physics::Dimension3D valueEnuPositionDimension;
-  ::ad::physics::Distance valueEnuPositionDimensionLength(0.);
+  ::ad::physics::Distance valueEnuPositionDimensionLength(-1e9);
   valueEnuPositionDimension.length = valueEnuPositionDimensionLength;
-  ::ad::physics::Distance valueEnuPositionDimensionWidth(0.);
+  ::ad::physics::Distance valueEnuPositionDimensionWidth(-1e9);
   valueEnuPositionDimension.width = valueEnuPositionDimensionWidth;
-  ::ad::physics::Distance valueEnuPositionDimensionHeight(0.);
+  ::ad::physics::Distance valueEnuPositionDimensionHeight(-1e9);
   valueEnuPositionDimension.height = valueEnuPositionDimensionHeight;
   valueEnuPosition.dimension = valueEnuPositionDimension;
   value.enuPosition = valueEnuPosition;
@@ -375,10 +381,10 @@ TEST(ObjectValidInputRangeTests, testValidInputRangeEnuPositionTooBig)
     std::numeric_limits<::ad::physics::RatioValue>::lowest());
   valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint.lateralT
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLateralT;
-  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneLength(0.);
+  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneLength(-1e9);
   valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint.laneLength
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneLength;
-  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneWidth(0.);
+  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneWidth(-1e9);
   valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint.laneWidth
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePointLaneWidth;
   valueMapMatchedBoundingBoxReferencePointPositionsElementElement.lanePoint
@@ -417,6 +423,9 @@ TEST(ObjectValidInputRangeTests, testValidInputRangeEnuPositionTooBig)
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementQueryPointZ;
   valueMapMatchedBoundingBoxReferencePointPositionsElementElement.queryPoint
     = valueMapMatchedBoundingBoxReferencePointPositionsElementElementQueryPoint;
+  ::ad::physics::Distance valueMapMatchedBoundingBoxReferencePointPositionsElementElementMatchedPointDistance(-1e9);
+  valueMapMatchedBoundingBoxReferencePointPositionsElementElement.matchedPointDistance
+    = valueMapMatchedBoundingBoxReferencePointPositionsElementElementMatchedPointDistance;
   valueMapMatchedBoundingBoxReferencePointPositionsElement.resize(
     1, valueMapMatchedBoundingBoxReferencePointPositionsElementElement);
   valueMapMatchedBoundingBoxReferencePointPositions.push_back(valueMapMatchedBoundingBoxReferencePointPositionsElement);

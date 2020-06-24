@@ -29,7 +29,7 @@ TEST(BoundingSphereValidInputRangeTests, testValidInputRange)
   ::ad::map::point::ECEFCoordinate valueCenterZ(-6400000);
   valueCenter.z = valueCenterZ;
   value.center = valueCenter;
-  ::ad::physics::Distance valueRadius(0.);
+  ::ad::physics::Distance valueRadius(-1e9);
   value.radius = valueRadius;
   ASSERT_TRUE(withinValidInputRange(value));
 }
@@ -45,7 +45,7 @@ TEST(BoundingSphereValidInputRangeTests, testValidInputRangeCenterTooSmall)
   ::ad::map::point::ECEFCoordinate valueCenterZ(-6400000);
   valueCenter.z = valueCenterZ;
   value.center = valueCenter;
-  ::ad::physics::Distance valueRadius(0.);
+  ::ad::physics::Distance valueRadius(-1e9);
   value.radius = valueRadius;
 
   // override member with data type value below input range minimum
@@ -67,7 +67,7 @@ TEST(BoundingSphereValidInputRangeTests, testValidInputRangeCenterTooBig)
   ::ad::map::point::ECEFCoordinate valueCenterZ(-6400000);
   valueCenter.z = valueCenterZ;
   value.center = valueCenter;
-  ::ad::physics::Distance valueRadius(0.);
+  ::ad::physics::Distance valueRadius(-1e9);
   value.radius = valueRadius;
 
   // override member with data type value above input range maximum
@@ -89,11 +89,11 @@ TEST(BoundingSphereValidInputRangeTests, testValidInputRangeRadiusTooSmall)
   ::ad::map::point::ECEFCoordinate valueCenterZ(-6400000);
   valueCenter.z = valueCenterZ;
   value.center = valueCenter;
-  ::ad::physics::Distance valueRadius(0.);
+  ::ad::physics::Distance valueRadius(-1e9);
   value.radius = valueRadius;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.radius = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -109,7 +109,7 @@ TEST(BoundingSphereValidInputRangeTests, testValidInputRangeRadiusTooBig)
   ::ad::map::point::ECEFCoordinate valueCenterZ(-6400000);
   valueCenter.z = valueCenterZ;
   value.center = valueCenter;
-  ::ad::physics::Distance valueRadius(0.);
+  ::ad::physics::Distance valueRadius(-1e9);
   value.radius = valueRadius;
 
   // override member with data type value above input range maximum

@@ -570,6 +570,7 @@ bool findNearestPointOnLane(Lane const &lane, point::ECEFPoint const &pt, match:
       mmpos.lanePoint.laneLength = lane.length;
       mmpos.lanePoint.laneWidth = point::distance(pt_left, pt_right);
       mmpos.queryPoint = pt;
+      mmpos.matchedPointDistance = point::distance(mmpos.matchedPoint, mmpos.queryPoint);
       return true;
     }
   }

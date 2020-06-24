@@ -34,7 +34,7 @@
  * \note the specified input range is defined by
  *       std::numeric_limits<::ad::physics::Distance>::lowest() <= \c input <=
  * std::numeric_limits<::ad::physics::Distance>::max()
- *       0. <= \c input <= 1e9
+ *       -1e9 <= \c input <= 1e9
  */
 inline bool withinValidInputRange(::ad::physics::Distance const &input, bool const logErrors = true)
 {
@@ -51,12 +51,12 @@ inline bool withinValidInputRange(::ad::physics::Distance const &input, bool con
   // check for individual input range
   if (inValidInputRange)
   {
-    inValidInputRange = (::ad::physics::Distance(0.) <= input) && (input <= ::ad::physics::Distance(1e9));
+    inValidInputRange = (::ad::physics::Distance(-1e9) <= input) && (input <= ::ad::physics::Distance(1e9));
     if (!inValidInputRange && logErrors)
     {
       spdlog::error("withinValidInputRange(::ad::physics::Distance)>> {} out of valid input range [{}, {}]",
                     input,
-                    ::ad::physics::Distance(0.),
+                    ::ad::physics::Distance(-1e9),
                     ::ad::physics::Distance(1e9)); // LCOV_EXCL_BR_LINE
     }
   }

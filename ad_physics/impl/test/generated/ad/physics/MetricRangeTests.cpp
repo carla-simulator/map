@@ -28,9 +28,10 @@ protected:
   {
     // valid initialization
     ::ad::physics::MetricRange value;
-    ::ad::physics::Distance valueMinimum(0.);
+    ::ad::physics::Distance valueMinimum(-1e9);
+    valueMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
     value.minimum = valueMinimum;
-    ::ad::physics::Distance valueMaximum(0.);
+    ::ad::physics::Distance valueMaximum(-1e9);
     value.maximum = valueMaximum;
     value.maximum = value.minimum;
     value.minimum = value.maximum;

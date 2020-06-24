@@ -47,11 +47,11 @@ protected:
     valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
     value.enuReferencePoint = valueEnuReferencePoint;
     ::ad::physics::Dimension3D valueDimension;
-    ::ad::physics::Distance valueDimensionLength(0.);
+    ::ad::physics::Distance valueDimensionLength(-1e9);
     valueDimension.length = valueDimensionLength;
-    ::ad::physics::Distance valueDimensionWidth(0.);
+    ::ad::physics::Distance valueDimensionWidth(-1e9);
     valueDimension.width = valueDimensionWidth;
-    ::ad::physics::Distance valueDimensionHeight(0.);
+    ::ad::physics::Distance valueDimensionHeight(-1e9);
     valueDimension.height = valueDimensionHeight;
     value.dimension = valueDimension;
     mValue = value;

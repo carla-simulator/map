@@ -57,22 +57,24 @@ TEST(LaneValidInputRangeTests, testValidInputRange)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -106,7 +108,7 @@ TEST(LaneValidInputRangeTests, testValidInputRange)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -138,7 +140,7 @@ TEST(LaneValidInputRangeTests, testValidInputRange)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -220,7 +222,7 @@ TEST(LaneValidInputRangeTests, testValidInputRange)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -270,22 +272,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeTypeTooSmall)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -319,7 +323,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeTypeTooSmall)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -351,7 +355,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeTypeTooSmall)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -433,7 +437,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeTypeTooSmall)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -487,22 +491,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeTypeTooBig)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -536,7 +542,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeTypeTooBig)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -568,7 +574,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeTypeTooBig)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -650,7 +656,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeTypeTooBig)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -704,22 +710,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeDirectionTooSmall)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -753,7 +761,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeDirectionTooSmall)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -785,7 +793,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeDirectionTooSmall)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -867,7 +875,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeDirectionTooSmall)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -921,22 +929,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeDirectionTooBig)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -970,7 +980,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeDirectionTooBig)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -1002,7 +1012,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeDirectionTooBig)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -1084,7 +1094,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeDirectionTooBig)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -1138,22 +1148,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthTooSmall)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -1187,7 +1199,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthTooSmall)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -1219,7 +1231,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthTooSmall)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -1301,7 +1313,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthTooSmall)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -1311,7 +1323,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthTooSmall)
   value.visibleLandmarks = valueVisibleLandmarks;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.length = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -1355,22 +1367,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthTooBig)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -1404,7 +1418,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthTooBig)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -1436,7 +1450,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthTooBig)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -1518,7 +1532,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthTooBig)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -1580,22 +1594,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthRangeTooSmall)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -1629,7 +1645,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthRangeTooSmall)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -1661,7 +1677,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthRangeTooSmall)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -1743,7 +1759,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthRangeTooSmall)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -1754,7 +1770,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthRangeTooSmall)
 
   // override member with data type value below input range minimum
   ::ad::physics::MetricRange invalidInitializedMember;
-  ::ad::physics::Distance invalidInitializedMemberMinimum(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMemberMinimum(-1e9 * 1.1);
   invalidInitializedMember.minimum = invalidInitializedMemberMinimum;
   value.lengthRange = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
@@ -1799,22 +1815,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthRangeTooBig)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -1848,7 +1866,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthRangeTooBig)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -1880,7 +1898,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthRangeTooBig)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -1962,7 +1980,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeLengthRangeTooBig)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -2018,22 +2036,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthTooSmall)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -2067,7 +2087,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthTooSmall)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -2099,7 +2119,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthTooSmall)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -2181,7 +2201,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthTooSmall)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -2191,7 +2211,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthTooSmall)
   value.visibleLandmarks = valueVisibleLandmarks;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.width = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -2235,22 +2255,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthTooBig)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -2284,7 +2306,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthTooBig)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -2316,7 +2338,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthTooBig)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -2398,7 +2420,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthTooBig)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -2460,22 +2482,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthRangeTooSmall)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -2509,7 +2533,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthRangeTooSmall)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -2541,7 +2565,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthRangeTooSmall)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -2623,7 +2647,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthRangeTooSmall)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -2634,7 +2658,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthRangeTooSmall)
 
   // override member with data type value below input range minimum
   ::ad::physics::MetricRange invalidInitializedMember;
-  ::ad::physics::Distance invalidInitializedMemberMinimum(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMemberMinimum(-1e9 * 1.1);
   invalidInitializedMember.minimum = invalidInitializedMemberMinimum;
   value.widthRange = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
@@ -2679,22 +2703,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthRangeTooBig)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -2728,7 +2754,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthRangeTooBig)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -2760,7 +2786,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthRangeTooBig)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -2842,7 +2868,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeWidthRangeTooBig)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -2898,22 +2924,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeLeftTooSmall)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -2947,7 +2975,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeLeftTooSmall)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -2979,7 +3007,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeLeftTooSmall)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -3061,7 +3089,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeLeftTooSmall)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -3072,7 +3100,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeLeftTooSmall)
 
   // override member with data type value below input range minimum
   ::ad::map::point::Geometry invalidInitializedMember;
-  ::ad::physics::Distance invalidInitializedMemberLength(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMemberLength(-1e9 * 1.1);
   invalidInitializedMember.length = invalidInitializedMemberLength;
   value.edgeLeft = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
@@ -3117,22 +3145,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeLeftTooBig)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -3166,7 +3196,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeLeftTooBig)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -3198,7 +3228,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeLeftTooBig)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -3280,7 +3310,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeLeftTooBig)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -3336,22 +3366,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeRightTooSmall)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -3385,7 +3417,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeRightTooSmall)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -3417,7 +3449,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeRightTooSmall)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -3499,7 +3531,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeRightTooSmall)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -3510,7 +3542,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeRightTooSmall)
 
   // override member with data type value below input range minimum
   ::ad::map::point::Geometry invalidInitializedMember;
-  ::ad::physics::Distance invalidInitializedMemberLength(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMemberLength(-1e9 * 1.1);
   invalidInitializedMember.length = invalidInitializedMemberLength;
   value.edgeRight = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
@@ -3555,22 +3587,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeRightTooBig)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -3604,7 +3638,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeRightTooBig)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -3636,7 +3670,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeRightTooBig)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -3718,7 +3752,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeEdgeRightTooBig)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -3774,22 +3808,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeBoundingSphereTooSmall)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -3823,7 +3859,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeBoundingSphereTooSmall)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -3855,7 +3891,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeBoundingSphereTooSmall)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -3937,7 +3973,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeBoundingSphereTooSmall)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
@@ -3995,22 +4031,24 @@ TEST(LaneValidInputRangeTests, testValidInputRangeBoundingSphereTooBig)
   valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
   valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
   value.restrictions = valueRestrictions;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::physics::MetricRange valueLengthRange;
-  ::ad::physics::Distance valueLengthRangeMinimum(0.);
+  ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+  valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueLengthRange.minimum = valueLengthRangeMinimum;
-  ::ad::physics::Distance valueLengthRangeMaximum(0.);
+  ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
   valueLengthRange.maximum = valueLengthRangeMaximum;
   valueLengthRange.maximum = valueLengthRange.minimum;
   valueLengthRange.minimum = valueLengthRange.maximum;
   value.lengthRange = valueLengthRange;
-  ::ad::physics::Distance valueWidth(0.);
+  ::ad::physics::Distance valueWidth(-1e9);
   value.width = valueWidth;
   ::ad::physics::MetricRange valueWidthRange;
-  ::ad::physics::Distance valueWidthRangeMinimum(0.);
+  ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+  valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   valueWidthRange.minimum = valueWidthRangeMinimum;
-  ::ad::physics::Distance valueWidthRangeMaximum(0.);
+  ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
   valueWidthRange.maximum = valueWidthRangeMaximum;
   valueWidthRange.maximum = valueWidthRange.minimum;
   valueWidthRange.minimum = valueWidthRange.maximum;
@@ -4044,7 +4082,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeBoundingSphereTooBig)
   valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
   valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
   valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-  ::ad::physics::Distance valueEdgeLeftLength(0.);
+  ::ad::physics::Distance valueEdgeLeftLength(-1e9);
   valueEdgeLeft.length = valueEdgeLeftLength;
   ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -4076,7 +4114,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeBoundingSphereTooBig)
   valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
   valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
   valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-  ::ad::physics::Distance valueEdgeRightLength(0.);
+  ::ad::physics::Distance valueEdgeRightLength(-1e9);
   valueEdgeRight.length = valueEdgeRightLength;
   ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -4158,7 +4196,7 @@ TEST(LaneValidInputRangeTests, testValidInputRangeBoundingSphereTooBig)
   ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
   valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
   valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
   valueBoundingSphere.radius = valueBoundingSphereRadius;
   value.boundingSphere = valueBoundingSphere;
   ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
