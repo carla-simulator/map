@@ -110,24 +110,6 @@ TEST_F(LaneIntervalOperationTest, LaneIntervalOperation)
   laneInt1.laneId = laneId;
   laneInt1.start = ::ad::physics::ParametricValue(0.2);
   laneInt1.end = ::ad::physics::ParametricValue(0.8);
-  point::ParaPoint paraPoi;
-
-  paraPoi = getRouteIntervalStart(laneInt1);
-  ASSERT_EQ(paraPoi.parametricOffset, ::ad::physics::ParametricValue(0.2));
-  ASSERT_EQ(paraPoi.laneId, laneId);
-  laneInt1.end = ::ad::physics::ParametricValue(0.1);
-  paraPoi = getRouteIntervalStart(laneInt1);
-  ASSERT_EQ(paraPoi.parametricOffset, ::ad::physics::ParametricValue(0.1));
-  ASSERT_EQ(paraPoi.laneId, laneId);
-
-  paraPoi = getRouteIntervalEnd(laneInt1);
-  ASSERT_EQ(paraPoi.parametricOffset, ::ad::physics::ParametricValue(0.2));
-  ASSERT_EQ(paraPoi.laneId, laneId);
-
-  laneInt1.end = ::ad::physics::ParametricValue(0.8);
-  paraPoi = getRouteIntervalEnd(laneInt1);
-  ASSERT_EQ(paraPoi.parametricOffset, ::ad::physics::ParametricValue(0.8));
-  ASSERT_EQ(paraPoi.laneId, laneId);
 
   point::ParaPoint first, second;
   first.laneId = lane::LaneId(100);

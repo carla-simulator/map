@@ -63,7 +63,7 @@ protected:
     valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
     valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
     valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-    ::ad::physics::Distance valueBoundingBoxLength(0.);
+    ::ad::physics::Distance valueBoundingBoxLength(-1e9);
     valueBoundingBox.length = valueBoundingBoxLength;
     ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
     ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;

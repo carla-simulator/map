@@ -29,9 +29,9 @@ TEST(LanePointValidInputRangeTests, testValidInputRange)
   value.paraPoint = valueParaPoint;
   ::ad::physics::RatioValue valueLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   value.lateralT = valueLateralT;
-  ::ad::physics::Distance valueLaneLength(0.);
+  ::ad::physics::Distance valueLaneLength(-1e9);
   value.laneLength = valueLaneLength;
-  ::ad::physics::Distance valueLaneWidth(0.);
+  ::ad::physics::Distance valueLaneWidth(-1e9);
   value.laneWidth = valueLaneWidth;
   ASSERT_TRUE(withinValidInputRange(value));
 }
@@ -47,9 +47,9 @@ TEST(LanePointValidInputRangeTests, testValidInputRangeParaPointTooSmall)
   value.paraPoint = valueParaPoint;
   ::ad::physics::RatioValue valueLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   value.lateralT = valueLateralT;
-  ::ad::physics::Distance valueLaneLength(0.);
+  ::ad::physics::Distance valueLaneLength(-1e9);
   value.laneLength = valueLaneLength;
-  ::ad::physics::Distance valueLaneWidth(0.);
+  ::ad::physics::Distance valueLaneWidth(-1e9);
   value.laneWidth = valueLaneWidth;
 
   // override member with data type value below input range minimum
@@ -72,9 +72,9 @@ TEST(LanePointValidInputRangeTests, testValidInputRangeParaPointTooBig)
   value.paraPoint = valueParaPoint;
   ::ad::physics::RatioValue valueLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   value.lateralT = valueLateralT;
-  ::ad::physics::Distance valueLaneLength(0.);
+  ::ad::physics::Distance valueLaneLength(-1e9);
   value.laneLength = valueLaneLength;
-  ::ad::physics::Distance valueLaneWidth(0.);
+  ::ad::physics::Distance valueLaneWidth(-1e9);
   value.laneWidth = valueLaneWidth;
 
   // override member with data type value above input range maximum
@@ -96,13 +96,13 @@ TEST(LanePointValidInputRangeTests, testValidInputRangeLaneLengthTooSmall)
   value.paraPoint = valueParaPoint;
   ::ad::physics::RatioValue valueLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   value.lateralT = valueLateralT;
-  ::ad::physics::Distance valueLaneLength(0.);
+  ::ad::physics::Distance valueLaneLength(-1e9);
   value.laneLength = valueLaneLength;
-  ::ad::physics::Distance valueLaneWidth(0.);
+  ::ad::physics::Distance valueLaneWidth(-1e9);
   value.laneWidth = valueLaneWidth;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.laneLength = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -118,9 +118,9 @@ TEST(LanePointValidInputRangeTests, testValidInputRangeLaneLengthTooBig)
   value.paraPoint = valueParaPoint;
   ::ad::physics::RatioValue valueLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   value.lateralT = valueLateralT;
-  ::ad::physics::Distance valueLaneLength(0.);
+  ::ad::physics::Distance valueLaneLength(-1e9);
   value.laneLength = valueLaneLength;
-  ::ad::physics::Distance valueLaneWidth(0.);
+  ::ad::physics::Distance valueLaneWidth(-1e9);
   value.laneWidth = valueLaneWidth;
 
   // override member with data type value above input range maximum
@@ -148,13 +148,13 @@ TEST(LanePointValidInputRangeTests, testValidInputRangeLaneWidthTooSmall)
   value.paraPoint = valueParaPoint;
   ::ad::physics::RatioValue valueLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   value.lateralT = valueLateralT;
-  ::ad::physics::Distance valueLaneLength(0.);
+  ::ad::physics::Distance valueLaneLength(-1e9);
   value.laneLength = valueLaneLength;
-  ::ad::physics::Distance valueLaneWidth(0.);
+  ::ad::physics::Distance valueLaneWidth(-1e9);
   value.laneWidth = valueLaneWidth;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.laneWidth = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -170,9 +170,9 @@ TEST(LanePointValidInputRangeTests, testValidInputRangeLaneWidthTooBig)
   value.paraPoint = valueParaPoint;
   ::ad::physics::RatioValue valueLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
   value.lateralT = valueLateralT;
-  ::ad::physics::Distance valueLaneLength(0.);
+  ::ad::physics::Distance valueLaneLength(-1e9);
   value.laneLength = valueLaneLength;
-  ::ad::physics::Distance valueLaneWidth(0.);
+  ::ad::physics::Distance valueLaneWidth(-1e9);
   value.laneWidth = valueLaneWidth;
 
   // override member with data type value above input range maximum

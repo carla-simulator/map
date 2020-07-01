@@ -24,6 +24,7 @@
 #include "ad/map/match/LanePoint.hpp"
 #include "ad/map/match/MapMatchedPositionType.hpp"
 #include "ad/map/point/ECEFPoint.hpp"
+#include "ad/physics/Distance.hpp"
 #include "ad/physics/Probability.hpp"
 /*!
  * @brief namespace ad
@@ -105,7 +106,8 @@ struct MapMatchedPosition
   bool operator==(const MapMatchedPosition &other) const
   {
     return (lanePoint == other.lanePoint) && (type == other.type) && (matchedPoint == other.matchedPoint)
-      && (probability == other.probability) && (queryPoint == other.queryPoint);
+      && (probability == other.probability) && (queryPoint == other.queryPoint)
+      && (matchedPointDistance == other.matchedPointDistance);
   }
 
   /**
@@ -133,6 +135,11 @@ struct MapMatchedPosition
    * Point that is used for determining this matched pos.
    */
   ::ad::map::point::ECEFPoint queryPoint;
+
+  /*!
+   * The distance between the matchedPoint and the queryPoint.
+   */
+  ::ad::physics::Distance matchedPointDistance;
 };
 
 } // namespace match
@@ -185,6 +192,9 @@ inline std::ostream &operator<<(std::ostream &os, MapMatchedPosition const &_val
   os << ",";
   os << "queryPoint:";
   os << _value.queryPoint;
+  os << ",";
+  os << "matchedPointDistance:";
+  os << _value.matchedPointDistance;
   os << ")";
   return os;
 }

@@ -14,7 +14,7 @@
 ##
 
 cmake_minimum_required(VERSION 3.5)
-project(ad_physics VERSION 2.0.3)
+project(ad_physics VERSION 2.1.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -37,6 +37,7 @@ add_library(${PROJECT_NAME}
   ${ad_physics_SOURCES}
   src/ad/physics/Acceleration.cpp
   src/ad/physics/Angle.cpp
+  src/ad/physics/AngularAcceleration.cpp
   src/ad/physics/AngularVelocity.cpp
   src/ad/physics/Distance.cpp
   src/ad/physics/DistanceSquared.cpp

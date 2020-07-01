@@ -36,9 +36,9 @@ protected:
     value.paraPoint = valueParaPoint;
     ::ad::physics::RatioValue valueLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
     value.lateralT = valueLateralT;
-    ::ad::physics::Distance valueLaneLength(0.);
+    ::ad::physics::Distance valueLaneLength(-1e9);
     value.laneLength = valueLaneLength;
-    ::ad::physics::Distance valueLaneWidth(0.);
+    ::ad::physics::Distance valueLaneWidth(-1e9);
     value.laneWidth = valueLaneWidth;
     mValue = value;
   }

@@ -23,6 +23,7 @@
 #include "ad/map/match/MapMatchedPosition.hpp"
 #include "ad/map/match/MapMatchedPositionTypeValidInputRange.hpp"
 #include "ad/map/point/ECEFPointValidInputRange.hpp"
+#include "ad/physics/DistanceValidInputRange.hpp"
 #include "ad/physics/ProbabilityValidInputRange.hpp"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/spdlog.h"
@@ -43,7 +44,8 @@ inline bool withinValidInputRange(::ad::map::match::MapMatchedPosition const &in
   bool inValidInputRange = true;
   inValidInputRange = withinValidInputRange(input.lanePoint, logErrors) && withinValidInputRange(input.type, logErrors)
     && withinValidInputRange(input.matchedPoint, logErrors) && withinValidInputRange(input.probability, logErrors)
-    && withinValidInputRange(input.queryPoint, logErrors);
+    && withinValidInputRange(input.queryPoint, logErrors)
+    && withinValidInputRange(input.matchedPointDistance, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::match::MapMatchedPosition)>> {} has invalid member",

@@ -14,6 +14,7 @@
 #include "ad/map/point/ECEFOperation.hpp"
 #include "ad/map/point/ENUOperation.hpp"
 #include "ad/map/point/Transform.hpp"
+#include "ad/physics/AngleOperation.hpp"
 
 namespace ad {
 namespace map {
@@ -37,28 +38,19 @@ ECEFHeading createECEFHeading(ENUHeading const &yaw, GeoPoint const &enuReferenc
   return createECEFHeading(start, end);
 }
 
-double normalizeAngle(double yaw)
-{
-  double normalizedAngle = std::fmod(yaw + static_cast<double>(M_PI), 2. * static_cast<double>(M_PI));
-  if (normalizedAngle <= 0)
-  {
-    normalizedAngle += static_cast<double>(M_PI);
-  }
-  else
-  {
-    normalizedAngle -= static_cast<double>(M_PI);
-  }
-  return normalizedAngle;
-}
-
 ENUHeading normalizeENUHeading(ENUHeading const &heading)
 {
-  return ENUHeading(normalizeAngle(static_cast<double>(heading)));
+  return createENUHeading(static_cast<double>(heading));
+}
+
+ENUHeading createENUHeading(physics::Angle const &angle)
+{
+  return ENUHeading(static_cast<double>(physics::normalizeAngleSigned(angle)));
 }
 
 ENUHeading createENUHeading(double yawAngleRadian)
 {
-  return ENUHeading(normalizeAngle(yawAngleRadian));
+  return createENUHeading(physics::Angle(yawAngleRadian));
 }
 
 ENUHeading createENUHeading(ECEFHeading const &ecefHeading)

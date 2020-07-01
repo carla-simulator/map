@@ -1,6 +1,16 @@
 ## Latest changes
+
+## Release 2.1.0
 #### :ghost: Maintenance
-* Improved BUILDING documentation
+* Added physics::AngleRange, physics::AngluarAcceleration data types and some AngleOperations
+* Extended physics Parametric and Ratio Operations to all physics basic types
+* Map Matching
+  - map::match::MapMatchedPosition get matchedPointDistance member
+  - removed distance parameter from match::AdMapMatching::getMapMatchedBoundingBox() and match::AdMapMatching::getLaneOccupiedRegions() functions which is now derived automatically from samplingDistance parameter
+  - The occupied regions only consider longitudinal in-lane matches
+* Removed misleading functions route::getRouteIntervalStart/End(LaneInterval); directly use the LaneInterval members instead
+* route::calculateConnectingRoute() shortens the result route by removing overlapping regions with the objects; the length of the connecting route now reflects the distance of the vehicles much better
+* Improved documentation (BUILDING, map_maker)
 * Added qgis plugin static build colcon meta file
 
 ## Release 2.0.3

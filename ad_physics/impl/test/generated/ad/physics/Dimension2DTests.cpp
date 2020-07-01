@@ -28,9 +28,9 @@ protected:
   {
     // valid initialization
     ::ad::physics::Dimension2D value;
-    ::ad::physics::Distance valueLength(0.);
+    ::ad::physics::Distance valueLength(-1e9);
     value.length = valueLength;
-    ::ad::physics::Distance valueWidth(0.);
+    ::ad::physics::Distance valueWidth(-1e9);
     value.width = valueWidth;
     mValue = value;
   }

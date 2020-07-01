@@ -21,9 +21,10 @@
 TEST(MetricRangeValidInputRangeTests, testValidInputRange)
 {
   ::ad::physics::MetricRange value;
-  ::ad::physics::Distance valueMinimum(0.);
+  ::ad::physics::Distance valueMinimum(-1e9);
+  valueMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   value.minimum = valueMinimum;
-  ::ad::physics::Distance valueMaximum(0.);
+  ::ad::physics::Distance valueMaximum(-1e9);
   value.maximum = valueMaximum;
   value.maximum = value.minimum;
   value.minimum = value.maximum;
@@ -33,15 +34,22 @@ TEST(MetricRangeValidInputRangeTests, testValidInputRange)
 TEST(MetricRangeValidInputRangeTests, testValidInputRangeMinimumTooSmall)
 {
   ::ad::physics::MetricRange value;
-  ::ad::physics::Distance valueMinimum(0.);
+  ::ad::physics::Distance valueMinimum(-1e9);
+  valueMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   value.minimum = valueMinimum;
-  ::ad::physics::Distance valueMaximum(0.);
+  ::ad::physics::Distance valueMaximum(-1e9);
   value.maximum = valueMaximum;
   value.maximum = value.minimum;
   value.minimum = value.maximum;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
+  value.minimum = invalidInitializedMember;
+  ASSERT_FALSE(withinValidInputRange(value));
+
+  // override member with value below struct member input range minimum
+  invalidInitializedMember
+    = ::ad::physics::Distance(0. - ::ad::physics::Distance::cPrecisionValue); // set to invalid value within struct
   value.minimum = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -49,9 +57,10 @@ TEST(MetricRangeValidInputRangeTests, testValidInputRangeMinimumTooSmall)
 TEST(MetricRangeValidInputRangeTests, testValidInputRangeMinimumTooBig)
 {
   ::ad::physics::MetricRange value;
-  ::ad::physics::Distance valueMinimum(0.);
+  ::ad::physics::Distance valueMinimum(-1e9);
+  valueMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   value.minimum = valueMinimum;
-  ::ad::physics::Distance valueMaximum(0.);
+  ::ad::physics::Distance valueMaximum(-1e9);
   value.maximum = valueMaximum;
   value.maximum = value.minimum;
   value.minimum = value.maximum;
@@ -73,15 +82,16 @@ TEST(MetricRangeValidInputRangeTests, testValidInputRangeminimumDefault)
 TEST(MetricRangeValidInputRangeTests, testValidInputRangeMaximumTooSmall)
 {
   ::ad::physics::MetricRange value;
-  ::ad::physics::Distance valueMinimum(0.);
+  ::ad::physics::Distance valueMinimum(-1e9);
+  valueMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   value.minimum = valueMinimum;
-  ::ad::physics::Distance valueMaximum(0.);
+  ::ad::physics::Distance valueMaximum(-1e9);
   value.maximum = valueMaximum;
   value.maximum = value.minimum;
   value.minimum = value.maximum;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.maximum = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -89,9 +99,10 @@ TEST(MetricRangeValidInputRangeTests, testValidInputRangeMaximumTooSmall)
 TEST(MetricRangeValidInputRangeTests, testValidInputRangeMaximumTooBig)
 {
   ::ad::physics::MetricRange value;
-  ::ad::physics::Distance valueMinimum(0.);
+  ::ad::physics::Distance valueMinimum(-1e9);
+  valueMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
   value.minimum = valueMinimum;
-  ::ad::physics::Distance valueMaximum(0.);
+  ::ad::physics::Distance valueMaximum(-1e9);
   value.maximum = valueMaximum;
   value.maximum = value.minimum;
   value.minimum = value.maximum;

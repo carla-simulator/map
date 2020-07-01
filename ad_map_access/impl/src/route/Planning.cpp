@@ -839,6 +839,60 @@ ConnectingRoute calculateConnectingRouteCheckForMergingRoute(route::FullRoute &o
   return resultRoute;
 }
 
+void dropOverlappingRegions(FullRoute &route,
+                            match::LaneOccupiedRegion const regionDropStart,
+                            match::LaneOccupiedRegion const regionDropEnd)
+{
+  if (route.roadSegments.empty())
+  {
+    return;
+  }
+  for (auto &laneSegment : route.roadSegments.front().drivableLaneSegments)
+  {
+    if (laneSegment.laneInterval.laneId == regionDropStart.laneId)
+    {
+      bool alignmentRequired = false;
+      if (isWithinInterval(laneSegment.laneInterval, regionDropStart.longitudinalRange.minimum))
+      {
+        laneSegment.laneInterval.start = regionDropStart.longitudinalRange.minimum;
+        alignmentRequired = true;
+      }
+      if (isWithinInterval(laneSegment.laneInterval, regionDropStart.longitudinalRange.maximum))
+      {
+        laneSegment.laneInterval.start = regionDropStart.longitudinalRange.maximum;
+        alignmentRequired = true;
+      }
+      if (alignmentRequired)
+      {
+        alignRouteStartingPoints(getIntervalStart(laneSegment.laneInterval), route);
+      }
+      break;
+    }
+  }
+  for (auto &laneSegment : route.roadSegments.back().drivableLaneSegments)
+  {
+    if (laneSegment.laneInterval.laneId == regionDropEnd.laneId)
+    {
+      bool alignmentRequired = false;
+      if (isWithinInterval(laneSegment.laneInterval, regionDropEnd.longitudinalRange.minimum))
+      {
+        laneSegment.laneInterval.end = regionDropEnd.longitudinalRange.minimum;
+        alignmentRequired = true;
+      }
+      if (isWithinInterval(laneSegment.laneInterval, regionDropEnd.longitudinalRange.maximum))
+      {
+        laneSegment.laneInterval.end = regionDropEnd.longitudinalRange.maximum;
+        alignmentRequired = true;
+      }
+      if (alignmentRequired)
+      {
+        alignRouteEndingPoints(getIntervalEnd(laneSegment.laneInterval), route);
+      }
+      break;
+    }
+  }
+}
+
 ConnectingRoute calculateConnectingRoute(const match::Object &objectA,
                                          const match::Object &objectB,
                                          physics::Distance const &maxDistance,
@@ -846,6 +900,8 @@ ConnectingRoute calculateConnectingRoute(const match::Object &objectA,
 {
   Route::RawRoute resultRawRoute;
   physics::Distance resultDistance = std::numeric_limits<physics::Distance>::max();
+  match::LaneOccupiedRegion resultStartRegion;
+  match::LaneOccupiedRegion resultDestRegion;
 
   for (auto const &startMatchingResult : objectA.mapMatchedBoundingBox.laneOccupiedRegions)
   {
@@ -865,6 +921,8 @@ ConnectingRoute calculateConnectingRoute(const match::Object &objectA,
         {
           resultDistance = rawRoute.routeDistance;
           resultRawRoute = rawRoute;
+          resultStartRegion = startMatchingResult;
+          resultDestRegion = destMatchingResult;
         }
       }
     }
@@ -919,18 +977,22 @@ ConnectingRoute calculateConnectingRoute(const match::Object &objectA,
         resultRoute.type = ConnectingRouteType::Opposing;
         resultRoute.routeA = routeA;
         resultRoute.routeB = routeB;
+        dropOverlappingRegions(resultRoute.routeA, resultStartRegion, resultDestRegion);
+        dropOverlappingRegions(resultRoute.routeB, resultDestRegion, resultStartRegion);
       }
       else if (objectADrivingAlongRoute)
       {
         // A is following B
         resultRoute.type = ConnectingRouteType::Following;
         resultRoute.routeA = routeA;
+        dropOverlappingRegions(resultRoute.routeA, resultStartRegion, resultDestRegion);
       }
       else if (objectBDrivingAlongRoute)
       {
         // B is following A
         resultRoute.type = ConnectingRouteType::Following;
         resultRoute.routeB = routeB;
+        dropOverlappingRegions(resultRoute.routeB, resultDestRegion, resultStartRegion);
       }
       else
       {

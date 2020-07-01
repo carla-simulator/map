@@ -66,22 +66,24 @@ protected:
     valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
     valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
     value.restrictions = valueRestrictions;
-    ::ad::physics::Distance valueLength(0.);
+    ::ad::physics::Distance valueLength(-1e9);
     value.length = valueLength;
     ::ad::physics::MetricRange valueLengthRange;
-    ::ad::physics::Distance valueLengthRangeMinimum(0.);
+    ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
+    valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
     valueLengthRange.minimum = valueLengthRangeMinimum;
-    ::ad::physics::Distance valueLengthRangeMaximum(0.);
+    ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
     valueLengthRange.maximum = valueLengthRangeMaximum;
     valueLengthRange.maximum = valueLengthRange.minimum;
     valueLengthRange.minimum = valueLengthRange.maximum;
     value.lengthRange = valueLengthRange;
-    ::ad::physics::Distance valueWidth(0.);
+    ::ad::physics::Distance valueWidth(-1e9);
     value.width = valueWidth;
     ::ad::physics::MetricRange valueWidthRange;
-    ::ad::physics::Distance valueWidthRangeMinimum(0.);
+    ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
+    valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
     valueWidthRange.minimum = valueWidthRangeMinimum;
-    ::ad::physics::Distance valueWidthRangeMaximum(0.);
+    ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
     valueWidthRange.maximum = valueWidthRangeMaximum;
     valueWidthRange.maximum = valueWidthRange.minimum;
     valueWidthRange.minimum = valueWidthRange.maximum;
@@ -115,7 +117,7 @@ protected:
     valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
     valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
     valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-    ::ad::physics::Distance valueEdgeLeftLength(0.);
+    ::ad::physics::Distance valueEdgeLeftLength(-1e9);
     valueEdgeLeft.length = valueEdgeLeftLength;
     ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
     ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
@@ -147,7 +149,7 @@ protected:
     valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
     valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
     valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-    ::ad::physics::Distance valueEdgeRightLength(0.);
+    ::ad::physics::Distance valueEdgeRightLength(-1e9);
     valueEdgeRight.length = valueEdgeRightLength;
     ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
     ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
@@ -229,7 +231,7 @@ protected:
     ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
     valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
     valueBoundingSphere.center = valueBoundingSphereCenter;
-    ::ad::physics::Distance valueBoundingSphereRadius(0.);
+    ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
     valueBoundingSphere.radius = valueBoundingSphereRadius;
     value.boundingSphere = valueBoundingSphere;
     ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;

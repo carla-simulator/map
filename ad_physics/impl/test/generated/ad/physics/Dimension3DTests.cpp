@@ -28,11 +28,11 @@ protected:
   {
     // valid initialization
     ::ad::physics::Dimension3D value;
-    ::ad::physics::Distance valueLength(0.);
+    ::ad::physics::Distance valueLength(-1e9);
     value.length = valueLength;
-    ::ad::physics::Distance valueWidth(0.);
+    ::ad::physics::Distance valueWidth(-1e9);
     value.width = valueWidth;
-    ::ad::physics::Distance valueHeight(0.);
+    ::ad::physics::Distance valueHeight(-1e9);
     value.height = valueHeight;
     mValue = value;
   }

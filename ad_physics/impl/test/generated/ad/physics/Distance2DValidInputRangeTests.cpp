@@ -21,9 +21,9 @@
 TEST(Distance2DValidInputRangeTests, testValidInputRange)
 {
   ::ad::physics::Distance2D value;
-  ::ad::physics::Distance valueX(0.);
+  ::ad::physics::Distance valueX(-1e9);
   value.x = valueX;
-  ::ad::physics::Distance valueY(0.);
+  ::ad::physics::Distance valueY(-1e9);
   value.y = valueY;
   ASSERT_TRUE(withinValidInputRange(value));
 }
@@ -31,13 +31,13 @@ TEST(Distance2DValidInputRangeTests, testValidInputRange)
 TEST(Distance2DValidInputRangeTests, testValidInputRangeXTooSmall)
 {
   ::ad::physics::Distance2D value;
-  ::ad::physics::Distance valueX(0.);
+  ::ad::physics::Distance valueX(-1e9);
   value.x = valueX;
-  ::ad::physics::Distance valueY(0.);
+  ::ad::physics::Distance valueY(-1e9);
   value.y = valueY;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.x = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -45,9 +45,9 @@ TEST(Distance2DValidInputRangeTests, testValidInputRangeXTooSmall)
 TEST(Distance2DValidInputRangeTests, testValidInputRangeXTooBig)
 {
   ::ad::physics::Distance2D value;
-  ::ad::physics::Distance valueX(0.);
+  ::ad::physics::Distance valueX(-1e9);
   value.x = valueX;
-  ::ad::physics::Distance valueY(0.);
+  ::ad::physics::Distance valueY(-1e9);
   value.y = valueY;
 
   // override member with data type value above input range maximum
@@ -67,13 +67,13 @@ TEST(Distance2DValidInputRangeTests, testValidInputRangexDefault)
 TEST(Distance2DValidInputRangeTests, testValidInputRangeYTooSmall)
 {
   ::ad::physics::Distance2D value;
-  ::ad::physics::Distance valueX(0.);
+  ::ad::physics::Distance valueX(-1e9);
   value.x = valueX;
-  ::ad::physics::Distance valueY(0.);
+  ::ad::physics::Distance valueY(-1e9);
   value.y = valueY;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.y = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -81,9 +81,9 @@ TEST(Distance2DValidInputRangeTests, testValidInputRangeYTooSmall)
 TEST(Distance2DValidInputRangeTests, testValidInputRangeYTooBig)
 {
   ::ad::physics::Distance2D value;
-  ::ad::physics::Distance valueX(0.);
+  ::ad::physics::Distance valueX(-1e9);
   value.x = valueX;
-  ::ad::physics::Distance valueY(0.);
+  ::ad::physics::Distance valueY(-1e9);
   value.y = valueY;
 
   // override member with data type value above input range maximum

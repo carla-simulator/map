@@ -35,7 +35,7 @@ TEST(GeometryValidInputRangeTests, testValidInputRange)
   valueEcefEdgeElement.z = valueEcefEdgeElementZ;
   valueEcefEdge.resize(1, valueEcefEdgeElement);
   value.ecefEdge = valueEcefEdge;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::map::point::ENUEdgeCache valuePrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valuePrivate_enuEdgeCacheEnuEdge;
@@ -71,7 +71,7 @@ TEST(GeometryValidInputRangeTests, testValidInputRangeLengthTooSmall)
   valueEcefEdgeElement.z = valueEcefEdgeElementZ;
   valueEcefEdge.resize(1, valueEcefEdgeElement);
   value.ecefEdge = valueEcefEdge;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::map::point::ENUEdgeCache valuePrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valuePrivate_enuEdgeCacheEnuEdge;
@@ -89,7 +89,7 @@ TEST(GeometryValidInputRangeTests, testValidInputRangeLengthTooSmall)
   value.private_enuEdgeCache = valuePrivate_enuEdgeCache;
 
   // override member with data type value below input range minimum
-  ::ad::physics::Distance invalidInitializedMember(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
   value.length = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -111,7 +111,7 @@ TEST(GeometryValidInputRangeTests, testValidInputRangeLengthTooBig)
   valueEcefEdgeElement.z = valueEcefEdgeElementZ;
   valueEcefEdge.resize(1, valueEcefEdgeElement);
   value.ecefEdge = valueEcefEdge;
-  ::ad::physics::Distance valueLength(0.);
+  ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
   ::ad::map::point::ENUEdgeCache valuePrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valuePrivate_enuEdgeCacheEnuEdge;

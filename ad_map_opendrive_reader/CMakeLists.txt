@@ -43,7 +43,6 @@ add_library(${PROJECT_NAME} ${PROJECT_SOURCE_LIST})
 # dependencies
 #####################################################################
 
-find_package(PkgConfig REQUIRED)
 find_package(Boost REQUIRED)
 
 #pugixml
@@ -58,13 +57,22 @@ if((NOT PUGIXML_LIBRARIES) OR (NOT PUGIXML_INCLUDE_DIR))
   message(FATAL "Dependency pugixml not found!")
 endif()
 
-pkg_check_modules(PROJ REQUIRED proj)
+find_library(PROJ_LIBRARIES
+  NAMES proj
+)
+find_path(PROJ_INCLUDE_DIR
+  NAMES proj_api.h
+)
+
+if((NOT PROJ_LIBRARIES) OR (NOT PROJ_INCLUDE_DIR))
+  message(FATAL "Dependency proj not found!")
+endif()
 
 target_include_directories(${PROJECT_NAME}
   PRIVATE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  ${PUGIXML_INCLUDE_DIRS}
-  ${PROJ_INCLUDE_DIRS}
+  ${PUGIXML_INCLUDE_DIR}
+  ${PROJ_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
 )
 
@@ -73,6 +81,7 @@ target_link_libraries(${PROJECT_NAME}
   ${PUGIXML_LIBRARIES}
   ${PROJ_LIBRARIES}
 )
+
 
 set(PROJECT_PUBLIC_HEADER_LIST
   "${CMAKE_CURRENT_SOURCE_DIR}/include/opendrive/types.hpp"

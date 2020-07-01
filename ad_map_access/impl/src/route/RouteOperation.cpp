@@ -1571,9 +1571,11 @@ FindLaneChangeResult findFirstLaneChange(match::MapMatchedPosition const &curren
 
   if (!findWaypointResult.isValid())
   {
-    access::getLogger()->error(
-      "ad::map::route::findFirstLaneChange: Current position is not part of the route {} {}", currentPosition, route);
-
+    if (!route.roadSegments.empty())
+    {
+      access::getLogger()->error(
+        "ad::map::route::findFirstLaneChange: Current position is not part of the route {} {}", currentPosition, route);
+    }
     // returning an invalid result (as if no lane change was found)
     return result;
   }

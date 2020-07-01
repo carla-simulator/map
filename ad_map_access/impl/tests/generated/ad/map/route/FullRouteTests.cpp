@@ -83,7 +83,7 @@ protected:
     ::ad::map::point::ECEFCoordinate valueRoadSegmentsElementBoundingSphereCenterZ(-6400000);
     valueRoadSegmentsElementBoundingSphereCenter.z = valueRoadSegmentsElementBoundingSphereCenterZ;
     valueRoadSegmentsElementBoundingSphere.center = valueRoadSegmentsElementBoundingSphereCenter;
-    ::ad::physics::Distance valueRoadSegmentsElementBoundingSphereRadius(0.);
+    ::ad::physics::Distance valueRoadSegmentsElementBoundingSphereRadius(-1e9);
     valueRoadSegmentsElementBoundingSphere.radius = valueRoadSegmentsElementBoundingSphereRadius;
     valueRoadSegmentsElement.boundingSphere = valueRoadSegmentsElementBoundingSphere;
     valueRoadSegments.resize(1, valueRoadSegmentsElement);

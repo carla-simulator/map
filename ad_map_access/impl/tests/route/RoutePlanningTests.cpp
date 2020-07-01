@@ -1238,7 +1238,7 @@ TEST_F(RoutePlanningTest, connecting_route)
                       physics::Distance(0.),
                       physics::Distance(50.),
                       route::ConnectingRouteType::Following,
-                      physics::Distance(9.34047),
+                      physics::Distance(4.33336),
                       physics::Distance(0.)),
       // simple standard: directly at back same direction, same lane
       std::make_tuple(emmyToAda,
@@ -1253,7 +1253,7 @@ TEST_F(RoutePlanningTest, connecting_route)
                       physics::Distance(50.),
                       route::ConnectingRouteType::Following,
                       physics::Distance(0.),
-                      physics::Distance(9.33094)),
+                      physics::Distance(4.32631)),
       // simple standard: directly in front other direction, other lane
       std::make_tuple(emmyToAda,
                       physics::ParametricValue(0.5),
@@ -1266,8 +1266,8 @@ TEST_F(RoutePlanningTest, connecting_route)
                       physics::Distance(0.),
                       physics::Distance(50.),
                       route::ConnectingRouteType::Opposing,
-                      physics::Distance(14.3601),
-                      physics::Distance(14.3601)),
+                      physics::Distance(4.34512),
+                      physics::Distance(4.34421)),
       // simple standard: already at back other direction, other lane
       std::make_tuple(emmyToAda,
                       physics::ParametricValue(0.5),

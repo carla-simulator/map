@@ -69,7 +69,7 @@ TEST(RoadSegmentListValidInputRangeTests, testValidInputRangeElementValid)
   ::ad::map::point::ECEFCoordinate elementBoundingSphereCenterZ(-6400000);
   elementBoundingSphereCenter.z = elementBoundingSphereCenterZ;
   elementBoundingSphere.center = elementBoundingSphereCenter;
-  ::ad::physics::Distance elementBoundingSphereRadius(0.);
+  ::ad::physics::Distance elementBoundingSphereRadius(-1e9);
   elementBoundingSphere.radius = elementBoundingSphereRadius;
   element.boundingSphere = elementBoundingSphere;
   value.push_back(element);

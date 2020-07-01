@@ -56,7 +56,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRange)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -120,7 +120,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTypeTooSmall)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -188,7 +188,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTypeTooBig)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -256,7 +256,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangePositionTooSmall)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -326,7 +326,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangePositionTooBig)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -396,7 +396,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeOrientationTooSmall)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -466,7 +466,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeOrientationTooBig)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -536,7 +536,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeBoundingBoxTooSmall)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -562,7 +562,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeBoundingBoxTooSmall)
 
   // override member with data type value below input range minimum
   ::ad::map::point::Geometry invalidInitializedMember;
-  ::ad::physics::Distance invalidInitializedMemberLength(0. - ::ad::physics::Distance::cPrecisionValue);
+  ::ad::physics::Distance invalidInitializedMemberLength(-1e9 * 1.1);
   invalidInitializedMember.length = invalidInitializedMemberLength;
   value.boundingBox = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
@@ -606,7 +606,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeBoundingBoxTooBig)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -676,7 +676,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooSmall)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -745,7 +745,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooBig)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -814,7 +814,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficSignTypeTooSmall)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
@@ -882,7 +882,7 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficSignTypeTooBig)
   valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
   valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
   valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(0.);
+  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
   valueBoundingBox.length = valueBoundingBoxLength;
   ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
   ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;

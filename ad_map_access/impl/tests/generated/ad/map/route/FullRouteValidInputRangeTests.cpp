@@ -76,7 +76,7 @@ TEST(FullRouteValidInputRangeTests, testValidInputRange)
   ::ad::map::point::ECEFCoordinate valueRoadSegmentsElementBoundingSphereCenterZ(-6400000);
   valueRoadSegmentsElementBoundingSphereCenter.z = valueRoadSegmentsElementBoundingSphereCenterZ;
   valueRoadSegmentsElementBoundingSphere.center = valueRoadSegmentsElementBoundingSphereCenter;
-  ::ad::physics::Distance valueRoadSegmentsElementBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueRoadSegmentsElementBoundingSphereRadius(-1e9);
   valueRoadSegmentsElementBoundingSphere.radius = valueRoadSegmentsElementBoundingSphereRadius;
   valueRoadSegmentsElement.boundingSphere = valueRoadSegmentsElementBoundingSphere;
   valueRoadSegments.resize(1, valueRoadSegmentsElement);
@@ -159,7 +159,7 @@ TEST(FullRouteValidInputRangeTests, testValidInputRangeRouteCreationModeTooSmall
   ::ad::map::point::ECEFCoordinate valueRoadSegmentsElementBoundingSphereCenterZ(-6400000);
   valueRoadSegmentsElementBoundingSphereCenter.z = valueRoadSegmentsElementBoundingSphereCenterZ;
   valueRoadSegmentsElementBoundingSphere.center = valueRoadSegmentsElementBoundingSphereCenter;
-  ::ad::physics::Distance valueRoadSegmentsElementBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueRoadSegmentsElementBoundingSphereRadius(-1e9);
   valueRoadSegmentsElementBoundingSphere.radius = valueRoadSegmentsElementBoundingSphereRadius;
   valueRoadSegmentsElement.boundingSphere = valueRoadSegmentsElementBoundingSphere;
   valueRoadSegments.resize(1, valueRoadSegmentsElement);
@@ -246,7 +246,7 @@ TEST(FullRouteValidInputRangeTests, testValidInputRangeRouteCreationModeTooBig)
   ::ad::map::point::ECEFCoordinate valueRoadSegmentsElementBoundingSphereCenterZ(-6400000);
   valueRoadSegmentsElementBoundingSphereCenter.z = valueRoadSegmentsElementBoundingSphereCenterZ;
   valueRoadSegmentsElementBoundingSphere.center = valueRoadSegmentsElementBoundingSphereCenter;
-  ::ad::physics::Distance valueRoadSegmentsElementBoundingSphereRadius(0.);
+  ::ad::physics::Distance valueRoadSegmentsElementBoundingSphereRadius(-1e9);
   valueRoadSegmentsElementBoundingSphere.radius = valueRoadSegmentsElementBoundingSphereRadius;
   valueRoadSegmentsElement.boundingSphere = valueRoadSegmentsElementBoundingSphere;
   valueRoadSegments.resize(1, valueRoadSegmentsElement);

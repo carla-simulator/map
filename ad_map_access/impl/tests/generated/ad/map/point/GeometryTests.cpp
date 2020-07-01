@@ -42,7 +42,7 @@ protected:
     valueEcefEdgeElement.z = valueEcefEdgeElementZ;
     valueEcefEdge.resize(1, valueEcefEdgeElement);
     value.ecefEdge = valueEcefEdge;
-    ::ad::physics::Distance valueLength(0.);
+    ::ad::physics::Distance valueLength(-1e9);
     value.length = valueLength;
     ::ad::map::point::ENUEdgeCache valuePrivate_enuEdgeCache;
     ::ad::map::point::ENUEdge valuePrivate_enuEdgeCacheEnuEdge;

@@ -17,40 +17,6 @@ namespace ad {
 namespace map {
 namespace route {
 
-point::ParaPoint getRouteIntervalStart(LaneInterval const &laneInterval)
-{
-  point::ParaPoint startPoint;
-  if (route::isRouteDirectionPositive(laneInterval))
-  {
-    startPoint.parametricOffset = laneInterval.start;
-  }
-  else
-  {
-    startPoint.parametricOffset = laneInterval.end;
-  }
-
-  startPoint.laneId = laneInterval.laneId;
-
-  return startPoint;
-}
-
-point::ParaPoint getRouteIntervalEnd(LaneInterval const &laneInterval)
-{
-  point::ParaPoint endPoint;
-  if (route::isRouteDirectionPositive(laneInterval))
-  {
-    endPoint.parametricOffset = laneInterval.end;
-  }
-  else
-  {
-    endPoint.parametricOffset = laneInterval.start;
-  }
-
-  endPoint.laneId = laneInterval.laneId;
-
-  return endPoint;
-}
-
 point::ParaPoint getIntervalStart(FullRoute const &route, lane::LaneId const &laneId)
 {
   point::ParaPoint result;

@@ -67,10 +67,10 @@ protected:
       std::numeric_limits<::ad::physics::RatioValue>::lowest());
     valueReferencePointPositionsElementElementLanePoint.lateralT
       = valueReferencePointPositionsElementElementLanePointLateralT;
-    ::ad::physics::Distance valueReferencePointPositionsElementElementLanePointLaneLength(0.);
+    ::ad::physics::Distance valueReferencePointPositionsElementElementLanePointLaneLength(-1e9);
     valueReferencePointPositionsElementElementLanePoint.laneLength
       = valueReferencePointPositionsElementElementLanePointLaneLength;
-    ::ad::physics::Distance valueReferencePointPositionsElementElementLanePointLaneWidth(0.);
+    ::ad::physics::Distance valueReferencePointPositionsElementElementLanePointLaneWidth(-1e9);
     valueReferencePointPositionsElementElementLanePoint.laneWidth
       = valueReferencePointPositionsElementElementLanePointLaneWidth;
     valueReferencePointPositionsElementElement.lanePoint = valueReferencePointPositionsElementElementLanePoint;
@@ -95,6 +95,9 @@ protected:
     ::ad::map::point::ECEFCoordinate valueReferencePointPositionsElementElementQueryPointZ(-6400000);
     valueReferencePointPositionsElementElementQueryPoint.z = valueReferencePointPositionsElementElementQueryPointZ;
     valueReferencePointPositionsElementElement.queryPoint = valueReferencePointPositionsElementElementQueryPoint;
+    ::ad::physics::Distance valueReferencePointPositionsElementElementMatchedPointDistance(-1e9);
+    valueReferencePointPositionsElementElement.matchedPointDistance
+      = valueReferencePointPositionsElementElementMatchedPointDistance;
     valueReferencePointPositionsElement.resize(1, valueReferencePointPositionsElementElement);
     valueReferencePointPositions.push_back(valueReferencePointPositionsElement);
     value.referencePointPositions = valueReferencePointPositions;

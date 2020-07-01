@@ -30,7 +30,7 @@ protected:
     ::ad::map::config::MapEntry value;
     std::string valueFilename{"min"};
     value.filename = valueFilename;
-    ::ad::physics::Distance valueOpenDriveOverlapMargin(0.);
+    ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
     value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
     ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
       ::ad::map::intersection::IntersectionType::Unknown);
