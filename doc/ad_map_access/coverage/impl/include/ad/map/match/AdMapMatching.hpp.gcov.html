@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-04-24 05:57:18</td>
+            <td class="headerValue">2020-07-01 15:08:56</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -114,7 +114,7 @@
 <span class="lineNum">      43 </span>                :            :   /**
 <a name="44"><span class="lineNum">      44 </span>                :            :    * @brief destructor</a>
 <span class="lineNum">      45 </span>                :            :    */
-<span class="lineNum">      46 </span>                :<span class="lineCov">       2260 :   ~AdMapMatching() = default;</span>
+<span class="lineNum">      46 </span>                :<span class="lineCov">       2262 :   ~AdMapMatching() = default;</span>
 <span class="lineNum">      47 </span>                :            : 
 <span class="lineNum">      48 </span>                :            :   /**
 <span class="lineNum">      49 </span>                :            :    * @brief set the maximum probability multiplier for heading hints
@@ -287,115 +287,111 @@
 <span class="lineNum">     216 </span>                :            :    *
 <span class="lineNum">     217 </span>                :            :    * @param[in] enuObjectPosition object position, orientation, dimensions and ENRReferencePoint
 <span class="lineNum">     218 </span>                :            :    *  to match against the map in ENU coordinate frame
-<span class="lineNum">     219 </span>                :            :    * @param[in] distance search radius around geoPoint to select a lane as a match
-<span class="lineNum">     220 </span>                :            :    * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
-<span class="lineNum">     221 </span>                :            :    *   This parameter is heavily influencing the performance of this function:
-<span class="lineNum">     222 </span>                :            :    *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
-<span class="lineNum">     223 </span>                :            :    * matching. To ensure the correctness of the LaneOccupiedRegions, this parameter is set &lt;= distance!
-<span class="lineNum">     224 </span>                :            :    *
-<span class="lineNum">     225 </span>                :            :    * @returns the map matched bounding box of the object
-<span class="lineNum">     226 </span>                :            :    */
-<span class="lineNum">     227 </span>                :            :   MapMatchedObjectBoundingBox getMapMatchedBoundingBox(ENUObjectPosition const &amp;enuObjectPosition,
-<span class="lineNum">     228 </span>                :            :                                                        physics::Distance const &amp;distance,
-<span class="lineNum">     229 </span>                :            :                                                        physics::Distance const &amp;samplingDistance
-<span class="lineNum">     230 </span>                :            :                                                        = physics::Distance(1.));
-<span class="lineNum">     231 </span>                :            : 
-<span class="lineNum">     232 </span>                :            :   /**
-<span class="lineNum">     233 </span>                :            :    * @brief get the lane occupied regions from a list of ENUObjectPositionList
-<span class="lineNum">     234 </span>                :            :    *
-<span class="lineNum">     235 </span>                :            :    * Merge the lane occupied regions of the getMapMatchedBoundingBox() results of all
-<span class="lineNum">     236 </span>                :            :    * position entries. See getMapMatchedBoundingBox() for a detailed description.
-<span class="lineNum">     237 </span>                :            :    * For a correct handling of the inner borders crossed on matching a bigger object, this function
-<span class="lineNum">     238 </span>                :            :    * only works as expected if the the provided enuObjectPositionList covers the whole object.
-<span class="lineNum">     239 </span>                :            :    *
-<span class="lineNum">     240 </span>                :            :    * @param[in] enuObjectPositionList list of ENUObjectPosition entries
-<span class="lineNum">     241 </span>                :            :    * @param[in] distance search radius around geoPoint to select a lane as a match
-<span class="lineNum">     242 </span>                :            :    * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
-<span class="lineNum">     243 </span>                :            :    *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
-<span class="lineNum">     244 </span>                :            :    * matching. To ensure the correctness of the LaneOccupiedRegions, this parameter is set &lt;= distance!
-<span class="lineNum">     245 </span>                :            :    *
-<span class="lineNum">     246 </span>                :            :    * @returns the map matched bounding box of the object
-<span class="lineNum">     247 </span>                :            :    */
-<span class="lineNum">     248 </span>                :            :   LaneOccupiedRegionList getLaneOccupiedRegions(ENUObjectPositionList enuObjectPositionList,
-<span class="lineNum">     249 </span>                :            :                                                 physics::Distance const &amp;distance,
-<span class="lineNum">     250 </span>                :            :                                                 physics::Distance const &amp;samplingDistance = physics::Distance(1.));
-<span class="lineNum">     251 </span>                :            : 
-<span class="lineNum">     252 </span>                :            :   /**
-<span class="lineNum">     253 </span>                :            :    * @brief Method to be called to retrieve the lane heading at a mapMatchedPosition
-<span class="lineNum">     254 </span>                :            :    */
-<span class="lineNum">     255 </span>                :            :   point::ENUHeading getLaneENUHeading(MapMatchedPosition const &amp;mapMatchedPosition);
-<span class="lineNum">     256 </span>                :            : 
-<span class="lineNum">     257 </span>                :            :   /**
-<span class="lineNum">     258 </span>                :            :    * @brief Spatial Lane Search.
-<span class="lineNum">     259 </span>                :            :    *        Returns all Lanes where any part of surface is less than specified physics::Distance
-<span class="lineNum">     260 </span>                :            :    *        from given point.
-<span class="lineNum">     261 </span>                :            :    * @param[in] ecefPoint Point that is used as base for the search.
-<span class="lineNum">     262 </span>                :            :    * @param[in] distance Search radius.
-<span class="lineNum">     263 </span>                :            :    *
-<span class="lineNum">     264 </span>                :            :    * This static function doesn't make use of any matching hints.
-<span class="lineNum">     265 </span>                :            :    *
-<span class="lineNum">     266 </span>                :            :    * @returns Map matching results that satisfy search criteria.
-<span class="lineNum">     267 </span>                :            :    */
-<span class="lineNum">     268 </span>                :            :   static MapMatchedPositionConfidenceList findLanes(point::ECEFPoint const &amp;ecefPoint,
-<span class="lineNum">     269 </span>                :            :                                                     physics::Distance const &amp;distance);
-<span class="lineNum">     270 </span>                :            : 
-<span class="lineNum">     271 </span>                :            :   /**
-<span class="lineNum">     272 </span>                :            :    * @brief Spatial Lane Search.
-<span class="lineNum">     273 </span>                :            :    *        Returns all Lanes where any part of surface is less than specified physics::Distance
-<span class="lineNum">     274 </span>                :            :    *        from given point.
-<span class="lineNum">     275 </span>                :            :    * @param[in] geoPoint Point that is used as base for the search.
-<span class="lineNum">     276 </span>                :            :    * @param[in] distance Search radius.
-<span class="lineNum">     277 </span>                :            :    *
-<span class="lineNum">     278 </span>                :            :    * This static function doesn't make use of any matching hints.
-<span class="lineNum">     279 </span>                :            :    *
-<span class="lineNum">     280 </span>                :            :    * @returns Map matching results that satisfy search criteria. The individual matching result probabilities are equal.
-<span class="lineNum">     281 </span>                :            :    */
-<span class="lineNum">     282 </span>                :            :   static MapMatchedPositionConfidenceList findLanes(point::GeoPoint const &amp;geoPoint, physics::Distance const &amp;distance);
-<span class="lineNum">     283 </span>                :            : 
-<span class="lineNum">     284 </span>                :            : private:
-<span class="lineNum">     285 </span>                :            :   // Copy operators and constructors are deleted to avoid accidental copies
-<span class="lineNum">     286 </span>                :            :   AdMapMatching(AdMapMatching const &amp;) = delete;
-<span class="lineNum">     287 </span>                :            :   AdMapMatching(AdMapMatching &amp;&amp;) = delete;
-<span class="lineNum">     288 </span>                :            :   AdMapMatching &amp;operator=(AdMapMatching &amp;&amp;) = delete;
-<span class="lineNum">     289 </span>                :            :   AdMapMatching &amp;operator=(AdMapMatching const &amp;) = delete;
-<span class="lineNum">     290 </span>                :            : 
-<span class="lineNum">     291 </span>                :            :   static match::MapMatchedPositionConfidenceList findLanesInputChecked(point::ECEFPoint const &amp;ecefPoint,
-<span class="lineNum">     292 </span>                :            :                                                                        physics::Distance const &amp;distance);
-<span class="lineNum">     293 </span>                :            : 
-<span class="lineNum">     294 </span>                :            :   static match::MapMatchedPositionConfidenceList
-<span class="lineNum">     295 </span>                :            :   findLanesInputChecked(std::vector&lt;lane::Lane::ConstPtr&gt; const &amp;relevantLanes,
-<span class="lineNum">     296 </span>                :            :                         point::ECEFPoint const &amp;ecefPoint,
-<span class="lineNum">     297 </span>                :            :                         physics::Distance const &amp;distance);
-<span class="lineNum">     298 </span>                :            : 
-<span class="lineNum">     299 </span>                :            :   static std::vector&lt;lane::Lane::ConstPtr&gt; getRelevantLanesInputChecked(point::ECEFPoint const &amp;ecefPoint,
-<span class="lineNum">     300 </span>                :            :                                                                         physics::Distance const &amp;distance);
-<span class="lineNum">     301 </span>                :            : 
-<span class="lineNum">     302 </span>                :            :   /**
-<span class="lineNum">     303 </span>                :            :    * @brief extract the mapMatchedPositions and write them into a map of occuppied regions
-<span class="lineNum">     304 </span>                :            :    *
-<span class="lineNum">     305 </span>                :            :    * @param[in,out] laneOccupiedRegions vector containing the occupied regions
-<span class="lineNum">     306 </span>                :            :    * @param[in] mapMatchedPositions
-<span class="lineNum">     307 </span>                :            :    */
-<span class="lineNum">     308 </span>                :            : 
-<span class="lineNum">     309 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
-<span class="lineNum">     310 </span>                :            :                       MapMatchedPositionConfidenceList const &amp;mapMatchedPositions);
-<span class="lineNum">     311 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
-<span class="lineNum">     312 </span>                :            :                       LaneOccupiedRegionList const &amp;otherLaneOccupiedRegions);
-<span class="lineNum">     313 </span>                :            : 
-<span class="lineNum">     314 </span>                :            :   MapMatchedPositionConfidenceList considerMapMatchingHints(MapMatchedPositionConfidenceList const &amp;mapMatchedPositions,
-<span class="lineNum">     315 </span>                :            :                                                             physics::Probability const &amp;minProbability);
-<span class="lineNum">     316 </span>                :            :   bool isLanePartOfRouteHints(lane::LaneId const &amp;laneId);
-<span class="lineNum">     317 </span>                :            :   double getHeadingFactor(MapMatchedPosition const &amp;matchedPosition);
-<span class="lineNum">     318 </span>                :            : 
-<span class="lineNum">     319 </span>                :            :   std::list&lt;point::ECEFHeading&gt; mHeadingHints;
-<span class="lineNum">     320 </span>                :            :   double mHeadingHintFactor{2.};
-<span class="lineNum">     321 </span>                :            :   std::list&lt;route::FullRoute&gt; mRouteHints;
-<span class="lineNum">     322 </span>                :            :   double mRouteHintFactor{10.};
-<span class="lineNum">     323 </span>                :            : };
-<span class="lineNum">     324 </span>                :            : 
-<span class="lineNum">     325 </span>                :            : } // namespace match
-<span class="lineNum">     326 </span>                :            : } // namespace map
-<span class="lineNum">     327 </span>                :            : } // namespace ad
+<span class="lineNum">     219 </span>                :            :    * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
+<span class="lineNum">     220 </span>                :            :    *   This parameter is heavily influencing the performance of this function:
+<span class="lineNum">     221 </span>                :            :    *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
+<span class="lineNum">     222 </span>                :            :    * matching.
+<span class="lineNum">     223 </span>                :            :    *
+<span class="lineNum">     224 </span>                :            :    * @returns the map matched bounding box of the object
+<span class="lineNum">     225 </span>                :            :    */
+<span class="lineNum">     226 </span>                :            :   MapMatchedObjectBoundingBox getMapMatchedBoundingBox(ENUObjectPosition const &amp;enuObjectPosition,
+<span class="lineNum">     227 </span>                :            :                                                        physics::Distance const &amp;samplingDistance
+<span class="lineNum">     228 </span>                :            :                                                        = physics::Distance(1.));
+<span class="lineNum">     229 </span>                :            : 
+<span class="lineNum">     230 </span>                :            :   /**
+<span class="lineNum">     231 </span>                :            :    * @brief get the lane occupied regions from a list of ENUObjectPositionList
+<span class="lineNum">     232 </span>                :            :    *
+<span class="lineNum">     233 </span>                :            :    * Merge the lane occupied regions of the getMapMatchedBoundingBox() results of all
+<span class="lineNum">     234 </span>                :            :    * position entries. See getMapMatchedBoundingBox() for a detailed description.
+<span class="lineNum">     235 </span>                :            :    * For a correct handling of the inner borders crossed on matching a bigger object, this function
+<span class="lineNum">     236 </span>                :            :    * only works as expected if the the provided enuObjectPositionList covers the whole object.
+<span class="lineNum">     237 </span>                :            :    *
+<span class="lineNum">     238 </span>                :            :    * @param[in] enuObjectPositionList list of ENUObjectPosition entries
+<span class="lineNum">     239 </span>                :            :    * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
+<span class="lineNum">     240 </span>                :            :    *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
+<span class="lineNum">     241 </span>                :            :    * matching.
+<span class="lineNum">     242 </span>                :            :    *
+<span class="lineNum">     243 </span>                :            :    * @returns the map matched bounding box of the object
+<span class="lineNum">     244 </span>                :            :    */
+<span class="lineNum">     245 </span>                :            :   LaneOccupiedRegionList getLaneOccupiedRegions(ENUObjectPositionList enuObjectPositionList,
+<span class="lineNum">     246 </span>                :            :                                                 physics::Distance const &amp;samplingDistance = physics::Distance(1.));
+<span class="lineNum">     247 </span>                :            : 
+<span class="lineNum">     248 </span>                :            :   /**
+<span class="lineNum">     249 </span>                :            :    * @brief Method to be called to retrieve the lane heading at a mapMatchedPosition
+<span class="lineNum">     250 </span>                :            :    */
+<span class="lineNum">     251 </span>                :            :   point::ENUHeading getLaneENUHeading(MapMatchedPosition const &amp;mapMatchedPosition);
+<span class="lineNum">     252 </span>                :            : 
+<span class="lineNum">     253 </span>                :            :   /**
+<span class="lineNum">     254 </span>                :            :    * @brief Spatial Lane Search.
+<span class="lineNum">     255 </span>                :            :    *        Returns all Lanes where any part of surface is less than specified physics::Distance
+<span class="lineNum">     256 </span>                :            :    *        from given point.
+<span class="lineNum">     257 </span>                :            :    * @param[in] ecefPoint Point that is used as base for the search.
+<span class="lineNum">     258 </span>                :            :    * @param[in] distance Search radius.
+<span class="lineNum">     259 </span>                :            :    *
+<span class="lineNum">     260 </span>                :            :    * This static function doesn't make use of any matching hints.
+<span class="lineNum">     261 </span>                :            :    *
+<span class="lineNum">     262 </span>                :            :    * @returns Map matching results that satisfy search criteria.
+<span class="lineNum">     263 </span>                :            :    */
+<span class="lineNum">     264 </span>                :            :   static MapMatchedPositionConfidenceList findLanes(point::ECEFPoint const &amp;ecefPoint,
+<span class="lineNum">     265 </span>                :            :                                                     physics::Distance const &amp;distance);
+<span class="lineNum">     266 </span>                :            : 
+<span class="lineNum">     267 </span>                :            :   /**
+<span class="lineNum">     268 </span>                :            :    * @brief Spatial Lane Search.
+<span class="lineNum">     269 </span>                :            :    *        Returns all Lanes where any part of surface is less than specified physics::Distance
+<span class="lineNum">     270 </span>                :            :    *        from given point.
+<span class="lineNum">     271 </span>                :            :    * @param[in] geoPoint Point that is used as base for the search.
+<span class="lineNum">     272 </span>                :            :    * @param[in] distance Search radius.
+<span class="lineNum">     273 </span>                :            :    *
+<span class="lineNum">     274 </span>                :            :    * This static function doesn't make use of any matching hints.
+<span class="lineNum">     275 </span>                :            :    *
+<span class="lineNum">     276 </span>                :            :    * @returns Map matching results that satisfy search criteria. The individual matching result probabilities are equal.
+<span class="lineNum">     277 </span>                :            :    */
+<span class="lineNum">     278 </span>                :            :   static MapMatchedPositionConfidenceList findLanes(point::GeoPoint const &amp;geoPoint, physics::Distance const &amp;distance);
+<span class="lineNum">     279 </span>                :            : 
+<span class="lineNum">     280 </span>                :            : private:
+<span class="lineNum">     281 </span>                :            :   // Copy operators and constructors are deleted to avoid accidental copies
+<span class="lineNum">     282 </span>                :            :   AdMapMatching(AdMapMatching const &amp;) = delete;
+<span class="lineNum">     283 </span>                :            :   AdMapMatching(AdMapMatching &amp;&amp;) = delete;
+<span class="lineNum">     284 </span>                :            :   AdMapMatching &amp;operator=(AdMapMatching &amp;&amp;) = delete;
+<span class="lineNum">     285 </span>                :            :   AdMapMatching &amp;operator=(AdMapMatching const &amp;) = delete;
+<span class="lineNum">     286 </span>                :            : 
+<span class="lineNum">     287 </span>                :            :   static match::MapMatchedPositionConfidenceList findLanesInputChecked(point::ECEFPoint const &amp;ecefPoint,
+<span class="lineNum">     288 </span>                :            :                                                                        physics::Distance const &amp;distance);
+<span class="lineNum">     289 </span>                :            : 
+<span class="lineNum">     290 </span>                :            :   static match::MapMatchedPositionConfidenceList
+<span class="lineNum">     291 </span>                :            :   findLanesInputChecked(std::vector&lt;lane::Lane::ConstPtr&gt; const &amp;relevantLanes,
+<span class="lineNum">     292 </span>                :            :                         point::ECEFPoint const &amp;ecefPoint,
+<span class="lineNum">     293 </span>                :            :                         physics::Distance const &amp;distance);
+<span class="lineNum">     294 </span>                :            : 
+<span class="lineNum">     295 </span>                :            :   static std::vector&lt;lane::Lane::ConstPtr&gt; getRelevantLanesInputChecked(point::ECEFPoint const &amp;ecefPoint,
+<span class="lineNum">     296 </span>                :            :                                                                         physics::Distance const &amp;distance);
+<span class="lineNum">     297 </span>                :            : 
+<span class="lineNum">     298 </span>                :            :   /**
+<span class="lineNum">     299 </span>                :            :    * @brief extract the mapMatchedPositions and write them into a map of occuppied regions
+<span class="lineNum">     300 </span>                :            :    *
+<span class="lineNum">     301 </span>                :            :    * @param[in,out] laneOccupiedRegions vector containing the occupied regions
+<span class="lineNum">     302 </span>                :            :    * @param[in] mapMatchedPositions
+<span class="lineNum">     303 </span>                :            :    */
+<span class="lineNum">     304 </span>                :            : 
+<span class="lineNum">     305 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
+<span class="lineNum">     306 </span>                :            :                       MapMatchedPositionConfidenceList const &amp;mapMatchedPositions);
+<span class="lineNum">     307 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
+<span class="lineNum">     308 </span>                :            :                       LaneOccupiedRegionList const &amp;otherLaneOccupiedRegions);
+<span class="lineNum">     309 </span>                :            : 
+<span class="lineNum">     310 </span>                :            :   MapMatchedPositionConfidenceList considerMapMatchingHints(MapMatchedPositionConfidenceList const &amp;mapMatchedPositions,
+<span class="lineNum">     311 </span>                :            :                                                             physics::Probability const &amp;minProbability);
+<span class="lineNum">     312 </span>                :            :   bool isLanePartOfRouteHints(lane::LaneId const &amp;laneId);
+<span class="lineNum">     313 </span>                :            :   double getHeadingFactor(MapMatchedPosition const &amp;matchedPosition);
+<span class="lineNum">     314 </span>                :            : 
+<span class="lineNum">     315 </span>                :            :   std::list&lt;point::ECEFHeading&gt; mHeadingHints;
+<span class="lineNum">     316 </span>                :            :   double mHeadingHintFactor{2.};
+<span class="lineNum">     317 </span>                :            :   std::list&lt;route::FullRoute&gt; mRouteHints;
+<span class="lineNum">     318 </span>                :            :   double mRouteHintFactor{10.};
+<span class="lineNum">     319 </span>                :            : };
+<span class="lineNum">     320 </span>                :            : 
+<span class="lineNum">     321 </span>                :            : } // namespace match
+<span class="lineNum">     322 </span>                :            : } // namespace map
+<span class="lineNum">     323 </span>                :            : } // namespace ad
 </pre>
       </td>
     </tr>

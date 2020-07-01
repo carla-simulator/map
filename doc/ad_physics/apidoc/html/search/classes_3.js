@@ -2,6 +2,7 @@ var searchData=
 [
   ['numeric_5flimits_3c_3a_3aad_3a_3aphysics_3a_3aacceleration_20_3e',['numeric_limits&lt;::ad::physics::Acceleration &gt;',['../classstd_1_1numeric__limits_3_1_1ad_1_1physics_1_1Acceleration_01_4.html',1,'std']]],
   ['numeric_5flimits_3c_3a_3aad_3a_3aphysics_3a_3aangle_20_3e',['numeric_limits&lt;::ad::physics::Angle &gt;',['../classstd_1_1numeric__limits_3_1_1ad_1_1physics_1_1Angle_01_4.html',1,'std']]],
+  ['numeric_5flimits_3c_3a_3aad_3a_3aphysics_3a_3aangularacceleration_20_3e',['numeric_limits&lt;::ad::physics::AngularAcceleration &gt;',['../classstd_1_1numeric__limits_3_1_1ad_1_1physics_1_1AngularAcceleration_01_4.html',1,'std']]],
   ['numeric_5flimits_3c_3a_3aad_3a_3aphysics_3a_3aangularvelocity_20_3e',['numeric_limits&lt;::ad::physics::AngularVelocity &gt;',['../classstd_1_1numeric__limits_3_1_1ad_1_1physics_1_1AngularVelocity_01_4.html',1,'std']]],
   ['numeric_5flimits_3c_3a_3aad_3a_3aphysics_3a_3adistance_20_3e',['numeric_limits&lt;::ad::physics::Distance &gt;',['../classstd_1_1numeric__limits_3_1_1ad_1_1physics_1_1Distance_01_4.html',1,'std']]],
   ['numeric_5flimits_3c_3a_3aad_3a_3aphysics_3a_3adistancesquared_20_3e',['numeric_limits&lt;::ad::physics::DistanceSquared &gt;',['../classstd_1_1numeric__limits_3_1_1ad_1_1physics_1_1DistanceSquared_01_4.html',1,'std']]],

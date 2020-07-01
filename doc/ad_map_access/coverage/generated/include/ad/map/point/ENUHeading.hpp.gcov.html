@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-04-24 05:57:18</td>
+            <td class="headerValue">2020-07-01 15:08:56</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">29</td>
@@ -158,20 +158,20 @@
 <span class="lineNum">      87 </span>                :            :    * The default value of ENUHeading is:
 <a name="88"><span class="lineNum">      88 </span>                :            :    * std::numeric_limits&lt;double&gt;::quiet_NaN()</a>
 <span class="lineNum">      89 </span>                :            :    */
-<span class="lineNum">      90 </span>                :<span class="lineCov">       1199 :   ENUHeading()</span>
-<span class="lineNum">      91 </span>                :<span class="lineCov">       1199 :     : mENUHeading(std::numeric_limits&lt;double&gt;::quiet_NaN())</span>
+<span class="lineNum">      90 </span>                :<span class="lineCov">       1198 :   ENUHeading()</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">       1198 :     : mENUHeading(std::numeric_limits&lt;double&gt;::quiet_NaN())</span>
 <span class="lineNum">      92 </span>                :            :   {
-<span class="lineNum">      93 </span>                :<span class="lineCov">       1199 :   }</span>
+<span class="lineNum">      93 </span>                :<span class="lineCov">       1198 :   }</span>
 <span class="lineNum">      94 </span>                :            : 
 <span class="lineNum">      95 </span>                :            :   /*!
 <span class="lineNum">      96 </span>                :            :    * \brief standard constructor
 <span class="lineNum">      97 </span>                :            :    *
 <a name="98"><span class="lineNum">      98 </span>                :            :    * \note \ref \_AD_MAP_POINT_ENUHEADING_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
 <span class="lineNum">      99 </span>                :            :    */
-<span class="lineNum">     100 </span>                :<span class="lineCov">       8898 :   _AD_MAP_POINT_ENUHEADING_EXPLICIT_CONVERSION_ ENUHeading(double const iENUHeading)</span>
-<span class="lineNum">     101 </span>                :<span class="lineCov">       8898 :     : mENUHeading(iENUHeading)</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">       8890 :   _AD_MAP_POINT_ENUHEADING_EXPLICIT_CONVERSION_ ENUHeading(double const iENUHeading)</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">       8890 :     : mENUHeading(iENUHeading)</span>
 <span class="lineNum">     102 </span>                :            :   {
-<span class="lineNum">     103 </span>                :<span class="lineCov">       8898 :   }</span>
+<span class="lineNum">     103 </span>                :<span class="lineCov">       8890 :   }</span>
 <span class="lineNum">     104 </span>                :            : 
 <span class="lineNum">     105 </span>                :            :   /*!
 <span class="lineNum">     106 </span>                :            :    * \brief standard copy constructor
@@ -208,11 +208,11 @@
 <span class="lineNum">     137 </span>                :            :    *
 <a name="138"><span class="lineNum">     138 </span>                :            :    * \returns \c true if both ENUHeading are valid and can be taken as numerically equal</a>
 <span class="lineNum">     139 </span>                :            :    */
-<span class="lineNum">     140 </span>                :<span class="lineCov">       2705 :   bool operator==(const ENUHeading &amp;other) const</span>
+<span class="lineNum">     140 </span>                :<span class="lineCov">       2704 :   bool operator==(const ENUHeading &amp;other) const</span>
 <span class="lineNum">     141 </span>                :            :   {
-<span class="lineNum">     142 </span>                :<span class="lineCov">       2705 :     ensureValid();</span>
-<span class="lineNum">     143 </span>                :<span class="lineCov">       2703 :     other.ensureValid();</span>
-<span class="lineNum">     144 </span>                :<span class="lineCov">       2701 :     return std::fabs(mENUHeading - other.mENUHeading) &lt; cPrecisionValue;</span>
+<span class="lineNum">     142 </span>                :<span class="lineCov">       2704 :     ensureValid();</span>
+<span class="lineNum">     143 </span>                :<span class="lineCov">       2702 :     other.ensureValid();</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">       2700 :     return std::fabs(mENUHeading - other.mENUHeading) &lt; cPrecisionValue;</span>
 <span class="lineNum">     145 </span>                :            :   }
 <span class="lineNum">     146 </span>                :            : 
 <span class="lineNum">     147 </span>                :            :   /**
@@ -339,13 +339,13 @@
 <span class="lineNum">     268 </span>                :            :    * \note throws a std::out_of_range exception if one of the two operands or the result of
 <a name="269"><span class="lineNum">     269 </span>                :            :    *   the operation is not valid</a>
 <span class="lineNum">     270 </span>                :            :    */
-<span class="lineNum">     271 </span>                :<span class="lineCov">        970 :   ENUHeading operator-(const ENUHeading &amp;other) const</span>
+<span class="lineNum">     271 </span>                :<span class="lineCov">        968 :   ENUHeading operator-(const ENUHeading &amp;other) const</span>
 <span class="lineNum">     272 </span>                :            :   {
-<span class="lineNum">     273 </span>        [<span class="branchCov" title="Branch 1 was taken 969 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">        970 :     ensureValid();</span>
-<span class="lineNum">     274 </span>        [<span class="branchCov" title="Branch 1 was taken 968 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">        969 :     other.ensureValid();</span>
-<span class="lineNum">     275 </span>                :<span class="lineCov">        968 :     ENUHeading const result(mENUHeading - other.mENUHeading);</span>
-<span class="lineNum">     276 </span>        [<span class="branchCov" title="Branch 1 was taken 967 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">        968 :     result.ensureValid();</span>
-<span class="lineNum">     277 </span>                :<span class="lineCov">        967 :     return result;</span>
+<span class="lineNum">     273 </span>        [<span class="branchCov" title="Branch 1 was taken 967 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">        968 :     ensureValid();</span>
+<span class="lineNum">     274 </span>        [<span class="branchCov" title="Branch 1 was taken 966 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">        967 :     other.ensureValid();</span>
+<span class="lineNum">     275 </span>                :<span class="lineCov">        966 :     ENUHeading const result(mENUHeading - other.mENUHeading);</span>
+<span class="lineNum">     276 </span>        [<span class="branchCov" title="Branch 1 was taken 965 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">        966 :     result.ensureValid();</span>
+<span class="lineNum">     277 </span>                :<span class="lineCov">        965 :     return result;</span>
 <span class="lineNum">     278 </span>                :            :   }
 <span class="lineNum">     279 </span>                :            : 
 <span class="lineNum">     280 </span>                :            :   /**
@@ -444,9 +444,9 @@
 <span class="lineNum">     373 </span>                :            :    * \note the conversion to the base type removes the physical unit.
 <a name="374"><span class="lineNum">     374 </span>                :            :    *       \ref \_AD_MAP_POINT_ENUHEADING_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.</a>
 <span class="lineNum">     375 </span>                :            :    */
-<span class="lineNum">     376 </span>                :<span class="lineCov">        999 :   _AD_MAP_POINT_ENUHEADING_EXPLICIT_CONVERSION_ operator double() const</span>
+<span class="lineNum">     376 </span>                :<span class="lineCov">        993 :   _AD_MAP_POINT_ENUHEADING_EXPLICIT_CONVERSION_ operator double() const</span>
 <span class="lineNum">     377 </span>                :            :   {
-<span class="lineNum">     378 </span>                :<span class="lineCov">        999 :     return mENUHeading;</span>
+<span class="lineNum">     378 </span>                :<span class="lineCov">        993 :     return mENUHeading;</span>
 <span class="lineNum">     379 </span>                :            :   }
 <span class="lineNum">     380 </span>                :            : 
 <span class="lineNum">     381 </span>                :            :   /*!
@@ -456,11 +456,11 @@
 <span class="lineNum">     385 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="386"><span class="lineNum">     386 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     387 </span>                :            :    */
-<span class="lineNum">     388 </span>                :<span class="lineCov">      18556 :   bool isValid() const</span>
+<span class="lineNum">     388 </span>                :<span class="lineCov">      18548 :   bool isValid() const</span>
 <span class="lineNum">     389 </span>                :            :   {
-<span class="lineNum">     390 </span>                :<span class="lineCov">      18556 :     auto const valueClass = std::fpclassify(mENUHeading);</span>
-<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 0 was taken 2015 times"> + </span><span class="branchCov" title="Branch 1 was taken 41 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 18515 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      18556 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mENUHeading)</span>
-<span class="lineNum">     392 </span>[<span class="branchCov" title="Branch 0 was taken 2056 times"> + </span><span class="branchCov" title="Branch 1 was taken 16500 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 18515 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      37112 :       &amp;&amp; (mENUHeading &lt;= cMaxValue);</span>
+<span class="lineNum">     390 </span>                :<span class="lineCov">      18548 :     auto const valueClass = std::fpclassify(mENUHeading);</span>
+<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 0 was taken 2015 times"> + </span><span class="branchCov" title="Branch 1 was taken 41 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 18507 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      18548 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mENUHeading)</span>
+<span class="lineNum">     392 </span>[<span class="branchCov" title="Branch 0 was taken 2056 times"> + </span><span class="branchCov" title="Branch 1 was taken 16492 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 18507 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      37096 :       &amp;&amp; (mENUHeading &lt;= cMaxValue);</span>
 <span class="lineNum">     393 </span>                :            :   }
 <span class="lineNum">     394 </span>                :            : 
 <span class="lineNum">     395 </span>                :            :   /*!
@@ -469,16 +469,16 @@
 <span class="lineNum">     398 </span>                :            :    * Throws an std::out_of_range() exception if the ENUHeading
 <a name="399"><span class="lineNum">     399 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     400 </span>                :            :    */
-<span class="lineNum">     401 </span>                :<span class="lineCov">      18518 :   void ensureValid() const</span>
+<span class="lineNum">     401 </span>                :<span class="lineCov">      18510 :   void ensureValid() const</span>
 <span class="lineNum">     402 </span>                :            :   {
-<span class="lineNum">     403 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 18484 times"> + </span>]:<span class="lineCov">      18518 :     if (!isValid())</span>
+<span class="lineNum">     403 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 18476 times"> + </span>]:<span class="lineCov">      18510 :     if (!isValid())</span>
 <span class="lineNum">     404 </span>                :            :     {
 <span class="lineNum">     405 </span>                :<span class="lineCov">         34 :       spdlog::info(&quot;ensureValid(::ad::map::point::ENUHeading)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     406 </span>                :            : #if (AD_MAP_POINT_ENUHEADING_THROWS_EXCEPTION == 1)
 <span class="lineNum">     407 </span>                :<span class="lineCov">         34 :       throw std::out_of_range(&quot;ENUHeading value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     408 </span>                :            : #endif
 <span class="lineNum">     409 </span>                :            :     }
-<span class="lineNum">     410 </span>                :<span class="lineCov">      18484 :   }</span>
+<span class="lineNum">     410 </span>                :<span class="lineCov">      18476 :   }</span>
 <span class="lineNum">     411 </span>                :            : 
 <span class="lineNum">     412 </span>                :            :   /*!
 <span class="lineNum">     413 </span>                :            :    * \brief ensure that the ENUHeading is valid and non zero
@@ -556,10 +556,10 @@
 <span class="lineNum">     485 </span>                :            : /*!
 <a name="486"><span class="lineNum">     486 </span>                :            :  * \brief overload of the std::fabs for ENUHeading</a>
 <span class="lineNum">     487 </span>                :            :  */
-<span class="lineNum">     488 </span>                :<span class="lineCov">         73 : inline ::ad::map::point::ENUHeading fabs(const ::ad::map::point::ENUHeading other)</span>
+<span class="lineNum">     488 </span>                :<span class="lineCov">         69 : inline ::ad::map::point::ENUHeading fabs(const ::ad::map::point::ENUHeading other)</span>
 <span class="lineNum">     489 </span>                :            : {
-<span class="lineNum">     490 </span>                :<span class="lineCov">         73 :   ::ad::map::point::ENUHeading const result(std::fabs(static_cast&lt;double&gt;(other)));</span>
-<span class="lineNum">     491 </span>                :<span class="lineCov">         73 :   return result;</span>
+<span class="lineNum">     490 </span>                :<span class="lineCov">         69 :   ::ad::map::point::ENUHeading const result(std::fabs(static_cast&lt;double&gt;(other)));</span>
+<span class="lineNum">     491 </span>                :<span class="lineCov">         69 :   return result;</span>
 <span class="lineNum">     492 </span>                :            : }
 <span class="lineNum">     493 </span>                :            : 
 <span class="lineNum">     494 </span>                :            : /*!

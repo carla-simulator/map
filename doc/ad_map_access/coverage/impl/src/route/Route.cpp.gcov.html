@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-04-24 05:57:18</td>
+            <td class="headerValue">2020-07-01 15:08:56</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -85,7 +85,7 @@
 <span class="lineNum">      14 </span>                :            : namespace route {
 <a name="15"><span class="lineNum">      15 </span>                :            : namespace planning {</a>
 <span class="lineNum">      16 </span>                :            : 
-<span class="lineNum">      17 </span>                :<span class="lineCov">       2753 : Route::Route(const RoutingParaPoint &amp;start,</span>
+<span class="lineNum">      17 </span>                :<span class="lineCov">       2749 : Route::Route(const RoutingParaPoint &amp;start,</span>
 <span class="lineNum">      18 </span>                :            :              const RoutingParaPoint &amp;dest,
 <span class="lineNum">      19 </span>                :            :              physics::Distance const &amp;maxDistance,
 <span class="lineNum">      20 </span>                :            :              physics::Duration const &amp;maxDuration,
@@ -95,23 +95,23 @@
 <span class="lineNum">      24 </span>                :            :   , mMaxDistance(maxDistance)
 <span class="lineNum">      25 </span>                :            :   , mMaxDuration(maxDuration)
 <span class="lineNum">      26 </span>                :            :   , mType(routingType)
-<span class="lineNum">      27 </span>                :<span class="lineCov">       2753 :   , mValid(false)</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">       2749 :   , mValid(false)</span>
 <span class="lineNum">      28 </span>                :            : {
-<span class="lineNum">      29 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2753 times"> + </span>]:<span class="lineCov">       2753 :   if (mType == Type::INVALID)</span>
+<span class="lineNum">      29 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2749 times"> + </span>]:<span class="lineCov">       2749 :   if (mType == Type::INVALID)</span>
 <span class="lineNum">      30 </span>                :            :   {
 <span class="lineNum">      31 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::runtime_error(&quot;type INVALID&quot;);</span>
 <span class="lineNum">      32 </span>                :            :   }
-<a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">       2753 : }</span></a>
+<a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">       2749 : }</span></a>
 <span class="lineNum">      34 </span>                :            : 
-<span class="lineNum">      35 </span>                :<span class="lineCov">     109080 : bool Route::laneDirectionIsIgnored() const</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">     108819 : bool Route::laneDirectionIsIgnored() const</span>
 <span class="lineNum">      36 </span>                :            : {
-<span class="lineNum">      37 </span>        [<span class="branchCov" title="Branch 0 was taken 1011 times"> + </span><span class="branchCov" title="Branch 1 was taken 108069 times"> + </span>]:<span class="lineCov">     109080 :   switch (mType)</span>
+<span class="lineNum">      37 </span>        [<span class="branchCov" title="Branch 0 was taken 779 times"> + </span><span class="branchCov" title="Branch 1 was taken 108040 times"> + </span>]:<span class="lineCov">     108819 :   switch (mType)</span>
 <span class="lineNum">      38 </span>                :            :   {
 <span class="lineNum">      39 </span>                :            :     case Type::SHORTEST_IGNORE_DIRECTION:
-<span class="lineNum">      40 </span>                :<span class="lineCov">       1011 :       return true;</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">        779 :       return true;</span>
 <span class="lineNum">      41 </span>                :            :     case Type::SHORTEST:
 <span class="lineNum">      42 </span>                :            :     default:
-<span class="lineNum">      43 </span>                :<span class="lineCov">     108069 :       return false;</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">     108040 :       return false;</span>
 <span class="lineNum">      44 </span>                :            :   }
 <a name="45"><span class="lineNum">      45 </span>                :            : }</a>
 <span class="lineNum">      46 </span>                :            : 

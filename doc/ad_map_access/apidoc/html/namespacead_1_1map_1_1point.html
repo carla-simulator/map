@@ -403,6 +403,9 @@ template&lt;&gt; </td></tr>
 <tr class="memitem:a6923ccf5b3993fcf6f3fe8e9e360d278"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#a6923ccf5b3993fcf6f3fe8e9e360d278">createENUHeading</a> (double yawAngleRadian)</td></tr>
 <tr class="memdesc:a6923ccf5b3993fcf6f3fe8e9e360d278"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a <a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html" title="DataType ENUHeading. ">ENUHeading</a> from yaw angle in radians  <a href="#a6923ccf5b3993fcf6f3fe8e9e360d278">More...</a><br /></td></tr>
 <tr class="separator:a6923ccf5b3993fcf6f3fe8e9e360d278"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a570b3955cf6470b2ad62e488f8dc510d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#a570b3955cf6470b2ad62e488f8dc510d">createENUHeading</a> (physics::Angle const &amp;angle)</td></tr>
+<tr class="memdesc:a570b3955cf6470b2ad62e488f8dc510d"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a <a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html" title="DataType ENUHeading. ">ENUHeading</a> from angle  <a href="#a570b3955cf6470b2ad62e488f8dc510d">More...</a><br /></td></tr>
+<tr class="separator:a570b3955cf6470b2ad62e488f8dc510d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af34c8cc8e943e80ff5e92b50b5cc0633"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1point.html#af34c8cc8e943e80ff5e92b50b5cc0633">createENUHeading</a> (<a class="el" href="structad_1_1map_1_1point_1_1ECEFHeading.html">ECEFHeading</a> const &amp;ecefHeading)</td></tr>
 <tr class="memdesc:af34c8cc8e943e80ff5e92b50b5cc0633"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a <a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html" title="DataType ENUHeading. ">ENUHeading</a> from <a class="el" href="structad_1_1map_1_1point_1_1ECEFHeading.html" title="DataType ECEFHeading. ">ECEFHeading</a> value  <a href="#af34c8cc8e943e80ff5e92b50b5cc0633">More...</a><br /></td></tr>
 <tr class="separator:af34c8cc8e943e80ff5e92b50b5cc0633"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -860,6 +863,32 @@ template&lt;typename PointType &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">yawAngleRadian</td><td>heading provided as yaw angle in radians</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>heading with given yaw angle is normalized in the range -M_PI &lt; heading &lt;= M_PI </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a570b3955cf6470b2ad62e488f8dc510d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">ENUHeading</a> ad::map::point::createENUHeading </td>
+          <td>(</td>
+          <td class="paramtype">physics::Angle const &amp;&#160;</td>
+          <td class="paramname"><em>angle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>create a <a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html" title="DataType ENUHeading. ">ENUHeading</a> from angle </p>
+<p>Heading in ENU coordinate system as angle measured from East to North axis (yaw) in radians</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">angle</td><td>heading provided as yaw angle in radians</td></tr>
   </table>
   </dd>
 </dl>
@@ -2852,50 +2881,6 @@ template&lt;typename PointType &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a5f4ebd43081b9004178996224062d0d5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; ad::map::point::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">ECEFPoint</a> const &amp;&#160;</td>
-          <td class="paramname"><em>_value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>standard ostream operator </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint. ">ECEFPoint</a> value</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a8df441158bffc491140fdbb7c8f48043"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2933,6 +2918,50 @@ template&lt;typename PointType &gt; </div>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1point_1_1ECEFHeading.html" title="DataType ECEFHeading. ">ECEFHeading</a> value</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5f4ebd43081b9004178996224062d0d5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; ad::map::point::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">ECEFPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>standard ostream operator </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint. ">ECEFPoint</a> value</td></tr>
   </table>
   </dd>
 </dl>

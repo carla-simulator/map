@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-04-24 05:57:18</td>
+            <td class="headerValue">2020-07-01 15:08:56</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -94,24 +94,24 @@
 <span class="lineNum">      23 </span>                :            : /////////////////////////
 <a name="24"><span class="lineNum">      24 </span>                :            : // Constructor/Destructor</a>
 <span class="lineNum">      25 </span>                :            : 
-<span class="lineNum">      26 </span>                :<span class="lineCov">        330 : Serializer::Serializer(bool store, bool calc_checksum)</span>
-<span class="lineNum">      27 </span>                :<span class="lineCov">        165 :   : ISerializer(store)</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">        332 : Serializer::Serializer(bool store, bool calc_checksum)</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">        166 :   : ISerializer(store)</span>
 <span class="lineNum">      28 </span>                :            : {
-<span class="lineNum">      29 </span>                :<span class="lineCov">        165 :   open_ = false;</span>
-<span class="lineNum">      30 </span>                :<span class="lineCov">        165 :   calc_checksum_ = calc_checksum;</span>
-<a name="31"><span class="lineNum">      31 </span>                :<span class="lineCov">        165 : }</span></a>
+<span class="lineNum">      29 </span>                :<span class="lineCov">        166 :   open_ = false;</span>
+<span class="lineNum">      30 </span>                :<span class="lineCov">        166 :   calc_checksum_ = calc_checksum;</span>
+<a name="31"><span class="lineNum">      31 </span>                :<span class="lineCov">        166 : }</span></a>
 <span class="lineNum">      32 </span>                :            : 
-<span class="lineNum">      33 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]:<span class="lineCov">        330 : Serializer::~Serializer()</span>
-<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 165 times"> + </span>][<span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 165 times"> + </span>]
+<span class="lineNum">      33 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]:<span class="lineCov">        332 : Serializer::~Serializer()</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 166 times"> + </span>][<span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 166 times"> + </span>]
 <span class="lineNum">      34 </span>                :            : {
-<span class="lineNum">      35 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 165 times"> + </span>]:<span class="lineCov">        165 : }</span>
+<span class="lineNum">      35 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 166 times"> + </span>]:<span class="lineCov">        166 : }</span>
 <span class="lineNum">      36 </span>                :            : 
 <span class="lineNum">      37 </span>                :            : /////////////
 <a name="38"><span class="lineNum">      38 </span>                :            : // Operations</a>
 <span class="lineNum">      39 </span>                :            : 
-<span class="lineNum">      40 </span>                :<span class="lineCov">        167 : bool Serializer::open(std::string const &amp;config, size_t &amp;version_major, size_t &amp;version_minor)</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">        168 : bool Serializer::open(std::string const &amp;config, size_t &amp;version_major, size_t &amp;version_minor)</span>
 <span class="lineNum">      41 </span>                :            : {
-<span class="lineNum">      42 </span>        [<span class="branchCov" title="Branch 1 was taken 12 times"> + </span><span class="branchCov" title="Branch 2 was taken 155 times"> + </span>]:<span class="lineCov">        167 :   if (isStoring())</span>
+<span class="lineNum">      42 </span>        [<span class="branchCov" title="Branch 1 was taken 12 times"> + </span><span class="branchCov" title="Branch 2 was taken 156 times"> + </span>]:<span class="lineCov">        168 :   if (isStoring())</span>
 <span class="lineNum">      43 </span>                :            :   {
 <span class="lineNum">      44 </span>                :<span class="lineCov">         12 :     version_major = VERSION_MAJOR;</span>
 <span class="lineNum">      45 </span>                :<span class="lineCov">         12 :     version_minor = VERSION_MINOR;</span>
@@ -119,52 +119,52 @@
 <span class="lineNum">      47 </span>                :            :   }
 <span class="lineNum">      48 </span>                :            :   else
 <span class="lineNum">      49 </span>                :            :   {
-<span class="lineNum">      50 </span>                :<span class="lineCov">        155 :     return openForRead(config, version_major, version_minor);</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">        156 :     return openForRead(config, version_major, version_minor);</span>
 <span class="lineNum">      51 </span>                :            :   }
 <a name="52"><span class="lineNum">      52 </span>                :            : }</a>
 <span class="lineNum">      53 </span>                :            : 
-<span class="lineNum">      54 </span>                :<span class="lineCov">        166 : bool Serializer::close()</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">        167 : bool Serializer::close()</span>
 <span class="lineNum">      55 </span>                :            : {
-<span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 0 was taken 164 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">        166 :   if (open_)</span>
+<span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 0 was taken 165 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">        167 :   if (open_)</span>
 <span class="lineNum">      57 </span>                :            :   {
-<span class="lineNum">      58 </span>        [<span class="branchCov" title="Branch 1 was taken 12 times"> + </span><span class="branchCov" title="Branch 2 was taken 152 times"> + </span>]:<span class="lineCov">        164 :     if (isStoring())</span>
+<span class="lineNum">      58 </span>        [<span class="branchCov" title="Branch 1 was taken 12 times"> + </span><span class="branchCov" title="Branch 2 was taken 153 times"> + </span>]:<span class="lineCov">        165 :     if (isStoring())</span>
 <span class="lineNum">      59 </span>                :            :     {
 <span class="lineNum">      60 </span>                :<span class="lineCov">         12 :       return closeForWrite();</span>
 <span class="lineNum">      61 </span>                :            :     }
 <span class="lineNum">      62 </span>                :            :     else
 <span class="lineNum">      63 </span>                :            :     {
-<span class="lineNum">      64 </span>                :<span class="lineCov">        152 :       return closeForRead();</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">        153 :       return closeForRead();</span>
 <span class="lineNum">      65 </span>                :            :     }
 <span class="lineNum">      66 </span>                :            :   }
 <span class="lineNum">      67 </span>                :            :   else
 <span class="lineNum">      68 </span>                :            :   {
 <span class="lineNum">      69 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;warn(&quot;Serializer: Attempt to close already closed stream.&quot;);</span>
-<span class="lineNum">      70 </span>                :<span class="lineCov">        166 :     return false;</span>
+<span class="lineNum">      70 </span>                :<span class="lineCov">        167 :     return false;</span>
 <span class="lineNum">      71 </span>                :            :   }
 <span class="lineNum">      72 </span>                :            : }
 <span class="lineNum">      73 </span>                :            : 
 <span class="lineNum">      74 </span>                :            : //////////////
 <a name="75"><span class="lineNum">      75 </span>                :            : // Aux Methods</a>
 <span class="lineNum">      76 </span>                :            : 
-<span class="lineNum">      77 </span>                :<span class="lineCov">        155 : bool Serializer::openForRead(std::string const &amp;config, size_t &amp;version_major, size_t &amp;version_minor)</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">        156 : bool Serializer::openForRead(std::string const &amp;config, size_t &amp;version_major, size_t &amp;version_minor)</span>
 <span class="lineNum">      78 </span>                :            : {
-<span class="lineNum">      79 </span>        [<span class="branchCov" title="Branch 1 was taken 154 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">        155 :   if (doOpenForRead(config))</span>
+<span class="lineNum">      79 </span>        [<span class="branchCov" title="Branch 1 was taken 155 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">        156 :   if (doOpenForRead(config))</span>
 <span class="lineNum">      80 </span>                :            :   {
-<span class="lineNum">      81 </span>                :<span class="lineCov">        154 :     version_major = 0;</span>
-<span class="lineNum">      82 </span>                :<span class="lineCov">        154 :     version_minor = 0;</span>
-<span class="lineNum">      83 </span>                :<span class="lineCov">        154 :     size_t magic = 0;</span>
-<span class="lineNum">      84 </span>        [<span class="branchCov" title="Branch 1 was taken 154 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        154 :     initChecksum();</span>
-<span class="lineNum">      85 </span>[<span class="branchCov" title="Branch 1 was taken 154 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 153 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">        154 :     if (ISerializer::serialize(magic) &amp;&amp; ISerializer::serialize(version_major) &amp;&amp; ISerializer::serialize(version_minor))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 153 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 153 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 153 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 153 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 153 times"> + </span><span class="branchCov" title="Branch 16 was taken 1 time"> + </span>]
+<span class="lineNum">      81 </span>                :<span class="lineCov">        155 :     version_major = 0;</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">        155 :     version_minor = 0;</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">        155 :     size_t magic = 0;</span>
+<span class="lineNum">      84 </span>        [<span class="branchCov" title="Branch 1 was taken 155 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        155 :     initChecksum();</span>
+<span class="lineNum">      85 </span>[<span class="branchCov" title="Branch 1 was taken 155 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 154 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">        155 :     if (ISerializer::serialize(magic) &amp;&amp; ISerializer::serialize(version_major) &amp;&amp; ISerializer::serialize(version_minor))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 154 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 154 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 154 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 154 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 154 times"> + </span><span class="branchCov" title="Branch 16 was taken 1 time"> + </span>]
 <span class="lineNum">      86 </span>                :            :     {
-<span class="lineNum">      87 </span>        [<span class="branchCov" title="Branch 0 was taken 153 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        153 :       if (magic == MAGIC)</span>
+<span class="lineNum">      87 </span>        [<span class="branchCov" title="Branch 0 was taken 154 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        154 :       if (magic == MAGIC)</span>
 <span class="lineNum">      88 </span>                :            :       {
-<span class="lineNum">      89 </span>[<span class="branchCov" title="Branch 0 was taken 152 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 2 was taken 152 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        153 :         if (version_major == VERSION_MAJOR &amp;&amp; version_minor == VERSION_MINOR)</span>
+<span class="lineNum">      89 </span>[<span class="branchCov" title="Branch 0 was taken 153 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 2 was taken 153 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        154 :         if (version_major == VERSION_MAJOR &amp;&amp; version_minor == VERSION_MINOR)</span>
 <span class="lineNum">      90 </span>                :            :         {
-<span class="lineNum">      91 </span>                :<span class="lineCov">        152 :           open_ = true;</span>
-<span class="lineNum">      92 </span>                :<span class="lineCov">        152 :           return true;</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">        153 :           open_ = true;</span>
+<span class="lineNum">      92 </span>                :<span class="lineCov">        153 :           return true;</span>
 <span class="lineNum">      93 </span>                :            :         }
 <span class="lineNum">      94 </span>                :            :         else
 <span class="lineNum">      95 </span>                :            :         {
@@ -188,7 +188,7 @@
 <span class="lineNum">     113 </span>                :            :   {
 <span class="lineNum">     114 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Serializer: Cannot open stream for reading {}&quot;, config);</span>
 <span class="lineNum">     115 </span>                :            :   }
-<span class="lineNum">     116 </span>                :<span class="lineCov">        154 :   return false;</span>
+<span class="lineNum">     116 </span>                :<span class="lineCov">        155 :   return false;</span>
 <a name="117"><span class="lineNum">     117 </span>                :            : }</a>
 <span class="lineNum">     118 </span>                :            : 
 <span class="lineNum">     119 </span>                :<span class="lineCov">         12 : bool Serializer::openForWrite(std::string const &amp;config)</span>
@@ -215,19 +215,19 @@
 <span class="lineNum">     139 </span>                :<span class="lineCov">         12 :   return false;</span>
 <a name="140"><span class="lineNum">     140 </span>                :            : }</a>
 <span class="lineNum">     141 </span>                :            : 
-<span class="lineNum">     142 </span>                :<span class="lineCov">        152 : bool Serializer::closeForRead()</span>
+<span class="lineNum">     142 </span>                :<span class="lineCov">        153 : bool Serializer::closeForRead()</span>
 <span class="lineNum">     143 </span>                :            : {
-<span class="lineNum">     144 </span>                :<span class="lineCov">        152 :   bool ret_val = false;</span>
-<span class="lineNum">     145 </span>[<span class="branchCov" title="Branch 0 was taken 152 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 150 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">        152 :   if (!calc_checksum_ || checksumOK())</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 5 was taken 150 times"> + </span><span class="branchCov" title="Branch 6 was taken 2 times"> + </span>]
+<span class="lineNum">     144 </span>                :<span class="lineCov">        153 :   bool ret_val = false;</span>
+<span class="lineNum">     145 </span>[<span class="branchCov" title="Branch 0 was taken 153 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 151 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">        153 :   if (!calc_checksum_ || checksumOK())</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 5 was taken 151 times"> + </span><span class="branchCov" title="Branch 6 was taken 2 times"> + </span>]
 <span class="lineNum">     146 </span>                :            :   {
-<span class="lineNum">     147 </span>                :<span class="lineCov">        150 :     ret_val = true;</span>
+<span class="lineNum">     147 </span>                :<span class="lineCov">        151 :     ret_val = true;</span>
 <span class="lineNum">     148 </span>                :            :   }
 <span class="lineNum">     149 </span>                :            :   else
 <span class="lineNum">     150 </span>                :            :   {
 <span class="lineNum">     151 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;Serializer: Checksum mismatch!&quot;);</span>
 <span class="lineNum">     152 </span>                :            :   }
-<span class="lineNum">     153 </span>[<span class="branchCov" title="Branch 1 was taken 151 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 3 was taken 150 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">        152 :   return doCloseForRead() &amp;&amp; ret_val;</span>
+<span class="lineNum">     153 </span>[<span class="branchCov" title="Branch 1 was taken 152 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 3 was taken 151 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">        153 :   return doCloseForRead() &amp;&amp; ret_val;</span>
 <a name="154"><span class="lineNum">     154 </span>                :            : }</a>
 <span class="lineNum">     155 </span>                :            : 
 <span class="lineNum">     156 </span>                :<span class="lineCov">         12 : bool Serializer::closeForWrite()</span>
@@ -265,20 +265,20 @@
 <span class="lineNum">     187 </span>                :            :   }
 <a name="188"><span class="lineNum">     188 </span>                :            : }</a>
 <span class="lineNum">     189 </span>                :            : 
-<span class="lineNum">     190 </span>                :<span class="lineCov">    9900776 : bool Serializer::read(void *x, size_t bytes)</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">    9975973 : bool Serializer::read(void *x, size_t bytes)</span>
 <span class="lineNum">     191 </span>                :            : {
-<span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 1 was taken 9900774 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">    9900776 :   if (doRead(x, bytes))</span>
+<span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 1 was taken 9975971 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">    9975973 :   if (doRead(x, bytes))</span>
 <span class="lineNum">     193 </span>                :            :   {
-<span class="lineNum">     194 </span>        [<span class="branchCov" title="Branch 0 was taken 9900774 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">    9900774 :     if (calc_checksum_)</span>
+<span class="lineNum">     194 </span>        [<span class="branchCov" title="Branch 0 was taken 9975971 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">    9975971 :     if (calc_checksum_)</span>
 <span class="lineNum">     195 </span>                :            :     {
-<span class="lineNum">     196 </span>                :<span class="lineCov">    9900774 :       updateChecksum(x, bytes);</span>
+<span class="lineNum">     196 </span>                :<span class="lineCov">    9975971 :       updateChecksum(x, bytes);</span>
 <span class="lineNum">     197 </span>                :            :     }
-<span class="lineNum">     198 </span>                :<span class="lineCov">    9900774 :     return true;</span>
+<span class="lineNum">     198 </span>                :<span class="lineCov">    9975971 :     return true;</span>
 <span class="lineNum">     199 </span>                :            :   }
 <span class="lineNum">     200 </span>                :            :   else
 <span class="lineNum">     201 </span>                :            :   {
 <span class="lineNum">     202 </span>[<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;Serializer: Unable to read {} bytes&quot;, bytes);</span>
-<span class="lineNum">     203 </span>                :<span class="lineCov">    9900776 :     return false;</span>
+<span class="lineNum">     203 </span>                :<span class="lineCov">    9975973 :     return false;</span>
 <span class="lineNum">     204 </span>                :            :   }
 <span class="lineNum">     205 </span>                :            : }
 <span class="lineNum">     206 </span>                :            : 

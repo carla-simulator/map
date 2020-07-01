@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-04-24 05:57:18</td>
+            <td class="headerValue">2020-07-01 15:08:56</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -107,20 +107,20 @@
 <span class="lineNum">      36 </span>                :            :  *
 <a name="37"><span class="lineNum">      37 </span>                :            :  * \note the specified input range is defined by the ranges of all members</a>
 <span class="lineNum">      38 </span>                :            :  */
-<span class="lineNum">      39 </span>                :<span class="lineCov">     363178 : inline bool withinValidInputRange(::ad::map::point::GeoPoint const &amp;input, bool const logErrors = true)</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">     363193 : inline bool withinValidInputRange(::ad::map::point::GeoPoint const &amp;input, bool const logErrors = true)</span>
 <span class="lineNum">      40 </span>                :            : {
 <span class="lineNum">      41 </span>                :            :   // check for generic member input ranges
-<span class="lineNum">      42 </span>                :<span class="lineCov">     363178 :   bool inValidInputRange = true;</span>
-<span class="lineNum">      43 </span>                :<span class="lineCov">     363178 :   inValidInputRange = withinValidInputRange(input.longitude, logErrors)</span>
-<span class="lineNum">      44 </span>[<span class="branchCov" title="Branch 0 was taken 362841 times"> + </span><span class="branchCov" title="Branch 1 was taken 337 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 362839 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">     363178 :     &amp;&amp; withinValidInputRange(input.latitude, logErrors) &amp;&amp; withinValidInputRange(input.altitude, logErrors);</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 362837 times"> + </span><span class="branchCov" title="Branch 7 was taken 2 times"> + </span>]
-<span class="lineNum">      45 </span>[<span class="branchCov" title="Branch 0 was taken 341 times"> + </span><span class="branchCov" title="Branch 1 was taken 362837 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 17 times"> + </span><span class="branchCov" title="Branch 3 was taken 324 times"> + </span>]:<span class="lineCov">     363178 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">     363193 :   bool inValidInputRange = true;</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">     363193 :   inValidInputRange = withinValidInputRange(input.longitude, logErrors)</span>
+<span class="lineNum">      44 </span>[<span class="branchCov" title="Branch 0 was taken 362855 times"> + </span><span class="branchCov" title="Branch 1 was taken 338 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 362853 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">     363193 :     &amp;&amp; withinValidInputRange(input.latitude, logErrors) &amp;&amp; withinValidInputRange(input.altitude, logErrors);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 362851 times"> + </span><span class="branchCov" title="Branch 7 was taken 2 times"> + </span>]
+<span class="lineNum">      45 </span>[<span class="branchCov" title="Branch 0 was taken 342 times"> + </span><span class="branchCov" title="Branch 1 was taken 362851 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 17 times"> + </span><span class="branchCov" title="Branch 3 was taken 325 times"> + </span>]:<span class="lineCov">     363193 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
 <span class="lineNum">      46 </span>                :            :   {
 <span class="lineNum">      47 </span>                :<span class="lineCov">         34 :     spdlog::error(&quot;withinValidInputRange(::ad::map::point::GeoPoint)&gt;&gt; {} has invalid member&quot;,</span>
 <span class="lineNum">      48 </span>                :<span class="lineCov">         17 :                   input); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">      49 </span>                :            :   }
 <span class="lineNum">      50 </span>                :            : 
-<span class="lineNum">      51 </span>                :<span class="lineCov">     363178 :   return inValidInputRange;</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">     363193 :   return inValidInputRange;</span>
 <span class="lineNum">      52 </span>                :            : }
 </pre>
       </td>

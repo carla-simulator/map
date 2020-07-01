@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-04-24 05:57:18</td>
+            <td class="headerValue">2020-07-01 15:08:56</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -92,11 +92,11 @@
 <span class="lineNum">      21 </span>                :            : /** @brief get the list of ParaPoints out of the map matched positions */
 <a name="22"><span class="lineNum">      22 </span>                :            : point::ParaPointList getParaPoints(MapMatchedPositionConfidenceList const &amp;inMapMatchedPositions);</a>
 <span class="lineNum">      23 </span>                :            : 
-<span class="lineNum">      24 </span>                :<span class="lineCov">     154781 : inline bool isLaneType(MapMatchedPositionType const &amp;mapMatchedPositionType)</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">     154782 : inline bool isLaneType(MapMatchedPositionType const &amp;mapMatchedPositionType)</span>
 <span class="lineNum">      25 </span>                :            : {
-<span class="lineNum">      26 </span>                :<span class="lineCov">     154781 :   return mapMatchedPositionType == MapMatchedPositionType::LANE_IN</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">     154782 :   return mapMatchedPositionType == MapMatchedPositionType::LANE_IN</span>
 <span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 0 was taken 44134 times"> + </span><span class="branchCov" title="Branch 1 was taken 47929 times"> + </span>]:<span class="lineCov">      92063 :     || mapMatchedPositionType == MapMatchedPositionType::LANE_LEFT</span>
-<span class="lineNum">      28 </span>[<span class="branchCov" title="Branch 0 was taken 92063 times"> + </span><span class="branchCov" title="Branch 1 was taken 62718 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 44134 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     246844 :     || mapMatchedPositionType == MapMatchedPositionType::LANE_RIGHT;</span>
+<span class="lineNum">      28 </span>[<span class="branchCov" title="Branch 0 was taken 92063 times"> + </span><span class="branchCov" title="Branch 1 was taken 62719 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 44134 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     246845 :     || mapMatchedPositionType == MapMatchedPositionType::LANE_RIGHT;</span>
 <span class="lineNum">      29 </span>                :            : }
 <span class="lineNum">      30 </span>                :            : 
 <span class="lineNum">      31 </span>                :            : /**
@@ -126,13 +126,13 @@
 <span class="lineNum">      55 </span>                :            :                                        MapMatchedPositionConfidenceList const &amp;mapMatchedPositions);
 <a name="56"><span class="lineNum">      56 </span>                :            : </a>
 <span class="lineNum">      57 </span>                :            : /** @brief get the para point of the occupied Region in the middle of the longitudinal extend of it */
-<span class="lineNum">      58 </span>                :<span class="lineCov">         24 : inline point::ParaPoint getCenterParaPoint(match::LaneOccupiedRegion const &amp;occupiedRegion)</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">         22 : inline point::ParaPoint getCenterParaPoint(match::LaneOccupiedRegion const &amp;occupiedRegion)</span>
 <span class="lineNum">      59 </span>                :            : {
-<span class="lineNum">      60 </span>        [<span class="branchCov" title="Branch 1 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         24 :   point::ParaPoint paraPoint;</span>
-<span class="lineNum">      61 </span>                :<span class="lineCov">         24 :   paraPoint.laneId = occupiedRegion.laneId;</span>
+<span class="lineNum">      60 </span>        [<span class="branchCov" title="Branch 1 was taken 22 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         22 :   point::ParaPoint paraPoint;</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">         22 :   paraPoint.laneId = occupiedRegion.laneId;</span>
 <span class="lineNum">      62 </span>                :            :   paraPoint.parametricOffset
-<span class="lineNum">      63 </span>[<span class="branchCov" title="Branch 1 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">         24 :     = 0.5 * (occupiedRegion.longitudinalRange.maximum + occupiedRegion.longitudinalRange.minimum);</span>
-<span class="lineNum">      64 </span>                :<span class="lineCov">         24 :   return paraPoint;</span>
+<span class="lineNum">      63 </span>[<span class="branchCov" title="Branch 1 was taken 22 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 22 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">         22 :     = 0.5 * (occupiedRegion.longitudinalRange.maximum + occupiedRegion.longitudinalRange.minimum);</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">         22 :   return paraPoint;</span>
 <span class="lineNum">      65 </span>                :            : }
 <span class="lineNum">      66 </span>                :            : 
 <span class="lineNum">      67 </span>                :            : } // namespace match

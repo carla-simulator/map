@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-04-24 05:57:18</td>
+            <td class="headerValue">2020-07-01 15:08:56</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -132,7 +132,7 @@
 <span class="lineNum">      61 </span>                :            :   /*!
 <a name="62"><span class="lineNum">      62 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      63 </span>                :            :    */
-<span class="lineNum">      64 </span>                :<span class="lineCov">     557944 :   LanePoint() = default;</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">     557202 :   LanePoint() = default;</span>
 <span class="lineNum">      65 </span>                :            : 
 <span class="lineNum">      66 </span>                :            :   /*!
 <span class="lineNum">      67 </span>                :            :    * \brief standard destructor
@@ -174,10 +174,10 @@
 <span class="lineNum">     103 </span>                :            :    *
 <a name="104"><span class="lineNum">     104 </span>                :            :    * \returns \c true if both LanePoint are equal</a>
 <span class="lineNum">     105 </span>                :            :    */
-<span class="lineNum">     106 </span>                :<span class="lineCov">         42 :   bool operator==(const LanePoint &amp;other) const</span>
+<span class="lineNum">     106 </span>                :<span class="lineCov">         44 :   bool operator==(const LanePoint &amp;other) const</span>
 <span class="lineNum">     107 </span>                :            :   {
-<span class="lineNum">     108 </span>[<span class="branchCov" title="Branch 2 was taken 36 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 5 was taken 34 times"> + </span><span class="branchCov" title="Branch 6 was taken 2 times"> + </span>]:<span class="lineCov">         80 :     return (paraPoint == other.paraPoint) &amp;&amp; (lateralT == other.lateralT) &amp;&amp; (laneLength == other.laneLength)</span>
-<span class="lineNum">     109 </span>[<span class="branchCov" title="Branch 0 was taken 38 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 32 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">         80 :       &amp;&amp; (laneWidth == other.laneWidth);</span>
+<span class="lineNum">     108 </span>[<span class="branchCov" title="Branch 2 was taken 38 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 5 was taken 36 times"> + </span><span class="branchCov" title="Branch 6 was taken 2 times"> + </span>]:<span class="lineCov">         84 :     return (paraPoint == other.paraPoint) &amp;&amp; (lateralT == other.lateralT) &amp;&amp; (laneLength == other.laneLength)</span>
+<span class="lineNum">     109 </span>[<span class="branchCov" title="Branch 0 was taken 40 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 34 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">         84 :       &amp;&amp; (laneWidth == other.laneWidth);</span>
 <span class="lineNum">     110 </span>                :            :   }
 <span class="lineNum">     111 </span>                :            : 
 <span class="lineNum">     112 </span>                :            :   /**
@@ -239,22 +239,22 @@
 <span class="lineNum">     168 </span>                :            :  * \returns The stream object.
 <a name="169"><span class="lineNum">     169 </span>                :            :  *</a>
 <span class="lineNum">     170 </span>                :            :  */
-<span class="lineNum">     171 </span>                :<span class="lineCov">         37 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, LanePoint const &amp;_value)</span>
+<span class="lineNum">     171 </span>                :<span class="lineCov">         41 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, LanePoint const &amp;_value)</span>
 <span class="lineNum">     172 </span>                :            : {
-<span class="lineNum">     173 </span>                :<span class="lineCov">         37 :   os &lt;&lt; &quot;LanePoint(&quot;;</span>
-<span class="lineNum">     174 </span>                :<span class="lineCov">         37 :   os &lt;&lt; &quot;paraPoint:&quot;;</span>
-<span class="lineNum">     175 </span>                :<span class="lineCov">         37 :   os &lt;&lt; _value.paraPoint;</span>
-<span class="lineNum">     176 </span>                :<span class="lineCov">         37 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     177 </span>                :<span class="lineCov">         37 :   os &lt;&lt; &quot;lateralT:&quot;;</span>
-<span class="lineNum">     178 </span>                :<span class="lineCov">         37 :   os &lt;&lt; _value.lateralT;</span>
-<span class="lineNum">     179 </span>                :<span class="lineCov">         37 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     180 </span>                :<span class="lineCov">         37 :   os &lt;&lt; &quot;laneLength:&quot;;</span>
-<span class="lineNum">     181 </span>                :<span class="lineCov">         37 :   os &lt;&lt; _value.laneLength;</span>
-<span class="lineNum">     182 </span>                :<span class="lineCov">         37 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     183 </span>                :<span class="lineCov">         37 :   os &lt;&lt; &quot;laneWidth:&quot;;</span>
-<span class="lineNum">     184 </span>                :<span class="lineCov">         37 :   os &lt;&lt; _value.laneWidth;</span>
-<span class="lineNum">     185 </span>                :<span class="lineCov">         37 :   os &lt;&lt; &quot;)&quot;;</span>
-<span class="lineNum">     186 </span>                :<span class="lineCov">         37 :   return os;</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">         41 :   os &lt;&lt; &quot;LanePoint(&quot;;</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">         41 :   os &lt;&lt; &quot;paraPoint:&quot;;</span>
+<span class="lineNum">     175 </span>                :<span class="lineCov">         41 :   os &lt;&lt; _value.paraPoint;</span>
+<span class="lineNum">     176 </span>                :<span class="lineCov">         41 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">         41 :   os &lt;&lt; &quot;lateralT:&quot;;</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">         41 :   os &lt;&lt; _value.lateralT;</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">         41 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     180 </span>                :<span class="lineCov">         41 :   os &lt;&lt; &quot;laneLength:&quot;;</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">         41 :   os &lt;&lt; _value.laneLength;</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">         41 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">         41 :   os &lt;&lt; &quot;laneWidth:&quot;;</span>
+<span class="lineNum">     184 </span>                :<span class="lineCov">         41 :   os &lt;&lt; _value.laneWidth;</span>
+<span class="lineNum">     185 </span>                :<span class="lineCov">         41 :   os &lt;&lt; &quot;)&quot;;</span>
+<span class="lineNum">     186 </span>                :<span class="lineCov">         41 :   return os;</span>
 <span class="lineNum">     187 </span>                :            : }
 <span class="lineNum">     188 </span>                :            : 
 <span class="lineNum">     189 </span>                :            : } // namespace match

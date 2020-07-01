@@ -1,5 +1,11 @@
 <map id="generated/include/ad/physics/AngularVelocity.hpp" name="generated/include/ad/physics/AngularVelocity.hpp">
-<area shape="rect" id="node2" href="$AngularVelocity3D_8hpp.html" title="generated/include/ad\l/physics/AngularVelocity3D.hpp" alt="" coords="5,102,227,143"/>
-<area shape="rect" id="node4" href="$AngularVelocityValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AngularVelocityValid\lInputRange.hpp" alt="" coords="251,95,456,151"/>
-<area shape="rect" id="node3" href="$AngularVelocity3DValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AngularVelocity3DValid\lInputRange.hpp" alt="" coords="123,199,346,255"/>
+<area shape="rect" id="node2" href="$AngularVelocity3D_8hpp.html" title="generated/include/ad\l/physics/AngularVelocity3D.hpp" alt="" coords="6,102,227,143"/>
+<area shape="rect" id="node4" href="$AngularVelocityValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AngularVelocityValid\lInputRange.hpp" alt="" coords="251,95,457,151"/>
+<area shape="rect" id="node5" href="$Types_8hpp.html" title="impl/include/ad/physics\l/Types.hpp" alt="" coords="493,102,663,143"/>
+<area shape="rect" id="node3" href="$AngularVelocity3DValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AngularVelocity3DValid\lInputRange.hpp" alt="" coords="5,199,228,255"/>
+<area shape="rect" id="node6" href="$AngleOperation_8hpp.html" title="impl/include/ad/physics\l/AngleOperation.hpp" alt="" coords="252,206,421,247"/>
+<area shape="rect" id="node7" href="$Operation_8hpp.html" title="impl/include/ad/physics\l/Operation.hpp" alt="" coords="505,303,675,344"/>
+<area shape="rect" id="node8" href="$ParametricOperation_8hpp.html" title="impl/include/ad/physics\l/ParametricOperation.hpp" alt="" coords="497,206,683,247"/>
+<area shape="rect" id="node9" href="$PhysicsOperation_8hpp.html" title="impl/include/ad/physics\l/PhysicsOperation.hpp" alt="" coords="708,206,877,247"/>
+<area shape="rect" id="node10" href="$RatioOperation_8hpp.html" title="impl/include/ad/physics\l/RatioOperation.hpp" alt="" coords="901,206,1071,247"/>
 </map>

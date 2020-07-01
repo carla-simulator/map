@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-04-24 05:57:18</td>
+            <td class="headerValue">2020-07-01 15:08:56</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -105,19 +105,19 @@
 <span class="lineNum">      34 </span>                :            :  *
 <a name="35"><span class="lineNum">      35 </span>                :            :  * \note the specified input range is defined by the ranges of all members</a>
 <span class="lineNum">      36 </span>                :            :  */
-<span class="lineNum">      37 </span>                :<span class="lineCov">    5365780 : inline bool withinValidInputRange(::ad::map::point::ECEFPoint const &amp;input, bool const logErrors = true)</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">    5364255 : inline bool withinValidInputRange(::ad::map::point::ECEFPoint const &amp;input, bool const logErrors = true)</span>
 <span class="lineNum">      38 </span>                :            : {
 <span class="lineNum">      39 </span>                :            :   // check for generic member input ranges
-<span class="lineNum">      40 </span>                :<span class="lineCov">    5365780 :   bool inValidInputRange = true;</span>
-<span class="lineNum">      41 </span>        [<span class="branchCov" title="Branch 2 was taken 5365735 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">   10731517 :   inValidInputRange = withinValidInputRange(input.x, logErrors) &amp;&amp; withinValidInputRange(input.y, logErrors)</span>
-<span class="lineNum">      42 </span>[<span class="branchCov" title="Branch 0 was taken 5365737 times"> + </span><span class="branchCov" title="Branch 1 was taken 43 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 5365733 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">   10731517 :     &amp;&amp; withinValidInputRange(input.z, logErrors);</span>
-<span class="lineNum">      43 </span>[<span class="branchCov" title="Branch 0 was taken 47 times"> + </span><span class="branchCov" title="Branch 1 was taken 5365733 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 31 times"> + </span><span class="branchCov" title="Branch 3 was taken 16 times"> + </span>]:<span class="lineCov">    5365780 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">    5364255 :   bool inValidInputRange = true;</span>
+<span class="lineNum">      41 </span>        [<span class="branchCov" title="Branch 2 was taken 5364210 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">   10728467 :   inValidInputRange = withinValidInputRange(input.x, logErrors) &amp;&amp; withinValidInputRange(input.y, logErrors)</span>
+<span class="lineNum">      42 </span>[<span class="branchCov" title="Branch 0 was taken 5364212 times"> + </span><span class="branchCov" title="Branch 1 was taken 43 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 5364208 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">   10728467 :     &amp;&amp; withinValidInputRange(input.z, logErrors);</span>
+<span class="lineNum">      43 </span>[<span class="branchCov" title="Branch 0 was taken 47 times"> + </span><span class="branchCov" title="Branch 1 was taken 5364208 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 31 times"> + </span><span class="branchCov" title="Branch 3 was taken 16 times"> + </span>]:<span class="lineCov">    5364255 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
 <span class="lineNum">      44 </span>                :            :   {
 <span class="lineNum">      45 </span>                :<span class="lineCov">         62 :     spdlog::error(&quot;withinValidInputRange(::ad::map::point::ECEFPoint)&gt;&gt; {} has invalid member&quot;,</span>
 <span class="lineNum">      46 </span>                :<span class="lineCov">         31 :                   input); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">      47 </span>                :            :   }
 <span class="lineNum">      48 </span>                :            : 
-<span class="lineNum">      49 </span>                :<span class="lineCov">    5365780 :   return inValidInputRange;</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">    5364255 :   return inValidInputRange;</span>
 <span class="lineNum">      50 </span>                :            : }
 </pre>
       </td>

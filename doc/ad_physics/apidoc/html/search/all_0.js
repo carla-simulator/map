@@ -2,6 +2,7 @@ var searchData=
 [
   ['_5fad_5fphysics_5facceleration_5fexplicit_5fconversion_5f',['_AD_PHYSICS_ACCELERATION_EXPLICIT_CONVERSION_',['../Acceleration_8hpp.html#a434e4ddd1a5ae6234692f90f1194e605',1,'Acceleration.hpp']]],
   ['_5fad_5fphysics_5fangle_5fexplicit_5fconversion_5f',['_AD_PHYSICS_ANGLE_EXPLICIT_CONVERSION_',['../Angle_8hpp.html#aa5762d87134e5b2c9143ccb62eaf63da',1,'Angle.hpp']]],
+  ['_5fad_5fphysics_5fangularacceleration_5fexplicit_5fconversion_5f',['_AD_PHYSICS_ANGULARACCELERATION_EXPLICIT_CONVERSION_',['../AngularAcceleration_8hpp.html#a25c99fdd03894f4e9ad171f03e1d6112',1,'AngularAcceleration.hpp']]],
   ['_5fad_5fphysics_5fangularvelocity_5fexplicit_5fconversion_5f',['_AD_PHYSICS_ANGULARVELOCITY_EXPLICIT_CONVERSION_',['../AngularVelocity_8hpp.html#a11bab17f96dc6edfff3dbd335bb1f520',1,'AngularVelocity.hpp']]],
   ['_5fad_5fphysics_5fdistance_5fexplicit_5fconversion_5f',['_AD_PHYSICS_DISTANCE_EXPLICIT_CONVERSION_',['../Distance_8hpp.html#a67de7c8fb68317d8b208161b6aac928c',1,'Distance.hpp']]],
   ['_5fad_5fphysics_5fdistancesquared_5fexplicit_5fconversion_5f',['_AD_PHYSICS_DISTANCESQUARED_EXPLICIT_CONVERSION_',['../DistanceSquared_8hpp.html#aade54c55ec6501579b10bcebb24b7849',1,'DistanceSquared.hpp']]],

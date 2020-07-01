@@ -4,6 +4,8 @@ var searchData=
   ['gen_5fguard_5fad_5fphysics_5facceleration3d',['GEN_GUARD_AD_PHYSICS_ACCELERATION3D',['../Acceleration3D_8hpp.html#a3f39f87acac15a8a7365b0dace703e02',1,'Acceleration3D.hpp']]],
   ['gen_5fguard_5fad_5fphysics_5faccelerationrange',['GEN_GUARD_AD_PHYSICS_ACCELERATIONRANGE',['../AccelerationRange_8hpp.html#a348036b2ad6278fb5762c324081c9e49',1,'AccelerationRange.hpp']]],
   ['gen_5fguard_5fad_5fphysics_5fangle',['GEN_GUARD_AD_PHYSICS_ANGLE',['../Angle_8hpp.html#a8babc04abaca0fab6b1f428ccd7a5de7',1,'Angle.hpp']]],
+  ['gen_5fguard_5fad_5fphysics_5fanglerange',['GEN_GUARD_AD_PHYSICS_ANGLERANGE',['../AngleRange_8hpp.html#ac03eed2e766e275f7e193125a259567e',1,'AngleRange.hpp']]],
+  ['gen_5fguard_5fad_5fphysics_5fangularacceleration',['GEN_GUARD_AD_PHYSICS_ANGULARACCELERATION',['../AngularAcceleration_8hpp.html#add46af13b51ef3f5581bbb859b4ea3a6',1,'AngularAcceleration.hpp']]],
   ['gen_5fguard_5fad_5fphysics_5fangularvelocity',['GEN_GUARD_AD_PHYSICS_ANGULARVELOCITY',['../AngularVelocity_8hpp.html#a3f77e95353299b59737b40e11645eac6',1,'AngularVelocity.hpp']]],
   ['gen_5fguard_5fad_5fphysics_5fangularvelocity3d',['GEN_GUARD_AD_PHYSICS_ANGULARVELOCITY3D',['../AngularVelocity3D_8hpp.html#a204ee11fc0dbfd4a39029158d15f9ddf',1,'AngularVelocity3D.hpp']]],
   ['gen_5fguard_5fad_5fphysics_5fdimension2d',['GEN_GUARD_AD_PHYSICS_DIMENSION2D',['../Dimension2D_8hpp.html#a88032410832ad96f494ff5d2d4212049',1,'Dimension2D.hpp']]],

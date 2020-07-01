@@ -92,9 +92,9 @@ colcon meta file:
 
 Furthermore, building the QGIS Plugin with static libraries eases the usage of it because the LD_LIBRARY_PATH is not required (see also next section). To build this one you might want to call:
 ```bash
- map$> colcon build --metas colcon_static_qgis.meta --packages-up-to ad_map_access_qgis --build-base build-qgis --install-base install-qgis
+ map$> colcon build --metas colcon_static.meta --packages-up-to ad_map_access_qgis --build-base build-static --install-base install-static
  map$> echo "QGIS plugin built! Let's test it out:"
- map$> export QGIS_PLUGINPATH=<path/to/>map/install-qgis/ad_map_access_qgis/share/qgis/python/plugins
+ map$> export QGIS_PLUGINPATH=<path/to/>map/install-static/ad_map_access_qgis/share/qgis/python/plugins
  map$> qgis
 ```
 You should have seen 'Intel AD Map Plug-in loaded' on successful loading of the plugin by qgis.
