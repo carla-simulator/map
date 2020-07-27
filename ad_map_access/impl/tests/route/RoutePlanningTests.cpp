@@ -215,7 +215,7 @@ void RoutePlanningTest::validateRouteConnections(route::FullRoute const &route, 
                   - route.roadSegments[i].drivableLaneSegments[0].routeLaneOffset)
         << "i:" << i << " j:" << j << " route:" << route;
 
-      if (j != static_cast<size_t>(route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset))
+      if (static_cast<int32_t>(j) != route.roadSegments[i].drivableLaneSegments[j].routeLaneOffset)
       {
         EXPECT_NE(RouteIsConstant, routeBehavior);
       }
