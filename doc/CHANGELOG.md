@@ -1,4 +1,5 @@
 ## Latest changes
+* Fix build of unit tests under Ubuntu18.04 with gcc 7.5.0
 
 ## Release 2.1.0
 #### :ghost: Maintenance
