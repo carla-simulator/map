@@ -28,6 +28,7 @@ The components within this repository have some dependencies:
    - Python lib
  - **map_maker** (in tools):
    - *ad_map_access*
+   - LAPACK
    - Osmium >= 2.13: <https://osmcode.org/libosmium/>
  - ***all components when enabling unit tests***:
    - gtest aka. googletests < 1.10 : <https://github.com/google/googletest>
@@ -40,10 +41,11 @@ Dependencies provided by Ubunutu (>= 16.04):
  - gtest
  - libpython-dev
  - libosmium2-dev
+ - liblapacke-dev
 
 Those can be installed by calling:
 ```bash
-$>  sudo apt-get install libboost-all-dev libpugixml-dev libproj-dev libgtest-dev libpython-dev libosmium2-dev
+$>  sudo apt-get install libboost-all-dev libpugixml-dev libproj-dev libgtest-dev libpython-dev libosmium2-dev liblapacke-dev
 ```
 
 Additional dependencies for the python bindings:
