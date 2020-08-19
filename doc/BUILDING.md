@@ -32,6 +32,7 @@ The components within this repository have some dependencies:
    - Osmium >= 2.13: <https://osmcode.org/libosmium/>
  - ***all components when enabling unit tests***:
    - gtest aka. googletests < 1.10 : <https://github.com/google/googletest>
+   - xmlrunner
 
 Dependencies provided by Ubunutu (>= 16.04):
 
@@ -53,6 +54,7 @@ Additional dependencies for the python bindings:
 $>  sudo apt-get install castxml
 $>  pip install --user pygccxml
 $>  pip install --user https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip
+$>  pip install --user xmlrunner
 ```
 
 Remaining dependencies:
