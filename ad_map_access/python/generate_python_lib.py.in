@@ -69,14 +69,32 @@ def main():
     }
 
     additional_replacements_python2=additional_replacements.copy()
-    additional_replacements_python2.add(("libad_map_access_python", "libad_map_access_python2"))
+    additional_replacements_python2.add(("BOOST_PYTHON_MODULE(libad_map_access_python){",
+                                         "extern \"C\" {"
+                                         "//explicitly declare dependencies\n"
+                                         "void initlibad_physics_python2();\n"
+                                         "}\n\n"
+                                         "BOOST_PYTHON_MODULE(libad_map_access_python2){\n"
+                                         "\n"
+                                         "    //explicitly load dependencies\n"
+                                         "    initlibad_physics_python2();"
+                                         "\n"))
     post_process_python_wrapper(header_directories=header_dirs,
                                 cpp_filename_in="AdMapAccessPythonWrapper.cpp.in",
                                 cpp_filename_out="AdMapAccessPythonWrapperPYTHON2.cpp",
                                 additional_replacements=additional_replacements_python2
                                 )
     additional_replacements_python3=additional_replacements.copy()
-    additional_replacements_python3.add(("libad_map_access_python", "libad_map_access_python3"))
+    additional_replacements_python3.add(("BOOST_PYTHON_MODULE(libad_map_access_python){",
+                                         "extern \"C\" {"
+                                         "//explicitly declare dependencies\n"
+                                         "void PyInit_libad_physics_python3();\n"
+                                         "}\n\n"
+                                         "BOOST_PYTHON_MODULE(libad_map_access_python3){\n"
+                                         "\n"
+                                         "    //explicitly load dependencies\n"
+                                         "     PyInit_libad_physics_python3();"
+                                         "\n"))
     post_process_python_wrapper(header_directories=header_dirs,
                                 cpp_filename_in="AdMapAccessPythonWrapper.cpp.in",
                                 cpp_filename_out="AdMapAccessPythonWrapperPYTHON3.cpp",
