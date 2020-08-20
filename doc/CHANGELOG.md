@@ -1,5 +1,7 @@
 ## Latest changes
 * Fix build of unit tests under Ubuntu18.04 with gcc 7.5.0
+* Build documentation update to make the plain cmake build more robust and especially make repeated builds with -DBUILD_PYTHON_BINDING=ON working
+* Make dependency of libad_map_access_python{2,3}.so to libad_physics_python{2,3}.so explicit by enforcing linking
 
 ## Release 2.1.0
 #### :ghost: Maintenance

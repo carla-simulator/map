@@ -52,9 +52,7 @@ $>  sudo apt-get install libboost-all-dev libpugixml-dev libproj-dev libgtest-de
 Additional dependencies for the python bindings:
 ```bash
 $>  sudo apt-get install castxml
-$>  pip install --user pygccxml
-$>  pip install --user https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip
-$>  pip install --user xmlrunner
+$>  pip install --user pygccxml pyplusplus xmlrunner
 ```
 
 Remaining dependencies:
