@@ -37,7 +37,8 @@ def main():
                             include_paths=include_dirs,
                             declarations={
                                 "ad", "toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
-                            )
+    )
+
     post_process_python_wrapper(header_directories=header_dirs, additional_replacements={("libad_physics_python", "libad_physics_python2")}, cpp_filename_in="AdPhysicsPythonWrapper.cpp.in", cpp_filename_out="AdPhysicsPythonWrapperPYTHON2.cpp")
     post_process_python_wrapper(header_directories=header_dirs, additional_replacements={("libad_physics_python", "libad_physics_python3")}, cpp_filename_in="AdPhysicsPythonWrapper.cpp.in", cpp_filename_out="AdPhysicsPythonWrapperPYTHON3.cpp")
 
