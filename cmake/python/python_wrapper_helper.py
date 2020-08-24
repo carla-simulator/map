@@ -93,10 +93,8 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
         header_list,
         xml_generator_path=generator_path,
         compilation_mode=parser.COMPILATION_MODE.ALL_AT_ONCE,
-        xml_generator_config=xml_generator_config)
-
-    for ignore_declaration in ignore_declarations:
-        builder.decls(lambda decl: ignore_declaration in decl.name).exclude()
+        xml_generator_config=xml_generator_config,
+        indexing_suite_version=2)
 
     # for some reason there is a problem with variables named 'length'
     # the filename is empty and the line no is set to -1
@@ -117,8 +115,17 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
         top_namespace = ""
         if top_namespace_split > 1:
             top_namespace = main_namespace[:top_namespace_split+2]
-        print("Main namespace defined, filtering enabled: top-namespace '{}' main-namespace '{}'".format(top_namespace, main_namespace))
-        for decl in builder.decls():
+        print("Main namespace defined, mainspace filtering enabled: top-namespace '{}' main-namespace '{}'".format(top_namespace, main_namespace))
+
+    for decl in builder.decls():
+        for ignore_declaration in ignore_declarations:
+            if ignore_declaration in decl.name or ignore_declaration in decl.alias:
+                decl.exclude()
+                decl.ignore = True
+                decl.already_exposed = True
+                # print("declaration to ignore found: {} (alias {})".format(decl, decl.alias))
+                break;
+        if main_namespace != "":
             if isinstance(decl, decl_wrappers.class_wrapper.class_t) or isinstance(decl, decl_wrappers.class_wrapper.class_declaration_t) or isinstance(decl, decl_wrappers.typedef_wrapper.typedef_t):
                 decl_full_string = "{}".format(decl)
                 if main_namespace in decl_full_string:

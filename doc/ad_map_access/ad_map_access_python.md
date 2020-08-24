@@ -1,13 +1,13 @@
 ## Usage of Python binding for ad_map_access
 
 Compilation of ad_map_access_python (build option *BUILD_PYTHON_BINDING*)
-will create a ad/map python packages inside the install/ad_map_access/lib/python{2,3}  folder.
+will create ad/map python packages inside the install/ad_map_access/lib/python{2,3} folder.
 The packages can be used inside any Python code to use
 datatypes or call methods defined in ad_map_access.
 
 ## Usage of Python binding
 To use the compiled Python binding, one has to extend the current environment
-to be able to use the newly created package. Afterwards, one can import the
+to be able to use the newly created packages. Afterwards, one can import the
 Python package and use it as any other Python module.
 ```bash
  ad_map_access_python$>  export PYTHONPATH=$PYTHONPATH:<path/to/>install/ad_physics/lib/python3:<path/to/>install/ad_map_access/lib/python3
