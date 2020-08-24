@@ -53,11 +53,13 @@ class AdMapAccessPythonTest(unittest.TestCase):
         routingEnd.laneId = routingStart.laneId
         routingEnd.parametricOffset = ad.physics.ParametricValue(0.0)
 
-        routeResult = ad.map.route.planRoute(ad.map.route.createRoutingPoint(routingStart), ad.map.route.createRoutingPoint(routingEnd))
+        routeResult = ad.map.route.planRoute(ad.map.route.createRoutingPoint(
+            routingStart), ad.map.route.createRoutingPoint(routingEnd))
         routeLength = ad.map.route.calcLength(routeResult.roadSegments[0])
         self.assertEqual(int(float(routeLength)), 4)
 
         ad.map.access.cleanup()
+
 
 if __name__ == '__main__':
     if os.environ.get('GTEST_OUTPUT') and os.environ['GTEST_OUTPUT'].startswith('xml:'):

@@ -113,10 +113,10 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
     if main_namespace != "":
         if main_namespace.startswith("::"):
             main_namespace = main_namespace[2:]
-        top_namespace_split=main_namespace.find(":")
+        top_namespace_split = main_namespace.find(":")
         top_namespace = ""
         if top_namespace_split > 1:
-            top_namespace=main_namespace[:top_namespace_split+2]
+            top_namespace = main_namespace[:top_namespace_split+2]
         print("Main namespace defined, filtering enabled: top-namespace '{}' main-namespace '{}'".format(top_namespace, main_namespace))
         for decl in builder.decls():
             if isinstance(decl, decl_wrappers.class_wrapper.class_t) or isinstance(decl, decl_wrappers.class_wrapper.class_declaration_t) or isinstance(decl, decl_wrappers.typedef_wrapper.typedef_t):
@@ -143,7 +143,6 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
 
     # Automatically detect properties and associated getters/setters
     builder.classes().add_properties(exclude_accessors=True)
-
 
     # Define a name for the module
     builder.build_code_creator(module_name=library_name)
