@@ -115,7 +115,7 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
         top_namespace = ""
         if top_namespace_split > 1:
             top_namespace = main_namespace[:top_namespace_split+2]
-        print("Main namespace defined, mainspace filtering enabled: top-namespace '{}' main-namespace '{}'".format(top_namespace, main_namespace))
+        print("Main namespace defined, namespace filtering enabled: top-namespace '{}' main-namespace '{}'".format(top_namespace, main_namespace))
 
     for decl in builder.decls():
         for ignore_declaration in ignore_declarations:
