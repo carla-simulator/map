@@ -33,19 +33,20 @@ configure_file(generate_python_lib.py.in generate_python_lib.py)
 generate_python_binding_source_code(${CMAKE_CURRENT_BINARY_DIR})
 
 foreach(binding ${PYTHON_BINDINGS})
-  string(TOLOWER ${binding} lc_binding)
 
-  configure_file(ad/__init__.py.in ${lc_binding}/ad/__init__.py)
-  configure_file(ad/map/__init__.py.in ${lc_binding}/ad/map/__init__.py)
+  string(REPLACE "." "" binding_string ${binding})
+
+  configure_file(ad/__init__.py.in ${binding}/ad/__init__.py)
+  configure_file(ad/map/__init__.py.in ${binding}/ad/map/__init__.py)
 
   foreach(component access config intersection landmark lane match point restriction route)
 
-    set(target ad_map_${component}_${lc_binding})
+    set(target ad_map_${component}_${binding_string})
 
-    configure_file(ad/map/component/__init__.py.in ${lc_binding}/ad/map/${component}/__init__.py)
+    configure_file(ad/map/component/__init__.py.in ${binding}/ad/map/${component}/__init__.py)
 
     add_library(${target}
-      ${CMAKE_CURRENT_BINARY_DIR}/AdMap${component}PythonWrapper${binding}.cpp
+      ${CMAKE_CURRENT_BINARY_DIR}/AdMap-${component}-PythonWrapper-${binding_string}.cpp
       )
     target_compile_definitions(${target} PUBLIC ${TARGET_COMPILE_DEFINITIONS})
     target_compile_options(${target} PRIVATE ${TARGET_COMPILE_OPTIONS})
@@ -65,8 +66,8 @@ foreach(binding ${PYTHON_BINDINGS})
       )
 
     install(TARGETS ${target}
-      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/${lc_binding}/ad/map/${component}
-      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/${lc_binding}/ad/map/${component}
+      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/${binding}/ad/map/${component}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/${binding}/ad/map/${component}
       )
   endforeach()
 
@@ -76,8 +77,8 @@ foreach(binding ${PYTHON_BINDINGS})
   ################################################################################
 
   install(DIRECTORY
-    ${CMAKE_CURRENT_BINARY_DIR}/${lc_binding}/ad
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/${lc_binding}/
+    ${CMAKE_CURRENT_BINARY_DIR}/${binding}/ad
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/${binding}/
     )
 
   #####################################################################
@@ -85,10 +86,10 @@ foreach(binding ${PYTHON_BINDINGS})
   #####################################################################
   if (BUILD_TESTING)
     add_test(NAME ${target}_test
-      COMMAND ${lc_binding} -m interface_test
+      COMMAND ${binding} -m interface_test
       WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/tests
     )
-    get_python_test_environment(${lc_binding} ad_physics ad_map_opendrive_reader)
+    get_python_test_environment(${binding} ad_physics ad_map_opendrive_reader)
     set_tests_properties(${target}_test PROPERTIES ENVIRONMENT "${PYTHON_TEST_ENVIRONMENT}")
   endif()
 

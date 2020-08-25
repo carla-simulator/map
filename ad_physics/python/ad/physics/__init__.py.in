@@ -7,11 +7,11 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 
 """
-This module provides a @lc_binding@ interface to the C++ ad::physics implementation
+This module provides a @binding@ interface to the C++ ad::physics implementation
 """
 
 import sys
 import os.path
 sys.path.append(os.path.dirname(__file__))
 
-from libad_physics_@lc_binding@ import *
+from libad_physics_@binding_string@ import *

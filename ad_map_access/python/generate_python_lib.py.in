@@ -23,9 +23,9 @@ def main():
     Main function to generate Python-C++ binding code
     """
     include_dirs = {
-        "${GENPY_INCLUDE_DIRS}",
-        "${CMAKE_CURRENT_LIST_DIR}/../generated/include",
-        "${CMAKE_CURRENT_LIST_DIR}/../impl/include"
+        "@GENPY_INCLUDE_DIRS@",
+        "@CMAKE_CURRENT_LIST_DIR@/../generated/include",
+        "@CMAKE_CURRENT_LIST_DIR@/../impl/include"
     }
 
     declarations={"toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
@@ -52,8 +52,8 @@ def main():
         declarations_component.add(main_namespace)
 
         header_dirs = {
-            "${CMAKE_CURRENT_LIST_DIR}/../generated/include/ad/map/{}".format(component),
-            "${CMAKE_CURRENT_LIST_DIR}/../impl/include/ad/map/{}".format(component)
+            "@CMAKE_CURRENT_LIST_DIR@/../generated/include/ad/map/{}".format(component),
+            "@CMAKE_CURRENT_LIST_DIR@/../impl/include/ad/map/{}".format(component)
         }
 
         ignore_files={}
@@ -82,7 +82,7 @@ def main():
 
         library_name="libad_map_{}_python".format(component)
         generate_python_wrapper(library_name=library_name,
-                                cpp_filename="AdMap{}PythonWrapper.cpp.in".format(component),
+                                cpp_filename="AdMap-{}-PythonWrapper.cpp.in".format(component),
                                 header_directories=header_dirs,
                                 include_paths=include_dirs,
                                 main_namespace=main_namespace,
@@ -90,23 +90,15 @@ def main():
                                 ignore_declarations=ignore_declarations,
                                 ignore_files=ignore_files)
 
-        additional_replacements_python2=additional_replacements.copy()
-        additional_replacements_python2.add(("libad_map_{}_python".format(component), "libad_map_{}_python2".format(component)))
-        post_process_python_wrapper(header_directories=header_dirs,
-                                    cpp_filename_in="AdMap{}PythonWrapper.cpp.in".format(component),
-                                    cpp_filename_out="AdMap{}PythonWrapperPYTHON2.cpp".format(component),
-                                    additional_replacements=additional_replacements_python2,
+        for binding in @PYTHON_BINDING_STRING_LIST@:
+            additional_replacements_binding=additional_replacements.copy()
+            additional_replacements_binding.add(("libad_map_{}_python".format(component), "libad_map_{}_{}".format(component, binding)))
+            post_process_python_wrapper(header_directories=header_dirs,
+                                    cpp_filename_in="AdMap-{}-PythonWrapper.cpp.in".format(component),
+                                    cpp_filename_out="AdMap-{}-PythonWrapper-{}.cpp".format(component, binding),
+                                    additional_replacements=additional_replacements_binding,
                                     additional_includes=additional_includes
-        )
-
-        additional_replacements_python3=additional_replacements.copy()
-        additional_replacements_python3.add(("libad_map_{}_python".format(component), "libad_map_{}_python3".format(component)))
-        post_process_python_wrapper(header_directories=header_dirs,
-                                    cpp_filename_in="AdMap{}PythonWrapper.cpp.in".format(component),
-                                    cpp_filename_out="AdMap{}PythonWrapperPYTHON3.cpp".format(component),
-                                    additional_replacements=additional_replacements_python3,
-                                    additional_includes=additional_includes
-        )
+            )
 
 
 if __name__ == '__main__':
