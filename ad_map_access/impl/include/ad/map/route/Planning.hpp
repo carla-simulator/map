@@ -351,45 +351,80 @@ std::vector<route::FullRoute> predictRoutes(const match::MapMatchedObjectBoundin
                                             = RouteCreationMode::SameDrivingDirection);
 
 /**
+ * @brief Filter duplicated routes from a list of routes
+ *
+ * If one of the routes is a real sub-route of the other, the longer version of the route is kept, the shorter dropped
+ *
+ * @param[in] fullRoutes list of full routes to be filtered
+ *
+ * @returns the filtered list of routes
+ */
+std::vector<FullRoute> filterDuplicatedRoutes(const std::vector<FullRoute> fullRoutes);
+
+/**
  * @brief Calculate the connecting route between the the two objects
  *
  * For route calculations the route type core::Route::Type::SHORTEST_IGNORE_DIRECTION is used.
+ * The prediction hints are taken into account if no direct connecting route can be found in search of a merge route.
+ * If no prediction hints are given, respective route predictions are calculated internally.
  *
  * @param[in] startObject object at starting position
  * @param[in] destObject object at destination position
  * @param[in] maxDistance distance when the search can be stopped.
  * @param[in] maxDuration duration when the search can be stopped.
+ * @param[in] startObjectPredictionHints route prediction hints for start object (optional)
+ * @param[in] destObjectPredictionHints route prediction hints for dest object (optional)
  */
 ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
                                          const match::Object &destObject,
                                          physics::Distance const &maxDistance,
-                                         physics::Duration const &maxDuration);
+                                         physics::Duration const &maxDuration,
+                                         std::vector<route::FullRoute> const &startObjectPredictionHints
+                                         = std::vector<route::FullRoute>(),
+                                         std::vector<route::FullRoute> const &destObjectPredictionHints
+                                         = std::vector<route::FullRoute>());
 
 /**
  * @brief Calculate the connecting route between the the two objects
  *
  * For route calculations the route type core::Route::Type::SHORTEST_IGNORE_DIRECTION is used.
+ * The prediction hints are taken into account if no direct connecting route can be found in search of a merge route.
+ * If no prediction hints are given, respective route predictions are calculated internally.
  *
  * @param[in] startObject object at starting position
  * @param[in] destObject object at destination position
  * @param[in] maxDistance distance when the search can be stopped.
+ * @param[in] startObjectPredictionHints route prediction hints for start object (optional)
+ * @param[in] destObjectPredictionHints route prediction hints for dest object (optional)
  */
 ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
                                          const match::Object &destObject,
-                                         physics::Distance const &maxDistance);
+                                         physics::Distance const &maxDistance,
+                                         std::vector<route::FullRoute> const &startObjectPredictionHints
+                                         = std::vector<route::FullRoute>(),
+                                         std::vector<route::FullRoute> const &destObjectPredictionHints
+                                         = std::vector<route::FullRoute>());
 
 /**
  * @brief Calculate the connecting route between the the two objects
  *
  * For route calculations the route type core::Route::Type::SHORTEST_IGNORE_DIRECTION is used.
+ * The prediction hints are taken into account if no direct connecting route can be found in search of a merge route.
+ * If no prediction hints are given, respective route predictions are calculated internally.
  *
  * @param[in] startObject object at starting position
  * @param[in] destObject object at destination position
  * @param[in] maxDuration duration when the search can be stopped.
+ * @param[in] startObjectPredictionHints route prediction hints for start object (optional)
+ * @param[in] destObjectPredictionHints route prediction hints for dest object (optional)
  */
 ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
                                          const match::Object &destObject,
-                                         physics::Duration const &maxDuration);
+                                         physics::Duration const &maxDuration,
+                                         std::vector<route::FullRoute> const &startObjectPredictionHints
+                                         = std::vector<route::FullRoute>(),
+                                         std::vector<route::FullRoute> const &destObjectPredictionHints
+                                         = std::vector<route::FullRoute>());
 
 /**
  * @brief update route planning counters of the route

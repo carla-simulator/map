@@ -73,6 +73,15 @@ TEST_F(AdMapAccessTest, initializeFromOpenDriveContent)
 
   ASSERT_TRUE(access::initFromOpenDriveContent(openDriveContent, 0.2, intersection::IntersectionType::TrafficLight));
 
+  // twice the same initialization works
+  ASSERT_TRUE(access::initFromOpenDriveContent(openDriveContent, 0.2, intersection::IntersectionType::TrafficLight));
+
+  std::ifstream mapFile3("test_files/Town03.xodr");
+  openDriveContentStream.clear();
+  openDriveContentStream << mapFile3.rdbuf();
+  openDriveContent = openDriveContentStream.str();
+
+  // but different content fails
   ASSERT_FALSE_NO_LOG(
     access::initFromOpenDriveContent(openDriveContent, 0.2, intersection::IntersectionType::TrafficLight));
 

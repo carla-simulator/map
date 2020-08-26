@@ -862,13 +862,96 @@ TEST_F(RoutePlanningTest, route_planning_multi_lane_changes_OstringKaeppelstr)
   validateRouteConnections(routeLeft, RouteIsBroadening);
   validateRouteConnections(routeRight, RouteIsBroadening);
   compareRoutes(routeLeft, routeRight, EndSegmentDiffers);
+}
 
-  auto routeLength = route::calcLength(routeLeft);
+TEST_F(RoutePlanningTest, extend_route_by_distance)
+{
+  ASSERT_TRUE(access::init(mTestFile));
 
+  startLaneId = lane::uniqueLaneId(createGeoPoint(Longitude(8.4396613), Latitude(49.0185636), Altitude(0.)));
+
+  route::FullRoute const initialRoute
+    = route::planning::planRoute(createParaPoint(startLaneId, physics::ParametricValue(0.)),
+                                 createParaPoint(startLaneId, physics::ParametricValue(.1)));
+
+  auto const initialRouteLength = route::calcLength(initialRoute);
+
+  auto route = initialRoute;
   std::vector<route::FullRoute> additionalRoutes;
-  ASSERT_TRUE(extendRouteToDistance(routeLeft, routeLength + physics::Distance(30.), additionalRoutes));
+  ASSERT_TRUE(extendRouteToDistance(route, initialRouteLength + physics::Distance(30.), additionalRoutes));
+  // still one road segment and no additional routes, route segment expanded till end
+  ASSERT_EQ(route.roadSegments.size(), 1u);
+  ASSERT_TRUE(additionalRoutes.empty());
+  auto routeLength = route::calcLength(route);
+  ASSERT_GT(routeLength, initialRouteLength + physics::Distance(30.));
+  ASSERT_EQ(route.roadSegments.front().drivableLaneSegments.front().laneInterval.laneId, startLaneId);
+  ASSERT_EQ(route.roadSegments.front().drivableLaneSegments.front().laneInterval.start, physics::ParametricValue(0.));
+  ASSERT_EQ(route.roadSegments.front().drivableLaneSegments.front().laneInterval.end, physics::ParametricValue(1.));
+  validateRouteParaPoints(route);
+  validateRouteConnections(route, RouteIsConstant);
 
-  ASSERT_GT(routeLength + physics::Distance(30.), route::calcLength(routeLeft));
+  // extending further spans into T-intersection and leads to an additional route
+  ASSERT_TRUE(extendRouteToDistance(route, routeLength + physics::Distance(30.), additionalRoutes));
+  ASSERT_EQ(route.roadSegments.size(), 3u);
+  ASSERT_EQ(additionalRoutes.size(), 1u);
+  ASSERT_EQ(additionalRoutes.front().roadSegments.size(), 3u);
+  auto routeLengthA = route::calcLength(route);
+  auto routeLengthB = route::calcLength(additionalRoutes.front());
+  ASSERT_GT(routeLengthA, routeLength + physics::Distance(30.));
+  ASSERT_GT(routeLengthB, routeLength + physics::Distance(30.));
+  // the begin of the routes is identical
+  ASSERT_EQ(route.roadSegments.front().drivableLaneSegments.front().laneInterval.laneId,
+            additionalRoutes.front().roadSegments.front().drivableLaneSegments.front().laneInterval.laneId);
+  // the end not
+  ASSERT_NE(route.roadSegments.back().drivableLaneSegments.front().laneInterval.laneId,
+            additionalRoutes.back().roadSegments.front().drivableLaneSegments.front().laneInterval.laneId);
+  validateRouteParaPoints(route);
+  validateRouteConnections(route, RouteIsConstant);
+  validateRouteParaPoints(additionalRoutes.back());
+  validateRouteConnections(additionalRoutes.back(), RouteIsConstant);
+}
+
+TEST_F(RoutePlanningTest, extend_route_by_destination)
+{
+  ASSERT_TRUE(access::init(mTestFile));
+
+  startLaneId = lane::uniqueLaneId(createGeoPoint(Longitude(8.4396613), Latitude(49.0185636), Altitude(0.)));
+
+  route::FullRoute const initialRoute
+    = route::planning::planRoute(createParaPoint(startLaneId, physics::ParametricValue(0.)),
+                                 createParaPoint(startLaneId, physics::ParametricValue(.1)),
+                                 RouteCreationMode::AllRoutableLanes);
+
+  auto const initialRouteLength = route::calcLength(initialRoute);
+
+  // extending by geo points
+  auto furtherDownTheSameLane = createGeoPoint(Longitude(8.4400608), Latitude(49.0190709), Altitude(0.));
+  auto route = initialRoute;
+  ASSERT_TRUE(extendRouteToDestinations(route, {furtherDownTheSameLane}));
+  // still one road segment and no additional routes, route segment expanded till end
+  ASSERT_EQ(route.roadSegments.size(), 1u);
+  auto routeLength = route::calcLength(route);
+  ASSERT_GT(routeLength, initialRouteLength);
+  ASSERT_EQ(route.roadSegments.front().drivableLaneSegments.front().laneInterval.laneId, startLaneId);
+  ASSERT_EQ(route.roadSegments.front().drivableLaneSegments.front().laneInterval.start, physics::ParametricValue(0.));
+  ASSERT_EQ(route.roadSegments.front().drivableLaneSegments.front().laneInterval.end,
+            physics::ParametricValue(.847167));
+  validateRouteParaPoints(route);
+  validateRouteConnections(route, RouteIsConstant);
+
+  // extending by furhter via some intersections geo points
+  auto furtherAccrossNextIntersection = createGeoPoint(Longitude(8.4402588), Latitude(49.0193127), Altitude(0.));
+  auto nearbyStartOppositeLane = createGeoPoint(Longitude(8.439657), Latitude(49.018624), Altitude(0.));
+  route = initialRoute;
+  ASSERT_TRUE(extendRouteToDestinations(
+    route, {furtherDownTheSameLane, furtherAccrossNextIntersection, nearbyStartOppositeLane}));
+  // still one road segment and no additional routes, route segment expanded till end
+  ASSERT_GT(route.roadSegments.size(), 1u);
+  routeLength = route::calcLength(route);
+  ASSERT_GT(routeLength, initialRouteLength);
+
+  ASSERT_EQ(route.roadSegments.front().drivableLaneSegments.front().laneInterval.laneId,
+            route.roadSegments.back().drivableLaneSegments.back().laneInterval.laneId);
 }
 
 TEST_F(RoutePlanningTest, routing_point)

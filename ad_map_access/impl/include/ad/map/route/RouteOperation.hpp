@@ -12,6 +12,7 @@
 #include "ad/map/match/Types.hpp"
 #include "ad/map/point/Types.hpp"
 #include "ad/map/route/LaneIntervalOperation.hpp"
+#include "ad/map/route/Routing.hpp"
 #include "ad/map/route/Types.hpp"
 #include "ad/physics/Types.hpp"
 
@@ -737,6 +738,40 @@ void appendLaneSegmentToRoute(route::LaneInterval const &laneInterval,
 bool extendRouteToDistance(route::FullRoute &route,
                            physics::Distance const &length,
                            std::vector<route::FullRoute> &additionalRoutes);
+
+/**
+ * @brief extends route with the given list of destinations
+ *
+ * @param[in/out] route the route to check and to extend
+ * @param[in] dest Vector with supporting points as routing parametric points to be visited on the route. Last point in
+ * the list is the
+ * actual destination point.
+ *
+ * @returns @c false is returned if the route is/was empty/degenerated
+ */
+bool extendRouteToDestinations(route::FullRoute &route, const std::vector<route::planning::RoutingParaPoint> &dest);
+
+/**
+ * @brief extends route with the given list of destinations
+ *
+ * @param[in/out] route the route to check and to extend
+ * @param[in] dest Vector with supporting points as geo points to be visited on the route. Last point in the list is the
+ * actual destination point.
+ *
+ * @returns @c false is returned if the route is/was empty/degenerated
+ */
+bool extendRouteToDestinations(route::FullRoute &route, const std::vector<point::GeoPoint> &dest);
+
+/**
+ * @brief extends route with the given list of destinations
+ *
+ * @param[in/out] route the route to check and to extend
+ * @param[in] dest Vector with supporting points as ENU points to be visited on the route. Last point in the list is the
+ * actual destination point.
+ *
+ * @returns @c false is returned if the route is/was empty/degenerated
+ */
+bool extendRouteToDestinations(route::FullRoute &route, const std::vector<point::ENUPoint> &dest);
 
 /** @brief function to append a new lane interval to a road segment list
  *

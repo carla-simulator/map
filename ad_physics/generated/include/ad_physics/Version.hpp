@@ -25,7 +25,7 @@
 /*!
  * The minor version of ad_physics
  */
-#define AD_PHYSICS_VERSION_MINOR 1
+#define AD_PHYSICS_VERSION_MINOR 2
 
 /*!
  * The revision of ad_physics
@@ -35,4 +35,4 @@
 /*!
  * The version of ad_physics as string
  */
-#define AD_PHYSICS_VERSION_STRING "2.1.0"
+#define AD_PHYSICS_VERSION_STRING "2.2.0"

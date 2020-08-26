@@ -57,8 +57,10 @@ public:
   /**
    * @brief initialize singleton with OpenDRIVE content string
    *
+   * If previously initialized with the same opendrive content the function performs nothing, but returns true.
+   *
    * The string contains the full OpenDRIVE data
-   * @return true if initialization was successful (i.e. config file exists or singleton was already initialized)
+   * @return true if initialization was successful.
    * @return false if OpenDRIVE data wasn't valid or the singleton was already initialized differently
    */
   bool initializeFromOpenDriveContent(std::string const &openDriveContent,
@@ -66,7 +68,6 @@ public:
                                       intersection::IntersectionType const defaultIntersectionType,
                                       landmark::TrafficLightType const defaultTrafficLightType
                                       = landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN);
-
   /**
    * @brief initialize singleton with given store
    *
@@ -90,6 +91,8 @@ public:
   config::MapConfigFileHandler mConfigFileHandler{};
 
   bool mInitializedFromStore{false};
+
+  uint32_t mInitializeFromOpenDriveContentChecksum{0u};
 
   std::shared_ptr<spdlog::logger> mLogger;
 

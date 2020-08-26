@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -19,6 +19,11 @@ namespace ad {
 namespace map {
 /** @brief namespace serialize */
 namespace serialize {
+
+/**
+ * @brief Standalone checksum CRC32 calculation
+ */
+uint32_t calculateCRC32Checksum(const void *x, size_t bytes);
 
 /**
  * @brief Checksum CRC32 calculation implementation

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -59,6 +59,24 @@ static uint32_t crc32_tab[]
      0x24b4a3a6, 0xbad03605, 0xcdd70693, 0x54de5729, 0x23d967bf, 0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94,
      0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d};
 
+uint32_t updateCRC32Checksum(uint32_t crcIn, const void *x, size_t bytes)
+{
+  const uint8_t *p = reinterpret_cast<const uint8_t *>(x);
+  uint32_t crcOut = crcIn;
+  crcOut ^= ~0U;
+  while (bytes--)
+  {
+    crcOut = crc32_tab[(crcOut ^ *p++) & 0xFF] ^ (crcOut >> 8);
+  }
+  crcOut ^= ~0U;
+  return crcOut;
+}
+
+uint32_t calculateCRC32Checksum(const void *x, size_t bytes)
+{
+  return updateCRC32Checksum(0u, x, bytes);
+}
+
 //////////////////////
 // Overriden IChecksum
 
@@ -69,13 +87,7 @@ void ChecksumCRC32::initChecksum()
 
 void ChecksumCRC32::updateChecksum(const void *x, size_t bytes)
 {
-  const uint8_t *p = reinterpret_cast<const uint8_t *>(x);
-  mCrc ^= ~0U;
-  while (bytes--)
-  {
-    mCrc = crc32_tab[(mCrc ^ *p++) & 0xFF] ^ (mCrc >> 8);
-  }
-  mCrc ^= ~0U;
+  mCrc = updateCRC32Checksum(mCrc, x, bytes);
 }
 
 bool ChecksumCRC32::writeChecksum()

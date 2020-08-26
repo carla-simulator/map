@@ -55,9 +55,10 @@ def main():
                             ignore_files=ignore_files)
 
     additional_replacements = {
-        # physics types used as default without full namespace in code
+        # types used as default without full namespace in code
         ("physics::Distance(", "ad::physics::Distance("),
         ("physics::ParametricValue(", "ad::physics::ParametricValue("),
+        ("std::vector<route::FullRoute>(", "std::vector<ad::map::route::FullRoute>("),
         ("nullptr", "0"),
         # some renaming for set data types
         ("\"vector_less__ad_scope_map_scope_lane_scope_LaneId__greater_\"", "\"LaneIdList\""),
@@ -65,7 +66,7 @@ def main():
         ("\"set_less__ad_scope_map_scope_landmark_scope_LandmarkId__greater_\"", "\"LandmarkIdSet\""),
         ("\"vector_less__ad_scope_map_scope_route_scope_ConnectingInterval__greater_\"", "\"ConnectingSegment\""),
         ("\"vector_less__ad_scope_map_scope_match_scope_MapMatchedPosition__greater_\"",
-         "\"MapMatchedPositionConfidenceList\""),
+         "\"MapMatchedPositionConfidenceList\"")
     }
 
     additional_replacements_python2=additional_replacements.copy()

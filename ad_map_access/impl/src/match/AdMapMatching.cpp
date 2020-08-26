@@ -126,12 +126,12 @@ AdMapMatching::AdMapMatching()
 {
 }
 
-point::ENUHeading AdMapMatching::getLaneENUHeading(MapMatchedPosition const &mapMatchedPosition)
+point::ENUHeading AdMapMatching::getLaneENUHeading(MapMatchedPosition const &mapMatchedPosition) const
 {
   return lane::getLaneENUHeading(mapMatchedPosition);
 }
 
-bool AdMapMatching::isLanePartOfRouteHints(lane::LaneId const &laneId)
+bool AdMapMatching::isLanePartOfRouteHints(lane::LaneId const &laneId) const
 {
   for (auto const &route : mRouteHints)
   {
@@ -149,7 +149,7 @@ bool AdMapMatching::isLanePartOfRouteHints(lane::LaneId const &laneId)
   return false;
 }
 
-double AdMapMatching::getHeadingFactor(MapMatchedPosition const &matchedPosition)
+double AdMapMatching::getHeadingFactor(MapMatchedPosition const &matchedPosition) const
 {
   double headingFactor = 1.0;
 
@@ -173,7 +173,7 @@ double AdMapMatching::getHeadingFactor(MapMatchedPosition const &matchedPosition
 
 MapMatchedPositionConfidenceList AdMapMatching::getMapMatchedPositions(point::GeoPoint const &geoPoint,
                                                                        physics::Distance const &distance,
-                                                                       physics::Probability const &minProbability)
+                                                                       physics::Probability const &minProbability) const
 {
   auto mapMatchingResult = findLanes(geoPoint, distance);
   mapMatchingResult = considerMapMatchingHints(mapMatchingResult, minProbability);
@@ -183,7 +183,7 @@ MapMatchedPositionConfidenceList AdMapMatching::getMapMatchedPositions(point::Ge
 
 MapMatchedPositionConfidenceList AdMapMatching::getMapMatchedPositions(point::ENUPoint const &enuPoint,
                                                                        physics::Distance const &distance,
-                                                                       physics::Probability const &minProbability)
+                                                                       physics::Probability const &minProbability) const
 {
   return getMapMatchedPositions(point::toGeo(enuPoint), distance, minProbability);
 }
@@ -191,7 +191,7 @@ MapMatchedPositionConfidenceList AdMapMatching::getMapMatchedPositions(point::EN
 MapMatchedPositionConfidenceList AdMapMatching::getMapMatchedPositions(point::ENUPoint const &enuPoint,
                                                                        point::GeoPoint const &enuReferencePoint,
                                                                        physics::Distance const &distance,
-                                                                       physics::Probability const &minProbability)
+                                                                       physics::Probability const &minProbability) const
 {
   return getMapMatchedPositions(point::toGeo(enuPoint, enuReferencePoint), distance, minProbability);
 }
@@ -209,7 +209,7 @@ MapMatchedPositionConfidenceList AdMapMatching::getMapMatchedPositions(ENUObject
 
 MapMatchedPositionConfidenceList
 AdMapMatching::considerMapMatchingHints(MapMatchedPositionConfidenceList const &mapMatchedPositions,
-                                        physics::Probability const &minProbability)
+                                        physics::Probability const &minProbability) const
 {
   access::getLogger()->trace("considerMapMatchingHints {}", mapMatchedPositions);
 
@@ -281,7 +281,7 @@ AdMapMatching::considerMapMatchingHints(MapMatchedPositionConfidenceList const &
 }
 
 MapMatchedObjectBoundingBox AdMapMatching::getMapMatchedBoundingBox(ENUObjectPosition const &enuObjectPosition,
-                                                                    physics::Distance const &samplingDistance)
+                                                                    physics::Distance const &samplingDistance) const
 {
   MapMatchedObjectBoundingBox mapMatchedObjectBoundingBox;
 
@@ -392,7 +392,7 @@ MapMatchedObjectBoundingBox AdMapMatching::getMapMatchedBoundingBox(ENUObjectPos
 }
 
 LaneOccupiedRegionList AdMapMatching::getLaneOccupiedRegions(std::vector<ENUObjectPosition> enuObjectPositions,
-                                                             physics::Distance const &samplingDistance)
+                                                             physics::Distance const &samplingDistance) const
 {
   LaneOccupiedRegionList laneOccupiedRegions;
 
@@ -434,7 +434,7 @@ inline bool isActualWithinLaneMatch(const MapMatchedPosition &mapMatchedPosition
 }
 
 void AdMapMatching::addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
-                                   MapMatchedPositionConfidenceList const &mapMatchedPositions)
+                                   MapMatchedPositionConfidenceList const &mapMatchedPositions) const
 {
   // Basic algorithm:
   // First, collect all actual matches within the respective lane (lateral AND longitudinal)
@@ -553,7 +553,7 @@ void AdMapMatching::addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
 }
 
 void AdMapMatching::addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
-                                   LaneOccupiedRegionList const &otherLaneOccupiedRegions)
+                                   LaneOccupiedRegionList const &otherLaneOccupiedRegions) const
 {
   for (auto const &otherRegion : otherLaneOccupiedRegions)
   {

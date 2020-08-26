@@ -896,7 +896,9 @@ void dropOverlappingRegions(FullRoute &route,
 ConnectingRoute calculateConnectingRoute(const match::Object &objectA,
                                          const match::Object &objectB,
                                          physics::Distance const &maxDistance,
-                                         physics::Duration const &maxDuration)
+                                         physics::Duration const &maxDuration,
+                                         std::vector<route::FullRoute> const &objectAPredictionHints,
+                                         std::vector<route::FullRoute> const &objectBPredictionHints)
 {
   Route::RawRoute resultRawRoute;
   physics::Distance resultDistance = std::numeric_limits<physics::Distance>::max();
@@ -1005,8 +1007,16 @@ ConnectingRoute calculateConnectingRoute(const match::Object &objectA,
     // no direct connecting route between the two objects found
     // check if we have a ConnectingRouteType::Merging case
     // search if one of the route lanes of A is part of one of the route lanes of B
-    auto objectAPredictions = predictRoutes(objectA.mapMatchedBoundingBox, maxDistance, maxDuration);
-    auto objectBPredictions = predictRoutes(objectB.mapMatchedBoundingBox, maxDistance, maxDuration);
+    auto objectAPredictions = objectAPredictionHints;
+    if (objectAPredictions.empty())
+    {
+      objectAPredictions = predictRoutes(objectA.mapMatchedBoundingBox, maxDistance, maxDuration);
+    }
+    auto objectBPredictions = objectBPredictionHints;
+    if (objectBPredictions.empty())
+    {
+      objectBPredictions = predictRoutes(objectB.mapMatchedBoundingBox, maxDistance, maxDuration);
+    }
 
     resultDistance = std::numeric_limits<physics::Distance>::max();
     for (auto &objectAPrediction : objectAPredictions)
@@ -1031,16 +1041,30 @@ ConnectingRoute calculateConnectingRoute(const match::Object &objectA,
 
 ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
                                          const match::Object &destObject,
-                                         physics::Distance const &maxDistance)
+                                         physics::Distance const &maxDistance,
+                                         std::vector<route::FullRoute> const &objectAPredictionHints,
+                                         std::vector<route::FullRoute> const &objectBPredictionHints)
 {
-  return calculateConnectingRoute(startObject, destObject, maxDistance, std::numeric_limits<physics::Duration>::max());
+  return calculateConnectingRoute(startObject,
+                                  destObject,
+                                  maxDistance,
+                                  std::numeric_limits<physics::Duration>::max(),
+                                  objectAPredictionHints,
+                                  objectBPredictionHints);
 }
 
 ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
                                          const match::Object &destObject,
-                                         physics::Duration const &maxDuration)
+                                         physics::Duration const &maxDuration,
+                                         std::vector<route::FullRoute> const &objectAPredictionHints,
+                                         std::vector<route::FullRoute> const &objectBPredictionHints)
 {
-  return calculateConnectingRoute(startObject, destObject, std::numeric_limits<physics::Distance>::max(), maxDuration);
+  return calculateConnectingRoute(startObject,
+                                  destObject,
+                                  std::numeric_limits<physics::Distance>::max(),
+                                  maxDuration,
+                                  objectAPredictionHints,
+                                  objectBPredictionHints);
 }
 
 } // namespace planning
