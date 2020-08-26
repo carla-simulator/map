@@ -32,6 +32,7 @@ The components within this repository have some dependencies:
    - Osmium >= 2.13: <https://osmcode.org/libosmium/>
  - ***all components when enabling unit tests***:
    - gtest aka. googletests < 1.10 : <https://github.com/google/googletest>
+   - xmlrunner
 
 Dependencies provided by Ubunutu (>= 16.04):
 
@@ -51,8 +52,7 @@ $>  sudo apt-get install libboost-all-dev libpugixml-dev libproj-dev libgtest-de
 Additional dependencies for the python bindings:
 ```bash
 $>  sudo apt-get install castxml
-$>  pip install --user pygccxml
-$>  pip install --user https://bitbucket.org/ompl/pyplusplus/get/1.8.1.zip
+$>  pip install --user pygccxml pyplusplus xmlrunner
 ```
 
 Remaining dependencies:
@@ -108,16 +108,16 @@ Therefore, a full list of step by step calls could look like e.g.:
  map$> mkdir install
  map$> mkdir -p build/{spdlog,ad_physics,ad_map_opendrive_reader,ad_map_access}
  map$> cd build/spdlog
- map/build/spdlog$> cmake ../../dependencies/spdlog -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_EXAMPLE=Off
+ map/build/spdlog$> cmake ../../dependencies/spdlog -DCMAKE_INSTALL_PREFIX=../../install/spdlog -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_EXAMPLE=Off
  map/build/spdlog$> make install
  map/build/spdlog$> cd ../ad_physics
- map/build/ad_physics$> cmake ../../ad_physics -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_physics$> cmake ../../ad_physics -DCMAKE_INSTALL_PREFIX=../../install/ad_physics -DCMAKE_PREFIX_PATH=../../install/spdlog
  map/build/ad_physics$> make install
  map/build/ad_physics$> cd ../ad_map_opendrive_reader
- map/build/ad_map_opendrive_reader$> cmake ../../ad_map_opendrive_reader -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_map_opendrive_reader$> cmake ../../ad_map_opendrive_reader -DCMAKE_INSTALL_PREFIX=../../install/ad_map_opendrive_reader -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics"
  map/build/ad_map_opendrive_reader$> make install
  map/build/ad_map_opendrive_reader$> cd ../../build/ad_map_access
- map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader"
  map/build/ad_map_access$> make install
  map/build/ad_map_access$> cd ../..
  map$> echo "Hurray, all built!"
@@ -128,7 +128,7 @@ Building the map_maker tools in addition then looks like:
 ```bash
  map$> mkdir -p build/map_maker
  map$> cd build/map_maker
- map/build/map_maker$> cmake ../../tools/map_maker -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/map_maker$> cmake ../../tools/map_maker -DCMAKE_INSTALL_PREFIX=../../install/map_maker -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader;../../install/ad_map_access"
  map/build/map_maker$> make install
  map/build/map_maker$> cd ../..
  map$> echo "Hurray, map maker tools built!"
@@ -139,15 +139,15 @@ Building the QGIS plugin in addition then looks like:
 ```bash
  map$> mkdir -p build/{ad_map_access_qgis_python,ad_map_access_qgis}
  map$> cd build/ad_map_access_qgis_python
- map/build/ad_map_access_qgis_python$> cmake ../../tools/ad_map_access_qgis_python -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_map_access_qgis_python$> cmake ../../tools/ad_map_access_qgis_python -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access_qgis_python -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader;../../install/ad_map_access"
  map/build/ad_map_access_qgis_python$> make install
  map/build/ad_map_access_qgis_python$> cd ../ad_map_access_qgis
- map/build/ad_map_access_qgis$> cmake ../../tools/ad_map_access_qgis -DCMAKE_INSTALL_PREFIX=../../install
+ map/build/ad_map_access_qgis$> cmake ../../tools/ad_map_access_qgis -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access_qgis
  map/build/ad_map_access_qgis$> make install
  map/build/ad_map_access_qgis$> cd ../..
  map$> echo "Hurray, QGIS plugin built! Let's try to run it:"
- map$> export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<path/to/>map/install/lib
- map$> export QGIS_PLUGINPATH=<path/to/>map/install/share/qgis/python/plugins
+ map$> export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<path/to/>map/install/spdlog/lib:<path/to/>map/install/ad_physics/lib:<path/to/>map/install/ad_map_opendrive_reader/lib:<path/to/>map/install/ad_map_access/lib:<path/to/>map/install/ad_map_access_qgis_python/lib
+ map$> export QGIS_PLUGINPATH=<path/to/>map/install/ad_map_access_qgis/share/qgis/python/plugins
  map$> qgis
  map$> echo "We should have seen 'Intel AD Map Plug-in loaded' on success"
 ```
@@ -169,14 +169,14 @@ e.g. "-DBUILD_TESTING=ON -DBUILD_APIDOC=ON".
 When BUILD_TESTING is enabled, the "make" call will automatically compile the Unit tests.
 They can be executed using CMake's ctest application.
 ```bash
- map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install -DBUILD_TESTING=ON
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader" -DBUILD_TESTING=ON
  map/build/ad_map_access$> make install
  map/build/ad_map_access$> ctest
 ```
 #### API documentation
 When BUILD_APIDOC is enabled, the "make" call will automatically generate the API documentation.
 ```bash
- map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install -DBUILD_APIDOC=ON
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader" -DBUILD_APIDOC=ON
  map/build/ad_map_access$> make install
 ```
 The API documentation is written to the _apidoc_ folder within the _build_ directory.
@@ -185,13 +185,13 @@ The API documentation is written to the _apidoc_ folder within the _build_ direc
 Usually, build hardening is injected by the surrounding build system. Nevertheless, the CMakeLists.txt defines
 hardening flags to ensure the code is compatible to respective flags. To enable hardening compiler and linker flags:
 ```bash
- map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install -DBUILD_HARDENING=ON
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader" -DBUILD_HARDENING=ON
  map/build/ad_map_access$> make install
 ```
 
 #### Python binding
 With this option enabled, Python bindings are generated and compiled. This option is disabled by default.
 ```bash
- map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install -DBUILD_PYTHON_BINDING=ON
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader" -DBUILD_PYTHON_BINDING=ON
  map/build/ad_map_access$> make install
 ```

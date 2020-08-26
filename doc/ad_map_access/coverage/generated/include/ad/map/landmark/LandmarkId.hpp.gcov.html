@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-07-27 17:29:37</td>
+            <td class="headerValue">2020-08-26 15:09:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">21</td>
@@ -153,20 +153,20 @@
 <span class="lineNum">      82 </span>                :            :    * The default value of LandmarkId is:
 <a name="83"><span class="lineNum">      83 </span>                :            :    * std::numeric_limits&lt;uint64_t&gt;::quiet_NaN()</a>
 <span class="lineNum">      84 </span>                :            :    */
-<span class="lineNum">      85 </span>                :<span class="lineCov">    1036944 :   LandmarkId()</span>
-<span class="lineNum">      86 </span>                :<span class="lineCov">    1036944 :     : mLandmarkId(std::numeric_limits&lt;uint64_t&gt;::quiet_NaN())</span>
+<span class="lineNum">      85 </span>                :<span class="lineCov">    1052954 :   LandmarkId()</span>
+<span class="lineNum">      86 </span>                :<span class="lineCov">    1052954 :     : mLandmarkId(std::numeric_limits&lt;uint64_t&gt;::quiet_NaN())</span>
 <span class="lineNum">      87 </span>                :            :   {
-<span class="lineNum">      88 </span>                :<span class="lineCov">    1036944 :   }</span>
+<span class="lineNum">      88 </span>                :<span class="lineCov">    1052954 :   }</span>
 <span class="lineNum">      89 </span>                :            : 
 <span class="lineNum">      90 </span>                :            :   /*!
 <span class="lineNum">      91 </span>                :            :    * \brief standard constructor
 <span class="lineNum">      92 </span>                :            :    *
 <a name="93"><span class="lineNum">      93 </span>                :            :    * \note \ref \_AD_MAP_LANDMARK_LANDMARKID_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
 <span class="lineNum">      94 </span>                :            :    */
-<span class="lineNum">      95 </span>                :<span class="lineCov">    1422855 :   _AD_MAP_LANDMARK_LANDMARKID_EXPLICIT_CONVERSION_ LandmarkId(uint64_t const iLandmarkId)</span>
-<span class="lineNum">      96 </span>                :<span class="lineCov">    1422855 :     : mLandmarkId(iLandmarkId)</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">    1444617 :   _AD_MAP_LANDMARK_LANDMARKID_EXPLICIT_CONVERSION_ LandmarkId(uint64_t const iLandmarkId)</span>
+<span class="lineNum">      96 </span>                :<span class="lineCov">    1444617 :     : mLandmarkId(iLandmarkId)</span>
 <span class="lineNum">      97 </span>                :            :   {
-<span class="lineNum">      98 </span>                :<span class="lineCov">    1422855 :   }</span>
+<span class="lineNum">      98 </span>                :<span class="lineCov">    1444617 :   }</span>
 <span class="lineNum">      99 </span>                :            : 
 <span class="lineNum">     100 </span>                :            :   /*!
 <span class="lineNum">     101 </span>                :            :    * \brief standard copy constructor
@@ -203,11 +203,11 @@
 <span class="lineNum">     132 </span>                :            :    *
 <a name="133"><span class="lineNum">     133 </span>                :            :    * \returns \c true if both LandmarkId are valid and can be taken as numerically equal</a>
 <span class="lineNum">     134 </span>                :            :    */
-<span class="lineNum">     135 </span>                :<span class="lineCov">      97844 :   bool operator==(const LandmarkId &amp;other) const</span>
+<span class="lineNum">     135 </span>                :<span class="lineCov">      98608 :   bool operator==(const LandmarkId &amp;other) const</span>
 <span class="lineNum">     136 </span>                :            :   {
-<span class="lineNum">     137 </span>                :<span class="lineCov">      97844 :     ensureValid();</span>
-<span class="lineNum">     138 </span>                :<span class="lineCov">      97844 :     other.ensureValid();</span>
-<span class="lineNum">     139 </span>                :<span class="lineCov">      97844 :     return mLandmarkId == other.mLandmarkId;</span>
+<span class="lineNum">     137 </span>                :<span class="lineCov">      98608 :     ensureValid();</span>
+<span class="lineNum">     138 </span>                :<span class="lineCov">      98608 :     other.ensureValid();</span>
+<span class="lineNum">     139 </span>                :<span class="lineCov">      98608 :     return mLandmarkId == other.mLandmarkId;</span>
 <span class="lineNum">     140 </span>                :            :   }
 <span class="lineNum">     141 </span>                :            : 
 <span class="lineNum">     142 </span>                :            :   /**
@@ -217,9 +217,9 @@
 <span class="lineNum">     146 </span>                :            :    *
 <a name="147"><span class="lineNum">     147 </span>                :            :    * \returns \c true if one of the LandmarkId is not valid or they can be taken as numerically different</a>
 <span class="lineNum">     148 </span>                :            :    */
-<span class="lineNum">     149 </span>                :<span class="lineCov">      78710 :   bool operator!=(const LandmarkId &amp;other) const</span>
+<span class="lineNum">     149 </span>                :<span class="lineCov">      79474 :   bool operator!=(const LandmarkId &amp;other) const</span>
 <span class="lineNum">     150 </span>                :            :   {
-<span class="lineNum">     151 </span>                :<span class="lineCov">      78710 :     return !operator==(other);</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">      79474 :     return !operator==(other);</span>
 <span class="lineNum">     152 </span>                :            :   }
 <span class="lineNum">     153 </span>                :            : 
 <span class="lineNum">     154 </span>                :            :   /**
@@ -247,11 +247,11 @@
 <span class="lineNum">     176 </span>                :            :    *   this LandmarkId is strictly numerically smaller than other.
 <a name="177"><span class="lineNum">     177 </span>                :            :    * \note the precision of LandmarkId is considered</a>
 <span class="lineNum">     178 </span>                :            :    */
-<span class="lineNum">     179 </span>                :<span class="lineCov">     554779 :   bool operator&lt;(const LandmarkId &amp;other) const</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">     565311 :   bool operator&lt;(const LandmarkId &amp;other) const</span>
 <span class="lineNum">     180 </span>                :            :   {
-<span class="lineNum">     181 </span>                :<span class="lineCov">     554779 :     ensureValid();</span>
-<span class="lineNum">     182 </span>                :<span class="lineCov">     554779 :     other.ensureValid();</span>
-<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 78708 times"> + </span><span class="branchCov" title="Branch 1 was taken 476071 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 78708 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     554779 :     return (mLandmarkId &lt; other.mLandmarkId) &amp;&amp; operator!=(other);</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">     565311 :     ensureValid();</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">     565311 :     other.ensureValid();</span>
+<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 79472 times"> + </span><span class="branchCov" title="Branch 1 was taken 485839 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 79472 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     565311 :     return (mLandmarkId &lt; other.mLandmarkId) &amp;&amp; operator!=(other);</span>
 <span class="lineNum">     184 </span>                :            :   }
 <span class="lineNum">     185 </span>                :            : 
 <span class="lineNum">     186 </span>                :            :   /**
@@ -380,11 +380,11 @@
 <span class="lineNum">     309 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="310"><span class="lineNum">     310 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     311 </span>                :            :    */
-<span class="lineNum">     312 </span>                :<span class="lineCov">    1318036 :   bool isValid() const</span>
+<span class="lineNum">     312 </span>                :<span class="lineCov">    1340628 :   bool isValid() const</span>
 <span class="lineNum">     313 </span>                :            :   {
-<span class="lineNum">     314 </span>                :<span class="lineCov">    1318036 :     auto const valueClass = std::fpclassify(mLandmarkId);</span>
-<span class="lineNum">     315 </span>[<span class="branchCov" title="Branch 0 was taken 31147 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 2 was taken 1318036 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    1318036 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mLandmarkId)</span>
-<span class="lineNum">     316 </span>[<span class="branchCov" title="Branch 0 was taken 31147 times"> + </span><span class="branchCov" title="Branch 1 was taken 1286889 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1318036 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    2636072 :       &amp;&amp; (mLandmarkId &lt;= cMaxValue);</span>
+<span class="lineNum">     314 </span>                :<span class="lineCov">    1340628 :     auto const valueClass = std::fpclassify(mLandmarkId);</span>
+<span class="lineNum">     315 </span>[<span class="branchCov" title="Branch 0 was taken 31147 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 2 was taken 1340628 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    1340628 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mLandmarkId)</span>
+<span class="lineNum">     316 </span>[<span class="branchCov" title="Branch 0 was taken 31147 times"> + </span><span class="branchCov" title="Branch 1 was taken 1309481 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1340628 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    2681256 :       &amp;&amp; (mLandmarkId &lt;= cMaxValue);</span>
 <span class="lineNum">     317 </span>                :            :   }
 <span class="lineNum">     318 </span>                :            : 
 <span class="lineNum">     319 </span>                :            :   /*!
@@ -393,16 +393,16 @@
 <span class="lineNum">     322 </span>                :            :    * Throws an std::out_of_range() exception if the LandmarkId
 <a name="323"><span class="lineNum">     323 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     324 </span>                :            :    */
-<span class="lineNum">     325 </span>                :<span class="lineCov">    1315474 :   void ensureValid() const</span>
+<span class="lineNum">     325 </span>                :<span class="lineCov">    1338066 :   void ensureValid() const</span>
 <span class="lineNum">     326 </span>                :            :   {
-<span class="lineNum">     327 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1315474 times"> + </span>]:<span class="lineCov">    1315474 :     if (!isValid())</span>
+<span class="lineNum">     327 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1338066 times"> + </span>]:<span class="lineCov">    1338066 :     if (!isValid())</span>
 <span class="lineNum">     328 </span>                :            :     {
 <span class="lineNum">     329 </span>                :<span class="lineNoCov">          0 :       spdlog::info(&quot;ensureValid(::ad::map::landmark::LandmarkId)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     330 </span>                :            : #if (AD_MAP_LANDMARK_LANDMARKID_THROWS_EXCEPTION == 1)
 <span class="lineNum">     331 </span>                :<span class="lineNoCov">          0 :       throw std::out_of_range(&quot;LandmarkId value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     332 </span>                :            : #endif
 <span class="lineNum">     333 </span>                :            :     }
-<span class="lineNum">     334 </span>                :<span class="lineCov">    1315474 :   }</span>
+<span class="lineNum">     334 </span>                :<span class="lineCov">    1338066 :   }</span>
 <span class="lineNum">     335 </span>                :            : 
 <span class="lineNum">     336 </span>                :            :   /*!
 <span class="lineNum">     337 </span>                :            :    * \brief ensure that the LandmarkId is valid and non zero

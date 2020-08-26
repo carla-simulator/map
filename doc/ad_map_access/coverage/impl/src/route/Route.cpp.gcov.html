@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-07-27 17:29:37</td>
+            <td class="headerValue">2020-08-26 15:09:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -85,7 +85,7 @@
 <span class="lineNum">      14 </span>                :            : namespace route {
 <a name="15"><span class="lineNum">      15 </span>                :            : namespace planning {</a>
 <span class="lineNum">      16 </span>                :            : 
-<span class="lineNum">      17 </span>                :<span class="lineCov">       2749 : Route::Route(const RoutingParaPoint &amp;start,</span>
+<span class="lineNum">      17 </span>                :<span class="lineCov">       2756 : Route::Route(const RoutingParaPoint &amp;start,</span>
 <span class="lineNum">      18 </span>                :            :              const RoutingParaPoint &amp;dest,
 <span class="lineNum">      19 </span>                :            :              physics::Distance const &amp;maxDistance,
 <span class="lineNum">      20 </span>                :            :              physics::Duration const &amp;maxDuration,
@@ -95,32 +95,32 @@
 <span class="lineNum">      24 </span>                :            :   , mMaxDistance(maxDistance)
 <span class="lineNum">      25 </span>                :            :   , mMaxDuration(maxDuration)
 <span class="lineNum">      26 </span>                :            :   , mType(routingType)
-<span class="lineNum">      27 </span>                :<span class="lineCov">       2749 :   , mValid(false)</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">       2756 :   , mValid(false)</span>
 <span class="lineNum">      28 </span>                :            : {
-<span class="lineNum">      29 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2749 times"> + </span>]:<span class="lineCov">       2749 :   if (mType == Type::INVALID)</span>
+<span class="lineNum">      29 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2756 times"> + </span>]:<span class="lineCov">       2756 :   if (mType == Type::INVALID)</span>
 <span class="lineNum">      30 </span>                :            :   {
 <span class="lineNum">      31 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::runtime_error(&quot;type INVALID&quot;);</span>
 <span class="lineNum">      32 </span>                :            :   }
-<a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">       2749 : }</span></a>
+<a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">       2756 : }</span></a>
 <span class="lineNum">      34 </span>                :            : 
-<span class="lineNum">      35 </span>                :<span class="lineCov">     108819 : bool Route::laneDirectionIsIgnored() const</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">     109051 : bool Route::laneDirectionIsIgnored() const</span>
 <span class="lineNum">      36 </span>                :            : {
-<span class="lineNum">      37 </span>        [<span class="branchCov" title="Branch 0 was taken 779 times"> + </span><span class="branchCov" title="Branch 1 was taken 108040 times"> + </span>]:<span class="lineCov">     108819 :   switch (mType)</span>
+<span class="lineNum">      37 </span>        [<span class="branchCov" title="Branch 0 was taken 779 times"> + </span><span class="branchCov" title="Branch 1 was taken 108272 times"> + </span>]:<span class="lineCov">     109051 :   switch (mType)</span>
 <span class="lineNum">      38 </span>                :            :   {
 <span class="lineNum">      39 </span>                :            :     case Type::SHORTEST_IGNORE_DIRECTION:
 <span class="lineNum">      40 </span>                :<span class="lineCov">        779 :       return true;</span>
 <span class="lineNum">      41 </span>                :            :     case Type::SHORTEST:
 <span class="lineNum">      42 </span>                :            :     default:
-<span class="lineNum">      43 </span>                :<span class="lineCov">     108040 :       return false;</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">     108272 :       return false;</span>
 <span class="lineNum">      44 </span>                :            :   }
 <a name="45"><span class="lineNum">      45 </span>                :            : }</a>
 <span class="lineNum">      46 </span>                :            : 
-<span class="lineNum">      47 </span>                :<span class="lineCov">       2705 : const Route::RawRoute &amp;Route::getRawRoute(size_t const routeIndex) const</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">       2711 : const Route::RawRoute &amp;Route::getRawRoute(size_t const routeIndex) const</span>
 <span class="lineNum">      48 </span>                :            : {
-<span class="lineNum">      49 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 2704 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       2705 :   static RawRoute const emptyRoute;</span>
-<span class="lineNum">      50 </span>        [<span class="branchCov" title="Branch 1 was taken 2705 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2705 :   if (mRawRoutes.size() &gt; routeIndex)</span>
+<span class="lineNum">      49 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 2710 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       2711 :   static RawRoute const emptyRoute;</span>
+<span class="lineNum">      50 </span>        [<span class="branchCov" title="Branch 1 was taken 2711 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2711 :   if (mRawRoutes.size() &gt; routeIndex)</span>
 <span class="lineNum">      51 </span>                :            :   {
-<span class="lineNum">      52 </span>                :<span class="lineCov">       2705 :     return mRawRoutes[routeIndex];</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">       2711 :     return mRawRoutes[routeIndex];</span>
 <span class="lineNum">      53 </span>                :            :   }
 <span class="lineNum">      54 </span>                :<span class="lineNoCov">          0 :   return emptyRoute;</span>
 <a name="55"><span class="lineNum">      55 </span>                :            : }</a>

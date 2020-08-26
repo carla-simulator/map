@@ -40,8 +40,8 @@ var searchData=
   ['enucoordinatevalidinputrange_2ehpp',['ENUCoordinateValidInputRange.hpp',['../ENUCoordinateValidInputRange_8hpp.html',1,'']]],
   ['enuedge',['ENUEdge',['../namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377',1,'ad::map::point']]],
   ['enuedge_2ehpp',['ENUEdge.hpp',['../ENUEdge_8hpp.html',1,'']]],
-  ['enuedgecache',['ENUEdgeCache',['../structad_1_1map_1_1point_1_1ENUEdgeCache.html#a2e2ffe03037d4b519971952b2087fdab',1,'ad::map::point::ENUEdgeCache::ENUEdgeCache()=default'],['../structad_1_1map_1_1point_1_1ENUEdgeCache.html#a1558d6281ace68fba4a7fb453a361fb0',1,'ad::map::point::ENUEdgeCache::ENUEdgeCache(const ENUEdgeCache &amp;other)=default'],['../structad_1_1map_1_1point_1_1ENUEdgeCache.html#a66c90cb6e1b5a0286130bd30d96e9415',1,'ad::map::point::ENUEdgeCache::ENUEdgeCache(ENUEdgeCache &amp;&amp;other)=default']]],
   ['enuedgecache',['ENUEdgeCache',['../structad_1_1map_1_1point_1_1ENUEdgeCache.html',1,'ad::map::point']]],
+  ['enuedgecache',['ENUEdgeCache',['../structad_1_1map_1_1point_1_1ENUEdgeCache.html#a2e2ffe03037d4b519971952b2087fdab',1,'ad::map::point::ENUEdgeCache::ENUEdgeCache()=default'],['../structad_1_1map_1_1point_1_1ENUEdgeCache.html#a1558d6281ace68fba4a7fb453a361fb0',1,'ad::map::point::ENUEdgeCache::ENUEdgeCache(const ENUEdgeCache &amp;other)=default'],['../structad_1_1map_1_1point_1_1ENUEdgeCache.html#a66c90cb6e1b5a0286130bd30d96e9415',1,'ad::map::point::ENUEdgeCache::ENUEdgeCache(ENUEdgeCache &amp;&amp;other)=default']]],
   ['enuedgecache_2ehpp',['ENUEdgeCache.hpp',['../ENUEdgeCache_8hpp.html',1,'']]],
   ['enuedgecachevalidinputrange_2ehpp',['ENUEdgeCacheValidInputRange.hpp',['../ENUEdgeCacheValidInputRange_8hpp.html',1,'']]],
   ['enuedgevalidinputrange_2ehpp',['ENUEdgeValidInputRange.hpp',['../ENUEdgeValidInputRange_8hpp.html',1,'']]],
@@ -80,5 +80,6 @@ var searchData=
   ['extendintervalfromstart',['extendIntervalFromStart',['../namespacead_1_1map_1_1route.html#ac2092bcb21b71c3a180a33400243423b',1,'ad::map::route']]],
   ['extendintervaluntilend',['extendIntervalUntilEnd',['../namespacead_1_1map_1_1route.html#afccce271032a2cc6e954c6c2798e775e',1,'ad::map::route']]],
   ['extendintervaluntilstart',['extendIntervalUntilStart',['../namespacead_1_1map_1_1route.html#a56aa93189c6873b85cf6b335ccf0a891',1,'ad::map::route']]],
+  ['extendroutetodestinations',['extendRouteToDestinations',['../namespacead_1_1map_1_1route.html#a336e7510d56fddfbb3458f0fa9bcdaa1',1,'ad::map::route::extendRouteToDestinations(route::FullRoute &amp;route, const std::vector&lt; route::planning::RoutingParaPoint &gt; &amp;dest)'],['../namespacead_1_1map_1_1route.html#ac88e42819772968191aa49161cda49ce',1,'ad::map::route::extendRouteToDestinations(route::FullRoute &amp;route, const std::vector&lt; point::GeoPoint &gt; &amp;dest)'],['../namespacead_1_1map_1_1route.html#abcabfdaedb1d7ded6fb19c9284a93dbc',1,'ad::map::route::extendRouteToDestinations(route::FullRoute &amp;route, const std::vector&lt; point::ENUPoint &gt; &amp;dest)']]],
   ['extendroutetodistance',['extendRouteToDistance',['../namespacead_1_1map_1_1route.html#a324156f17408d4aa2c91fb3ee5ea8841',1,'ad::map::route']]]
 ];

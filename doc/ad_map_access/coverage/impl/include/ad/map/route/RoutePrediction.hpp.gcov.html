@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-07-27 17:29:37</td>
+            <td class="headerValue">2020-08-26 15:09:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -103,7 +103,7 @@
 <span class="lineNum">      32 </span>                :            : /**
 <a name="33"><span class="lineNum">      33 </span>                :            :  * @brief Implements route prediction on the lane network.</a>
 <span class="lineNum">      34 </span>                :            :  */
-<span class="lineNum">      35 </span>        [<span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 32 times"> + </span>]:<span class="lineCov">         64 : class RoutePrediction : public RouteExpander&lt;RoutePredictionScore&gt;</span>
+<span class="lineNum">      35 </span>        [<span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 33 times"> + </span>]:<span class="lineCov">         66 : class RoutePrediction : public RouteExpander&lt;RoutePredictionScore&gt;</span>
 <span class="lineNum">      36 </span>                :            : {
 <span class="lineNum">      37 </span>                :            : public:
 <span class="lineNum">      38 </span>                :            :   using RouteExpander::RoutingPoint;
@@ -165,21 +165,21 @@
 <span class="lineNum">      94 </span>                :            :   /**
 <a name="95"><span class="lineNum">      95 </span>                :            :    * @brief Element of the routing tree</a>
 <span class="lineNum">      96 </span>                :            :    */
-<span class="lineNum">      97 </span>                :<span class="lineCov">       3638 :   struct RouteTreeElement</span>
+<span class="lineNum">      97 </span>                :<span class="lineCov">       3656 :   struct RouteTreeElement</span>
 <a name="98"><span class="lineNum">      98 </span>                :            :   {</a>
 <span class="lineNum">      99 </span>                :            :     //! Constructor.
-<span class="lineNum">     100 </span>                :<span class="lineCov">       4036 :     RouteTreeElement(RouteTreeElement const *parent, RoutingPoint const &amp;iRoutingPoint)</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">       4039 :     RouteTreeElement(RouteTreeElement const *parent, RoutingPoint const &amp;iRoutingPoint)</span>
 <span class="lineNum">     101 </span>                :            :       : routingPoint(iRoutingPoint)
-<span class="lineNum">     102 </span>                :<span class="lineCov">       4036 :       , theParent(parent)</span>
+<span class="lineNum">     102 </span>                :<span class="lineCov">       4039 :       , theParent(parent)</span>
 <span class="lineNum">     103 </span>                :            :     {
-<span class="lineNum">     104 </span>                :<span class="lineCov">       4036 :     }</span>
+<span class="lineNum">     104 </span>                :<span class="lineCov">       4039 :     }</span>
 <span class="lineNum">     105 </span>                :            : 
 <span class="lineNum">     106 </span>                :            :     //! comparing route tree elements by their actual route-point to ensure children are unique
 <a name="107"><span class="lineNum">     107 </span>                :            :     struct RouteTreeElementCompare</a>
 <span class="lineNum">     108 </span>                :            :     {
-<span class="lineNum">     109 </span>                :<span class="lineCov">      10939 :       bool operator()(const std::shared_ptr&lt;RouteTreeElement&gt; &amp;left, const std::shared_ptr&lt;RouteTreeElement&gt; &amp;right)</span>
+<span class="lineNum">     109 </span>                :<span class="lineCov">      10936 :       bool operator()(const std::shared_ptr&lt;RouteTreeElement&gt; &amp;left, const std::shared_ptr&lt;RouteTreeElement&gt; &amp;right)</span>
 <span class="lineNum">     110 </span>                :            :       {
-<span class="lineNum">     111 </span>                :<span class="lineCov">      10939 :         return left-&gt;routingPoint.first &lt; right-&gt;routingPoint.first;</span>
+<span class="lineNum">     111 </span>                :<span class="lineCov">      10936 :         return left-&gt;routingPoint.first &lt; right-&gt;routingPoint.first;</span>
 <span class="lineNum">     112 </span>                :            :       }
 <span class="lineNum">     113 </span>                :            :     };
 <span class="lineNum">     114 </span>                :            : 

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-07-27 17:29:37</td>
+            <td class="headerValue">2020-08-26 15:09:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -93,60 +93,60 @@
 <span class="lineNum">      22 </span>                :            : /**
 <a name="23"><span class="lineNum">      23 </span>                :            :  * @brief serializer for restriction::PassengerCount</a>
 <span class="lineNum">      24 </span>                :            :  */
-<span class="lineNum">      25 </span>                :<span class="lineCov">      87694 : inline bool doSerialize(ISerializer &amp;serializer, restriction::PassengerCount &amp;x)</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">      88674 : inline bool doSerialize(ISerializer &amp;serializer, restriction::PassengerCount &amp;x)</span>
 <span class="lineNum">      26 </span>                :            : {
 <span class="lineNum">      27 </span>                :            :   return serializer.serializeGeneratedType&lt;restriction::PassengerCount, uint16_t, SerializeableMagic::PassengerCount&gt;(
-<span class="lineNum">      28 </span>                :<span class="lineCov">      87694 :     x);</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">      88674 :     x);</span>
 <span class="lineNum">      29 </span>                :            : }
 <span class="lineNum">      30 </span>                :            : 
 <span class="lineNum">      31 </span>                :            : /**
 <a name="32"><span class="lineNum">      32 </span>                :            :  * @brief serializer for restriction::Restriction</a>
 <span class="lineNum">      33 </span>                :            :  */
-<span class="lineNum">      34 </span>                :<span class="lineCov">      87694 : inline bool doSerialize(ISerializer &amp;serializer, restriction::Restriction &amp;x)</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">      88674 : inline bool doSerialize(ISerializer &amp;serializer, restriction::Restriction &amp;x)</span>
 <span class="lineNum">      35 </span>                :            : {
-<span class="lineNum">      36 </span>[<span class="branchCov" title="Branch 1 was taken 87694 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 87694 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     350776 :   return serializer.serialize(SerializeableMagic::Restriction) &amp;&amp; serializer.serialize(x.negated)</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 87694 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 87694 times"> + </span>]
+<span class="lineNum">      36 </span>[<span class="branchCov" title="Branch 1 was taken 88674 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 88674 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     354696 :   return serializer.serialize(SerializeableMagic::Restriction) &amp;&amp; serializer.serialize(x.negated)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 88674 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 88674 times"> + </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
-<span class="lineNum">      37 </span>[<span class="branchCov" title="Branch 0 was taken 87694 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 87694 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     350776 :     &amp;&amp; doSerialize(serializer, x.passengersMin) &amp;&amp; serializer.serializeVector(x.roadUserTypes);</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 87694 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 87694 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 10 was taken 87694 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">      37 </span>[<span class="branchCov" title="Branch 0 was taken 88674 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 88674 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     354696 :     &amp;&amp; doSerialize(serializer, x.passengersMin) &amp;&amp; serializer.serializeVector(x.roadUserTypes);</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 88674 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 88674 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 10 was taken 88674 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <span class="lineNum">      38 </span>                :            : }
 <span class="lineNum">      39 </span>                :            : 
 <span class="lineNum">      40 </span>                :            : /**
 <a name="41"><span class="lineNum">      41 </span>                :            :  * @brief serializer for restriction::Restrictions</a>
 <span class="lineNum">      42 </span>                :            :  */
-<span class="lineNum">      43 </span>                :<span class="lineCov">     180589 : inline bool doSerialize(ISerializer &amp;serializer, restriction::Restrictions &amp;x)</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">     182981 : inline bool doSerialize(ISerializer &amp;serializer, restriction::Restrictions &amp;x)</span>
 <span class="lineNum">      44 </span>                :            : {
-<span class="lineNum">      45 </span>[<span class="branchCov" title="Branch 1 was taken 180589 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 180589 times"> + </span>]:<span class="lineCov">     541767 :   return serializer.serialize(SerializeableMagic::Restrictions)</span>
+<span class="lineNum">      45 </span>[<span class="branchCov" title="Branch 1 was taken 182981 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 182981 times"> + </span>]:<span class="lineCov">     548943 :   return serializer.serialize(SerializeableMagic::Restrictions)</span>
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 5 was not executed"> # </span><span class="branchNoExec" title="Branch 6 was not executed"> # </span>]
 <span class="lineNum">      46 </span>                :            :     //@todo: special serializable magic for backward compatibility
-<span class="lineNum">      47 </span>[<span class="branchCov" title="Branch 1 was taken 180589 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 180589 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     361178 :     &amp;&amp; serializer.serializeObjectVector(x.conjunctions, SerializeableMagic::ObjectPtrVectorType)</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 180589 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>]
-<span class="lineNum">      48 </span>[<span class="branchCov" title="Branch 0 was taken 180589 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 180589 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     722356 :     &amp;&amp; serializer.serializeObjectVector(x.disjunctions, SerializeableMagic::ObjectPtrVectorType);</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 180589 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 180589 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">      47 </span>[<span class="branchCov" title="Branch 1 was taken 182981 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 182981 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     365962 :     &amp;&amp; serializer.serializeObjectVector(x.conjunctions, SerializeableMagic::ObjectPtrVectorType)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 182981 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>]
+<span class="lineNum">      48 </span>[<span class="branchCov" title="Branch 0 was taken 182981 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 182981 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     731924 :     &amp;&amp; serializer.serializeObjectVector(x.disjunctions, SerializeableMagic::ObjectPtrVectorType);</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 182981 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 182981 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 9 was not executed"> # </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span>]
 <span class="lineNum">      49 </span>                :            : }
 <span class="lineNum">      50 </span>                :            : 
 <span class="lineNum">      51 </span>                :            : /**
 <a name="52"><span class="lineNum">      52 </span>                :            :  * @brief serializer for restriction::SpeedLimit</a>
 <span class="lineNum">      53 </span>                :            :  */
-<span class="lineNum">      54 </span>                :<span class="lineCov">      25801 : inline bool doSerialize(ISerializer &amp;serializer, restriction::SpeedLimit &amp;x)</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">      26083 : inline bool doSerialize(ISerializer &amp;serializer, restriction::SpeedLimit &amp;x)</span>
 <span class="lineNum">      55 </span>                :            : {
-<span class="lineNum">      56 </span>[<span class="branchCov" title="Branch 1 was taken 25801 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 25801 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     103204 :   bool ok = serializer.serialize(SerializeableMagic::SpeedLimit) &amp;&amp; doSerialize(serializer, x.speedLimit)</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 25801 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 25801 times"> + </span>]
+<span class="lineNum">      56 </span>[<span class="branchCov" title="Branch 1 was taken 26083 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 26083 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     104332 :   bool ok = serializer.serialize(SerializeableMagic::SpeedLimit) &amp;&amp; doSerialize(serializer, x.speedLimit)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 26083 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 26083 times"> + </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
-<span class="lineNum">      57 </span>[<span class="branchCov" title="Branch 0 was taken 25801 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 25801 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      77403 :     &amp;&amp; doSerialize(serializer, x.lanePiece);</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 5 was taken 25801 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]
+<span class="lineNum">      57 </span>[<span class="branchCov" title="Branch 0 was taken 26083 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 26083 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      78249 :     &amp;&amp; doSerialize(serializer, x.lanePiece);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 5 was taken 26083 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]
 <span class="lineNum">      58 </span>                :            : 
-<span class="lineNum">      59 </span>        [<span class="branchCov" title="Branch 0 was taken 25801 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      25801 :   if (ok)</span>
+<span class="lineNum">      59 </span>        [<span class="branchCov" title="Branch 0 was taken 26083 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      26083 :   if (ok)</span>
 <span class="lineNum">      60 </span>                :            :   {
 <span class="lineNum">      61 </span>                :            :     // speed limits have to be actually positive!
-<span class="lineNum">      62 </span>[<span class="branchCov" title="Branch 2 was taken 25801 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1490 times"> + </span><span class="branchCov" title="Branch 5 was taken 24311 times"> + </span>]:<span class="lineCov">      25801 :     if (x.speedLimit &lt;= physics::Speed(0.))</span>
+<span class="lineNum">      62 </span>[<span class="branchCov" title="Branch 2 was taken 26083 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1490 times"> + </span><span class="branchCov" title="Branch 5 was taken 24593 times"> + </span>]:<span class="lineCov">      26083 :     if (x.speedLimit &lt;= physics::Speed(0.))</span>
 <span class="lineNum">      63 </span>                :            :     {
 <span class="lineNum">      64 </span>                :<span class="lineCov">       1490 :       x.speedLimit = std::numeric_limits&lt;physics::Speed&gt;::max();</span>
 <span class="lineNum">      65 </span>                :            :     }
 <span class="lineNum">      66 </span>                :            :   }
-<span class="lineNum">      67 </span>                :<span class="lineCov">      25801 :   return ok;</span>
+<span class="lineNum">      67 </span>                :<span class="lineCov">      26083 :   return ok;</span>
 <span class="lineNum">      68 </span>                :            : }
 <span class="lineNum">      69 </span>                :            : 
 <span class="lineNum">      70 </span>                :            : } // namespace serialize

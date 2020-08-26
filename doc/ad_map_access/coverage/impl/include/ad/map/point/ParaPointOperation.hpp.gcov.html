@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-07-27 17:29:37</td>
+            <td class="headerValue">2020-08-26 15:09:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -91,12 +91,12 @@
 <span class="lineNum">      20 </span>                :            :  * @param[in] laneId  the lane id
 <a name="21"><span class="lineNum">      21 </span>                :            :  * @param[in] parametricOffset the parametric offset</a>
 <span class="lineNum">      22 </span>                :            :  */
-<span class="lineNum">      23 </span>                :<span class="lineCov">       5444 : inline ParaPoint createParaPoint(lane::LaneId const &amp;laneId, physics::ParametricValue const &amp;parametricOffset)</span>
+<span class="lineNum">      23 </span>                :<span class="lineCov">       5451 : inline ParaPoint createParaPoint(lane::LaneId const &amp;laneId, physics::ParametricValue const &amp;parametricOffset)</span>
 <span class="lineNum">      24 </span>                :            : {
-<span class="lineNum">      25 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineCov">       5444 :   ParaPoint result;</span>
-<span class="lineNum">      26 </span>                :<span class="lineCov">       5444 :   result.laneId = laneId;</span>
-<span class="lineNum">      27 </span>                :<span class="lineCov">       5444 :   result.parametricOffset = parametricOffset;</span>
-<span class="lineNum">      28 </span>                :<span class="lineCov">       5444 :   return result;</span>
+<span class="lineNum">      25 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineCov">       5451 :   ParaPoint result;</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">       5451 :   result.laneId = laneId;</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">       5451 :   result.parametricOffset = parametricOffset;</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">       5451 :   return result;</span>
 <span class="lineNum">      29 </span>                :            : }
 <span class="lineNum">      30 </span>                :            : 
 <span class="lineNum">      31 </span>                :            : } // namespace point
@@ -107,19 +107,19 @@
 <span class="lineNum">      36 </span>                :            :  * @brief Standard comparison operator.
 <a name="37"><span class="lineNum">      37 </span>                :            :  * @returns True if left object can be seen as less than right object.</a>
 <span class="lineNum">      38 </span>                :            :  */
-<span class="lineNum">      39 </span>                :<span class="lineCov">     794028 : inline bool operator&lt;(const ::ad::map::point::ParaPoint &amp;left, const ::ad::map::point::ParaPoint &amp;right)</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">     795865 : inline bool operator&lt;(const ::ad::map::point::ParaPoint &amp;left, const ::ad::map::point::ParaPoint &amp;right)</span>
 <span class="lineNum">      40 </span>                :            : {
-<span class="lineNum">      41 </span>        [<span class="branchCov" title="Branch 1 was taken 346746 times"> + </span><span class="branchCov" title="Branch 2 was taken 447282 times"> + </span>]:<span class="lineCov">     794028 :   if (left.laneId &lt; right.laneId)</span>
+<span class="lineNum">      41 </span>        [<span class="branchCov" title="Branch 1 was taken 347567 times"> + </span><span class="branchCov" title="Branch 2 was taken 448298 times"> + </span>]:<span class="lineCov">     795865 :   if (left.laneId &lt; right.laneId)</span>
 <span class="lineNum">      42 </span>                :            :   {
-<span class="lineNum">      43 </span>                :<span class="lineCov">     346746 :     return true;</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">     347567 :     return true;</span>
 <span class="lineNum">      44 </span>                :            :   }
-<span class="lineNum">      45 </span>        [<span class="branchCov" title="Branch 1 was taken 203827 times"> + </span><span class="branchCov" title="Branch 2 was taken 243455 times"> + </span>]:<span class="lineCov">     447282 :   else if (left.laneId == right.laneId)</span>
+<span class="lineNum">      45 </span>        [<span class="branchCov" title="Branch 1 was taken 204196 times"> + </span><span class="branchCov" title="Branch 2 was taken 244102 times"> + </span>]:<span class="lineCov">     448298 :   else if (left.laneId == right.laneId)</span>
 <span class="lineNum">      46 </span>                :            :   {
-<span class="lineNum">      47 </span>                :<span class="lineCov">     203827 :     return left.parametricOffset &lt; right.parametricOffset;</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">     204196 :     return left.parametricOffset &lt; right.parametricOffset;</span>
 <span class="lineNum">      48 </span>                :            :   }
 <span class="lineNum">      49 </span>                :            :   else
 <span class="lineNum">      50 </span>                :            :   {
-<span class="lineNum">      51 </span>                :<span class="lineCov">     243455 :     return false;</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">     244102 :     return false;</span>
 <span class="lineNum">      52 </span>                :            :   }
 <span class="lineNum">      53 </span>                :            : }
 <span class="lineNum">      54 </span>                :            : 

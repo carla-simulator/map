@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-07-27 17:29:37</td>
+            <td class="headerValue">2020-08-26 15:09:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -260,9 +260,9 @@
 <span class="lineNum">     189 </span>                :            :  *
 <a name="190"><span class="lineNum">     190 </span>                :            :  * @returns @c true if the interval is degenerated: start == end</a>
 <span class="lineNum">     191 </span>                :            :  */
-<span class="lineNum">     192 </span>                :<span class="lineCov">        265 : inline bool isDegenerated(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">     192 </span>                :<span class="lineCov">        268 : inline bool isDegenerated(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">     193 </span>                :            : {
-<span class="lineNum">     194 </span>                :<span class="lineCov">        265 :   return (laneInterval.start == laneInterval.end);</span>
+<span class="lineNum">     194 </span>                :<span class="lineCov">        268 :   return (laneInterval.start == laneInterval.end);</span>
 <span class="lineNum">     195 </span>                :            : }
 <span class="lineNum">     196 </span>                :            : 
 <span class="lineNum">     197 </span>                :            : /**
@@ -374,9 +374,9 @@
 <span class="lineNum">     303 </span>                :            : /**
 <a name="304"><span class="lineNum">     304 </span>                :            :  * @brief calculate the length of the provided lane interval as parametric value</a>
 <span class="lineNum">     305 </span>                :            :  */
-<span class="lineNum">     306 </span>                :<span class="lineCov">        227 : inline physics::ParametricValue calcParametricLength(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">     306 </span>                :<span class="lineCov">        258 : inline physics::ParametricValue calcParametricLength(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">     307 </span>                :            : {
-<span class="lineNum">     308 </span>                :<span class="lineCov">        227 :   return std::fabs(laneInterval.start - laneInterval.end);</span>
+<span class="lineNum">     308 </span>                :<span class="lineCov">        258 :   return std::fabs(laneInterval.start - laneInterval.end);</span>
 <span class="lineNum">     309 </span>                :            : }
 <span class="lineNum">     310 </span>                :            : 
 <span class="lineNum">     311 </span>                :            : /** @brief calculate the length of the provided lane interval as physics::Distance value

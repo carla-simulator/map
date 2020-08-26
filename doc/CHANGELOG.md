@@ -1,5 +1,13 @@
 ## Latest changes
+
+## Release 2.2.0
+#### :ghost: Maintenance
 * Fix build of unit tests under Ubuntu18.04 with gcc 7.5.0
+* Added ad::map::route::extendRouteToDestinations()
+* Fixed AdMapMatching function constness
+* Made ad::map::route::filterDuplicateRoutes() public available
+* ad::map::access::initializeFromOpenDriveContent can be initialized twice with same open drive content
+* Build documentation update to make the plain cmake build more robust and especially make repeated builds with -DBUILD_PYTHON_BINDING=ON working
 
 ## Release 2.1.0
 #### :ghost: Maintenance

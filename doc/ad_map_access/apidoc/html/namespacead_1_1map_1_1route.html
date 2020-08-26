@@ -517,6 +517,15 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <tr class="memitem:a324156f17408d4aa2c91fb3ee5ea8841"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a324156f17408d4aa2c91fb3ee5ea8841">extendRouteToDistance</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, physics::Distance const &amp;length, std::vector&lt; <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &gt; &amp;additionalRoutes)</td></tr>
 <tr class="memdesc:a324156f17408d4aa2c91fb3ee5ea8841"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route to have at least the given length  <a href="#a324156f17408d4aa2c91fb3ee5ea8841">More...</a><br /></td></tr>
 <tr class="separator:a324156f17408d4aa2c91fb3ee5ea8841"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a336e7510d56fddfbb3458f0fa9bcdaa1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a336e7510d56fddfbb3458f0fa9bcdaa1">extendRouteToDestinations</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, const std::vector&lt; <a class="el" href="structad_1_1map_1_1route_1_1planning_1_1RoutingParaPoint.html">route::planning::RoutingParaPoint</a> &gt; &amp;dest)</td></tr>
+<tr class="memdesc:a336e7510d56fddfbb3458f0fa9bcdaa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route with the given list of destinations  <a href="#a336e7510d56fddfbb3458f0fa9bcdaa1">More...</a><br /></td></tr>
+<tr class="separator:a336e7510d56fddfbb3458f0fa9bcdaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac88e42819772968191aa49161cda49ce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#ac88e42819772968191aa49161cda49ce">extendRouteToDestinations</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, const std::vector&lt; <a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> &gt; &amp;dest)</td></tr>
+<tr class="memdesc:ac88e42819772968191aa49161cda49ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route with the given list of destinations  <a href="#ac88e42819772968191aa49161cda49ce">More...</a><br /></td></tr>
+<tr class="separator:ac88e42819772968191aa49161cda49ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcabfdaedb1d7ded6fb19c9284a93dbc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#abcabfdaedb1d7ded6fb19c9284a93dbc">extendRouteToDestinations</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, const std::vector&lt; <a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> &gt; &amp;dest)</td></tr>
+<tr class="memdesc:abcabfdaedb1d7ded6fb19c9284a93dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route with the given list of destinations  <a href="#abcabfdaedb1d7ded6fb19c9284a93dbc">More...</a><br /></td></tr>
+<tr class="separator:abcabfdaedb1d7ded6fb19c9284a93dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8341749daa83ed3ccf36785fe0232a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#ad8341749daa83ed3ccf36785fe0232a2">appendRoadSegmentToRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1LaneInterval.html">route::LaneInterval</a> const &amp;laneInverval, <a class="el" href="namespacead_1_1map_1_1route.html#adf33d33b9c6c78ec77b2544c09021b6e">route::RouteLaneOffset</a> const &amp;laneOffset, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route)</td></tr>
 <tr class="memdesc:ad8341749daa83ed3ccf36785fe0232a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to append a new lane interval to a road segment list  <a href="#ad8341749daa83ed3ccf36785fe0232a2">More...</a><br /></td></tr>
 <tr class="separator:ad8341749daa83ed3ccf36785fe0232a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1447,6 +1456,108 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>resulting extended <a class="el" href="structad_1_1map_1_1route_1_1LaneInterval.html" title="DataType LaneInterval. ">LaneInterval</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a336e7510d56fddfbb3458f0fa9bcdaa1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::route::extendRouteToDestinations </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;&#160;</td>
+          <td class="paramname"><em>route</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="structad_1_1map_1_1route_1_1planning_1_1RoutingParaPoint.html">route::planning::RoutingParaPoint</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>dest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>extends route with the given list of destinations </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac88e42819772968191aa49161cda49ce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::route::extendRouteToDestinations </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;&#160;</td>
+          <td class="paramname"><em>route</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>dest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>extends route with the given list of destinations </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="abcabfdaedb1d7ded6fb19c9284a93dbc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::route::extendRouteToDestinations </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;&#160;</td>
+          <td class="paramname"><em>route</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>dest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>extends route with the given list of destinations </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -3765,50 +3876,6 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="a7bb1ae8d0fbf7d8a7cb2f4e86eba3c45"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; ad::map::route::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1LaneSegment.html">LaneSegment</a> const &amp;&#160;</td>
-          <td class="paramname"><em>_value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>standard ostream operator </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1route_1_1LaneSegment.html" title="DataType LaneSegment. ">LaneSegment</a> value</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="aaf4e6cd1476293dc7a59b9e50f3cf565"></a>
 <div class="memitem">
 <div class="memproto">
@@ -3846,6 +3913,50 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1route_1_1ConnectingRoute.html" title="DataType ConnectingRoute. ">ConnectingRoute</a> value</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7bb1ae8d0fbf7d8a7cb2f4e86eba3c45"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; ad::map::route::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1LaneSegment.html">LaneSegment</a> const &amp;&#160;</td>
+          <td class="paramname"><em>_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>standard ostream operator </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1route_1_1LaneSegment.html" title="DataType LaneSegment. ">LaneSegment</a> value</td></tr>
   </table>
   </dd>
 </dl>

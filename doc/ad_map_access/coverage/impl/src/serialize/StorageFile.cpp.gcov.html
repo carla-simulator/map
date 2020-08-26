@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-07-27 17:29:37</td>
+            <td class="headerValue">2020-08-26 15:09:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -84,49 +84,49 @@
 <span class="lineNum">      13 </span>                :            : namespace map {
 <a name="14"><span class="lineNum">      14 </span>                :            : namespace serialize {</a>
 <span class="lineNum">      15 </span>                :            : 
-<span class="lineNum">      16 </span>                :<span class="lineCov">        332 : StorageFile::StorageFile()</span>
+<span class="lineNum">      16 </span>                :<span class="lineCov">        336 : StorageFile::StorageFile()</span>
 <span class="lineNum">      17 </span>                :            : {
-<span class="lineNum">      18 </span>                :<span class="lineCov">        166 :   file_ = nullptr;</span>
-<a name="19"><span class="lineNum">      19 </span>                :<span class="lineCov">        166 : }</span></a>
+<span class="lineNum">      18 </span>                :<span class="lineCov">        168 :   file_ = nullptr;</span>
+<a name="19"><span class="lineNum">      19 </span>                :<span class="lineCov">        168 : }</span></a>
 <span class="lineNum">      20 </span>                :            : 
-<span class="lineNum">      21 </span>[<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 166 times"> + </span>]:<span class="lineCov">        498 : StorageFile::~StorageFile()</span>
+<span class="lineNum">      21 </span>[<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 168 times"> + </span>]:<span class="lineCov">        504 : StorageFile::~StorageFile()</span>
 <span class="lineNum">      22 </span>                :            : {
-<span class="lineNum">      23 </span>[<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>][<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchCov" title="Branch 3 was taken 164 times"> + </span>]:<span class="lineCov">        166 :   if (file_ != nullptr)</span>
+<span class="lineNum">      23 </span>[<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>][<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchCov" title="Branch 3 was taken 166 times"> + </span>]:<span class="lineCov">        168 :   if (file_ != nullptr)</span>
 <span class="lineNum">      24 </span>                :            :   {
 <span class="lineNum">      25 </span>                :<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;StorageFile::dtor: File is not closed!&quot;);</span>
 <span class="lineNum">      26 </span>                :<span class="lineCov">          2 :     fclose(file_);</span>
 <span class="lineNum">      27 </span>                :            :   }
-<span class="lineNum">      28 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 166 times"> + </span>]:<span class="lineCov">        166 : }</span>
+<span class="lineNum">      28 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 168 times"> + </span>]:<span class="lineCov">        168 : }</span>
 <span class="lineNum">      29 </span>                :            : 
 <span class="lineNum">      30 </span>                :            : //////////////////////////
 <a name="31"><span class="lineNum">      31 </span>                :            : // IStorage Implementation</a>
 <span class="lineNum">      32 </span>                :            : 
-<span class="lineNum">      33 </span>                :<span class="lineCov">        168 : bool StorageFile::doOpen(std::string const &amp;config, std::string const &amp;flags)</span>
+<span class="lineNum">      33 </span>                :<span class="lineCov">        170 : bool StorageFile::doOpen(std::string const &amp;config, std::string const &amp;flags)</span>
 <span class="lineNum">      34 </span>                :            : {
-<span class="lineNum">      35 </span>        [<span class="branchCov" title="Branch 0 was taken 166 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">        168 :   if (file_ == nullptr)</span>
+<span class="lineNum">      35 </span>        [<span class="branchCov" title="Branch 0 was taken 168 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">        170 :   if (file_ == nullptr)</span>
 <span class="lineNum">      36 </span>                :            :   {
-<span class="lineNum">      37 </span>                :<span class="lineCov">        166 :     file_ = fopen(config.c_str(), flags.c_str());</span>
-<span class="lineNum">      38 </span>                :<span class="lineCov">        166 :     return file_ != nullptr;</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">        168 :     file_ = fopen(config.c_str(), flags.c_str());</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">        168 :     return file_ != nullptr;</span>
 <span class="lineNum">      39 </span>                :            :   }
 <span class="lineNum">      40 </span>                :            :   else
 <span class="lineNum">      41 </span>                :            :   {
 <span class="lineNum">      42 </span>[<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;StorageFile::DoOpen: File already open! {}&quot;, config);</span>
-<span class="lineNum">      43 </span>                :<span class="lineCov">        168 :     return false;</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">        170 :     return false;</span>
 <span class="lineNum">      44 </span>                :            :   }
 <a name="45"><span class="lineNum">      45 </span>                :            : }</a>
 <span class="lineNum">      46 </span>                :            : 
-<span class="lineNum">      47 </span>                :<span class="lineCov">        166 : bool StorageFile::doClose()</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">        168 : bool StorageFile::doClose()</span>
 <span class="lineNum">      48 </span>                :            : {
-<span class="lineNum">      49 </span>        [<span class="branchCov" title="Branch 0 was taken 164 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">        166 :   if (file_ != nullptr)</span>
+<span class="lineNum">      49 </span>        [<span class="branchCov" title="Branch 0 was taken 166 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">        168 :   if (file_ != nullptr)</span>
 <span class="lineNum">      50 </span>                :            :   {
-<span class="lineNum">      51 </span>                :<span class="lineCov">        164 :     fclose(file_);</span>
-<span class="lineNum">      52 </span>                :<span class="lineCov">        164 :     file_ = nullptr;</span>
-<span class="lineNum">      53 </span>                :<span class="lineCov">        164 :     return true;</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">        166 :     fclose(file_);</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">        166 :     file_ = nullptr;</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">        166 :     return true;</span>
 <span class="lineNum">      54 </span>                :            :   }
 <span class="lineNum">      55 </span>                :            :   else
 <span class="lineNum">      56 </span>                :            :   {
 <span class="lineNum">      57 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;StorageFile: Attempt to close already closed file!&quot;);</span>
-<span class="lineNum">      58 </span>                :<span class="lineCov">        166 :     return false;</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">        168 :     return false;</span>
 <span class="lineNum">      59 </span>                :            :   }
 <a name="60"><span class="lineNum">      60 </span>                :            : }</a>
 <span class="lineNum">      61 </span>                :            : 
@@ -143,16 +143,16 @@
 <span class="lineNum">      72 </span>                :            :   }
 <a name="73"><span class="lineNum">      73 </span>                :            : }</a>
 <span class="lineNum">      74 </span>                :            : 
-<span class="lineNum">      75 </span>                :<span class="lineCov">    9976126 : bool StorageFile::doRead(void *x, size_t bytes)</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">   10126522 : bool StorageFile::doRead(void *x, size_t bytes)</span>
 <span class="lineNum">      76 </span>                :            : {
-<span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 0 was taken 9976124 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">    9976126 :   if (file_ != nullptr)</span>
+<span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 0 was taken 10126520 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">   10126522 :   if (file_ != nullptr)</span>
 <span class="lineNum">      78 </span>                :            :   {
-<span class="lineNum">      79 </span>                :<span class="lineCov">    9976124 :     return fread(x, bytes, 1, file_) == 1;</span>
+<span class="lineNum">      79 </span>                :<span class="lineCov">   10126520 :     return fread(x, bytes, 1, file_) == 1;</span>
 <span class="lineNum">      80 </span>                :            :   }
 <span class="lineNum">      81 </span>                :            :   else
 <span class="lineNum">      82 </span>                :            :   {
 <span class="lineNum">      83 </span>        [<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;StorageFile::DoRead: File not open.&quot;);</span>
-<span class="lineNum">      84 </span>                :<span class="lineCov">    9976126 :     return false;</span>
+<span class="lineNum">      84 </span>                :<span class="lineCov">   10126522 :     return false;</span>
 <span class="lineNum">      85 </span>                :            :   }
 <span class="lineNum">      86 </span>                :            : }
 <span class="lineNum">      87 </span>                :            : 

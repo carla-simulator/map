@@ -6,6 +6,7 @@ var searchData=
   ['calcparametriclength',['calcParametricLength',['../namespacead_1_1map_1_1route.html#ae17597d2b615c8d7717a912dc2b55243',1,'ad::map::route']]],
   ['calculate',['calculate',['../classad_1_1map_1_1route_1_1planning_1_1Route.html#abb547499baa63fe8bebadfb6a7ffad0c',1,'ad::map::route::planning::Route::calculate()'],['../classad_1_1map_1_1route_1_1planning_1_1RouteAstar.html#a596e99cd1fafd75c5d1adda64a8995d3',1,'ad::map::route::planning::RouteAstar::calculate()'],['../classad_1_1map_1_1route_1_1planning_1_1RoutePrediction.html#abd9d54313954b3b6ac70d1ab0242c814',1,'ad::map::route::planning::RoutePrediction::calculate()']]],
   ['calculatebypassingroute',['calculateBypassingRoute',['../namespacead_1_1map_1_1route.html#a41e7099ba80205587ac132e5e7ae6983',1,'ad::map::route']]],
+  ['calculatecrc32checksum',['calculateCRC32Checksum',['../namespacead_1_1map_1_1serialize.html#a3193b76c1c68a08a65b3b4e83d776325',1,'ad::map::serialize']]],
   ['calculateedgelength',['calculateEdgeLength',['../namespacead_1_1map_1_1point.html#aa4b2893d6a92667c5b1db39ff365744c',1,'ad::map::point']]],
   ['calculaterouteparapointatdistance',['calculateRouteParaPointAtDistance',['../namespacead_1_1map_1_1route.html#a38d2779b19827861271c7f7523e8c836',1,'ad::map::route']]],
   ['calculatewidthrange',['calculateWidthRange',['../namespacead_1_1map_1_1point.html#a050ea828959e24fe00874e9ec66c0f68',1,'ad::map::point']]],

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-07-27 17:29:37</td>
+            <td class="headerValue">2020-08-26 15:09:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -83,90 +83,90 @@
 <span class="lineNum">      12 </span>                :            : namespace map {
 <a name="13"><span class="lineNum">      13 </span>                :            : namespace point {</a>
 <span class="lineNum">      14 </span>                :            : 
-<span class="lineNum">      15 </span>                :<span class="lineCov">     616366 : void expandBounds(point::ECEFPoint &amp;upperBound, point::ECEFPoint &amp;lowerBound, point::ECEFPoint const &amp;point)</span>
+<span class="lineNum">      15 </span>                :<span class="lineCov">     621806 : void expandBounds(point::ECEFPoint &amp;upperBound, point::ECEFPoint &amp;lowerBound, point::ECEFPoint const &amp;point)</span>
 <span class="lineNum">      16 </span>                :            : {
-<span class="lineNum">      17 </span>                :<span class="lineCov">     616366 :   upperBound.x = std::max(upperBound.x, point.x);</span>
-<span class="lineNum">      18 </span>                :<span class="lineCov">     616366 :   upperBound.y = std::max(upperBound.y, point.y);</span>
-<span class="lineNum">      19 </span>                :<span class="lineCov">     616366 :   upperBound.z = std::max(upperBound.z, point.z);</span>
-<span class="lineNum">      20 </span>                :<span class="lineCov">     616366 :   lowerBound.x = std::min(lowerBound.x, point.x);</span>
-<span class="lineNum">      21 </span>                :<span class="lineCov">     616366 :   lowerBound.y = std::min(lowerBound.y, point.y);</span>
-<span class="lineNum">      22 </span>                :<span class="lineCov">     616366 :   lowerBound.z = std::min(lowerBound.z, point.z);</span>
-<a name="23"><span class="lineNum">      23 </span>                :<span class="lineCov">     616366 : }</span></a>
+<span class="lineNum">      17 </span>                :<span class="lineCov">     621806 :   upperBound.x = std::max(upperBound.x, point.x);</span>
+<span class="lineNum">      18 </span>                :<span class="lineCov">     621806 :   upperBound.y = std::max(upperBound.y, point.y);</span>
+<span class="lineNum">      19 </span>                :<span class="lineCov">     621806 :   upperBound.z = std::max(upperBound.z, point.z);</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">     621806 :   lowerBound.x = std::min(lowerBound.x, point.x);</span>
+<span class="lineNum">      21 </span>                :<span class="lineCov">     621806 :   lowerBound.y = std::min(lowerBound.y, point.y);</span>
+<span class="lineNum">      22 </span>                :<span class="lineCov">     621806 :   lowerBound.z = std::min(lowerBound.z, point.z);</span>
+<a name="23"><span class="lineNum">      23 </span>                :<span class="lineCov">     621806 : }</span></a>
 <span class="lineNum">      24 </span>                :            : 
-<span class="lineNum">      25 </span>                :<span class="lineCov">      41550 : point::BoundingSphere calcBoundingSphere(Geometry const &amp;geometryLeft, Geometry const &amp;geometryRight)</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">      41832 : point::BoundingSphere calcBoundingSphere(Geometry const &amp;geometryLeft, Geometry const &amp;geometryRight)</span>
 <span class="lineNum">      26 </span>                :            : {
-<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 1 was taken 41550 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41550 :   point::BoundingSphere boundingSphere;</span>
+<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 1 was taken 41832 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41832 :   point::BoundingSphere boundingSphere;</span>
 <span class="lineNum">      28 </span>                :            : 
-<span class="lineNum">      29 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchCov" title="Branch 2 was taken 41548 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]:<span class="lineCov">      41550 :   if (geometryLeft.ecefEdge.empty() &amp;&amp; geometryRight.ecefEdge.empty())</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchCov" title="Branch 7 was taken 41549 times"> + </span>]
+<span class="lineNum">      29 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchCov" title="Branch 2 was taken 41830 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]:<span class="lineCov">      41832 :   if (geometryLeft.ecefEdge.empty() &amp;&amp; geometryRight.ecefEdge.empty())</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchCov" title="Branch 7 was taken 41831 times"> + </span>]
 <span class="lineNum">      30 </span>                :            :   {
 <span class="lineNum">      31 </span>                :<span class="lineCov">          1 :     return boundingSphere;</span>
 <span class="lineNum">      32 </span>                :            :   }
 <span class="lineNum">      33 </span>                :            : 
-<span class="lineNum">      34 </span>        [<span class="branchCov" title="Branch 1 was taken 41549 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41549 :   point::ECEFPoint upperBound;</span>
-<span class="lineNum">      35 </span>        [<span class="branchCov" title="Branch 1 was taken 41549 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41549 :   point::ECEFPoint lowerBound;</span>
-<span class="lineNum">      36 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 41548 times"> + </span>]:<span class="lineCov">      41549 :   if (geometryLeft.ecefEdge.empty())</span>
+<span class="lineNum">      34 </span>        [<span class="branchCov" title="Branch 1 was taken 41831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41831 :   point::ECEFPoint upperBound;</span>
+<span class="lineNum">      35 </span>        [<span class="branchCov" title="Branch 1 was taken 41831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41831 :   point::ECEFPoint lowerBound;</span>
+<span class="lineNum">      36 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 41830 times"> + </span>]:<span class="lineCov">      41831 :   if (geometryLeft.ecefEdge.empty())</span>
 <span class="lineNum">      37 </span>                :            :   {
 <span class="lineNum">      38 </span>                :<span class="lineCov">          1 :     upperBound = geometryRight.ecefEdge.front();</span>
 <span class="lineNum">      39 </span>                :            :   }
 <span class="lineNum">      40 </span>                :            :   else
 <span class="lineNum">      41 </span>                :            :   {
-<span class="lineNum">      42 </span>                :<span class="lineCov">      41548 :     upperBound = geometryLeft.ecefEdge.front();</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">      41830 :     upperBound = geometryLeft.ecefEdge.front();</span>
 <span class="lineNum">      43 </span>                :            :   }
-<span class="lineNum">      44 </span>                :<span class="lineCov">      41549 :   lowerBound = upperBound;</span>
+<span class="lineNum">      44 </span>                :<span class="lineCov">      41831 :   lowerBound = upperBound;</span>
 <span class="lineNum">      45 </span>                :            : 
-<span class="lineNum">      46 </span>        [<span class="branchCov" title="Branch 3 was taken 308175 times"> + </span><span class="branchCov" title="Branch 4 was taken 41549 times"> + </span>]:<span class="lineCov">     349724 :   for (auto const &amp;point : geometryLeft.ecefEdge)</span>
+<span class="lineNum">      46 </span>        [<span class="branchCov" title="Branch 3 was taken 310895 times"> + </span><span class="branchCov" title="Branch 4 was taken 41831 times"> + </span>]:<span class="lineCov">     352726 :   for (auto const &amp;point : geometryLeft.ecefEdge)</span>
 <span class="lineNum">      47 </span>                :            :   {
-<span class="lineNum">      48 </span>        [<span class="branchCov" title="Branch 1 was taken 308175 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     308175 :     expandBounds(upperBound, lowerBound, point);</span>
+<span class="lineNum">      48 </span>        [<span class="branchCov" title="Branch 1 was taken 310895 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     310895 :     expandBounds(upperBound, lowerBound, point);</span>
 <span class="lineNum">      49 </span>                :            :   }
-<span class="lineNum">      50 </span>        [<span class="branchCov" title="Branch 3 was taken 308191 times"> + </span><span class="branchCov" title="Branch 4 was taken 41549 times"> + </span>]:<span class="lineCov">     349740 :   for (auto const &amp;point : geometryRight.ecefEdge)</span>
+<span class="lineNum">      50 </span>        [<span class="branchCov" title="Branch 3 was taken 310911 times"> + </span><span class="branchCov" title="Branch 4 was taken 41831 times"> + </span>]:<span class="lineCov">     352742 :   for (auto const &amp;point : geometryRight.ecefEdge)</span>
 <span class="lineNum">      51 </span>                :            :   {
-<span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 1 was taken 308191 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     308191 :     expandBounds(upperBound, lowerBound, point);</span>
+<span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 1 was taken 310911 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     310911 :     expandBounds(upperBound, lowerBound, point);</span>
 <span class="lineNum">      53 </span>                :            :   }
 <span class="lineNum">      54 </span>                :            : 
-<span class="lineNum">      55 </span>        [<span class="branchCov" title="Branch 1 was taken 41549 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41549 :   point::ECEFPoint const diagonalVector = upperBound - lowerBound;</span>
-<span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 1 was taken 41549 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41549 :   auto diagonalVectorLength = point::vectorLength(diagonalVector);</span>
+<span class="lineNum">      55 </span>        [<span class="branchCov" title="Branch 1 was taken 41831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41831 :   point::ECEFPoint const diagonalVector = upperBound - lowerBound;</span>
+<span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 1 was taken 41831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41831 :   auto diagonalVectorLength = point::vectorLength(diagonalVector);</span>
 <span class="lineNum">      57 </span>                :            : 
-<span class="lineNum">      58 </span>        [<span class="branchCov" title="Branch 1 was taken 41549 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41549 :   boundingSphere.radius = 0.5 * diagonalVectorLength;</span>
-<span class="lineNum">      59 </span>[<span class="branchCov" title="Branch 1 was taken 41549 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 41549 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      41549 :   boundingSphere.center = lowerBound + 0.5 * diagonalVector;</span>
+<span class="lineNum">      58 </span>        [<span class="branchCov" title="Branch 1 was taken 41831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      41831 :   boundingSphere.radius = 0.5 * diagonalVectorLength;</span>
+<span class="lineNum">      59 </span>[<span class="branchCov" title="Branch 1 was taken 41831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 41831 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      41831 :   boundingSphere.center = lowerBound + 0.5 * diagonalVector;</span>
 <span class="lineNum">      60 </span>                :            : 
-<span class="lineNum">      61 </span>                :<span class="lineCov">      41550 :   return boundingSphere;</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">      41832 :   return boundingSphere;</span>
 <span class="lineNum">      62 </span>                :            : }
 <span class="lineNum">      63 </span>                :            : 
 <span class="lineNum">      64 </span>                :            : } // namespace point
 <span class="lineNum">      65 </span>                :            : } // namespace map
 <a name="66"><span class="lineNum">      66 </span>                :            : } // namespace ad</a>
 <span class="lineNum">      67 </span>                :            : 
-<span class="lineNum">      68 </span>                :<span class="lineCov">       3688 : ::ad::map::point::BoundingSphere operator+(::ad::map::point::BoundingSphere const &amp;a,</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">       3711 : ::ad::map::point::BoundingSphere operator+(::ad::map::point::BoundingSphere const &amp;a,</span>
 <span class="lineNum">      69 </span>                :            :                                            ::ad::map::point::BoundingSphere const &amp;b)
 <span class="lineNum">      70 </span>                :            : {
-<span class="lineNum">      71 </span>        [<span class="branchCov" title="Branch 1 was taken 3688 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3688 :   ::ad::map::point::BoundingSphere result;</span>
+<span class="lineNum">      71 </span>        [<span class="branchCov" title="Branch 1 was taken 3711 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3711 :   ::ad::map::point::BoundingSphere result;</span>
 <span class="lineNum">      72 </span>                :            :   ::ad::map::point::BoundingSphere const *small;
 <span class="lineNum">      73 </span>                :            :   ::ad::map::point::BoundingSphere const *large;
-<span class="lineNum">      74 </span>[<span class="branchCov" title="Branch 1 was taken 3688 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1091 times"> + </span><span class="branchCov" title="Branch 4 was taken 2597 times"> + </span>]:<span class="lineCov">       3688 :   if (a.radius &lt; b.radius)</span>
+<span class="lineNum">      74 </span>[<span class="branchCov" title="Branch 1 was taken 3711 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1104 times"> + </span><span class="branchCov" title="Branch 4 was taken 2607 times"> + </span>]:<span class="lineCov">       3711 :   if (a.radius &lt; b.radius)</span>
 <span class="lineNum">      75 </span>                :            :   {
-<span class="lineNum">      76 </span>                :<span class="lineCov">       1091 :     small = &amp;a;</span>
-<span class="lineNum">      77 </span>                :<span class="lineCov">       1091 :     large = &amp;b;</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">       1104 :     small = &amp;a;</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">       1104 :     large = &amp;b;</span>
 <span class="lineNum">      78 </span>                :            :   }
 <span class="lineNum">      79 </span>                :            :   else
 <span class="lineNum">      80 </span>                :            :   {
-<span class="lineNum">      81 </span>                :<span class="lineCov">       2597 :     small = &amp;b;</span>
-<span class="lineNum">      82 </span>                :<span class="lineCov">       2597 :     large = &amp;a;</span>
+<span class="lineNum">      81 </span>                :<span class="lineCov">       2607 :     small = &amp;b;</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">       2607 :     large = &amp;a;</span>
 <span class="lineNum">      83 </span>                :            :   }
 <span class="lineNum">      84 </span>                :            : 
-<span class="lineNum">      85 </span>        [<span class="branchCov" title="Branch 1 was taken 3688 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3688 :   auto const fromLargeToSmallCenter = small-&gt;center - large-&gt;center;</span>
-<span class="lineNum">      86 </span>        [<span class="branchCov" title="Branch 1 was taken 3688 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3688 :   auto const sphereCenterDistance = ::ad::map::point::vectorLength(fromLargeToSmallCenter);</span>
+<span class="lineNum">      85 </span>        [<span class="branchCov" title="Branch 1 was taken 3711 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3711 :   auto const fromLargeToSmallCenter = small-&gt;center - large-&gt;center;</span>
+<span class="lineNum">      86 </span>        [<span class="branchCov" title="Branch 1 was taken 3711 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3711 :   auto const sphereCenterDistance = ::ad::map::point::vectorLength(fromLargeToSmallCenter);</span>
 <span class="lineNum">      87 </span>                :            : 
 <span class="lineNum">      88 </span>                :            :   // move the center of the larger sphere in direction of the smaller one
 <span class="lineNum">      89 </span>                :            :   // and increase the larger radius by the moving distance
-<span class="lineNum">      90 </span>[<span class="branchCov" title="Branch 1 was taken 3688 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 3688 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       3688 :   auto const displacement = 0.5 * (sphereCenterDistance - large-&gt;radius + small-&gt;radius);</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 3688 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
-<span class="lineNum">      91 </span>[<span class="branchCov" title="Branch 2 was taken 3688 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 27 times"> + </span><span class="branchCov" title="Branch 5 was taken 3661 times"> + </span>]:<span class="lineCov">       3688 :   if (displacement &lt;= ::ad::physics::Distance(0.))</span>
+<span class="lineNum">      90 </span>[<span class="branchCov" title="Branch 1 was taken 3711 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 3711 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       3711 :   auto const displacement = 0.5 * (sphereCenterDistance - large-&gt;radius + small-&gt;radius);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 3711 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">      91 </span>[<span class="branchCov" title="Branch 2 was taken 3711 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 27 times"> + </span><span class="branchCov" title="Branch 5 was taken 3684 times"> + </span>]:<span class="lineCov">       3711 :   if (displacement &lt;= ::ad::physics::Distance(0.))</span>
 <span class="lineNum">      92 </span>                :            :   {
 <span class="lineNum">      93 </span>                :            :     // small is already within large
 <span class="lineNum">      94 </span>                :<span class="lineCov">         27 :     result = *large;</span>
 <span class="lineNum">      95 </span>                :            :   }
-<span class="lineNum">      96 </span>[<span class="branchCov" title="Branch 2 was taken 3661 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 3661 times"> + </span>]:<span class="lineCov">       3661 :   else if (sphereCenterDistance == ::ad::physics::Distance(0.))</span>
+<span class="lineNum">      96 </span>[<span class="branchCov" title="Branch 2 was taken 3684 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 3684 times"> + </span>]:<span class="lineCov">       3684 :   else if (sphereCenterDistance == ::ad::physics::Distance(0.))</span>
 <span class="lineNum">      97 </span>                :            :   {
 <span class="lineNum">      98 </span>                :            :     // tiny center distance
 <span class="lineNum">      99 </span>                :<span class="lineNoCov">          0 :     result = *large;</span>
@@ -174,11 +174,11 @@
 <span class="lineNum">     101 </span>                :            :   else
 <span class="lineNum">     102 </span>                :            :   {
 <span class="lineNum">     103 </span>                :            :     result.center
-<span class="lineNum">     104 </span>[<span class="branchCov" title="Branch 1 was taken 3661 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 3661 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">       3661 :       = large-&gt;center + ::ad::physics::Distance(displacement / sphereCenterDistance) * (fromLargeToSmallCenter);</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 3661 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 1 was taken 3661 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3661 :     result.radius = large-&gt;radius + displacement;</span>
+<span class="lineNum">     104 </span>[<span class="branchCov" title="Branch 1 was taken 3684 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 3684 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">       3684 :       = large-&gt;center + ::ad::physics::Distance(displacement / sphereCenterDistance) * (fromLargeToSmallCenter);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 3684 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 1 was taken 3684 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3684 :     result.radius = large-&gt;radius + displacement;</span>
 <a name="106"><span class="lineNum">     106 </span>                :            :   }</a>
-<span class="lineNum">     107 </span>                :<span class="lineCov">       3688 :   return result;</span>
+<span class="lineNum">     107 </span>                :<span class="lineCov">       3711 :   return result;</span>
 <span class="lineNum">     108 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 : }</span>
 </pre>
       </td>
