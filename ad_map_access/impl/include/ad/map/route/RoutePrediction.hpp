@@ -106,7 +106,7 @@ private:
     //! comparing route tree elements by their actual route-point to ensure children are unique
     struct RouteTreeElementCompare
     {
-      bool operator()(const std::shared_ptr<RouteTreeElement> &left, const std::shared_ptr<RouteTreeElement> &right)
+      bool operator()(const std::shared_ptr<RouteTreeElement> &left, const std::shared_ptr<RouteTreeElement> &right) const
       {
         return left->routingPoint.first < right->routingPoint.first;
       }
