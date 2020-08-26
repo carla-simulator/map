@@ -114,7 +114,7 @@ point::ENUHeading getLaneENUHeading(point::ParaPoint const &paraPoint, point::Ge
   return point::createENUHeading(getLaneECEFHeading(paraPoint), gnssReference);
 }
 
-LaneId uniqueLaneId(point::GeoPoint const &geoPoint)
+point::ParaPoint uniqueParaPoint(point::GeoPoint const &geoPoint)
 {
   match::AdMapMatching mapMatching;
   auto mapMatchingResult
@@ -125,7 +125,12 @@ LaneId uniqueLaneId(point::GeoPoint const &geoPoint)
     throw std::runtime_error("uniqueLaneId: position matches multiple lanes");
   }
 
-  return mapMatchingResult[0].lanePoint.paraPoint.laneId;
+  return mapMatchingResult[0].lanePoint.paraPoint;
+}
+
+LaneId uniqueLaneId(point::GeoPoint const &geoPoint)
+{
+  return uniqueParaPoint(geoPoint).laneId;
 }
 
 physics::Distance getWidth(Lane const &lane, physics::ParametricValue const &longitudinalOffset)

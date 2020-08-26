@@ -1105,6 +1105,76 @@ void removeLastRoadSegmentIfDegenerated(route::FullRoute &route)
   }
 }
 
+bool prepareRouteForExtension(route::FullRoute &route,
+                              route::planning::RoutingParaPoint &routeExtensionStartPoint,
+                              route::LaneSegment &extensionReferenceLaneSegment)
+{
+  // first drop degenerated road segments at the end of route to ensure we get proper direction
+  removeLastRoadSegmentIfDegenerated(route);
+
+  // abort on degenerated route
+  if (route.roadSegments.empty() || route.roadSegments.back().drivableLaneSegments.empty())
+  {
+    return false;
+  }
+
+  extensionReferenceLaneSegment = route.roadSegments.back().drivableLaneSegments.front();
+  routeExtensionStartPoint = route::planning::createRoutingPoint(
+    extensionReferenceLaneSegment.laneInterval.laneId,
+    extensionReferenceLaneSegment.laneInterval.start,
+    (isRouteDirectionPositive(extensionReferenceLaneSegment.laneInterval) ? planning::RoutingDirection::POSITIVE
+                                                                          : planning::RoutingDirection::NEGATIVE));
+  return true;
+}
+
+route::FullRoute mergeRouteExtension(route::FullRoute const &route,
+                                     route::LaneSegment const &extensionReferenceLaneSegment,
+                                     route::FullRoute const &routeExtension)
+{
+  FullRoute newRoute(route);
+  removeLastRoadSegment(newRoute);
+  for (auto const &roadSegment : routeExtension.roadSegments)
+  {
+    route::appendRoadSegmentToRoute(roadSegment.drivableLaneSegments.front().laneInterval,
+                                    extensionReferenceLaneSegment.routeLaneOffset
+                                      + roadSegment.drivableLaneSegments.front().routeLaneOffset,
+                                    newRoute);
+  }
+  planning::updateRoutePlanningCounters(newRoute);
+  return newRoute;
+}
+
+template <typename T> bool extendRouteToDestinationsT(route::FullRoute &route, const std::vector<T> &dest)
+{
+  route::planning::RoutingParaPoint routeExtensionStartPoint;
+  route::LaneSegment extensionReferenceLaneSegment;
+  if (!prepareRouteForExtension(route, routeExtensionStartPoint, extensionReferenceLaneSegment))
+  {
+    return false;
+  }
+
+  auto routeExtension = route::planning::planRoute(routeExtensionStartPoint, dest, route.routeCreationMode);
+
+  route = mergeRouteExtension(route, extensionReferenceLaneSegment, routeExtension);
+
+  return true;
+}
+
+bool extendRouteToDestinations(route::FullRoute &route, const std::vector<route::planning::RoutingParaPoint> &dest)
+{
+  return extendRouteToDestinationsT(route, dest);
+}
+
+bool extendRouteToDestinations(route::FullRoute &route, const std::vector<point::GeoPoint> &dest)
+{
+  return extendRouteToDestinationsT(route, dest);
+}
+
+bool extendRouteToDestinations(route::FullRoute &route, const std::vector<point::ENUPoint> &dest)
+{
+  return extendRouteToDestinationsT(route, dest);
+}
+
 bool extendRouteToDistance(route::FullRoute &route,
                            const physics::Distance &length,
                            std::vector<route::FullRoute> &additionalRoutes)
@@ -1125,26 +1195,18 @@ bool extendRouteToDistance(route::FullRoute &route,
     return true;
   }
 
-  // first drop degenerated road segments at the end of route to ensure we get proper direction
-  removeLastRoadSegmentIfDegenerated(route);
-
-  // abort on degenerated route
-  if (route.roadSegments.empty() || route.roadSegments.back().drivableLaneSegments.empty())
+  route::planning::RoutingParaPoint routeExtensionStartPoint;
+  route::LaneSegment extensionReferenceLaneSegment;
+  if (!prepareRouteForExtension(route, routeExtensionStartPoint, extensionReferenceLaneSegment))
   {
     return false;
   }
 
-  auto const lastRightLaneSegment = route.roadSegments.back().drivableLaneSegments.front();
-  auto routingStartPoint = route::planning::createRoutingPoint(
-    lastRightLaneSegment.laneInterval.laneId,
-    lastRightLaneSegment.laneInterval.start,
-    (isRouteDirectionPositive(lastRightLaneSegment.laneInterval) ? planning::RoutingDirection::POSITIVE
-                                                                 : planning::RoutingDirection::NEGATIVE));
-  distance += route::calcLength(lastRightLaneSegment.laneInterval);
+  distance += route::calcLength(extensionReferenceLaneSegment.laneInterval);
 
-  auto routeExtensions = route::planning::predictRoutesOnDistance(routingStartPoint, distance, route.routeCreationMode);
+  auto routeExtensions
+    = route::planning::predictRoutesOnDistance(routeExtensionStartPoint, distance, route.routeCreationMode);
 
-  // additional ones
   auto it = routeExtensions.begin();
   if (it != routeExtensions.end())
   {
@@ -1153,16 +1215,7 @@ bool extendRouteToDistance(route::FullRoute &route,
   for (; it != routeExtensions.end(); ++it)
   {
     auto const &routeExtension = *it;
-    FullRoute newRoute(route);
-    removeLastRoadSegment(newRoute);
-    for (auto const &roadSegment : routeExtension.roadSegments)
-    {
-      route::appendRoadSegmentToRoute(roadSegment.drivableLaneSegments.front().laneInterval,
-                                      lastRightLaneSegment.routeLaneOffset
-                                        + roadSegment.drivableLaneSegments.front().routeLaneOffset,
-                                      newRoute);
-    }
-    planning::updateRoutePlanningCounters(newRoute);
+    auto newRoute = mergeRouteExtension(route, extensionReferenceLaneSegment, routeExtension);
     additionalRoutes.push_back(newRoute);
   }
 
@@ -1170,16 +1223,9 @@ bool extendRouteToDistance(route::FullRoute &route,
   if (routeExtensions.size() > 0)
   {
     auto const &routeExtension = routeExtensions.front();
-    removeLastRoadSegment(route);
-    for (auto const &roadSegment : routeExtension.roadSegments)
-    {
-      route::appendRoadSegmentToRoute(roadSegment.drivableLaneSegments.front().laneInterval,
-                                      lastRightLaneSegment.routeLaneOffset
-                                        + roadSegment.drivableLaneSegments.front().routeLaneOffset,
-                                      route);
-    }
-    planning::updateRoutePlanningCounters(route);
+    route = mergeRouteExtension(route, extensionReferenceLaneSegment, routeExtension);
   }
+
   return true;
 }
 

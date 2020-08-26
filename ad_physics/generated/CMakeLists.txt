@@ -14,7 +14,7 @@
 ##
 
 cmake_minimum_required(VERSION 3.5)
-project(ad_physics VERSION 2.1.0)
+project(ad_physics VERSION 2.2.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)

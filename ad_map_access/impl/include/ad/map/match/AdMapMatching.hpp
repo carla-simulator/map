@@ -155,7 +155,7 @@ public:
    */
   MapMatchedPositionConfidenceList getMapMatchedPositions(point::GeoPoint const &geoPoint,
                                                           physics::Distance const &distance,
-                                                          physics::Probability const &minProbability);
+                                                          physics::Probability const &minProbability) const;
 
   /**
    * @brief get the map matched positions
@@ -170,7 +170,7 @@ public:
   MapMatchedPositionConfidenceList getMapMatchedPositions(point::ENUPoint const &enuPoint,
                                                           point::GeoPoint const &enuReferencePoint,
                                                           physics::Distance const &distance,
-                                                          physics::Probability const &minProbability);
+                                                          physics::Probability const &minProbability) const;
 
   /**
    * @brief get the map matched positions
@@ -186,7 +186,7 @@ public:
    */
   MapMatchedPositionConfidenceList getMapMatchedPositions(point::ENUPoint const &enuPoint,
                                                           physics::Distance const &distance,
-                                                          physics::Probability const &minProbability);
+                                                          physics::Probability const &minProbability) const;
 
   /**
    * @brief get the map matched positions
@@ -225,7 +225,7 @@ public:
    */
   MapMatchedObjectBoundingBox getMapMatchedBoundingBox(ENUObjectPosition const &enuObjectPosition,
                                                        physics::Distance const &samplingDistance
-                                                       = physics::Distance(1.));
+                                                       = physics::Distance(1.)) const;
 
   /**
    * @brief get the lane occupied regions from a list of ENUObjectPositionList
@@ -243,12 +243,13 @@ public:
    * @returns the map matched bounding box of the object
    */
   LaneOccupiedRegionList getLaneOccupiedRegions(ENUObjectPositionList enuObjectPositionList,
-                                                physics::Distance const &samplingDistance = physics::Distance(1.));
+                                                physics::Distance const &samplingDistance
+                                                = physics::Distance(1.)) const;
 
   /**
    * @brief Method to be called to retrieve the lane heading at a mapMatchedPosition
    */
-  point::ENUHeading getLaneENUHeading(MapMatchedPosition const &mapMatchedPosition);
+  point::ENUHeading getLaneENUHeading(MapMatchedPosition const &mapMatchedPosition) const;
 
   /**
    * @brief Spatial Lane Search.
@@ -303,14 +304,14 @@ private:
    */
 
   void addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
-                      MapMatchedPositionConfidenceList const &mapMatchedPositions);
+                      MapMatchedPositionConfidenceList const &mapMatchedPositions) const;
   void addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
-                      LaneOccupiedRegionList const &otherLaneOccupiedRegions);
+                      LaneOccupiedRegionList const &otherLaneOccupiedRegions) const;
 
   MapMatchedPositionConfidenceList considerMapMatchingHints(MapMatchedPositionConfidenceList const &mapMatchedPositions,
-                                                            physics::Probability const &minProbability);
-  bool isLanePartOfRouteHints(lane::LaneId const &laneId);
-  double getHeadingFactor(MapMatchedPosition const &matchedPosition);
+                                                            physics::Probability const &minProbability) const;
+  bool isLanePartOfRouteHints(lane::LaneId const &laneId) const;
+  double getHeadingFactor(MapMatchedPosition const &matchedPosition) const;
 
   std::list<point::ECEFHeading> mHeadingHints;
   double mHeadingHintFactor{2.};

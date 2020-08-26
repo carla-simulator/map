@@ -94,6 +94,13 @@ point::ENUHeading getLaneENUHeading(point::ParaPoint const &paraPoint, point::Ge
 LaneId uniqueLaneId(point::GeoPoint const &point);
 
 /**
+* @return parametric point at given location
+*
+* Throws if there is more than one lane at the given position
+*/
+point::ParaPoint uniqueParaPoint(point::GeoPoint const &point);
+
+/**
  * @brief Checks if vehicle fits the lanes restriction criteria.
  * @param[in] lane the lane.
  * @param[in] vehicle Description of the vehicle.

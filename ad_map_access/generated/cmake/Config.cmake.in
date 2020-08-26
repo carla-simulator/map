@@ -30,7 +30,7 @@ get_target_property(AD_MAP_OPENDRIVE_READER_INTERFACE_INCLUDE_DIRS ad_map_opendr
 list(APPEND INCLUDE_DIRS ${AD_MAP_OPENDRIVE_READER_INTERFACE_INCLUDE_DIRS})
 list(APPEND LIBRARIES ad_map_opendrive_reader)
 
-find_dependency(ad_physics 2.1.0)
+find_dependency(ad_physics 2.2.0)
 find_dependency(spdlog)
 
 include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")

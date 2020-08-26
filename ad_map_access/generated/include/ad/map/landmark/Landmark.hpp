@@ -46,7 +46,7 @@ namespace landmark {
 /*!
  * \brief DataType Landmark
  *
- * Landmark description in ENU coordiante frame.
+ * Landmark description in ECEF coordiante frame.
  */
 struct Landmark
 {

@@ -102,11 +102,21 @@ bool AdMapAccess::initializeFromOpenDriveContent(std::string const &openDriveCon
     return false;
   }
 
+  auto const openDriveContentChecksum
+    = serialize::calculateCRC32Checksum(openDriveContent.c_str(), openDriveContent.size());
   if (mInitializedFromStore)
   {
-    mLogger->error(
-      "AdMapAccess::initializeFromOpenDriveContent() failed; already initialized with different store object");
-    return false;
+    if (openDriveContentChecksum == mInitializeFromOpenDriveContentChecksum)
+    {
+      // initialize twice from same store object is ok.
+      return true;
+    }
+    else
+    {
+      mLogger->error("AdMapAccess::initializeFromOpenDriveContent() failed; already initialized with different store "
+                     "object or content");
+      return false;
+    }
   }
 
   auto store = std::make_shared<Store>();
@@ -116,6 +126,7 @@ bool AdMapAccess::initializeFromOpenDriveContent(std::string const &openDriveCon
     = factory.createAdMapFromString(openDriveContent, overlapMargin, defaultIntersectionType, defaultTrafficLightType);
   if (result)
   {
+    mInitializeFromOpenDriveContentChecksum = openDriveContentChecksum;
     mInitializedFromStore = true;
     mStore = store;
   }
