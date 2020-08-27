@@ -106,7 +106,7 @@ bool RouteAstar::calculate()
     // sort the routing points by the smallest total cost
     struct FScoreCompare
     {
-      bool operator()(RoutingPoint const &left, RoutingPoint const &right)
+      bool operator()(RoutingPoint const &left, RoutingPoint const &right) const
       {
         return left.second.costData.estimatedDistanceToTarget < right.second.costData.estimatedDistanceToTarget;
       }

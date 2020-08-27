@@ -30,9 +30,9 @@
 /*!
  * The revision of ad_physics
  */
-#define AD_PHYSICS_VERSION_REVISION 0
+#define AD_PHYSICS_VERSION_REVISION 1
 
 /*!
  * The version of ad_physics as string
  */
-#define AD_PHYSICS_VERSION_STRING "2.2.0"
+#define AD_PHYSICS_VERSION_STRING "2.2.1"
