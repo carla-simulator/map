@@ -1,5 +1,10 @@
 ## Latest changes
 
+## Release 2.2.1
+#### :ghost: Maintenance
+* Fix build with C++ 17
+* Suppressed python code generation build output
+
 ## Release 2.2.0
 #### :ghost: Maintenance
 * Fix build of unit tests under Ubuntu18.04 with gcc 7.5.0

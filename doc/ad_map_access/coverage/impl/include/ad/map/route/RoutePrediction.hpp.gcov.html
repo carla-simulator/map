@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-08-26 15:09:21</td>
+            <td class="headerValue">2020-08-27 14:43:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -177,43 +177,44 @@
 <span class="lineNum">     106 </span>                :            :     //! comparing route tree elements by their actual route-point to ensure children are unique
 <a name="107"><span class="lineNum">     107 </span>                :            :     struct RouteTreeElementCompare</a>
 <span class="lineNum">     108 </span>                :            :     {
-<span class="lineNum">     109 </span>                :<span class="lineCov">      10936 :       bool operator()(const std::shared_ptr&lt;RouteTreeElement&gt; &amp;left, const std::shared_ptr&lt;RouteTreeElement&gt; &amp;right)</span>
-<span class="lineNum">     110 </span>                :            :       {
-<span class="lineNum">     111 </span>                :<span class="lineCov">      10936 :         return left-&gt;routingPoint.first &lt; right-&gt;routingPoint.first;</span>
-<span class="lineNum">     112 </span>                :            :       }
-<span class="lineNum">     113 </span>                :            :     };
-<span class="lineNum">     114 </span>                :            : 
-<span class="lineNum">     115 </span>                :            :     typedef std::set&lt;std::shared_ptr&lt;RouteTreeElement&gt;, RouteTreeElementCompare&gt; RouteTreeElementUniqueRoutePointSet;
-<span class="lineNum">     116 </span>                :            : 
-<span class="lineNum">     117 </span>                :            :     //! the routing point represented by this tree element
-<span class="lineNum">     118 </span>                :            :     RoutingPoint routingPoint;
-<span class="lineNum">     119 </span>                :            :     //! the children of the tree element. If children are empty, the element is a leaf of the tree
-<span class="lineNum">     120 </span>                :            :     RouteTreeElementUniqueRoutePointSet children;
-<span class="lineNum">     121 </span>                :            :     //! pointer to the parent(s) of this, required for later reconstruction of the paths
-<span class="lineNum">     122 </span>                :            :     RouteTreeElement const *theParent;
-<span class="lineNum">     123 </span>                :            :   };
-<span class="lineNum">     124 </span>                :            : 
-<span class="lineNum">     125 </span>                :            :   /**
-<span class="lineNum">     126 </span>                :            :    * @brief reconstruct the path after search finished
-<span class="lineNum">     127 </span>                :            :    */
-<span class="lineNum">     128 </span>                :            :   void reconstructPaths();
-<span class="lineNum">     129 </span>                :            : 
-<span class="lineNum">     130 </span>                :            :   //! the tree root element
-<span class="lineNum">     131 </span>                :            :   std::shared_ptr&lt;RouteTreeElement&gt; mRouteTreeRoot;
-<span class="lineNum">     132 </span>                :            : 
-<span class="lineNum">     133 </span>                :            :   /**
-<span class="lineNum">     134 </span>                :            :    * @brief the already processed transitions from -&gt; {to} (only process a transition once)
-<span class="lineNum">     135 </span>                :            :    */
-<span class="lineNum">     136 </span>                :            :   std::map&lt;RoutingParaPoint, RouteTreeElement::RouteTreeElementUniqueRoutePointSet&gt; mProcessedTransitions;
-<span class="lineNum">     137 </span>                :            : 
-<span class="lineNum">     138 </span>                :            :   //! the list of elements to be processed
-<span class="lineNum">     139 </span>                :            :   std::deque&lt;std::shared_ptr&lt;RouteTreeElement&gt;&gt; mElementsToProcess;
-<span class="lineNum">     140 </span>                :            : };
-<span class="lineNum">     141 </span>                :            : 
-<span class="lineNum">     142 </span>                :            : } // namespace planning
-<span class="lineNum">     143 </span>                :            : } // namespace route
-<span class="lineNum">     144 </span>                :            : } // namespace map
-<span class="lineNum">     145 </span>                :            : } // namespace ad
+<span class="lineNum">     109 </span>                :<span class="lineCov">      10936 :       bool operator()(const std::shared_ptr&lt;RouteTreeElement&gt; &amp;left,</span>
+<span class="lineNum">     110 </span>                :            :                       const std::shared_ptr&lt;RouteTreeElement&gt; &amp;right) const
+<span class="lineNum">     111 </span>                :            :       {
+<span class="lineNum">     112 </span>                :<span class="lineCov">      10936 :         return left-&gt;routingPoint.first &lt; right-&gt;routingPoint.first;</span>
+<span class="lineNum">     113 </span>                :            :       }
+<span class="lineNum">     114 </span>                :            :     };
+<span class="lineNum">     115 </span>                :            : 
+<span class="lineNum">     116 </span>                :            :     typedef std::set&lt;std::shared_ptr&lt;RouteTreeElement&gt;, RouteTreeElementCompare&gt; RouteTreeElementUniqueRoutePointSet;
+<span class="lineNum">     117 </span>                :            : 
+<span class="lineNum">     118 </span>                :            :     //! the routing point represented by this tree element
+<span class="lineNum">     119 </span>                :            :     RoutingPoint routingPoint;
+<span class="lineNum">     120 </span>                :            :     //! the children of the tree element. If children are empty, the element is a leaf of the tree
+<span class="lineNum">     121 </span>                :            :     RouteTreeElementUniqueRoutePointSet children;
+<span class="lineNum">     122 </span>                :            :     //! pointer to the parent(s) of this, required for later reconstruction of the paths
+<span class="lineNum">     123 </span>                :            :     RouteTreeElement const *theParent;
+<span class="lineNum">     124 </span>                :            :   };
+<span class="lineNum">     125 </span>                :            : 
+<span class="lineNum">     126 </span>                :            :   /**
+<span class="lineNum">     127 </span>                :            :    * @brief reconstruct the path after search finished
+<span class="lineNum">     128 </span>                :            :    */
+<span class="lineNum">     129 </span>                :            :   void reconstructPaths();
+<span class="lineNum">     130 </span>                :            : 
+<span class="lineNum">     131 </span>                :            :   //! the tree root element
+<span class="lineNum">     132 </span>                :            :   std::shared_ptr&lt;RouteTreeElement&gt; mRouteTreeRoot;
+<span class="lineNum">     133 </span>                :            : 
+<span class="lineNum">     134 </span>                :            :   /**
+<span class="lineNum">     135 </span>                :            :    * @brief the already processed transitions from -&gt; {to} (only process a transition once)
+<span class="lineNum">     136 </span>                :            :    */
+<span class="lineNum">     137 </span>                :            :   std::map&lt;RoutingParaPoint, RouteTreeElement::RouteTreeElementUniqueRoutePointSet&gt; mProcessedTransitions;
+<span class="lineNum">     138 </span>                :            : 
+<span class="lineNum">     139 </span>                :            :   //! the list of elements to be processed
+<span class="lineNum">     140 </span>                :            :   std::deque&lt;std::shared_ptr&lt;RouteTreeElement&gt;&gt; mElementsToProcess;
+<span class="lineNum">     141 </span>                :            : };
+<span class="lineNum">     142 </span>                :            : 
+<span class="lineNum">     143 </span>                :            : } // namespace planning
+<span class="lineNum">     144 </span>                :            : } // namespace route
+<span class="lineNum">     145 </span>                :            : } // namespace map
+<span class="lineNum">     146 </span>                :            : } // namespace ad
 </pre>
       </td>
     </tr>

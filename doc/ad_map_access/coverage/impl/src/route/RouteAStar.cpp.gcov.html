@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-08-26 15:09:21</td>
+            <td class="headerValue">2020-08-27 14:43:43</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -177,7 +177,7 @@
 <span class="lineNum">     106 </span>                :            :     // sort the routing points by the smallest total cost
 <a name="107"><span class="lineNum">     107 </span>                :            :     struct FScoreCompare</a>
 <span class="lineNum">     108 </span>                :            :     {
-<span class="lineNum">     109 </span>                :<span class="lineCov">      65933 :       bool operator()(RoutingPoint const &amp;left, RoutingPoint const &amp;right)</span>
+<span class="lineNum">     109 </span>                :<span class="lineCov">      65933 :       bool operator()(RoutingPoint const &amp;left, RoutingPoint const &amp;right) const</span>
 <span class="lineNum">     110 </span>                :            :       {
 <span class="lineNum">     111 </span>                :<span class="lineCov">      65933 :         return left.second.costData.estimatedDistanceToTarget &lt; right.second.costData.estimatedDistanceToTarget;</span>
 <span class="lineNum">     112 </span>                :            :       }
