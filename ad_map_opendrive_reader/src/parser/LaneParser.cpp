@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -248,6 +248,8 @@ void LaneParser::Parse(const pugi::xml_node &xmlNode, Lanes &out_lanes)
   {
     LaneSection laneSec;
     laneSec.start_position = std::stod(laneSection.attribute("s").value());
+    // until we know more, we set end to start
+    laneSec.end_position = laneSec.start_position;
 
     pugi::xml_node lane = laneSection.child("left");
     laneParser.ParseLane(lane, laneSec.left);

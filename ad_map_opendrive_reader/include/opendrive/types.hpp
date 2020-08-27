@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -281,8 +281,8 @@ struct LaneInfo
 
 struct LaneSection
 {
-  double start_position;
-  double end_position; // extended value
+  double start_position{0.};
+  double end_position{0.}; // extended value
   std::vector<LaneInfo> left, center, right;
 };
 
@@ -389,6 +389,8 @@ struct RoadLinkInformation
 
   RoadLinkInformation()
     : id(-1)
+    , element_type(ElementType::Invalid)
+    , contact_point(ContactPoint::Invalid)
   {
   }
 };

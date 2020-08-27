@@ -15,6 +15,8 @@ from pyplusplus import module_builder, decl_wrappers
 
 import fileinput
 
+import warnings
+
 
 def get_list_of_files(directory, ignore_files):
     """
@@ -60,6 +62,8 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
     :type ignore_files: list<string>
     :return:
     """
+
+    warnings.filterwarnings(action="once", category=DeprecationWarning)
 
     # Find out the xml generator (gccxml or castxml)
     generator_path, generator_name = utils.find_xml_generator()
