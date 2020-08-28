@@ -33,47 +33,64 @@ configure_file(generate_python_lib.py.in generate_python_lib.py)
 generate_python_binding_source_code(${CMAKE_CURRENT_BINARY_DIR})
 
 foreach(binding ${PYTHON_BINDINGS})
-  string(TOLOWER ${binding} lc_binding)
-  set(target ad_map_access_${lc_binding})
 
-  list(APPEND targets ${target})
+  string(REPLACE "." "" binding_string ${binding})
 
-  add_library(${target}
-    ${CMAKE_CURRENT_BINARY_DIR}/AdMapAccessPythonWrapper${binding}.cpp
-  )
-  target_compile_definitions(${target} PUBLIC ${TARGET_COMPILE_DEFINITIONS})
-  target_compile_options(${target} PRIVATE ${TARGET_COMPILE_OPTIONS})
-  set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS ${TARGET_LINK_FLAGS})
+  configure_file(ad/__init__.py.in ${binding}/ad/__init__.py)
+  configure_file(ad/map/__init__.py.in ${binding}/ad/map/__init__.py)
 
-  target_include_directories(${target} PRIVATE
-    ${PYTHON_BINDING_PACKAGE_INCLUDE_DIRS_${binding}}
-    ${CMAKE_CURRENT_BINARY_DIR}
-  )
+  foreach(component access config intersection landmark lane match point restriction route)
 
-  target_link_libraries(${target} PRIVATE
-    ad_map_access
-    ad_map_opendrive_reader
-    ad_physics
-    spdlog::spdlog
-    ${PYTHON_BINDING_PACKAGE_LIBRARIES_${binding}}
-  )
+    set(target ad_map_${component}_${binding_string})
 
+    configure_file(ad/map/component/__init__.py.in ${binding}/ad/map/${component}/__init__.py)
+
+    add_library(${target} SHARED
+      ${CMAKE_CURRENT_BINARY_DIR}/AdMap-${component}-PythonWrapper-${binding_string}.cpp
+      )
+    target_compile_definitions(${target} PUBLIC ${TARGET_COMPILE_DEFINITIONS})
+    target_compile_options(${target} PRIVATE ${TARGET_COMPILE_OPTIONS})
+    set_property(TARGET ${target} APPEND_STRING PROPERTY LINK_FLAGS ${TARGET_LINK_FLAGS})
+
+    target_include_directories(${target} PRIVATE
+      ${PYTHON_BINDING_PACKAGE_INCLUDE_DIRS_${binding}}
+      ${CMAKE_CURRENT_BINARY_DIR}
+      )
+
+    target_link_libraries(${target} PRIVATE
+      ad_map_access
+      ad_map_opendrive_reader
+      ad_physics
+      spdlog::spdlog
+      ${PYTHON_BINDING_PACKAGE_LIBRARIES_${binding}}
+      )
+
+    install(TARGETS ${target}
+      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/${binding}/ad/map/${component}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/${binding}/ad/map/${component}
+      )
+  endforeach()
+
+
+  ################################################################################
+  # Install section
+  ################################################################################
+
+  install(DIRECTORY
+    ${CMAKE_CURRENT_BINARY_DIR}/${binding}/ad
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/${binding}/
+    )
+
+  #####################################################################
+  # Tests
+  #####################################################################
   if (BUILD_TESTING)
     add_test(NAME ${target}_test
-      COMMAND ${lc_binding} -m interface_test
+      COMMAND ${binding} -m interface_test
       WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/tests
     )
-    get_python_test_environment(ad_physics ad_map_opendrive_reader)
+    get_python_test_environment(${binding} ad_physics ad_map_opendrive_reader)
     set_tests_properties(${target}_test PROPERTIES ENVIRONMENT "${PYTHON_TEST_ENVIRONMENT}")
   endif()
 
 endforeach()
-
-################################################################################
-# Install section
-################################################################################
-
-install(TARGETS ${targets} EXPORT ${PROJECT_NAME}_EXPORT
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)

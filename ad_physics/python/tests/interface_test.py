@@ -17,10 +17,7 @@ import xmlrunner
 import sys
 import os
 
-if sys.version_info.major == 3:
-    import libad_physics_python3 as physics
-else:
-    import libad_physics_python2 as physics
+import ad.physics
 
 
 class AdPhysicsPythonTest(unittest.TestCase):
@@ -33,14 +30,14 @@ class AdPhysicsPythonTest(unittest.TestCase):
         """
         Main test part
         """
-        speed_a = physics.Speed(10.)
-        speed_b = physics.Speed(20.)
+        speed_a = ad.physics.Speed(10.)
+        speed_b = ad.physics.Speed(20.)
         speed_c = speed_a + speed_b
 
         self.assertEqual(speed_c, 30.)
 
-        t = physics.Duration(2.)
-        a = physics.Acceleration(10.)
+        t = ad.physics.Duration(2.)
+        a = ad.physics.Acceleration(10.)
 
         speed_c = t * a
 

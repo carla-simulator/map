@@ -24,11 +24,11 @@ def main():
     Main function to generate Python-C++ binding code
     """
     header_dirs = {
-        "${CMAKE_CURRENT_LIST_DIR}/../generated/include/",
-        "${CMAKE_CURRENT_LIST_DIR}/../impl/include/"
+        "@CMAKE_CURRENT_LIST_DIR@/../generated/include/",
+        "@CMAKE_CURRENT_LIST_DIR@/../impl/include/"
     }
     include_dirs = {
-        "${GENPY_INCLUDE_DIRS}"
+        "@GENPY_INCLUDE_DIRS@"
     }
 
     generate_python_wrapper(library_name="libad_physics_python",
@@ -37,9 +37,10 @@ def main():
                             include_paths=include_dirs,
                             declarations={
                                 "ad", "toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
-                            )
-    post_process_python_wrapper(header_directories=header_dirs, additional_replacements={("libad_physics_python", "libad_physics_python2")}, cpp_filename_in="AdPhysicsPythonWrapper.cpp.in", cpp_filename_out="AdPhysicsPythonWrapperPYTHON2.cpp")
-    post_process_python_wrapper(header_directories=header_dirs, additional_replacements={("libad_physics_python", "libad_physics_python3")}, cpp_filename_in="AdPhysicsPythonWrapper.cpp.in", cpp_filename_out="AdPhysicsPythonWrapperPYTHON3.cpp")
+    )
+
+    for binding in @PYTHON_BINDING_STRING_LIST@:
+        post_process_python_wrapper(header_directories=header_dirs, additional_replacements={("libad_physics_python", "libad_physics_{}".format(binding))}, cpp_filename_in="AdPhysicsPythonWrapper.cpp.in", cpp_filename_out="AdPhysicsPythonWrapper-{}.cpp".format(binding))
 
 if __name__ == '__main__':
     main()

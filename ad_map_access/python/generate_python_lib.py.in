@@ -22,37 +22,13 @@ def main():
     """
     Main function to generate Python-C++ binding code
     """
-    header_dirs = {
-        "${CMAKE_CURRENT_LIST_DIR}/../generated/include/",
-        "${CMAKE_CURRENT_LIST_DIR}/../impl/include/"
-    }
     include_dirs = {
-        "${GENPY_INCLUDE_DIRS}"
-    }
-    # currently ignored files,
-    # these will require manual adaptions if one wants to enable those
-    ignore_files = {
-        # issue: virtual calculate() function
-        "route/Route.hpp",
-        "route/RouteAStar.hpp",
-        "route/RouteExpander.hpp",
-        "route/RoutePrediction.hpp",
-        # issue: compile errors, serializer, Factory should not be required directly
-        "serialize/",
-        "access/Factory.hpp",
-        "opendrive/AdMapFactory.hpp",
-        # issue: store makes problems on compilation, because returning reference not possible
-        "access/Store.hpp",
+        "@GENPY_INCLUDE_DIRS@",
+        "@CMAKE_CURRENT_LIST_DIR@/../generated/include",
+        "@CMAKE_CURRENT_LIST_DIR@/../impl/include"
     }
 
-    generate_python_wrapper(library_name="libad_map_access_python",
-                            cpp_filename="AdMapAccessPythonWrapper.cpp.in",
-                            header_directories=header_dirs,
-                            include_paths=include_dirs,
-                            declarations={
-                                "ad", "toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"},
-                            ignore_declarations={"Store", "getStore"},
-                            ignore_files=ignore_files)
+    declarations={"toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
 
     additional_replacements = {
         # types used as default without full namespace in code
@@ -69,20 +45,62 @@ def main():
          "\"MapMatchedPositionConfidenceList\"")
     }
 
-    additional_replacements_python2=additional_replacements.copy()
-    additional_replacements_python2.add(("libad_map_access_python", "libad_map_access_python2"))
-    post_process_python_wrapper(header_directories=header_dirs,
-                                cpp_filename_in="AdMapAccessPythonWrapper.cpp.in",
-                                cpp_filename_out="AdMapAccessPythonWrapperPYTHON2.cpp",
-                                additional_replacements=additional_replacements_python2
-                                )
-    additional_replacements_python3=additional_replacements.copy()
-    additional_replacements_python3.add(("libad_map_access_python", "libad_map_access_python3"))
-    post_process_python_wrapper(header_directories=header_dirs,
-                                cpp_filename_in="AdMapAccessPythonWrapper.cpp.in",
-                                cpp_filename_out="AdMapAccessPythonWrapperPYTHON3.cpp",
-                                additional_replacements=additional_replacements_python3
-                                )
+    # leave out opendrive and serialize completely
+    for component in ["access", "config", "intersection", "landmark", "lane", "match", "point", "restriction", "route"]:
+        main_namespace="ad::map::{}".format(component)
+
+        declarations_component=declarations.copy()
+        declarations_component.add(main_namespace)
+
+        header_dirs = {
+            "@CMAKE_CURRENT_LIST_DIR@/../generated/include/ad/map/{}".format(component),
+            "@CMAKE_CURRENT_LIST_DIR@/../impl/include/ad/map/{}".format(component)
+        }
+
+        ignore_files={}
+        ignore_declarations={}
+        additional_includes={}
+        if component == "access":
+            ignore_files={
+                # issue: compile errors, serializer, Factory should not be required directly
+                "access/Factory.hpp",
+                # issue: store makes problems on compilation, because returning reference not possible
+                "access/Store.hpp"
+            }
+            ignore_declarations={"Store", "getStore"}
+            # cope with forward declarations
+            additional_includes={"ad/map/point/CoordinateTransform.hpp"}
+        elif component == "route":
+            ignore_files={
+                # issue: virtual calculate() function
+                "route/Route.hpp",
+                "route/RouteAStar.hpp",
+                "route/RouteExpander.hpp",
+                "route/RoutePrediction.hpp"
+                }
+            # cope with forward declarations
+            additional_includes={"ad/map/intersection/Intersection.hpp"}
+
+        library_name="libad_map_{}_python".format(component)
+        generate_python_wrapper(library_name=library_name,
+                                cpp_filename="AdMap-{}-PythonWrapper.cpp.in".format(component),
+                                header_directories=header_dirs,
+                                include_paths=include_dirs,
+                                main_namespace=main_namespace,
+                                declarations=declarations_component,
+                                ignore_declarations=ignore_declarations,
+                                ignore_files=ignore_files)
+
+        for binding in @PYTHON_BINDING_STRING_LIST@:
+            additional_replacements_binding=additional_replacements.copy()
+            additional_replacements_binding.add(("libad_map_{}_python".format(component), "libad_map_{}_{}".format(component, binding)))
+            post_process_python_wrapper(header_directories=header_dirs,
+                                    cpp_filename_in="AdMap-{}-PythonWrapper.cpp.in".format(component),
+                                    cpp_filename_out="AdMap-{}-PythonWrapper-{}.cpp".format(component, binding),
+                                    additional_replacements=additional_replacements_binding,
+                                    additional_includes=additional_includes
+            )
+
 
 if __name__ == '__main__':
     main()

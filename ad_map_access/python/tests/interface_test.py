@@ -17,12 +17,7 @@ import xmlrunner
 import sys
 import os
 
-if sys.version_info.major == 3:
-    import libad_physics_python3 as physics
-    import libad_map_access_python3 as admap
-else:
-    import libad_physics_python2 as physics
-    import libad_map_access_python2 as admap
+import ad.map
 
 
 class AdMapAccessPythonTest(unittest.TestCase):
@@ -35,34 +30,36 @@ class AdMapAccessPythonTest(unittest.TestCase):
         """
         Main test part
         """
-        self.assertTrue(admap.init("test_files/TPK.adm.txt"))
+        self.assertTrue(ad.map.access.init("test_files/TPK.adm.txt"))
 
         # map loaded
-        lanes = admap.getLanes()
+        lanes = ad.map.lane.getLanes()
         self.assertEqual(len(lanes), 141)
 
         # map matching
-        mapMatching = admap.AdMapMatching()
-        geoPoint = admap.GeoPoint()
-        geoPoint.longitude = admap.Longitude(8.4401803)
-        geoPoint.latitude = admap.Latitude(49.0191987)
-        geoPoint.altitude = admap.Altitude(0.)
+        mapMatching = ad.map.match.AdMapMatching()
+        geoPoint = ad.map.point.GeoPoint()
+        geoPoint.longitude = ad.map.point.Longitude(8.4401803)
+        geoPoint.latitude = ad.map.point.Latitude(49.0191987)
+        geoPoint.altitude = ad.map.point.Altitude(0.)
 
         mapMatchingResults = mapMatching.getMapMatchedPositions(
-            geoPoint, physics.Distance(0.01), physics.Probability(0.05))
+            geoPoint, ad.physics.Distance(0.01), ad.physics.Probability(0.05))
         self.assertEqual(len(mapMatchingResults), 1)
 
         # route planning
         routingStart = mapMatchingResults[0].lanePoint.paraPoint
-        routingEnd = admap.ParaPoint()
+        routingEnd = ad.map.point.ParaPoint()
         routingEnd.laneId = routingStart.laneId
-        routingEnd.parametricOffset = physics.ParametricValue(0.0)
+        routingEnd.parametricOffset = ad.physics.ParametricValue(0.0)
 
-        routeResult = admap.planRoute(admap.createRoutingPoint(routingStart), admap.createRoutingPoint(routingEnd))
-        routeLength = admap.calcLength(routeResult.roadSegments[0])
+        routeResult = ad.map.route.planRoute(ad.map.route.createRoutingPoint(
+            routingStart), ad.map.route.createRoutingPoint(routingEnd))
+        routeLength = ad.map.route.calcLength(routeResult.roadSegments[0])
         self.assertEqual(int(float(routeLength)), 4)
 
-        admap.cleanup()
+        ad.map.access.cleanup()
+
 
 if __name__ == '__main__':
     if os.environ.get('GTEST_OUTPUT') and os.environ['GTEST_OUTPUT'].startswith('xml:'):
