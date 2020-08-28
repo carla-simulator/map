@@ -81,8 +81,7 @@ def main():
             # cope with forward declarations
             additional_includes={"ad/map/intersection/Intersection.hpp"}
 
-        library_name="libad_map_{}_python".format(component)
-        generate_python_wrapper(library_name=library_name,
+        generate_python_wrapper(library_name=component,
                                 cpp_filename="AdMap-{}-PythonWrapper.cpp.in".format(component),
                                 header_directories=header_dirs,
                                 include_paths=include_dirs,
@@ -91,15 +90,19 @@ def main():
                                 ignore_declarations=ignore_declarations,
                                 ignore_files=ignore_files)
 
-        for binding in @PYTHON_BINDING_STRING_LIST@:
-            additional_replacements_binding=additional_replacements.copy()
-            additional_replacements_binding.add(("libad_map_{}_python".format(component), "libad_map_{}_{}".format(component, binding)))
-            post_process_python_wrapper(header_directories=header_dirs,
+        additional_replacements.add(
+                ("BOOST_PYTHON_MODULE({}){{".format(component),
+                 "void export_ad_map_{}(){{\n\n".format(component) +
+                 "  bp::object ad_map_{}_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"ad.map.{}\"))));\n".format(component, component) +
+                 "  bp::scope().attr(\"{}\") = ad_map_{}_module;\n".format(component, component) +
+                 "  bp::scope submodule_scope = ad_map_{}_module;\n\n".format(component)
+                ))
+        post_process_python_wrapper(header_directories=header_dirs,
                                     cpp_filename_in="AdMap-{}-PythonWrapper.cpp.in".format(component),
-                                    cpp_filename_out="AdMap-{}-PythonWrapper-{}.cpp".format(component, binding),
-                                    additional_replacements=additional_replacements_binding,
+                                    cpp_filename_out="AdMap-{}-PythonWrapper.cpp".format(component),
+                                    additional_replacements=additional_replacements,
                                     additional_includes=additional_includes
-            )
+        )
 
 
 if __name__ == '__main__':

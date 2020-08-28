@@ -1,0 +1,34 @@
+/*
+ * ----------------- BEGIN LICENSE BLOCK ---------------------------------
+ *
+ * Copyright (c) 2020 Intel Corporation
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * ----------------- END LICENSE BLOCK -----------------------------------
+ */
+
+#include <boost/python.hpp>
+
+void export_ad_map_access();
+void export_ad_map_config();
+void export_ad_map_intersection();
+void export_ad_map_landmark();
+void export_ad_map_lane();
+void export_ad_map_match();
+void export_ad_map_point();
+void export_ad_map_restriction();
+void export_ad_map_route();
+
+BOOST_PYTHON_MODULE(libad_map_access_@binding_string@)
+{
+  export_ad_map_landmark();
+  export_ad_map_access();
+  export_ad_map_config();
+  export_ad_map_intersection();
+  export_ad_map_lane();
+  export_ad_map_match();
+  export_ad_map_point();
+  export_ad_map_restriction();
+  export_ad_map_route();
+}

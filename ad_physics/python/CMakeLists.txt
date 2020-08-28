@@ -73,12 +73,12 @@ foreach(binding ${PYTHON_BINDINGS})
   # Tests
   #####################################################################
   if (BUILD_TESTING)
-    add_test(NAME ${target}_test
+    add_test(NAME ${PROJECT_NAME}_test_${binding}
       COMMAND ${binding} -m interface_test
       WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/tests
     )
     get_python_test_environment(${binding})
-    set_tests_properties(${target}_test PROPERTIES ENVIRONMENT "${PYTHON_TEST_ENVIRONMENT}")
+    set_tests_properties(${PROJECT_NAME}_test_${binding} PROPERTIES ENVIRONMENT "${PYTHON_TEST_ENVIRONMENT}")
   endif()
 
 endforeach()

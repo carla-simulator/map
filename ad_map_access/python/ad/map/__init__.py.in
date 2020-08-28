@@ -15,12 +15,4 @@ import os.path
 sys.path.append(os.path.dirname(__file__))
 
 import ad.physics
-import landmark
-import access
-import config
-import intersection
-import lane
-import match
-import point
-import restriction
-import route
+from libad_map_access_@binding_string@ import *
