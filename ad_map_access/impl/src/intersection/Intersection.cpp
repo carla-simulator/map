@@ -1493,7 +1493,7 @@ physics::Speed Intersection::getSpeedLimit() const
 
 void Intersection::calculateSpeedLimit()
 {
-  for (auto const internalLaneId : mInternalLanes)
+  for (auto const &internalLaneId : mInternalLanes)
   {
     route::LaneInterval laneInterval;
     laneInterval.laneId = internalLaneId;

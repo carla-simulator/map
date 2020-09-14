@@ -97,7 +97,7 @@ LandmarkId uniqueLandmarkId(point::GeoPoint const &geoPoint)
 
   point::ECEFPoint ecefDstPoint = toECEF(geoPoint);
   physics::Distance minDistance = std::numeric_limits<physics::Distance>::max();
-  for (auto const landmarkId : landmarksIds)
+  for (auto const &landmarkId : landmarksIds)
   {
     auto const landmarkPtr = getLandmarkPtr(landmarkId);
     point::GeoPoint geoSrcPoint = toGeo(landmarkPtr->position);
