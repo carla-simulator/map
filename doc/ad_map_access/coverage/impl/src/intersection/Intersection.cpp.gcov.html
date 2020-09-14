@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-08-27 14:43:43</td>
+            <td class="headerValue">2020-09-14 11:44:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">99</td>
@@ -1605,7 +1605,7 @@
 <span class="lineNum">    1493 </span>                :            : 
 <span class="lineNum">    1494 </span>                :<span class="lineCov">        111 : void Intersection::calculateSpeedLimit()</span>
 <span class="lineNum">    1495 </span>                :            : {
-<span class="lineNum">    1496 </span>        [<span class="branchCov" title="Branch 3 was taken 1436 times"> + </span><span class="branchCov" title="Branch 4 was taken 111 times"> + </span>]:<span class="lineCov">       1547 :   for (auto const internalLaneId : mInternalLanes)</span>
+<span class="lineNum">    1496 </span>        [<span class="branchCov" title="Branch 3 was taken 1436 times"> + </span><span class="branchCov" title="Branch 4 was taken 111 times"> + </span>]:<span class="lineCov">       1547 :   for (auto const &amp;internalLaneId : mInternalLanes)</span>
 <span class="lineNum">    1497 </span>                :            :   {
 <span class="lineNum">    1498 </span>        [<span class="branchCov" title="Branch 1 was taken 1436 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       1436 :     route::LaneInterval laneInterval;</span>
 <span class="lineNum">    1499 </span>                :<span class="lineCov">       1436 :     laneInterval.laneId = internalLaneId;</span>

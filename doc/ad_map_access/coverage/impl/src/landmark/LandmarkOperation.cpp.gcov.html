@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-08-27 14:43:43</td>
+            <td class="headerValue">2020-09-14 11:44:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -169,7 +169,7 @@
 <span class="lineNum">      97 </span>                :            : 
 <span class="lineNum">      98 </span>        [<span class="branchCov" title="Branch 1 was taken 43 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         43 :   point::ECEFPoint ecefDstPoint = toECEF(geoPoint);</span>
 <span class="lineNum">      99 </span>                :<span class="lineCov">         43 :   physics::Distance minDistance = std::numeric_limits&lt;physics::Distance&gt;::max();</span>
-<span class="lineNum">     100 </span>        [<span class="branchCov" title="Branch 3 was taken 8972 times"> + </span><span class="branchCov" title="Branch 4 was taken 43 times"> + </span>]:<span class="lineCov">       9015 :   for (auto const landmarkId : landmarksIds)</span>
+<span class="lineNum">     100 </span>        [<span class="branchCov" title="Branch 3 was taken 8972 times"> + </span><span class="branchCov" title="Branch 4 was taken 43 times"> + </span>]:<span class="lineCov">       9015 :   for (auto const &amp;landmarkId : landmarksIds)</span>
 <span class="lineNum">     101 </span>                :            :   {
 <span class="lineNum">     102 </span>        [<span class="branchCov" title="Branch 1 was taken 8972 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      17944 :     auto const landmarkPtr = getLandmarkPtr(landmarkId);</span>
 <span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 2 was taken 8972 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       8972 :     point::GeoPoint geoSrcPoint = toGeo(landmarkPtr-&gt;position);</span>
