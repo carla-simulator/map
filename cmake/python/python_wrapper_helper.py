@@ -160,7 +160,11 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
     builder.build_code_creator(module_name=library_name)
 
     # Writes the C++ interface file
+    if os.path.exists(cpp_filename):
+        os.remove(cpp_filename)
     builder.write_module(cpp_filename)
+
+    print("generate_python_wrapper(): {} written.".format(cpp_filename))
 
 
 def post_process_python_wrapper(header_directories, cpp_filename_in, cpp_filename_out, additional_replacements={}, additional_includes={}, spdx_license="MIT", fix_include_directives=True, fix_enum_class=True):
@@ -247,3 +251,5 @@ def post_process_python_wrapper(header_directories, cpp_filename_in, cpp_filenam
 
     file_output.write("\n#pragma GCC diagnostic pop\n"
                       "// clang-format on\n")
+
+    print("post_process_python_wrapper(): {} written.".format(cpp_filename_out))

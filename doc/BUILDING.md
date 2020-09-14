@@ -112,7 +112,8 @@ Therefore, a full list of step by step calls could look like e.g.:
  map$> mkdir install
  map$> mkdir -p build/{proj,spdlog,ad_physics,ad_map_opendrive_reader,ad_map_access}
  map$> cd build/proj
- map/build/proj$> cmake ../../dependencies/proj -DCMAKE_INSTALL_PREFIX=../../install/proj -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+ map/build/proj$> cmake ../../dependencies/PROJ -DCMAKE_INSTALL_PREFIX=../../install/proj -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+ map/build/proj$> make install
  map$> cd ../spdlog
  map/build/spdlog$> cmake ../../dependencies/spdlog -DCMAKE_INSTALL_PREFIX=../../install/spdlog -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_EXAMPLE=Off
  map/build/spdlog$> make install

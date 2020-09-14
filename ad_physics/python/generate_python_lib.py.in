@@ -39,7 +39,7 @@ def main():
                                 "ad", "toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
     )
 
-    for binding in @PYTHON_BINDING_STRING_LIST@:
+    for binding in [ @PYTHON_BINDING_STRING_LIST@ ]:
         post_process_python_wrapper(header_directories=header_dirs, additional_replacements={("libad_physics_python", "libad_physics_{}".format(binding))}, cpp_filename_in="AdPhysicsPythonWrapper.cpp.in", cpp_filename_out="AdPhysicsPythonWrapper-{}.cpp".format(binding))
 
 if __name__ == '__main__':
