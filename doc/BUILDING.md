@@ -197,7 +197,10 @@ hardening flags to ensure the code is compatible to respective flags. To enable 
 ```
 
 #### Python binding
-With this option enabled, Python bindings are generated and compiled. When compiling Python bindings it's recommended to build and link the other libraries statically to prevent from dependencies on the LD_LIBRARY_PATH at execution time. This option is disabled by default.
+With this option enabled, Python bindings are generated and compiled.
+When compiling Python bindings it's recommended to build and link the other
+libraries statically to prevent from dependencies on the LD_LIBRARY_PATH at execution time.
+This option is disabled by default.
 You have to enable the python binding also on the respective dependent component. ad_physics in this case.
 ```bash
  map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader" -DBUILD_PYTHON_BINDING=ON -DBUILD_SHARED_LIBS=OFF
