@@ -1,7 +1,7 @@
 ## Usage of Python binding for ad_physics
 
 Compilation of ad_physics_python (build option *-DBUILD_PYTHON_BINDING=ON*
-and ideally *-DBUILD_SHARED_LIBS=OFF*) will create a ad/physics python package
+and ideally *-DBUILD_SHARED_LIBS=OFF*) will create an *ad* python package
 inside the install/ad_physics/lib/pythonMaj.Min folder.
 The package be used inside any Python code
 to use datatypes or call methods defined in ad_physics.

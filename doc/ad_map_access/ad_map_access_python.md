@@ -1,10 +1,10 @@
 ## Usage of Python binding for ad_map_access
 
 Compilation of ad_map_access_python (build option *BUILD_PYTHON_BINDING*
-and ideally *-DBUILD_SHARED_LIBS=OFF*) will create ad/map python packages
+and ideally *-DBUILD_SHARED_LIBS=OFF*) will create an *ad* python package
 inside the install/ad_map_access/lib/pythonMaj.Min folder.
 The packages can be used inside any Python code to use
-datatypes or call methods defined in ad_map_access.
+datatypes or call methods defined in ad_map_access and its dependency ad_physics.
 
 ## Usage of Python binding
 To use the compiled Python binding, one has to extend the current environment
@@ -17,6 +17,11 @@ Python package and use it as any other Python module.
  >>> ad.map.access.init("tests/test_files/TPK.adm.txt")
  >>> lanes = ad.map.lane.getLanes()
  >>> print(len(lanes))
+```
+Also the interface of the dependency can be accessed directly, since ad_map_access is relying on those:
+```bash
+ >>> distance = ad.physics.Distance(2.0)
+ >>> print(distance)
 ```
 
 When using other python versions you have to set PYTHONPATH accordingly.
