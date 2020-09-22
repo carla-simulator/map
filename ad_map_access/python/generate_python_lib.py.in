@@ -90,7 +90,8 @@ def main():
                                 ignore_declarations=ignore_declarations,
                                 ignore_files=ignore_files)
 
-        additional_replacements.add(
+        additional_replacements_component = additional_replacements.copy()
+        additional_replacements_component.add(
                 ("BOOST_PYTHON_MODULE({}){{".format(component),
                  "void export_ad_map_{}(){{\n\n".format(component) +
                  "  bp::object ad_map_{}_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"ad.map.{}\"))));\n".format(component, component) +
@@ -103,7 +104,7 @@ def main():
         post_process_python_wrapper(header_directories=header_dirs,
                                     cpp_filename_in="AdMap-{}-PythonWrapper.cpp.in".format(component),
                                     cpp_filename_out="AdMap-{}-PythonWrapper.cpp".format(component),
-                                    additional_replacements=additional_replacements,
+                                    additional_replacements=additional_replacements_component,
                                     additional_includes=additional_includes
         )
 
