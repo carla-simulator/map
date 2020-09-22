@@ -31,16 +31,29 @@ def main():
         "@GENPY_INCLUDE_DIRS@"
     }
 
-    generate_python_wrapper(library_name="libad_physics_python",
-                            cpp_filename="AdPhysicsPythonWrapper.cpp.in",
+    generate_python_wrapper(library_name="physics",
+                            cpp_filename="Ad-physics-PythonWrapper.cpp.in",
                             header_directories=header_dirs,
                             include_paths=include_dirs,
+                            main_namespace="ad::physics",
                             declarations={
-                                "ad", "toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
+                                "ad::physics", "toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
     )
 
-    for binding in [ @PYTHON_BINDING_STRING_LIST@ ]:
-        post_process_python_wrapper(header_directories=header_dirs, additional_replacements={("libad_physics_python", "libad_physics_{}".format(binding))}, cpp_filename_in="AdPhysicsPythonWrapper.cpp.in", cpp_filename_out="AdPhysicsPythonWrapper-{}.cpp".format(binding))
+    additional_replacements = {("BOOST_PYTHON_MODULE(physics){",
+         "void export_ad_physics(){\n\n" +
+         "  bp::object ad_physics_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"ad.physics\"))));\n" +
+         "  bp::scope().attr(\"physics\") = ad_physics_module;\n" +
+         "  bp::scope submodule_scope = ad_physics_module;\n\n" +
+         "  bp::scope().attr(\"__doc__\") = \"Python binding of ad::physics C++ code for @binding_string@\";" +
+         "  bp::scope().attr(\"__copyright__\") = \"Copyright (C) 2020 Intel Corporation\";" +
+         "  bp::scope().attr(\"__license__\") = \"MIT\";"
+         )
+        }
+    post_process_python_wrapper(header_directories=header_dirs,
+                                cpp_filename_in="Ad-physics-PythonWrapper.cpp.in",
+                                cpp_filename_out="Ad-physics-PythonWrapper.cpp",
+                                additional_replacements=additional_replacements)
 
 if __name__ == '__main__':
     main()

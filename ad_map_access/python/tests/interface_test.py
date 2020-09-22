@@ -17,7 +17,7 @@ import xmlrunner
 import sys
 import os
 
-import ad.map
+import ad
 
 
 class AdMapAccessPythonTest(unittest.TestCase):

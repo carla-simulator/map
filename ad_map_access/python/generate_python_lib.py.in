@@ -95,7 +95,10 @@ def main():
                  "void export_ad_map_{}(){{\n\n".format(component) +
                  "  bp::object ad_map_{}_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"ad.map.{}\"))));\n".format(component, component) +
                  "  bp::scope().attr(\"{}\") = ad_map_{}_module;\n".format(component, component) +
-                 "  bp::scope submodule_scope = ad_map_{}_module;\n\n".format(component)
+                 "  bp::scope submodule_scope = ad_map_{}_module;\n\n".format(component) +
+                 "  bp::scope().attr(\"__doc__\") = \"Python binding of ad::map::{} C++ code for @binding_string@\";".format(component) +
+                 "  bp::scope().attr(\"__copyright__\") = \"Copyright (C) 2020 Intel Corporation\";" +
+                 "  bp::scope().attr(\"__license__\") = \"MIT\";"
                 ))
         post_process_python_wrapper(header_directories=header_dirs,
                                     cpp_filename_in="AdMap-{}-PythonWrapper.cpp.in".format(component),

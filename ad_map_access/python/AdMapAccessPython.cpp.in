@@ -1,27 +1,37 @@
-/*
- * ----------------- BEGIN LICENSE BLOCK ---------------------------------
- *
- * Copyright (c) 2020 Intel Corporation
- *
- * SPDX-License-Identifier: MIT
- *
- * ----------------- END LICENSE BLOCK -----------------------------------
- */
+// ----------------- BEGIN LICENSE BLOCK ---------------------------------
+//
+// Copyright (C) 2020 Intel Corporation
+//
+// SPDX-License-Identifier: MIT
+//
+// ----------------- END LICENSE BLOCK -----------------------------------
 
 #include <boost/python.hpp>
 
-void export_ad_map_access();
-void export_ad_map_config();
-void export_ad_map_intersection();
-void export_ad_map_landmark();
-void export_ad_map_lane();
-void export_ad_map_match();
-void export_ad_map_point();
-void export_ad_map_restriction();
-void export_ad_map_route();
+extern void export_ad_map_access();
+extern void export_ad_map_config();
+extern void export_ad_map_intersection();
+extern void export_ad_map_landmark();
+extern void export_ad_map_lane();
+extern void export_ad_map_match();
+extern void export_ad_map_point();
+extern void export_ad_map_restriction();
+extern void export_ad_map_route();
 
-BOOST_PYTHON_MODULE(libad_map_access_@binding_string@)
+namespace bp = boost::python;
+
+void export_ad_map_access_python()
 {
+  // create the ad.map module scope
+  bp::object ad_map_module(bp::handle<>(bp::borrowed(PyImport_AddModule("ad.map"))));
+  bp::scope().attr("map") = ad_map_module;
+  bp::scope submodule_scope = ad_map_module;
+
+  bp::scope().attr("__doc__") = "Python binding of ad::map C++ code for @binding_string@";
+  bp::scope().attr("__copyright__") = "Copyright (C) 2020 Intel Corporation";
+  bp::scope().attr("__license__") = "MIT";
+
+  // fix the order to ensure depedencies are met
   export_ad_map_landmark();
   export_ad_map_access();
   export_ad_map_config();

@@ -11,9 +11,9 @@ To use the compiled Python binding, one has to extend the current environment
 to be able to use the newly created packages. Afterwards, one can import the
 Python package and use it as any other Python module.
 ```bash
- ad_map_access_python$>  export PYTHONPATH=$PYTHONPATH:<path/to/>install/ad_physics/lib/python3.6:<path/to/>install/ad_map_access/lib/python3.6
+ ad_map_access_python$>  export PYTHONPATH=$PYTHONPATH:<path/to/>install/ad_map_access/lib/python3.6
  ad_map_access_python$>  python3.6
- >>> import ad.map
+ >>> import ad
  >>> ad.map.access.init("tests/test_files/TPK.adm.txt")
  >>> lanes = ad.map.lane.getLanes()
  >>> print(len(lanes))

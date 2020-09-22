@@ -13,7 +13,7 @@ Python package and use it as any other Python module.
 ```bash
  map$>  export PYTHONPATH=$PYTHONPATH:<path/to/>install/ad_physics/lib/python3.6
  map$>  python3.6
- >>> import ad.physics
+ >>> import ad
  >>> distance = ad.physics.Distance(2.0)
  >>> print(distance)
 ```
