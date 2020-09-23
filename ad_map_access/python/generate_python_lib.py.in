@@ -94,10 +94,10 @@ def main():
         additional_replacements_component.add(
                 ("BOOST_PYTHON_MODULE({}){{".format(component),
                  "void export_ad_map_{}(){{\n\n".format(component) +
-                 "  bp::object ad_map_{}_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"ad.map.{}\"))));\n".format(component, component) +
+                 "  bp::object ad_map_{}_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"{}\"))));\n".format(component, component) +
                  "  bp::scope().attr(\"{}\") = ad_map_{}_module;\n".format(component, component) +
                  "  bp::scope submodule_scope = ad_map_{}_module;\n\n".format(component) +
-                 "  bp::scope().attr(\"__doc__\") = \"Python binding of ad::map::{} C++ code for @binding_string@\";".format(component) +
+                 "  bp::scope().attr(\"__doc__\") = \"Python binding of ad_map_access ad::map::{} namespace C++ code for @binding_string@\";".format(component) +
                  "  bp::scope().attr(\"__copyright__\") = \"Copyright (C) 2020 Intel Corporation\";" +
                  "  bp::scope().attr(\"__license__\") = \"MIT\";"
                 ))

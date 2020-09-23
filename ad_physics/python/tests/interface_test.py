@@ -17,7 +17,7 @@ import xmlrunner
 import sys
 import os
 
-import ad
+import ad_physics as ad
 
 
 class AdPhysicsPythonTest(unittest.TestCase):

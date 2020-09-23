@@ -13,7 +13,7 @@ Python package and use it as any other Python module.
 ```bash
  ad_map_access_python$>  export PYTHONPATH=$PYTHONPATH:<path/to/>install/ad_map_access/lib/python3.6
  ad_map_access_python$>  python3.6
- >>> import ad
+ >>> import ad_map_access as ad
  >>> ad.map.access.init("tests/test_files/TPK.adm.txt")
  >>> lanes = ad.map.lane.getLanes()
  >>> print(len(lanes))
