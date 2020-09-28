@@ -1,4 +1,6 @@
 ## Latest changes
+#### :ghost: Maintenance
+* Improved user interface of python binding
 
 ## Release 2.2.1
 #### :ghost: Maintenance

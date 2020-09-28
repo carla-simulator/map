@@ -41,9 +41,9 @@ You might have to set the LD_LIBRARY_PATH before:
 $> export LD_LIBRARY_PATH=install/ad_physics/lib:install/ad_map_access/lib:install/ad_map_opendrive_reader/lib
 ```
 
-Or you build it with the static colcon configuration to get rid of the LD_LIBRARY_PATH [described here](../BUILDING/#colcon-build).
+Or you build it with the static (python) colcon configuration to get rid of the LD_LIBRARY_PATH [described here](../BUILDING/#colcon-build).
 ```bash
-$> colcon build --metas colcon_static.meta --packages-up-to MapMaker --build-base build-static --install-base install-static
+$> colcon build --metas colcon_python.meta --packages-up-to MapMaker --build-base build-static --install-base install-static
 ```
 
 Then you can omit the LD_LIBRARY_PATH and call it directly
