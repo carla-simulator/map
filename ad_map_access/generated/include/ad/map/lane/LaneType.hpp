@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1988
+ * Generator Version : 11.0.0-1997
  */
 
 #pragma once
@@ -42,16 +42,49 @@ namespace lane {
  */
 enum class LaneType : int32_t
 {
+  /*!
+   INVALID
+   */
   INVALID = 0,
+  /*!
+   UNKNOWN
+   */
   UNKNOWN = 1,
+  /*!
+   NORMAL
+   */
   NORMAL = 2,
+  /*!
+   INTERSECTION
+   */
   INTERSECTION = 3,
+  /*!
+   SHOULDER
+   */
   SHOULDER = 4,
+  /*!
+   EMERGENCY
+   */
   EMERGENCY = 5,
+  /*!
+   MULTI
+   */
   MULTI = 6,
+  /*!
+   PEDESTRIAN
+   */
   PEDESTRIAN = 7,
+  /*!
+   OVERTAKING
+   */
   OVERTAKING = 8,
+  /*!
+   TURN
+   */
   TURN = 9,
+  /*!
+   BIKE
+   */
   BIKE = 10
 };
 

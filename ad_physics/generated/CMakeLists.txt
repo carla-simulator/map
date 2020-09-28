@@ -10,11 +10,11 @@
 ##
 # Generated file
 #
-# Generator Version : 11.0.0-1988
+# Generator Version : 11.0.0-1997
 ##
 
 cmake_minimum_required(VERSION 3.5)
-project(ad_physics VERSION 2.2.1)
+project(ad_physics VERSION 2.3.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)

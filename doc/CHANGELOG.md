@@ -1,4 +1,6 @@
 ## Latest changes
+#### :rocket: New Features
+* Added ad::physics::<Type>List types
 
 ## Release 2.2.1
 #### :ghost: Maintenance

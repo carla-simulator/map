@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1988
+ * Generator Version : 11.0.0-1997
  */
 
 #pragma once
@@ -40,17 +40,53 @@ namespace restriction {
  */
 enum class RoadUserType : int32_t
 {
+  /*!
+   INVALID
+   */
   INVALID = 0,
+  /*!
+   UNKNOWN
+   */
   UNKNOWN = 1,
+  /*!
+   CAR
+   */
   CAR = 2,
+  /*!
+   BUS
+   */
   BUS = 3,
+  /*!
+   TRUCK
+   */
   TRUCK = 4,
+  /*!
+   PEDESTRIAN
+   */
   PEDESTRIAN = 5,
+  /*!
+   MOTORBIKE
+   */
   MOTORBIKE = 6,
+  /*!
+   BICYCLE
+   */
   BICYCLE = 7,
+  /*!
+   CAR_ELECTRIC
+   */
   CAR_ELECTRIC = 8,
+  /*!
+   CAR_HYBRID
+   */
   CAR_HYBRID = 9,
+  /*!
+   CAR_PETROL
+   */
   CAR_PETROL = 10,
+  /*!
+   CAR_DIESEL
+   */
   CAR_DIESEL = 11
 };
 
