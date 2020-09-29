@@ -1,5 +1,7 @@
 <map id="generated/include/ad/physics/AccelerationRange.hpp" name="generated/include/ad/physics/AccelerationRange.hpp">
-<area shape="rect" id="node2" href="$AccelerationRangeValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationRangeValid\lInputRange.hpp" alt="" coords="5,95,232,151"/>
-<area shape="rect" id="node3" href="$RangeOperation_8hpp.html" title="impl/include/ad/physics\l/RangeOperation.hpp" alt="" coords="34,199,203,240"/>
-<area shape="rect" id="node4" href="$Operation_8hpp.html" title="impl/include/ad/physics\l/Operation.hpp" alt="" coords="34,288,203,329"/>
+<area shape="rect" id="node2" href="$AccelerationRangeList_8hpp.html" title="generated/include/ad\l/physics/AccelerationRangeList.hpp" alt="" coords="5,102,252,143"/>
+<area shape="rect" id="node4" href="$AccelerationRangeValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationRangeValid\lInputRange.hpp" alt="" coords="277,95,503,151"/>
+<area shape="rect" id="node3" href="$AccelerationRangeListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationRangeList\lValidInputRange.hpp" alt="" coords="41,199,259,255"/>
+<area shape="rect" id="node5" href="$RangeOperation_8hpp.html" title="impl/include/ad/physics\l/RangeOperation.hpp" alt="" coords="305,206,475,247"/>
+<area shape="rect" id="node6" href="$Operation_8hpp.html" title="impl/include/ad/physics\l/Operation.hpp" alt="" coords="305,303,475,344"/>
 </map>

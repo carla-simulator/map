@@ -22,6 +22,8 @@ var searchData=
   ['traffictype_2ehpp',['TrafficType.hpp',['../TrafficType_8hpp.html',1,'']]],
   ['traffictypevalidinputrange_2ehpp',['TrafficTypeValidInputRange.hpp',['../TrafficTypeValidInputRange_8hpp.html',1,'']]],
   ['tree',['TREE',['../namespacead_1_1map_1_1landmark.html#ae307e7342e34144a0a5df9165b886dd6ac0f8e24cf041639c4fc457ebec9490eb',1,'ad::map::landmark']]],
+  ['truck',['TRUCK',['../namespacead_1_1map_1_1restriction.html#a82db9230b6d16e53aa1cf75a45bb14c6a881c2687b20d706b709caf71a1cf8315',1,'ad::map::restriction']]],
+  ['turn',['TURN',['../namespacead_1_1map_1_1lane.html#a2063fce08470b3c416ef695aa694b419a2ac9e5790771f403f29325a77d9e4a2a',1,'ad::map::lane']]],
   ['turndirection',['turnDirection',['../classad_1_1map_1_1intersection_1_1Intersection.html#a50b8c014ba370ea379ec9024f9937aaa',1,'ad::map::intersection::Intersection::turnDirection()'],['../namespacead_1_1map_1_1intersection.html#a9349488e0eeb54f585a0b2e4be98b91b',1,'ad::map::intersection::TurnDirection()']]],
   ['turndirection_2ehpp',['TurnDirection.hpp',['../TurnDirection_8hpp.html',1,'']]],
   ['turndirectionvalidinputrange_2ehpp',['TurnDirectionValidInputRange.hpp',['../TurnDirectionValidInputRange_8hpp.html',1,'']]],

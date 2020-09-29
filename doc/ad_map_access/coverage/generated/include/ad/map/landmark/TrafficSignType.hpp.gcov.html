@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-28 10:58:50</td>
+            <td class="headerValue">2020-09-29 07:06:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -83,7 +83,7 @@
 <span class="lineNum">      12 </span>                :            :  * Generated file
 <span class="lineNum">      13 </span>                :            :  * @file
 <span class="lineNum">      14 </span>                :            :  *
-<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1988
+<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997
 <span class="lineNum">      16 </span>                :            :  */
 <span class="lineNum">      17 </span>                :            : 
 <span class="lineNum">      18 </span>                :            : #pragma once
@@ -113,177 +113,396 @@
 <span class="lineNum">      42 </span>                :            :  */
 <span class="lineNum">      43 </span>                :            : enum class TrafficSignType : int32_t
 <span class="lineNum">      44 </span>                :            : {
-<span class="lineNum">      45 </span>                :            :   INVALID = 0,
-<span class="lineNum">      46 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_LEFT = 1,
-<span class="lineNum">      47 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_RIGHT = 2,
-<span class="lineNum">      48 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT = 3,
-<span class="lineNum">      49 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_UP_DOWN = 4,
-<span class="lineNum">      50 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE = 5,
-<span class="lineNum">      51 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE = 6,
-<span class="lineNum">      52 </span>                :            :   SUPPLEMENT_APPLIES_NEXT_N_KM_TIME = 7,
-<span class="lineNum">      53 </span>                :            :   SUPPLEMENT_ENDS = 8,
-<span class="lineNum">      54 </span>                :            :   SUPPLEMENT_RESIDENTS_ALLOWED = 9,
-<span class="lineNum">      55 </span>                :            :   SUPPLEMENT_BICYCLE_ALLOWED = 10,
-<span class="lineNum">      56 </span>                :            :   SUPPLEMENT_MOPED_ALLOWED = 11,
-<span class="lineNum">      57 </span>                :            :   SUPPLEMENT_TRAM_ALLOWED = 12,
-<span class="lineNum">      58 </span>                :            :   SUPPLEMENT_FORESTAL_ALLOWED = 13,
-<span class="lineNum">      59 </span>                :            :   SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED = 14,
-<span class="lineNum">      60 </span>                :            :   SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN = 15,
-<span class="lineNum">      61 </span>                :            :   SUPPLEMENT_RAILWAY_ONLY = 16,
-<span class="lineNum">      62 </span>                :            :   SUPPLEMENT_APPLIES_FOR_WEIGHT = 17,
-<span class="lineNum">      63 </span>                :            :   DANGER = 18,
-<span class="lineNum">      64 </span>                :            :   LANES_MERGING = 19,
-<span class="lineNum">      65 </span>                :            :   CAUTION_PEDESTRIAN = 20,
-<span class="lineNum">      66 </span>                :            :   CAUTION_CHILDREN = 21,
-<span class="lineNum">      67 </span>                :            :   CAUTION_BICYCLE = 22,
-<span class="lineNum">      68 </span>                :            :   CAUTION_ANIMALS = 23,
-<span class="lineNum">      69 </span>                :            :   CAUTION_RAIL_CROSSING_WITH_BARRIER = 24,
-<span class="lineNum">      70 </span>                :            :   CAUTION_RAIL_CROSSING = 25,
-<span class="lineNum">      71 </span>                :            :   YIELD_TRAIN = 26,
-<span class="lineNum">      72 </span>                :            :   YIELD = 27,
-<span class="lineNum">      73 </span>                :            :   STOP = 28,
-<span class="lineNum">      74 </span>                :            :   REQUIRED_RIGHT_TURN = 29,
-<span class="lineNum">      75 </span>                :            :   REQUIRED_LEFT_TURN = 30,
-<span class="lineNum">      76 </span>                :            :   REQUIRED_STRAIGHT = 31,
-<span class="lineNum">      77 </span>                :            :   REQUIRED_STRAIGHT_OR_RIGHT_TURN = 32,
-<span class="lineNum">      78 </span>                :            :   REQUIRED_STRAIGHT_OR_LEFT_TURN = 33,
-<span class="lineNum">      79 </span>                :            :   ROUNDABOUT = 34,
-<span class="lineNum">      80 </span>                :            :   PASS_RIGHT = 35,
-<span class="lineNum">      81 </span>                :            :   PASS_LEFT = 36,
-<span class="lineNum">      82 </span>                :            :   BYBICLE_PATH = 37,
-<span class="lineNum">      83 </span>                :            :   FOOTWALK = 38,
-<span class="lineNum">      84 </span>                :            :   FOOTWALK_BICYCLE_SHARED = 39,
-<span class="lineNum">      85 </span>                :            :   FOOTWALK_BICYCLE_SEP_RIGHT = 40,
-<span class="lineNum">      86 </span>                :            :   FOOTWALK_BICYCLE_SEP_LEFT = 41,
-<span class="lineNum">      87 </span>                :            :   PEDESTRIAN_AREA_BEGIN = 42,
-<span class="lineNum">      88 </span>                :            :   ACCESS_FORBIDDEN = 43,
-<span class="lineNum">      89 </span>                :            :   ACCESS_FORBIDDEN_TRUCKS = 44,
-<span class="lineNum">      90 </span>                :            :   ACCESS_FORBIDDEN_BICYCLE = 45,
-<span class="lineNum">      91 </span>                :            :   ACCESS_FORBIDDEN_MOTORVEHICLES = 46,
-<span class="lineNum">      92 </span>                :            :   ACCESS_FORBIDDEN_WEIGHT = 47,
-<span class="lineNum">      93 </span>                :            :   ACCESS_FORBIDDEN_WIDTH = 48,
-<span class="lineNum">      94 </span>                :            :   ACCESS_FORBIDDEN_HEIGHT = 49,
-<span class="lineNum">      95 </span>                :            :   ACCESS_FORBIDDEN_WRONG_DIR = 50,
-<span class="lineNum">      96 </span>                :            :   ENVIORNMENT_ZONE_BEGIN = 51,
-<span class="lineNum">      97 </span>                :            :   ENVIORNMENT_ZONE_END = 52,
-<span class="lineNum">      98 </span>                :            :   MAX_SPEED = 53,
-<span class="lineNum">      99 </span>                :            :   SPEED_ZONE_30_BEGIN = 54,
-<span class="lineNum">     100 </span>                :            :   SPEED_ZONE_30_END = 55,
-<span class="lineNum">     101 </span>                :            :   HAS_WAY_NEXT_INTERSECTION = 56,
-<span class="lineNum">     102 </span>                :            :   PRIORITY_WAY = 57,
-<span class="lineNum">     103 </span>                :            :   CITY_BEGIN = 58,
-<span class="lineNum">     104 </span>                :            :   CITY_END = 59,
-<span class="lineNum">     105 </span>                :            :   MOTORWAY_BEGIN = 60,
-<span class="lineNum">     106 </span>                :            :   MOTORWAY_END = 61,
-<span class="lineNum">     107 </span>                :            :   MOTORVEHICLE_BEGIN = 62,
-<span class="lineNum">     108 </span>                :            :   MOTORVEHICLE_END = 63,
-<span class="lineNum">     109 </span>                :            :   INFO_MOTORWAY_INFO = 64,
-<span class="lineNum">     110 </span>                :            :   CUL_DE_SAC = 65,
-<span class="lineNum">     111 </span>                :            :   CUL_DE_SAC_EXCEPT_PED_BICYCLE = 66,
-<span class="lineNum">     112 </span>                :            :   INFO_NUMBER_OF_AUTOBAHN = 67,
-<span class="lineNum">     113 </span>                :            :   DIRECTION_TURN_TO_AUTOBAHN = 68,
-<span class="lineNum">     114 </span>                :            :   DIRECTION_TURN_TO_LOCAL = 69,
-<span class="lineNum">     115 </span>                :            :   DESTINATION_BOARD = 70,
-<span class="lineNum">     116 </span>                :            :   FREE_TEXT = 71,
-<span class="lineNum">     117 </span>                :            :   UNKNOWN = 72
-<span class="lineNum">     118 </span>                :            : };
-<span class="lineNum">     119 </span>                :            : 
-<span class="lineNum">     120 </span>                :            : } // namespace landmark
-<span class="lineNum">     121 </span>                :            : } // namespace map
-<span class="lineNum">     122 </span>                :            : } // namespace ad
-<span class="lineNum">     123 </span>                :            : /*!
-<span class="lineNum">     124 </span>                :            :  * \brief Conversion of ::ad::map::landmark::TrafficSignType to std::string helper.
-<span class="lineNum">     125 </span>                :            :  */
-<span class="lineNum">     126 </span>                :            : std::string toString(::ad::map::landmark::TrafficSignType const e);
-<span class="lineNum">     127 </span>                :            : 
-<span class="lineNum">     128 </span>                :            : /*!
-<span class="lineNum">     129 </span>                :            :  * \brief Conversion from std::string to enum type T helper.
-<span class="lineNum">     130 </span>                :            :  *
-<span class="lineNum">     131 </span>                :            :  * \param [in] str - a fully qualified string name of enum class type
-<span class="lineNum">     132 </span>                :            :  *
-<span class="lineNum">     133 </span>                :            :  * \return T enum value
-<span class="lineNum">     134 </span>                :            :  *
-<span class="lineNum">     135 </span>                :            :  * \throws std::out_of_range exception if the given string does not match any enum type
-<span class="lineNum">     136 </span>                :            :  *
-<span class="lineNum">     137 </span>                :            :  * Example usage:
-<span class="lineNum">     138 </span>                :            :  * \code
-<span class="lineNum">     139 </span>                :            :  *   auto value = fromString&lt;SomeEnumType&gt;(&quot;SomeEnumType::eValue&quot;);
-<span class="lineNum">     140 </span>                :            :  *   assert(value == SomeEnumType::eValue);
-<span class="lineNum">     141 </span>                :            :  *   // Or:
-<span class="lineNum">     142 </span>                :            :  *   auto value = fromString&lt;SomeEnumType&gt;(&quot;eValue&quot;);
-<span class="lineNum">     143 </span>                :            :  *   assert(value == SomeEnumType::eValue);
-<span class="lineNum">     144 </span>                :            :  * \endcode
-<span class="lineNum">     145 </span>                :            :  */
-<span class="lineNum">     146 </span>                :            : template &lt;typename EnumType&gt; EnumType fromString(std::string const &amp;str);
-<span class="lineNum">     147 </span>                :            : 
-<span class="lineNum">     148 </span>                :            : /*!
-<span class="lineNum">     149 </span>                :            :  * \brief Conversion from std::string to enum type T helper.
-<span class="lineNum">     150 </span>                :            :  *
-<span class="lineNum">     151 </span>                :            :  * \param [in] str - a fully qualified string name of enum class type
-<span class="lineNum">     152 </span>                :            :  *
-<span class="lineNum">     153 </span>                :            :  * \return T enum value
-<span class="lineNum">     154 </span>                :            :  *
-<span class="lineNum">     155 </span>                :            :  * \throws std::out_of_range exception if the given string does not match any enum type
-<span class="lineNum">     156 </span>                :            :  *
-<span class="lineNum">     157 </span>                :            :  * Example usage:
-<span class="lineNum">     158 </span>                :            :  * \code
-<span class="lineNum">     159 </span>                :            :  *   auto value = fromString&lt;SomeEnumType&gt;(&quot;SomeEnumType::eValue&quot;);
-<span class="lineNum">     160 </span>                :            :  *   assert(value == SomeEnumType::eValue);
-<span class="lineNum">     161 </span>                :            :  *   // Or:
-<span class="lineNum">     162 </span>                :            :  *   auto value = fromString&lt;SomeEnumType&gt;(&quot;eValue&quot;);
-<span class="lineNum">     163 </span>                :            :  *   assert(value == SomeEnumType::eValue);
-<span class="lineNum">     164 </span>                :            :  * \endcode
-<span class="lineNum">     165 </span>                :            :  */
-<span class="lineNum">     166 </span>                :            : template &lt;&gt;::ad::map::landmark::TrafficSignType fromString(std::string const &amp;str);
-<span class="lineNum">     167 </span>                :            : 
-<span class="lineNum">     168 </span>                :            : /*!
-<span class="lineNum">     169 </span>                :            :  * \brief protect the definition of functions from duplicates by typedef usage within other data types
-<span class="lineNum">     170 </span>                :            :  */
-<span class="lineNum">     171 </span>                :            : #ifndef GEN_GUARD_AD_MAP_LANDMARK_TRAFFICSIGNTYPE
-<span class="lineNum">     172 </span>                :            : #define GEN_GUARD_AD_MAP_LANDMARK_TRAFFICSIGNTYPE
-<span class="lineNum">     173 </span>                :            : /*!
-<span class="lineNum">     174 </span>                :            :  * @brief namespace ad
-<span class="lineNum">     175 </span>                :            :  */
-<span class="lineNum">     176 </span>                :            : namespace ad {
-<span class="lineNum">     177 </span>                :            : /*!
-<span class="lineNum">     178 </span>                :            :  * @brief namespace map
-<span class="lineNum">     179 </span>                :            :  */
-<span class="lineNum">     180 </span>                :            : namespace map {
-<span class="lineNum">     181 </span>                :            : /*!
-<span class="lineNum">     182 </span>                :            :  * @brief namespace landmark
-<span class="lineNum">     183 </span>                :            :  *
-<span class="lineNum">     184 </span>                :            :  * Handling of landmarks
-<span class="lineNum">     185 </span>                :            :  */
-<span class="lineNum">     186 </span>                :            : namespace landmark {
-<span class="lineNum">     187 </span>                :            : 
-<span class="lineNum">     188 </span>                :            : /**
-<span class="lineNum">     189 </span>                :            :  * \brief standard ostream operator
-<span class="lineNum">     190 </span>                :            :  *
-<span class="lineNum">     191 </span>                :            :  * \param[in] os The output stream to write to
-<span class="lineNum">     192 </span>                :            :  * \param[in] value TrafficSignType value
-<span class="lineNum">     193 </span>                :            :  *
-<span class="lineNum">     194 </span>                :            :  * \returns The stream object.
-<a name="195"><span class="lineNum">     195 </span>                :            :  *</a>
-<span class="lineNum">     196 </span>                :            :  */
-<span class="lineNum">     197 </span>                :<span class="lineCov">         18 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, TrafficSignType const &amp;value)</span>
-<span class="lineNum">     198 </span>                :            : {
-<span class="lineNum">     199 </span>        [<span class="branchCov" title="Branch 2 was taken 18 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         18 :   return os &lt;&lt; toString(value);</span>
-<span class="lineNum">     200 </span>                :            : }
-<span class="lineNum">     201 </span>                :            : 
-<span class="lineNum">     202 </span>                :            : } // namespace landmark
-<span class="lineNum">     203 </span>                :            : } // namespace map
-<span class="lineNum">     204 </span>                :            : } // namespace ad
-<span class="lineNum">     205 </span>                :            : 
-<span class="lineNum">     206 </span>                :            : namespace std {
-<span class="lineNum">     207 </span>                :            : /*!
-<span class="lineNum">     208 </span>                :            :  * \brief overload of the std::to_string for TrafficSignType
-<span class="lineNum">     209 </span>                :            :  */
-<span class="lineNum">     210 </span>                :            : inline std::string to_string(::ad::map::landmark::TrafficSignType const &amp;value)
-<span class="lineNum">     211 </span>                :            : {
-<span class="lineNum">     212 </span>                :            :   return ::toString(value);
-<span class="lineNum">     213 </span>                :            : }
-<span class="lineNum">     214 </span>                :            : } // namespace std
-<span class="lineNum">     215 </span>                :            : #endif // GEN_GUARD_AD_MAP_LANDMARK_TRAFFICSIGNTYPE
+<span class="lineNum">      45 </span>                :            :   /*!
+<span class="lineNum">      46 </span>                :            :    INVALID
+<span class="lineNum">      47 </span>                :            :    */
+<span class="lineNum">      48 </span>                :            :   INVALID = 0,
+<span class="lineNum">      49 </span>                :            :   /*!
+<span class="lineNum">      50 </span>                :            :    SUPPLEMENT_ARROW_APPLIES_LEFT
+<span class="lineNum">      51 </span>                :            :    */
+<span class="lineNum">      52 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_LEFT = 1,
+<span class="lineNum">      53 </span>                :            :   /*!
+<span class="lineNum">      54 </span>                :            :    SUPPLEMENT_ARROW_APPLIES_RIGHT
+<span class="lineNum">      55 </span>                :            :    */
+<span class="lineNum">      56 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_RIGHT = 2,
+<span class="lineNum">      57 </span>                :            :   /*!
+<span class="lineNum">      58 </span>                :            :    SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT
+<span class="lineNum">      59 </span>                :            :    */
+<span class="lineNum">      60 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT = 3,
+<span class="lineNum">      61 </span>                :            :   /*!
+<span class="lineNum">      62 </span>                :            :    SUPPLEMENT_ARROW_APPLIES_UP_DOWN
+<span class="lineNum">      63 </span>                :            :    */
+<span class="lineNum">      64 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_UP_DOWN = 4,
+<span class="lineNum">      65 </span>                :            :   /*!
+<span class="lineNum">      66 </span>                :            :    SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE
+<span class="lineNum">      67 </span>                :            :    */
+<span class="lineNum">      68 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE = 5,
+<span class="lineNum">      69 </span>                :            :   /*!
+<span class="lineNum">      70 </span>                :            :    SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE
+<span class="lineNum">      71 </span>                :            :    */
+<span class="lineNum">      72 </span>                :            :   SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE = 6,
+<span class="lineNum">      73 </span>                :            :   /*!
+<span class="lineNum">      74 </span>                :            :    SUPPLEMENT_APPLIES_NEXT_N_KM_TIME
+<span class="lineNum">      75 </span>                :            :    */
+<span class="lineNum">      76 </span>                :            :   SUPPLEMENT_APPLIES_NEXT_N_KM_TIME = 7,
+<span class="lineNum">      77 </span>                :            :   /*!
+<span class="lineNum">      78 </span>                :            :    SUPPLEMENT_ENDS
+<span class="lineNum">      79 </span>                :            :    */
+<span class="lineNum">      80 </span>                :            :   SUPPLEMENT_ENDS = 8,
+<span class="lineNum">      81 </span>                :            :   /*!
+<span class="lineNum">      82 </span>                :            :    SUPPLEMENT_RESIDENTS_ALLOWED
+<span class="lineNum">      83 </span>                :            :    */
+<span class="lineNum">      84 </span>                :            :   SUPPLEMENT_RESIDENTS_ALLOWED = 9,
+<span class="lineNum">      85 </span>                :            :   /*!
+<span class="lineNum">      86 </span>                :            :    SUPPLEMENT_BICYCLE_ALLOWED
+<span class="lineNum">      87 </span>                :            :    */
+<span class="lineNum">      88 </span>                :            :   SUPPLEMENT_BICYCLE_ALLOWED = 10,
+<span class="lineNum">      89 </span>                :            :   /*!
+<span class="lineNum">      90 </span>                :            :    SUPPLEMENT_MOPED_ALLOWED
+<span class="lineNum">      91 </span>                :            :    */
+<span class="lineNum">      92 </span>                :            :   SUPPLEMENT_MOPED_ALLOWED = 11,
+<span class="lineNum">      93 </span>                :            :   /*!
+<span class="lineNum">      94 </span>                :            :    SUPPLEMENT_TRAM_ALLOWED
+<span class="lineNum">      95 </span>                :            :    */
+<span class="lineNum">      96 </span>                :            :   SUPPLEMENT_TRAM_ALLOWED = 12,
+<span class="lineNum">      97 </span>                :            :   /*!
+<span class="lineNum">      98 </span>                :            :    SUPPLEMENT_FORESTAL_ALLOWED
+<span class="lineNum">      99 </span>                :            :    */
+<span class="lineNum">     100 </span>                :            :   SUPPLEMENT_FORESTAL_ALLOWED = 13,
+<span class="lineNum">     101 </span>                :            :   /*!
+<span class="lineNum">     102 </span>                :            :    SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED
+<span class="lineNum">     103 </span>                :            :    */
+<span class="lineNum">     104 </span>                :            :   SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED = 14,
+<span class="lineNum">     105 </span>                :            :   /*!
+<span class="lineNum">     106 </span>                :            :    SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN
+<span class="lineNum">     107 </span>                :            :    */
+<span class="lineNum">     108 </span>                :            :   SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN = 15,
+<span class="lineNum">     109 </span>                :            :   /*!
+<span class="lineNum">     110 </span>                :            :    SUPPLEMENT_RAILWAY_ONLY
+<span class="lineNum">     111 </span>                :            :    */
+<span class="lineNum">     112 </span>                :            :   SUPPLEMENT_RAILWAY_ONLY = 16,
+<span class="lineNum">     113 </span>                :            :   /*!
+<span class="lineNum">     114 </span>                :            :    SUPPLEMENT_APPLIES_FOR_WEIGHT
+<span class="lineNum">     115 </span>                :            :    */
+<span class="lineNum">     116 </span>                :            :   SUPPLEMENT_APPLIES_FOR_WEIGHT = 17,
+<span class="lineNum">     117 </span>                :            :   /*!
+<span class="lineNum">     118 </span>                :            :    DANGER
+<span class="lineNum">     119 </span>                :            :    */
+<span class="lineNum">     120 </span>                :            :   DANGER = 18,
+<span class="lineNum">     121 </span>                :            :   /*!
+<span class="lineNum">     122 </span>                :            :    LANES_MERGING
+<span class="lineNum">     123 </span>                :            :    */
+<span class="lineNum">     124 </span>                :            :   LANES_MERGING = 19,
+<span class="lineNum">     125 </span>                :            :   /*!
+<span class="lineNum">     126 </span>                :            :    CAUTION_PEDESTRIAN
+<span class="lineNum">     127 </span>                :            :    */
+<span class="lineNum">     128 </span>                :            :   CAUTION_PEDESTRIAN = 20,
+<span class="lineNum">     129 </span>                :            :   /*!
+<span class="lineNum">     130 </span>                :            :    CAUTION_CHILDREN
+<span class="lineNum">     131 </span>                :            :    */
+<span class="lineNum">     132 </span>                :            :   CAUTION_CHILDREN = 21,
+<span class="lineNum">     133 </span>                :            :   /*!
+<span class="lineNum">     134 </span>                :            :    CAUTION_BICYCLE
+<span class="lineNum">     135 </span>                :            :    */
+<span class="lineNum">     136 </span>                :            :   CAUTION_BICYCLE = 22,
+<span class="lineNum">     137 </span>                :            :   /*!
+<span class="lineNum">     138 </span>                :            :    CAUTION_ANIMALS
+<span class="lineNum">     139 </span>                :            :    */
+<span class="lineNum">     140 </span>                :            :   CAUTION_ANIMALS = 23,
+<span class="lineNum">     141 </span>                :            :   /*!
+<span class="lineNum">     142 </span>                :            :    CAUTION_RAIL_CROSSING_WITH_BARRIER
+<span class="lineNum">     143 </span>                :            :    */
+<span class="lineNum">     144 </span>                :            :   CAUTION_RAIL_CROSSING_WITH_BARRIER = 24,
+<span class="lineNum">     145 </span>                :            :   /*!
+<span class="lineNum">     146 </span>                :            :    CAUTION_RAIL_CROSSING
+<span class="lineNum">     147 </span>                :            :    */
+<span class="lineNum">     148 </span>                :            :   CAUTION_RAIL_CROSSING = 25,
+<span class="lineNum">     149 </span>                :            :   /*!
+<span class="lineNum">     150 </span>                :            :    YIELD_TRAIN
+<span class="lineNum">     151 </span>                :            :    */
+<span class="lineNum">     152 </span>                :            :   YIELD_TRAIN = 26,
+<span class="lineNum">     153 </span>                :            :   /*!
+<span class="lineNum">     154 </span>                :            :    YIELD
+<span class="lineNum">     155 </span>                :            :    */
+<span class="lineNum">     156 </span>                :            :   YIELD = 27,
+<span class="lineNum">     157 </span>                :            :   /*!
+<span class="lineNum">     158 </span>                :            :    STOP
+<span class="lineNum">     159 </span>                :            :    */
+<span class="lineNum">     160 </span>                :            :   STOP = 28,
+<span class="lineNum">     161 </span>                :            :   /*!
+<span class="lineNum">     162 </span>                :            :    REQUIRED_RIGHT_TURN
+<span class="lineNum">     163 </span>                :            :    */
+<span class="lineNum">     164 </span>                :            :   REQUIRED_RIGHT_TURN = 29,
+<span class="lineNum">     165 </span>                :            :   /*!
+<span class="lineNum">     166 </span>                :            :    REQUIRED_LEFT_TURN
+<span class="lineNum">     167 </span>                :            :    */
+<span class="lineNum">     168 </span>                :            :   REQUIRED_LEFT_TURN = 30,
+<span class="lineNum">     169 </span>                :            :   /*!
+<span class="lineNum">     170 </span>                :            :    REQUIRED_STRAIGHT
+<span class="lineNum">     171 </span>                :            :    */
+<span class="lineNum">     172 </span>                :            :   REQUIRED_STRAIGHT = 31,
+<span class="lineNum">     173 </span>                :            :   /*!
+<span class="lineNum">     174 </span>                :            :    REQUIRED_STRAIGHT_OR_RIGHT_TURN
+<span class="lineNum">     175 </span>                :            :    */
+<span class="lineNum">     176 </span>                :            :   REQUIRED_STRAIGHT_OR_RIGHT_TURN = 32,
+<span class="lineNum">     177 </span>                :            :   /*!
+<span class="lineNum">     178 </span>                :            :    REQUIRED_STRAIGHT_OR_LEFT_TURN
+<span class="lineNum">     179 </span>                :            :    */
+<span class="lineNum">     180 </span>                :            :   REQUIRED_STRAIGHT_OR_LEFT_TURN = 33,
+<span class="lineNum">     181 </span>                :            :   /*!
+<span class="lineNum">     182 </span>                :            :    ROUNDABOUT
+<span class="lineNum">     183 </span>                :            :    */
+<span class="lineNum">     184 </span>                :            :   ROUNDABOUT = 34,
+<span class="lineNum">     185 </span>                :            :   /*!
+<span class="lineNum">     186 </span>                :            :    PASS_RIGHT
+<span class="lineNum">     187 </span>                :            :    */
+<span class="lineNum">     188 </span>                :            :   PASS_RIGHT = 35,
+<span class="lineNum">     189 </span>                :            :   /*!
+<span class="lineNum">     190 </span>                :            :    PASS_LEFT
+<span class="lineNum">     191 </span>                :            :    */
+<span class="lineNum">     192 </span>                :            :   PASS_LEFT = 36,
+<span class="lineNum">     193 </span>                :            :   /*!
+<span class="lineNum">     194 </span>                :            :    BYBICLE_PATH
+<span class="lineNum">     195 </span>                :            :    */
+<span class="lineNum">     196 </span>                :            :   BYBICLE_PATH = 37,
+<span class="lineNum">     197 </span>                :            :   /*!
+<span class="lineNum">     198 </span>                :            :    FOOTWALK
+<span class="lineNum">     199 </span>                :            :    */
+<span class="lineNum">     200 </span>                :            :   FOOTWALK = 38,
+<span class="lineNum">     201 </span>                :            :   /*!
+<span class="lineNum">     202 </span>                :            :    FOOTWALK_BICYCLE_SHARED
+<span class="lineNum">     203 </span>                :            :    */
+<span class="lineNum">     204 </span>                :            :   FOOTWALK_BICYCLE_SHARED = 39,
+<span class="lineNum">     205 </span>                :            :   /*!
+<span class="lineNum">     206 </span>                :            :    FOOTWALK_BICYCLE_SEP_RIGHT
+<span class="lineNum">     207 </span>                :            :    */
+<span class="lineNum">     208 </span>                :            :   FOOTWALK_BICYCLE_SEP_RIGHT = 40,
+<span class="lineNum">     209 </span>                :            :   /*!
+<span class="lineNum">     210 </span>                :            :    FOOTWALK_BICYCLE_SEP_LEFT
+<span class="lineNum">     211 </span>                :            :    */
+<span class="lineNum">     212 </span>                :            :   FOOTWALK_BICYCLE_SEP_LEFT = 41,
+<span class="lineNum">     213 </span>                :            :   /*!
+<span class="lineNum">     214 </span>                :            :    PEDESTRIAN_AREA_BEGIN
+<span class="lineNum">     215 </span>                :            :    */
+<span class="lineNum">     216 </span>                :            :   PEDESTRIAN_AREA_BEGIN = 42,
+<span class="lineNum">     217 </span>                :            :   /*!
+<span class="lineNum">     218 </span>                :            :    ACCESS_FORBIDDEN
+<span class="lineNum">     219 </span>                :            :    */
+<span class="lineNum">     220 </span>                :            :   ACCESS_FORBIDDEN = 43,
+<span class="lineNum">     221 </span>                :            :   /*!
+<span class="lineNum">     222 </span>                :            :    ACCESS_FORBIDDEN_TRUCKS
+<span class="lineNum">     223 </span>                :            :    */
+<span class="lineNum">     224 </span>                :            :   ACCESS_FORBIDDEN_TRUCKS = 44,
+<span class="lineNum">     225 </span>                :            :   /*!
+<span class="lineNum">     226 </span>                :            :    ACCESS_FORBIDDEN_BICYCLE
+<span class="lineNum">     227 </span>                :            :    */
+<span class="lineNum">     228 </span>                :            :   ACCESS_FORBIDDEN_BICYCLE = 45,
+<span class="lineNum">     229 </span>                :            :   /*!
+<span class="lineNum">     230 </span>                :            :    ACCESS_FORBIDDEN_MOTORVEHICLES
+<span class="lineNum">     231 </span>                :            :    */
+<span class="lineNum">     232 </span>                :            :   ACCESS_FORBIDDEN_MOTORVEHICLES = 46,
+<span class="lineNum">     233 </span>                :            :   /*!
+<span class="lineNum">     234 </span>                :            :    ACCESS_FORBIDDEN_WEIGHT
+<span class="lineNum">     235 </span>                :            :    */
+<span class="lineNum">     236 </span>                :            :   ACCESS_FORBIDDEN_WEIGHT = 47,
+<span class="lineNum">     237 </span>                :            :   /*!
+<span class="lineNum">     238 </span>                :            :    ACCESS_FORBIDDEN_WIDTH
+<span class="lineNum">     239 </span>                :            :    */
+<span class="lineNum">     240 </span>                :            :   ACCESS_FORBIDDEN_WIDTH = 48,
+<span class="lineNum">     241 </span>                :            :   /*!
+<span class="lineNum">     242 </span>                :            :    ACCESS_FORBIDDEN_HEIGHT
+<span class="lineNum">     243 </span>                :            :    */
+<span class="lineNum">     244 </span>                :            :   ACCESS_FORBIDDEN_HEIGHT = 49,
+<span class="lineNum">     245 </span>                :            :   /*!
+<span class="lineNum">     246 </span>                :            :    ACCESS_FORBIDDEN_WRONG_DIR
+<span class="lineNum">     247 </span>                :            :    */
+<span class="lineNum">     248 </span>                :            :   ACCESS_FORBIDDEN_WRONG_DIR = 50,
+<span class="lineNum">     249 </span>                :            :   /*!
+<span class="lineNum">     250 </span>                :            :    ENVIORNMENT_ZONE_BEGIN
+<span class="lineNum">     251 </span>                :            :    */
+<span class="lineNum">     252 </span>                :            :   ENVIORNMENT_ZONE_BEGIN = 51,
+<span class="lineNum">     253 </span>                :            :   /*!
+<span class="lineNum">     254 </span>                :            :    ENVIORNMENT_ZONE_END
+<span class="lineNum">     255 </span>                :            :    */
+<span class="lineNum">     256 </span>                :            :   ENVIORNMENT_ZONE_END = 52,
+<span class="lineNum">     257 </span>                :            :   /*!
+<span class="lineNum">     258 </span>                :            :    MAX_SPEED
+<span class="lineNum">     259 </span>                :            :    */
+<span class="lineNum">     260 </span>                :            :   MAX_SPEED = 53,
+<span class="lineNum">     261 </span>                :            :   /*!
+<span class="lineNum">     262 </span>                :            :    SPEED_ZONE_30_BEGIN
+<span class="lineNum">     263 </span>                :            :    */
+<span class="lineNum">     264 </span>                :            :   SPEED_ZONE_30_BEGIN = 54,
+<span class="lineNum">     265 </span>                :            :   /*!
+<span class="lineNum">     266 </span>                :            :    SPEED_ZONE_30_END
+<span class="lineNum">     267 </span>                :            :    */
+<span class="lineNum">     268 </span>                :            :   SPEED_ZONE_30_END = 55,
+<span class="lineNum">     269 </span>                :            :   /*!
+<span class="lineNum">     270 </span>                :            :    HAS_WAY_NEXT_INTERSECTION
+<span class="lineNum">     271 </span>                :            :    */
+<span class="lineNum">     272 </span>                :            :   HAS_WAY_NEXT_INTERSECTION = 56,
+<span class="lineNum">     273 </span>                :            :   /*!
+<span class="lineNum">     274 </span>                :            :    PRIORITY_WAY
+<span class="lineNum">     275 </span>                :            :    */
+<span class="lineNum">     276 </span>                :            :   PRIORITY_WAY = 57,
+<span class="lineNum">     277 </span>                :            :   /*!
+<span class="lineNum">     278 </span>                :            :    CITY_BEGIN
+<span class="lineNum">     279 </span>                :            :    */
+<span class="lineNum">     280 </span>                :            :   CITY_BEGIN = 58,
+<span class="lineNum">     281 </span>                :            :   /*!
+<span class="lineNum">     282 </span>                :            :    CITY_END
+<span class="lineNum">     283 </span>                :            :    */
+<span class="lineNum">     284 </span>                :            :   CITY_END = 59,
+<span class="lineNum">     285 </span>                :            :   /*!
+<span class="lineNum">     286 </span>                :            :    MOTORWAY_BEGIN
+<span class="lineNum">     287 </span>                :            :    */
+<span class="lineNum">     288 </span>                :            :   MOTORWAY_BEGIN = 60,
+<span class="lineNum">     289 </span>                :            :   /*!
+<span class="lineNum">     290 </span>                :            :    MOTORWAY_END
+<span class="lineNum">     291 </span>                :            :    */
+<span class="lineNum">     292 </span>                :            :   MOTORWAY_END = 61,
+<span class="lineNum">     293 </span>                :            :   /*!
+<span class="lineNum">     294 </span>                :            :    MOTORVEHICLE_BEGIN
+<span class="lineNum">     295 </span>                :            :    */
+<span class="lineNum">     296 </span>                :            :   MOTORVEHICLE_BEGIN = 62,
+<span class="lineNum">     297 </span>                :            :   /*!
+<span class="lineNum">     298 </span>                :            :    MOTORVEHICLE_END
+<span class="lineNum">     299 </span>                :            :    */
+<span class="lineNum">     300 </span>                :            :   MOTORVEHICLE_END = 63,
+<span class="lineNum">     301 </span>                :            :   /*!
+<span class="lineNum">     302 </span>                :            :    INFO_MOTORWAY_INFO
+<span class="lineNum">     303 </span>                :            :    */
+<span class="lineNum">     304 </span>                :            :   INFO_MOTORWAY_INFO = 64,
+<span class="lineNum">     305 </span>                :            :   /*!
+<span class="lineNum">     306 </span>                :            :    CUL_DE_SAC
+<span class="lineNum">     307 </span>                :            :    */
+<span class="lineNum">     308 </span>                :            :   CUL_DE_SAC = 65,
+<span class="lineNum">     309 </span>                :            :   /*!
+<span class="lineNum">     310 </span>                :            :    CUL_DE_SAC_EXCEPT_PED_BICYCLE
+<span class="lineNum">     311 </span>                :            :    */
+<span class="lineNum">     312 </span>                :            :   CUL_DE_SAC_EXCEPT_PED_BICYCLE = 66,
+<span class="lineNum">     313 </span>                :            :   /*!
+<span class="lineNum">     314 </span>                :            :    INFO_NUMBER_OF_AUTOBAHN
+<span class="lineNum">     315 </span>                :            :    */
+<span class="lineNum">     316 </span>                :            :   INFO_NUMBER_OF_AUTOBAHN = 67,
+<span class="lineNum">     317 </span>                :            :   /*!
+<span class="lineNum">     318 </span>                :            :    DIRECTION_TURN_TO_AUTOBAHN
+<span class="lineNum">     319 </span>                :            :    */
+<span class="lineNum">     320 </span>                :            :   DIRECTION_TURN_TO_AUTOBAHN = 68,
+<span class="lineNum">     321 </span>                :            :   /*!
+<span class="lineNum">     322 </span>                :            :    DIRECTION_TURN_TO_LOCAL
+<span class="lineNum">     323 </span>                :            :    */
+<span class="lineNum">     324 </span>                :            :   DIRECTION_TURN_TO_LOCAL = 69,
+<span class="lineNum">     325 </span>                :            :   /*!
+<span class="lineNum">     326 </span>                :            :    DESTINATION_BOARD
+<span class="lineNum">     327 </span>                :            :    */
+<span class="lineNum">     328 </span>                :            :   DESTINATION_BOARD = 70,
+<span class="lineNum">     329 </span>                :            :   /*!
+<span class="lineNum">     330 </span>                :            :    FREE_TEXT
+<span class="lineNum">     331 </span>                :            :    */
+<span class="lineNum">     332 </span>                :            :   FREE_TEXT = 71,
+<span class="lineNum">     333 </span>                :            :   /*!
+<span class="lineNum">     334 </span>                :            :    UNKNOWN
+<span class="lineNum">     335 </span>                :            :    */
+<span class="lineNum">     336 </span>                :            :   UNKNOWN = 72
+<span class="lineNum">     337 </span>                :            : };
+<span class="lineNum">     338 </span>                :            : 
+<span class="lineNum">     339 </span>                :            : } // namespace landmark
+<span class="lineNum">     340 </span>                :            : } // namespace map
+<span class="lineNum">     341 </span>                :            : } // namespace ad
+<span class="lineNum">     342 </span>                :            : /*!
+<span class="lineNum">     343 </span>                :            :  * \brief Conversion of ::ad::map::landmark::TrafficSignType to std::string helper.
+<span class="lineNum">     344 </span>                :            :  */
+<span class="lineNum">     345 </span>                :            : std::string toString(::ad::map::landmark::TrafficSignType const e);
+<span class="lineNum">     346 </span>                :            : 
+<span class="lineNum">     347 </span>                :            : /*!
+<span class="lineNum">     348 </span>                :            :  * \brief Conversion from std::string to enum type T helper.
+<span class="lineNum">     349 </span>                :            :  *
+<span class="lineNum">     350 </span>                :            :  * \param [in] str - a fully qualified string name of enum class type
+<span class="lineNum">     351 </span>                :            :  *
+<span class="lineNum">     352 </span>                :            :  * \return T enum value
+<span class="lineNum">     353 </span>                :            :  *
+<span class="lineNum">     354 </span>                :            :  * \throws std::out_of_range exception if the given string does not match any enum type
+<span class="lineNum">     355 </span>                :            :  *
+<span class="lineNum">     356 </span>                :            :  * Example usage:
+<span class="lineNum">     357 </span>                :            :  * \code
+<span class="lineNum">     358 </span>                :            :  *   auto value = fromString&lt;SomeEnumType&gt;(&quot;SomeEnumType::eValue&quot;);
+<span class="lineNum">     359 </span>                :            :  *   assert(value == SomeEnumType::eValue);
+<span class="lineNum">     360 </span>                :            :  *   // Or:
+<span class="lineNum">     361 </span>                :            :  *   auto value = fromString&lt;SomeEnumType&gt;(&quot;eValue&quot;);
+<span class="lineNum">     362 </span>                :            :  *   assert(value == SomeEnumType::eValue);
+<span class="lineNum">     363 </span>                :            :  * \endcode
+<span class="lineNum">     364 </span>                :            :  */
+<span class="lineNum">     365 </span>                :            : template &lt;typename EnumType&gt; EnumType fromString(std::string const &amp;str);
+<span class="lineNum">     366 </span>                :            : 
+<span class="lineNum">     367 </span>                :            : /*!
+<span class="lineNum">     368 </span>                :            :  * \brief Conversion from std::string to enum type T helper.
+<span class="lineNum">     369 </span>                :            :  *
+<span class="lineNum">     370 </span>                :            :  * \param [in] str - a fully qualified string name of enum class type
+<span class="lineNum">     371 </span>                :            :  *
+<span class="lineNum">     372 </span>                :            :  * \return T enum value
+<span class="lineNum">     373 </span>                :            :  *
+<span class="lineNum">     374 </span>                :            :  * \throws std::out_of_range exception if the given string does not match any enum type
+<span class="lineNum">     375 </span>                :            :  *
+<span class="lineNum">     376 </span>                :            :  * Example usage:
+<span class="lineNum">     377 </span>                :            :  * \code
+<span class="lineNum">     378 </span>                :            :  *   auto value = fromString&lt;SomeEnumType&gt;(&quot;SomeEnumType::eValue&quot;);
+<span class="lineNum">     379 </span>                :            :  *   assert(value == SomeEnumType::eValue);
+<span class="lineNum">     380 </span>                :            :  *   // Or:
+<span class="lineNum">     381 </span>                :            :  *   auto value = fromString&lt;SomeEnumType&gt;(&quot;eValue&quot;);
+<span class="lineNum">     382 </span>                :            :  *   assert(value == SomeEnumType::eValue);
+<span class="lineNum">     383 </span>                :            :  * \endcode
+<span class="lineNum">     384 </span>                :            :  */
+<span class="lineNum">     385 </span>                :            : template &lt;&gt;::ad::map::landmark::TrafficSignType fromString(std::string const &amp;str);
+<span class="lineNum">     386 </span>                :            : 
+<span class="lineNum">     387 </span>                :            : /*!
+<span class="lineNum">     388 </span>                :            :  * \brief protect the definition of functions from duplicates by typedef usage within other data types
+<span class="lineNum">     389 </span>                :            :  */
+<span class="lineNum">     390 </span>                :            : #ifndef GEN_GUARD_AD_MAP_LANDMARK_TRAFFICSIGNTYPE
+<span class="lineNum">     391 </span>                :            : #define GEN_GUARD_AD_MAP_LANDMARK_TRAFFICSIGNTYPE
+<span class="lineNum">     392 </span>                :            : /*!
+<span class="lineNum">     393 </span>                :            :  * @brief namespace ad
+<span class="lineNum">     394 </span>                :            :  */
+<span class="lineNum">     395 </span>                :            : namespace ad {
+<span class="lineNum">     396 </span>                :            : /*!
+<span class="lineNum">     397 </span>                :            :  * @brief namespace map
+<span class="lineNum">     398 </span>                :            :  */
+<span class="lineNum">     399 </span>                :            : namespace map {
+<span class="lineNum">     400 </span>                :            : /*!
+<span class="lineNum">     401 </span>                :            :  * @brief namespace landmark
+<span class="lineNum">     402 </span>                :            :  *
+<span class="lineNum">     403 </span>                :            :  * Handling of landmarks
+<span class="lineNum">     404 </span>                :            :  */
+<span class="lineNum">     405 </span>                :            : namespace landmark {
+<span class="lineNum">     406 </span>                :            : 
+<span class="lineNum">     407 </span>                :            : /**
+<span class="lineNum">     408 </span>                :            :  * \brief standard ostream operator
+<span class="lineNum">     409 </span>                :            :  *
+<span class="lineNum">     410 </span>                :            :  * \param[in] os The output stream to write to
+<span class="lineNum">     411 </span>                :            :  * \param[in] value TrafficSignType value
+<span class="lineNum">     412 </span>                :            :  *
+<span class="lineNum">     413 </span>                :            :  * \returns The stream object.
+<a name="414"><span class="lineNum">     414 </span>                :            :  *</a>
+<span class="lineNum">     415 </span>                :            :  */
+<span class="lineNum">     416 </span>                :<span class="lineCov">         18 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, TrafficSignType const &amp;value)</span>
+<span class="lineNum">     417 </span>                :            : {
+<span class="lineNum">     418 </span>        [<span class="branchCov" title="Branch 2 was taken 18 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         18 :   return os &lt;&lt; toString(value);</span>
+<span class="lineNum">     419 </span>                :            : }
+<span class="lineNum">     420 </span>                :            : 
+<span class="lineNum">     421 </span>                :            : } // namespace landmark
+<span class="lineNum">     422 </span>                :            : } // namespace map
+<span class="lineNum">     423 </span>                :            : } // namespace ad
+<span class="lineNum">     424 </span>                :            : 
+<span class="lineNum">     425 </span>                :            : namespace std {
+<span class="lineNum">     426 </span>                :            : /*!
+<span class="lineNum">     427 </span>                :            :  * \brief overload of the std::to_string for TrafficSignType
+<span class="lineNum">     428 </span>                :            :  */
+<span class="lineNum">     429 </span>                :            : inline std::string to_string(::ad::map::landmark::TrafficSignType const &amp;value)
+<span class="lineNum">     430 </span>                :            : {
+<span class="lineNum">     431 </span>                :            :   return ::toString(value);
+<span class="lineNum">     432 </span>                :            : }
+<span class="lineNum">     433 </span>                :            : } // namespace std
+<span class="lineNum">     434 </span>                :            : #endif // GEN_GUARD_AD_MAP_LANDMARK_TRAFFICSIGNTYPE
 </pre>
       </td>
     </tr>

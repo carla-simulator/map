@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-28 10:56:12</td>
+            <td class="headerValue">2020-09-29 07:04:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -83,7 +83,7 @@
 <span class="lineNum">      12 </span>                :            :  * Generated file
 <span class="lineNum">      13 </span>                :            :  * @file
 <span class="lineNum">      14 </span>                :            :  *
-<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1988
+<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997
 <span class="lineNum">      16 </span>                :            :  */
 <span class="lineNum">      17 </span>                :            : 
 <span class="lineNum">      18 </span>                :            : #pragma once
@@ -124,7 +124,7 @@
 <span class="lineNum">      53 </span>                :            :   /*!
 <a name="54"><span class="lineNum">      54 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      55 </span>                :            :    */
-<span class="lineNum">      56 </span>                :<span class="lineCov">         60 :   Velocity() = default;</span>
+<span class="lineNum">      56 </span>                :<span class="lineCov">         64 :   Velocity() = default;</span>
 <span class="lineNum">      57 </span>                :            : 
 <span class="lineNum">      58 </span>                :            :   /*!
 <span class="lineNum">      59 </span>                :            :    * \brief standard destructor
@@ -226,19 +226,19 @@
 <span class="lineNum">     154 </span>                :            :  * \returns The stream object.
 <a name="155"><span class="lineNum">     155 </span>                :            :  *</a>
 <span class="lineNum">     156 </span>                :            :  */
-<span class="lineNum">     157 </span>                :<span class="lineCov">         11 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, Velocity const &amp;_value)</span>
+<span class="lineNum">     157 </span>                :<span class="lineCov">         14 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, Velocity const &amp;_value)</span>
 <span class="lineNum">     158 </span>                :            : {
-<span class="lineNum">     159 </span>                :<span class="lineCov">         11 :   os &lt;&lt; &quot;Velocity(&quot;;</span>
-<span class="lineNum">     160 </span>                :<span class="lineCov">         11 :   os &lt;&lt; &quot;x:&quot;;</span>
-<span class="lineNum">     161 </span>                :<span class="lineCov">         11 :   os &lt;&lt; _value.x;</span>
-<span class="lineNum">     162 </span>                :<span class="lineCov">         11 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     163 </span>                :<span class="lineCov">         11 :   os &lt;&lt; &quot;y:&quot;;</span>
-<span class="lineNum">     164 </span>                :<span class="lineCov">         11 :   os &lt;&lt; _value.y;</span>
-<span class="lineNum">     165 </span>                :<span class="lineCov">         11 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     166 </span>                :<span class="lineCov">         11 :   os &lt;&lt; &quot;z:&quot;;</span>
-<span class="lineNum">     167 </span>                :<span class="lineCov">         11 :   os &lt;&lt; _value.z;</span>
-<span class="lineNum">     168 </span>                :<span class="lineCov">         11 :   os &lt;&lt; &quot;)&quot;;</span>
-<span class="lineNum">     169 </span>                :<span class="lineCov">         11 :   return os;</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;Velocity(&quot;;</span>
+<span class="lineNum">     160 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;x:&quot;;</span>
+<span class="lineNum">     161 </span>                :<span class="lineCov">         14 :   os &lt;&lt; _value.x;</span>
+<span class="lineNum">     162 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;y:&quot;;</span>
+<span class="lineNum">     164 </span>                :<span class="lineCov">         14 :   os &lt;&lt; _value.y;</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     166 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;z:&quot;;</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">         14 :   os &lt;&lt; _value.z;</span>
+<span class="lineNum">     168 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;)&quot;;</span>
+<span class="lineNum">     169 </span>                :<span class="lineCov">         14 :   return os;</span>
 <span class="lineNum">     170 </span>                :            : }
 <span class="lineNum">     171 </span>                :            : 
 <span class="lineNum">     172 </span>                :            : } // namespace physics

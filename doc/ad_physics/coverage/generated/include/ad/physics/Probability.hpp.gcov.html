@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-28 10:56:12</td>
+            <td class="headerValue">2020-09-29 07:04:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -83,7 +83,7 @@
 <span class="lineNum">      12 </span>                :            :  * Generated file
 <span class="lineNum">      13 </span>                :            :  * @file
 <span class="lineNum">      14 </span>                :            :  *
-<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1988
+<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997
 <span class="lineNum">      16 </span>                :            :  */
 <span class="lineNum">      17 </span>                :            : 
 <span class="lineNum">      18 </span>                :            : #pragma once
@@ -161,10 +161,10 @@
 <span class="lineNum">      90 </span>                :            :    *
 <a name="91"><span class="lineNum">      91 </span>                :            :    * \note \ref \_AD_PHYSICS_PROBABILITY_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
 <span class="lineNum">      92 </span>                :            :    */
-<span class="lineNum">      93 </span>                :<span class="lineCov">         25 :   _AD_PHYSICS_PROBABILITY_EXPLICIT_CONVERSION_ Probability(double const iProbability)</span>
-<span class="lineNum">      94 </span>                :<span class="lineCov">         25 :     : mProbability(iProbability)</span>
+<span class="lineNum">      93 </span>                :<span class="lineCov">         36 :   _AD_PHYSICS_PROBABILITY_EXPLICIT_CONVERSION_ Probability(double const iProbability)</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">         36 :     : mProbability(iProbability)</span>
 <span class="lineNum">      95 </span>                :            :   {
-<span class="lineNum">      96 </span>                :<span class="lineCov">         25 :   }</span>
+<span class="lineNum">      96 </span>                :<span class="lineCov">         36 :   }</span>
 <span class="lineNum">      97 </span>                :            : 
 <span class="lineNum">      98 </span>                :            :   /*!
 <span class="lineNum">      99 </span>                :            :    * \brief standard copy constructor
@@ -201,11 +201,11 @@
 <span class="lineNum">     130 </span>                :            :    *
 <a name="131"><span class="lineNum">     131 </span>                :            :    * \returns \c true if both Probability are valid and can be taken as numerically equal</a>
 <span class="lineNum">     132 </span>                :            :    */
-<span class="lineNum">     133 </span>                :<span class="lineCov">          4 :   bool operator==(const Probability &amp;other) const</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">          6 :   bool operator==(const Probability &amp;other) const</span>
 <span class="lineNum">     134 </span>                :            :   {
-<span class="lineNum">     135 </span>                :<span class="lineCov">          4 :     ensureValid();</span>
-<span class="lineNum">     136 </span>                :<span class="lineCov">          4 :     other.ensureValid();</span>
-<span class="lineNum">     137 </span>                :<span class="lineCov">          4 :     return std::fabs(mProbability - other.mProbability) &lt; cPrecisionValue;</span>
+<span class="lineNum">     135 </span>                :<span class="lineCov">          6 :     ensureValid();</span>
+<span class="lineNum">     136 </span>                :<span class="lineCov">          6 :     other.ensureValid();</span>
+<span class="lineNum">     137 </span>                :<span class="lineCov">          6 :     return std::fabs(mProbability - other.mProbability) &lt; cPrecisionValue;</span>
 <span class="lineNum">     138 </span>                :            :   }
 <span class="lineNum">     139 </span>                :            : 
 <span class="lineNum">     140 </span>                :            :   /**
@@ -277,11 +277,11 @@
 <span class="lineNum">     206 </span>                :            :    *   this Probability is numerically smaller than other.
 <a name="207"><span class="lineNum">     207 </span>                :            :    * \note the precision of Probability is considered</a>
 <span class="lineNum">     208 </span>                :            :    */
-<span class="lineNum">     209 </span>                :<span class="lineCov">         15 :   bool operator&lt;=(const Probability &amp;other) const</span>
+<span class="lineNum">     209 </span>                :<span class="lineCov">         22 :   bool operator&lt;=(const Probability &amp;other) const</span>
 <span class="lineNum">     210 </span>                :            :   {
-<span class="lineNum">     211 </span>                :<span class="lineCov">         15 :     ensureValid();</span>
-<span class="lineNum">     212 </span>                :<span class="lineCov">         15 :     other.ensureValid();</span>
-<span class="lineNum">     213 </span>[<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 11 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">         15 :     return ((mProbability &lt; other.mProbability) || operator==(other));</span>
+<span class="lineNum">     211 </span>                :<span class="lineCov">         22 :     ensureValid();</span>
+<span class="lineNum">     212 </span>                :<span class="lineCov">         22 :     other.ensureValid();</span>
+<span class="lineNum">     213 </span>[<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 3 times"> + </span><span class="branchCov" title="Branch 4 was taken 3 times"> + </span>]:<span class="lineCov">         22 :     return ((mProbability &lt; other.mProbability) || operator==(other));</span>
 <span class="lineNum">     214 </span>                :            :   }
 <span class="lineNum">     215 </span>                :            : 
 <span class="lineNum">     216 </span>                :            :   /**
@@ -437,9 +437,9 @@
 <span class="lineNum">     366 </span>                :            :    * \note the conversion to the base type removes the physical unit.
 <a name="367"><span class="lineNum">     367 </span>                :            :    *       \ref \_AD_PHYSICS_PROBABILITY_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.</a>
 <span class="lineNum">     368 </span>                :            :    */
-<span class="lineNum">     369 </span>                :<span class="lineCov">          9 :   _AD_PHYSICS_PROBABILITY_EXPLICIT_CONVERSION_ operator double() const</span>
+<span class="lineNum">     369 </span>                :<span class="lineCov">         14 :   _AD_PHYSICS_PROBABILITY_EXPLICIT_CONVERSION_ operator double() const</span>
 <span class="lineNum">     370 </span>                :            :   {
-<span class="lineNum">     371 </span>                :<span class="lineCov">          9 :     return mProbability;</span>
+<span class="lineNum">     371 </span>                :<span class="lineCov">         14 :     return mProbability;</span>
 <span class="lineNum">     372 </span>                :            :   }
 <span class="lineNum">     373 </span>                :            : 
 <span class="lineNum">     374 </span>                :            :   /*!
@@ -449,11 +449,11 @@
 <span class="lineNum">     378 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="379"><span class="lineNum">     379 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     380 </span>                :            :    */
-<span class="lineNum">     381 </span>                :<span class="lineCov">         43 :   bool isValid() const</span>
+<span class="lineNum">     381 </span>                :<span class="lineCov">         63 :   bool isValid() const</span>
 <span class="lineNum">     382 </span>                :            :   {
-<span class="lineNum">     383 </span>                :<span class="lineCov">         43 :     auto const valueClass = std::fpclassify(mProbability);</span>
-<span class="lineNum">     384 </span>[<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 2 was taken 42 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         43 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mProbability)</span>
-<span class="lineNum">     385 </span>[<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchCov" title="Branch 1 was taken 30 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 42 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         86 :       &amp;&amp; (mProbability &lt;= cMaxValue);</span>
+<span class="lineNum">     383 </span>                :<span class="lineCov">         63 :     auto const valueClass = std::fpclassify(mProbability);</span>
+<span class="lineNum">     384 </span>[<span class="branchCov" title="Branch 0 was taken 22 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 2 was taken 62 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         63 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mProbability)</span>
+<span class="lineNum">     385 </span>[<span class="branchCov" title="Branch 0 was taken 23 times"> + </span><span class="branchCov" title="Branch 1 was taken 40 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 62 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        126 :       &amp;&amp; (mProbability &lt;= cMaxValue);</span>
 <span class="lineNum">     386 </span>                :            :   }
 <span class="lineNum">     387 </span>                :            : 
 <span class="lineNum">     388 </span>                :            :   /*!
@@ -462,16 +462,16 @@
 <span class="lineNum">     391 </span>                :            :    * Throws an std::out_of_range() exception if the Probability
 <a name="392"><span class="lineNum">     392 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     393 </span>                :            :    */
-<span class="lineNum">     394 </span>                :<span class="lineCov">         38 :   void ensureValid() const</span>
+<span class="lineNum">     394 </span>                :<span class="lineCov">         56 :   void ensureValid() const</span>
 <span class="lineNum">     395 </span>                :            :   {
-<span class="lineNum">     396 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 38 times"> + </span>]:<span class="lineCov">         38 :     if (!isValid())</span>
+<span class="lineNum">     396 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 56 times"> + </span>]:<span class="lineCov">         56 :     if (!isValid())</span>
 <span class="lineNum">     397 </span>                :            :     {
 <span class="lineNum">     398 </span>                :<span class="lineNoCov">          0 :       spdlog::info(&quot;ensureValid(::ad::physics::Probability)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     399 </span>                :            : #if (AD_PHYSICS_PROBABILITY_THROWS_EXCEPTION == 1)
 <span class="lineNum">     400 </span>                :<span class="lineNoCov">          0 :       throw std::out_of_range(&quot;Probability value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     401 </span>                :            : #endif
 <span class="lineNum">     402 </span>                :            :     }
-<span class="lineNum">     403 </span>                :<span class="lineCov">         38 :   }</span>
+<span class="lineNum">     403 </span>                :<span class="lineCov">         56 :   }</span>
 <span class="lineNum">     404 </span>                :            : 
 <span class="lineNum">     405 </span>                :            :   /*!
 <span class="lineNum">     406 </span>                :            :    * \brief ensure that the Probability is valid and non zero
@@ -494,17 +494,17 @@
 <span class="lineNum">     423 </span>                :            :   /*!
 <a name="424"><span class="lineNum">     424 </span>                :            :    * \brief get minimum valid Probability (i.e. \ref cMinValue)</a>
 <span class="lineNum">     425 </span>                :            :    */
-<span class="lineNum">     426 </span>                :<span class="lineCov">          5 :   static Probability getMin()</span>
+<span class="lineNum">     426 </span>                :<span class="lineCov">          7 :   static Probability getMin()</span>
 <span class="lineNum">     427 </span>                :            :   {
-<span class="lineNum">     428 </span>                :<span class="lineCov">          5 :     return Probability(cMinValue);</span>
+<span class="lineNum">     428 </span>                :<span class="lineCov">          7 :     return Probability(cMinValue);</span>
 <span class="lineNum">     429 </span>                :            :   }
 <span class="lineNum">     430 </span>                :            : 
 <span class="lineNum">     431 </span>                :            :   /*!
 <a name="432"><span class="lineNum">     432 </span>                :            :    * \brief get maximum valid Probability (i.e. \ref cMaxValue)</a>
 <span class="lineNum">     433 </span>                :            :    */
-<span class="lineNum">     434 </span>                :<span class="lineCov">          5 :   static Probability getMax()</span>
+<span class="lineNum">     434 </span>                :<span class="lineCov">          7 :   static Probability getMax()</span>
 <span class="lineNum">     435 </span>                :            :   {
-<span class="lineNum">     436 </span>                :<span class="lineCov">          5 :     return Probability(cMaxValue);</span>
+<span class="lineNum">     436 </span>                :<span class="lineCov">          7 :     return Probability(cMaxValue);</span>
 <span class="lineNum">     437 </span>                :            :   }
 <span class="lineNum">     438 </span>                :            : 
 <span class="lineNum">     439 </span>                :            :   /*!
@@ -568,16 +568,16 @@
 <span class="lineNum">     497 </span>                :            :   /*!
 <a name="498"><span class="lineNum">     498 </span>                :            :    * \see std::numeric_limits::lowest()</a>
 <span class="lineNum">     499 </span>                :            :    */
-<span class="lineNum">     500 </span>                :<span class="lineCov">          5 :   static inline ::ad::physics::Probability lowest()</span>
+<span class="lineNum">     500 </span>                :<span class="lineCov">          7 :   static inline ::ad::physics::Probability lowest()</span>
 <span class="lineNum">     501 </span>                :            :   {
-<span class="lineNum">     502 </span>                :<span class="lineCov">          5 :     return ::ad::physics::Probability::getMin();</span>
+<span class="lineNum">     502 </span>                :<span class="lineCov">          7 :     return ::ad::physics::Probability::getMin();</span>
 <span class="lineNum">     503 </span>                :            :   }
 <span class="lineNum">     504 </span>                :            :   /*!
 <a name="505"><span class="lineNum">     505 </span>                :            :    * \see std::numeric_limits::max()</a>
 <span class="lineNum">     506 </span>                :            :    */
-<span class="lineNum">     507 </span>                :<span class="lineCov">          5 :   static inline ::ad::physics::Probability max()</span>
+<span class="lineNum">     507 </span>                :<span class="lineCov">          7 :   static inline ::ad::physics::Probability max()</span>
 <span class="lineNum">     508 </span>                :            :   {
-<span class="lineNum">     509 </span>                :<span class="lineCov">          5 :     return ::ad::physics::Probability::getMax();</span>
+<span class="lineNum">     509 </span>                :<span class="lineCov">          7 :     return ::ad::physics::Probability::getMax();</span>
 <span class="lineNum">     510 </span>                :            :   }
 <span class="lineNum">     511 </span>                :            : 
 <span class="lineNum">     512 </span>                :            :   /*!
@@ -614,9 +614,9 @@
 <span class="lineNum">     543 </span>                :            :  * \returns The stream object.
 <a name="544"><span class="lineNum">     544 </span>                :            :  *</a>
 <span class="lineNum">     545 </span>                :            :  */
-<span class="lineNum">     546 </span>                :<span class="lineCov">          9 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, Probability const &amp;_value)</span>
+<span class="lineNum">     546 </span>                :<span class="lineCov">         14 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, Probability const &amp;_value)</span>
 <span class="lineNum">     547 </span>                :            : {
-<span class="lineNum">     548 </span>                :<span class="lineCov">          9 :   return os &lt;&lt; double(_value);</span>
+<span class="lineNum">     548 </span>                :<span class="lineCov">         14 :   return os &lt;&lt; double(_value);</span>
 <span class="lineNum">     549 </span>                :            : }
 <span class="lineNum">     550 </span>                :            : 
 <span class="lineNum">     551 </span>                :            : } // namespace physics

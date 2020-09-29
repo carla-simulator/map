@@ -1,4 +1,8 @@
 ## Latest changes
+
+## Release 2.3.0
+#### :rocket: New Features
+* Added ad::physics::<Type>List types
 #### :ghost: Maintenance
 * Improved user interface of python binding
 

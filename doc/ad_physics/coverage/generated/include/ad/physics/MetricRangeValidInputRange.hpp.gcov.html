@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-28 10:56:12</td>
+            <td class="headerValue">2020-09-29 07:04:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -83,7 +83,7 @@
 <span class="lineNum">      12 </span>                :            :  * Generated file
 <span class="lineNum">      13 </span>                :            :  * @file
 <span class="lineNum">      14 </span>                :            :  *
-<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1988
+<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997
 <span class="lineNum">      16 </span>                :            :  */
 <span class="lineNum">      17 </span>                :            : 
 <span class="lineNum">      18 </span>                :            : #pragma once
@@ -107,25 +107,25 @@
 <span class="lineNum">      36 </span>                :            :  *       ::ad::physics::Distance(0.) &lt;= minimum &lt;= maximum
 <a name="37"><span class="lineNum">      37 </span>                :            :  *       minimum &lt;= maximum &lt;= ::ad::physics::Distance(1e6)</a>
 <span class="lineNum">      38 </span>                :            :  */
-<span class="lineNum">      39 </span>                :<span class="lineCov">          9 : inline bool withinValidInputRange(::ad::physics::MetricRange const &amp;input, bool const logErrors = true)</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">         11 : inline bool withinValidInputRange(::ad::physics::MetricRange const &amp;input, bool const logErrors = true)</span>
 <span class="lineNum">      40 </span>                :            : {
 <span class="lineNum">      41 </span>                :            :   // check for generic member input ranges
-<span class="lineNum">      42 </span>                :<span class="lineCov">          9 :   bool inValidInputRange = true;</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">         11 :   bool inValidInputRange = true;</span>
 <span class="lineNum">      43 </span>                :            :   inValidInputRange
-<span class="lineNum">      44 </span>[<span class="branchCov" title="Branch 1 was taken 6 times"> + </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 3 times"> + </span><span class="branchCov" title="Branch 5 was taken 3 times"> + </span>]:<span class="lineCov">          9 :     = withinValidInputRange(input.minimum, logErrors) &amp;&amp; withinValidInputRange(input.maximum, logErrors);</span>
-<span class="lineNum">      45 </span>[<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          9 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      44 </span>[<span class="branchCov" title="Branch 1 was taken 7 times"> + </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 4 times"> + </span><span class="branchCov" title="Branch 5 was taken 3 times"> + </span>]:<span class="lineCov">         11 :     = withinValidInputRange(input.minimum, logErrors) &amp;&amp; withinValidInputRange(input.maximum, logErrors);</span>
+<span class="lineNum">      45 </span>[<span class="branchCov" title="Branch 0 was taken 7 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 7 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         11 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
 <span class="lineNum">      46 </span>                :            :   {
-<span class="lineNum">      47 </span>                :<span class="lineCov">         12 :     spdlog::error(&quot;withinValidInputRange(::ad::physics::MetricRange)&gt;&gt; {} has invalid member&quot;,</span>
-<span class="lineNum">      48 </span>                :<span class="lineCov">          6 :                   input); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">         14 :     spdlog::error(&quot;withinValidInputRange(::ad::physics::MetricRange)&gt;&gt; {} has invalid member&quot;,</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">          7 :                   input); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">      49 </span>                :            :   }
 <span class="lineNum">      50 </span>                :            : 
 <span class="lineNum">      51 </span>                :            :   // check for individual input ranges
-<span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">          9 :   if (inValidInputRange)</span>
+<span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 7 times"> + </span>]:<span class="lineCov">         11 :   if (inValidInputRange)</span>
 <span class="lineNum">      53 </span>                :            :   {
-<span class="lineNum">      54 </span>[<span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 2 times"> + </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]:<span class="lineCov">          3 :     inValidInputRange = (::ad::physics::Distance(0.) &lt;= input.minimum) &amp;&amp; (input.minimum &lt;= input.maximum);</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>]
-<span class="lineNum">      55 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          3 :     if (!inValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      54 </span>[<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 3 times"> + </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]:<span class="lineCov">          4 :     inValidInputRange = (::ad::physics::Distance(0.) &lt;= input.minimum) &amp;&amp; (input.minimum &lt;= input.maximum);</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>]
+<span class="lineNum">      55 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :     if (!inValidInputRange &amp;&amp; logErrors)</span>
 <span class="lineNum">      56 </span>                :            :     {
 <span class="lineNum">      57 </span>                :<span class="lineCov">          2 :       spdlog::error(</span>
 <span class="lineNum">      58 </span>                :            :         &quot;withinValidInputRange(::ad::physics::MetricRange)&gt;&gt; {} element {} out of valid input range [{}, {}]&quot;,
@@ -136,12 +136,12 @@
 <span class="lineNum">      63 </span>                :            :     }
 <span class="lineNum">      64 </span>                :            :   }
 <span class="lineNum">      65 </span>                :            : 
-<span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 7 times"> + </span>]:<span class="lineCov">          9 :   if (inValidInputRange)</span>
+<span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchCov" title="Branch 1 was taken 8 times"> + </span>]:<span class="lineCov">         11 :   if (inValidInputRange)</span>
 <span class="lineNum">      67 </span>                :            :   {
-<span class="lineNum">      68 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          2 :     inValidInputRange = (input.minimum &lt;= input.maximum) &amp;&amp; (input.maximum &lt;= ::ad::physics::Distance(1e6));</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 1 time"> + </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>]
-<span class="lineNum">      69 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :     if (!inValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      68 </span>[<span class="branchCov" title="Branch 1 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          3 :     inValidInputRange = (input.minimum &lt;= input.maximum) &amp;&amp; (input.maximum &lt;= ::ad::physics::Distance(1e6));</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 2 times"> + </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>]
+<span class="lineNum">      69 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          3 :     if (!inValidInputRange &amp;&amp; logErrors)</span>
 <span class="lineNum">      70 </span>                :            :     {
 <span class="lineNum">      71 </span>                :<span class="lineCov">          2 :       spdlog::error(</span>
 <span class="lineNum">      72 </span>                :            :         &quot;withinValidInputRange(::ad::physics::MetricRange)&gt;&gt; {} element {} out of valid input range [{}, {}]&quot;,
@@ -152,7 +152,7 @@
 <span class="lineNum">      77 </span>                :            :     }
 <span class="lineNum">      78 </span>                :            :   }
 <span class="lineNum">      79 </span>                :            : 
-<span class="lineNum">      80 </span>                :<span class="lineCov">          9 :   return inValidInputRange;</span>
+<span class="lineNum">      80 </span>                :<span class="lineCov">         11 :   return inValidInputRange;</span>
 <span class="lineNum">      81 </span>                :            : }
 </pre>
       </td>

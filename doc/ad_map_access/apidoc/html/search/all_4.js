@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['danger',['DANGER',['../namespacead_1_1map_1_1landmark.html#a1173173052ed303ab4fc23c39359ba6ea707e893c1db5175432f341eb5d6d1ca7',1,'ad::map::landmark']]],
   ['defaultenureference',['defaultEnuReference',['../classad_1_1map_1_1config_1_1MapConfigFileHandler.html#a48ca35ca6c463d701a8bafead119ff3b',1,'ad::map::config::MapConfigFileHandler']]],
   ['defaultenureferenceavailable',['defaultEnuReferenceAvailable',['../classad_1_1map_1_1config_1_1MapConfigFileHandler.html#a145b130b21c61f247c19c835562598db',1,'ad::map::config::MapConfigFileHandler']]],
   ['degree2radians',['degree2radians',['../namespacead_1_1map_1_1point.html#a4ca79a3d0952a02977a5c58238de6662',1,'ad::map::point']]],
@@ -7,9 +8,12 @@ var searchData=
   ['deletelandmark',['deleteLandmark',['../classad_1_1map_1_1access_1_1Factory.html#a10ebc0ed6996a4403e2c6a320eeb2334',1,'ad::map::access::Factory']]],
   ['deletelane',['deleteLane',['../classad_1_1map_1_1access_1_1Factory.html#a32a1ba0bb7f50c1495518dff2eb61972',1,'ad::map::access::Factory']]],
   ['destination',['Destination',['../classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html#a254bd181ec1e1587e531fd521c60a18aa12007e1d59f4d09c87dbe2c438256244',1,'ad::map::route::planning::RouteExpander']]],
+  ['destination_5fboard',['DESTINATION_BOARD',['../namespacead_1_1map_1_1landmark.html#a1173173052ed303ab4fc23c39359ba6eab8f184ac9ff822ee3f6df57cabca2184',1,'ad::map::landmark']]],
   ['destinationlaneoffset',['destinationLaneOffset',['../structad_1_1map_1_1route_1_1FullRoute.html#af9b8b96b257909ca7ff174aa7476549d',1,'ad::map::route::FullRoute']]],
   ['dimension',['dimension',['../structad_1_1map_1_1match_1_1ENUObjectPosition.html#a5ecfbbc0f699b4fe473efe21dff9f3c8',1,'ad::map::match::ENUObjectPosition']]],
   ['direction',['direction',['../structad_1_1map_1_1lane_1_1Lane.html#a8c3b78eecfb263aef3b2a26f4af214ab',1,'ad::map::lane::Lane']]],
+  ['direction_5fturn_5fto_5fautobahn',['DIRECTION_TURN_TO_AUTOBAHN',['../namespacead_1_1map_1_1landmark.html#a1173173052ed303ab4fc23c39359ba6eadda2ac4053e1a5f830c4a5d23035775f',1,'ad::map::landmark']]],
+  ['direction_5fturn_5fto_5flocal',['DIRECTION_TURN_TO_LOCAL',['../namespacead_1_1map_1_1landmark.html#a1173173052ed303ab4fc23c39359ba6eaedcd0a0b2449b82da16f42fecd3dde1d',1,'ad::map::landmark']]],
   ['distance',['distance',['../namespacead_1_1map_1_1point.html#a236fefa016cb4ecc1a381852a2ba03f8',1,'ad::map::point::distance(BoundingSphere const &amp;left, BoundingSphere const &amp;right)'],['../namespacead_1_1map_1_1point.html#ac6fc12aeb932a0b0a99b8e862b4fe151',1,'ad::map::point::distance(ECEFPoint const &amp;point, ECEFPoint const &amp;other)'],['../namespacead_1_1map_1_1point.html#ad48de7d650428e74b0f186063459caad',1,'ad::map::point::distance(ENUPoint const &amp;point, ENUPoint const &amp;other)'],['../namespacead_1_1map_1_1point.html#aff5eb7907a0f7f74bab1bfd5c0efd7a3',1,'ad::map::point::distance(GeoPoint const &amp;point, GeoPoint const &amp;other)']]],
   ['doesrangeattributeoverlap',['doesRangeAttributeOverlap',['../namespacead_1_1map_1_1restriction.html#add0dcc271669541253427fa7e44ae19f',1,'ad::map::restriction']]],
   ['dontcutintersectionandprependifsucceededbeforeroute',['DontCutIntersectionAndPrependIfSucceededBeforeRoute',['../namespacead_1_1map_1_1route.html#a35ee85c81b9b35fd5a360e296480c670acf85c0bbaa5860b429a47f3bc68d2991',1,'ad::map::route']]],

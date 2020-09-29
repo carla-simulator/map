@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-28 10:56:12</td>
+            <td class="headerValue">2020-09-29 07:04:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">29</td>
@@ -83,7 +83,7 @@
 <span class="lineNum">      12 </span>                :            :  * Generated file
 <span class="lineNum">      13 </span>                :            :  * @file
 <span class="lineNum">      14 </span>                :            :  *
-<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1988
+<span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997
 <span class="lineNum">      16 </span>                :            :  */
 <span class="lineNum">      17 </span>                :            : 
 <span class="lineNum">      18 </span>                :            : #pragma once
@@ -162,10 +162,10 @@
 <span class="lineNum">      91 </span>                :            :    *
 <a name="92"><span class="lineNum">      92 </span>                :            :    * \note \ref \_AD_PHYSICS_ANGLE_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
 <span class="lineNum">      93 </span>                :            :    */
-<span class="lineNum">      94 </span>                :<span class="lineCov">        251 :   _AD_PHYSICS_ANGLE_EXPLICIT_CONVERSION_ Angle(double const iAngle)</span>
-<span class="lineNum">      95 </span>                :<span class="lineCov">        251 :     : mAngle(iAngle)</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">        282 :   _AD_PHYSICS_ANGLE_EXPLICIT_CONVERSION_ Angle(double const iAngle)</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">        282 :     : mAngle(iAngle)</span>
 <span class="lineNum">      96 </span>                :            :   {
-<span class="lineNum">      97 </span>                :<span class="lineCov">        251 :   }</span>
+<span class="lineNum">      97 </span>                :<span class="lineCov">        282 :   }</span>
 <span class="lineNum">      98 </span>                :            : 
 <span class="lineNum">      99 </span>                :            :   /*!
 <span class="lineNum">     100 </span>                :            :    * \brief standard copy constructor
@@ -202,11 +202,11 @@
 <span class="lineNum">     131 </span>                :            :    *
 <a name="132"><span class="lineNum">     132 </span>                :            :    * \returns \c true if both Angle are valid and can be taken as numerically equal</a>
 <span class="lineNum">     133 </span>                :            :    */
-<span class="lineNum">     134 </span>                :<span class="lineCov">         71 :   bool operator==(const Angle &amp;other) const</span>
+<span class="lineNum">     134 </span>                :<span class="lineCov">         76 :   bool operator==(const Angle &amp;other) const</span>
 <span class="lineNum">     135 </span>                :            :   {
-<span class="lineNum">     136 </span>                :<span class="lineCov">         71 :     ensureValid();</span>
-<span class="lineNum">     137 </span>                :<span class="lineCov">         69 :     other.ensureValid();</span>
-<span class="lineNum">     138 </span>                :<span class="lineCov">         67 :     return std::fabs(mAngle - other.mAngle) &lt; cPrecisionValue;</span>
+<span class="lineNum">     136 </span>                :<span class="lineCov">         76 :     ensureValid();</span>
+<span class="lineNum">     137 </span>                :<span class="lineCov">         74 :     other.ensureValid();</span>
+<span class="lineNum">     138 </span>                :<span class="lineCov">         72 :     return std::fabs(mAngle - other.mAngle) &lt; cPrecisionValue;</span>
 <span class="lineNum">     139 </span>                :            :   }
 <span class="lineNum">     140 </span>                :            : 
 <span class="lineNum">     141 </span>                :            :   /**
@@ -278,11 +278,11 @@
 <span class="lineNum">     207 </span>                :            :    *   this Angle is numerically smaller than other.
 <a name="208"><span class="lineNum">     208 </span>                :            :    * \note the precision of Angle is considered</a>
 <span class="lineNum">     209 </span>                :            :    */
-<span class="lineNum">     210 </span>                :<span class="lineCov">         55 :   bool operator&lt;=(const Angle &amp;other) const</span>
+<span class="lineNum">     210 </span>                :<span class="lineCov">         73 :   bool operator&lt;=(const Angle &amp;other) const</span>
 <span class="lineNum">     211 </span>                :            :   {
-<span class="lineNum">     212 </span>                :<span class="lineCov">         55 :     ensureValid();</span>
-<span class="lineNum">     213 </span>                :<span class="lineCov">         54 :     other.ensureValid();</span>
-<span class="lineNum">     214 </span>[<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchCov" title="Branch 1 was taken 36 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 9 times"> + </span><span class="branchCov" title="Branch 4 was taken 8 times"> + </span>]:<span class="lineCov">         53 :     return ((mAngle &lt; other.mAngle) || operator==(other));</span>
+<span class="lineNum">     212 </span>                :<span class="lineCov">         73 :     ensureValid();</span>
+<span class="lineNum">     213 </span>                :<span class="lineCov">         72 :     other.ensureValid();</span>
+<span class="lineNum">     214 </span>[<span class="branchCov" title="Branch 0 was taken 22 times"> + </span><span class="branchCov" title="Branch 1 was taken 49 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 12 times"> + </span><span class="branchCov" title="Branch 4 was taken 10 times"> + </span>]:<span class="lineCov">         71 :     return ((mAngle &lt; other.mAngle) || operator==(other));</span>
 <span class="lineNum">     215 </span>                :            :   }
 <span class="lineNum">     216 </span>                :            : 
 <span class="lineNum">     217 </span>                :            :   /**
@@ -438,9 +438,9 @@
 <span class="lineNum">     367 </span>                :            :    * \note the conversion to the base type removes the physical unit.
 <a name="368"><span class="lineNum">     368 </span>                :            :    *       \ref \_AD_PHYSICS_ANGLE_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.</a>
 <span class="lineNum">     369 </span>                :            :    */
-<span class="lineNum">     370 </span>                :<span class="lineCov">        154 :   _AD_PHYSICS_ANGLE_EXPLICIT_CONVERSION_ operator double() const</span>
+<span class="lineNum">     370 </span>                :<span class="lineCov">        168 :   _AD_PHYSICS_ANGLE_EXPLICIT_CONVERSION_ operator double() const</span>
 <span class="lineNum">     371 </span>                :            :   {
-<span class="lineNum">     372 </span>                :<span class="lineCov">        154 :     return mAngle;</span>
+<span class="lineNum">     372 </span>                :<span class="lineCov">        168 :     return mAngle;</span>
 <span class="lineNum">     373 </span>                :            :   }
 <span class="lineNum">     374 </span>                :            : 
 <span class="lineNum">     375 </span>                :            :   /*!
@@ -450,11 +450,11 @@
 <span class="lineNum">     379 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="380"><span class="lineNum">     380 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     381 </span>                :            :    */
-<span class="lineNum">     382 </span>                :<span class="lineCov">        388 :   bool isValid() const</span>
+<span class="lineNum">     382 </span>                :<span class="lineCov">        439 :   bool isValid() const</span>
 <span class="lineNum">     383 </span>                :            :   {
-<span class="lineNum">     384 </span>                :<span class="lineCov">        388 :     auto const valueClass = std::fpclassify(mAngle);</span>
-<span class="lineNum">     385 </span>[<span class="branchCov" title="Branch 0 was taken 64 times"> + </span><span class="branchCov" title="Branch 1 was taken 324 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 22 times"> + </span><span class="branchCov" title="Branch 3 was taken 42 times"> + </span>]:<span class="lineCov">        388 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mAngle) &amp;&amp; (mAngle &lt;= cMaxValue);</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 346 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 346 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
+<span class="lineNum">     384 </span>                :<span class="lineCov">        439 :     auto const valueClass = std::fpclassify(mAngle);</span>
+<span class="lineNum">     385 </span>[<span class="branchCov" title="Branch 0 was taken 64 times"> + </span><span class="branchCov" title="Branch 1 was taken 375 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 22 times"> + </span><span class="branchCov" title="Branch 3 was taken 42 times"> + </span>]:<span class="lineCov">        439 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mAngle) &amp;&amp; (mAngle &lt;= cMaxValue);</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 397 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 397 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
 <span class="lineNum">     386 </span>                :            :   }
 <span class="lineNum">     387 </span>                :            : 
 <span class="lineNum">     388 </span>                :            :   /*!
@@ -463,16 +463,16 @@
 <span class="lineNum">     391 </span>                :            :    * Throws an std::out_of_range() exception if the Angle
 <a name="392"><span class="lineNum">     392 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     393 </span>                :            :    */
-<span class="lineNum">     394 </span>                :<span class="lineCov">        356 :   void ensureValid() const</span>
+<span class="lineNum">     394 </span>                :<span class="lineCov">        402 :   void ensureValid() const</span>
 <span class="lineNum">     395 </span>                :            :   {
-<span class="lineNum">     396 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 322 times"> + </span>]:<span class="lineCov">        356 :     if (!isValid())</span>
+<span class="lineNum">     396 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 368 times"> + </span>]:<span class="lineCov">        402 :     if (!isValid())</span>
 <span class="lineNum">     397 </span>                :            :     {
 <span class="lineNum">     398 </span>                :<span class="lineCov">         34 :       spdlog::info(&quot;ensureValid(::ad::physics::Angle)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     399 </span>                :            : #if (AD_PHYSICS_ANGLE_THROWS_EXCEPTION == 1)
 <span class="lineNum">     400 </span>                :<span class="lineCov">         34 :       throw std::out_of_range(&quot;Angle value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     401 </span>                :            : #endif
 <span class="lineNum">     402 </span>                :            :     }
-<span class="lineNum">     403 </span>                :<span class="lineCov">        322 :   }</span>
+<span class="lineNum">     403 </span>                :<span class="lineCov">        368 :   }</span>
 <span class="lineNum">     404 </span>                :            : 
 <span class="lineNum">     405 </span>                :            :   /*!
 <span class="lineNum">     406 </span>                :            :    * \brief ensure that the Angle is valid and non zero
@@ -495,17 +495,17 @@
 <span class="lineNum">     423 </span>                :            :   /*!
 <a name="424"><span class="lineNum">     424 </span>                :            :    * \brief get minimum valid Angle (i.e. \ref cMinValue)</a>
 <span class="lineNum">     425 </span>                :            :    */
-<span class="lineNum">     426 </span>                :<span class="lineCov">         43 :   static Angle getMin()</span>
+<span class="lineNum">     426 </span>                :<span class="lineCov">         50 :   static Angle getMin()</span>
 <span class="lineNum">     427 </span>                :            :   {
-<span class="lineNum">     428 </span>                :<span class="lineCov">         43 :     return Angle(cMinValue);</span>
+<span class="lineNum">     428 </span>                :<span class="lineCov">         50 :     return Angle(cMinValue);</span>
 <span class="lineNum">     429 </span>                :            :   }
 <span class="lineNum">     430 </span>                :            : 
 <span class="lineNum">     431 </span>                :            :   /*!
 <a name="432"><span class="lineNum">     432 </span>                :            :    * \brief get maximum valid Angle (i.e. \ref cMaxValue)</a>
 <span class="lineNum">     433 </span>                :            :    */
-<span class="lineNum">     434 </span>                :<span class="lineCov">         43 :   static Angle getMax()</span>
+<span class="lineNum">     434 </span>                :<span class="lineCov">         50 :   static Angle getMax()</span>
 <span class="lineNum">     435 </span>                :            :   {
-<span class="lineNum">     436 </span>                :<span class="lineCov">         43 :     return Angle(cMaxValue);</span>
+<span class="lineNum">     436 </span>                :<span class="lineCov">         50 :     return Angle(cMaxValue);</span>
 <span class="lineNum">     437 </span>                :            :   }
 <span class="lineNum">     438 </span>                :            : 
 <span class="lineNum">     439 </span>                :            :   /*!
@@ -569,16 +569,16 @@
 <span class="lineNum">     497 </span>                :            :   /*!
 <a name="498"><span class="lineNum">     498 </span>                :            :    * \see std::numeric_limits::lowest()</a>
 <span class="lineNum">     499 </span>                :            :    */
-<span class="lineNum">     500 </span>                :<span class="lineCov">         41 :   static inline ::ad::physics::Angle lowest()</span>
+<span class="lineNum">     500 </span>                :<span class="lineCov">         48 :   static inline ::ad::physics::Angle lowest()</span>
 <span class="lineNum">     501 </span>                :            :   {
-<span class="lineNum">     502 </span>                :<span class="lineCov">         41 :     return ::ad::physics::Angle::getMin();</span>
+<span class="lineNum">     502 </span>                :<span class="lineCov">         48 :     return ::ad::physics::Angle::getMin();</span>
 <span class="lineNum">     503 </span>                :            :   }
 <span class="lineNum">     504 </span>                :            :   /*!
 <a name="505"><span class="lineNum">     505 </span>                :            :    * \see std::numeric_limits::max()</a>
 <span class="lineNum">     506 </span>                :            :    */
-<span class="lineNum">     507 </span>                :<span class="lineCov">         41 :   static inline ::ad::physics::Angle max()</span>
+<span class="lineNum">     507 </span>                :<span class="lineCov">         48 :   static inline ::ad::physics::Angle max()</span>
 <span class="lineNum">     508 </span>                :            :   {
-<span class="lineNum">     509 </span>                :<span class="lineCov">         41 :     return ::ad::physics::Angle::getMax();</span>
+<span class="lineNum">     509 </span>                :<span class="lineCov">         48 :     return ::ad::physics::Angle::getMax();</span>
 <span class="lineNum">     510 </span>                :            :   }
 <span class="lineNum">     511 </span>                :            : 
 <span class="lineNum">     512 </span>                :            :   /*!
@@ -615,9 +615,9 @@
 <span class="lineNum">     543 </span>                :            :  * \returns The stream object.
 <a name="544"><span class="lineNum">     544 </span>                :            :  *</a>
 <span class="lineNum">     545 </span>                :            :  */
-<span class="lineNum">     546 </span>                :<span class="lineCov">         81 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, Angle const &amp;_value)</span>
+<span class="lineNum">     546 </span>                :<span class="lineCov">         95 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, Angle const &amp;_value)</span>
 <span class="lineNum">     547 </span>                :            : {
-<span class="lineNum">     548 </span>                :<span class="lineCov">         81 :   return os &lt;&lt; double(_value);</span>
+<span class="lineNum">     548 </span>                :<span class="lineCov">         95 :   return os &lt;&lt; double(_value);</span>
 <span class="lineNum">     549 </span>                :            : }
 <span class="lineNum">     550 </span>                :            : 
 <span class="lineNum">     551 </span>                :            : } // namespace physics

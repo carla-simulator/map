@@ -54,5 +54,6 @@ var searchData=
   ['outgoingparapoints',['outgoingParaPoints',['../classad_1_1map_1_1intersection_1_1Intersection.html#a858f5baa76957ca7e7bd7d6cd60d65a7',1,'ad::map::intersection::Intersection']]],
   ['outgoingparapointsonroute',['outgoingParaPointsOnRoute',['../classad_1_1map_1_1intersection_1_1Intersection.html#a8a83374a7465d1e20d2e0c990d6e7bbb',1,'ad::map::intersection::Intersection']]],
   ['overlap',['OVERLAP',['../namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50aa8c009c8dd4d4f9dde7515c00d5cd4661',1,'ad::map::lane']]],
-  ['overlapsinterval',['overlapsInterval',['../namespacead_1_1map_1_1route.html#ad4b822bd2200adab8e1f4a284289e8be',1,'ad::map::route']]]
+  ['overlapsinterval',['overlapsInterval',['../namespacead_1_1map_1_1route.html#ad4b822bd2200adab8e1f4a284289e8be',1,'ad::map::route']]],
+  ['overtaking',['OVERTAKING',['../namespacead_1_1map_1_1lane.html#a2063fce08470b3c416ef695aa694b419ad9135495280b5efb042f4fc2f4a63ee1',1,'ad::map::lane']]]
 ];
