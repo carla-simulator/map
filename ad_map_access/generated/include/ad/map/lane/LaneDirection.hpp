@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1988
+ * Generator Version : 11.0.0-1997
  */
 
 #pragma once
@@ -42,12 +42,33 @@ namespace lane {
  */
 enum class LaneDirection : int32_t
 {
+  /*!
+   INVALID
+   */
   INVALID = 0,
+  /*!
+   UNKNOWN
+   */
   UNKNOWN = 1,
+  /*!
+   POSITIVE
+   */
   POSITIVE = 2,
+  /*!
+   NEGATIVE
+   */
   NEGATIVE = 3,
+  /*!
+   REVERSABLE
+   */
   REVERSABLE = 4,
+  /*!
+   BIDIRECTIONAL
+   */
   BIDIRECTIONAL = 5,
+  /*!
+   NONE
+   */
   NONE = 6
 };
 

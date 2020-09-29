@@ -10,11 +10,11 @@
 ##
 # Generated file
 #
-# Generator Version : 11.0.0-1988
+# Generator Version : 11.0.0-1997
 ##
 
 cmake_minimum_required(VERSION 3.5)
-project(ad_map_access VERSION 2.2.1)
+project(ad_map_access VERSION 2.3.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -47,7 +47,7 @@ get_target_property(AD_MAP_OPENDRIVE_READER_INTERFACE_INCLUDE_DIRS ad_map_opendr
 list(APPEND INCLUDE_DIRS ${AD_MAP_OPENDRIVE_READER_INTERFACE_INCLUDE_DIRS})
 list(APPEND LIBRARIES ad_map_opendrive_reader)
 
-find_package(ad_physics 2.2.1 REQUIRED CONFIG)
+find_package(ad_physics 2.3.0 REQUIRED CONFIG)
 find_package(spdlog REQUIRED CONFIG)
 
 add_library(${PROJECT_NAME}

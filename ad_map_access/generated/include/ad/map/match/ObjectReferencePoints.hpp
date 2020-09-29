@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1988
+ * Generator Version : 11.0.0-1997
  */
 
 #pragma once
@@ -42,11 +42,29 @@ namespace match {
  */
 enum class ObjectReferencePoints : int32_t
 {
+  /*!
+   FrontLeft
+   */
   FrontLeft = 0,
+  /*!
+   FrontRight
+   */
   FrontRight = 1,
+  /*!
+   RearLeft
+   */
   RearLeft = 2,
+  /*!
+   RearRight
+   */
   RearRight = 3,
+  /*!
+   Center
+   */
   Center = 4,
+  /*!
+   NumPoints
+   */
   NumPoints = 5
 };
 

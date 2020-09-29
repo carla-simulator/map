@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1988
+ * Generator Version : 11.0.0-1997
  */
 
 #pragma once
@@ -25,14 +25,14 @@
 /*!
  * The minor version of ad_map_access
  */
-#define AD_MAP_ACCESS_VERSION_MINOR 2
+#define AD_MAP_ACCESS_VERSION_MINOR 3
 
 /*!
  * The revision of ad_map_access
  */
-#define AD_MAP_ACCESS_VERSION_REVISION 1
+#define AD_MAP_ACCESS_VERSION_REVISION 0
 
 /*!
  * The version of ad_map_access as string
  */
-#define AD_MAP_ACCESS_VERSION_STRING "2.2.1"
+#define AD_MAP_ACCESS_VERSION_STRING "2.3.0"

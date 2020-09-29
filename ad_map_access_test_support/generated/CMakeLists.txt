@@ -10,11 +10,11 @@
 ##
 # Generated file
 #
-# Generator Version : 11.0.0-1988
+# Generator Version : 11.0.0-1997
 ##
 
 cmake_minimum_required(VERSION 3.5)
-project(ad_map_access_test_support VERSION 2.2.1)
+project(ad_map_access_test_support VERSION 2.3.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -31,7 +31,7 @@ if ((NOT ad_map_access_test_support_SOURCES) OR (NOT ad_map_access_test_support_
   message(FATAL_ERROR "${PROJECT_NAME}: Variable ad_map_access_test_support_SOURCES or ad_map_access_test_support_INCLUDE_DIRS pointing to the generator managed library not set!")
 endif()
 
-find_package(ad_map_access 2.2.1 REQUIRED CONFIG)
+find_package(ad_map_access 2.3.0 REQUIRED CONFIG)
 
 add_library(${PROJECT_NAME}
   ${ad_map_access_test_support_SOURCES}
