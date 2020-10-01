@@ -87,7 +87,7 @@ TEST_F(LaneOperationTest, getLane)
 TEST_F(LaneOperationTest, getPointsOfInterest)
 {
   ASSERT_TRUE(access::init("test_files/Town01.txt"));
-  auto pos = point::createGeoPoint(point::Longitude(8.0026912), point::Latitude(48.9970472), point::Altitude(3.1));
+  auto pos = point::createGeoPoint(point::Longitude(0.00193915337), point::Latitude(-0.00295), point::Altitude(0.));
   std::vector<config::PointOfInterest> poI;
   poI = access::getPointsOfInterest(pos, physics::Distance(1.0));
   ASSERT_EQ(poI.size(), 0u);

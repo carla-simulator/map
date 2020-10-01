@@ -27,6 +27,7 @@ configure_file(generate_python_lib.py.in generate_python_lib.py)
 
 generate_python_binding_source_code(${CMAKE_CURRENT_BINARY_DIR})
 
+
 foreach(binding ${PYTHON_BINDINGS})
 
   string(REPLACE "." "" binding_string ${binding})

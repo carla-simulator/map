@@ -84,7 +84,7 @@ struct RoutePredictionTestTown03 : public RoutePredictionTest
 {
   std::string getTestMap() override
   {
-    return "test_files/Town03.adm.txt";
+    return "test_files/Town03.txt";
   }
 };
 
@@ -93,7 +93,7 @@ TEST_F(RoutePredictionTestTown01, route_prediction_positive)
   auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(10.));
   EXPECT_EQ(routePredictions.size(), 1u);
 
-  routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(500.));
+  routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(450.));
   EXPECT_EQ(routePredictions.size(), 6u);
 }
 
@@ -103,7 +103,7 @@ TEST_F(RoutePredictionTestTown01, route_prediction_dont_care)
   auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(10.));
   EXPECT_EQ(routePredictions.size(), 1u);
 
-  routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(500.));
+  routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(450.));
   EXPECT_EQ(routePredictions.size(), 6u);
 }
 
@@ -112,7 +112,7 @@ TEST_F(RoutePredictionTestTown03, route_prediction_positive)
   auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(10.));
   EXPECT_EQ(routePredictions.size(), 1u);
 
-  routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(500.));
+  routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(478.));
   EXPECT_EQ(routePredictions.size(), 18u);
 }
 
@@ -122,7 +122,7 @@ TEST_F(RoutePredictionTestTown03, route_prediction_dont_care)
   auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(10.));
   EXPECT_EQ(routePredictions.size(), 1u);
 
-  routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(500.));
+  routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(478.));
   EXPECT_EQ(routePredictions.size(), 18u);
 }
 
@@ -132,7 +132,7 @@ TEST_F(RoutePredictionTestTown03, route_prediction_constructor)
   auto routePredictions = route::planning::predictRoutesOnDuration(predictionStart, physics::Duration(1.));
   ASSERT_EQ(routePredictions.size(), 1u);
 
-  routePredictions = route::planning::predictRoutes(predictionStart, physics::Distance(500.), physics::Duration(500.));
+  routePredictions = route::planning::predictRoutes(predictionStart, physics::Distance(478.), physics::Duration(478.));
   ASSERT_EQ(routePredictions.size(), 18u);
 }
 
@@ -150,7 +150,7 @@ struct RoutePredictionTestIntersection : public RoutePredictionTestTown01
 {
   point::GeoPoint getPredictionStartGeo() override
   {
-    return point::createGeoPoint(point::Longitude(8.0012071), point::Latitude(48.9971953), point::Altitude(0.));
+    return point::createGeoPoint(point::Longitude(0.00079520), point::Latitude(-0.00284188), point::Altitude(0.));
   }
 };
 
@@ -189,12 +189,17 @@ struct RoutePredictionTestRoundabout : public RoutePredictionTestTown03
 {
   point::GeoPoint getPredictionStartGeo() override
   {
-    return point::createGeoPoint(point::Longitude(8.0004625), point::Latitude(49.0000714), point::Altitude(0.));
+    return point::createGeoPoint(point::Longitude(0.00033117), point::Latitude(0.00007233), point::Altitude(0.));
   }
 };
 
 TEST_F(RoutePredictionTestRoundabout, route_prediction)
 {
-  auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(50.));
-  EXPECT_EQ(routePredictions.size(), 5u);
+  auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(130.));
+  // starting at the east entry we get:
+  // - to north
+  // - to south
+  // - circling just before out to east
+  // the route towards the west is not present in the new map!
+  EXPECT_EQ(routePredictions.size(), 3u);
 }

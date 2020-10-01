@@ -5,4 +5,4 @@ openDriveDefaultIntersectionType=TrafficLight
 openDriveDefaultTrafficLightType=LEFT_STRAIGHT_RED_YELLOW_GREEN
 
 [POI]
-poi=T1 48.997026667 8.0026912 0.1
+poi=T1 -0.00298986768 0.00193915337 0.

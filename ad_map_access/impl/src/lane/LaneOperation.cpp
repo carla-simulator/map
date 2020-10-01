@@ -120,7 +120,11 @@ point::ParaPoint uniqueParaPoint(point::GeoPoint const &geoPoint)
   auto mapMatchingResult
     = mapMatching.getMapMatchedPositions(geoPoint, physics::Distance(0.1), physics::Probability(0.5));
 
-  if (mapMatchingResult.size() != 1)
+  if (mapMatchingResult.size() == 0u)
+  {
+    throw std::runtime_error("uniqueLaneId: position doesn't match any lane within 0.1 meters");
+  }
+  if (mapMatchingResult.size() != 1u)
   {
     throw std::runtime_error("uniqueLaneId: position matches multiple lanes");
   }

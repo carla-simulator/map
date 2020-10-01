@@ -291,7 +291,6 @@ TEST_F(LaneIntervalOperationTest, GetEdgeAndBorder)
 TEST_F(LaneIntervalOperationTest, GetProjectedENUEdgeOnTown01)
 {
   ASSERT_TRUE(access::init("test_files/Town01.txt"));
-  access::setENUReferencePoint(createGeoPoint(Longitude(8.0), Latitude(49.0), Altitude(0.)));
 
   ENUPoint point_edu1 = createENUPoint(4.453, -4.560, 0);
   ASSERT_NEAR((double)lane::calcWidth(point_edu1), 3.9943, 0.0001);

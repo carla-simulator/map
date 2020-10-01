@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -129,6 +129,44 @@ void invertLane(Lane &lane)
   }
 }
 
+void invertLaneAndNeighbors(LaneMap &laneMap, Lane &lane)
+{
+  std::set<Id> neighborhood;
+  neighborhood.insert(lane.id);
+  auto leftNeighbor = lane.leftNeighbor;
+  while (leftNeighbor != 0u)
+  {
+    auto insertResult = neighborhood.insert(leftNeighbor);
+    if (insertResult.second)
+    {
+      leftNeighbor = laneMap[leftNeighbor].leftNeighbor;
+    }
+    else
+    {
+      std::cerr << "invertLaneAndNeighbors(" << lane.id << ") recursion" << std::endl;
+      leftNeighbor = 0u;
+    }
+  }
+  auto rightNeighbor = lane.rightNeighbor;
+  while (rightNeighbor != 0u)
+  {
+    auto insertResult = neighborhood.insert(rightNeighbor);
+    if (insertResult.second)
+    {
+      rightNeighbor = laneMap[rightNeighbor].rightNeighbor;
+    }
+    else
+    {
+      std::cerr << "invertLaneAndNeighbors(" << lane.id << ") recursion" << std::endl;
+      rightNeighbor = 0u;
+    }
+  }
+  for (auto const &laneId : neighborhood)
+  {
+    invertLane(laneMap[laneId]);
+  }
+}
+
 ContactPlace contactPlace(Lane const &leftLane, Lane const &rightLane)
 {
   if (leftLane.leftEdge.empty() || leftLane.rightEdge.empty())
@@ -174,6 +212,46 @@ ContactPlace contactPlace(Lane const &leftLane, Lane const &rightLane)
   }
 
   return ContactPlace::None;
+}
+
+void checkAddPredecessor(Lane &lane, Lane const &otherLane)
+{
+  auto const thisLeftStart = lane.leftEdge.front();
+  auto const thisRightStart = lane.rightEdge.front();
+  auto const otherLeftStart = otherLane.leftEdge.front();
+  auto const otherRightStart = otherLane.rightEdge.front();
+  auto const otherLeftEnd = otherLane.leftEdge.back();
+  auto const otherRightEnd = otherLane.rightEdge.back();
+
+  if ((near(thisLeftStart, otherLeftEnd) && near(thisRightStart, otherRightEnd))
+      || (near(thisLeftStart, otherRightStart) && near(thisRightStart, otherLeftStart)))
+  {
+    lane.predecessors.push_back(otherLane.id);
+  }
+  else
+  {
+    // std::cerr << "checkAddPredecessor[" << lane.id << "] rejecting other lane:" << otherLane.id << std::endl;
+  }
+}
+
+void checkAddSuccessor(Lane &lane, Lane const &otherLane)
+{
+  auto const thisLeftEnd = lane.leftEdge.back();
+  auto const thisRightEnd = lane.rightEdge.back();
+  auto const otherLeftStart = otherLane.leftEdge.front();
+  auto const otherRightStart = otherLane.rightEdge.front();
+  auto const otherLeftEnd = otherLane.leftEdge.back();
+  auto const otherRightEnd = otherLane.rightEdge.back();
+
+  if ((near(thisLeftEnd, otherLeftStart) && near(thisRightEnd, otherRightStart))
+      || (near(thisLeftEnd, otherRightEnd) && near(thisRightEnd, otherLeftEnd)))
+  {
+    lane.successors.push_back(otherLane.id);
+  }
+  else
+  {
+    // std::cerr << "checkAddSuccessor[" << lane.id << "] rejecting other lane:" << otherLane.id << std::endl;
+  }
 }
 
 Id laneId(int roadId, int laneSectionIndex, int laneIndex)
