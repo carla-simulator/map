@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -130,7 +130,7 @@
 <span class="lineNum">      59 </span>                :            :   /*!
 <a name="60"><span class="lineNum">      60 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      61 </span>                :            :    */
-<span class="lineNum">      62 </span>                :<span class="lineCov">     542470 :   GeoPoint() = default;</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">     888204 :   GeoPoint() = default;</span>
 <span class="lineNum">      63 </span>                :            : 
 <span class="lineNum">      64 </span>                :            :   /*!
 <span class="lineNum">      65 </span>                :            :    * \brief standard destructor
@@ -172,10 +172,10 @@
 <span class="lineNum">     101 </span>                :            :    *
 <a name="102"><span class="lineNum">     102 </span>                :            :    * \returns \c true if both GeoPoint are equal</a>
 <span class="lineNum">     103 </span>                :            :    */
-<span class="lineNum">     104 </span>                :<span class="lineCov">        103 :   bool operator==(const GeoPoint &amp;other) const</span>
+<span class="lineNum">     104 </span>                :<span class="lineCov">        102 :   bool operator==(const GeoPoint &amp;other) const</span>
 <span class="lineNum">     105 </span>                :            :   {
-<span class="lineNum">     106 </span>[<span class="branchCov" title="Branch 1 was taken 81 times"> + </span><span class="branchCov" title="Branch 2 was taken 22 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 79 times"> + </span><span class="branchCov" title="Branch 5 was taken 2 times"> + </span>]:<span class="lineCov">        103 :     return (longitude == other.longitude) &amp;&amp; (latitude == other.latitude) &amp;&amp; (altitude == other.altitude);</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 77 times"> + </span><span class="branchCov" title="Branch 8 was taken 2 times"> + </span>]
+<span class="lineNum">     106 </span>[<span class="branchCov" title="Branch 1 was taken 79 times"> + </span><span class="branchCov" title="Branch 2 was taken 23 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 77 times"> + </span><span class="branchCov" title="Branch 5 was taken 2 times"> + </span>]:<span class="lineCov">        102 :     return (longitude == other.longitude) &amp;&amp; (latitude == other.latitude) &amp;&amp; (altitude == other.altitude);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 75 times"> + </span><span class="branchCov" title="Branch 8 was taken 2 times"> + </span>]
 <span class="lineNum">     107 </span>                :            :   }
 <span class="lineNum">     108 </span>                :            : 
 <span class="lineNum">     109 </span>                :            :   /**
@@ -185,9 +185,9 @@
 <span class="lineNum">     113 </span>                :            :    *
 <a name="114"><span class="lineNum">     114 </span>                :            :    * \returns \c true if both GeoPoint are different</a>
 <span class="lineNum">     115 </span>                :            :    */
-<span class="lineNum">     116 </span>                :<span class="lineCov">         23 :   bool operator!=(const GeoPoint &amp;other) const</span>
+<span class="lineNum">     116 </span>                :<span class="lineCov">         22 :   bool operator!=(const GeoPoint &amp;other) const</span>
 <span class="lineNum">     117 </span>                :            :   {
-<span class="lineNum">     118 </span>                :<span class="lineCov">         23 :     return !operator==(other);</span>
+<span class="lineNum">     118 </span>                :<span class="lineCov">         22 :     return !operator==(other);</span>
 <span class="lineNum">     119 </span>                :            :   }
 <span class="lineNum">     120 </span>                :            : 
 <span class="lineNum">     121 </span>                :            :   /*!

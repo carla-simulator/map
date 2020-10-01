@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -134,20 +134,20 @@
 <span class="lineNum">      63 </span>                :            : /**
 <a name="64"><span class="lineNum">      64 </span>                :            :  * @brief convert lane interval to ParametricRange</a>
 <span class="lineNum">      65 </span>                :            :  */
-<span class="lineNum">      66 </span>                :<span class="lineCov">       1500 : inline physics::ParametricRange toParametricRange(route::LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">       1452 : inline physics::ParametricRange toParametricRange(route::LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">      67 </span>                :            : {
-<span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 1 was taken 1500 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       1500 :   physics::ParametricRange range;</span>
-<span class="lineNum">      69 </span>[<span class="branchCov" title="Branch 1 was taken 1500 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1471 times"> + </span><span class="branchCov" title="Branch 4 was taken 29 times"> + </span>]:<span class="lineCov">       1500 :   if (laneInterval.start &lt;= laneInterval.end)</span>
+<span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 1 was taken 1452 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       1452 :   physics::ParametricRange range;</span>
+<span class="lineNum">      69 </span>[<span class="branchCov" title="Branch 1 was taken 1452 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1423 times"> + </span><span class="branchCov" title="Branch 4 was taken 29 times"> + </span>]:<span class="lineCov">       1452 :   if (laneInterval.start &lt;= laneInterval.end)</span>
 <span class="lineNum">      70 </span>                :            :   {
-<span class="lineNum">      71 </span>                :<span class="lineCov">       1471 :     range.minimum = laneInterval.start;</span>
-<span class="lineNum">      72 </span>                :<span class="lineCov">       1471 :     range.maximum = laneInterval.end;</span>
+<span class="lineNum">      71 </span>                :<span class="lineCov">       1423 :     range.minimum = laneInterval.start;</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">       1423 :     range.maximum = laneInterval.end;</span>
 <span class="lineNum">      73 </span>                :            :   }
 <span class="lineNum">      74 </span>                :            :   else
 <span class="lineNum">      75 </span>                :            :   {
 <span class="lineNum">      76 </span>                :<span class="lineCov">         29 :     range.minimum = laneInterval.end;</span>
 <span class="lineNum">      77 </span>                :<span class="lineCov">         29 :     range.maximum = laneInterval.start;</span>
 <span class="lineNum">      78 </span>                :            :   }
-<span class="lineNum">      79 </span>                :<span class="lineCov">       1500 :   return range;</span>
+<span class="lineNum">      79 </span>                :<span class="lineCov">       1452 :   return range;</span>
 <span class="lineNum">      80 </span>                :            : }
 <span class="lineNum">      81 </span>                :            : 
 <span class="lineNum">      82 </span>                :            : /**
@@ -273,11 +273,11 @@
 <span class="lineNum">     202 </span>                :            :  * @returns @c true if given parametric offset is after the interval
 <a name="203"><span class="lineNum">     203 </span>                :            :  * Be aware: if the route interval is degenerated isAfterInterval() and isBeforeInterval() return the same value</a>
 <span class="lineNum">     204 </span>                :            :  */
-<span class="lineNum">     205 </span>                :<span class="lineCov">         15 : inline bool isAfterInterval(LaneInterval const &amp;laneInterval, physics::ParametricValue const parametricOffset)</span>
+<span class="lineNum">     205 </span>                :<span class="lineCov">         36 : inline bool isAfterInterval(LaneInterval const &amp;laneInterval, physics::ParametricValue const parametricOffset)</span>
 <span class="lineNum">     206 </span>                :            : {
-<span class="lineNum">     207 </span>        [<span class="branchCov" title="Branch 1 was taken 12 times"> + </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">         15 :   if (isRouteDirectionPositive(laneInterval))</span>
+<span class="lineNum">     207 </span>        [<span class="branchCov" title="Branch 1 was taken 33 times"> + </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">         36 :   if (isRouteDirectionPositive(laneInterval))</span>
 <span class="lineNum">     208 </span>                :            :   {
-<span class="lineNum">     209 </span>                :<span class="lineCov">         12 :     return (parametricOffset &gt; laneInterval.end);</span>
+<span class="lineNum">     209 </span>                :<span class="lineCov">         33 :     return (parametricOffset &gt; laneInterval.end);</span>
 <span class="lineNum">     210 </span>                :            :   }
 <span class="lineNum">     211 </span>                :            :   else
 <span class="lineNum">     212 </span>                :            :   {

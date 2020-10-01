@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">29</td>
@@ -168,10 +168,10 @@
 <span class="lineNum">      97 </span>                :            :    *
 <a name="98"><span class="lineNum">      98 </span>                :            :    * \note \ref \_AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
 <span class="lineNum">      99 </span>                :            :    */
-<span class="lineNum">     100 </span>                :<span class="lineCov">     740956 :   _AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION_ ENUCoordinate(double const iENUCoordinate)</span>
-<span class="lineNum">     101 </span>                :<span class="lineCov">     740956 :     : mENUCoordinate(iENUCoordinate)</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">     728608 :   _AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION_ ENUCoordinate(double const iENUCoordinate)</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">     728608 :     : mENUCoordinate(iENUCoordinate)</span>
 <span class="lineNum">     102 </span>                :            :   {
-<span class="lineNum">     103 </span>                :<span class="lineCov">     740956 :   }</span>
+<span class="lineNum">     103 </span>                :<span class="lineCov">     728608 :   }</span>
 <span class="lineNum">     104 </span>                :            : 
 <span class="lineNum">     105 </span>                :            :   /*!
 <span class="lineNum">     106 </span>                :            :    * \brief standard copy constructor
@@ -284,11 +284,11 @@
 <span class="lineNum">     213 </span>                :            :    *   this ENUCoordinate is numerically smaller than other.
 <a name="214"><span class="lineNum">     214 </span>                :            :    * \note the precision of ENUCoordinate is considered</a>
 <span class="lineNum">     215 </span>                :            :    */
-<span class="lineNum">     216 </span>                :<span class="lineCov">     564416 :   bool operator&lt;=(const ENUCoordinate &amp;other) const</span>
+<span class="lineNum">     216 </span>                :<span class="lineCov">     554552 :   bool operator&lt;=(const ENUCoordinate &amp;other) const</span>
 <span class="lineNum">     217 </span>                :            :   {
-<span class="lineNum">     218 </span>                :<span class="lineCov">     564416 :     ensureValid();</span>
-<span class="lineNum">     219 </span>                :<span class="lineCov">     564415 :     other.ensureValid();</span>
-<span class="lineNum">     220 </span>[<span class="branchCov" title="Branch 0 was taken 86 times"> + </span><span class="branchCov" title="Branch 1 was taken 564328 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 66 times"> + </span><span class="branchCov" title="Branch 4 was taken 20 times"> + </span>]:<span class="lineCov">     564414 :     return ((mENUCoordinate &lt; other.mENUCoordinate) || operator==(other));</span>
+<span class="lineNum">     218 </span>                :<span class="lineCov">     554552 :     ensureValid();</span>
+<span class="lineNum">     219 </span>                :<span class="lineCov">     554551 :     other.ensureValid();</span>
+<span class="lineNum">     220 </span>[<span class="branchCov" title="Branch 0 was taken 86 times"> + </span><span class="branchCov" title="Branch 1 was taken 554464 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 66 times"> + </span><span class="branchCov" title="Branch 4 was taken 20 times"> + </span>]:<span class="lineCov">     554550 :     return ((mENUCoordinate &lt; other.mENUCoordinate) || operator==(other));</span>
 <span class="lineNum">     221 </span>                :            :   }
 <span class="lineNum">     222 </span>                :            : 
 <span class="lineNum">     223 </span>                :            :   /**
@@ -444,9 +444,9 @@
 <span class="lineNum">     373 </span>                :            :    * \note the conversion to the base type removes the physical unit.
 <a name="374"><span class="lineNum">     374 </span>                :            :    *       \ref \_AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.</a>
 <span class="lineNum">     375 </span>                :            :    */
-<span class="lineNum">     376 </span>                :<span class="lineCov">      75013 :   _AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION_ operator double() const</span>
+<span class="lineNum">     376 </span>                :<span class="lineCov">      73771 :   _AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION_ operator double() const</span>
 <span class="lineNum">     377 </span>                :            :   {
-<span class="lineNum">     378 </span>                :<span class="lineCov">      75013 :     return mENUCoordinate;</span>
+<span class="lineNum">     378 </span>                :<span class="lineCov">      73771 :     return mENUCoordinate;</span>
 <span class="lineNum">     379 </span>                :            :   }
 <span class="lineNum">     380 </span>                :            : 
 <span class="lineNum">     381 </span>                :            :   /*!
@@ -456,11 +456,11 @@
 <span class="lineNum">     385 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="386"><span class="lineNum">     386 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     387 </span>                :            :    */
-<span class="lineNum">     388 </span>                :<span class="lineCov">    1291681 :   bool isValid() const</span>
+<span class="lineNum">     388 </span>                :<span class="lineCov">    1269487 :   bool isValid() const</span>
 <span class="lineNum">     389 </span>                :            :   {
-<span class="lineNum">     390 </span>                :<span class="lineCov">    1291681 :     auto const valueClass = std::fpclassify(mENUCoordinate);</span>
-<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 0 was taken 27124 times"> + </span><span class="branchCov" title="Branch 1 was taken 50 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1291626 times"> + </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span>]:<span class="lineCov">    1291681 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mENUCoordinate)</span>
-<span class="lineNum">     392 </span>[<span class="branchCov" title="Branch 0 was taken 27174 times"> + </span><span class="branchCov" title="Branch 1 was taken 1264507 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1291620 times"> + </span><span class="branchCov" title="Branch 3 was taken 6 times"> + </span>]:<span class="lineCov">    2583362 :       &amp;&amp; (mENUCoordinate &lt;= cMaxValue);</span>
+<span class="lineNum">     390 </span>                :<span class="lineCov">    1269487 :     auto const valueClass = std::fpclassify(mENUCoordinate);</span>
+<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 0 was taken 27064 times"> + </span><span class="branchCov" title="Branch 1 was taken 50 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1269432 times"> + </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span>]:<span class="lineCov">    1269487 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mENUCoordinate)</span>
+<span class="lineNum">     392 </span>[<span class="branchCov" title="Branch 0 was taken 27114 times"> + </span><span class="branchCov" title="Branch 1 was taken 1242373 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1269426 times"> + </span><span class="branchCov" title="Branch 3 was taken 6 times"> + </span>]:<span class="lineCov">    2538974 :       &amp;&amp; (mENUCoordinate &lt;= cMaxValue);</span>
 <span class="lineNum">     393 </span>                :            :   }
 <span class="lineNum">     394 </span>                :            : 
 <span class="lineNum">     395 </span>                :            :   /*!
@@ -469,16 +469,16 @@
 <span class="lineNum">     398 </span>                :            :    * Throws an std::out_of_range() exception if the ENUCoordinate
 <a name="399"><span class="lineNum">     399 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     400 </span>                :            :    */
-<span class="lineNum">     401 </span>                :<span class="lineCov">    1150538 :   void ensureValid() const</span>
+<span class="lineNum">     401 </span>                :<span class="lineCov">    1130810 :   void ensureValid() const</span>
 <span class="lineNum">     402 </span>                :            :   {
-<span class="lineNum">     403 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 1150504 times"> + </span>]:<span class="lineCov">    1150538 :     if (!isValid())</span>
+<span class="lineNum">     403 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 1130776 times"> + </span>]:<span class="lineCov">    1130810 :     if (!isValid())</span>
 <span class="lineNum">     404 </span>                :            :     {
 <span class="lineNum">     405 </span>                :<span class="lineCov">         34 :       spdlog::info(&quot;ensureValid(::ad::map::point::ENUCoordinate)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     406 </span>                :            : #if (AD_MAP_POINT_ENUCOORDINATE_THROWS_EXCEPTION == 1)
 <span class="lineNum">     407 </span>                :<span class="lineCov">         34 :       throw std::out_of_range(&quot;ENUCoordinate value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     408 </span>                :            : #endif
 <span class="lineNum">     409 </span>                :            :     }
-<span class="lineNum">     410 </span>                :<span class="lineCov">    1150504 :   }</span>
+<span class="lineNum">     410 </span>                :<span class="lineCov">    1130776 :   }</span>
 <span class="lineNum">     411 </span>                :            : 
 <span class="lineNum">     412 </span>                :            :   /*!
 <span class="lineNum">     413 </span>                :            :    * \brief ensure that the ENUCoordinate is valid and non zero
@@ -501,17 +501,17 @@
 <span class="lineNum">     430 </span>                :            :   /*!
 <a name="431"><span class="lineNum">     431 </span>                :            :    * \brief get minimum valid ENUCoordinate (i.e. \ref cMinValue)</a>
 <span class="lineNum">     432 </span>                :            :    */
-<span class="lineNum">     433 </span>                :<span class="lineCov">     141119 :   static ENUCoordinate getMin()</span>
+<span class="lineNum">     433 </span>                :<span class="lineCov">     138653 :   static ENUCoordinate getMin()</span>
 <span class="lineNum">     434 </span>                :            :   {
-<span class="lineNum">     435 </span>                :<span class="lineCov">     141119 :     return ENUCoordinate(cMinValue);</span>
+<span class="lineNum">     435 </span>                :<span class="lineCov">     138653 :     return ENUCoordinate(cMinValue);</span>
 <span class="lineNum">     436 </span>                :            :   }
 <span class="lineNum">     437 </span>                :            : 
 <span class="lineNum">     438 </span>                :            :   /*!
 <a name="439"><span class="lineNum">     439 </span>                :            :    * \brief get maximum valid ENUCoordinate (i.e. \ref cMaxValue)</a>
 <span class="lineNum">     440 </span>                :            :    */
-<span class="lineNum">     441 </span>                :<span class="lineCov">     141119 :   static ENUCoordinate getMax()</span>
+<span class="lineNum">     441 </span>                :<span class="lineCov">     138653 :   static ENUCoordinate getMax()</span>
 <span class="lineNum">     442 </span>                :            :   {
-<span class="lineNum">     443 </span>                :<span class="lineCov">     141119 :     return ENUCoordinate(cMaxValue);</span>
+<span class="lineNum">     443 </span>                :<span class="lineCov">     138653 :     return ENUCoordinate(cMaxValue);</span>
 <span class="lineNum">     444 </span>                :            :   }
 <span class="lineNum">     445 </span>                :            : 
 <span class="lineNum">     446 </span>                :            :   /*!
@@ -576,16 +576,16 @@
 <span class="lineNum">     505 </span>                :            :   /*!
 <a name="506"><span class="lineNum">     506 </span>                :            :    * \see std::numeric_limits::lowest()</a>
 <span class="lineNum">     507 </span>                :            :    */
-<span class="lineNum">     508 </span>                :<span class="lineCov">     141116 :   static inline ::ad::map::point::ENUCoordinate lowest()</span>
+<span class="lineNum">     508 </span>                :<span class="lineCov">     138650 :   static inline ::ad::map::point::ENUCoordinate lowest()</span>
 <span class="lineNum">     509 </span>                :            :   {
-<span class="lineNum">     510 </span>                :<span class="lineCov">     141116 :     return ::ad::map::point::ENUCoordinate::getMin();</span>
+<span class="lineNum">     510 </span>                :<span class="lineCov">     138650 :     return ::ad::map::point::ENUCoordinate::getMin();</span>
 <span class="lineNum">     511 </span>                :            :   }
 <span class="lineNum">     512 </span>                :            :   /*!
 <a name="513"><span class="lineNum">     513 </span>                :            :    * \see std::numeric_limits::max()</a>
 <span class="lineNum">     514 </span>                :            :    */
-<span class="lineNum">     515 </span>                :<span class="lineCov">     141116 :   static inline ::ad::map::point::ENUCoordinate max()</span>
+<span class="lineNum">     515 </span>                :<span class="lineCov">     138650 :   static inline ::ad::map::point::ENUCoordinate max()</span>
 <span class="lineNum">     516 </span>                :            :   {
-<span class="lineNum">     517 </span>                :<span class="lineCov">     141116 :     return ::ad::map::point::ENUCoordinate::getMax();</span>
+<span class="lineNum">     517 </span>                :<span class="lineCov">     138650 :     return ::ad::map::point::ENUCoordinate::getMax();</span>
 <span class="lineNum">     518 </span>                :            :   }
 <span class="lineNum">     519 </span>                :            : 
 <span class="lineNum">     520 </span>                :            :   /*!

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -127,17 +127,17 @@
 <span class="lineNum">      56 </span>                :            :   /*!
 <a name="57"><span class="lineNum">      57 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      58 </span>                :            :    */
-<span class="lineNum">      59 </span>                :<span class="lineCov">     283242 :   Restriction() = default;</span>
+<span class="lineNum">      59 </span>                :<span class="lineCov">     331770 :   Restriction() = default;</span>
 <span class="lineNum">      60 </span>                :            : 
 <span class="lineNum">      61 </span>                :            :   /*!
 <a name="62"><span class="lineNum">      62 </span>                :            :    * \brief standard destructor</a>
 <span class="lineNum">      63 </span>                :            :    */
-<span class="lineNum">      64 </span>                :<span class="lineCov">    3022278 :   ~Restriction() = default;</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">    3580550 :   ~Restriction() = default;</span>
 <span class="lineNum">      65 </span>                :            : 
 <span class="lineNum">      66 </span>                :            :   /*!
 <a name="67"><span class="lineNum">      67 </span>                :            :    * \brief standard copy constructor</a>
 <span class="lineNum">      68 </span>                :            :    */
-<span class="lineNum">      69 </span>                :<span class="lineCov">    2739032 :   Restriction(const Restriction &amp;other) = default;</span>
+<span class="lineNum">      69 </span>                :<span class="lineCov">    3248776 :   Restriction(const Restriction &amp;other) = default;</span>
 <span class="lineNum">      70 </span>                :            : 
 <span class="lineNum">      71 </span>                :            :   /*!
 <a name="72"><span class="lineNum">      72 </span>                :            :    * \brief standard move constructor</a>
@@ -169,10 +169,10 @@
 <span class="lineNum">      98 </span>                :            :    *
 <a name="99"><span class="lineNum">      99 </span>                :            :    * \returns \c true if both Restriction are equal</a>
 <span class="lineNum">     100 </span>                :            :    */
-<span class="lineNum">     101 </span>                :<span class="lineCov">       4978 :   bool operator==(const Restriction &amp;other) const</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">       6206 :   bool operator==(const Restriction &amp;other) const</span>
 <span class="lineNum">     102 </span>                :            :   {
-<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 4974 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">       4976 :     return (negated == other.negated) &amp;&amp; (roadUserTypes == other.roadUserTypes)</span>
-<span class="lineNum">     104 </span>[<span class="branchCov" title="Branch 0 was taken 4976 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4972 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">       9954 :       &amp;&amp; (passengersMin == other.passengersMin);</span>
+<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 6202 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">       6204 :     return (negated == other.negated) &amp;&amp; (roadUserTypes == other.roadUserTypes)</span>
+<span class="lineNum">     104 </span>[<span class="branchCov" title="Branch 0 was taken 6204 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 6200 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">      12410 :       &amp;&amp; (passengersMin == other.passengersMin);</span>
 <span class="lineNum">     105 </span>                :            :   }
 <span class="lineNum">     106 </span>                :            : 
 <span class="lineNum">     107 </span>                :            :   /**

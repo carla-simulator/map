@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">9</td>
             <td class="headerCovTableEntry">10</td>
-            <td class="headerCovTableEntryMed">80.0 %</td>
+            <td class="headerCovTableEntryHi">90.0 %</td>
           </tr>
           <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -106,7 +106,7 @@
 <span class="lineNum">      35 </span>                :            :  */
 <span class="lineNum">      36 </span>                :<span class="lineCov">         31 : inline bool isValid(MapMetaData const &amp;metaData, bool const logErrors = true)</span>
 <span class="lineNum">      37 </span>                :            : {
-<span class="lineNum">      38 </span>[<span class="branchCov" title="Branch 1 was taken 29 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 29 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">         31 :   bool isValidInputRange = withinValidInputRange(metaData, logErrors) &amp;&amp; (metaData.trafficType != TrafficType::INVALID);</span>
+<span class="lineNum">      38 </span>[<span class="branchCov" title="Branch 1 was taken 30 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 3 was taken 29 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">         31 :   bool isValidInputRange = withinValidInputRange(metaData, logErrors) &amp;&amp; (metaData.trafficType != TrafficType::INVALID);</span>
 <span class="lineNum">      39 </span>[<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 29 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">         31 :   if (!isValidInputRange &amp;&amp; logErrors)</span>
 <span class="lineNum">      40 </span>                :            :   {
 <span class="lineNum">      41 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     spdlog::error(&quot;withinValidInputRange(::ad::map::access::MapMetaData)&gt;&gt; {} not valid&quot;, metaData);</span>

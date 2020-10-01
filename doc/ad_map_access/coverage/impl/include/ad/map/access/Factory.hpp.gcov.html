@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -105,16 +105,16 @@
 <span class="lineNum">      34 </span>                :            :    * @brief Constructor.
 <a name="35"><span class="lineNum">      35 </span>                :            :    * @param[in] store Store on which this Factory will operate.</a>
 <span class="lineNum">      36 </span>                :            :    */
-<span class="lineNum">      37 </span>                :<span class="lineCov">         56 :   explicit Factory(Store &amp;store)</span>
-<span class="lineNum">      38 </span>                :<span class="lineCov">         56 :     : mStore(store)</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">         60 :   explicit Factory(Store &amp;store)</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">         60 :     : mStore(store)</span>
 <span class="lineNum">      39 </span>                :            :   {
-<span class="lineNum">      40 </span>                :<span class="lineCov">         56 :   }</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">         60 :   }</span>
 <span class="lineNum">      41 </span>                :            : 
 <span class="lineNum">      42 </span>                :            :   /**
 <span class="lineNum">      43 </span>                :            :    * @brief Destructor.
 <a name="44"><span class="lineNum">      44 </span>                :            :    *        Releases all resources.</a>
 <span class="lineNum">      45 </span>                :            :    */
-<span class="lineNum">      46 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 56 times"> + </span>]:<span class="lineCov">        156 :   virtual ~Factory() = default;</span>
+<span class="lineNum">      46 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 60 times"> + </span>]:<span class="lineCov">        164 :   virtual ~Factory() = default;</span>
 <span class="lineNum">      47 </span>                :            : 
 <span class="lineNum">      48 </span>                :            : public: // Atomic Operations -- Main
 <span class="lineNum">      49 </span>                :            :   /**

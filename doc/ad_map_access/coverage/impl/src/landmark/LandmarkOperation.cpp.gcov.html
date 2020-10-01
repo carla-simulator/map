@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -71,7 +71,7 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <span class="lineNum">       2 </span>                :            : //
-<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2019 Intel Corporation
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2020 Intel Corporation
 <span class="lineNum">       4 </span>                :            : //
 <span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
 <span class="lineNum">       6 </span>                :            : //
@@ -96,20 +96,20 @@
 <span class="lineNum">      25 </span>        [<span class="branchCov" title="Branch 2 was taken 15 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         15 :   return point::createENUHeading(point::createECEFHeading(landmark.position, landmark.orientation));</span>
 <a name="26"><span class="lineNum">      26 </span>                :            : }</a>
 <span class="lineNum">      27 </span>                :            : 
-<span class="lineNum">      28 </span>                :<span class="lineCov">       9033 : Landmark::ConstPtr getLandmarkPtr(LandmarkId const &amp;id)</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">       9035 : Landmark::ConstPtr getLandmarkPtr(LandmarkId const &amp;id)</span>
 <span class="lineNum">      29 </span>                :            : {
-<span class="lineNum">      30 </span>                :<span class="lineCov">       9033 :   auto landmarkPtr = access::getStore().getLandmarkPtr(id);</span>
+<span class="lineNum">      30 </span>                :<span class="lineCov">       9035 :   auto landmarkPtr = access::getStore().getLandmarkPtr(id);</span>
 <span class="lineNum">      31 </span>                :            : 
-<span class="lineNum">      32 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 9032 times"> + </span>]:<span class="lineCov">       9033 :   if (!bool(landmarkPtr))</span>
+<span class="lineNum">      32 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 9034 times"> + </span>]:<span class="lineCov">       9035 :   if (!bool(landmarkPtr))</span>
 <span class="lineNum">      33 </span>                :            :   {
 <span class="lineNum">      34 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     throw std::invalid_argument(&quot;ad::map::landmark::getLandmarkPtr: LandmarkId not found in store&quot;);</span>
 <span class="lineNum">      35 </span>                :            :   }
-<span class="lineNum">      36 </span>                :<span class="lineCov">       9032 :   return landmarkPtr;</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">       9034 :   return landmarkPtr;</span>
 <a name="37"><span class="lineNum">      37 </span>                :            : }</a>
 <span class="lineNum">      38 </span>                :            : 
-<span class="lineNum">      39 </span>                :<span class="lineCov">         24 : Landmark const &amp;getLandmark(LandmarkId const &amp;id)</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">         26 : Landmark const &amp;getLandmark(LandmarkId const &amp;id)</span>
 <span class="lineNum">      40 </span>                :            : {
-<span class="lineNum">      41 </span>                :<span class="lineCov">         24 :   return *getLandmarkPtr(id);</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">         26 :   return *getLandmarkPtr(id);</span>
 <a name="42"><span class="lineNum">      42 </span>                :            : }</a>
 <span class="lineNum">      43 </span>                :            : 
 <span class="lineNum">      44 </span>                :<span class="lineCov">         12 : landmark::LandmarkIdList getLandmarks()</span>

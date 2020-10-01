@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">21</td>
@@ -163,10 +163,10 @@
 <span class="lineNum">      92 </span>                :            :    *
 <a name="93"><span class="lineNum">      93 </span>                :            :    * \note \ref \_AD_MAP_ACCESS_PARTITIONID_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
 <span class="lineNum">      94 </span>                :            :    */
-<span class="lineNum">      95 </span>                :<span class="lineCov">      22765 :   _AD_MAP_ACCESS_PARTITIONID_EXPLICIT_CONVERSION_ PartitionId(uint64_t const iPartitionId)</span>
-<span class="lineNum">      96 </span>                :<span class="lineCov">      22765 :     : mPartitionId(iPartitionId)</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">      26792 :   _AD_MAP_ACCESS_PARTITIONID_EXPLICIT_CONVERSION_ PartitionId(uint64_t const iPartitionId)</span>
+<span class="lineNum">      96 </span>                :<span class="lineCov">      26792 :     : mPartitionId(iPartitionId)</span>
 <span class="lineNum">      97 </span>                :            :   {
-<span class="lineNum">      98 </span>                :<span class="lineCov">      22765 :   }</span>
+<span class="lineNum">      98 </span>                :<span class="lineCov">      26792 :   }</span>
 <span class="lineNum">      99 </span>                :            : 
 <span class="lineNum">     100 </span>                :            :   /*!
 <span class="lineNum">     101 </span>                :            :    * \brief standard copy constructor
@@ -247,11 +247,11 @@
 <span class="lineNum">     176 </span>                :            :    *   this PartitionId is strictly numerically smaller than other.
 <a name="177"><span class="lineNum">     177 </span>                :            :    * \note the precision of PartitionId is considered</a>
 <span class="lineNum">     178 </span>                :            :    */
-<span class="lineNum">     179 </span>                :<span class="lineCov">      35267 :   bool operator&lt;(const PartitionId &amp;other) const</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">      43473 :   bool operator&lt;(const PartitionId &amp;other) const</span>
 <span class="lineNum">     180 </span>                :            :   {
-<span class="lineNum">     181 </span>                :<span class="lineCov">      35267 :     ensureValid();</span>
-<span class="lineNum">     182 </span>                :<span class="lineCov">      35267 :     other.ensureValid();</span>
-<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 35266 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      35267 :     return (mPartitionId &lt; other.mPartitionId) &amp;&amp; operator!=(other);</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">      43473 :     ensureValid();</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">      43473 :     other.ensureValid();</span>
+<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 43472 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      43473 :     return (mPartitionId &lt; other.mPartitionId) &amp;&amp; operator!=(other);</span>
 <span class="lineNum">     184 </span>                :            :   }
 <span class="lineNum">     185 </span>                :            : 
 <span class="lineNum">     186 </span>                :            :   /**
@@ -380,11 +380,11 @@
 <span class="lineNum">     309 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="310"><span class="lineNum">     310 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     311 </span>                :            :    */
-<span class="lineNum">     312 </span>                :<span class="lineCov">      70598 :   bool isValid() const</span>
+<span class="lineNum">     312 </span>                :<span class="lineCov">      87010 :   bool isValid() const</span>
 <span class="lineNum">     313 </span>                :            :   {
-<span class="lineNum">     314 </span>                :<span class="lineCov">      70598 :     auto const valueClass = std::fpclassify(mPartitionId);</span>
-<span class="lineNum">     315 </span>[<span class="branchCov" title="Branch 0 was taken 70583 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 2 was taken 70598 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      70598 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mPartitionId)</span>
-<span class="lineNum">     316 </span>[<span class="branchCov" title="Branch 0 was taken 70583 times"> + </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 70598 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     141196 :       &amp;&amp; (mPartitionId &lt;= cMaxValue);</span>
+<span class="lineNum">     314 </span>                :<span class="lineCov">      87010 :     auto const valueClass = std::fpclassify(mPartitionId);</span>
+<span class="lineNum">     315 </span>[<span class="branchCov" title="Branch 0 was taken 86995 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 2 was taken 87010 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      87010 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mPartitionId)</span>
+<span class="lineNum">     316 </span>[<span class="branchCov" title="Branch 0 was taken 86995 times"> + </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 87010 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     174020 :       &amp;&amp; (mPartitionId &lt;= cMaxValue);</span>
 <span class="lineNum">     317 </span>                :            :   }
 <span class="lineNum">     318 </span>                :            : 
 <span class="lineNum">     319 </span>                :            :   /*!
@@ -393,16 +393,16 @@
 <span class="lineNum">     322 </span>                :            :    * Throws an std::out_of_range() exception if the PartitionId
 <a name="323"><span class="lineNum">     323 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     324 </span>                :            :    */
-<span class="lineNum">     325 </span>                :<span class="lineCov">      70586 :   void ensureValid() const</span>
+<span class="lineNum">     325 </span>                :<span class="lineCov">      86998 :   void ensureValid() const</span>
 <span class="lineNum">     326 </span>                :            :   {
-<span class="lineNum">     327 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 70586 times"> + </span>]:<span class="lineCov">      70586 :     if (!isValid())</span>
+<span class="lineNum">     327 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 86998 times"> + </span>]:<span class="lineCov">      86998 :     if (!isValid())</span>
 <span class="lineNum">     328 </span>                :            :     {
 <span class="lineNum">     329 </span>                :<span class="lineNoCov">          0 :       spdlog::info(&quot;ensureValid(::ad::map::access::PartitionId)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     330 </span>                :            : #if (AD_MAP_ACCESS_PARTITIONID_THROWS_EXCEPTION == 1)
 <span class="lineNum">     331 </span>                :<span class="lineNoCov">          0 :       throw std::out_of_range(&quot;PartitionId value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     332 </span>                :            : #endif
 <span class="lineNum">     333 </span>                :            :     }
-<span class="lineNum">     334 </span>                :<span class="lineCov">      70586 :   }</span>
+<span class="lineNum">     334 </span>                :<span class="lineCov">      86998 :   }</span>
 <span class="lineNum">     335 </span>                :            : 
 <span class="lineNum">     336 </span>                :            :   /*!
 <span class="lineNum">     337 </span>                :            :    * \brief ensure that the PartitionId is valid and non zero

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -195,13 +195,13 @@
 <span class="lineNum">     124 </span>                :            :  *
 <a name="125"><span class="lineNum">     125 </span>                :            :  * @param[in] heading the heading input</a>
 <span class="lineNum">     126 </span>                :            :  */
-<span class="lineNum">     127 </span>                :<span class="lineCov">        335 : inline ENUPoint getDirectionalVectorZPlane(ENUHeading const &amp;heading)</span>
+<span class="lineNum">     127 </span>                :<span class="lineCov">        329 : inline ENUPoint getDirectionalVectorZPlane(ENUHeading const &amp;heading)</span>
 <span class="lineNum">     128 </span>                :            : {
-<span class="lineNum">     129 </span>                :<span class="lineCov">        335 :   ENUPoint directionalVector;</span>
-<span class="lineNum">     130 </span>                :<span class="lineCov">        335 :   directionalVector.x = ENUCoordinate(std::cos(static_cast&lt;double&gt;(heading)));</span>
-<span class="lineNum">     131 </span>                :<span class="lineCov">        335 :   directionalVector.y = ENUCoordinate(std::sin(static_cast&lt;double&gt;(heading)));</span>
-<span class="lineNum">     132 </span>                :<span class="lineCov">        335 :   directionalVector.z = ENUCoordinate(0.);</span>
-<span class="lineNum">     133 </span>                :<span class="lineCov">        335 :   return directionalVector;</span>
+<span class="lineNum">     129 </span>                :<span class="lineCov">        329 :   ENUPoint directionalVector;</span>
+<span class="lineNum">     130 </span>                :<span class="lineCov">        329 :   directionalVector.x = ENUCoordinate(std::cos(static_cast&lt;double&gt;(heading)));</span>
+<span class="lineNum">     131 </span>                :<span class="lineCov">        329 :   directionalVector.y = ENUCoordinate(std::sin(static_cast&lt;double&gt;(heading)));</span>
+<span class="lineNum">     132 </span>                :<span class="lineCov">        329 :   directionalVector.z = ENUCoordinate(0.);</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">        329 :   return directionalVector;</span>
 <span class="lineNum">     134 </span>                :            : }
 <span class="lineNum">     135 </span>                :            : 
 <span class="lineNum">     136 </span>                :            : /**
@@ -280,9 +280,9 @@
 <span class="lineNum">     209 </span>                :            :  *
 <a name="210"><span class="lineNum">     210 </span>                :            :  * @returns value d = a * b</a>
 <span class="lineNum">     211 </span>                :            :  */
-<span class="lineNum">     212 </span>                :<span class="lineCov">     148590 : inline double operator*(::ad::map::point::ECEFHeading const &amp;a, ::ad::map::point::ECEFHeading const &amp;b)</span>
+<span class="lineNum">     212 </span>                :<span class="lineCov">     138099 : inline double operator*(::ad::map::point::ECEFHeading const &amp;a, ::ad::map::point::ECEFHeading const &amp;b)</span>
 <span class="lineNum">     213 </span>                :            : {
-<span class="lineNum">     214 </span>                :<span class="lineCov">     148590 :   return ::ad::map::point::vectorDotProduct(a, b);</span>
+<span class="lineNum">     214 </span>                :<span class="lineCov">     138099 :   return ::ad::map::point::vectorDotProduct(a, b);</span>
 <span class="lineNum">     215 </span>                :            : }
 <span class="lineNum">     216 </span>                :            : 
 <span class="lineNum">     217 </span>                :            : /**
@@ -320,9 +320,9 @@
 <span class="lineNum">     249 </span>                :            :  * @param[in] b scalar b
 <a name="250"><span class="lineNum">     250 </span>                :            :  * @param[in] a vector a</a>
 <span class="lineNum">     251 </span>                :            :  */
-<span class="lineNum">     252 </span>                :<span class="lineCov">      95547 : inline ::ad::map::point::ECEFHeading operator*(double const &amp;b, ::ad::map::point::ECEFHeading const &amp;a)</span>
+<span class="lineNum">     252 </span>                :<span class="lineCov">     101341 : inline ::ad::map::point::ECEFHeading operator*(double const &amp;b, ::ad::map::point::ECEFHeading const &amp;a)</span>
 <span class="lineNum">     253 </span>                :            : {
-<span class="lineNum">     254 </span>                :<span class="lineCov">      95547 :   return ::ad::map::point::vectorMultiplyScalar(a, b);</span>
+<span class="lineNum">     254 </span>                :<span class="lineCov">     101341 :   return ::ad::map::point::vectorMultiplyScalar(a, b);</span>
 <span class="lineNum">     255 </span>                :            : }
 </pre>
       </td>

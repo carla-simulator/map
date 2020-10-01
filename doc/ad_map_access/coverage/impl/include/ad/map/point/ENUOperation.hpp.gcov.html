@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -92,9 +92,9 @@
 <span class="lineNum">      21 </span>                :            :  *
 <a name="22"><span class="lineNum">      22 </span>                :            :  * The point is valid if it's within valid input range.</a>
 <span class="lineNum">      23 </span>                :            :  */
-<span class="lineNum">      24 </span>                :<span class="lineCov">      44321 : inline bool isValid(ENUPoint const &amp;point, bool const logErrors = true)</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">      43499 : inline bool isValid(ENUPoint const &amp;point, bool const logErrors = true)</span>
 <span class="lineNum">      25 </span>                :            : {
-<span class="lineNum">      26 </span>                :<span class="lineCov">      44321 :   return withinValidInputRange(point, logErrors);</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">      43499 :   return withinValidInputRange(point, logErrors);</span>
 <span class="lineNum">      27 </span>                :            : }
 <span class="lineNum">      28 </span>                :            : 
 <span class="lineNum">      29 </span>                :            : /**
@@ -114,13 +114,13 @@
 <span class="lineNum">      43 </span>                :            :  * @param[in] y y-coodinate of the point
 <a name="44"><span class="lineNum">      44 </span>                :            :  * @param[in] z z-coodinate of the point</a>
 <span class="lineNum">      45 </span>                :            :  */
-<span class="lineNum">      46 </span>                :<span class="lineCov">      23986 : inline ENUPoint createENUPoint(double const x, double const y, double const z)</span>
+<span class="lineNum">      46 </span>                :<span class="lineCov">      23578 : inline ENUPoint createENUPoint(double const x, double const y, double const z)</span>
 <span class="lineNum">      47 </span>                :            : {
-<span class="lineNum">      48 </span>                :<span class="lineCov">      23986 :   ENUPoint result;</span>
-<span class="lineNum">      49 </span>                :<span class="lineCov">      23986 :   result.x = ENUCoordinate(x);</span>
-<span class="lineNum">      50 </span>                :<span class="lineCov">      23986 :   result.y = ENUCoordinate(y);</span>
-<span class="lineNum">      51 </span>                :<span class="lineCov">      23986 :   result.z = ENUCoordinate(z);</span>
-<span class="lineNum">      52 </span>                :<span class="lineCov">      23986 :   return result;</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">      23578 :   ENUPoint result;</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">      23578 :   result.x = ENUCoordinate(x);</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">      23578 :   result.y = ENUCoordinate(y);</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">      23578 :   result.z = ENUCoordinate(z);</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">      23578 :   return result;</span>
 <span class="lineNum">      53 </span>                :            : }
 <span class="lineNum">      54 </span>                :            : 
 <span class="lineNum">      55 </span>                :            : /**

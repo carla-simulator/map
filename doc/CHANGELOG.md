@@ -4,6 +4,7 @@
 #### :rocket: New Features
 * Added ad::physics::<Type>List types
 #### :ghost: Maintenance
+* ad_map_opendrive_reader: fixed reading of CARLA v0.9.10 maps
 * Improved user interface of python binding
 
 ## Release 2.2.1

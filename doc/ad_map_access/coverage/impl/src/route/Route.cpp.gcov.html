@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -103,15 +103,15 @@
 <span class="lineNum">      32 </span>                :            :   }
 <a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">       2756 : }</span></a>
 <span class="lineNum">      34 </span>                :            : 
-<span class="lineNum">      35 </span>                :<span class="lineCov">     109051 : bool Route::laneDirectionIsIgnored() const</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">     105335 : bool Route::laneDirectionIsIgnored() const</span>
 <span class="lineNum">      36 </span>                :            : {
-<span class="lineNum">      37 </span>        [<span class="branchCov" title="Branch 0 was taken 779 times"> + </span><span class="branchCov" title="Branch 1 was taken 108272 times"> + </span>]:<span class="lineCov">     109051 :   switch (mType)</span>
+<span class="lineNum">      37 </span>        [<span class="branchCov" title="Branch 0 was taken 779 times"> + </span><span class="branchCov" title="Branch 1 was taken 104556 times"> + </span>]:<span class="lineCov">     105335 :   switch (mType)</span>
 <span class="lineNum">      38 </span>                :            :   {
 <span class="lineNum">      39 </span>                :            :     case Type::SHORTEST_IGNORE_DIRECTION:
 <span class="lineNum">      40 </span>                :<span class="lineCov">        779 :       return true;</span>
 <span class="lineNum">      41 </span>                :            :     case Type::SHORTEST:
 <span class="lineNum">      42 </span>                :            :     default:
-<span class="lineNum">      43 </span>                :<span class="lineCov">     108272 :       return false;</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">     104556 :       return false;</span>
 <span class="lineNum">      44 </span>                :            :   }
 <a name="45"><span class="lineNum">      45 </span>                :            : }</a>
 <span class="lineNum">      46 </span>                :            : 

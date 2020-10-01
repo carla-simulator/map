@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">9</td>
@@ -92,9 +92,9 @@
 <span class="lineNum">      21 </span>                :            :  *
 <a name="22"><span class="lineNum">      22 </span>                :            :  * The point is valid if it's within valid input range.</a>
 <span class="lineNum">      23 </span>                :            :  */
-<span class="lineNum">      24 </span>                :<span class="lineCov">    5120701 : inline bool isValid(ECEFPoint const &amp;point, bool const logErrors = true)</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">    6611193 : inline bool isValid(ECEFPoint const &amp;point, bool const logErrors = true)</span>
 <span class="lineNum">      25 </span>                :            : {
-<span class="lineNum">      26 </span>                :<span class="lineCov">    5120701 :   return withinValidInputRange(point, logErrors);</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">    6611193 :   return withinValidInputRange(point, logErrors);</span>
 <span class="lineNum">      27 </span>                :            : }
 <span class="lineNum">      28 </span>                :            : 
 <span class="lineNum">      29 </span>                :            : /**
@@ -102,9 +102,9 @@
 <span class="lineNum">      31 </span>                :            :  *
 <a name="32"><span class="lineNum">      32 </span>                :            :  * The point is valid if it's within valid input range.</a>
 <span class="lineNum">      33 </span>                :            :  */
-<span class="lineNum">      34 </span>                :<span class="lineCov">      35879 : inline bool isValid(ECEFEdge const &amp;edge, bool const logErrors = true)</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">      42245 : inline bool isValid(ECEFEdge const &amp;edge, bool const logErrors = true)</span>
 <span class="lineNum">      35 </span>                :            : {
-<span class="lineNum">      36 </span>                :<span class="lineCov">      35879 :   return withinValidInputRange(edge, logErrors);</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">      42245 :   return withinValidInputRange(edge, logErrors);</span>
 <span class="lineNum">      37 </span>                :            : }
 <span class="lineNum">      38 </span>                :            : 
 <span class="lineNum">      39 </span>                :            : /**
@@ -114,13 +114,13 @@
 <span class="lineNum">      43 </span>                :            :  * @param[in] y y-coodinate of the point
 <a name="44"><span class="lineNum">      44 </span>                :            :  * @param[in] z z-coodinate of the point</a>
 <span class="lineNum">      45 </span>                :            :  */
-<span class="lineNum">      46 </span>                :<span class="lineCov">     321768 : inline ECEFPoint createECEFPoint(double const x, double const y, double const z)</span>
+<span class="lineNum">      46 </span>                :<span class="lineCov">     494157 : inline ECEFPoint createECEFPoint(double const x, double const y, double const z)</span>
 <span class="lineNum">      47 </span>                :            : {
-<span class="lineNum">      48 </span>                :<span class="lineCov">     321768 :   ECEFPoint result;</span>
-<span class="lineNum">      49 </span>                :<span class="lineCov">     321768 :   result.x = ECEFCoordinate(x);</span>
-<span class="lineNum">      50 </span>                :<span class="lineCov">     321768 :   result.y = ECEFCoordinate(y);</span>
-<span class="lineNum">      51 </span>                :<span class="lineCov">     321768 :   result.z = ECEFCoordinate(z);</span>
-<span class="lineNum">      52 </span>                :<span class="lineCov">     321768 :   return result;</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">     494157 :   ECEFPoint result;</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">     494157 :   result.x = ECEFCoordinate(x);</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">     494157 :   result.y = ECEFCoordinate(y);</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">     494157 :   result.z = ECEFCoordinate(z);</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">     494157 :   return result;</span>
 <span class="lineNum">      53 </span>                :            : }
 <span class="lineNum">      54 </span>                :            : 
 <span class="lineNum">      55 </span>                :            : /**
@@ -143,9 +143,9 @@
 <span class="lineNum">      72 </span>                :            :   * @brief Computes distance between ECEF points.
 <a name="73"><span class="lineNum">      73 </span>                :            :   * @returns Distance between two points in meters.</a>
 <span class="lineNum">      74 </span>                :            :   */
-<span class="lineNum">      75 </span>                :<span class="lineCov">   55108641 : inline physics::Distance distance(ECEFPoint const &amp;point, ECEFPoint const &amp;other)</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">   83860221 : inline physics::Distance distance(ECEFPoint const &amp;point, ECEFPoint const &amp;other)</span>
 <span class="lineNum">      76 </span>                :            : {
-<span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 2 was taken 55108641 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">   55108641 :   return vectorLength(vectorSub(point, other));</span>
+<span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 2 was taken 83860221 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">   83860221 :   return vectorLength(vectorSub(point, other));</span>
 <span class="lineNum">      78 </span>                :            : }
 <span class="lineNum">      79 </span>                :            : 
 <span class="lineNum">      80 </span>                :            : /** @brief calculate the length of the provided border as distance value
@@ -186,9 +186,9 @@
 <span class="lineNum">     115 </span>                :            :  * @param[in] b scalar b
 <a name="116"><span class="lineNum">     116 </span>                :            :  * @param[in] a vector a</a>
 <span class="lineNum">     117 </span>                :            :  */
-<span class="lineNum">     118 </span>                :<span class="lineCov">       3684 : inline ::ad::map::point::ECEFPoint operator*(::ad::physics::Distance const &amp;b, ::ad::map::point::ECEFPoint const &amp;a)</span>
+<span class="lineNum">     118 </span>                :<span class="lineCov">       3408 : inline ::ad::map::point::ECEFPoint operator*(::ad::physics::Distance const &amp;b, ::ad::map::point::ECEFPoint const &amp;a)</span>
 <span class="lineNum">     119 </span>                :            : {
-<span class="lineNum">     120 </span>                :<span class="lineCov">       3684 :   return ::ad::map::point::vectorMultiplyScalar(a, b);</span>
+<span class="lineNum">     120 </span>                :<span class="lineCov">       3408 :   return ::ad::map::point::vectorMultiplyScalar(a, b);</span>
 <span class="lineNum">     121 </span>                :            : }
 <span class="lineNum">     122 </span>                :            : 
 <span class="lineNum">     123 </span>                :            : /**
@@ -206,9 +206,9 @@
 <span class="lineNum">     135 </span>                :            :  * @param[in] b scalar b
 <a name="136"><span class="lineNum">     136 </span>                :            :  * @param[in] a vector a</a>
 <span class="lineNum">     137 </span>                :            :  */
-<span class="lineNum">     138 </span>                :<span class="lineCov">      41861 : inline ::ad::map::point::ECEFPoint operator*(double const &amp;b, ::ad::map::point::ECEFPoint const &amp;a)</span>
+<span class="lineNum">     138 </span>                :<span class="lineCov">      45050 : inline ::ad::map::point::ECEFPoint operator*(double const &amp;b, ::ad::map::point::ECEFPoint const &amp;a)</span>
 <span class="lineNum">     139 </span>                :            : {
-<span class="lineNum">     140 </span>                :<span class="lineCov">      41861 :   return ::ad::map::point::vectorMultiplyScalar(a, b);</span>
+<span class="lineNum">     140 </span>                :<span class="lineCov">      45050 :   return ::ad::map::point::vectorMultiplyScalar(a, b);</span>
 <span class="lineNum">     141 </span>                :            : }
 <span class="lineNum">     142 </span>                :            : 
 <span class="lineNum">     143 </span>                :            : /**
@@ -219,9 +219,9 @@
 <span class="lineNum">     148 </span>                :            :  *
 <a name="149"><span class="lineNum">     149 </span>                :            :  * @returns vector c = a + b</a>
 <span class="lineNum">     150 </span>                :            :  */
-<span class="lineNum">     151 </span>                :<span class="lineCov">      71814 : inline ::ad::map::point::ECEFPoint operator+(::ad::map::point::ECEFPoint const &amp;a, ::ad::map::point::ECEFPoint const &amp;b)</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">      74313 : inline ::ad::map::point::ECEFPoint operator+(::ad::map::point::ECEFPoint const &amp;a, ::ad::map::point::ECEFPoint const &amp;b)</span>
 <span class="lineNum">     152 </span>                :            : {
-<span class="lineNum">     153 </span>                :<span class="lineCov">      71814 :   return ::ad::map::point::vectorAdd(a, b);</span>
+<span class="lineNum">     153 </span>                :<span class="lineCov">      74313 :   return ::ad::map::point::vectorAdd(a, b);</span>
 <span class="lineNum">     154 </span>                :            : }
 <span class="lineNum">     155 </span>                :            : 
 <span class="lineNum">     156 </span>                :            : /**
@@ -232,9 +232,9 @@
 <span class="lineNum">     161 </span>                :            :  *
 <a name="162"><span class="lineNum">     162 </span>                :            :  * @returns c = a - b</a>
 <span class="lineNum">     163 </span>                :            :  */
-<span class="lineNum">     164 </span>                :<span class="lineCov">   26722261 : inline ::ad::map::point::ECEFPoint operator-(::ad::map::point::ECEFPoint const &amp;a, ::ad::map::point::ECEFPoint const &amp;b)</span>
+<span class="lineNum">     164 </span>                :<span class="lineCov">   42832254 : inline ::ad::map::point::ECEFPoint operator-(::ad::map::point::ECEFPoint const &amp;a, ::ad::map::point::ECEFPoint const &amp;b)</span>
 <span class="lineNum">     165 </span>                :            : {
-<span class="lineNum">     166 </span>                :<span class="lineCov">   26722261 :   return ::ad::map::point::vectorSub(a, b);</span>
+<span class="lineNum">     166 </span>                :<span class="lineCov">   42832254 :   return ::ad::map::point::vectorSub(a, b);</span>
 <span class="lineNum">     167 </span>                :            : }
 </pre>
       </td>

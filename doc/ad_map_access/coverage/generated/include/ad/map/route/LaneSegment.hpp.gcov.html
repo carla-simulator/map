@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -121,7 +121,7 @@
 <span class="lineNum">      50 </span>                :            :  * route.
 <a name="51"><span class="lineNum">      51 </span>                :            :  * Be aware: The semantics of the connection is respecting the route direction.</a>
 <span class="lineNum">      52 </span>                :            :  */
-<span class="lineNum">      53 </span>                :<span class="lineCov">        146 : struct LaneSegment</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">        650 : struct LaneSegment</span>
 <span class="lineNum">      54 </span>                :            : {
 <span class="lineNum">      55 </span>                :            :   /*!
 <span class="lineNum">      56 </span>                :            :    * \brief Smart pointer on LaneSegment
@@ -136,22 +136,22 @@
 <span class="lineNum">      65 </span>                :            :   /*!
 <a name="66"><span class="lineNum">      66 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      67 </span>                :            :    */
-<span class="lineNum">      68 </span>        [<span class="branchNoExec" title="Branch 5 was not executed"> # </span><span class="branchNoExec" title="Branch 6 was not executed"> # </span>]:<span class="lineCov">      30428 :   LaneSegment() = default;</span>
+<span class="lineNum">      68 </span>        [<span class="branchNoExec" title="Branch 5 was not executed"> # </span><span class="branchNoExec" title="Branch 6 was not executed"> # </span>]:<span class="lineCov">      28592 :   LaneSegment() = default;</span>
 <span class="lineNum">      69 </span>                :            : 
 <span class="lineNum">      70 </span>                :            :   /*!
 <a name="71"><span class="lineNum">      71 </span>                :            :    * \brief standard destructor</a>
 <span class="lineNum">      72 </span>                :            :    */
-<span class="lineNum">      73 </span>                :<span class="lineCov">     127162 :   ~LaneSegment() = default;</span>
+<span class="lineNum">      73 </span>                :<span class="lineCov">     116890 :   ~LaneSegment() = default;</span>
 <span class="lineNum">      74 </span>                :            : 
 <span class="lineNum">      75 </span>                :            :   /*!
 <a name="76"><span class="lineNum">      76 </span>                :            :    * \brief standard copy constructor</a>
 <span class="lineNum">      77 </span>                :            :    */
-<span class="lineNum">      78 </span>        [<span class="branchCov" title="Branch 2 was taken 44562 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      44562 :   LaneSegment(const LaneSegment &amp;other) = default;</span>
+<span class="lineNum">      78 </span>        [<span class="branchCov" title="Branch 2 was taken 40620 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      40620 :   LaneSegment(const LaneSegment &amp;other) = default;</span>
 <span class="lineNum">      79 </span>                :            : 
 <span class="lineNum">      80 </span>                :            :   /*!
 <a name="81"><span class="lineNum">      81 </span>                :            :    * \brief standard move constructor</a>
 <span class="lineNum">      82 </span>                :            :    */
-<span class="lineNum">      83 </span>                :<span class="lineCov">       7610 :   LaneSegment(LaneSegment &amp;&amp;other) = default;</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">       7058 :   LaneSegment(LaneSegment &amp;&amp;other) = default;</span>
 <span class="lineNum">      84 </span>                :            : 
 <span class="lineNum">      85 </span>                :            :   /**
 <span class="lineNum">      86 </span>                :            :    * \brief standard assignment operator

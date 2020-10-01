@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -100,9 +100,9 @@
 <span class="lineNum">      29 </span>                :            :  *
 <a name="30"><span class="lineNum">      30 </span>                :            :  * The laneId is valid if it's within valid input range.</a>
 <span class="lineNum">      31 </span>                :            :  */
-<span class="lineNum">      32 </span>                :<span class="lineCov">      32880 : inline bool isValid(LaneId const &amp;laneId, bool const logErrors = true)</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">      32453 : inline bool isValid(LaneId const &amp;laneId, bool const logErrors = true)</span>
 <span class="lineNum">      33 </span>                :            : {
-<span class="lineNum">      34 </span>                :<span class="lineCov">      32880 :   return withinValidInputRange(laneId, logErrors);</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">      32453 :   return withinValidInputRange(laneId, logErrors);</span>
 <span class="lineNum">      35 </span>                :            : }
 <span class="lineNum">      36 </span>                :            : 
 <span class="lineNum">      37 </span>                :            : /**
@@ -188,9 +188,9 @@
 <span class="lineNum">     117 </span>                :            :  * @param[in] boundingSphere input sphere
 <a name="118"><span class="lineNum">     118 </span>                :            :  * @returns true given sphere intersects with lane bounding ball.</a>
 <span class="lineNum">     119 </span>                :            :  */
-<span class="lineNum">     120 </span>                :<span class="lineCov">    6496189 : inline bool isNear(Lane const &amp;lane, point::BoundingSphere const &amp;boundingSphere)</span>
+<span class="lineNum">     120 </span>                :<span class="lineCov">    6247128 : inline bool isNear(Lane const &amp;lane, point::BoundingSphere const &amp;boundingSphere)</span>
 <span class="lineNum">     121 </span>                :            : {
-<span class="lineNum">     122 </span>[<span class="branchCov" title="Branch 2 was taken 6496189 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 6496189 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">    6496189 :   return distance(lane.boundingSphere, boundingSphere) == physics::Distance(0.);</span>
+<span class="lineNum">     122 </span>[<span class="branchCov" title="Branch 2 was taken 6247128 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 6247128 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">    6247128 :   return distance(lane.boundingSphere, boundingSphere) == physics::Distance(0.);</span>
 <span class="lineNum">     123 </span>                :            : }
 <span class="lineNum">     124 </span>                :            : 
 <span class="lineNum">     125 </span>                :            : /**
@@ -249,34 +249,34 @@
 <span class="lineNum">     178 </span>                :            : /**
 <a name="179"><span class="lineNum">     179 </span>                :            :  * @returns true if direction is POSITIVE or BIDIRECTIONAL.</a>
 <span class="lineNum">     180 </span>                :            :  */
-<span class="lineNum">     181 </span>                :<span class="lineCov">     191342 : inline bool isLaneDirectionPositive(Lane const &amp;lane)</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">     179337 : inline bool isLaneDirectionPositive(Lane const &amp;lane)</span>
 <span class="lineNum">     182 </span>                :            : {
-<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 114187 times"> + </span><span class="branchCov" title="Branch 1 was taken 77155 times"> + </span>][<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 114187 times"> + </span>]:<span class="lineCov">     191342 :   return lane.direction == LaneDirection::POSITIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span>
+<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 119653 times"> + </span><span class="branchCov" title="Branch 1 was taken 59684 times"> + </span>][<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 119653 times"> + </span>]:<span class="lineCov">     179337 :   return lane.direction == LaneDirection::POSITIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span>
 <span class="lineNum">     184 </span>                :            : }
 <span class="lineNum">     185 </span>                :            : 
 <span class="lineNum">     186 </span>                :            : /**
 <a name="187"><span class="lineNum">     187 </span>                :            :  * @returns true if direction is NEGATIVE or BIDIRECTIONAL.</a>
 <span class="lineNum">     188 </span>                :            :  */
-<span class="lineNum">     189 </span>                :<span class="lineCov">      45922 : inline bool isLaneDirectionNegative(Lane const &amp;lane)</span>
+<span class="lineNum">     189 </span>                :<span class="lineCov">      44433 : inline bool isLaneDirectionNegative(Lane const &amp;lane)</span>
 <span class="lineNum">     190 </span>                :            : {
-<span class="lineNum">     191 </span>[<span class="branchCov" title="Branch 0 was taken 27228 times"> + </span><span class="branchCov" title="Branch 1 was taken 18694 times"> + </span>][<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 27228 times"> + </span>]:<span class="lineCov">      45922 :   return lane.direction == LaneDirection::NEGATIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span>
+<span class="lineNum">     191 </span>[<span class="branchCov" title="Branch 0 was taken 26031 times"> + </span><span class="branchCov" title="Branch 1 was taken 18402 times"> + </span>][<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 26031 times"> + </span>]:<span class="lineCov">      44433 :   return lane.direction == LaneDirection::NEGATIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span>
 <span class="lineNum">     192 </span>                :            : }
 <span class="lineNum">     193 </span>                :            : 
 <span class="lineNum">     194 </span>                :            : /**
 <a name="195"><span class="lineNum">     195 </span>                :            :  * @returns true if lane can be used in Routing.</a>
 <span class="lineNum">     196 </span>                :            :  */
-<span class="lineNum">     197 </span>                :<span class="lineCov">      80933 : inline bool isRouteable(Lane const &amp;lane)</span>
+<span class="lineNum">     197 </span>                :<span class="lineCov">      81276 : inline bool isRouteable(Lane const &amp;lane)</span>
 <span class="lineNum">     198 </span>                :            : {
-<span class="lineNum">     199 </span>[<span class="branchCov" title="Branch 0 was taken 29355 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 2 was taken 1265 times"> + </span><span class="branchCov" title="Branch 3 was taken 28090 times"> + </span>]:<span class="lineCov">      29355 :   return lane.type == LaneType::INTERSECTION || lane.type == LaneType::MULTI || lane.type == LaneType::NORMAL</span>
-<span class="lineNum">     200 </span>[<span class="branchCov" title="Branch 0 was taken 29355 times"> + </span><span class="branchCov" title="Branch 1 was taken 51578 times"> + </span>][<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1265 times"> + </span>]:<span class="lineCov">     110288 :     || lane.type == LaneType::TURN;</span>
+<span class="lineNum">     199 </span>[<span class="branchCov" title="Branch 0 was taken 31910 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 2 was taken 2965 times"> + </span><span class="branchCov" title="Branch 3 was taken 28945 times"> + </span>]:<span class="lineCov">      31910 :   return lane.type == LaneType::INTERSECTION || lane.type == LaneType::MULTI || lane.type == LaneType::NORMAL</span>
+<span class="lineNum">     200 </span>[<span class="branchCov" title="Branch 0 was taken 31910 times"> + </span><span class="branchCov" title="Branch 1 was taken 49366 times"> + </span>][<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 2965 times"> + </span>]:<span class="lineCov">     113186 :     || lane.type == LaneType::TURN;</span>
 <span class="lineNum">     201 </span>                :            : }
 <span class="lineNum">     202 </span>                :            : 
 <span class="lineNum">     203 </span>                :            : /**
 <a name="204"><span class="lineNum">     204 </span>                :            :  * @returns true if lane is part of an intersection.</a>
 <span class="lineNum">     205 </span>                :            :  */
-<span class="lineNum">     206 </span>                :<span class="lineCov">       9035 : inline bool isLanePartOfAnIntersection(Lane const &amp;lane)</span>
+<span class="lineNum">     206 </span>                :<span class="lineCov">       8767 : inline bool isLanePartOfAnIntersection(Lane const &amp;lane)</span>
 <span class="lineNum">     207 </span>                :            : {
-<span class="lineNum">     208 </span>                :<span class="lineCov">       9035 :   return (lane.type == lane::LaneType::INTERSECTION);</span>
+<span class="lineNum">     208 </span>                :<span class="lineCov">       8767 :   return (lane.type == lane::LaneType::INTERSECTION);</span>
 <span class="lineNum">     209 </span>                :            : }
 <span class="lineNum">     210 </span>                :            : 
 <span class="lineNum">     211 </span>                :            : /**

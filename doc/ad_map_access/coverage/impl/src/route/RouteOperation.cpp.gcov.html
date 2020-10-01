@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">91</td>
@@ -895,56 +895,56 @@
 <span class="lineNum">     810 </span>[<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>][<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>]:<span class="lineNoCov">          0 :     || intersection::Intersection::isRoutePartOfAnIntersection(connectingRoute.routeB);</span>
 <a name="811"><span class="lineNum">     811 </span>                :            : }</a>
 <span class="lineNum">     812 </span>                :            : 
-<span class="lineNum">     813 </span>                :<span class="lineCov">       2862 : void alignRouteStartingPoints(point::ParaPoint const &amp;startAlignmentParaPoint, route::FullRoute &amp;route)</span>
+<span class="lineNum">     813 </span>                :<span class="lineCov">       2882 : void alignRouteStartingPoints(point::ParaPoint const &amp;startAlignmentParaPoint, route::FullRoute &amp;route)</span>
 <span class="lineNum">     814 </span>                :            : {
-<span class="lineNum">     815 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2862 times"> + </span>]:<span class="lineCov">       2862 :   if (route.roadSegments.empty())</span>
+<span class="lineNum">     815 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2882 times"> + </span>]:<span class="lineCov">       2882 :   if (route.roadSegments.empty())</span>
 <span class="lineNum">     816 </span>                :            :   {
 <span class="lineNum">     817 </span>                :<span class="lineNoCov">          0 :     return;</span>
 <span class="lineNum">     818 </span>                :            :   }
 <span class="lineNum">     819 </span>                :            : 
 <span class="lineNum">     820 </span>                :            :   // we need to ensure, that the starting point of all segments are aligned,
 <span class="lineNum">     821 </span>                :            :   // i.e. the starting points are located on an imaginary line on the curve radius
-<span class="lineNum">     822 </span>[<span class="branchCov" title="Branch 1 was taken 2862 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 2862 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       5724 :   auto const startAlignmentLane = lane::getLane(startAlignmentParaPoint.laneId);</span>
+<span class="lineNum">     822 </span>[<span class="branchCov" title="Branch 1 was taken 2882 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 2882 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       5764 :   auto const startAlignmentLane = lane::getLane(startAlignmentParaPoint.laneId);</span>
 <span class="lineNum">     823 </span>                :            :   auto const startAlignmentPoint = lane::getProjectedParametricPoint(
-<span class="lineNum">     824 </span>        [<span class="branchCov" title="Branch 2 was taken 2862 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       2862 :     startAlignmentLane, startAlignmentParaPoint.parametricOffset, physics::ParametricValue(0.5));</span>
+<span class="lineNum">     824 </span>        [<span class="branchCov" title="Branch 2 was taken 2882 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       2882 :     startAlignmentLane, startAlignmentParaPoint.parametricOffset, physics::ParametricValue(0.5));</span>
 <span class="lineNum">     825 </span>                :            : 
-<span class="lineNum">     826 </span>        [<span class="branchCov" title="Branch 3 was taken 3648 times"> + </span><span class="branchCov" title="Branch 4 was taken 2862 times"> + </span>]:<span class="lineCov">      13020 :   for (route::LaneSegmentList::iterator laneSegmentIter = route.roadSegments.front().drivableLaneSegments.begin();</span>
-<span class="lineNum">     827 </span>                :<span class="lineCov">       6510 :        laneSegmentIter != route.roadSegments.front().drivableLaneSegments.end();</span>
+<span class="lineNum">     826 </span>        [<span class="branchCov" title="Branch 3 was taken 3688 times"> + </span><span class="branchCov" title="Branch 4 was taken 2882 times"> + </span>]:<span class="lineCov">      13140 :   for (route::LaneSegmentList::iterator laneSegmentIter = route.roadSegments.front().drivableLaneSegments.begin();</span>
+<span class="lineNum">     827 </span>                :<span class="lineCov">       6570 :        laneSegmentIter != route.roadSegments.front().drivableLaneSegments.end();</span>
 <span class="lineNum">     828 </span>                :            :        ++laneSegmentIter)
 <span class="lineNum">     829 </span>                :            :   {
-<span class="lineNum">     830 </span>[<span class="branchCov" title="Branch 2 was taken 3648 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 786 times"> + </span><span class="branchCov" title="Branch 5 was taken 2862 times"> + </span>]:<span class="lineCov">       3648 :     if (laneSegmentIter-&gt;laneInterval.laneId != startAlignmentParaPoint.laneId)</span>
+<span class="lineNum">     830 </span>[<span class="branchCov" title="Branch 2 was taken 3688 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 806 times"> + </span><span class="branchCov" title="Branch 5 was taken 2882 times"> + </span>]:<span class="lineCov">       3688 :     if (laneSegmentIter-&gt;laneInterval.laneId != startAlignmentParaPoint.laneId)</span>
 <span class="lineNum">     831 </span>                :            :     {
-<span class="lineNum">     832 </span>[<span class="branchCov" title="Branch 2 was taken 786 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 786 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">       1572 :       auto lane = lane::getLane(laneSegmentIter-&gt;laneInterval.laneId);</span>
-<span class="lineNum">     833 </span>        [<span class="branchCov" title="Branch 1 was taken 786 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        786 :       auto rightT = point::findNearestPointOnEdge(lane.edgeRight, startAlignmentPoint);</span>
-<span class="lineNum">     834 </span>        [<span class="branchCov" title="Branch 1 was taken 786 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        786 :       auto leftT = point::findNearestPointOnEdge(lane.edgeLeft, startAlignmentPoint);</span>
-<span class="lineNum">     835 </span>[<span class="branchCov" title="Branch 2 was taken 786 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 786 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        786 :       laneSegmentIter-&gt;laneInterval.start = 0.5 * (rightT + leftT);</span>
+<span class="lineNum">     832 </span>[<span class="branchCov" title="Branch 2 was taken 806 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 806 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">       1612 :       auto lane = lane::getLane(laneSegmentIter-&gt;laneInterval.laneId);</span>
+<span class="lineNum">     833 </span>        [<span class="branchCov" title="Branch 1 was taken 806 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        806 :       auto rightT = point::findNearestPointOnEdge(lane.edgeRight, startAlignmentPoint);</span>
+<span class="lineNum">     834 </span>        [<span class="branchCov" title="Branch 1 was taken 806 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        806 :       auto leftT = point::findNearestPointOnEdge(lane.edgeLeft, startAlignmentPoint);</span>
+<span class="lineNum">     835 </span>[<span class="branchCov" title="Branch 2 was taken 806 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 806 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        806 :       laneSegmentIter-&gt;laneInterval.start = 0.5 * (rightT + leftT);</span>
 <span class="lineNum">     836 </span>                :            :     }
 <span class="lineNum">     837 </span>                :            :   }
 <a name="838"><span class="lineNum">     838 </span>                :            : }</a>
 <span class="lineNum">     839 </span>                :            : 
-<span class="lineNum">     840 </span>                :<span class="lineCov">       2841 : void alignRouteEndingPoints(point::ParaPoint const &amp;alignmentParaPoint, route::FullRoute &amp;route)</span>
+<span class="lineNum">     840 </span>                :<span class="lineCov">       2861 : void alignRouteEndingPoints(point::ParaPoint const &amp;alignmentParaPoint, route::FullRoute &amp;route)</span>
 <span class="lineNum">     841 </span>                :            : {
-<span class="lineNum">     842 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2841 times"> + </span>]:<span class="lineCov">       2841 :   if (route.roadSegments.empty())</span>
+<span class="lineNum">     842 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2861 times"> + </span>]:<span class="lineCov">       2861 :   if (route.roadSegments.empty())</span>
 <span class="lineNum">     843 </span>                :            :   {
 <span class="lineNum">     844 </span>                :<span class="lineNoCov">          0 :     return;</span>
 <span class="lineNum">     845 </span>                :            :   }
 <span class="lineNum">     846 </span>                :            : 
 <span class="lineNum">     847 </span>                :            :   // we need to ensure, that the end point of all segments are aligned,
 <span class="lineNum">     848 </span>                :            :   // i.e. the end points are located on an imaginary line on the curve radius
-<span class="lineNum">     849 </span>[<span class="branchCov" title="Branch 1 was taken 2841 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 2841 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       5682 :   auto const alignmentLane = lane::getLane(alignmentParaPoint.laneId);</span>
+<span class="lineNum">     849 </span>[<span class="branchCov" title="Branch 1 was taken 2861 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 2861 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       5722 :   auto const alignmentLane = lane::getLane(alignmentParaPoint.laneId);</span>
 <span class="lineNum">     850 </span>                :            :   auto const alignmentPoint = lane::getProjectedParametricPoint(
-<span class="lineNum">     851 </span>        [<span class="branchCov" title="Branch 2 was taken 2841 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       2841 :     alignmentLane, alignmentParaPoint.parametricOffset, physics::ParametricValue(0.5));</span>
+<span class="lineNum">     851 </span>        [<span class="branchCov" title="Branch 2 was taken 2861 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       2861 :     alignmentLane, alignmentParaPoint.parametricOffset, physics::ParametricValue(0.5));</span>
 <span class="lineNum">     852 </span>                :            : 
-<span class="lineNum">     853 </span>        [<span class="branchCov" title="Branch 3 was taken 3361 times"> + </span><span class="branchCov" title="Branch 4 was taken 2841 times"> + </span>]:<span class="lineCov">      12404 :   for (route::LaneSegmentList::iterator laneSegmentIter = route.roadSegments.back().drivableLaneSegments.begin();</span>
-<span class="lineNum">     854 </span>                :<span class="lineCov">       6202 :        laneSegmentIter != route.roadSegments.back().drivableLaneSegments.end();</span>
+<span class="lineNum">     853 </span>        [<span class="branchCov" title="Branch 3 was taken 3409 times"> + </span><span class="branchCov" title="Branch 4 was taken 2861 times"> + </span>]:<span class="lineCov">      12540 :   for (route::LaneSegmentList::iterator laneSegmentIter = route.roadSegments.back().drivableLaneSegments.begin();</span>
+<span class="lineNum">     854 </span>                :<span class="lineCov">       6270 :        laneSegmentIter != route.roadSegments.back().drivableLaneSegments.end();</span>
 <span class="lineNum">     855 </span>                :            :        ++laneSegmentIter)
 <span class="lineNum">     856 </span>                :            :   {
-<span class="lineNum">     857 </span>[<span class="branchCov" title="Branch 2 was taken 3361 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 520 times"> + </span><span class="branchCov" title="Branch 5 was taken 2841 times"> + </span>]:<span class="lineCov">       3361 :     if (laneSegmentIter-&gt;laneInterval.laneId != alignmentParaPoint.laneId)</span>
+<span class="lineNum">     857 </span>[<span class="branchCov" title="Branch 2 was taken 3409 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 548 times"> + </span><span class="branchCov" title="Branch 5 was taken 2861 times"> + </span>]:<span class="lineCov">       3409 :     if (laneSegmentIter-&gt;laneInterval.laneId != alignmentParaPoint.laneId)</span>
 <span class="lineNum">     858 </span>                :            :     {
-<span class="lineNum">     859 </span>[<span class="branchCov" title="Branch 2 was taken 520 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 520 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">       1040 :       auto lane = lane::getLane(laneSegmentIter-&gt;laneInterval.laneId);</span>
-<span class="lineNum">     860 </span>        [<span class="branchCov" title="Branch 1 was taken 520 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        520 :       auto rightT = point::findNearestPointOnEdge(lane.edgeRight, alignmentPoint);</span>
-<span class="lineNum">     861 </span>        [<span class="branchCov" title="Branch 1 was taken 520 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        520 :       auto leftT = point::findNearestPointOnEdge(lane.edgeLeft, alignmentPoint);</span>
-<span class="lineNum">     862 </span>[<span class="branchCov" title="Branch 2 was taken 520 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 520 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        520 :       laneSegmentIter-&gt;laneInterval.end = 0.5 * (rightT + leftT);</span>
+<span class="lineNum">     859 </span>[<span class="branchCov" title="Branch 2 was taken 548 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 548 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">       1096 :       auto lane = lane::getLane(laneSegmentIter-&gt;laneInterval.laneId);</span>
+<span class="lineNum">     860 </span>        [<span class="branchCov" title="Branch 1 was taken 548 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        548 :       auto rightT = point::findNearestPointOnEdge(lane.edgeRight, alignmentPoint);</span>
+<span class="lineNum">     861 </span>        [<span class="branchCov" title="Branch 1 was taken 548 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        548 :       auto leftT = point::findNearestPointOnEdge(lane.edgeLeft, alignmentPoint);</span>
+<span class="lineNum">     862 </span>[<span class="branchCov" title="Branch 2 was taken 548 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 548 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        548 :       laneSegmentIter-&gt;laneInterval.end = 0.5 * (rightT + leftT);</span>
 <span class="lineNum">     863 </span>                :            :     }
 <span class="lineNum">     864 </span>                :            :   }
 <a name="865"><span class="lineNum">     865 </span>                :            : }</a>
@@ -1226,12 +1226,12 @@
 <span class="lineNum">    1133 </span>                :            : {
 <span class="lineNum">    1134 </span>                :<span class="lineCov">          7 :   FullRoute newRoute(route);</span>
 <span class="lineNum">    1135 </span>        [<span class="branchCov" title="Branch 1 was taken 7 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          7 :   removeLastRoadSegment(newRoute);</span>
-<span class="lineNum">    1136 </span>        [<span class="branchCov" title="Branch 3 was taken 30 times"> + </span><span class="branchCov" title="Branch 4 was taken 7 times"> + </span>]:<span class="lineCov">         37 :   for (auto const &amp;roadSegment : routeExtension.roadSegments)</span>
+<span class="lineNum">    1136 </span>        [<span class="branchCov" title="Branch 3 was taken 29 times"> + </span><span class="branchCov" title="Branch 4 was taken 7 times"> + </span>]:<span class="lineCov">         36 :   for (auto const &amp;roadSegment : routeExtension.roadSegments)</span>
 <span class="lineNum">    1137 </span>                :            :   {
-<span class="lineNum">    1138 </span>                :<span class="lineCov">         30 :     route::appendRoadSegmentToRoute(roadSegment.drivableLaneSegments.front().laneInterval,</span>
-<span class="lineNum">    1139 </span>                :<span class="lineCov">         30 :                                     extensionReferenceLaneSegment.routeLaneOffset</span>
-<span class="lineNum">    1140 </span>                :<span class="lineCov">         30 :                                       + roadSegment.drivableLaneSegments.front().routeLaneOffset,</span>
-<span class="lineNum">    1141 </span>        [<span class="branchCov" title="Branch 1 was taken 30 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         30 :                                     newRoute);</span>
+<span class="lineNum">    1138 </span>                :<span class="lineCov">         29 :     route::appendRoadSegmentToRoute(roadSegment.drivableLaneSegments.front().laneInterval,</span>
+<span class="lineNum">    1139 </span>                :<span class="lineCov">         29 :                                     extensionReferenceLaneSegment.routeLaneOffset</span>
+<span class="lineNum">    1140 </span>                :<span class="lineCov">         29 :                                       + roadSegment.drivableLaneSegments.front().routeLaneOffset,</span>
+<span class="lineNum">    1141 </span>        [<span class="branchCov" title="Branch 1 was taken 29 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         29 :                                     newRoute);</span>
 <span class="lineNum">    1142 </span>                :            :   }
 <span class="lineNum">    1143 </span>        [<span class="branchCov" title="Branch 1 was taken 7 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          7 :   planning::updateRoutePlanningCounters(newRoute);</span>
 <span class="lineNum">    1144 </span>                :<span class="lineCov">          7 :   return newRoute;</span>
@@ -1872,83 +1872,83 @@
 <span class="lineNum">    1763 </span>                :<span class="lineCov">          5 :   return result;</span>
 <a name="1764"><span class="lineNum">    1764 </span>                :            : }</a>
 <span class="lineNum">    1765 </span>                :            : 
-<span class="lineNum">    1766 </span>                :<span class="lineCov">      27434 : void addLaneIdUnique(lane::LaneIdList &amp;laneIds, lane::LaneId const laneId)</span>
+<span class="lineNum">    1766 </span>                :<span class="lineCov">      26064 : void addLaneIdUnique(lane::LaneIdList &amp;laneIds, lane::LaneId const laneId)</span>
 <span class="lineNum">    1767 </span>                :            : {
-<span class="lineNum">    1768 </span>        [<span class="branchCov" title="Branch 3 was taken 27434 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      27434 :   auto findResult = std::find(std::begin(laneIds), std::end(laneIds), laneId);</span>
-<span class="lineNum">    1769 </span>        [<span class="branchCov" title="Branch 2 was taken 22084 times"> + </span><span class="branchCov" title="Branch 3 was taken 5350 times"> + </span>]:<span class="lineCov">      27434 :   if (findResult == std::end(laneIds))</span>
+<span class="lineNum">    1768 </span>        [<span class="branchCov" title="Branch 3 was taken 26064 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      26064 :   auto findResult = std::find(std::begin(laneIds), std::end(laneIds), laneId);</span>
+<span class="lineNum">    1769 </span>        [<span class="branchCov" title="Branch 2 was taken 20600 times"> + </span><span class="branchCov" title="Branch 3 was taken 5464 times"> + </span>]:<span class="lineCov">      26064 :   if (findResult == std::end(laneIds))</span>
 <span class="lineNum">    1770 </span>                :            :   {
-<span class="lineNum">    1771 </span>        [<span class="branchCov" title="Branch 1 was taken 22084 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      22084 :     laneIds.push_back(laneId);</span>
+<span class="lineNum">    1771 </span>        [<span class="branchCov" title="Branch 1 was taken 20600 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20600 :     laneIds.push_back(laneId);</span>
 <span class="lineNum">    1772 </span>                :            :   }
-<a name="1773"><span class="lineNum">    1773 </span>                :<span class="lineCov">      27434 : }</span></a>
+<a name="1773"><span class="lineNum">    1773 </span>                :<span class="lineCov">      26064 : }</span></a>
 <span class="lineNum">    1774 </span>                :            : 
-<span class="lineNum">    1775 </span>                :<span class="lineCov">      15104 : void addRoutePredecessorRelationToNewSegment(lane::Lane const &amp;lane,</span>
+<span class="lineNum">    1775 </span>                :<span class="lineCov">      14186 : void addRoutePredecessorRelationToNewSegment(lane::Lane const &amp;lane,</span>
 <span class="lineNum">    1776 </span>                :            :                                              route::LaneSegment &amp;laneSegment,
 <span class="lineNum">    1777 </span>                :            :                                              route::FullRoute &amp;route,
 <span class="lineNum">    1778 </span>                :            :                                              bool routeDirectionPositive)
 <span class="lineNum">    1779 </span>                :            : {
-<span class="lineNum">    1780 </span>        [<span class="branchCov" title="Branch 1 was taken 3628 times"> + </span><span class="branchCov" title="Branch 2 was taken 11476 times"> + </span>]:<span class="lineCov">      15104 :   if (route.roadSegments.empty())</span>
+<span class="lineNum">    1780 </span>        [<span class="branchCov" title="Branch 1 was taken 3668 times"> + </span><span class="branchCov" title="Branch 2 was taken 10518 times"> + </span>]:<span class="lineCov">      14186 :   if (route.roadSegments.empty())</span>
 <span class="lineNum">    1781 </span>                :            :   {
-<span class="lineNum">    1782 </span>                :<span class="lineCov">       3628 :     return;</span>
+<span class="lineNum">    1782 </span>                :<span class="lineCov">       3668 :     return;</span>
 <span class="lineNum">    1783 </span>                :            :   }
-<span class="lineNum">    1784 </span>        [<span class="branchCov" title="Branch 1 was taken 20232 times"> + </span><span class="branchCov" title="Branch 2 was taken 11476 times"> + </span>]:<span class="lineCov">      31708 :   for (auto predecessorLaneContact : lane::getContactLanes(</span>
-<span class="lineNum">    1785 </span>[<span class="branchCov" title="Branch 0 was taken 7632 times"> + </span><span class="branchCov" title="Branch 1 was taken 3844 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 11476 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      67044 :          lane, routeDirectionPositive ? lane::ContactLocation::PREDECESSOR : lane::ContactLocation::SUCCESSOR))</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 20232 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<span class="lineNum">    1784 </span>        [<span class="branchCov" title="Branch 1 was taken 19441 times"> + </span><span class="branchCov" title="Branch 2 was taken 10518 times"> + </span>]:<span class="lineCov">      29959 :   for (auto predecessorLaneContact : lane::getContactLanes(</span>
+<span class="lineNum">    1785 </span>[<span class="branchCov" title="Branch 0 was taken 6395 times"> + </span><span class="branchCov" title="Branch 1 was taken 4123 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 10518 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      63586 :          lane, routeDirectionPositive ? lane::ContactLocation::PREDECESSOR : lane::ContactLocation::SUCCESSOR))</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 19441 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
 <span class="lineNum">    1786 </span>                :            :   {
-<span class="lineNum">    1787 </span>                :<span class="lineCov">      20232 :     auto predecessorLaneId = predecessorLaneContact.toLane;</span>
-<a name="1788"><span class="lineNum">    1788 </span>                :<span class="lineCov">      20232 :     auto predecessorLaneSegmentIter = std::find_if(std::begin(route.roadSegments.back().drivableLaneSegments),</span></a>
-<span class="lineNum">    1789 </span>                :<span class="lineCov">      20232 :                                                    std::end(route.roadSegments.back().drivableLaneSegments),</span>
-<span class="lineNum">    1790 </span>                :<span class="lineCov">      26067 :                                                    [&amp;predecessorLaneId](route::LaneSegment const &amp;innerLaneSegment) {</span>
-<span class="lineNum">    1791 </span>                :<span class="lineCov">      26067 :                                                      return innerLaneSegment.laneInterval.laneId == predecessorLaneId;</span>
-<span class="lineNum">    1792 </span>        [<span class="branchCov" title="Branch 3 was taken 20232 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      66531 :                                                    });</span>
+<span class="lineNum">    1787 </span>                :<span class="lineCov">      19441 :     auto predecessorLaneId = predecessorLaneContact.toLane;</span>
+<a name="1788"><span class="lineNum">    1788 </span>                :<span class="lineCov">      19441 :     auto predecessorLaneSegmentIter = std::find_if(std::begin(route.roadSegments.back().drivableLaneSegments),</span></a>
+<span class="lineNum">    1789 </span>                :<span class="lineCov">      19441 :                                                    std::end(route.roadSegments.back().drivableLaneSegments),</span>
+<span class="lineNum">    1790 </span>                :<span class="lineCov">      25244 :                                                    [&amp;predecessorLaneId](route::LaneSegment const &amp;innerLaneSegment) {</span>
+<span class="lineNum">    1791 </span>                :<span class="lineCov">      25244 :                                                      return innerLaneSegment.laneInterval.laneId == predecessorLaneId;</span>
+<span class="lineNum">    1792 </span>        [<span class="branchCov" title="Branch 3 was taken 19441 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      64126 :                                                    });</span>
 <span class="lineNum">    1793 </span>                :            : 
-<span class="lineNum">    1794 </span>        [<span class="branchCov" title="Branch 3 was taken 13717 times"> + </span><span class="branchCov" title="Branch 4 was taken 6515 times"> + </span>]:<span class="lineCov">      20232 :     if (predecessorLaneSegmentIter != std::end(route.roadSegments.back().drivableLaneSegments))</span>
+<span class="lineNum">    1794 </span>        [<span class="branchCov" title="Branch 3 was taken 13032 times"> + </span><span class="branchCov" title="Branch 4 was taken 6409 times"> + </span>]:<span class="lineCov">      19441 :     if (predecessorLaneSegmentIter != std::end(route.roadSegments.back().drivableLaneSegments))</span>
 <span class="lineNum">    1795 </span>                :            :     {
-<span class="lineNum">    1796 </span>        [<span class="branchCov" title="Branch 2 was taken 13717 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      13717 :       addLaneIdUnique(predecessorLaneSegmentIter-&gt;successors, laneSegment.laneInterval.laneId);</span>
-<span class="lineNum">    1797 </span>        [<span class="branchCov" title="Branch 1 was taken 13717 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      13717 :       addLaneIdUnique(laneSegment.predecessors, predecessorLaneId);</span>
-<span class="lineNum">    1798 </span>                :<span class="lineCov">      13717 :       laneSegment.routeLaneOffset = predecessorLaneSegmentIter-&gt;routeLaneOffset;</span>
+<span class="lineNum">    1796 </span>        [<span class="branchCov" title="Branch 2 was taken 13032 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      13032 :       addLaneIdUnique(predecessorLaneSegmentIter-&gt;successors, laneSegment.laneInterval.laneId);</span>
+<span class="lineNum">    1797 </span>        [<span class="branchCov" title="Branch 1 was taken 13032 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      13032 :       addLaneIdUnique(laneSegment.predecessors, predecessorLaneId);</span>
+<span class="lineNum">    1798 </span>                :<span class="lineCov">      13032 :       laneSegment.routeLaneOffset = predecessorLaneSegmentIter-&gt;routeLaneOffset;</span>
 <span class="lineNum">    1799 </span>                :            :     }
 <span class="lineNum">    1800 </span>                :            :   }
 <a name="1801"><span class="lineNum">    1801 </span>                :            : }</a>
 <span class="lineNum">    1802 </span>                :            : 
-<span class="lineNum">    1803 </span>                :<span class="lineCov">      22864 : bool isRightNeighbor(lane::ContactLocation const contactLocation, bool const isRouteDirectionPositive)</span>
+<span class="lineNum">    1803 </span>                :<span class="lineCov">      21580 : bool isRightNeighbor(lane::ContactLocation const contactLocation, bool const isRouteDirectionPositive)</span>
 <span class="lineNum">    1804 </span>                :            : {
 <span class="lineNum">    1805 </span>                :            :   bool rightNeighbor;
 <span class="lineNum">    1806 </span>                :            :   // determine the neighborhood relationship in respect to route direction
-<span class="lineNum">    1807 </span>        [<span class="branchCov" title="Branch 0 was taken 11432 times"> + </span><span class="branchCov" title="Branch 1 was taken 11432 times"> + </span>]:<span class="lineCov">      22864 :   if (contactLocation == lane::ContactLocation::RIGHT)</span>
+<span class="lineNum">    1807 </span>        [<span class="branchCov" title="Branch 0 was taken 10790 times"> + </span><span class="branchCov" title="Branch 1 was taken 10790 times"> + </span>]:<span class="lineCov">      21580 :   if (contactLocation == lane::ContactLocation::RIGHT)</span>
 <span class="lineNum">    1808 </span>                :            :   {
-<span class="lineNum">    1809 </span>                :<span class="lineCov">      11432 :     rightNeighbor = isRouteDirectionPositive;</span>
+<span class="lineNum">    1809 </span>                :<span class="lineCov">      10790 :     rightNeighbor = isRouteDirectionPositive;</span>
 <span class="lineNum">    1810 </span>                :            :   }
 <span class="lineNum">    1811 </span>                :            :   else // contactLocation == core::ContactLocation::LEFT
 <span class="lineNum">    1812 </span>                :            :   {
-<span class="lineNum">    1813 </span>                :<span class="lineCov">      11432 :     rightNeighbor = !isRouteDirectionPositive;</span>
+<span class="lineNum">    1813 </span>                :<span class="lineCov">      10790 :     rightNeighbor = !isRouteDirectionPositive;</span>
 <span class="lineNum">    1814 </span>                :            :   }
-<span class="lineNum">    1815 </span>                :<span class="lineCov">      22864 :   return rightNeighbor;</span>
+<span class="lineNum">    1815 </span>                :<span class="lineCov">      21580 :   return rightNeighbor;</span>
 <a name="1816"><span class="lineNum">    1816 </span>                :            : }</a>
 <span class="lineNum">    1817 </span>                :            : 
-<span class="lineNum">    1818 </span>                :<span class="lineCov">      15528 : void updateRouteLaneOffsetRange(RouteLaneOffset const &amp;routeLaneOffset, FullRoute &amp;route)</span>
+<span class="lineNum">    1818 </span>                :<span class="lineCov">      14648 : void updateRouteLaneOffsetRange(RouteLaneOffset const &amp;routeLaneOffset, FullRoute &amp;route)</span>
 <span class="lineNum">    1819 </span>                :            : {
-<span class="lineNum">    1820 </span>        [<span class="branchCov" title="Branch 0 was taken 590 times"> + </span><span class="branchCov" title="Branch 1 was taken 14938 times"> + </span>]:<span class="lineCov">      15528 :   if (routeLaneOffset &gt; route.maxLaneOffset)</span>
+<span class="lineNum">    1820 </span>        [<span class="branchCov" title="Branch 0 was taken 601 times"> + </span><span class="branchCov" title="Branch 1 was taken 14047 times"> + </span>]:<span class="lineCov">      14648 :   if (routeLaneOffset &gt; route.maxLaneOffset)</span>
 <span class="lineNum">    1821 </span>                :            :   {
-<span class="lineNum">    1822 </span>                :<span class="lineCov">        590 :     route.maxLaneOffset = routeLaneOffset;</span>
+<span class="lineNum">    1822 </span>                :<span class="lineCov">        601 :     route.maxLaneOffset = routeLaneOffset;</span>
 <span class="lineNum">    1823 </span>                :            :   }
-<span class="lineNum">    1824 </span>        [<span class="branchCov" title="Branch 0 was taken 469 times"> + </span><span class="branchCov" title="Branch 1 was taken 15059 times"> + </span>]:<span class="lineCov">      15528 :   if (routeLaneOffset &lt; route.minLaneOffset)</span>
+<span class="lineNum">    1824 </span>        [<span class="branchCov" title="Branch 0 was taken 475 times"> + </span><span class="branchCov" title="Branch 1 was taken 14173 times"> + </span>]:<span class="lineCov">      14648 :   if (routeLaneOffset &lt; route.minLaneOffset)</span>
 <span class="lineNum">    1825 </span>                :            :   {
-<span class="lineNum">    1826 </span>                :<span class="lineCov">        469 :     route.minLaneOffset = routeLaneOffset;</span>
+<span class="lineNum">    1826 </span>                :<span class="lineCov">        475 :     route.minLaneOffset = routeLaneOffset;</span>
 <span class="lineNum">    1827 </span>                :            :   }
-<a name="1828"><span class="lineNum">    1828 </span>                :<span class="lineCov">      15528 : }</span></a>
+<a name="1828"><span class="lineNum">    1828 </span>                :<span class="lineCov">      14648 : }</span></a>
 <span class="lineNum">    1829 </span>                :            : 
-<span class="lineNum">    1830 </span>                :<span class="lineCov">       4096 : void updateRouteLaneOffset(bool const rightNeighbor, RouteLaneOffset &amp;routeLaneOffset, FullRoute &amp;route)</span>
+<span class="lineNum">    1830 </span>                :<span class="lineCov">       3858 : void updateRouteLaneOffset(bool const rightNeighbor, RouteLaneOffset &amp;routeLaneOffset, FullRoute &amp;route)</span>
 <span class="lineNum">    1831 </span>                :            : {
-<span class="lineNum">    1832 </span>        [<span class="branchCov" title="Branch 0 was taken 1419 times"> + </span><span class="branchCov" title="Branch 1 was taken 2677 times"> + </span>]:<span class="lineCov">       4096 :   if (rightNeighbor)</span>
+<span class="lineNum">    1832 </span>        [<span class="branchCov" title="Branch 0 was taken 1691 times"> + </span><span class="branchCov" title="Branch 1 was taken 2167 times"> + </span>]:<span class="lineCov">       3858 :   if (rightNeighbor)</span>
 <span class="lineNum">    1833 </span>                :            :   {
-<span class="lineNum">    1834 </span>                :<span class="lineCov">       1419 :     routeLaneOffset--;</span>
+<span class="lineNum">    1834 </span>                :<span class="lineCov">       1691 :     routeLaneOffset--;</span>
 <span class="lineNum">    1835 </span>                :            :   }
 <span class="lineNum">    1836 </span>                :            :   else
 <span class="lineNum">    1837 </span>                :            :   {
-<span class="lineNum">    1838 </span>                :<span class="lineCov">       2677 :     routeLaneOffset++;</span>
+<span class="lineNum">    1838 </span>                :<span class="lineCov">       2167 :     routeLaneOffset++;</span>
 <span class="lineNum">    1839 </span>                :            :   }
-<span class="lineNum">    1840 </span>                :<span class="lineCov">       4096 :   updateRouteLaneOffsetRange(routeLaneOffset, route);</span>
-<a name="1841"><span class="lineNum">    1841 </span>                :<span class="lineCov">       4096 : }</span></a>
+<span class="lineNum">    1840 </span>                :<span class="lineCov">       3858 :   updateRouteLaneOffsetRange(routeLaneOffset, route);</span>
+<a name="1841"><span class="lineNum">    1841 </span>                :<span class="lineCov">       3858 : }</span></a>
 <span class="lineNum">    1842 </span>                :            : 
 <span class="lineNum">    1843 </span>                :<span class="lineCov">          2 : void appendLaneSegmentToRoute(route::LaneInterval const &amp;laneInterval,</span>
 <span class="lineNum">    1844 </span>                :            :                               route::FullRoute &amp;route,
@@ -1971,45 +1971,45 @@
 <span class="lineNum">    1861 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   route.roadSegments.push_back(roadSegment);</span>
 <a name="1862"><span class="lineNum">    1862 </span>                :<span class="lineCov">          2 : }</span></a>
 <span class="lineNum">    1863 </span>                :            : 
-<span class="lineNum">    1864 </span>                :<span class="lineCov">      11432 : void appendRoadSegmentToRoute(route::LaneInterval const &amp;laneInterval,</span>
+<span class="lineNum">    1864 </span>                :<span class="lineCov">      10790 : void appendRoadSegmentToRoute(route::LaneInterval const &amp;laneInterval,</span>
 <span class="lineNum">    1865 </span>                :            :                               route::RouteLaneOffset const &amp;routeLaneOffset,
 <span class="lineNum">    1866 </span>                :            :                               FullRoute &amp;route)
 <span class="lineNum">    1867 </span>                :            : {
-<span class="lineNum">    1868 </span>[<span class="branchCov" title="Branch 1 was taken 11432 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 11432 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      22864 :   auto lane = lane::getLane(laneInterval.laneId);</span>
+<span class="lineNum">    1868 </span>[<span class="branchCov" title="Branch 1 was taken 10790 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 10790 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      21580 :   auto lane = lane::getLane(laneInterval.laneId);</span>
 <span class="lineNum">    1869 </span>                :            : 
-<span class="lineNum">    1870 </span>        [<span class="branchCov" title="Branch 1 was taken 11432 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      22864 :   route::RoadSegment roadSegment;</span>
-<span class="lineNum">    1871 </span>                :<span class="lineCov">      11432 :   roadSegment.boundingSphere = lane.boundingSphere;</span>
+<span class="lineNum">    1870 </span>        [<span class="branchCov" title="Branch 1 was taken 10790 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      21580 :   route::RoadSegment roadSegment;</span>
+<span class="lineNum">    1871 </span>                :<span class="lineCov">      10790 :   roadSegment.boundingSphere = lane.boundingSphere;</span>
 <span class="lineNum">    1872 </span>                :            :   // this information will be post processed by updateRoutePlanningCounters()
-<span class="lineNum">    1873 </span>                :<span class="lineCov">      11432 :   roadSegment.segmentCountFromDestination = 0u;</span>
+<span class="lineNum">    1873 </span>                :<span class="lineCov">      10790 :   roadSegment.segmentCountFromDestination = 0u;</span>
 <span class="lineNum">    1874 </span>                :            : 
-<span class="lineNum">    1875 </span>        [<span class="branchCov" title="Branch 1 was taken 11432 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      11432 :   const bool routeDirectionPositive = isRouteDirectionPositive(laneInterval);</span>
+<span class="lineNum">    1875 </span>        [<span class="branchCov" title="Branch 1 was taken 10790 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      10790 :   const bool routeDirectionPositive = isRouteDirectionPositive(laneInterval);</span>
 <span class="lineNum">    1876 </span>                :            : 
-<span class="lineNum">    1877 </span>        [<span class="branchCov" title="Branch 1 was taken 11432 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      22864 :   route::LaneSegment laneSegment;</span>
-<span class="lineNum">    1878 </span>                :<span class="lineCov">      11432 :   laneSegment.laneInterval = laneInterval;</span>
-<span class="lineNum">    1879 </span>                :<span class="lineCov">      11432 :   laneSegment.routeLaneOffset = routeLaneOffset;</span>
-<span class="lineNum">    1880 </span>        [<span class="branchCov" title="Branch 1 was taken 11432 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      11432 :   updateRouteLaneOffsetRange(routeLaneOffset, route);</span>
-<span class="lineNum">    1881 </span>        [<span class="branchCov" title="Branch 1 was taken 11432 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      11432 :   addRoutePredecessorRelationToNewSegment(lane, laneSegment, route, routeDirectionPositive);</span>
-<span class="lineNum">    1882 </span>        [<span class="branchCov" title="Branch 1 was taken 11432 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      11432 :   roadSegment.drivableLaneSegments.push_back(laneSegment);</span>
+<span class="lineNum">    1877 </span>        [<span class="branchCov" title="Branch 1 was taken 10790 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      21580 :   route::LaneSegment laneSegment;</span>
+<span class="lineNum">    1878 </span>                :<span class="lineCov">      10790 :   laneSegment.laneInterval = laneInterval;</span>
+<span class="lineNum">    1879 </span>                :<span class="lineCov">      10790 :   laneSegment.routeLaneOffset = routeLaneOffset;</span>
+<span class="lineNum">    1880 </span>        [<span class="branchCov" title="Branch 1 was taken 10790 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      10790 :   updateRouteLaneOffsetRange(routeLaneOffset, route);</span>
+<span class="lineNum">    1881 </span>        [<span class="branchCov" title="Branch 1 was taken 10790 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      10790 :   addRoutePredecessorRelationToNewSegment(lane, laneSegment, route, routeDirectionPositive);</span>
+<span class="lineNum">    1882 </span>        [<span class="branchCov" title="Branch 1 was taken 10790 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      10790 :   roadSegment.drivableLaneSegments.push_back(laneSegment);</span>
 <span class="lineNum">    1883 </span>                :            : 
-<span class="lineNum">    1884 </span>                :<span class="lineCov">      11432 :   lane::LaneDirection const direction = lane.direction;</span>
-<span class="lineNum">    1885 </span>        [<span class="branchCov" title="Branch 2 was taken 22864 times"> + </span><span class="branchCov" title="Branch 3 was taken 11432 times"> + </span>]:<span class="lineCov">      34296 :   for (auto contactLocation : {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT})</span>
+<span class="lineNum">    1884 </span>                :<span class="lineCov">      10790 :   lane::LaneDirection const direction = lane.direction;</span>
+<span class="lineNum">    1885 </span>        [<span class="branchCov" title="Branch 2 was taken 21580 times"> + </span><span class="branchCov" title="Branch 3 was taken 10790 times"> + </span>]:<span class="lineCov">      32370 :   for (auto contactLocation : {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT})</span>
 <span class="lineNum">    1886 </span>                :            :   {
-<span class="lineNum">    1887 </span>                :<span class="lineCov">      22864 :     route::RouteLaneOffset currentRouteLaneOffset = routeLaneOffset;</span>
-<span class="lineNum">    1888 </span>        [<span class="branchCov" title="Branch 1 was taken 22864 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      22864 :     bool const rightNeighbor = isRightNeighbor(contactLocation, routeDirectionPositive);</span>
-<span class="lineNum">    1889 </span>        [<span class="branchCov" title="Branch 1 was taken 22864 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      45728 :     lane::ContactLaneList contactLanes = lane::getContactLanes(lane, contactLocation);</span>
+<span class="lineNum">    1887 </span>                :<span class="lineCov">      21580 :     route::RouteLaneOffset currentRouteLaneOffset = routeLaneOffset;</span>
+<span class="lineNum">    1888 </span>        [<span class="branchCov" title="Branch 1 was taken 21580 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      21580 :     bool const rightNeighbor = isRightNeighbor(contactLocation, routeDirectionPositive);</span>
+<span class="lineNum">    1889 </span>        [<span class="branchCov" title="Branch 1 was taken 21580 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      43160 :     lane::ContactLaneList contactLanes = lane::getContactLanes(lane, contactLocation);</span>
 <span class="lineNum">    1890 </span>                :            : 
-<span class="lineNum">    1891 </span>                :<span class="lineCov">      45728 :     lane::LaneIdSet visitedLaneIds;</span>
-<span class="lineNum">    1892 </span>        [<span class="branchCov" title="Branch 1 was taken 22864 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      22864 :     visitedLaneIds.insert(laneInterval.laneId);</span>
+<span class="lineNum">    1891 </span>                :<span class="lineCov">      43160 :     lane::LaneIdSet visitedLaneIds;</span>
+<span class="lineNum">    1892 </span>        [<span class="branchCov" title="Branch 1 was taken 21580 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      21580 :     visitedLaneIds.insert(laneInterval.laneId);</span>
 <span class="lineNum">    1893 </span>                :            : 
 <span class="lineNum">    1894 </span>                :            :     // we expect that per map model only one contact lane is possible in one direction
-<span class="lineNum">    1895 </span>        [<span class="branchCov" title="Branch 1 was taken 14093 times"> + </span><span class="branchCov" title="Branch 2 was taken 22864 times"> + </span>]:<span class="lineCov">      36957 :     while (contactLanes.size() == 1u)</span>
+<span class="lineNum">    1895 </span>        [<span class="branchCov" title="Branch 1 was taken 13821 times"> + </span><span class="branchCov" title="Branch 2 was taken 21580 times"> + </span>]:<span class="lineCov">      35401 :     while (contactLanes.size() == 1u)</span>
 <span class="lineNum">    1896 </span>                :            :     {
 <span class="lineNum">    1897 </span>                :            :       // in some broken map cases we could end in an infinite loop here, due to broken neighborhood relations
 <span class="lineNum">    1898 </span>                :            :       // to avoid this issue, add an early return upon detecting the start lane again
-<span class="lineNum">    1899 </span>                :<span class="lineCov">      14093 :       lane::LaneId otherLaneId = contactLanes.front().toLane;</span>
+<span class="lineNum">    1899 </span>                :<span class="lineCov">      13821 :       lane::LaneId otherLaneId = contactLanes.front().toLane;</span>
 <span class="lineNum">    1900 </span>                :            : 
-<span class="lineNum">    1901 </span>        [<span class="branchCov" title="Branch 1 was taken 14093 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      14093 :       auto laneNotVisited = visitedLaneIds.insert(otherLaneId);</span>
-<span class="lineNum">    1902 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 14093 times"> + </span>]:<span class="lineCov">      14093 :       if (!laneNotVisited.second)</span>
+<span class="lineNum">    1901 </span>        [<span class="branchCov" title="Branch 1 was taken 13821 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      13821 :       auto laneNotVisited = visitedLaneIds.insert(otherLaneId);</span>
+<span class="lineNum">    1902 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 13821 times"> + </span>]:<span class="lineCov">      13821 :       if (!laneNotVisited.second)</span>
 <span class="lineNum">    1903 </span>                :            :       {
 <span class="lineNum">    1904 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :         access::getLogger()-&gt;warn(&quot;ad::map::route::appendRoadSegmentToRoute: Broken neighborhood relations detected &quot;</span>
 <span class="lineNum">    1905 </span>                :            :                                   &quot;for LaneId {}, Skipping expansion.&quot;,
@@ -2018,60 +2018,60 @@
 <span class="lineNum">    1908 </span>                :<span class="lineNoCov">          0 :         break;</span>
 <span class="lineNum">    1909 </span>                :            :       }
 <span class="lineNum">    1910 </span>                :            : 
-<span class="lineNum">    1911 </span>        [<span class="branchCov" title="Branch 1 was taken 14093 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      14093 :       auto const &amp;otherLane = lane::getLane(otherLaneId);</span>
-<span class="lineNum">    1912 </span>[<span class="branchCov" title="Branch 0 was taken 10423 times"> + </span><span class="branchCov" title="Branch 1 was taken 3625 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 3670 times"> + </span><span class="branchCov" title="Branch 3 was taken 10423 times"> + </span>]:<span class="lineCov">      28141 :       if (((route.routeCreationMode == RouteCreationMode::SameDrivingDirection) &amp;&amp; (direction == otherLane.direction))</span>
-<span class="lineNum">    1913 </span>[<span class="branchCov" title="Branch 0 was taken 42 times"> + </span><span class="branchCov" title="Branch 1 was taken 10426 times"> + </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 42 times"> + </span>]:<span class="lineCov">      10468 :           || ((route.routeCreationMode == RouteCreationMode::AllRoutableLanes) &amp;&amp; (lane::isRouteable(otherLane)))</span>
-<span class="lineNum">    1914 </span>[<span class="branchCov" title="Branch 0 was taken 14048 times"> + </span><span class="branchCov" title="Branch 1 was taken 45 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchCov" title="Branch 3 was taken 10423 times"> + </span>]:<span class="lineCov">      28186 :           || (route.routeCreationMode == RouteCreationMode::AllNeighborLanes))</span>
+<span class="lineNum">    1911 </span>        [<span class="branchCov" title="Branch 1 was taken 13821 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      13821 :       auto const &amp;otherLane = lane::getLane(otherLaneId);</span>
+<span class="lineNum">    1912 </span>[<span class="branchCov" title="Branch 0 was taken 10427 times"> + </span><span class="branchCov" title="Branch 1 was taken 3349 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 3394 times"> + </span><span class="branchCov" title="Branch 3 was taken 10427 times"> + </span>]:<span class="lineCov">      27597 :       if (((route.routeCreationMode == RouteCreationMode::SameDrivingDirection) &amp;&amp; (direction == otherLane.direction))</span>
+<span class="lineNum">    1913 </span>[<span class="branchCov" title="Branch 0 was taken 42 times"> + </span><span class="branchCov" title="Branch 1 was taken 10430 times"> + </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 42 times"> + </span>]:<span class="lineCov">      10472 :           || ((route.routeCreationMode == RouteCreationMode::AllRoutableLanes) &amp;&amp; (lane::isRouteable(otherLane)))</span>
+<span class="lineNum">    1914 </span>[<span class="branchCov" title="Branch 0 was taken 13776 times"> + </span><span class="branchCov" title="Branch 1 was taken 45 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchCov" title="Branch 3 was taken 10427 times"> + </span>]:<span class="lineCov">      27642 :           || (route.routeCreationMode == RouteCreationMode::AllNeighborLanes))</span>
 <span class="lineNum">    1915 </span>                :            :       {
-<span class="lineNum">    1916 </span>        [<span class="branchCov" title="Branch 1 was taken 3670 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       7340 :         route::LaneSegment newLaneSegment;</span>
-<span class="lineNum">    1917 </span>                :<span class="lineCov">       3670 :         newLaneSegment.laneInterval.laneId = otherLaneId;</span>
-<span class="lineNum">    1918 </span>                :<span class="lineCov">       3670 :         newLaneSegment.laneInterval.start = laneInterval.start;</span>
-<span class="lineNum">    1919 </span>                :<span class="lineCov">       3670 :         newLaneSegment.laneInterval.end = laneInterval.end;</span>
-<span class="lineNum">    1920 </span>        [<span class="branchCov" title="Branch 0 was taken 3627 times"> + </span><span class="branchCov" title="Branch 1 was taken 43 times"> + </span>]:<span class="lineCov">       3670 :         if (direction == otherLane.direction)</span>
+<span class="lineNum">    1916 </span>        [<span class="branchCov" title="Branch 1 was taken 3394 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       6788 :         route::LaneSegment newLaneSegment;</span>
+<span class="lineNum">    1917 </span>                :<span class="lineCov">       3394 :         newLaneSegment.laneInterval.laneId = otherLaneId;</span>
+<span class="lineNum">    1918 </span>                :<span class="lineCov">       3394 :         newLaneSegment.laneInterval.start = laneInterval.start;</span>
+<span class="lineNum">    1919 </span>                :<span class="lineCov">       3394 :         newLaneSegment.laneInterval.end = laneInterval.end;</span>
+<span class="lineNum">    1920 </span>        [<span class="branchCov" title="Branch 0 was taken 3351 times"> + </span><span class="branchCov" title="Branch 1 was taken 43 times"> + </span>]:<span class="lineCov">       3394 :         if (direction == otherLane.direction)</span>
 <span class="lineNum">    1921 </span>                :            :         {
-<span class="lineNum">    1922 </span>                :<span class="lineCov">       3627 :           newLaneSegment.laneInterval.wrongWay = laneInterval.wrongWay;</span>
+<span class="lineNum">    1922 </span>                :<span class="lineCov">       3351 :           newLaneSegment.laneInterval.wrongWay = laneInterval.wrongWay;</span>
 <span class="lineNum">    1923 </span>                :            :         }
 <span class="lineNum">    1924 </span>                :            :         else
 <span class="lineNum">    1925 </span>                :            :         {
 <span class="lineNum">    1926 </span>                :<span class="lineCov">         43 :           newLaneSegment.laneInterval.wrongWay = !laneInterval.wrongWay;</span>
 <span class="lineNum">    1927 </span>                :            :         }
-<span class="lineNum">    1928 </span>        [<span class="branchCov" title="Branch 1 was taken 3670 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3670 :         updateRouteLaneOffset(rightNeighbor, currentRouteLaneOffset, route);</span>
-<span class="lineNum">    1929 </span>                :<span class="lineCov">       3670 :         newLaneSegment.routeLaneOffset = currentRouteLaneOffset;</span>
+<span class="lineNum">    1928 </span>        [<span class="branchCov" title="Branch 1 was taken 3394 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3394 :         updateRouteLaneOffset(rightNeighbor, currentRouteLaneOffset, route);</span>
+<span class="lineNum">    1929 </span>                :<span class="lineCov">       3394 :         newLaneSegment.routeLaneOffset = currentRouteLaneOffset;</span>
 <span class="lineNum">    1930 </span>                :            : 
-<span class="lineNum">    1931 </span>        [<span class="branchCov" title="Branch 1 was taken 3670 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3670 :         roadSegment.boundingSphere = roadSegment.boundingSphere + otherLane.boundingSphere;</span>
+<span class="lineNum">    1931 </span>        [<span class="branchCov" title="Branch 1 was taken 3394 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3394 :         roadSegment.boundingSphere = roadSegment.boundingSphere + otherLane.boundingSphere;</span>
 <span class="lineNum">    1932 </span>                :            : 
-<span class="lineNum">    1933 </span>        [<span class="branchCov" title="Branch 1 was taken 3670 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3670 :         addRoutePredecessorRelationToNewSegment(otherLane, newLaneSegment, route, routeDirectionPositive);</span>
+<span class="lineNum">    1933 </span>        [<span class="branchCov" title="Branch 1 was taken 3394 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3394 :         addRoutePredecessorRelationToNewSegment(otherLane, newLaneSegment, route, routeDirectionPositive);</span>
 <span class="lineNum">    1934 </span>                :            : 
 <span class="lineNum">    1935 </span>                :            :         // sorting: right lanes are added at front, left lanes at back
-<span class="lineNum">    1936 </span>        [<span class="branchCov" title="Branch 0 was taken 1236 times"> + </span><span class="branchCov" title="Branch 1 was taken 2434 times"> + </span>]:<span class="lineCov">       3670 :         if (rightNeighbor)</span>
+<span class="lineNum">    1936 </span>        [<span class="branchCov" title="Branch 0 was taken 1484 times"> + </span><span class="branchCov" title="Branch 1 was taken 1910 times"> + </span>]:<span class="lineCov">       3394 :         if (rightNeighbor)</span>
 <span class="lineNum">    1937 </span>                :            :         {
-<span class="lineNum">    1938 </span>                :<span class="lineCov">       1236 :           roadSegment.drivableLaneSegments.front().rightNeighbor = newLaneSegment.laneInterval.laneId;</span>
-<span class="lineNum">    1939 </span>                :<span class="lineCov">       1236 :           newLaneSegment.leftNeighbor = roadSegment.drivableLaneSegments.front().laneInterval.laneId;</span>
-<span class="lineNum">    1940 </span>        [<span class="branchCov" title="Branch 3 was taken 1236 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       1236 :           roadSegment.drivableLaneSegments.insert(roadSegment.drivableLaneSegments.begin(), newLaneSegment);</span>
+<span class="lineNum">    1938 </span>                :<span class="lineCov">       1484 :           roadSegment.drivableLaneSegments.front().rightNeighbor = newLaneSegment.laneInterval.laneId;</span>
+<span class="lineNum">    1939 </span>                :<span class="lineCov">       1484 :           newLaneSegment.leftNeighbor = roadSegment.drivableLaneSegments.front().laneInterval.laneId;</span>
+<span class="lineNum">    1940 </span>        [<span class="branchCov" title="Branch 3 was taken 1484 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       1484 :           roadSegment.drivableLaneSegments.insert(roadSegment.drivableLaneSegments.begin(), newLaneSegment);</span>
 <span class="lineNum">    1941 </span>                :            :         }
 <span class="lineNum">    1942 </span>                :            :         else
 <span class="lineNum">    1943 </span>                :            :         {
-<span class="lineNum">    1944 </span>                :<span class="lineCov">       2434 :           roadSegment.drivableLaneSegments.back().leftNeighbor = newLaneSegment.laneInterval.laneId;</span>
-<span class="lineNum">    1945 </span>                :<span class="lineCov">       2434 :           newLaneSegment.rightNeighbor = roadSegment.drivableLaneSegments.back().laneInterval.laneId;</span>
-<span class="lineNum">    1946 </span>        [<span class="branchCov" title="Branch 3 was taken 2434 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       2434 :           roadSegment.drivableLaneSegments.insert(roadSegment.drivableLaneSegments.end(), newLaneSegment);</span>
+<span class="lineNum">    1944 </span>                :<span class="lineCov">       1910 :           roadSegment.drivableLaneSegments.back().leftNeighbor = newLaneSegment.laneInterval.laneId;</span>
+<span class="lineNum">    1945 </span>                :<span class="lineCov">       1910 :           newLaneSegment.rightNeighbor = roadSegment.drivableLaneSegments.back().laneInterval.laneId;</span>
+<span class="lineNum">    1946 </span>        [<span class="branchCov" title="Branch 3 was taken 1910 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       1910 :           roadSegment.drivableLaneSegments.insert(roadSegment.drivableLaneSegments.end(), newLaneSegment);</span>
 <span class="lineNum">    1947 </span>                :            :         }
 <span class="lineNum">    1948 </span>                :            : 
 <span class="lineNum">    1949 </span>                :            :         // go aside recursively
-<span class="lineNum">    1950 </span>        [<span class="branchCov" title="Branch 1 was taken 3670 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3670 :         contactLanes = lane::getContactLanes(otherLane, contactLocation);</span>
+<span class="lineNum">    1950 </span>        [<span class="branchCov" title="Branch 1 was taken 3394 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       3394 :         contactLanes = lane::getContactLanes(otherLane, contactLocation);</span>
 <span class="lineNum">    1951 </span>                :            :       }
 <span class="lineNum">    1952 </span>                :            :       else
 <span class="lineNum">    1953 </span>                :            :       {
-<span class="lineNum">    1954 </span>                :<span class="lineCov">      10423 :         contactLanes.clear();</span>
+<span class="lineNum">    1954 </span>                :<span class="lineCov">      10427 :         contactLanes.clear();</span>
 <span class="lineNum">    1955 </span>                :            :       }
 <span class="lineNum">    1956 </span>                :            :     }
-<span class="lineNum">    1957 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 22864 times"> + </span>]:<span class="lineCov">      22864 :     if (!contactLanes.empty())</span>
+<span class="lineNum">    1957 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 21580 times"> + </span>]:<span class="lineCov">      21580 :     if (!contactLanes.empty())</span>
 <span class="lineNum">    1958 </span>                :            :     {
 <span class="lineNum">    1959 </span>                :            :       throw std::runtime_error(
 <span class="lineNum">    1960 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :         &quot;AdRoadNetworkAdm::fillRoadSegment algorithm is not able to handle multiple left/right contact lanes&quot;);</span>
 <span class="lineNum">    1961 </span>                :            :     }
 <span class="lineNum">    1962 </span>                :            :   }
-<span class="lineNum">    1963 </span>        [<span class="branchCov" title="Branch 1 was taken 11432 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      11432 :   route.roadSegments.push_back(roadSegment);</span>
-<a name="1964"><span class="lineNum">    1964 </span>                :<span class="lineCov">      11432 : }</span></a>
+<span class="lineNum">    1963 </span>        [<span class="branchCov" title="Branch 1 was taken 10790 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      10790 :   route.roadSegments.push_back(roadSegment);</span>
+<a name="1964"><span class="lineNum">    1964 </span>                :<span class="lineCov">      10790 : }</span></a>
 <span class="lineNum">    1965 </span>                :            : 
 <span class="lineNum">    1966 </span>                :<span class="lineCov">          3 : physics::Distance addOpposingLaneSegmentToRoadSegment(point::ParaPoint const &amp;startpoint,</span>
 <span class="lineNum">    1967 </span>                :            :                                                       physics::Distance const &amp;distance,

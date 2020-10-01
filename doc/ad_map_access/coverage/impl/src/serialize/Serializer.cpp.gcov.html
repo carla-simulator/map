@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -248,37 +248,37 @@
 <span class="lineNum">     170 </span>                :            : ////////////////////
 <a name="171"><span class="lineNum">     171 </span>                :            : // Atomic Operations</a>
 <span class="lineNum">     172 </span>                :            : 
-<span class="lineNum">     173 </span>                :<span class="lineCov">     157897 : bool Serializer::write(const void *x, size_t bytes)</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">     185942 : bool Serializer::write(const void *x, size_t bytes)</span>
 <span class="lineNum">     174 </span>                :            : {
-<span class="lineNum">     175 </span>        [<span class="branchCov" title="Branch 1 was taken 157896 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">     157897 :   if (doWrite(x, bytes))</span>
+<span class="lineNum">     175 </span>        [<span class="branchCov" title="Branch 1 was taken 185941 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">     185942 :   if (doWrite(x, bytes))</span>
 <span class="lineNum">     176 </span>                :            :   {
-<span class="lineNum">     177 </span>        [<span class="branchCov" title="Branch 0 was taken 157896 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">     157896 :     if (calc_checksum_)</span>
+<span class="lineNum">     177 </span>        [<span class="branchCov" title="Branch 0 was taken 185941 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">     185941 :     if (calc_checksum_)</span>
 <span class="lineNum">     178 </span>                :            :     {
-<span class="lineNum">     179 </span>                :<span class="lineCov">     157896 :       updateChecksum(x, bytes);</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">     185941 :       updateChecksum(x, bytes);</span>
 <span class="lineNum">     180 </span>                :            :     }
-<span class="lineNum">     181 </span>                :<span class="lineCov">     157896 :     return true;</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">     185941 :     return true;</span>
 <span class="lineNum">     182 </span>                :            :   }
 <span class="lineNum">     183 </span>                :            :   else
 <span class="lineNum">     184 </span>                :            :   {
 <span class="lineNum">     185 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Serializer: Unable to write {} bytes&quot;, bytes);</span>
-<span class="lineNum">     186 </span>                :<span class="lineCov">     157897 :     return false;</span>
+<span class="lineNum">     186 </span>                :<span class="lineCov">     185942 :     return false;</span>
 <span class="lineNum">     187 </span>                :            :   }
 <a name="188"><span class="lineNum">     188 </span>                :            : }</a>
 <span class="lineNum">     189 </span>                :            : 
-<span class="lineNum">     190 </span>                :<span class="lineCov">   10126367 : bool Serializer::read(void *x, size_t bytes)</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">   10154412 : bool Serializer::read(void *x, size_t bytes)</span>
 <span class="lineNum">     191 </span>                :            : {
-<span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 1 was taken 10126365 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">   10126367 :   if (doRead(x, bytes))</span>
+<span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 1 was taken 10154410 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">   10154412 :   if (doRead(x, bytes))</span>
 <span class="lineNum">     193 </span>                :            :   {
-<span class="lineNum">     194 </span>        [<span class="branchCov" title="Branch 0 was taken 10126365 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">   10126365 :     if (calc_checksum_)</span>
+<span class="lineNum">     194 </span>        [<span class="branchCov" title="Branch 0 was taken 10154410 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">   10154410 :     if (calc_checksum_)</span>
 <span class="lineNum">     195 </span>                :            :     {
-<span class="lineNum">     196 </span>                :<span class="lineCov">   10126365 :       updateChecksum(x, bytes);</span>
+<span class="lineNum">     196 </span>                :<span class="lineCov">   10154410 :       updateChecksum(x, bytes);</span>
 <span class="lineNum">     197 </span>                :            :     }
-<span class="lineNum">     198 </span>                :<span class="lineCov">   10126365 :     return true;</span>
+<span class="lineNum">     198 </span>                :<span class="lineCov">   10154410 :     return true;</span>
 <span class="lineNum">     199 </span>                :            :   }
 <span class="lineNum">     200 </span>                :            :   else
 <span class="lineNum">     201 </span>                :            :   {
 <span class="lineNum">     202 </span>[<span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;Serializer: Unable to read {} bytes&quot;, bytes);</span>
-<span class="lineNum">     203 </span>                :<span class="lineCov">   10126367 :     return false;</span>
+<span class="lineNum">     203 </span>                :<span class="lineCov">   10154412 :     return false;</span>
 <span class="lineNum">     204 </span>                :            :   }
 <span class="lineNum">     205 </span>                :            : }
 <span class="lineNum">     206 </span>                :            : 

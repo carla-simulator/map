@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">13</td>
@@ -90,23 +90,23 @@
 <span class="lineNum">      19 </span>                :            : 
 <a name="20"><span class="lineNum">      20 </span>                :            : typedef std::lock_guard&lt;std::recursive_mutex&gt; LockGuard;</a>
 <span class="lineNum">      21 </span>                :            : 
-<span class="lineNum">      22 </span>                :<span class="lineCov">    7350335 : AdMapAccess &amp;AdMapAccess::getAdMapAccessInstance()</span>
+<span class="lineNum">      22 </span>                :<span class="lineCov">    7255233 : AdMapAccess &amp;AdMapAccess::getAdMapAccessInstance()</span>
 <span class="lineNum">      23 </span>                :            : {
-<span class="lineNum">      24 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 7350334 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    7350335 :   static AdMapAccess singleton;</span>
+<span class="lineNum">      24 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 7255232 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    7255233 :   static AdMapAccess singleton;</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
-<span class="lineNum">      25 </span>                :<span class="lineCov">    7350335 :   return singleton;</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">    7255233 :   return singleton;</span>
 <a name="26"><span class="lineNum">      26 </span>                :            : }</a>
 <span class="lineNum">      27 </span>                :            : 
-<span class="lineNum">      28 </span>                :<span class="lineCov">    6835753 : AdMapAccess &amp;AdMapAccess::getInitializedInstance()</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">    6579867 : AdMapAccess &amp;AdMapAccess::getInitializedInstance()</span>
 <span class="lineNum">      29 </span>                :            : {
-<span class="lineNum">      30 </span>        [<span class="branchCov" title="Branch 1 was taken 6835753 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    6835753 :   AdMapAccess &amp;singleton = getAdMapAccessInstance();</span>
-<span class="lineNum">      31 </span>        [<span class="branchCov" title="Branch 1 was taken 6835753 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   13671506 :   LockGuard guard(singleton.mMutex);</span>
-<span class="lineNum">      32 </span>[<span class="branchCov" title="Branch 1 was taken 6835753 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 164 times"> + </span><span class="branchCov" title="Branch 4 was taken 6835589 times"> + </span>]:<span class="lineCov">    6835753 :   if (!singleton.mConfigFileHandler.isInitialized() &amp;&amp; !singleton.mInitializedFromStore)</span>
-<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 164 times"> + </span>][<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 6835753 times"> + </span>]
+<span class="lineNum">      30 </span>        [<span class="branchCov" title="Branch 1 was taken 6579867 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    6579867 :   AdMapAccess &amp;singleton = getAdMapAccessInstance();</span>
+<span class="lineNum">      31 </span>        [<span class="branchCov" title="Branch 1 was taken 6579867 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   13159734 :   LockGuard guard(singleton.mMutex);</span>
+<span class="lineNum">      32 </span>[<span class="branchCov" title="Branch 1 was taken 6579867 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 164 times"> + </span><span class="branchCov" title="Branch 4 was taken 6579703 times"> + </span>]:<span class="lineCov">    6579867 :   if (!singleton.mConfigFileHandler.isInitialized() &amp;&amp; !singleton.mInitializedFromStore)</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 164 times"> + </span>][<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 6579867 times"> + </span>]
 <span class="lineNum">      33 </span>                :            :   {
 <span class="lineNum">      34 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::runtime_error(&quot;Instance not initialized. Forgot to call AdMapAccess::initialize?&quot;);</span>
 <span class="lineNum">      35 </span>                :            :   }
-<span class="lineNum">      36 </span>                :<span class="lineCov">    6835753 :   return singleton;</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">    6579867 :   return singleton;</span>
 <a name="37"><span class="lineNum">      37 </span>                :            : }</a>
 <span class="lineNum">      38 </span>                :            : 
 <span class="lineNum">      39 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 : AdMapAccess::AdMapAccess()</span>
@@ -121,15 +121,15 @@
 <span class="lineNum">      48 </span>                :            : {
 <a name="49"><span class="lineNum">      49 </span>                :<span class="lineCov">          1 : }</span></a>
 <span class="lineNum">      50 </span>                :            : 
-<span class="lineNum">      51 </span>                :<span class="lineCov">        184 : bool AdMapAccess::initialize(std::string const &amp;configFileName)</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">        188 : bool AdMapAccess::initialize(std::string const &amp;configFileName)</span>
 <span class="lineNum">      52 </span>                :            : {
-<span class="lineNum">      53 </span>        [<span class="branchCov" title="Branch 1 was taken 184 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        368 :   LockGuard guard(mMutex);</span>
-<span class="lineNum">      54 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 183 times"> + </span>]:<span class="lineCov">        184 :   if (mInitializedFromStore)</span>
+<span class="lineNum">      53 </span>        [<span class="branchCov" title="Branch 1 was taken 188 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        376 :   LockGuard guard(mMutex);</span>
+<span class="lineNum">      54 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 187 times"> + </span>]:<span class="lineCov">        188 :   if (mInitializedFromStore)</span>
 <span class="lineNum">      55 </span>                :            :   {
 <span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     mLogger-&gt;error(&quot;AdMapAccess::initialize(config) failed; already initialized from store&quot;);</span>
 <span class="lineNum">      57 </span>                :<span class="lineCov">          1 :     return false;</span>
 <span class="lineNum">      58 </span>                :            :   }
-<span class="lineNum">      59 </span>[<span class="branchCov" title="Branch 1 was taken 183 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchCov" title="Branch 4 was taken 181 times"> + </span>]:<span class="lineCov">        183 :   if (mConfigFileHandler.isInitialized())</span>
+<span class="lineNum">      59 </span>[<span class="branchCov" title="Branch 1 was taken 187 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchCov" title="Branch 4 was taken 185 times"> + </span>]:<span class="lineCov">        187 :   if (mConfigFileHandler.isInitialized())</span>
 <span class="lineNum">      60 </span>                :            :   {
 <span class="lineNum">      61 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">          2 :     if (!mConfigFileHandler.isInitializedWithFilename(configFileName))</span>
 <span class="lineNum">      62 </span>                :            :     {
@@ -141,25 +141,25 @@
 <span class="lineNum">      68 </span>                :            :     }
 <span class="lineNum">      69 </span>                :<span class="lineCov">          1 :     return true;</span>
 <span class="lineNum">      70 </span>                :            :   }
-<span class="lineNum">      71 </span>[<span class="branchCov" title="Branch 1 was taken 181 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 3 times"> + </span><span class="branchCov" title="Branch 4 was taken 178 times"> + </span>]:<span class="lineCov">        181 :   if (!mConfigFileHandler.readConfig(configFileName))</span>
+<span class="lineNum">      71 </span>[<span class="branchCov" title="Branch 1 was taken 185 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 3 times"> + </span><span class="branchCov" title="Branch 4 was taken 182 times"> + </span>]:<span class="lineCov">        185 :   if (!mConfigFileHandler.readConfig(configFileName))</span>
 <span class="lineNum">      72 </span>                :            :   {
 <span class="lineNum">      73 </span>        [<span class="branchCov" title="Branch 3 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          3 :     mLogger-&gt;warn(&quot;AdMapAccess::initialize(config) Failed to open {}&quot;, configFileName);</span>
 <span class="lineNum">      74 </span>                :<span class="lineCov">          3 :     return false;</span>
 <span class="lineNum">      75 </span>                :            :   }
 <span class="lineNum">      76 </span>                :            : 
-<span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 3 was taken 178 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">        178 :   mLogger-&gt;info(&quot;AdMapAccess::initialize(config) Successfully opened {}&quot;, configFileName);</span>
-<span class="lineNum">      78 </span>[<span class="branchCov" title="Branch 1 was taken 178 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 178 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        178 :   if (!readMap(mConfigFileHandler.adMapEntry().filename))</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 3 times"> + </span><span class="branchCov" title="Branch 7 was taken 175 times"> + </span>]
+<span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 3 was taken 182 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">        182 :   mLogger-&gt;info(&quot;AdMapAccess::initialize(config) Successfully opened {}&quot;, configFileName);</span>
+<span class="lineNum">      78 </span>[<span class="branchCov" title="Branch 1 was taken 182 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 182 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        182 :   if (!readMap(mConfigFileHandler.adMapEntry().filename))</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 3 times"> + </span><span class="branchCov" title="Branch 7 was taken 179 times"> + </span>]
 <span class="lineNum">      79 </span>                :            :   {
 <span class="lineNum">      80 </span>[<span class="branchCov" title="Branch 1 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          3 :     mLogger-&gt;warn(&quot;Unable to read map {}&quot;, mConfigFileHandler.adMapEntry().filename);</span>
 <span class="lineNum">      81 </span>        [<span class="branchCov" title="Branch 1 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          3 :     reset();</span>
 <span class="lineNum">      82 </span>                :<span class="lineCov">          3 :     return false;</span>
 <span class="lineNum">      83 </span>                :            :   }
-<span class="lineNum">      84 </span>[<span class="branchCov" title="Branch 1 was taken 175 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 140 times"> + </span><span class="branchCov" title="Branch 4 was taken 35 times"> + </span>]:<span class="lineCov">        175 :   if (mConfigFileHandler.defaultEnuReferenceAvailable())</span>
+<span class="lineNum">      84 </span>[<span class="branchCov" title="Branch 1 was taken 179 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 140 times"> + </span><span class="branchCov" title="Branch 4 was taken 39 times"> + </span>]:<span class="lineCov">        179 :   if (mConfigFileHandler.defaultEnuReferenceAvailable())</span>
 <span class="lineNum">      85 </span>                :            :   {
 <span class="lineNum">      86 </span>[<span class="branchCov" title="Branch 1 was taken 140 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 140 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        140 :     setENUReferencePoint(mConfigFileHandler.defaultEnuReference());</span>
 <span class="lineNum">      87 </span>                :            :   }
-<span class="lineNum">      88 </span>                :<span class="lineCov">        175 :   return true;</span>
+<span class="lineNum">      88 </span>                :<span class="lineCov">        179 :   return true;</span>
 <a name="89"><span class="lineNum">      89 </span>                :            : }</a>
 <span class="lineNum">      90 </span>                :            : 
 <span class="lineNum">      91 </span>                :<span class="lineCov">          5 : bool AdMapAccess::initializeFromOpenDriveContent(std::string const &amp;openDriveContent,</span>
@@ -251,20 +251,20 @@
 <span class="lineNum">     176 </span>                :<span class="lineCov">         25 :   return true;</span>
 <a name="177"><span class="lineNum">     177 </span>                :            : }</a>
 <span class="lineNum">     178 </span>                :            : 
-<span class="lineNum">     179 </span>                :<span class="lineCov">        416 : void AdMapAccess::reset()</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">        424 : void AdMapAccess::reset()</span>
 <span class="lineNum">     180 </span>                :            : {
-<span class="lineNum">     181 </span>        [<span class="branchCov" title="Branch 1 was taken 416 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        832 :   LockGuard guard(mMutex);</span>
-<span class="lineNum">     182 </span>        [<span class="branchCov" title="Branch 1 was taken 416 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        416 :   mStore = std::make_shared&lt;Store&gt;();</span>
-<span class="lineNum">     183 </span>        [<span class="branchCov" title="Branch 1 was taken 416 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        416 :   mConfigFileHandler.reset();</span>
-<span class="lineNum">     184 </span>                :<span class="lineCov">        416 :   mInitializedFromStore = false;</span>
-<span class="lineNum">     185 </span>        [<span class="branchCov" title="Branch 1 was taken 416 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        416 :   mCoordinateTransform = std::make_shared&lt;point::CoordinateTransform&gt;();</span>
-<a name="186"><span class="lineNum">     186 </span>                :<span class="lineCov">        416 : }</span></a>
+<span class="lineNum">     181 </span>        [<span class="branchCov" title="Branch 1 was taken 424 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        848 :   LockGuard guard(mMutex);</span>
+<span class="lineNum">     182 </span>        [<span class="branchCov" title="Branch 1 was taken 424 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        424 :   mStore = std::make_shared&lt;Store&gt;();</span>
+<span class="lineNum">     183 </span>        [<span class="branchCov" title="Branch 1 was taken 424 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        424 :   mConfigFileHandler.reset();</span>
+<span class="lineNum">     184 </span>                :<span class="lineCov">        424 :   mInitializedFromStore = false;</span>
+<span class="lineNum">     185 </span>        [<span class="branchCov" title="Branch 1 was taken 424 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        424 :   mCoordinateTransform = std::make_shared&lt;point::CoordinateTransform&gt;();</span>
+<a name="186"><span class="lineNum">     186 </span>                :<span class="lineCov">        424 : }</span></a>
 <span class="lineNum">     187 </span>                :            : 
-<span class="lineNum">     188 </span>                :<span class="lineCov">        178 : bool AdMapAccess::readMap(std::string const &amp;mapName)</span>
+<span class="lineNum">     188 </span>                :<span class="lineCov">        182 : bool AdMapAccess::readMap(std::string const &amp;mapName)</span>
 <span class="lineNum">     189 </span>                :            : {
-<span class="lineNum">     190 </span>        [<span class="branchCov" title="Branch 1 was taken 30 times"> + </span><span class="branchCov" title="Branch 2 was taken 148 times"> + </span>]:<span class="lineCov">        178 :   if (ad::map::opendrive::AdMapFactory::isOpenDriveMap(mapName))</span>
+<span class="lineNum">     190 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 148 times"> + </span>]:<span class="lineCov">        182 :   if (ad::map::opendrive::AdMapFactory::isOpenDriveMap(mapName))</span>
 <span class="lineNum">     191 </span>                :            :   {
-<span class="lineNum">     192 </span>                :<span class="lineCov">         30 :     return readOpenDriveMap(mapName);</span>
+<span class="lineNum">     192 </span>                :<span class="lineCov">         34 :     return readOpenDriveMap(mapName);</span>
 <span class="lineNum">     193 </span>                :            :   }
 <span class="lineNum">     194 </span>                :            :   else
 <span class="lineNum">     195 </span>                :            :   {
@@ -272,13 +272,13 @@
 <span class="lineNum">     197 </span>                :            :   }
 <a name="198"><span class="lineNum">     198 </span>                :            : }</a>
 <span class="lineNum">     199 </span>                :            : 
-<span class="lineNum">     200 </span>                :<span class="lineCov">         30 : bool AdMapAccess::readOpenDriveMap(std::string const &amp;mapName)</span>
+<span class="lineNum">     200 </span>                :<span class="lineCov">         34 : bool AdMapAccess::readOpenDriveMap(std::string const &amp;mapName)</span>
 <span class="lineNum">     201 </span>                :            : {
-<span class="lineNum">     202 </span>        [<span class="branchCov" title="Branch 2 was taken 30 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         60 :   opendrive::AdMapFactory factory(*mStore);</span>
-<span class="lineNum">     203 </span>                :<span class="lineCov">         30 :   return factory.createAdMap(mapName,</span>
-<span class="lineNum">     204 </span>        [<span class="branchCov" title="Branch 1 was taken 30 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         30 :                              static_cast&lt;double&gt;(mConfigFileHandler.adMapEntry().openDriveOverlapMargin),</span>
-<span class="lineNum">     205 </span>        [<span class="branchCov" title="Branch 1 was taken 30 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         30 :                              mConfigFileHandler.adMapEntry().openDriveDefaultIntersectionType,</span>
-<span class="lineNum">     206 </span>  [<span class="branchCov" title="Branch 1 was taken 30 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 30 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">         90 :                              mConfigFileHandler.adMapEntry().openDriveDefaultTrafficLightType);</span>
+<span class="lineNum">     202 </span>        [<span class="branchCov" title="Branch 2 was taken 34 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         68 :   opendrive::AdMapFactory factory(*mStore);</span>
+<span class="lineNum">     203 </span>                :<span class="lineCov">         34 :   return factory.createAdMap(mapName,</span>
+<span class="lineNum">     204 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         34 :                              static_cast&lt;double&gt;(mConfigFileHandler.adMapEntry().openDriveOverlapMargin),</span>
+<span class="lineNum">     205 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         34 :                              mConfigFileHandler.adMapEntry().openDriveDefaultIntersectionType,</span>
+<span class="lineNum">     206 </span>  [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 34 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        102 :                              mConfigFileHandler.adMapEntry().openDriveDefaultTrafficLightType);</span>
 <a name="207"><span class="lineNum">     207 </span>                :            : }</a>
 <span class="lineNum">     208 </span>                :            : 
 <span class="lineNum">     209 </span>                :<span class="lineCov">        148 : bool AdMapAccess::readAdMap(std::string const &amp;mapName)</span>

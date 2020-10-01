@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -94,17 +94,17 @@
 <span class="lineNum">      23 </span>                :            :  * @brief Converts an opendrive id into an ad::map::LaneId
 <a name="24"><span class="lineNum">      24 </span>                :            :  * @param[in] id opendrive::Id</a>
 <span class="lineNum">      25 </span>                :            :  */
-<span class="lineNum">      26 </span>                :<span class="lineCov">     165211 : inline lane::LaneId toLaneId(::opendrive::Id id)</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">     219364 : inline lane::LaneId toLaneId(::opendrive::Id id)</span>
 <span class="lineNum">      27 </span>                :            : {
-<span class="lineNum">      28 </span>                :<span class="lineCov">     165211 :   return lane::LaneId(id);</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">     219364 :   return lane::LaneId(id);</span>
 <span class="lineNum">      29 </span>                :            : }
 <span class="lineNum">      30 </span>                :            : 
 <span class="lineNum">      31 </span>                :            : /**
 <a name="32"><span class="lineNum">      32 </span>                :            :  * @brief Converts an OpenDRIVE landmark id</a>
 <span class="lineNum">      33 </span>                :            :  */
-<span class="lineNum">      34 </span>                :<span class="lineCov">         91 : inline landmark::LandmarkId toLandmarkId(int id)</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">       3884 : inline landmark::LandmarkId toLandmarkId(int id)</span>
 <span class="lineNum">      35 </span>                :            : {
-<span class="lineNum">      36 </span>                :<span class="lineCov">         91 :   return landmark::LandmarkId(size_t(id));</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">       3884 :   return landmark::LandmarkId(size_t(id));</span>
 <span class="lineNum">      37 </span>                :            : }
 <span class="lineNum">      38 </span>                :            : 
 <span class="lineNum">      39 </span>                :            : /**

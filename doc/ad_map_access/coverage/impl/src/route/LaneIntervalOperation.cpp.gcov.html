@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">48</td>
@@ -138,15 +138,15 @@
 <span class="lineNum">      65 </span>                :<span class="lineCov">          1 :   return std::fabs(first.parametricOffset - second.parametricOffset);</span>
 <a name="66"><span class="lineNum">      66 </span>                :            : }</a>
 <span class="lineNum">      67 </span>                :            : 
-<span class="lineNum">      68 </span>                :<span class="lineCov">      12581 : bool isRouteDirectionPositive(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">      11998 : bool isRouteDirectionPositive(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">      69 </span>                :            : {
-<span class="lineNum">      70 </span>        [<span class="branchCov" title="Branch 1 was taken 81 times"> + </span><span class="branchCov" title="Branch 2 was taken 12500 times"> + </span>]:<span class="lineCov">      12581 :   if (laneInterval.start == laneInterval.end)</span>
+<span class="lineNum">      70 </span>        [<span class="branchCov" title="Branch 1 was taken 105 times"> + </span><span class="branchCov" title="Branch 2 was taken 11893 times"> + </span>]:<span class="lineCov">      11998 :   if (laneInterval.start == laneInterval.end)</span>
 <span class="lineNum">      71 </span>                :            :   {
-<span class="lineNum">      72 </span>                :<span class="lineCov">         81 :     return lane::isLaneDirectionPositive(laneInterval.laneId) ^ laneInterval.wrongWay;</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">        105 :     return lane::isLaneDirectionPositive(laneInterval.laneId) ^ laneInterval.wrongWay;</span>
 <span class="lineNum">      73 </span>                :            :   }
 <span class="lineNum">      74 </span>                :            :   else
 <span class="lineNum">      75 </span>                :            :   {
-<span class="lineNum">      76 </span>                :<span class="lineCov">      12500 :     return (laneInterval.start &lt; laneInterval.end);</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">      11893 :     return (laneInterval.start &lt; laneInterval.end);</span>
 <span class="lineNum">      77 </span>                :            :   }
 <a name="78"><span class="lineNum">      78 </span>                :            : }</a>
 <span class="lineNum">      79 </span>                :            : 
@@ -674,10 +674,10 @@
 <span class="lineNum">     547 </span>                :<span class="lineCov">         24 :   return result;</span>
 <a name="548"><span class="lineNum">     548 </span>                :            : }</a>
 <span class="lineNum">     549 </span>                :            : 
-<span class="lineNum">     550 </span>                :<span class="lineCov">       1440 : restriction::SpeedLimitList getSpeedLimits(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">     550 </span>                :<span class="lineCov">       1392 : restriction::SpeedLimitList getSpeedLimits(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">     551 </span>                :            : {
-<span class="lineNum">     552 </span>        [<span class="branchCov" title="Branch 1 was taken 1440 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2880 :   auto lanePtr = lane::getLanePtr(laneInterval.laneId);</span>
-<span class="lineNum">     553 </span>[<span class="branchCov" title="Branch 1 was taken 1440 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 1440 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">       2880 :   return getSpeedLimits(*lanePtr, toParametricRange(laneInterval));</span>
+<span class="lineNum">     552 </span>        [<span class="branchCov" title="Branch 1 was taken 1392 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2784 :   auto lanePtr = lane::getLanePtr(laneInterval.laneId);</span>
+<span class="lineNum">     553 </span>[<span class="branchCov" title="Branch 1 was taken 1392 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 1392 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">       2784 :   return getSpeedLimits(*lanePtr, toParametricRange(laneInterval));</span>
 <a name="554"><span class="lineNum">     554 </span>                :            : }</a>
 <span class="lineNum">     555 </span>                :            : 
 <span class="lineNum">     556 </span>                :<span class="lineNoCov">          0 : void getMetricRanges(LaneInterval const &amp;laneInterval,</span>

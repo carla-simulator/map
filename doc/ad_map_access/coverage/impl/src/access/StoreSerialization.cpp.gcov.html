@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-09-29 07:06:59</td>
+            <td class="headerValue">2020-10-01 15:07:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">9</td>
@@ -247,12 +247,12 @@
 <span class="lineNum">     163 </span>                :            : 
 <span class="lineNum">     164 </span>                :<span class="lineCov">          2 : bool Store::storeGeometry(GeometryStore &amp;gs)</span>
 <span class="lineNum">     165 </span>                :            : {
-<span class="lineNum">     166 </span>        [<span class="branchCov" title="Branch 3 was taken 612 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">        614 :   for (auto lane : lane_map_)</span>
+<span class="lineNum">     166 </span>        [<span class="branchCov" title="Branch 3 was taken 600 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">        602 :   for (auto lane : lane_map_)</span>
 <span class="lineNum">     167 </span>                :            :   {
-<span class="lineNum">     168 </span>[<span class="branchCov" title="Branch 2 was taken 612 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 612 times"> + </span>]:<span class="lineCov">        612 :     if (!gs.store(lane.second))</span>
+<span class="lineNum">     168 </span>[<span class="branchCov" title="Branch 2 was taken 600 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 600 times"> + </span>]:<span class="lineCov">        600 :     if (!gs.store(lane.second))</span>
 <span class="lineNum">     169 </span>                :            :     {
 <span class="lineNum">     170 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]:<span class="lineNoCov">          0 :       access::getLogger()-&gt;error(&quot;Store geometry failed for lane {}&quot;, lane.first);</span>
-<span class="lineNum">     171 </span>        [<span class="branchCov" title="Branch 1 was taken 612 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        612 :       return false;</span>
+<span class="lineNum">     171 </span>        [<span class="branchCov" title="Branch 1 was taken 600 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        600 :       return false;</span>
 <span class="lineNum">     172 </span>                :            :     }
 <span class="lineNum">     173 </span>                :            :   }
 <span class="lineNum">     174 </span>                :<span class="lineCov">          2 :   return true;</span>
@@ -260,12 +260,12 @@
 <span class="lineNum">     176 </span>                :            : 
 <span class="lineNum">     177 </span>                :<span class="lineCov">          1 : bool Store::restoreGeometry(const GeometryStore &amp;gs)</span>
 <span class="lineNum">     178 </span>                :            : {
-<span class="lineNum">     179 </span>        [<span class="branchCov" title="Branch 3 was taken 306 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">        307 :   for (auto lane : lane_map_)</span>
+<span class="lineNum">     179 </span>        [<span class="branchCov" title="Branch 3 was taken 300 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">        301 :   for (auto lane : lane_map_)</span>
 <span class="lineNum">     180 </span>                :            :   {
-<span class="lineNum">     181 </span>[<span class="branchCov" title="Branch 2 was taken 306 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 306 times"> + </span>]:<span class="lineCov">        306 :     if (!gs.restore(lane.second))</span>
+<span class="lineNum">     181 </span>[<span class="branchCov" title="Branch 2 was taken 300 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 300 times"> + </span>]:<span class="lineCov">        300 :     if (!gs.restore(lane.second))</span>
 <span class="lineNum">     182 </span>                :            :     {
 <span class="lineNum">     183 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]:<span class="lineNoCov">          0 :       access::getLogger()-&gt;error(&quot;Restore geometry failed for lane {}&quot;, lane.first);</span>
-<span class="lineNum">     184 </span>        [<span class="branchCov" title="Branch 1 was taken 306 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        306 :       return false;</span>
+<span class="lineNum">     184 </span>        [<span class="branchCov" title="Branch 1 was taken 300 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        300 :       return false;</span>
 <span class="lineNum">     185 </span>                :            :     }
 <span class="lineNum">     186 </span>                :            :   }
 <span class="lineNum">     187 </span>                :<span class="lineCov">          1 :   return true;</span>
@@ -273,12 +273,12 @@
 <span class="lineNum">     189 </span>                :            : 
 <span class="lineNum">     190 </span>                :<span class="lineCov">          1 : bool Store::checkGeometry(const GeometryStore &amp;gs)</span>
 <span class="lineNum">     191 </span>                :            : {
-<span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 3 was taken 306 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">        307 :   for (auto lane : lane_map_)</span>
+<span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 3 was taken 300 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">        301 :   for (auto lane : lane_map_)</span>
 <span class="lineNum">     193 </span>                :            :   {
-<span class="lineNum">     194 </span>[<span class="branchCov" title="Branch 2 was taken 306 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 306 times"> + </span>]:<span class="lineCov">        306 :     if (!gs.check(lane.second))</span>
+<span class="lineNum">     194 </span>[<span class="branchCov" title="Branch 2 was taken 300 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 300 times"> + </span>]:<span class="lineCov">        300 :     if (!gs.check(lane.second))</span>
 <span class="lineNum">     195 </span>                :            :     {
 <span class="lineNum">     196 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 5 was not executed"> # </span><span class="branchNoExec" title="Branch 6 was not executed"> # </span>]:<span class="lineNoCov">          0 :       access::getLogger()-&gt;error(&quot;Redundant geometry check failed!&quot;);</span>
-<span class="lineNum">     197 </span>        [<span class="branchCov" title="Branch 1 was taken 306 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        306 :       return false;</span>
+<span class="lineNum">     197 </span>        [<span class="branchCov" title="Branch 1 was taken 300 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        300 :       return false;</span>
 <span class="lineNum">     198 </span>                :            :     }
 <span class="lineNum">     199 </span>                :            :   }
 <span class="lineNum">     200 </span>        [<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;info(&quot;Redundant geometry check ok.&quot;);</span>
