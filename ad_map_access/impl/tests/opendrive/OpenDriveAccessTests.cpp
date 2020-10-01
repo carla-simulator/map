@@ -38,6 +38,10 @@ struct OpenDriveAccessTests : ::testing::Test
   void checkEdgePoints(lane::LaneId laneId, point::ECEFEdge const &edge)
   {
     EXPECT_GE(edge.size(), 2u) << static_cast<uint64_t>(laneId);
+    if (edge.size() == 2u)
+    {
+      return;
+    }
     for (auto pointIter = edge.begin(); pointIter != edge.end(); pointIter++)
     {
       auto nextPointIter = pointIter + 1;
@@ -45,7 +49,7 @@ struct OpenDriveAccessTests : ::testing::Test
       {
         auto deltaPoints = *pointIter - *nextPointIter;
         auto pointDistance = vectorLength(deltaPoints);
-        EXPECT_NE(pointDistance, physics::Distance(0.)) << static_cast<uint64_t>(laneId);
+        EXPECT_NE(pointDistance, physics::Distance(0.)) << static_cast<uint64_t>(laneId) << " num: " << edge.size();
       }
     }
   }
@@ -221,6 +225,52 @@ TEST_F(OpenDriveAccessTests, lane_points_town01)
 TEST_F(OpenDriveAccessTests, lane_contact_points_town01)
 {
   ASSERT_TRUE(access::init("test_files/Town01.txt"));
+
+  for (auto laneId : lane::getLanes())
+  {
+    auto lane = lane::getLane(laneId);
+    checkEdgeContacts(lane);
+  }
+}
+
+TEST_F(OpenDriveAccessTests, lane_points_town03)
+{
+  ASSERT_TRUE(access::init("test_files/Town03.txt"));
+
+  for (auto laneId : lane::getLanes())
+  {
+    auto lane = lane::getLane(laneId);
+    checkEdgePoints(lane.id, lane.edgeLeft.ecefEdge);
+    checkEdgePoints(lane.id, lane.edgeRight.ecefEdge);
+  }
+}
+
+TEST_F(OpenDriveAccessTests, lane_contact_points_town03)
+{
+  ASSERT_TRUE(access::init("test_files/Town03.txt"));
+
+  for (auto laneId : lane::getLanes())
+  {
+    auto lane = lane::getLane(laneId);
+    checkEdgeContacts(lane);
+  }
+}
+
+TEST_F(OpenDriveAccessTests, lane_points_town04)
+{
+  ASSERT_TRUE(access::init("test_files/Town04.txt"));
+
+  for (auto laneId : lane::getLanes())
+  {
+    auto lane = lane::getLane(laneId);
+    checkEdgePoints(lane.id, lane.edgeLeft.ecefEdge);
+    checkEdgePoints(lane.id, lane.edgeRight.ecefEdge);
+  }
+}
+
+TEST_F(OpenDriveAccessTests, lane_contact_points_town04)
+{
+  ASSERT_TRUE(access::init("test_files/Town04.txt"));
 
   for (auto laneId : lane::getLanes())
   {

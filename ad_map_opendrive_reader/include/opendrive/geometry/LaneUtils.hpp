@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -35,7 +35,10 @@ inline bool near(Point const &left, Point const &right, double resolution = 1e-3
 }
 
 bool lanesOverlap(Lane const &leftLane, Lane const &rightLane, double const overlapMargin);
-void invertLane(Lane &lane);
+void invertLaneAndNeighbors(LaneMap &laneMap, Lane &lane);
+void checkAddSuccessor(Lane &lane, Lane const &otherLane);
+void checkAddPredecessor(Lane &lane, Lane const &otherLane);
+
 Id laneId(int roadId, int laneSectionIndex, int laneIndex);
 }
 }

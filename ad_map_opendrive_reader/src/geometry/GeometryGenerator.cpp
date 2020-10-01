@@ -251,6 +251,63 @@ bool initializeLaneMap(opendrive::OpenDriveData &mapData)
   return ok;
 }
 
+void normalizeEdge(Id const id, std::string const &what, Edge &edge)
+{
+  if (edge.size() <= 2u)
+  {
+    // if edge only consists of 2 points we could only remove the whole edge in case the points are too near to each
+    // other
+    return;
+  }
+  std::size_t pointsToDrop = 0u;
+  Point previousEdgeDir(0., 0.);
+  for (std::size_t i = 1u; i < edge.size(); ++i)
+  {
+    // i-pointsToDrop > 0
+    if (pointsToDrop > 0u)
+    {
+      edge[i - pointsToDrop] = edge[i];
+    }
+    if (edge[i - pointsToDrop] == edge[i - pointsToDrop - 1])
+    {
+      // drop identical points
+      // std::cerr<< "normalizeEdge[" << id << "] dropping identical point from " << what << " edge at index: " << i <<
+      // std::endl;
+      pointsToDrop++;
+    }
+    else
+    {
+      //  moving the middle line in a narrow curve often leads to artifacts (circles) which are removed by the below
+      auto nextEdgeDir = edge[i - pointsToDrop] - edge[i - pointsToDrop - 1];
+      if (previousEdgeDir != Point(0., 0.))
+      {
+        auto dotProduct = previousEdgeDir.dot(nextEdgeDir);
+        if (dotProduct < 0.)
+        {
+          // std::cerr<< "normalizeEdge[" << id << "] dropping extreme direction changing point from " << what << " edge
+          // at index: " << i << std::endl;
+          pointsToDrop++;
+        }
+        else
+        {
+          previousEdgeDir = nextEdgeDir;
+        }
+      }
+      else
+      {
+        previousEdgeDir = nextEdgeDir;
+      }
+    }
+  }
+  if (pointsToDrop > 0u)
+  {
+    std::size_t const newEdgeSize = std::max(std::size_t(2u), edge.size() - pointsToDrop);
+    // std::cerr<< "normalizeEdge[" << id << "] dropping points from " << what << " edge: " << pointsToDrop << "
+    // remaining: " << newEdgeSize << std::endl;
+    edge.resize(newEdgeSize, Point(0., 0.));
+  }
+}
+
 bool generateRoadGeometry(RoadInformation &roadInfo, opendrive::OpenDriveData &mapData)
 {
   bool ok = true;
@@ -310,7 +367,8 @@ bool generateRoadGeometry(RoadInformation &roadInfo, opendrive::OpenDriveData &m
         leftPoint.ApplyLateralOffset(borderOffset + width);
         rightPoint.ApplyLateralOffset(borderOffset);
 
-        auto id = laneId(roadId, laneSectionIndex, laneInfo.attributes.id);
+        auto const id = laneId(roadId, laneSectionIndex, laneInfo.attributes.id);
+
         mapData.laneMap[id].leftEdge.push_back(leftPoint.location);
         mapData.laneMap[id].rightEdge.push_back(rightPoint.location);
         borderOffset += width;
@@ -327,12 +385,19 @@ bool generateRoadGeometry(RoadInformation &roadInfo, opendrive::OpenDriveData &m
         leftPoint.ApplyLateralOffset(borderOffset);
         rightPoint.ApplyLateralOffset(borderOffset - width);
 
-        auto id = laneId(roadId, laneSectionIndex, laneInfo.attributes.id);
+        auto const id = laneId(roadId, laneSectionIndex, laneInfo.attributes.id);
+
         mapData.laneMap[id].leftEdge.push_back(leftPoint.location);
         mapData.laneMap[id].rightEdge.push_back(rightPoint.location);
         borderOffset -= width;
       }
     }
+  }
+
+  for (auto &lane : mapData.laneMap)
+  {
+    normalizeEdge(lane.first, "left", lane.second.leftEdge);
+    normalizeEdge(lane.first, "right", lane.second.rightEdge);
   }
 
   return ok;
@@ -538,14 +603,14 @@ void setPredecessor(::opendrive::OpenDriveData &mapData,
     if (contact == ::opendrive::ContactPoint::End)
     {
       predecessorId = laneId(roadId, roadIt->lanes.lane_sections.size(), laneInfo.link->predecessor_id);
-      mapData.laneMap[predecessorId].successors.push_back(thisLaneId);
+      checkAddSuccessor(mapData.laneMap[predecessorId], mapData.laneMap[thisLaneId]);
     }
     else if (contact == ::opendrive::ContactPoint::Start)
     {
       predecessorId = laneId(roadId, 1, laneInfo.link->predecessor_id);
-      mapData.laneMap[predecessorId].predecessors.push_back(thisLaneId);
+      checkAddPredecessor(mapData.laneMap[predecessorId], mapData.laneMap[thisLaneId]);
     }
-    mapData.laneMap[thisLaneId].predecessors.push_back(predecessorId);
+    checkAddPredecessor(mapData.laneMap[thisLaneId], mapData.laneMap[predecessorId]);
   }
 }
 
@@ -569,14 +634,14 @@ void setSuccessor(::opendrive::OpenDriveData &mapData,
     if (contact == ::opendrive::ContactPoint::End)
     {
       successorId = laneId(roadId, roadIt->lanes.lane_sections.size(), laneInfo.link->successor_id);
-      mapData.laneMap[successorId].successors.push_back(thisLaneId);
+      checkAddSuccessor(mapData.laneMap[successorId], mapData.laneMap[thisLaneId]);
     }
     else if (contact == ::opendrive::ContactPoint::Start)
     {
       successorId = laneId(roadId, 1, laneInfo.link->successor_id);
-      mapData.laneMap[successorId].predecessors.push_back(thisLaneId);
+      checkAddPredecessor(mapData.laneMap[successorId], mapData.laneMap[thisLaneId]);
     }
-    mapData.laneMap[thisLaneId].successors.push_back(successorId);
+    checkAddSuccessor(mapData.laneMap[thisLaneId], mapData.laneMap[successorId]);
   }
 }
 
@@ -619,7 +684,7 @@ void setSuccessorPredecessor(::opendrive::OpenDriveData &mapData,
     if (laneInfo.link->predecessor_id != 0)
     {
       Id predecessorId = laneId(roadInfo.attributes.id, laneSectionIndex - 1, laneInfo.link->predecessor_id);
-      mapData.laneMap[currentLaneId].predecessors.push_back(predecessorId);
+      checkAddPredecessor(mapData.laneMap[currentLaneId], mapData.laneMap[predecessorId]);
     }
   }
 
@@ -629,7 +694,7 @@ void setSuccessorPredecessor(::opendrive::OpenDriveData &mapData,
     if (laneInfo.link->successor_id != 0)
     {
       Id successorId = laneId(roadInfo.attributes.id, laneSectionIndex + 1, laneInfo.link->successor_id);
-      mapData.laneMap[currentLaneId].successors.push_back(successorId);
+      checkAddSuccessor(mapData.laneMap[currentLaneId], mapData.laneMap[successorId]);
     }
   }
   else
@@ -757,24 +822,20 @@ void autoConnectIntersectionLanes(opendrive::OpenDriveData &mapData, double cons
         switch (contactPlace(laneMap[*leftIt], laneMap[*rightIt]))
         {
           case ContactPlace::LeftLeft:
-            laneMap[*leftIt].leftNeighbor = *rightIt;
-            laneMap[*rightIt].leftNeighbor = *leftIt;
-            // lane needs inversion
-            invertLane(mapData.laneMap[*rightIt]);
-            break;
+            // lane and neighbors need inversion
+            invertLaneAndNeighbors(laneMap, mapData.laneMap[*rightIt]);
+          // fallthrough
           case ContactPlace::LeftRight:
             laneMap[*leftIt].leftNeighbor = *rightIt;
             laneMap[*rightIt].rightNeighbor = *leftIt;
             break;
+          case ContactPlace::RightRight:
+            // lane and neighbors need inversion
+            invertLaneAndNeighbors(laneMap, mapData.laneMap[*rightIt]);
+          // fallthrough
           case ContactPlace::RightLeft:
             laneMap[*leftIt].rightNeighbor = *rightIt;
             laneMap[*rightIt].leftNeighbor = *leftIt;
-            break;
-          case ContactPlace::RightRight:
-            laneMap[*leftIt].rightNeighbor = *rightIt;
-            laneMap[*rightIt].rightNeighbor = *leftIt;
-            // lane needs inversion
-            invertLane(mapData.laneMap[*rightIt]);
             break;
           case ContactPlace::Overlap:
           case ContactPlace::None:

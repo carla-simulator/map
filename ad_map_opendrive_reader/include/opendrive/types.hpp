@@ -107,8 +107,12 @@ struct Point
 
   bool operator==(const Point &rhs) const
   {
-    // Points are treated as equal when below 1 micro
-    return (std::fabs(x - rhs.x) < 1e-6) && (std::fabs(y - rhs.y) < 1e-6);
+    // Points are treated as equal when below 1 mm
+    return (std::fabs(x - rhs.x) < 1e-3) && (std::fabs(y - rhs.y) < 1e-3);
+  }
+  bool operator!=(const Point &rhs) const
+  {
+    return !operator==(rhs);
   }
 
   double normSquared() const
@@ -119,6 +123,11 @@ struct Point
   double norm() const
   {
     return sqrt(normSquared());
+  }
+
+  double dot(const Point &other) const
+  {
+    return x * other.x + y * other.y;
   }
 };
 

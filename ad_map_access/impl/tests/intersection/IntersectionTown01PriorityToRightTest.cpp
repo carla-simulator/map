@@ -60,14 +60,6 @@ struct IntersectionPrioRightTown01WestToSouthTest : IntersectionTown01WestToSout
       return IntersectionPriorityToRightWestToSouthTest::expectedIncomingLanesWithLowerPriority();
     }
   }
-
-  virtual lane::LaneIdSet expectedCrossingLanes() const override
-  {
-    // since there are four internal lanes within the intersection from north to south (510149, 510249, 510349, 510449)
-    // the precalculated from the base class don't work here
-    // we have to reduce to the lower half of the lanes
-    return createUnorderedLaneIdSet({lane::LaneId(510349), lane::LaneId(510449)});
-  }
 };
 
 TEST_F(IntersectionPrioRightTown01WestToSouthTest, basic_checks)
