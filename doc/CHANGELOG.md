@@ -1,4 +1,7 @@
 ## Latest changes
+#### :ghost: Maintenance
+* Fixed handling of parametric ranges for degenerated edges (as e.g. present in Town03.xodr)
+* Disable qgis threads to prevent from segfaults
 
 ## Release 2.3.0
 #### :rocket: New Features

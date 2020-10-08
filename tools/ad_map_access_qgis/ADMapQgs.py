@@ -29,14 +29,14 @@ class ADMapQgs(object):
 
     def __init__(self):
         "..."
-        self.worker = None
+        self.workers = []
         self.layers = ADMapQgsLayers()
         self.partition_manager = PartitionManager()
 
     def data_added(self):
         "..."
         self.partition_manager.update()
-        self.worker = None
+        self.workers = []
         self.__add_lane_dir_worker__()
         self.__add_lane_orientation_worker__()
         for contact_type in self.layers.LANE_CONTACT_TYPE:
@@ -48,7 +48,8 @@ class ADMapQgs(object):
         self.__add_lane_edge_worker__()
         for landmark_type in self.layers.LANDMARK_TYPE:
             self.__add_landmark_worker__(landmark_type)
-        self.worker.start()
+        for worker in self.workers:
+            worker.do_work()
 
     def __add_landmark_worker__(self, landmark_type):
         "..."
@@ -56,7 +57,7 @@ class ADMapQgs(object):
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
         runner = LandmarkRunnerGeneric(layer_manager, self.partition_manager.added_landmark_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_edge_worker__(self):
         "..."
@@ -64,7 +65,7 @@ class ADMapQgs(object):
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
         runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_surface_workers__(self, hov, hd):
         "..."
@@ -93,13 +94,13 @@ class ADMapQgs(object):
             layer = self.layers.layer[title]
             layer_manager = self.layers.layer_managers[title]
             runner = LaneRunnerSurface(layer_manager, lane_ids, hd)
-            self.worker = Worker(title, layer, runner, self.worker)
+            self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_speed_worker__(self):
         "..."
         layers = self.layers.lane_speed_layers()
         runner = LaneRunnerSpeed(self, self.partition_manager.added_lane_ids)
-        self.worker = Worker("Speed Limit", layers, runner, self.worker)
+        self.workers.append(Worker("Speed Limit", layers, runner))
 
     def __add_lane_contact_type_worker__(self, contact_type):
         "..."
@@ -107,7 +108,7 @@ class ADMapQgs(object):
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
         runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_topo_worker__(self, position):
         "..."
@@ -115,7 +116,7 @@ class ADMapQgs(object):
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
         runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_dir_worker__(self):
         "..."
@@ -123,7 +124,7 @@ class ADMapQgs(object):
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
         runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_orientation_worker__(self):
         "..."
@@ -131,7 +132,7 @@ class ADMapQgs(object):
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
         runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        self.workers.append(Worker(title, layer, runner))
 
     def __draw_new_lane__(self, new_lane_id):
         "..."

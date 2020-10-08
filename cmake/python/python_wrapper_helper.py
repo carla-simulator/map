@@ -97,8 +97,7 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
         header_list,
         xml_generator_path=generator_path,
         compilation_mode=parser.COMPILATION_MODE.ALL_AT_ONCE,
-        xml_generator_config=xml_generator_config,
-        indexing_suite_version=2)
+        xml_generator_config=xml_generator_config)
 
     # for some reason there is a problem with variables named 'length'
     # the filename is empty and the line no is set to -1

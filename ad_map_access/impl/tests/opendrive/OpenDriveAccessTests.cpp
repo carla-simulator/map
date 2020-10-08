@@ -38,20 +38,24 @@ struct OpenDriveAccessTests : ::testing::Test
   void checkEdgePoints(lane::LaneId laneId, point::ECEFEdge const &edge)
   {
     EXPECT_GE(edge.size(), 2u) << static_cast<uint64_t>(laneId);
-    if (edge.size() == 2u)
+    if (edge.size() > 2u)
     {
-      return;
-    }
-    for (auto pointIter = edge.begin(); pointIter != edge.end(); pointIter++)
-    {
-      auto nextPointIter = pointIter + 1;
-      if (nextPointIter != edge.end())
+      for (auto pointIter = edge.begin(); pointIter != edge.end(); pointIter++)
       {
-        auto deltaPoints = *pointIter - *nextPointIter;
-        auto pointDistance = vectorLength(deltaPoints);
-        EXPECT_NE(pointDistance, physics::Distance(0.)) << static_cast<uint64_t>(laneId) << " num: " << edge.size();
+        auto nextPointIter = pointIter + 1;
+        if (nextPointIter != edge.end())
+        {
+          auto deltaPoints = *pointIter - *nextPointIter;
+          auto pointDistance = vectorLength(deltaPoints);
+          EXPECT_NE(pointDistance, physics::Distance(0.)) << static_cast<uint64_t>(laneId) << " num: " << edge.size();
+        }
       }
     }
+    physics::ParametricRange trange;
+    trange.minimum = physics::ParametricValue(0.);
+    trange.maximum = physics::ParametricValue(1.);
+    auto ecefs = point::getParametricRange(edge, trange);
+    EXPECT_EQ(edge.size(), ecefs.size()) << static_cast<uint64_t>(laneId);
   }
 
   void checkEdgeContacts(lane::Lane const &lane)

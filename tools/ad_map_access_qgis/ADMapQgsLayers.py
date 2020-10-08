@@ -64,36 +64,36 @@ class ADMapQgsLayers(object):
     #
     LANE_SURFACE_COLOR = {
         "UNKNOWN":      "255, 128,   0, 50",
-                            "NORMAL":       "  0,   0, 192, 50",
-                            "INTERSECTION": " 64, 160,  64, 33",
-                            "OTHER":        "  0,   0,   0, 50"}
+        "NORMAL":       "  0,   0, 192, 50",
+        "INTERSECTION": " 64, 160,  64, 33",
+        "OTHER":        "  0,   0,   0, 50"}
     #
     LANE_SPEED_COLOR = {
         "Not set":      "224, 224, 224, 50",
-                            "Set":       " 32, 255, 255, 50"}
+        "Set":       " 32, 255, 255, 50"}
     #
     LANE_TOPO = {
         "Left":         (QColor(0, 255, 0), 0.4, 0.5),
-                    "Right":       (QColor(0, 0, 255), 0.6, 0.5),
-                    "Successor":   (QColor(255, 255, 0), 0.95, 0.2),
-                    "Predecessor": (QColor(0, 255, 255), 0.05, 0.8),
-                    "Overlap":      (QColor(255, 0, 255), 0.5, 0.5)}
+        "Right":       (QColor(0, 0, 255), 0.6, 0.5),
+        "Successor":   (QColor(255, 255, 0), 0.95, 0.2),
+        "Predecessor": (QColor(0, 255, 255), 0.05, 0.8),
+        "Overlap":      (QColor(255, 0, 255), 0.5, 0.5)}
 
     LANE_CONTACT_TYPE = {
         "STOP":               "stop.svg",
-                    "STOP_ALL":           "stop_all.svg",
-                    "YIELD":              "yield.svg",
-                    "TRAFFIC_LIGHT":      "traffic_light.svg",
-                    "CROSSWALK":          "crosswalk.svg",
-                    "PRIO_TO_RIGHT":      "prio_to_right.svg",
-                    "RIGHT_OF_WAY":       "right_of_way.svg",
-                    "PRIO_TO_RIGHT_AND_STRAIGHT":      "prio_to_right_and_straight.svg"}
+        "STOP_ALL":           "stop_all.svg",
+        "YIELD":              "yield.svg",
+        "TRAFFIC_LIGHT":      "traffic_light.svg",
+        "CROSSWALK":          "crosswalk.svg",
+        "PRIO_TO_RIGHT":      "prio_to_right.svg",
+        "RIGHT_OF_WAY":       "right_of_way.svg",
+        "PRIO_TO_RIGHT_AND_STRAIGHT":      "prio_to_right_and_straight.svg"}
     LANDMARK_TYPE = {
         "LANDMARK": "map_marker.svg",
-                  "TREE": "tree.svg",
-                  "STREET_LAMP": "streetlamp.svg",
-                  "TRAFFIC_LIGHT": "traffic_light_landmark.svg",
-                  "DANGER": "Zeichen_101_-_Gefahrstelle_StVO_1970.svg",
+        "TREE": "tree.svg",
+        "STREET_LAMP": "streetlamp.svg",
+        "TRAFFIC_LIGHT": "traffic_light_landmark.svg",
+        "DANGER": "Zeichen_101_-_Gefahrstelle_StVO_1970.svg",
                   "LANES_MERGING": "Zeichen_120_-_Verengte_Fahrbahn_StVO_1970.svg",
                   "CAUTION_PEDESTRIAN": "Zeichen_133-10_-_Fussgaenger_Aufstellung_rechts_StVO_1992.svg",
                   "CAUTION_CHILDREN": "Zeichen_136-10_-_Kinder_Aufstellung_rechts_StVO_1992.svg",
