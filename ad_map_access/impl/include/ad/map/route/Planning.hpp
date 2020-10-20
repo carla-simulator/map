@@ -300,6 +300,11 @@ std::vector<route::FullRoute> predictRoutes(const RoutingParaPoint &start,
                                             RouteCreationMode const routeCreationMode
                                             = RouteCreationMode::SameDrivingDirection);
 
+// FullRouteList predictRoutes(const RoutingParaPoint &start,
+//        					physics::Distance const &predictionDistance,
+//							physics::Duration const &predictionDuration,
+//							RouteCreationMode const routeCreationMode
+//							= RouteCreationMode::SameDrivingDirection);
 /**
  * @brief perform route based prediction restricted by the prediction duration.
  * Note: Route predictions will not stop in the middle of an intersection.

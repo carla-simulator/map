@@ -930,6 +930,16 @@ inline lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &roadSegment)
  */
 std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRoute const &route);
 
+std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRoute const &route);
+
+std::vector<lane::GeoBorder> getGeoBorderOfRoute(FullRoute const &route);
+
+std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRouteList const &route);
+
+std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRouteList const &route);
+
+std::vector<lane::GeoBorder> getGeoBorderOfRoute(FullRouteList const &route);
+
 /**
  * @brief get the ENU heading of a route at the location of the object
  *

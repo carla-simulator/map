@@ -6,12 +6,19 @@
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
+from PyQt5.QtWidgets import QDialog
+from PyQt5.Qt import QDialogButtonBox, QVBoxLayout, QStringListModel, QInputDialog,\
+    QWidget, QComboBox, QSize
 
-import ad_map_access_qgis_python as admap
+from PyQt5 import QtGui, uic, QtWidgets, QtCore
+from PyQt5.QtGui import QIcon
+
+import ad.map
+from utility import *
 import Globs
 from qgis.gui import QgsMapToolEmitPoint
 from qgis.core import QgsField
-from PyQt4.QtCore import QVariant
+from PyQt5.QtCore import QVariant
 from .QGISLayer import WGS84PointLayer, WGS84SurfaceLayer
 
 # too many instance attrs
@@ -39,6 +46,9 @@ class MapPredictionTest(QgsMapToolEmitPoint):
         self.layer_routes = []
         self.pt_start = None
         self.pt_dest = None
+        self.mode = None
+        self.length = None
+        self.duration = None
         self.routes_edges = []
 
     def destroy(self):
@@ -52,6 +62,21 @@ class MapPredictionTest(QgsMapToolEmitPoint):
         self.__create_layers__()
         self.action.setChecked(True)
         Globs.log.info("Map Prediction Test Activated")
+
+        items = []
+        items.append("Same Driving Direction")
+        items.append("All Routable Lanes")
+        items.append("All Neighbor Lanes")
+        items.append("Undefined")
+
+        widget = QWidget()
+        tf = False
+        self.mode, tf = QInputDialog.getItem(widget, "Select Route Creation Mode for Prediction Test               ",
+                                             "Options for creating Route:                     ", items, 0, False)
+        self.length, tf = QInputDialog.getDouble(
+            widget, "Enter length for Prediction Test                         ", "Length:                                         ", 150.0, False)
+        self.duration, tf = QInputDialog.getDouble(
+            widget, "Enter duration for Prediction Test                     ", "Duration:                                       ", 10.0, False)
 
     def deactivate(self):
         "..."
@@ -77,40 +102,32 @@ class MapPredictionTest(QgsMapToolEmitPoint):
         self.layer_waypoints.remove_all_features()
         for layer_route in self.layer_routes:
             layer_route.remove_all_features()
-        self.pt_start = mmpt[5]
-        attrs = ["Start", mmpt[0], mmpt[1], mmpt[2], mmpt[3], mmpt[4]]
+        self.pt_start = mmpt.matchedPoint
+        attrs = ["Start", mmpt.lanePoint.paraPoint, mmpt.type, mmpt.lanePoint.lateralT,
+                 mmpt.lanePoint.laneWidth, mmpt.lanePoint.laneLength]
         self.layer_waypoints.add_lla(self.pt_start, attrs)
 
     def __calculate_predictions__(self):
         "..."
-        routes = admap.Predictions(self.pt_start)
+        routes = Predictions(self.pt_start, self.mode, self.length, self.duration)
+        edgeList = ad.map.route.getGeoBorderOfRoute(routes)
         if routes is not None:
             self.routes_edges = []
             self.__resize_route_layers__(len(routes))
             for route in routes:
                 self.routes_edges.append([])
-                for lanes in route:
-                    for edge in lanes:
-                        self.__add_edge__(edge)
+                for edge in edgeList:
+                    self.__add_edge__(edge)
         else:
             Globs.log.error("Cannot predict route.")
 
     def __add_edge__(self, new_edge):
         "..."
         current_prediction_index = len(self.routes_edges) - 1
-        lane_id_1 = new_edge[0]
-        lane_t_1 = new_edge[1]
         for edge in self.routes_edges[current_prediction_index]:
-            lane_id_0 = edge[0]
-            lane_t_0 = edge[1]
-            if lane_id_0 == lane_id_1:
-                t_start = min(lane_t_0, lane_t_1)
-                t_end = max(lane_t_0, lane_t_1)
-                lla_left = admap.GetLaneSubEdgeLeft(lane_id_0, t_start, t_end)
-                lla_right = admap.GetLaneSubEdgeRight(lane_id_0, t_start, t_end)
-                self.layer_routes[current_prediction_index].add_lla2(lla_left, lla_right, [])
-                self.routes_edges[current_prediction_index].remove(edge)
-                return
+            self.layer_routes[current_prediction_index].add_lla2(new_edge.left, new_edge.right, [])
+            self.routes_edges[current_prediction_index].remove(edge)
+            return
         self.routes_edges[current_prediction_index].append(new_edge)
 
     def __resize_route_layers__(self, required_size):

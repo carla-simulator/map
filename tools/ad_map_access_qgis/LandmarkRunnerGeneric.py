@@ -7,6 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
+import Globs
 from .LandmarkRunner import LandmarkRunner
 
 

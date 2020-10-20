@@ -7,13 +7,12 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-from PyQt4.QtCore import QVariant
-from PyQt4.QtGui import QColor
-from qgis.core import QgsField
+from PyQt5.QtCore import QVariant
+from PyQt5.QtGui import QColor
+from qgis.core import QgsField, QgsProject
 
-import ad_map_access_qgis_python as admap
+import ad.map
 import Globs
-
 from .QGISLayer import WGS84ArrowLayer, WGS84PolylineLayer, WGS84SurfaceLayer, WGS84PointLayer, WGS84SVGPointLayer
 from .LayerManagerLaneEdge import LayerManagerLaneEdge
 from .LayerManagerLaneSurface import LayerManagerLaneSurface
@@ -64,105 +63,105 @@ class ADMapQgsLayers(object):
     #
     LANE_SURFACE_COLOR = {
         "UNKNOWN":      "255, 128,   0, 50",
-                            "NORMAL":       "  0,   0, 192, 50",
-                            "INTERSECTION": " 64, 160,  64, 33",
-                            "OTHER":        "  0,   0,   0, 50"}
+        "NORMAL":       "  0,   0, 192, 50",
+        "INTERSECTION": " 64, 160,  64, 33",
+        "OTHER":        "  0,   0,   0, 50"}
     #
     LANE_SPEED_COLOR = {
         "Not set":      "224, 224, 224, 50",
-                            "Set":       " 32, 255, 255, 50"}
+        "Set":       " 32, 255, 255, 50"}
     #
     LANE_TOPO = {
         "Left":         (QColor(0, 255, 0), 0.4, 0.5),
-                    "Right":       (QColor(0, 0, 255), 0.6, 0.5),
-                    "Successor":   (QColor(255, 255, 0), 0.95, 0.2),
-                    "Predecessor": (QColor(0, 255, 255), 0.05, 0.8),
-                    "Overlap":      (QColor(255, 0, 255), 0.5, 0.5)}
+        "Right":       (QColor(0, 0, 255), 0.6, 0.5),
+        "Successor":   (QColor(255, 255, 0), 0.95, 0.2),
+        "Predecessor": (QColor(0, 255, 255), 0.05, 0.8),
+        "Overlap":      (QColor(255, 0, 255), 0.5, 0.5)}
 
     LANE_CONTACT_TYPE = {
         "STOP":               "stop.svg",
-                    "STOP_ALL":           "stop_all.svg",
-                    "YIELD":              "yield.svg",
-                    "TRAFFIC_LIGHT":      "traffic_light.svg",
-                    "CROSSWALK":          "crosswalk.svg",
-                    "PRIO_TO_RIGHT":      "prio_to_right.svg",
-                    "RIGHT_OF_WAY":       "right_of_way.svg",
-                    "PRIO_TO_RIGHT_AND_STRAIGHT":      "prio_to_right_and_straight.svg"}
+        "STOP_ALL":           "stop_all.svg",
+        "YIELD":              "yield.svg",
+        "TRAFFIC_LIGHT":      "traffic_light.svg",
+        "CROSSWALK":          "crosswalk.svg",
+        "PRIO_TO_RIGHT":      "prio_to_right.svg",
+        "RIGHT_OF_WAY":       "right_of_way.svg",
+        "PRIO_TO_RIGHT_AND_STRAIGHT":      "prio_to_right_and_straight.svg"}
     LANDMARK_TYPE = {
         "LANDMARK": "map_marker.svg",
-                  "TREE": "tree.svg",
-                  "STREET_LAMP": "streetlamp.svg",
-                  "TRAFFIC_LIGHT": "traffic_light_landmark.svg",
-                  "DANGER": "Zeichen_101_-_Gefahrstelle_StVO_1970.svg",
-                  "LANES_MERGING": "Zeichen_120_-_Verengte_Fahrbahn_StVO_1970.svg",
-                  "CAUTION_PEDESTRIAN": "Zeichen_133-10_-_Fussgaenger_Aufstellung_rechts_StVO_1992.svg",
-                  "CAUTION_CHILDREN": "Zeichen_136-10_-_Kinder_Aufstellung_rechts_StVO_1992.svg",
-                  "CAUTION_BICYCLE": "Zeichen_138-10_-_Radverkehr_StVO_2013.svg",
-                  "CAUTION_ANIMALS": "Zeichen_142-10_-_Wildwechsel_Aufstellung_rechts_StVO_1992.svg",
-                  "CAUTION_RAIL_CROSSING_WITH_BARRIER": "Zeichen_150_-_Beschrankter_Bahnuebergang_StVO_1992.svg",
-                  "CAUTION_RAIL_CROSSING": "Zeichen_151_-_Bahnuebergang_StVO_2013.svg",
-                  "YIELD_TRAIN": "Zeichen_201-51_-_Andreaskreuz_stehend_mit_Blitzpfeil_StVO_1992.svg",
-                  "YIELD": "Zeichen_205_-_Vorfahrt_gewaehren_StVO_1970.svg",
-                  "STOP": "Zeichen_206_-_Halt_Vorfahrt_gewaehren_StVO_1970.svg",
-                  "REQUIRED_LEFT_TURN": "Zeichen_209-10_-_Vorgeschriebene_Fahrtrichtung_links_StVO_2017.svg",
-                  "REQUIRED_STRAIGHT": "Zeichen_209-30_-_Vorgeschriebene_Fahrtrichtung_Geradeaus_StVO_2017.svg",
-                  "REQUIRED_RIGHT_TURN": "Zeichen_209_-_Vorgeschriebene_Fahrtrichtung_rechts_StVO_2017.svg",
-                  "REQUIRED_STRAIGHT_OR_LEFT_TURN": "Zeichen_214-10_-_Vorgeschriebene_Fahrtrichtung_Geradeaus_oder_links_StVO_2017.svg",
-                  "REQUIRED_STRAIGHT_OR_RIGHT_TURN": "Zeichen_214_-_Vorgeschriebene_Fahrtrichtung_Geradeaus_oder_rechts_StVO_2017.svg",
-                  "ROUNDABOUT": "Zeichen_215_-_Kreisverkehr_StVO_2000.svg",
-                  "PASS_LEFT": "Zeichen_222-10_-_Vorgeschriebene_Vorbeifahrt_Links_vorbei_StVO_2017.svg",
-                  "PASS_RIGHT": "Zeichen_222_-_Vorgeschriebene_Vorbeifahrt_Rechts_vorbei_StVO_2017.svg",
-                  "BYBICLE_PATH": "Zeichen_237_-_Sonderweg_Radfahrer_StVO_1992.svg",
-                  "FOOTWALK": "Zeichen_239_-_Sonderweg_Fussgaenger_StVO_1992.svg",
-                  "FOOTWALK_BICYCLE_SHARED": "Zeichen_240_-_Gemeinsamer_Fuss-_und_Radweg_StVO_1992.svg",
-                  "FOOTWALK_BICYCLE_SEP_LEFT": "Zeichen_241-30_-_getrennter_Rad-_und_Fussweg_StVO_1992.svg",
-                  "FOOTWALK_BICYCLE_SEP_RIGHT": "Zeichen_241-31_-_getrennter_Fuss-_und_Radweg_StVO_1992.svg",
-                  "PEDESTRIAN_AREA_BEGIN": "Zeichen_242.1_-_Beginn_einer_Fussgaengerzone_StVO_2009.svg",
-                  "ACCESS_FORBIDDEN": "Zeichen_250_-_Verbot_fuer_Fahrzeuge_aller_Art_StVO_1970.svg",
-                  "ACCESS_FORBIDDEN_TRUCKS": "Zeichen_253_-_Verbot_fuer_Kraftfahrzeuge_mit_einem_zulaessigen_Gesamtgewicht_StVO_1992.svg",
-                  "ACCESS_FORBIDDEN_BICYCLE": "Zeichen_254_-_Verbot_fuer_Radfahrer_StVO_1992.svg",
-                  "ACCESS_FORBIDDEN_MOTORVEHICLES": "Zeichen_260_-_Verbot_fuer_Kraftraeder_und_Mofas_und_sonstige_mehrspurige_Kraftfahrzeuge_StVO_1992.svg",
-                  "ACCESS_FORBIDDEN_WEIGHT": "Zeichen_262-5_5_-_Verbot_fuer_Fahrzeuge_ueber_angegebene_tatsaechliche_Masse_StVO_2017.svg",
-                  "ACCESS_FORBIDDEN_WIDTH": "Zeichen_264-2_-_Verbot_fuer_Fahrzeuge_ueber_angegebene_tatsaechliche_Breite_StVO_2017.svg",
-                  "ACCESS_FORBIDDEN_HEIGHT": "Zeichen_265-3_8_-_Verbot_fuer_Fahrzeuge_ueber_angegebene_tatsaechliche_Hoehe_StVO_2017.svg",
-                  "ACCESS_FORBIDDEN_WRONG_DIR": "Zeichen_267_-_Verbot_der_Einfahrt_StVO_1970.svg",
-                  "ENVIORNMENT_ZONE_BEGIN": "Zeichen_270.1_-_Beginn_eines_Verkehrsverbots_zur_Verminderung_schaedlicher_Luftverunreinigungen_in_einer_Zone_I_StVO_2007.svg",
-                  "ENVIORNMENT_ZONE_END": "Zeichen_270.2_-_Ende_einer_Verkehrsverbotszone_zur_Verminderung_schaedlicher_Luftverunreinigungen_in_einer_Zone_StVO_2007.svg",
-                  "SPEED_ZONE_30_BEGIN": "Zeichen_274.1_-_Beginn_einer_Tempo_30-Zone_StVO_2013.svg",
-                  "SPEED_ZONE_30_END": "Zeichen_274.2_-_Ende_einer_Tempo_30-Zone_einseitig_StVO_2013.svg",
-                  "MAX_SPEED": "Zeichen_274-50_-_Zulaessige_Hoechstgeschwindigkeit_StVO_2017.svg",
-                  "HAS_WAY_NEXT_INTERSECTION": "Zeichen_301_-_Vorfahrt_StVO_1970.svg",
-                  "PRIORITY_WAY": "Zeichen_306_-_Vorfahrtstrasse_StVO_1970.svg",
-                  "CITY_BEGIN": "Zeichen_310_-_Ortstafel_Vorderseite_StVO_2017.svg",
-                  "CITY_END": "Zeichen_311_-_Ortstafel_Rueckseite_StVO_2017.svg",
-                  "MOTORWAY_BEGIN": "Zeichen_330.1_-_Autobahn_StVO_2013.svg",
-                  "MOTORWAY_END": "Zeichen_330.2_-_Ende_der_Autobahn_StVO_2013.svg",
-                  "MOTORVEHICLE_BEGIN": "Zeichen_331.1_-_Kraftfahrstrasse_StVO_2013.svg",
-                  "MOTORVEHICLE_END": "Zeichen_331.2_-_Ende_der_Kraftfahrstrasse_StVO_2013.svg",
-                  "INFO_MOTORWAY_INFO": "Zeichen_332_-_Ausfahrt_von_der_Autobahn_StVO_1981.svg",
-                  "CUL_DE_SAC_EXCEPT_PED_BICYCLE": "Zeichen_357-50_-_Durchlaessige_Sackgasse_fuer_Fussgaenger_und_Radverkehr_StVO_2009.svg",
-                  "CUL_DE_SAC": "Zeichen_357_-_Sackgasse_StVO_1992.svg",
-                  "INFO_NUMBER_OF_AUTOBAHN": "Zeichen_405_-_Nummernschild_fuer_Autobahnen_StVO_1992.svg",
-                  "DIRECTION_TURN_TO_AUTOBAHN": "Zeichen_430-20_-_Wegweiser_zur_Autobahn_StVO_1992.svg",
-                  "DIRECTION_TURN_TO_LOCAL": "Zeichen_432-20_-_Wegweiser_zu_inneroertlichen_Zielen_und_zu_Einrichtungen_mit_erheblicher_Verkehrsbedeutung_rechtsweisend_nach_RWB_StVO_1992.svg",
-                  "DESTINATION_BOARD": "Zeichen_438_-_Vorwegweiser_StVO_1992.svg",
-                  "SUPPLEMENT_ARROW_APPLIES_LEFT": "Zusatzzeichen_1000-11_-_Richtung_der_Gefahrstelle_linksweisend_StVO_1992.svg",
-                  "SUPPLEMENT_ARROW_APPLIES_RIGHT": "Zusatzzeichen_1000-21_-_Richtung_der_Gefahrstelle_rechtsweisend_StVO_1992.svg",
-                  "SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT": "Zusatzzeichen_1000-30_-_beide_Richtungen_zwei_gegengerichtete_waagerechte_Pfeile_StVO_1992.svg",
-                  "SUPPLEMENT_ARROW_APPLIES_UP_DOWN": "Zusatzzeichen_1000-31_-_beide_Richtungen_zwei_gegengerichtete_senkrechte_Pfeile_StVO_1992.svg",
-                  "SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE": "Zusatzzeichen_1000-32_-_Radfahrer_kreuzen_von_rechts_und_links_StVO_1997.svg",
-                  "SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE": "Zusatzzeichen_1000-33_-_Radverkehr_im_Gegenverkehr_StVO_1997.svg",
-                  "SUPPLEMENT_APPLIES_NEXT_N_KM": "Zusatzzeichen_1001-31_-_auf_..._km_600x330_StVO_1992.svg",
-                  "SUPPLEMENT_ENDS": "Zusatzzeichen_1012-31_-_Ende_600x330_StVO_1992.svg",
-                  "SUPPLEMENT_RESIDENTS_ALLOWED": "Zusatzzeichen_1020-30_-_Anlieger_frei_600x330_StVO_1992.svg",
-                  "SUPPLEMENT_BICYCLE_ALLOWED": "Zusatzzeichen_1022-10_-_Radfahrer_frei_StVO_1992.svg",
-                  "SUPPLEMENT_MOPED_ALLOWED": "Zusatzzeichen_1022-11_-_Mofas_frei_600x450_StVO_1992.svg",
-                  "SUPPLEMENT_TRAM_ALLOWED": "Zusatzzeichen_1024-16_-_Strassenbahn_frei_StVO_1992.svg",
-                  "SUPPLEMENT_FORESTAL_ALLOWED": "Zusatzzeichen_1026-37_-_Forstwirtschaflicher_Verkehr_frei_StVO_1992.svg",
-                  "SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED": "Zusatzzeichen_1028-30_-_Baustellenfahrzeuge_frei_450x600_StVO_1992.svg",
-                  "SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN": "Zusatzzeichen_1031-51_-_Freistellung_vom_Verkehrsverbot_nach_para_40_Abs._1_BlmSchG_gelbe_und_gruene_Plakette_StVO_2017.svg",
-                  "SUPPLEMENT_RAILWAY_ONLY": "Zusatzzeichen_1048-18_-_nur_Schienenbahn_600x450_StVO_1992.svg",
-                  "SUPPLEMENT_APPLIES_FOR_WEIGHT": "Zusatzzeichen_1053-33_-_Massenangabe_7_5_t_420x231_StVO_2017.svg"}
+        "TREE": "tree.svg",
+                "STREET_LAMP": "streetlamp.svg",
+                "TRAFFIC_LIGHT": "traffic_light_landmark.svg",
+                "DANGER": "Zeichen_101_-_Gefahrstelle_StVO_1970.svg",
+                "LANES_MERGING": "Zeichen_120_-_Verengte_Fahrbahn_StVO_1970.svg",
+                "CAUTION_PEDESTRIAN": "Zeichen_133-10_-_Fussgaenger_Aufstellung_rechts_StVO_1992.svg",
+                "CAUTION_CHILDREN": "Zeichen_136-10_-_Kinder_Aufstellung_rechts_StVO_1992.svg",
+                "CAUTION_BICYCLE": "Zeichen_138-10_-_Radverkehr_StVO_2013.svg",
+                "CAUTION_ANIMALS": "Zeichen_142-10_-_Wildwechsel_Aufstellung_rechts_StVO_1992.svg",
+                "CAUTION_RAIL_CROSSING_WITH_BARRIER": "Zeichen_150_-_Beschrankter_Bahnuebergang_StVO_1992.svg",
+                "CAUTION_RAIL_CROSSING": "Zeichen_151_-_Bahnuebergang_StVO_2013.svg",
+                "YIELD_TRAIN": "Zeichen_201-51_-_Andreaskreuz_stehend_mit_Blitzpfeil_StVO_1992.svg",
+                "YIELD": "Zeichen_205_-_Vorfahrt_gewaehren_StVO_1970.svg",
+                "STOP": "Zeichen_206_-_Halt_Vorfahrt_gewaehren_StVO_1970.svg",
+                "REQUIRED_LEFT_TURN": "Zeichen_209-10_-_Vorgeschriebene_Fahrtrichtung_links_StVO_2017.svg",
+                "REQUIRED_STRAIGHT": "Zeichen_209-30_-_Vorgeschriebene_Fahrtrichtung_Geradeaus_StVO_2017.svg",
+                "REQUIRED_RIGHT_TURN": "Zeichen_209_-_Vorgeschriebene_Fahrtrichtung_rechts_StVO_2017.svg",
+                "REQUIRED_STRAIGHT_OR_LEFT_TURN": "Zeichen_214-10_-_Vorgeschriebene_Fahrtrichtung_Geradeaus_oder_links_StVO_2017.svg",
+                "REQUIRED_STRAIGHT_OR_RIGHT_TURN": "Zeichen_214_-_Vorgeschriebene_Fahrtrichtung_Geradeaus_oder_rechts_StVO_2017.svg",
+                "ROUNDABOUT": "Zeichen_215_-_Kreisverkehr_StVO_2000.svg",
+                "PASS_LEFT": "Zeichen_222-10_-_Vorgeschriebene_Vorbeifahrt_Links_vorbei_StVO_2017.svg",
+                "PASS_RIGHT": "Zeichen_222_-_Vorgeschriebene_Vorbeifahrt_Rechts_vorbei_StVO_2017.svg",
+                "BYBICLE_PATH": "Zeichen_237_-_Sonderweg_Radfahrer_StVO_1992.svg",
+                "FOOTWALK": "Zeichen_239_-_Sonderweg_Fussgaenger_StVO_1992.svg",
+                "FOOTWALK_BICYCLE_SHARED": "Zeichen_240_-_Gemeinsamer_Fuss-_und_Radweg_StVO_1992.svg",
+                "FOOTWALK_BICYCLE_SEP_LEFT": "Zeichen_241-30_-_getrennter_Rad-_und_Fussweg_StVO_1992.svg",
+                "FOOTWALK_BICYCLE_SEP_RIGHT": "Zeichen_241-31_-_getrennter_Fuss-_und_Radweg_StVO_1992.svg",
+                "PEDESTRIAN_AREA_BEGIN": "Zeichen_242.1_-_Beginn_einer_Fussgaengerzone_StVO_2009.svg",
+                "ACCESS_FORBIDDEN": "Zeichen_250_-_Verbot_fuer_Fahrzeuge_aller_Art_StVO_1970.svg",
+                "ACCESS_FORBIDDEN_TRUCKS": "Zeichen_253_-_Verbot_fuer_Kraftfahrzeuge_mit_einem_zulaessigen_Gesamtgewicht_StVO_1992.svg",
+                "ACCESS_FORBIDDEN_BICYCLE": "Zeichen_254_-_Verbot_fuer_Radfahrer_StVO_1992.svg",
+                "ACCESS_FORBIDDEN_MOTORVEHICLES": "Zeichen_260_-_Verbot_fuer_Kraftraeder_und_Mofas_und_sonstige_mehrspurige_Kraftfahrzeuge_StVO_1992.svg",
+                "ACCESS_FORBIDDEN_WEIGHT": "Zeichen_262-5_5_-_Verbot_fuer_Fahrzeuge_ueber_angegebene_tatsaechliche_Masse_StVO_2017.svg",
+                "ACCESS_FORBIDDEN_WIDTH": "Zeichen_264-2_-_Verbot_fuer_Fahrzeuge_ueber_angegebene_tatsaechliche_Breite_StVO_2017.svg",
+                "ACCESS_FORBIDDEN_HEIGHT": "Zeichen_265-3_8_-_Verbot_fuer_Fahrzeuge_ueber_angegebene_tatsaechliche_Hoehe_StVO_2017.svg",
+                "ACCESS_FORBIDDEN_WRONG_DIR": "Zeichen_267_-_Verbot_der_Einfahrt_StVO_1970.svg",
+                "ENVIORNMENT_ZONE_BEGIN": "Zeichen_270.1_-_Beginn_eines_Verkehrsverbots_zur_Verminderung_schaedlicher_Luftverunreinigungen_in_einer_Zone_I_StVO_2007.svg",
+                "ENVIORNMENT_ZONE_END": "Zeichen_270.2_-_Ende_einer_Verkehrsverbotszone_zur_Verminderung_schaedlicher_Luftverunreinigungen_in_einer_Zone_StVO_2007.svg",
+                "SPEED_ZONE_30_BEGIN": "Zeichen_274.1_-_Beginn_einer_Tempo_30-Zone_StVO_2013.svg",
+                "SPEED_ZONE_30_END": "Zeichen_274.2_-_Ende_einer_Tempo_30-Zone_einseitig_StVO_2013.svg",
+                "MAX_SPEED": "Zeichen_274-50_-_Zulaessige_Hoechstgeschwindigkeit_StVO_2017.svg",
+                "HAS_WAY_NEXT_INTERSECTION": "Zeichen_301_-_Vorfahrt_StVO_1970.svg",
+                "PRIORITY_WAY": "Zeichen_306_-_Vorfahrtstrasse_StVO_1970.svg",
+                "CITY_BEGIN": "Zeichen_310_-_Ortstafel_Vorderseite_StVO_2017.svg",
+                "CITY_END": "Zeichen_311_-_Ortstafel_Rueckseite_StVO_2017.svg",
+                "MOTORWAY_BEGIN": "Zeichen_330.1_-_Autobahn_StVO_2013.svg",
+                "MOTORWAY_END": "Zeichen_330.2_-_Ende_der_Autobahn_StVO_2013.svg",
+                "MOTORVEHICLE_BEGIN": "Zeichen_331.1_-_Kraftfahrstrasse_StVO_2013.svg",
+                "MOTORVEHICLE_END": "Zeichen_331.2_-_Ende_der_Kraftfahrstrasse_StVO_2013.svg",
+                "INFO_MOTORWAY_INFO": "Zeichen_332_-_Ausfahrt_von_der_Autobahn_StVO_1981.svg",
+                "CUL_DE_SAC_EXCEPT_PED_BICYCLE": "Zeichen_357-50_-_Durchlaessige_Sackgasse_fuer_Fussgaenger_und_Radverkehr_StVO_2009.svg",
+                "CUL_DE_SAC": "Zeichen_357_-_Sackgasse_StVO_1992.svg",
+                "INFO_NUMBER_OF_AUTOBAHN": "Zeichen_405_-_Nummernschild_fuer_Autobahnen_StVO_1992.svg",
+                "DIRECTION_TURN_TO_AUTOBAHN": "Zeichen_430-20_-_Wegweiser_zur_Autobahn_StVO_1992.svg",
+                "DIRECTION_TURN_TO_LOCAL": "Zeichen_432-20_-_Wegweiser_zu_inneroertlichen_Zielen_und_zu_Einrichtungen_mit_erheblicher_Verkehrsbedeutung_rechtsweisend_nach_RWB_StVO_1992.svg",
+                "DESTINATION_BOARD": "Zeichen_438_-_Vorwegweiser_StVO_1992.svg",
+                "SUPPLEMENT_ARROW_APPLIES_LEFT": "Zusatzzeichen_1000-11_-_Richtung_der_Gefahrstelle_linksweisend_StVO_1992.svg",
+                "SUPPLEMENT_ARROW_APPLIES_RIGHT": "Zusatzzeichen_1000-21_-_Richtung_der_Gefahrstelle_rechtsweisend_StVO_1992.svg",
+                "SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT": "Zusatzzeichen_1000-30_-_beide_Richtungen_zwei_gegengerichtete_waagerechte_Pfeile_StVO_1992.svg",
+                "SUPPLEMENT_ARROW_APPLIES_UP_DOWN": "Zusatzzeichen_1000-31_-_beide_Richtungen_zwei_gegengerichtete_senkrechte_Pfeile_StVO_1992.svg",
+                "SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE": "Zusatzzeichen_1000-32_-_Radfahrer_kreuzen_von_rechts_und_links_StVO_1997.svg",
+                "SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE": "Zusatzzeichen_1000-33_-_Radverkehr_im_Gegenverkehr_StVO_1997.svg",
+                "SUPPLEMENT_APPLIES_NEXT_N_KM": "Zusatzzeichen_1001-31_-_auf_..._km_600x330_StVO_1992.svg",
+                "SUPPLEMENT_ENDS": "Zusatzzeichen_1012-31_-_Ende_600x330_StVO_1992.svg",
+                "SUPPLEMENT_RESIDENTS_ALLOWED": "Zusatzzeichen_1020-30_-_Anlieger_frei_600x330_StVO_1992.svg",
+                "SUPPLEMENT_BICYCLE_ALLOWED": "Zusatzzeichen_1022-10_-_Radfahrer_frei_StVO_1992.svg",
+                "SUPPLEMENT_MOPED_ALLOWED": "Zusatzzeichen_1022-11_-_Mofas_frei_600x450_StVO_1992.svg",
+                "SUPPLEMENT_TRAM_ALLOWED": "Zusatzzeichen_1024-16_-_Strassenbahn_frei_StVO_1992.svg",
+                "SUPPLEMENT_FORESTAL_ALLOWED": "Zusatzzeichen_1026-37_-_Forstwirtschaflicher_Verkehr_frei_StVO_1992.svg",
+                "SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED": "Zusatzzeichen_1028-30_-_Baustellenfahrzeuge_frei_450x600_StVO_1992.svg",
+                "SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN": "Zusatzzeichen_1031-51_-_Freistellung_vom_Verkehrsverbot_nach_para_40_Abs._1_BlmSchG_gelbe_und_gruene_Plakette_StVO_2017.svg",
+                "SUPPLEMENT_RAILWAY_ONLY": "Zusatzzeichen_1048-18_-_nur_Schienenbahn_600x450_StVO_1992.svg",
+                "SUPPLEMENT_APPLIES_FOR_WEIGHT": "Zusatzzeichen_1053-33_-_Massenangabe_7_5_t_420x231_StVO_2017.svg"}
 
     def __init__(self):
         "..."
@@ -195,13 +194,12 @@ class ADMapQgsLayers(object):
         self.layer_managers_topology = []
         self.layer_managers_landmark = []
         self.layer_managers_contact_type = []
-        legend = Globs.iface.legendInterface()
-        while legend.groupExists(0):
-            legend.removeGroup(0)
+        QgsProject.instance().clear()
 
     def __create_layer_groups__(self):
         "..."
-        legend = Globs.iface.legendInterface()
+
+        legend = QgsProject.instance().layerTreeRoot()
         self.layer_groups[self.GEOM] = legend.addGroup(self.GEOM)
         self.layer_groups[self.LANES] = legend.addGroup(self.LANES)
         self.layer_groups[self.SPEEDS] = legend.addGroup(self.SPEEDS)
@@ -259,12 +257,20 @@ class ADMapQgsLayers(object):
 
     def __add_lane_surface_layer__(self, typ, hov, hd, color):
         "..."
-        lane_ids = admap.GetLaneIds(typ, hov)
+        lane_ids = []
+        lane_list = ad.map.lane.getLanes()
+        for lane_id in lane_list:
+            lane = ad.map.lane.getLane(lane_id)
+            if(ad.map.lane.satisfiesFilter(lane, typ, hov)):
+                lane_ids.append(lane_id)
+
         attr_keys = []
         attr_keys.append(QgsField("Id", QVariant.LongLong))
         attr_keys.append(QgsField("Type", QVariant.String))
         attr_keys.append(QgsField("HOV", QVariant.String))
-        attr_keys.append(QgsField("ComplianceVer", QVariant.Int))
+        attr_keys.append(QgsField("Road ID", QVariant.Int))
+        attr_keys.append(QgsField("Lane Section Index", QVariant.Int))
+        attr_keys.append(QgsField("Lane Index", QVariant.Int))
         if lane_ids is not None:
             title = self.lane_surface_layer_name(typ, hov, hd)
             group = self.layer_groups[self.LANES]
@@ -379,7 +385,7 @@ class ADMapQgsLayers(object):
     def update_landmark_layers(self, landmark_id):
         "..."
         to_refresh = []
-        landmark = admap.GetLandmark(landmark_id)
+        landmark = ad.map.landmark.getLandmark(landmark_id)
         for layer_name in layer_managers_landmark:
             layer = self.layer[layer_name]
             manager = self.layer_managers[layer_name]
@@ -400,7 +406,7 @@ class ADMapQgsLayers(object):
     def update_lane_on_layers(self, lane_id, layer_names):
         "..."
         to_refresh = []
-        lane = admap.GetLane(lane_id)
+        lane = ad.map.lane.getLane(lane_id)
         for layer_name in layer_names:
             layer = self.layer[layer_name]
             manager = self.layer_managers[layer_name]
@@ -426,11 +432,11 @@ class ADMapQgsLayers(object):
 
     def update_lane_speed_layers(self, lane_id):
         "..."
-        lane = admap.GetLane(lane_id)
+        lane = ad.map.lane.getLane(lane_id)
         to_refresh = self.__remove_lane_from__(lane_id, self.layer_managers_speed)
         if "SpeedLimit" in lane.keys():
-            for speed_limit in lane['SpeedLimit']:
-                limit = speed_limit[0]
+            for speed_limit in lane.speedLimits:
+                limit = speed_limit.speedLimit
                 layer_manager = self.speed_layer_manager(limit)
                 layer_manager.add_speed_limit(lane, speed_limit)
                 to_refresh.append(layer_manager)
@@ -438,11 +444,11 @@ class ADMapQgsLayers(object):
 
     def update_lane_surface_layers(self, lane_id):
         "..."
-        lane = admap.GetLane(lane_id)
+        lane = ad.map.lane.getLane(lane_id)
         to_refresh = self.__remove_lane_from__(lane_id, self.layer_managers_surface)
-        typ = lane['Type']
-        hov = lane['HOV'] > 1
-        high_definition = lane['ComplianceVer'] > 0
+        typ = lane.type
+        hov = ad.map.lane.getHOV() > 1
+        high_definition = lane.complianceVersion > 0
         layer_manager_name = self.lane_surface_layer_name(typ, hov, high_definition)
         layer_manager = self.layer_managers[layer_manager_name]
         layer_manager.add(lane)
@@ -457,21 +463,21 @@ class ADMapQgsLayers(object):
             if not layer_manager in self.layer_managers_speed:
                 if not layer_manager in self.layer_managers_surface:
                     if layer_manager.is_on_layer(lane_id):
-                        lane = admap.GetLane(lane_id)
+                        lane = ad.map.lane.getLane(lane_id)
                         layer_manager.add(lane)
                         to_refresh.append(layer_manager)
         return to_refresh
 
     def lane_types(self):
         "..."
-        lane_types = self.LANE_SURFACE_COLOR.keys()
+        lane_types = list(self.LANE_SURFACE_COLOR.keys())
         lane_types.sort()
         lane_types.reverse()
         return lane_types
 
     def lane_speeds(self):
         "..."
-        lane_speeds = self.LANE_SPEED_COLOR.keys()
+        lane_speeds = list(self.LANE_SPEED_COLOR.keys())
         lane_speeds.sort()
         lane_speeds.reverse()
         return lane_speeds

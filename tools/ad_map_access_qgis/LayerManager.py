@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad_map_access_qgis_python as admap
+import ad.map
 import Globs
 from qgis.core import QgsFeatureRequest
 
@@ -118,7 +118,8 @@ class LayerManager(object):
                 lane_id = self.feature_id_to_lane_id_map_1[feature_id]
                 Globs.removed_lanes.append(lane_id)
                 self.remove_old_feature(lane_id, False)
-                if admap.DeleteLane(lane_id):
+                if ad.map.access.deleteLane(lane_id):
+                 # if admap.DeleteLane(lane_id):
                     Globs.map_dirty = True
                 else:
                     Globs.log.error("Failed to delete lane " + str(lane_id))
@@ -126,7 +127,7 @@ class LayerManager(object):
                 lane_id = self.feature_id_to_lane_id_map_2[feature_id]
                 Globs.removed_lanes.append(lane_id)
                 self.remove_old_feature(lane_id, False)
-                if admap.DeleteLane(lane_id):
+                if ad.map.access.deleteLane(lane_id):
                     Globs.map_dirty = True
                 else:
                     Globs.log.error("Failed to delete lane " + str(lane_id))

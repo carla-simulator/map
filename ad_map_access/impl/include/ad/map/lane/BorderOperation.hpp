@@ -120,7 +120,6 @@ inline physics::Distance calcLength(ENUBorder const &border)
 {
   return (calcLength(border.left) + calcLength(border.right)) / 2.;
 }
-
 /** @brief calculate the length of the provided border as distance value
  *
  * For length calculation the average between left and right edge of the border is returned.
@@ -141,12 +140,17 @@ inline physics::Distance calcLength(GeoBorder const &border)
   return (calcLength(border.left) + calcLength(border.right)) / 2.;
 }
 
+physics::Distance calcLength(ENUBorderList const &borderList);
+physics::Distance calcLength(ECEFBorderList const &borderList);
+physics::Distance calcLength(GeoBorderList const &borderList);
+
 /** @brief calculate the ENUHeading of the vector<ENUBorder> at the given ENUPoint
  *
  *  If the given ENUPoint is not within the given borders,
  *  an ENUHeading(2*M_PI) is returned.
  */
-point::ENUHeading getENUHeading(std::vector<ENUBorder> const &borderList, point::ENUPoint const &enuPoint);
+// point::ENUHeading getENUHeading(std::vector<ENUBorder> const &borderList, point::ENUPoint const &enuPoint);
+point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint const &enuPoint);
 
 } // namespace lane
 } // namespace map

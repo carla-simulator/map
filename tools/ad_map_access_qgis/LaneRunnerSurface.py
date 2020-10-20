@@ -22,5 +22,5 @@ class LaneRunnerSurface(LaneRunner):
 
     def work_lane(self, lane):
         "..."
-        if (lane['ComplianceVer'] != 0L) == self.high_definition:
+        if (lane.complianceVersion != 0) == self.high_definition:
             self.layer_manager.add(lane)

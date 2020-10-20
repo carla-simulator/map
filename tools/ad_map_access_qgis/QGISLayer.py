@@ -7,13 +7,17 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-from qgis.core import QgsFeature, QgsFillSymbolV2, QgsGeometry, QgsLineSymbolV2, QgsSymbolV2, QgsSvgMarkerSymbolLayerV2
-from qgis.core import QgsMapLayerRegistry, QgsMarkerLineSymbolLayerV2
-from qgis.core import QgsMarkerSymbolV2, QgsPoint, QgsVectorLayer
-from qgis.core import QgsArrowSymbolLayer, QgsProject
-from qgis.core import QgsDataDefined, QgsLayerTreeGroup
-from qgis.core import QGis
+from qgis.core import QgsFeature, QgsFillSymbol, QgsGeometry, QgsLineSymbol, QgsSymbol, QgsSvgMarkerSymbolLayer
+from qgis.core import QgsProject, QgsMarkerLineSymbolLayer, QgsWkbTypes
+from qgis.core import QgsMarkerSymbol, QgsPoint, QgsVectorLayer
+from qgis.core import QgsArrowSymbolLayer, QgsProject,  QgsPointXY
+from qgis.core import QgsProperty, QgsLayerTreeGroup, QgsRenderContext
+from qgis.core import Qgis, QgsProject, QgsLayerTreeModel, QgsLayerTreeLayer, QgsSymbolLayer
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from qgis.gui import *
 import os.path
+import Globs
 
 # Too many arguments
 # pylint: disable=R0913
@@ -30,11 +34,18 @@ class WGS84Layer(object):
         self.visible = visible
         self.layer = QgsVectorLayer(layer_type + "?crs=EPSG:4326", layer_name, "memory")
         self.provider = self.layer.dataProvider()
-        self.layer = QgsMapLayerRegistry.instance().addMapLayer(self.layer)
+        self.layer = QgsProject.instance().addMapLayer(self.layer)
         self.canvas = iface.mapCanvas()
         if group is not None:
-            # move layer to group
-            self.iface.legendInterface().moveLayer(self.layer, group)
+            layer_t = QgsProject.instance().mapLayersByName(layer_name)[0]
+            root = QgsProject.instance().layerTreeRoot()
+
+            myLayer = root.findLayer(layer_t.id())
+            myClone = myLayer.clone()
+            parent = myLayer.parent()
+
+            group.insertChildNode(0, myClone)
+            parent.removeChildNode(myLayer)
 
             # collapse groups
             for child in QgsProject.instance().layerTreeRoot().children():
@@ -48,42 +59,43 @@ class WGS84Layer(object):
 
     def show(self, show_it):
         "..."
-        legend = self.iface.legendInterface()
-        legend.setLayerVisible(self.layer, show_it)
+        node = QgsProject.instance().layerTreeRoot().findLayer(self.layer)
+        if node:
+            node.setItemVisibilityChecked(show_it)
 
     def remove(self):
         "..."
         # It seems QGis does already delete the layers
         # Ensure that the layer is still in the registry before calling removeMapLayer
-        if self.layer is not None and len(QgsMapLayerRegistry.instance().mapLayersByName(self.layer_name)) > 0:
-            QgsMapLayerRegistry.instance().removeMapLayer(self.layer)
+        if self.layer is not None and len(QgsProject.instance().mapLayersByName(self.layer_name)) > 0:
+            QgsProject.instance().removeMapLayer(self.layer)
             self.layer = None
 
     def refresh(self):
         "..."
         if not self.canvas.isDrawing():
-            self.layer.setCacheImage(None)
-            self.layer.triggerRepaint()
+            self.layer.triggerRepaint(True)
             self.canvas.refresh()
 
     def refresh_legend(self):
         "..."
-        self.iface.legendInterface().refreshLayerSymbology(self.layer)
+        root = QgsProject.instance().layerTreeRoot().findLayer(self.layer.id())
+        self.iface.layerTreeView().layerTreeModel().refreshLayerLegend(root)
         self.iface.mapCanvas().refresh()
 
     def poly_marker(self, placement, qcolor, width):
         "..."
-        marker = QgsMarkerLineSymbolLayerV2()
+        marker = QgsMarkerLineSymbolLayer()
         marker.setColor(qcolor)
         marker.setPlacement(placement)
         marker.setWidth(width)
-        self.layer.rendererV2().symbol().appendSymbolLayer(marker)
+        self.layer.renderer().symbol().appendSymbolLayer(marker)
 
     def poly_markers(self, qcolor, width):
         "..."
-        self.poly_marker(QgsMarkerLineSymbolLayerV2.Vertex, qcolor, width * 1.33)
-        self.poly_marker(QgsMarkerLineSymbolLayerV2.FirstVertex, qcolor, width * 2.25)
-        self.poly_marker(QgsMarkerLineSymbolLayerV2.LastVertex, qcolor, width * 2.25)
+        self.poly_marker(QgsMarkerLineSymbolLayer.Vertex, qcolor, width * 1.33)
+        self.poly_marker(QgsMarkerLineSymbolLayer.FirstVertex, qcolor, width * 2.25)
+        self.poly_marker(QgsMarkerLineSymbolLayer.LastVertex, qcolor, width * 2.25)
 
     def set_attributes(self, attributes):
         "..."
@@ -133,32 +145,38 @@ class WGS84SVGPointLayer(WGS84Layer):
         self.svg_path = os.path.dirname(__file__) + "/icons/"
         WGS84Layer.__init__(self, iface, layer_name, "Point", visible, group)
 
-        props = self.layer.rendererV2().symbol().symbolLayer(0).properties()
+        symbol = QgsSymbol.defaultSymbol(self.layer.geometryType())
         svgStyle = {}
         svgStyle['name'] = self.svg_path + svg_resource
         svgStyle['outline'] = '#00000'
         svgStyle['outline-width'] = '0'
         svgStyle['size'] = svg_size
-        symbol_layer = QgsSvgMarkerSymbolLayerV2.create(svgStyle)
+        symbol_layer = QgsSvgMarkerSymbolLayer.create(svgStyle)
 
         # Rotate the svg to reflect the orientation of a landmark
         # admap uses a counter-clockwise orientation with radians, qgis a clockwise and degrees
-        dataDefinedAngle = QgsDataDefined(True, True, '(-("Orientation" * 180 / pi()) - 90) % 360')
-        symbol_layer.setDataDefinedProperty('angle', dataDefinedAngle)
+        dataDefinedAngle = QgsProperty.fromExpression('(-("Orientation" * 180 / pi()) - 90) % 360', True)
+        symbol_layer.setDataDefinedProperty(QgsSymbolLayer.PropertyAngle, dataDefinedAngle)
 
         # Make the SVG size scalable with the zoom level of the map
         # i.e. less zoom, smaller SVG
-        dataDefinedSize = QgsDataDefined(True, True, 'CASE WHEN @map_scale < 500 THEN 1000 / @map_scale ELSE 2 END')
-        symbol_layer.setDataDefinedProperty('size', dataDefinedSize)
-        self.layer.rendererV2().symbols()[0].changeSymbolLayer(0, symbol_layer)
+        dataDefinedSize = QgsProperty.fromExpression(
+            'CASE WHEN @map_scale < 500 THEN 1000 / @map_scale ELSE 2 END', True)
+        symbol_layer.setDataDefinedProperty(QgsSymbolLayer.PropertySize, dataDefinedSize)
 
+        if symbol_layer is not None:
+            symbols = self.layer.renderer().symbols(QgsRenderContext())
+            sym = symbols[0]
+            sym.changeSymbolLayer(0, symbol_layer)
+
+        self.layer.triggerRepaint()
         WGS84Layer.refresh_legend(self)
         self.set_attributes(attributes)
 
     def add_lla(self, point, attributes):
         "..."
-        qgs_point = QgsPoint(point[0], point[1])
-        geometry = QgsGeometry.fromPoint(qgs_point)
+        qgs_point = QgsPointXY(point.longitude, point.latitude)
+        geometry = QgsGeometry.fromPointXY(qgs_point)
         return self.add_feature(geometry, attributes)
 
 
@@ -169,17 +187,17 @@ class WGS84PointLayer(WGS84Layer):
     def __init__(self, iface, layer_name, symbol, color, size, attributes, group=None, visible=True):
         "..."
         WGS84Layer.__init__(self, iface, layer_name, "Point", visible, group)
-        props = self.layer.rendererV2().symbol().symbolLayer(0).properties()
-        symbol = QgsSymbolV2.defaultSymbol(QGis.Point)
+        props = self.layer.renderer().symbol().symbolLayer(0).properties()
+        symbol = QgsSymbol.defaultSymbol(QgsWkbTypes.PointGeometry)
         symbol.setSize(1.5)
-        self.layer.rendererV2().setSymbol(symbol)
+        self.layer.renderer().setSymbol(symbol)
         WGS84Layer.refresh_legend(self)
         self.set_attributes(attributes)
 
     def add_lla(self, point, attributes):
         "..."
-        qgs_point = QgsPoint(point[0], point[1])
-        geometry = QgsGeometry.fromPoint(qgs_point)
+        qgs_point = QgsPointXY(point.x, point.y)
+        geometry = QgsGeometry.fromPointXY(qgs_point)
         return self.add_feature(geometry, attributes)
 
 
@@ -190,11 +208,11 @@ class WGS84PolylineLayer(WGS84Layer):
     def __init__(self, iface, layer_name, color, width, qcolor, attributes, layer_group=None, visible=True):
         "..."
         WGS84Layer.__init__(self, iface, layer_name, "LineString", visible, layer_group)
-        props = self.layer.rendererV2().symbol().symbolLayer(0).properties()
+        props = self.layer.renderer().symbol().symbolLayer(0).properties()
         props['line_color'] = color
         props['line_width'] = width
-        line = QgsLineSymbolV2.createSimple(props)
-        self.layer.rendererV2().setSymbol(line)
+        line = QgsLineSymbol.createSimple(props)
+        self.layer.renderer().setSymbol(line)
         self.poly_markers(qcolor, float(width))
         WGS84Layer.refresh_legend(self)
         self.set_attributes(attributes)
@@ -204,8 +222,8 @@ class WGS84PolylineLayer(WGS84Layer):
         if len(polyline) > 1:
             poly = []
             for point in polyline:
-                poly.append(QgsPoint(point[0], point[1]))
-            geometry = QgsGeometry.fromPolyline(poly)
+                poly.append(QgsPointXY(float(point.longitude), float(point.latitude)))
+            geometry = QgsGeometry.fromPolylineXY(poly)
             return self.add_feature(geometry, attributes)
         return None
 
@@ -222,14 +240,18 @@ class WGS84ArrowLayer(WGS84Layer):
         arrow_layer.setArrowWidth(width)
         arrow_layer.setArrowStartWidth(width)
         arrow_layer.setHeadThickness(width * 2.0)
-        self.layer.rendererV2().symbol().changeSymbolLayer(0, arrow_layer)
+        self.layer.renderer().symbol().changeSymbolLayer(0, arrow_layer)
         WGS84Layer.refresh_legend(self)
         self.set_attributes(attributes)
 
     def add_lla(self, pt_from, pt_to, attributes):
         "..."
-        poly = [QgsPoint(pt_from[0], pt_from[1]), QgsPoint(pt_to[0], pt_to[1])]
-        geometry = QgsGeometry.fromPolyline(poly)
+        poly = []
+        pt = QgsPointXY(pt_from.longitude, pt_from.latitude)
+        poly.append(pt)
+        pt1 = QgsPointXY(pt_to.longitude, pt_to.latitude)
+        poly.append(pt1)
+        geometry = QgsGeometry.fromPolylineXY(poly)
         return self.add_feature(geometry, attributes)
 
 
@@ -242,12 +264,12 @@ class WGS84SurfaceLayer(WGS84Layer):
         if out_color is None:
             out_color = color
         WGS84Layer.__init__(self, iface, name, "Polygon", visible, layer_group)
-        props = self.layer.rendererV2().symbol().symbolLayer(0).properties()
+        props = self.layer.renderer().symbol().symbolLayer(0).properties()
         props['color'] = color
         props['outline_color'] = out_color
         props['outline_width'] = w
-        fill_symbol = QgsFillSymbolV2.createSimple(props)
-        self.layer.rendererV2().setSymbol(fill_symbol)
+        fill_symbol = QgsFillSymbol.createSimple(props)
+        self.layer.renderer().setSymbol(fill_symbol)
         WGS84Layer.refresh_legend(self)
         self.set_attributes(attributes)
 
@@ -256,9 +278,9 @@ class WGS84SurfaceLayer(WGS84Layer):
         if len(polygon) > 1:
             poly = []
             for point in polygon:
-                poly.append(QgsPoint(point[0], point[1]))
+                poly.append(QgsPointXY(point.longitude, point.latitude))
             poly.append(poly[0])
-            geom = QgsGeometry.fromPolygon([poly])
+            geom = QgsGeometry.fromPolygonXY([poly])
             return self.add_feature(geom, attrs)
         return None
 
@@ -266,6 +288,7 @@ class WGS84SurfaceLayer(WGS84Layer):
         "..."
         if len(edge) > 1 and len(another_edge) > 1:
             another_edge.reverse()
-            edge.extend(another_edge)
+            for point in another_edge:
+                edge.append(point)
             return self.add_lla(edge, attrs)
         return None

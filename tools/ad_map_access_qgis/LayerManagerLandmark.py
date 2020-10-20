@@ -7,7 +7,8 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad_map_access_qgis_python as admap
+import ad.map
+import Globs
 from .LayerManager import LayerManager
 
 
@@ -28,19 +29,17 @@ class LayerManagerLandmark(LayerManager):
 
     def add(self, landmark):
         "..."
-        landmark_id = landmark['Id']
-        pt0 = admap.GetLandmarkPosition(landmark_id)
-        landmark_attrs = admap.GetLandmark(landmark_id)
-        typ = landmark_attrs['Type']
-        if typ == "TRAFFIC_SIGN":
-            typ = landmark_attrs['TrafficSignType']
-        if pt0 is None or landmark_attrs is None:
+        landmark_id = landmark.id
+        pt0 = ad.map.point.toGeo(landmark.position)
+        typ = landmark.type
+
+        if pt0 is None:
             return
-        if typ not in self.landmark_types:
+        if str(typ) not in self.landmark_types:
             return
 
-        heading = admap.GetLandmarkOrientationAngle(landmark_id)
-        orientation = round(heading, 5)
+        heading = ad.map.landmark.getENUHeading(landmark)
+        orientation = round(float(heading), 5)
         attrs = [landmark_id, typ, orientation]
         feature_1 = self.layer.add_lla(pt0, attrs)
         LayerManager.add_new_feature(self, landmark_id, feature_1)

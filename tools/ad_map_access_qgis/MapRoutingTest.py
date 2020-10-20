@@ -5,18 +5,26 @@
 # SPDX-License-Identifier: MIT
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
-"..."
 
-import ad_map_access_qgis_python as admap
+"..."
+from PyQt5.QtWidgets import QDialog
+from PyQt5.Qt import QDialogButtonBox, QVBoxLayout, QStringListModel, QInputDialog,\
+    QWidget
+
+
+from PyQt5 import QtGui, uic, QtWidgets, QtCore
+from PyQt5.QtGui import QIcon
+import ad.map
+from utility import *
 import Globs
 from qgis.gui import QgsMapToolEmitPoint
 from qgis.core import QgsField
-from PyQt4.QtCore import QVariant
+from PyQt5.QtCore import QVariant
 from .QGISLayer import WGS84PointLayer, WGS84SurfaceLayer
+
 
 # too many instance attrs
 # pylint: disable=R0902
-
 
 class MapRoutingTest(QgsMapToolEmitPoint):
 
@@ -44,6 +52,7 @@ class MapRoutingTest(QgsMapToolEmitPoint):
         self.state = self.START_SELECTION
         self.pt_start = None
         self.pt_dest = None
+        self.mode = None
         self.route_edges = []
 
     def destroy(self):
@@ -68,6 +77,16 @@ class MapRoutingTest(QgsMapToolEmitPoint):
         self.action.setChecked(True)
         Globs.log.info("Map Routing Test Activated")
 
+        items = []
+        items.append("Same Driving Direction")
+        items.append("All Routable Lanes")
+        items.append("All Neighbor Lanes")
+        items.append("Undefined")
+
+        tf = False
+        self.mode, tf = QInputDialog.getItem(QWidget(), "Select Route Creation Mode for Routing Test   ",
+                                             "Options for creating Route:                           ", items, 0, False)
+
     def deactivate(self):
         "..."
         super(MapRoutingTest, self).deactivate()
@@ -78,6 +97,7 @@ class MapRoutingTest(QgsMapToolEmitPoint):
         "..."
         raw_pt = self.toLayerCoordinates(self.layer_waypoints.layer, event.pos())
         mmpts = self.snapper.snap(raw_pt)
+
         if mmpts is not None:
             if self.state == self.START_SELECTION:
                 self.__set_start__(mmpts[0])
@@ -95,44 +115,35 @@ class MapRoutingTest(QgsMapToolEmitPoint):
         "..."
         self.layer_waypoints.remove_all_features()
         self.layer_route.remove_all_features()
-        self.pt_start = mmpt[5]
-        attrs = ["Start", mmpt[0], mmpt[1], mmpt[2], mmpt[3], mmpt[4]]
+        self.pt_start = mmpt.matchedPoint
+        attrs = ["Start", mmpt.lanePoint.paraPoint, mmpt.type, mmpt.lanePoint.lateralT,
+                 mmpt.lanePoint.laneWidth, mmpt.lanePoint.laneLength]
         self.layer_waypoints.add_lla(self.pt_start, attrs)
         self.state = self.DESTINATION_SELECTION
 
     def __set_destination__(self, mmpt):
         "..."
-        self.pt_dest = mmpt[5]
-        attrs = ["Destination", mmpt[0], mmpt[1], mmpt[2], mmpt[3], mmpt[4]]
+        self.pt_dest = mmpt.matchedPoint
+        attrs = ["Destination", mmpt.lanePoint.paraPoint, mmpt.type,
+                 mmpt.lanePoint.lateralT, mmpt.lanePoint.laneWidth, mmpt.lanePoint.laneLength]
         self.layer_waypoints.add_lla(self.pt_dest, attrs)
         self.state = self.START_SELECTION
 
     def __calculate_route__(self):
         "..."
-        route = admap.Route(self.pt_start, self.pt_dest)
+        route = Route(self.pt_start, self.pt_dest, self.mode)
+        edgeList = ad.map.route.getGeoBorderOfRoute(route)
+
         if route is not None:
             self.route_edges = []
-            for lanes in route:
-                for edge in lanes:
-                    self.__add_edge__(edge)
+            for edge in edgeList:
+                self.__add_edge__(edge)
         else:
             Globs.log.error("Cannot calculate route.")
 
     def __add_edge__(self, new_edge):
         "..."
-        lane_id_1 = new_edge[0]
-        lane_t_1 = new_edge[1]
-        for edge in self.route_edges:
-            lane_id_0 = edge[0]
-            lane_t_0 = edge[1]
-            if lane_id_0 == lane_id_1:
-                t_start = min(lane_t_0, lane_t_1)
-                t_end = max(lane_t_0, lane_t_1)
-                lla_left = admap.GetLaneSubEdgeLeft(lane_id_0, t_start, t_end)
-                lla_right = admap.GetLaneSubEdgeRight(lane_id_0, t_start, t_end)
-                self.layer_route.add_lla2(lla_left, lla_right, [])
-                self.route_edges.remove(edge)
-                return
+        self.layer_route.add_lla2(new_edge.left, new_edge.right, [])
         self.route_edges.append(new_edge)
 
     def __create_layers__(self):

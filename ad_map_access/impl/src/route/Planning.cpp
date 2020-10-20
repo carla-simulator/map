@@ -671,6 +671,23 @@ std::vector<FullRoute> predictRoutes(const RoutingParaPoint &start,
   return filterDuplicatedRoutes(resultRoutes);
 }
 
+// FullRouteList predictRoutes(const RoutingParaPoint &start,
+//                                     physics::Distance const &predictionDistance,
+//                                     physics::Duration const &predictionDuration,
+//                                     RouteCreationMode const routeCreationMode)
+//{
+//  std::vector<FullRoute> resultRoutes;
+//  RoutePrediction routePrediction(start, predictionDistance, predictionDuration);
+//  if (routePrediction.calculate())
+//  {
+//    for (auto &rawRoute : routePrediction.getRawRoutes())
+//    {
+//      resultRoutes.push_back(createFullRoute(rawRoute, routeCreationMode));
+//    }
+//  }
+//  return filterDuplicatedRoutes(resultRoutes);
+//}
+
 std::vector<FullRoute> predictRoutes(const match::MapMatchedObjectBoundingBox &startObject,
                                      physics::Distance const &predictionDistance,
                                      physics::Duration const &predictionDuration,

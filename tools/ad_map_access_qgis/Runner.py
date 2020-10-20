@@ -8,35 +8,38 @@
 "..."
 
 import traceback
-from PyQt4 import QtCore
+import Globs
+from PyQt5 import QtCore
 
 
 class Runner(QtCore.QObject):
 
     "..."
-    #
-    progress = QtCore.pyqtSignal(float)
-    finished = QtCore.pyqtSignal(object)
-    #
-    debug = QtCore.pyqtSignal(str)
-    info = QtCore.pyqtSignal(str)
-    warning = QtCore.pyqtSignal(str)
-    error = QtCore.pyqtSignal(str)
-    exxception = QtCore.pyqtSignal(basestring)
 
     def __init__(self):
         "..."
         QtCore.QObject.__init__(self)
 
-    def run(self):
+    def progress(self, percent):
         "..."
-        try:
-            result = self.work()
-            self.finished.emit(result)
-        except:  # pylint: disable=W0702
-            self.exxception.emit(traceback.format_exc())
-            self.finished.emit(None)
 
-    def work(self):
+    def debug(self, msg):
         "..."
-        raise NotImplementedError
+        Globs.log.debug(msg)
+
+    def info(self, msg):
+        "..."
+        Globs.log.info(msg)
+
+    def warning(self, msg):
+        "..."
+        Globs.log.warning(msg)
+
+    def error(self, msg):
+        "..."
+        Globs.log.error(msg)
+
+    def exxception(self, msg):
+        "..."
+        self.error("Thread " + self.title + "raised exception! See message log for more info!")
+        QgsMessageLog.logMessage("Thread " + self.title + " exception: " + msg)
