@@ -58,7 +58,7 @@ class Main(object):
 
     def __init__(self):
         "..."
-        self.ui = QGISUI(Globs.iface, "&Intel AD Map", True)  # pylint: disable=C0103
+        self.ui = QGISUI(Globs.iface, "&CARLA ad_map_access", True)  # pylint: disable=C0103
         self.actions_map_not_loaded = []
         self.actions_map_loaded = []
         self.action_tool = {}
@@ -80,7 +80,7 @@ class Main(object):
         self.__add_action__(self.ENABLE_ALL_LANE_IDS, self.__enable_all__)
         self.ui.add_separator()
         self.update_ui()
-        Globs.log.info("Intel AD Map Plug-in loaded.")
+        Globs.log.info("CARLA ad_map_access Plug-in loaded.")
 
     def unload(self):
         "..."

@@ -7,7 +7,7 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=Intel ADM
+name=CARLA ad_map_access
 qgisMinimumVersion=3.10
 qgisMaximumVersion=3.99
 description=Intel ADM

@@ -29,6 +29,7 @@ nav:
   - Datatypes: 'https://ad-map-access.readthedocs.io/en/latest/ad_physics/coverage/'
   - Library: 'https://ad-map-access.readthedocs.io/en/latest/ad_map_access/coverage/'
 - Changelog: CHANGELOG.md
+- Qgis 3.14: ad_map_access_qgis/ad_map_access_qgis.md
 
 markdown_extensions:
   - admonition
