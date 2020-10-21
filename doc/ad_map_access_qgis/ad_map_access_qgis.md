@@ -104,7 +104,7 @@ After selecting the layer to be visualized, the feature identification tool on a
   ![](images/Attributes.png)
 
 ### Layer view <a name="Layerview"></a>
-When a map is loaded in QGis, all the layers of the map are visible in the Layers Panel on the QGis main window.
+When a map is loaded in QGis, all the layers of the map are visible in the Layers Panel on the QGis main window as below:
 
 ![](images/Layer_view.png) 
 

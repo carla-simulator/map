@@ -1,3 +1,10 @@
+## Brief overview of changes
+      - Intel AD Map Plugin was written for Qgis 2.18 using manually written python binding calls.
+      - In the meantime, there existed a 1:1 python binding of the C++ interface.
+      - The existing for the plugin was adapted to be compatible with the new C++ interface.
+      - Also, changes were made to made the plugin code adaptable to Qgis version 3.14 
+        (Please note: Qgis 3.14 had many differences with Qgis 2.18 , the details of which can be found at: https://qgis.org/api/api_break.html)
+
 ## Changes made to existing python bindings and how to make it all work
   - All imports from the old python interface(for e.g. import ad_map_access_qgis_python as admap) were discarded.
   - All the differences between the two versions were adapted to the plugin code at different places.
@@ -15,7 +22,7 @@
 ## Understanding of how the layers in QGis is created
  
 **__init__.py**
-- The starting point of the plugin. It has to have the classFactory() method and may have any other initialisation code.
+       - The starting point of the plugin. It has to have the classFactory() method and may have any other initialisation code.
 
 **metadata.txt**
 - Required for QGIS >= 1.8.0. Contains general info, version, name and some other metadata used by plugins website and plugin infrastructure. Since QGIS 2.0 the   metadata from __init__.py are not accepted anymore and the metadata.txt is required.
