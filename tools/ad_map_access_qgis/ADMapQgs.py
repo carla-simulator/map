@@ -22,7 +22,6 @@ from .PartitionManager import PartitionManager
 # ADMapQgs Class
 # pylint: disable=C0103, R0902
 
-
 class ADMapQgs(object):
 
     "..."
@@ -43,7 +42,7 @@ class ADMapQgs(object):
         for topo in self.layers.LANE_TOPO:
             self.__add_lane_topo_worker__(topo)
         self.__add_lane_speed_worker__()
-        self.__add_lane_surface_workers__(False, False)
+        self.__add_lane_surface_workers__(False)
         self.__add_lane_edge_worker__()
         for landmark_type in self.layers.LANDMARK_TYPE:
             self.__add_landmark_worker__(landmark_type)
@@ -66,7 +65,7 @@ class ADMapQgs(object):
         runner = LaneRunnerGeneric(layer_manager, ad.map.lane.getLanes())
         self.workers.append(Worker(title, layer, runner))
 
-    def __add_lane_surface_workers__(self, hov, hd):
+    def __add_lane_surface_workers__(self, hov):
         "..."
         lane_collection = {}
 
@@ -88,10 +87,10 @@ class ADMapQgs(object):
 
         # go over collections and add workers
         for typ, lane_ids in lane_collection.items():
-            title = self.layers.lane_surface_layer_name(typ, hov, hd)
+            title = self.layers.lane_surface_layer_name(typ, hov)
             layer = self.layers.layer[title]
             layer_manager = self.layers.layer_managers[title]
-            runner = LaneRunnerSurface(layer_manager, lane_ids, hd)
+            runner = LaneRunnerSurface(layer_manager, lane_ids)
             self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_speed_worker__(self):

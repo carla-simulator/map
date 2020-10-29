@@ -19,7 +19,7 @@ namespace lane {
 physics::Distance calcLength(ENUBorderList const &borderList)
 {
   physics::Distance total;
-  for (auto value : borderList)
+  for (auto const &value : borderList)
   {
     total = total + calcLength(value);
   }
@@ -29,7 +29,7 @@ physics::Distance calcLength(ENUBorderList const &borderList)
 physics::Distance calcLength(ECEFBorderList const &borderList)
 {
   physics::Distance total;
-  for (auto value : borderList)
+  for (auto const &value : borderList)
   {
     total = total + calcLength(value);
   }
@@ -39,7 +39,7 @@ physics::Distance calcLength(ECEFBorderList const &borderList)
 physics::Distance calcLength(GeoBorderList const &borderList)
 {
   physics::Distance total;
-  for (auto value : borderList)
+  for (auto const &value : borderList)
   {
     total = total + calcLength(value);
   }

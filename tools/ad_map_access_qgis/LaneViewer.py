@@ -5,20 +5,17 @@
 # SPDX-License-Identifier: MIT
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
-from qgis._core import QgsVectorLayerSimpleLabeling
 "..."
 
 import ad.map
 from utility import *
 import Globs
+from qgis._core import QgsVectorLayerSimpleLabeling
 from qgis.gui import QgsMapToolEmitPoint, QgsMapTool
 from qgis.core import QgsField, QgsFeature, QgsProject, QgsPalLayerSettings, QgsTextFormat
 from PyQt5.QtCore import QVariant
 from .QGISLayer import WGS84PointLayer, WGS84SurfaceLayer
 from .LayerManager import LayerManager
-
-# too many instance attrs
-# pylint: disable=R0902
 
 
 class LaneViewer(QgsMapTool):

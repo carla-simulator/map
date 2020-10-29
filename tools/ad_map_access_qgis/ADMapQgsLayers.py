@@ -220,7 +220,7 @@ class ADMapQgsLayers(object):
         lane_types = self.lane_types()
         for lane_type in lane_types:
             color = ADMapQgsLayers.LANE_SURFACE_COLOR[lane_type]
-            self.__add_lane_surface_layer__(lane_type, False, False, color)
+            self.__add_lane_surface_layer__(lane_type, False, color)
         self.__add_lane_edge_layer__()
         for landmark_type in sorted(self.LANDMARK_TYPE):
             self.__add_landmark_layer__(landmark_type)
@@ -255,7 +255,7 @@ class ADMapQgsLayers(object):
         self.layer[title] = layer
         self.layer_managers[title] = layer_manager
 
-    def __add_lane_surface_layer__(self, typ, hov, hd, color):
+    def __add_lane_surface_layer__(self, typ, hov, color):
         "..."
         lane_ids = []
         lane_list = ad.map.lane.getLanes()
@@ -272,7 +272,7 @@ class ADMapQgsLayers(object):
         attr_keys.append(QgsField("Lane Section Index", QVariant.Int))
         attr_keys.append(QgsField("Lane Index", QVariant.Int))
         if lane_ids is not None:
-            title = self.lane_surface_layer_name(typ, hov, hd)
+            title = self.lane_surface_layer_name(typ, hov)
             group = self.layer_groups[self.LANES]
             layer = WGS84SurfaceLayer(Globs.iface, title, color, attr_keys, group)
             layer_manager = LayerManagerLaneSurface(layer)
@@ -448,8 +448,7 @@ class ADMapQgsLayers(object):
         to_refresh = self.__remove_lane_from__(lane_id, self.layer_managers_surface)
         typ = lane.type
         hov = ad.map.lane.getHOV() > 1
-        high_definition = lane.complianceVersion > 0
-        layer_manager_name = self.lane_surface_layer_name(typ, hov, high_definition)
+        layer_manager_name = self.lane_surface_layer_name(typ, hov)
         layer_manager = self.layer_managers[layer_manager_name]
         layer_manager.add(lane)
         to_refresh.append(layer_manager)
@@ -491,7 +490,7 @@ class ADMapQgsLayers(object):
             layers.append(layer)
         return layers
 
-    def lane_surface_layer_name(self, typ, hov, hi_def):
+    def lane_surface_layer_name(self, typ, hov):
         "..."
         if typ not in self.lane_types():
             title = "OTHER"

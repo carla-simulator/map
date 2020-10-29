@@ -37,7 +37,6 @@ def classFactory(iface):  # pylint: disable=invalid-name
     Globs.log = Logger.LoggerQgs(iface)
     # If the console logger is needed then the below line can be uncommented to observe the log messages on the console.
     #Globs.log = Logger.LoggerConsole(iface)
-
     Globs.main = Main()
     return Globs.main
 
@@ -64,7 +63,7 @@ class Main(object):
         self.action_tool = {}
         self.admap = None
         self.plugin_dir = os.path.dirname(__file__)
-        self.file_name = "ADMap.admap"
+        self.file_name = "ADMap.txt"
 
     def initGui(self):  # pylint: disable=C0103
         "..."
@@ -86,11 +85,21 @@ class Main(object):
         "..."
         self.__map_unload__()
         self.ui.destroy()
-        Globs.log.info("Intel AD Map Plug-in removed.")
+        Globs.log.info("CARLA ad_map_access Plug-in removed.")
 
     def __open_first_map__(self, file_name):
         "..."
-        if ad.map.access.init(file_name):
+        if file_name.endswith('.xodr'):
+            open_drive_content = open(file_name, 'r').read()
+            ad.map.access.initFromOpenDriveContent(open_drive_content,0.2,ad.map.intersection.IntersectionType.Unknown,ad.map.landmark.TrafficLightType.UNKNOWN)
+            self.admap = ADMapQgs()
+            self.admap.layers.create_all()
+            self.admap.data_added()
+            self.__create_map_tools__()
+            self.update_ui()
+            return True
+        else:
+            ad.map.access.init(file_name)
             self.admap = ADMapQgs()
             self.admap.layers.create_all()
             self.admap.data_added()
@@ -110,7 +119,7 @@ class Main(object):
 
     def __select_file_name__(self):
         "..."
-        title = "Select Intel ADM file..."
+        title = "Select CARLA ad_map_access file..."
         default_dir = "/"
         self.file_name = QFileDialog.getOpenFileName(None, title, default_dir)
 

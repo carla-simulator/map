@@ -2,10 +2,9 @@
  
 ## Table of contents
 1. [Introduction](#introduction)
-2. [Features of Qgis 3.14](#features)
-3. [CARLA ad_map_access toolbar](#toolbar)
-4. [How to use the tool](#howtouse)
-5. [Layer view ](#Layerview)
+2. [CARLA ad_map_access toolbar](#toolbar)
+3. [How to use the tool](#howtouse)
+4. [Layer view ](#Layerview)
 
 ### Introduction <a name="introduction"></a>
 Visualization of the map data is crucial to be able to inspect the data and work with it. 
@@ -22,21 +21,6 @@ The following map data is e.g. visualized there:
 
 Also basic tools to test the map matching and routing functionality, prediction test(with runtime selection of route creation mode, prediction duration and length) are also provided.
 
-
-### Features of QGis 3.14 <a name="features"></a>
-Version 3.0 brings changes to many underlying dependencies which QGIS is built upon.
-
-#### Python 3.0
-QGIS 3.0 introduces a move to Python 3. This version brings many changes to both the Python language and individual Python libraries.  
-A good place to start learning about the changes involved, and how to port your code to Python 3, is available in the official Python documentation: [Porting Python 2 Code to Python 3.](https://docs.python.org/3/howto/pyporting.html)
-
-#### Qt5
-QGIS 3.0 is based off version 5 of the underlying Qt libraries. Many changes and API breaks were introduced in Qt5. 
-
-#### PyQt 5
-Together with the Python and Qt version changes, the PyQt libraries which expose Qt classes to Python have also had their version bumped to PyQt 5.
-
-
 ### CARLA ad_map_access toolbar <a name="toolbar"></a>
 The CARLA ad_map_access toolbar looks like this when the plugin is loaded:
 
@@ -52,23 +36,27 @@ The different features provided by the plugin are:
 #### Set Snap Altitude
  ![Set Snap Altitude](images/Setsnapaltitude.png) : By using this tool, user can hover anywhere over the map and click to set the default altitude for calculations during Snapping Test, Routing Test and Prediction Test.
 #### Snapping Test
- ![Unload Loaded Map](images/Snappingtest.png) : User can select this icon to activate the snapping test. Also ENU co-ordinates of the map-snapped listed points is also visible. 
+ ![Snapping Test](images/Snappingtest.png) : User can select this icon to activate the snapping test. Also ENU co-ordinates of the map-snapped listed points is also visible. 
 #### Routing Test
- ![Unload Loaded Map](images/Routingtest.png) : Selecting this icon, will provide the options to the user to select a mode for route creation. After selecting the appropriate route creation mode, the start point and the end point of the route is selected on the map, which then generates the route.
+ ![Routing Test](images/Routingtest.png) : Selecting this icon, will provide the options to the user to select a mode for route creation. After selecting the appropriate route creation mode, the start point and the end point of the route is selected on the map, which then generates the route.
 #### Routing Restart
- ![Unload Loaded Map](images/Routingrestart.png) : User can select this icon to restart the routing test.
+ ![Routing Restart](images/Routingrestart.png) : User can select this icon to restart the routing test.
 #### Prediction Test
- ![Unload Loaded Map](images/Predictiontest.png) : Provides the Prediction test on the loaded map. On selecting this icon, user will get options to select the route creation mode, length and duration of the prediction test. Post selection of the test specific features, the lane for prediction can be selected on the map.
+ ![Prediction Test](images/Predictiontest.png) : Provides the Prediction test on the loaded map. On selecting this icon, user will get options to select the route creation mode, length and duration of the prediction test. Post selection of the test specific features, the lane for prediction can be selected on the map.
 #### Enable all lane IDs
- ![Unload Loaded Map](images/ID.png) : Generally it is required to select each layer(INTERSECTION, NORMAL, OTHER or UNKNOWN) under Lane Types, and then activate the lane id attribute to visualize the lane ids on the map. Enabling this button helps the user to bypass those steps, and directly visualize the lane ids on the map. Also, disabling the button removes the lane IDs from the map.
+ ![Enable All](images/ID.png) : Generally it is required to select each layer(INTERSECTION, NORMAL, OTHER or UNKNOWN) under Lane Types, and then activate the lane id attribute to visualize the lane ids on the map. Enabling this button helps the user to bypass those steps, and directly visualize the lane ids on the map. Also, disabling the button removes the lane IDs from the map.
 
 ### How to use the tool <a name="howtouse"></a>
 - The python path is set to the current python bindings and the working folder.  
-*$map> export PYTHONPATH=$PYTHONPATH:/localdisk/shreyade/map/install/ad_map_access/lib/python3.6:/localdisk/shreyade/map/install/ad_physics/lib/python3.6:/localdisk/shreyade/map/tools*
+*$map> export PYTHONPATH=$PYTHONPATH:<path/to/>install/ad_map_access/lib/python3.6*
 - Load qgis from the working folder where the python environment was set.
 - The QGIS_PLUGINPATH can be configured optionally as a shell script file to avoid loading the plugin everytime, QGis is opened.
+  QGIS_PLUGINPATH=<path/to/>install/ad_map_access_qgis/share/qgis/python/plugins/ad_map_access_qgis
 - Once the plugin is loaded, the CARLA ad_map_access toolbar is now available for use.
-- The map is loaded using the load map icon on the CARLA ad_map_access toolbar. 
+- The map is loaded using the load map icon on the CARLA ad_map_access toolbar.  
+  Currently, we load the txt configuration file from ad_map_access as direct loading of xodr files is not possible anymore.  
+  Linking an example [file](https://github.com/carla-simulator/map/blob/master/ad_map_access/impl/tests/test_files/Town01.txt).  
+  Also please refer to the [configuration structure](https://ad-map-access.readthedocs.io/en/latest/ad_map_access/apidoc/html/        classad_1_1map_1_1config_1_1MapConfigFileHandler.html).
  ![Loading the desired map](images/Load_file.png "Select the map from the file system") 
       *Select the map from the file system* 
 
@@ -98,7 +86,7 @@ After selecting the layer to be visualized, the feature identification tool on a
  ![](images/feature_tool_result.png)
      *The Normal Layer under Lane Types is selected and the features are displayed*
 
-- The in-built python console in Qgis 3.14 ![](images/python.png) can also be used to verify different functionalities of Qgis while reading and understanding any plugin code. ALl the qgis core modules and gui modules are already a part of the environment which makes debugging for the user easier.
+- The in-built python console in Qgis 3.14 ![](images/python.png) can also be used to verify different functionalities of Qgis while reading and understanding any plugin code. All the qgis core modules and gui modules are already a part of the environment which makes debugging for the user easier.
 
 - In order to manually enable any attributes of a particular layer, the *Layer Properties* of the layer is accessed any attribute is enabled to be visible. 
   ![](images/Attributes.png)

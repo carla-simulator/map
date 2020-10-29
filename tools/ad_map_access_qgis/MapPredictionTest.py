@@ -82,6 +82,9 @@ class MapPredictionTest(QgsMapToolEmitPoint):
         "..."
         super(MapPredictionTest, self).deactivate()
         self.action.setChecked(False)
+        self.layer_waypoints = None
+        self.routes_edges = None
+        self.layer_routes = None
         Globs.log.info("Map Prediction Test Deactivated")
 
     def canvasReleaseEvent(self, event):  # pylint: disable=invalid-name
@@ -110,7 +113,8 @@ class MapPredictionTest(QgsMapToolEmitPoint):
     def __calculate_predictions__(self):
         "..."
         routes = Predictions(self.pt_start, self.mode, self.length, self.duration)
-        edgeList = ad.map.route.getGeoBorderOfRoute(routes)
+        for each in routes:
+            edgeList = ad.map.route.getGeoBorderOfRoute(each)
         if routes is not None:
             self.routes_edges = []
             self.__resize_route_layers__(len(routes))
@@ -123,12 +127,10 @@ class MapPredictionTest(QgsMapToolEmitPoint):
 
     def __add_edge__(self, new_edge):
         "..."
-        current_prediction_index = len(self.routes_edges) - 1
-        for edge in self.routes_edges[current_prediction_index]:
+        for edge in self.routes_edges:
+            current_prediction_index = len(self.routes_edges) - 1
             self.layer_routes[current_prediction_index].add_lla2(new_edge.left, new_edge.right, [])
-            self.routes_edges[current_prediction_index].remove(edge)
-            return
-        self.routes_edges[current_prediction_index].append(new_edge)
+            self.routes_edges[current_prediction_index].append(new_edge)
 
     def __resize_route_layers__(self, required_size):
         while len(self.layer_routes) < required_size:
