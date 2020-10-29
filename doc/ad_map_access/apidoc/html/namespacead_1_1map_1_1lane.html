@@ -140,6 +140,15 @@ typedef std::vector&lt;::<a class="el" href="structad_1_1map_1_1lane_1_1ContactL
 <tr class="memitem:acf0a6c6d4a0c4277002588aa9f0cfe75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf0a6c6d4a0c4277002588aa9f0cfe75"></a>
 typedef std::set&lt; <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>LaneIdSet</b></td></tr>
 <tr class="separator:acf0a6c6d4a0c4277002588aa9f0cfe75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12d98f0a3b87b00bbeaac952fb54eb1d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12d98f0a3b87b00bbeaac952fb54eb1d"></a>
+typedef std::vector&lt; <a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ad::map::lane::ENUBorder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ENUBorderList</b></td></tr>
+<tr class="separator:a12d98f0a3b87b00bbeaac952fb54eb1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6f130cf095cc7f5e40ee8144e8fd1c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6f130cf095cc7f5e40ee8144e8fd1c6"></a>
+typedef std::vector&lt; <a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html">ad::map::lane::ECEFBorder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ECEFBorderList</b></td></tr>
+<tr class="separator:aa6f130cf095cc7f5e40ee8144e8fd1c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff7d363d12d04a4950f4a47cb3dd8526"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff7d363d12d04a4950f4a47cb3dd8526"></a>
+typedef std::vector&lt; <a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html">ad::map::lane::GeoBorder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GeoBorderList</b></td></tr>
+<tr class="separator:aff7d363d12d04a4950f4a47cb3dd8526"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -282,9 +291,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ac655789776ac1fe8599627dff35be496"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ac655789776ac1fe8599627dff35be496">calcLength</a> (<a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html">GeoBorder</a> const &amp;border)</td></tr>
 <tr class="memdesc:ac655789776ac1fe8599627dff35be496"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the length of the provided border as distance value  <a href="#ac655789776ac1fe8599627dff35be496">More...</a><br /></td></tr>
 <tr class="separator:ac655789776ac1fe8599627dff35be496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cbd0bb3a1dabbc0de1e32f472e0a0b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a4cbd0bb3a1dabbc0de1e32f472e0a0b8">getENUHeading</a> (std::vector&lt; <a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> &gt; const &amp;borderList, <a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> const &amp;enuPoint)</td></tr>
-<tr class="memdesc:a4cbd0bb3a1dabbc0de1e32f472e0a0b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the ENUHeading of the vector&lt;ENUBorder&gt; at the given ENUPoint  <a href="#a4cbd0bb3a1dabbc0de1e32f472e0a0b8">More...</a><br /></td></tr>
-<tr class="separator:a4cbd0bb3a1dabbc0de1e32f472e0a0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af62688aa064b38a7d74a28542c47defd"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#af62688aa064b38a7d74a28542c47defd">calcLength</a> (ENUBorderList const &amp;borderList)</td></tr>
+<tr class="memdesc:af62688aa064b38a7d74a28542c47defd"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the length out of the provided ENU border List as distance value  <a href="#af62688aa064b38a7d74a28542c47defd">More...</a><br /></td></tr>
+<tr class="separator:af62688aa064b38a7d74a28542c47defd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10cdb2f38c116ccd5414f82bc759c42e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a10cdb2f38c116ccd5414f82bc759c42e">getENUHeading</a> (ENUBorderList const &amp;borderList, <a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> const &amp;enuPoint)</td></tr>
+<tr class="memdesc:a10cdb2f38c116ccd5414f82bc759c42e"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the ENUHeading of the vector&lt;ENUBorder&gt; at the given ENUPoint  <a href="#a10cdb2f38c116ccd5414f82bc759c42e">More...</a><br /></td></tr>
+<tr class="separator:a10cdb2f38c116ccd5414f82bc759c42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a609b7ae504bc14634c42248d84276c56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a609b7ae504bc14634c42248d84276c56">oppositeLocation</a> (<a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a> const &amp;e)</td></tr>
 <tr class="memdesc:a609b7ae504bc14634c42248d84276c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides opposite Location.  <a href="#a609b7ae504bc14634c42248d84276c56">More...</a><br /></td></tr>
 <tr class="separator:a609b7ae504bc14634c42248d84276c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -832,6 +844,29 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
+<a class="anchor" id="af62688aa064b38a7d74a28542c47defd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::lane::calcLength </td>
+          <td>(</td>
+          <td class="paramtype">ENUBorderList const &amp;&#160;</td>
+          <td class="paramname"><em>borderList</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>calculate the length out of the provided ENU border List as distance value </p>
+<p>calculate the length out of the provided GEO border List as distance value</p>
+<p>calculate the length out of the provided ECEF border List as distance value</p>
+<p>For length calculation the average between left and right edge of the border is returned. Length calculation is performed within Cartesian ENU coordinate frame.</p>
+<p>For length calculation the average between left and right edge of the border is returned. Length calculation is performed within Cartesian ECEF coordinate frame.</p>
+<p>For length calculation the average between left and right edge of the border is returned. Length calculation is performed within GEO coordinate frame. </p>
+
+</div>
+</div>
 <a class="anchor" id="a243036d22fb63060e528669205325578"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1163,14 +1198,14 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="a4cbd0bb3a1dabbc0de1e32f472e0a0b8"></a>
+<a class="anchor" id="a10cdb2f38c116ccd5414f82bc759c42e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a> ad::map::lane::getENUHeading </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> &gt; const &amp;&#160;</td>
+          <td class="paramtype">ENUBorderList const &amp;&#160;</td>
           <td class="paramname"><em>borderList</em>, </td>
         </tr>
         <tr>
@@ -2535,50 +2570,6 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="a2ec904704badf15ce91a9be1d43f109e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; ad::map::lane::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html">GeoBorder</a> const &amp;&#160;</td>
-          <td class="paramname"><em>_value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>standard ostream operator </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html" title="DataType GeoBorder. ">GeoBorder</a> value</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a00f93569eb8658a553463d0fa6b12021"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2616,6 +2607,50 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html" title="DataType ECEFBorder. ">ECEFBorder</a> value</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2ec904704badf15ce91a9be1d43f109e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; ad::map::lane::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html">GeoBorder</a> const &amp;&#160;</td>
+          <td class="paramname"><em>_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>standard ostream operator </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html" title="DataType GeoBorder. ">GeoBorder</a> value</td></tr>
   </table>
   </dd>
 </dl>

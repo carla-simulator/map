@@ -107,23 +107,39 @@ But like this, you can have the pure-static (python) builds separated from the s
 
 ### Plain CMake build
 The ad_map_access (same applies to the other libraries) library is built with a standard cmake toolchain.
+
+!!! Note
+  To enable Python bindings, you will need to set ```-DBUILD_PYTHON_BINDING=ON``` for ```ad_physics``` and ```ad_map_access```. See [Python Bindings](#python-binding) for more info.
+
 Therefore, a full list of step by step calls could look like e.g.:
+
 ```bash
+ # Creating directories
  map$> mkdir install
  map$> mkdir -p build/{proj,spdlog,ad_physics,ad_map_opendrive_reader,ad_map_access}
+ 
+ # Build proj
  map$> cd build/proj
  map/build/proj$> cmake ../../dependencies/PROJ -DCMAKE_INSTALL_PREFIX=../../install/proj -DCMAKE_POSITION_INDEPENDENT_CODE=ON
  map/build/proj$> make install
+ 
+ # Build spdlog
  map$> cd ../spdlog
- map/build/spdlog$> cmake ../../dependencies/spdlog -DCMAKE_INSTALL_PREFIX=../../install/spdlog -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_EXAMPLE=Off
+ map/build/spdlog$> cmake ../../dependencies/spdlog -DCMAKE_INSTALL_PREFIX=../../install/spdlog -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DSPDLOG_BUILD_TESTS=OFF -DSPDLOG_BUILD_EXAMPLE=OFF
  map/build/spdlog$> make install
+ 
+ # Build ad_physics
  map/build/spdlog$> cd ../ad_physics
  map/build/ad_physics$> cmake ../../ad_physics -DCMAKE_INSTALL_PREFIX=../../install/ad_physics -DCMAKE_PREFIX_PATH=../../install/spdlog
  map/build/ad_physics$> make install
+
+ # Build ad_map_opendrive_reader
  map/build/ad_physics$> cd ../ad_map_opendrive_reader
  map/build/ad_map_opendrive_reader$> cmake ../../ad_map_opendrive_reader -DCMAKE_INSTALL_PREFIX=../../install/ad_map_opendrive_reader -DCMAKE_PREFIX_PATH="../../install/proj;../../install/spdlog;../../install/ad_physics"
  map/build/ad_map_opendrive_reader$> make install
- map/build/ad_map_opendrive_reader$> cd ../../build/ad_map_access
+ 
+ # Build ad_map_access
+ map/build/ad_map_opendrive_reader$> cd ../ad_map_access
  map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/proj;../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader"
  map/build/ad_map_access$> make install
  map/build/ad_map_access$> cd ../..
@@ -135,7 +151,7 @@ Building the map_maker tools in addition then looks like:
 ```bash
  map$> mkdir -p build/map_maker
  map$> cd build/map_maker
- map/build/map_maker$> cmake ../../tools/map_maker -DCMAKE_INSTALL_PREFIX=../../install/map_maker
+ map/build/map_maker$> cmake ../../tools/map_maker -DCMAKE_INSTALL_PREFIX=../../install/map_maker -DCMAKE_PREFIX_PATH="../../install/ad_map_access;../../install/ad_map_opendrive_reader;../../install/ad_physics;../../install/spdlog"
  map/build/map_maker$> make install
  map/build/map_maker$> cd ../..
  map$> echo "Hurray, map maker tools built!"
@@ -207,3 +223,7 @@ You have to enable the python binding also on the respective dependent component
  map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader" -DBUILD_PYTHON_BINDING=ON -DBUILD_SHARED_LIBS=OFF
  map/build/ad_map_access$> make install
 ```
+
+## **FAQ**
+### **Error "relocation R_X86_64_PC32 against symbol '...' can not be used when making a shared object; recompile with -fPIC" when building**
+Try adding the flag ```-DCMAKE_POSITION_INDEPENDENT_CODE=ON``` to cmake

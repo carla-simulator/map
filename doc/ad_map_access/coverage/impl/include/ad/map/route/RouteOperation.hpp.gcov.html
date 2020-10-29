@@ -32,17 +32,17 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">23</td>
-            <td class="headerCovTableEntry">23</td>
-            <td class="headerCovTableEntryHi">100.0 %</td>
+            <td class="headerCovTableEntry">27</td>
+            <td class="headerCovTableEntryMed">85.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-10-01 15:07:46</td>
+            <td class="headerValue">2020-10-29 20:11:47</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">8</td>
-            <td class="headerCovTableEntry">8</td>
-            <td class="headerCovTableEntryHi">100.0 %</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryMed">80.0 %</td>
           </tr>
           <tr>
             <td></td>
@@ -50,8 +50,8 @@
             <td></td>
             <td class="headerItem">Branches:</td>
             <td class="headerCovTableEntry">20</td>
-            <td class="headerCovTableEntry">28</td>
-            <td class="headerCovTableEntryLo">71.4 %</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntryLo">62.5 %</td>
           </tr>
           <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -944,11 +944,11 @@
 <span class="lineNum">     872 </span>                :            :  *
 <span class="lineNum">     873 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
 <span class="lineNum">     874 </span>                :            :  *
-<span class="lineNum">     875 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<a name="875"><span class="lineNum">     875 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from</a>
 <span class="lineNum">     876 </span>                :            :  */
-<span class="lineNum">     877 </span>                :            : inline lane::ECEFBorder getECEFBorderOfRoadSegment(RoadSegment const &amp;roadSegment)
+<span class="lineNum">     877 </span>                :<span class="lineNoCov">          0 : inline lane::ECEFBorder getECEFBorderOfRoadSegment(RoadSegment const &amp;roadSegment)</span>
 <span class="lineNum">     878 </span>                :            : {
-<span class="lineNum">     879 </span>                :            :   return getECEFBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));
+<span class="lineNum">     879 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   return getECEFBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));</span>
 <span class="lineNum">     880 </span>                :            : }
 <span class="lineNum">     881 </span>                :            : 
 <span class="lineNum">     882 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
@@ -986,11 +986,11 @@
 <span class="lineNum">     914 </span>                :            :  *
 <span class="lineNum">     915 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
 <span class="lineNum">     916 </span>                :            :  *
-<span class="lineNum">     917 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<a name="917"><span class="lineNum">     917 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from</a>
 <span class="lineNum">     918 </span>                :            :  */
-<span class="lineNum">     919 </span>                :            : inline lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &amp;roadSegment)
+<span class="lineNum">     919 </span>                :<span class="lineNoCov">          0 : inline lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &amp;roadSegment)</span>
 <span class="lineNum">     920 </span>                :            : {
-<span class="lineNum">     921 </span>                :            :   return getGeoBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));
+<span class="lineNum">     921 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   return getGeoBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));</span>
 <span class="lineNum">     922 </span>                :            : }
 <span class="lineNum">     923 </span>                :            : 
 <span class="lineNum">     924 </span>                :            : /** @brief get borders of a full route
@@ -1002,46 +1002,64 @@
 <span class="lineNum">     930 </span>                :            :  */
 <span class="lineNum">     931 </span>                :            : std::vector&lt;lane::ENUBorder&gt; getENUBorderOfRoute(FullRoute const &amp;route);
 <span class="lineNum">     932 </span>                :            : 
-<span class="lineNum">     933 </span>                :            : /**
-<span class="lineNum">     934 </span>                :            :  * @brief get the ENU heading of a route at the location of the object
-<span class="lineNum">     935 </span>                :            :  *
-<span class="lineNum">     936 </span>                :            :  * @param object the object on the route
-<span class="lineNum">     937 </span>                :            :  * @param route the route
-<span class="lineNum">     938 </span>                :            :  *
-<span class="lineNum">     939 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
-<span class="lineNum">     940 </span>                :            :  */
-<span class="lineNum">     941 </span>                :            : point::ENUHeading getENUHeadingOfRoute(match::Object const &amp;object, FullRoute const &amp;route);
-<span class="lineNum">     942 </span>                :            : 
-<span class="lineNum">     943 </span>                :            : /**
-<span class="lineNum">     944 </span>                :            :  * @brief compare the ENU heading of the route at the location of the object with the ENU heading of the object
-<span class="lineNum">     945 </span>                :            :  *
-<span class="lineNum">     946 </span>                :            :  * @returns \c true if the difference between object heading and route heading at the object position
-<span class="lineNum">     947 </span>                :            :  * is not larger than 90°
-<span class="lineNum">     948 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
-<span class="lineNum">     949 </span>                :            :  */
-<span class="lineNum">     950 </span>                :            : bool isObjectHeadingInRouteDirection(match::Object const &amp;object, FullRoute const &amp;route);
-<span class="lineNum">     951 </span>                :            : 
-<span class="lineNum">     952 </span>                :            : /**
-<span class="lineNum">     953 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the begin
-<span class="lineNum">     954 </span>                :            :  *
-<span class="lineNum">     955 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromBegin()
+<span class="lineNum">     933 </span>                :            : /** @brief get borders of a full route
+<span class="lineNum">     934 </span>                :            :  *
+<span class="lineNum">     935 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     936 </span>                :            :  * The borders of successive road segments are collected in the result vector.
+<span class="lineNum">     937 </span>                :            :  *
+<span class="lineNum">     938 </span>                :            :  * @param[in] route the route to extract the borders from
+<span class="lineNum">     939 </span>                :            :  */
+<span class="lineNum">     940 </span>                :            : std::vector&lt;lane::ECEFBorder&gt; getECEFBorderOfRoute(FullRoute const &amp;route);
+<span class="lineNum">     941 </span>                :            : 
+<span class="lineNum">     942 </span>                :            : /** @brief get borders of a full route
+<span class="lineNum">     943 </span>                :            :  *
+<span class="lineNum">     944 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     945 </span>                :            :  * The borders of successive road segments are collected in the result vector.
+<span class="lineNum">     946 </span>                :            :  *
+<span class="lineNum">     947 </span>                :            :  * @param[in] route the route to extract the borders from
+<span class="lineNum">     948 </span>                :            :  */
+<span class="lineNum">     949 </span>                :            : std::vector&lt;lane::GeoBorder&gt; getGeoBorderOfRoute(FullRoute const &amp;route);
+<span class="lineNum">     950 </span>                :            : 
+<span class="lineNum">     951 </span>                :            : /**
+<span class="lineNum">     952 </span>                :            :  * @brief get the ENU heading of a route at the location of the object
+<span class="lineNum">     953 </span>                :            :  *
+<span class="lineNum">     954 </span>                :            :  * @param object the object on the route
+<span class="lineNum">     955 </span>                :            :  * @param route the route
 <span class="lineNum">     956 </span>                :            :  *
-<span class="lineNum">     957 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
+<span class="lineNum">     957 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
 <span class="lineNum">     958 </span>                :            :  */
-<span class="lineNum">     959 </span>                :            : void shortenSegmentFromBegin(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
+<span class="lineNum">     959 </span>                :            : point::ENUHeading getENUHeadingOfRoute(match::Object const &amp;object, FullRoute const &amp;route);
 <span class="lineNum">     960 </span>                :            : 
 <span class="lineNum">     961 </span>                :            : /**
-<span class="lineNum">     962 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the end
+<span class="lineNum">     962 </span>                :            :  * @brief compare the ENU heading of the route at the location of the object with the ENU heading of the object
 <span class="lineNum">     963 </span>                :            :  *
-<span class="lineNum">     964 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromEnd()
-<span class="lineNum">     965 </span>                :            :  *
-<span class="lineNum">     966 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
+<span class="lineNum">     964 </span>                :            :  * @returns \c true if the difference between object heading and route heading at the object position
+<span class="lineNum">     965 </span>                :            :  * is not larger than 90°
+<span class="lineNum">     966 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
 <span class="lineNum">     967 </span>                :            :  */
-<span class="lineNum">     968 </span>                :            : void shortenSegmentFromEnd(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
+<span class="lineNum">     968 </span>                :            : bool isObjectHeadingInRouteDirection(match::Object const &amp;object, FullRoute const &amp;route);
 <span class="lineNum">     969 </span>                :            : 
-<span class="lineNum">     970 </span>                :            : } // namespace route
-<span class="lineNum">     971 </span>                :            : } // namespace map
-<span class="lineNum">     972 </span>                :            : } // namespace ad
+<span class="lineNum">     970 </span>                :            : /**
+<span class="lineNum">     971 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the begin
+<span class="lineNum">     972 </span>                :            :  *
+<span class="lineNum">     973 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromBegin()
+<span class="lineNum">     974 </span>                :            :  *
+<span class="lineNum">     975 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
+<span class="lineNum">     976 </span>                :            :  */
+<span class="lineNum">     977 </span>                :            : void shortenSegmentFromBegin(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
+<span class="lineNum">     978 </span>                :            : 
+<span class="lineNum">     979 </span>                :            : /**
+<span class="lineNum">     980 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the end
+<span class="lineNum">     981 </span>                :            :  *
+<span class="lineNum">     982 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromEnd()
+<span class="lineNum">     983 </span>                :            :  *
+<span class="lineNum">     984 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
+<span class="lineNum">     985 </span>                :            :  */
+<span class="lineNum">     986 </span>                :            : void shortenSegmentFromEnd(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
+<span class="lineNum">     987 </span>                :            : 
+<span class="lineNum">     988 </span>                :            : } // namespace route
+<span class="lineNum">     989 </span>                :            : } // namespace map
+<span class="lineNum">     990 </span>                :            : } // namespace ad
 </pre>
       </td>
     </tr>

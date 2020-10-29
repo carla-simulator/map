@@ -31,27 +31,27 @@
             <td class="headerValue">ad_map_access</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">949</td>
-            <td class="headerCovTableEntry">1052</td>
-            <td class="headerCovTableEntryHi">90.2 %</td>
+            <td class="headerCovTableEntry">950</td>
+            <td class="headerCovTableEntry">1065</td>
+            <td class="headerCovTableEntryMed">89.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-10-01 15:07:46</td>
+            <td class="headerValue">2020-10-29 20:11:47</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">91</td>
-            <td class="headerCovTableEntry">100</td>
-            <td class="headerCovTableEntryHi">91.0 %</td>
+            <td class="headerCovTableEntry">102</td>
+            <td class="headerCovTableEntryMed">89.2 %</td>
           </tr>
           <tr>
             <td></td>
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">827</td>
-            <td class="headerCovTableEntry">1508</td>
-            <td class="headerCovTableEntryLo">54.8 %</td>
+            <td class="headerCovTableEntry">828</td>
+            <td class="headerCovTableEntry">1526</td>
+            <td class="headerCovTableEntryLo">54.3 %</td>
           </tr>
           <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -2365,47 +2365,70 @@
 <span class="lineNum">    2249 </span>                :<span class="lineCov">          8 : std::vector&lt;lane::ENUBorder&gt; getENUBorderOfRoute(FullRoute const &amp;route)</span>
 <span class="lineNum">    2250 </span>                :            : {
 <span class="lineNum">    2251 </span>                :<span class="lineCov">          8 :   std::vector&lt;lane::ENUBorder&gt; enuBorderList;</span>
-<span class="lineNum">    2252 </span>        [<span class="branchCov" title="Branch 3 was taken 8 times"> + </span><span class="branchCov" title="Branch 4 was taken 8 times"> + </span>]:<span class="lineCov">         16 :   for (auto const &amp;roadSegment : route.roadSegments)</span>
-<span class="lineNum">    2253 </span>                :            :   {
-<span class="lineNum">    2254 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :     enuBorderList.push_back(getENUBorderOfRoadSegment(roadSegment));</span>
-<span class="lineNum">    2255 </span>                :            :   }
-<span class="lineNum">    2256 </span>                :<span class="lineCov">          8 :   return enuBorderList;</span>
-<a name="2257"><span class="lineNum">    2257 </span>                :            : }</a>
-<span class="lineNum">    2258 </span>                :            : 
-<span class="lineNum">    2259 </span>                :<span class="lineCov">          8 : point::ENUHeading getENUHeadingOfRoute(match::Object const &amp;object, FullRoute const &amp;route)</span>
-<span class="lineNum">    2260 </span>                :            : {
-<span class="lineNum">    2261 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   FindWaypointResult objectCenterWaypoint = findCenterWaypoint(object, route);</span>
-<span class="lineNum">    2262 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 8 times"> + </span>]:<span class="lineCov">          8 :   if (!objectCenterWaypoint.isValid())</span>
-<span class="lineNum">    2263 </span>                :            :   {
-<span class="lineNum">    2264 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]:<span class="lineNoCov">          0 :     access::getLogger()-&gt;error(&quot;ad::map::route::getENUHeadingOfRoute: object not found in route {} {}&quot;, object, route);</span>
-<span class="lineNum">    2265 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::runtime_error(&quot;route::getENUHeadingOfRoute&gt;&gt; object not found in route&quot;);</span>
-<span class="lineNum">    2266 </span>                :            :   }
-<span class="lineNum">    2267 </span>                :            :   // ensure the object center point is in
-<span class="lineNum">    2268 </span>                :            :   auto const routeSectionAroundObject = getRouteSection(objectCenterWaypoint,
-<span class="lineNum">    2269 </span>                :            :                                                         object.enuPosition.dimension.length,
-<span class="lineNum">    2270 </span>                :            :                                                         object.enuPosition.dimension.length,
-<span class="lineNum">    2271 </span>                :            :                                                         route,
-<span class="lineNum">    2272 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         16 :                                                         RouteSectionCreationMode::AllRouteLanes);</span>
-<span class="lineNum">    2273 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         16 :   auto const routeENUBorders = getENUBorderOfRoute(routeSectionAroundObject);</span>
-<span class="lineNum">    2274 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         16 :   return lane::getENUHeading(routeENUBorders, object.enuPosition.centerPoint);</span>
-<a name="2275"><span class="lineNum">    2275 </span>                :            : }</a>
-<span class="lineNum">    2276 </span>                :            : 
-<span class="lineNum">    2277 </span>                :<span class="lineCov">          8 : bool isObjectHeadingInRouteDirection(match::Object const &amp;object, FullRoute const &amp;route)</span>
-<span class="lineNum">    2278 </span>                :            : {
-<span class="lineNum">    2279 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const enuHeadingOfRoute = getENUHeadingOfRoute(object, route);</span>
-<span class="lineNum">    2280 </span>                :            :   // enforce normalization of angle difference
-<span class="lineNum">    2281 </span>                :            :   const auto headingDifference
-<span class="lineNum">    2282 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          8 :     = point::createENUHeading(static_cast&lt;double&gt;(std::fabs(enuHeadingOfRoute - object.enuPosition.heading)));</span>
-<span class="lineNum">    2283 </span>        [<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchCov" title="Branch 3 was taken 4 times"> + </span>]:<span class="lineCov">          8 :   if (static_cast&lt;double&gt;(std::fabs(headingDifference)) &gt; M_PI / 2.)</span>
-<span class="lineNum">    2284 </span>                :            :   {
-<span class="lineNum">    2285 </span>                :<span class="lineCov">          4 :     return false;</span>
-<span class="lineNum">    2286 </span>                :            :   }
-<span class="lineNum">    2287 </span>                :<span class="lineCov">          8 :   return true;</span>
-<span class="lineNum">    2288 </span>                :            : }
-<span class="lineNum">    2289 </span>                :            : 
-<a name="2290"><span class="lineNum">    2290 </span>                :            : } // namespace route</a>
-<span class="lineNum">    2291 </span>                :            : } // namespace map
-<span class="lineNum">    2292 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 : } // namespace ad</span>
+<span class="lineNum">    2252 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :   enuBorderList.reserve(route.roadSegments.size());</span>
+<span class="lineNum">    2253 </span>        [<span class="branchCov" title="Branch 3 was taken 8 times"> + </span><span class="branchCov" title="Branch 4 was taken 8 times"> + </span>]:<span class="lineCov">         16 :   for (auto const &amp;roadSegment : route.roadSegments)</span>
+<span class="lineNum">    2254 </span>                :            :   {
+<span class="lineNum">    2255 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          8 :     enuBorderList.push_back(getENUBorderOfRoadSegment(roadSegment));</span>
+<span class="lineNum">    2256 </span>                :            :   }
+<span class="lineNum">    2257 </span>                :<span class="lineCov">          8 :   return enuBorderList;</span>
+<a name="2258"><span class="lineNum">    2258 </span>                :            : }</a>
+<span class="lineNum">    2259 </span>                :            : 
+<span class="lineNum">    2260 </span>                :<span class="lineNoCov">          0 : std::vector&lt;lane::ECEFBorder&gt; getECEFBorderOfRoute(FullRoute const &amp;route)</span>
+<span class="lineNum">    2261 </span>                :            : {
+<span class="lineNum">    2262 </span>                :<span class="lineNoCov">          0 :   std::vector&lt;lane::ECEFBorder&gt; ecefBorderList;</span>
+<span class="lineNum">    2263 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   ecefBorderList.reserve(route.roadSegments.size());</span>
+<span class="lineNum">    2264 </span>        [<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>]:<span class="lineNoCov">          0 :   for (auto const &amp;roadSegment : route.roadSegments)</span>
+<span class="lineNum">    2265 </span>                :            :   {
+<span class="lineNum">    2266 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]:<span class="lineNoCov">          0 :     ecefBorderList.push_back(getECEFBorderOfRoadSegment(roadSegment));</span>
+<span class="lineNum">    2267 </span>                :            :   }
+<span class="lineNum">    2268 </span>                :<span class="lineNoCov">          0 :   return ecefBorderList;</span>
+<a name="2269"><span class="lineNum">    2269 </span>                :            : }</a>
+<span class="lineNum">    2270 </span>                :            : 
+<span class="lineNum">    2271 </span>                :<span class="lineNoCov">          0 : std::vector&lt;lane::GeoBorder&gt; getGeoBorderOfRoute(FullRoute const &amp;route)</span>
+<span class="lineNum">    2272 </span>                :            : {
+<span class="lineNum">    2273 </span>                :<span class="lineNoCov">          0 :   std::vector&lt;lane::GeoBorder&gt; geoBorderList;</span>
+<span class="lineNum">    2274 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   geoBorderList.reserve(route.roadSegments.size());</span>
+<span class="lineNum">    2275 </span>        [<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>]:<span class="lineNoCov">          0 :   for (auto const &amp;roadSegment : route.roadSegments)</span>
+<span class="lineNum">    2276 </span>                :            :   {
+<span class="lineNum">    2277 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]:<span class="lineNoCov">          0 :     geoBorderList.push_back(getGeoBorderOfRoadSegment(roadSegment));</span>
+<span class="lineNum">    2278 </span>                :            :   }
+<span class="lineNum">    2279 </span>                :<span class="lineNoCov">          0 :   return geoBorderList;</span>
+<a name="2280"><span class="lineNum">    2280 </span>                :            : }</a>
+<span class="lineNum">    2281 </span>                :            : 
+<span class="lineNum">    2282 </span>                :<span class="lineCov">          8 : point::ENUHeading getENUHeadingOfRoute(match::Object const &amp;object, FullRoute const &amp;route)</span>
+<span class="lineNum">    2283 </span>                :            : {
+<span class="lineNum">    2284 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   FindWaypointResult objectCenterWaypoint = findCenterWaypoint(object, route);</span>
+<span class="lineNum">    2285 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 8 times"> + </span>]:<span class="lineCov">          8 :   if (!objectCenterWaypoint.isValid())</span>
+<span class="lineNum">    2286 </span>                :            :   {
+<span class="lineNum">    2287 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]:<span class="lineNoCov">          0 :     access::getLogger()-&gt;error(&quot;ad::map::route::getENUHeadingOfRoute: object not found in route {} {}&quot;, object, route);</span>
+<span class="lineNum">    2288 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::runtime_error(&quot;route::getENUHeadingOfRoute&gt;&gt; object not found in route&quot;);</span>
+<span class="lineNum">    2289 </span>                :            :   }
+<span class="lineNum">    2290 </span>                :            :   // ensure the object center point is in
+<span class="lineNum">    2291 </span>                :            :   auto const routeSectionAroundObject = getRouteSection(objectCenterWaypoint,
+<span class="lineNum">    2292 </span>                :            :                                                         object.enuPosition.dimension.length,
+<span class="lineNum">    2293 </span>                :            :                                                         object.enuPosition.dimension.length,
+<span class="lineNum">    2294 </span>                :            :                                                         route,
+<span class="lineNum">    2295 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         16 :                                                         RouteSectionCreationMode::AllRouteLanes);</span>
+<span class="lineNum">    2296 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         16 :   auto const routeENUBorders = getENUBorderOfRoute(routeSectionAroundObject);</span>
+<span class="lineNum">    2297 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         16 :   return lane::getENUHeading(routeENUBorders, object.enuPosition.centerPoint);</span>
+<a name="2298"><span class="lineNum">    2298 </span>                :            : }</a>
+<span class="lineNum">    2299 </span>                :            : 
+<span class="lineNum">    2300 </span>                :<span class="lineCov">          8 : bool isObjectHeadingInRouteDirection(match::Object const &amp;object, FullRoute const &amp;route)</span>
+<span class="lineNum">    2301 </span>                :            : {
+<span class="lineNum">    2302 </span>        [<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          8 :   auto const enuHeadingOfRoute = getENUHeadingOfRoute(object, route);</span>
+<span class="lineNum">    2303 </span>                :            :   // enforce normalization of angle difference
+<span class="lineNum">    2304 </span>                :            :   const auto headingDifference
+<span class="lineNum">    2305 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          8 :     = point::createENUHeading(static_cast&lt;double&gt;(std::fabs(enuHeadingOfRoute - object.enuPosition.heading)));</span>
+<span class="lineNum">    2306 </span>        [<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchCov" title="Branch 3 was taken 4 times"> + </span>]:<span class="lineCov">          8 :   if (static_cast&lt;double&gt;(std::fabs(headingDifference)) &gt; M_PI / 2.)</span>
+<span class="lineNum">    2307 </span>                :            :   {
+<span class="lineNum">    2308 </span>                :<span class="lineCov">          4 :     return false;</span>
+<span class="lineNum">    2309 </span>                :            :   }
+<span class="lineNum">    2310 </span>                :<span class="lineCov">          8 :   return true;</span>
+<span class="lineNum">    2311 </span>                :            : }
+<span class="lineNum">    2312 </span>                :            : 
+<a name="2313"><span class="lineNum">    2313 </span>                :            : } // namespace route</a>
+<span class="lineNum">    2314 </span>                :            : } // namespace map
+<span class="lineNum">    2315 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 : } // namespace ad</span>
 </pre>
       </td>
     </tr>
