@@ -6,11 +6,12 @@
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
-
+import ad.map
 import Globs
 from qgis.gui import QgsMapToolEmitPoint
 from qgis.core import QgsField
-from PyQt4.QtCore import QVariant
+from PyQt5.QtCore import QVariant
+import qgis.PyQt.QtCore
 from .QGISLayer import WGS84PointLayer
 
 
@@ -54,10 +55,14 @@ class MapSnappingTest(QgsMapToolEmitPoint):
         "..."
         self.layer.remove_all_features()
         raw_pt = self.toLayerCoordinates(self.layer.layer, event.pos())
+        pt_geo = ad.map.point.createGeoPoint(raw_pt.x(), raw_pt.y(), 0)
+        enu_pt = ad.map.point.toENU(pt_geo)
         mmpts = self.snapper.snap(raw_pt)
+        Globs.log.info(str(enu_pt))
         if mmpts is not None:
             for mmpt in mmpts:
-                self.layer.add_lla(mmpt[5], [mmpt[0], mmpt[1], mmpt[2], mmpt[3], mmpt[4]])
+                self.layer.add_lla(mmpt.matchedPoint, [
+                                   mmpt.lanePoint.paraPoint, mmpt.type, mmpt.lanePoint.lateralT, mmpt.lanePoint.laneWidth, mmpt.lanePoint.laneLength, enu_pt])
         self.layer.refresh()
 
     def __create_layer__(self):
@@ -67,7 +72,8 @@ class MapSnappingTest(QgsMapToolEmitPoint):
                      QgsField("Pos Type", QVariant.String),
                      QgsField("Long-T-Left", QVariant.Double),
                      QgsField("Long-T-Right", QVariant.Double),
-                     QgsField("Lateral-T", QVariant.Double)]
+                     QgsField("Lateral-T", QVariant.Double),
+                     QgsField("ENU Point", QVariant.Double)]
             self.layer = WGS84PointLayer(Globs.iface,
                                          self.TITLE,
                                          self.SYMBOL,

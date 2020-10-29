@@ -16,6 +16,36 @@ namespace ad {
 namespace map {
 namespace lane {
 
+physics::Distance calcLength(ENUBorderList const &borderList)
+{
+  physics::Distance total;
+  for (auto const &value : borderList)
+  {
+    total = total + calcLength(value);
+  }
+  return total;
+}
+
+physics::Distance calcLength(ECEFBorderList const &borderList)
+{
+  physics::Distance total;
+  for (auto const &value : borderList)
+  {
+    total = total + calcLength(value);
+  }
+  return total;
+}
+
+physics::Distance calcLength(GeoBorderList const &borderList)
+{
+  physics::Distance total;
+  for (auto const &value : borderList)
+  {
+    total = total + calcLength(value);
+  }
+  return total;
+}
+
 void removeDegeneratedEdgePoints(point::ENUEdge &edge, point::ENUEdge const *previousEdge = nullptr)
 {
   if (edge.size() < 2u)
@@ -253,7 +283,7 @@ inline point::ENUHeading createHeadingFromBorderPoints(point::ENUPoint const &pt
   return resultHeading;
 }
 
-point::ENUHeading getENUHeading(std::vector<ENUBorder> const &borderList, point::ENUPoint const &enuPoint)
+point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint const &enuPoint)
 {
   point::ENUHeading resultHeading(2. * M_PI);
 

@@ -37,6 +37,10 @@ def main():
         ("std::vector<route::FullRoute>(", "std::vector<ad::map::route::FullRoute>("),
         ("nullptr", "0"),
         # some renaming for set data types
+        ("\"vector_less__ad_scope_map_scope_route_scope_FullRoute__greater_\"", "\"FullRouteList\""),
+	    ("\"vector_less__ad_scope_map_scope_lane_scope_ENUBorder__greater_\"", "\"ENUBorderList\""),
+	    ("\"vector_less__ad_scope_map_scope_lane_scope_ECEFBorder__greater_\"", "\"ECEFBorderList\""),
+	    ("\"vector_less__ad_scope_map_scope_lane_scope_GeoBorder__greater_\"", "\"GeoBorderList\""),
         ("\"vector_less__ad_scope_map_scope_lane_scope_LaneId__greater_\"", "\"LaneIdList\""),
         ("\"set_less__ad_scope_map_scope_lane_scope_LaneId__greater_\"", "\"LaneIdSet\""),
         ("\"set_less__ad_scope_map_scope_landmark_scope_LandmarkId__greater_\"", "\"LandmarkIdSet\""),

@@ -7,8 +7,6 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-
-import ad_map_access_qgis_python as admap
 import Globs
 
 
@@ -42,32 +40,6 @@ class PartitionManager(object):
         self.part_landmark_map = {}
         self.reset()
 
-    def update(self):
-        "..."
-        self.reset()
-        parts = admap.GetPartitions()
-        for part in parts:
-            if part not in self.part_map:
-                part_lane_ids = admap.GetLaneIds(part)
-                self.part_map[part] = part_lane_ids
-                self.added_lane_ids += part_lane_ids
-
-                part_landmark_ids = admap.GetLandmarkIds(part)
-                self.part_landmark_map[part] = part_landmark_ids
-                self.added_landmark_ids += part_landmark_ids
-
-                self.added_partitions.append(part)
-        part_map = list(self.part_map)
-        for part in part_map:
-            if part not in parts:
-                self.removed_lane_ids += self.part_map[part]
-                del self.part_map[part]
-
-                self.removed_landmark_ids += self.part_landmark_map[part]
-                del self.part_landmark_map[part]
-
-                self.removed_partitions.append(part)
-
     def add_lane(self, part, lane_id):
         "..."
         if part in self.part_map:
@@ -87,8 +59,8 @@ class PartitionManager(object):
         "..."
         for part in self.part_map:
             lanes = self.part_map[part]
-            print "Partition " + str(part) + ": Lanes " + str(len(lanes))
-        print "Added lane ids: " + str(len(self.added_lane_ids))
-        print "Removed lane ids: " + str(len(self.removed_lane_ids))
-        print "Added partitions: " + str(self.added_partitions)
-        print "Removed partitions: " + str(self.removed_partitions)
+            print ("Partition " + str(part) + ": Lanes " + str(len(lanes)))
+        print ("Added lane ids: " + str(len(self.added_lane_ids)))
+        print ("Removed lane ids: " + str(len(self.removed_lane_ids)))
+        print ("Added partitions: " + str(self.added_partitions))
+        print ("Removed partitions: " + str(self.removed_partitions))

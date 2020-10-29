@@ -1,5 +1,13 @@
 ## Latest changes
 
+* Qgis 2.18 to QGis 3.14
+   - The plugin code is adapted to QGis3.14, Python 3 and the python bindings of the new C++ interface.
+   - QGis-Logger is restored.
+   - Button to enable LaneIDs in view for all layers at once.
+   - Settings for Route Prediction test,Routing Test at run time.
+   - For open drive map, the attributes roadId, laneSectionIndex and laneIndex are added.
+   - The ENU coordinates of the map snapped point is added as an attribute.
+
 ## Release 2.3.0
 #### :rocket: New Features
 * Added ad::physics::<Type>List types

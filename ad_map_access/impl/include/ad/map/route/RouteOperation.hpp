@@ -930,6 +930,24 @@ inline lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &roadSegment)
  */
 std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRoute const &route);
 
+/** @brief get borders of a full route
+ *
+ * The order of the points within the LaneGeometries are ordered according to the route direction.
+ * The borders of successive road segments are collected in the result vector.
+ *
+ * @param[in] route the route to extract the borders from
+ */
+std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRoute const &route);
+
+/** @brief get borders of a full route
+ *
+ * The order of the points within the LaneGeometries are ordered according to the route direction.
+ * The borders of successive road segments are collected in the result vector.
+ *
+ * @param[in] route the route to extract the borders from
+ */
+std::vector<lane::GeoBorder> getGeoBorderOfRoute(FullRoute const &route);
+
 /**
  * @brief get the ENU heading of a route at the location of the object
  *

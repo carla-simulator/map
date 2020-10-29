@@ -7,7 +7,9 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad_map_access_qgis_python as admap
+import ad.map
+import Globs
+from utility import *
 from .LayerManager import LayerManager
 
 
@@ -23,22 +25,22 @@ class LayerManagerLaneContactType(LayerManager):
 
     def add(self, lane):
         "..."
-        lane_id = lane['Id']
-        successors = lane['Successor']
+        lane_id = lane.id
+        successors = ad.map.lane.getContactLanes(lane, ad.map.lane.ContactLocation.SUCCESSOR)
         for succ in successors:
             self.addContact(lane_id, succ, 1.0)
 
-        predecessors = lane['Predecessor']
+        predecessors = ad.map.lane.getContactLanes(lane, ad.map.lane.ContactLocation.PREDECESSOR)
         for pred in predecessors:
             self.addContact(lane_id, pred, 0.0)
 
     def addContact(self, lane_id, contact, tlon):
         "..."
-        contact_types = contact['Type']
-        to_lane_id = contact['ToLane']
+        contact_types = contact.types
+        to_lane_id = contact.toLane
         for contact_type in contact_types:
-            if contact_type == self.contact_type:
-                pt0 = admap.GetLaneParamPoint(lane_id, tlon, 0.5)
+            if str(contact_type) == self.contact_type:
+                pt0 = GetLaneParamPoint(lane_id, tlon, 0.5)
                 attrs = [lane_id, to_lane_id, contact_type]
                 feature = self.layer.add_lla(pt0, attrs)
                 LayerManager.add_new_feature(self, lane_id, feature)

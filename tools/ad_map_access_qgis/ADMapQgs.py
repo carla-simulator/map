@@ -8,7 +8,7 @@
 "..."
 
 import Globs
-import ad_map_access_qgis_python as admap
+import ad.map
 
 from .ADMapQgsLayers import ADMapQgsLayers
 from .Worker import Worker
@@ -29,14 +29,13 @@ class ADMapQgs(object):
 
     def __init__(self):
         "..."
-        self.worker = None
+        self.workers = []
         self.layers = ADMapQgsLayers()
-        self.partition_manager = PartitionManager()
 
     def data_added(self):
         "..."
-        self.partition_manager.update()
-        self.worker = None
+
+        self.workers = []
         self.__add_lane_dir_worker__()
         self.__add_lane_orientation_worker__()
         for contact_type in self.layers.LANE_CONTACT_TYPE:
@@ -44,36 +43,36 @@ class ADMapQgs(object):
         for topo in self.layers.LANE_TOPO:
             self.__add_lane_topo_worker__(topo)
         self.__add_lane_speed_worker__()
-        self.__add_lane_surface_workers__(False, False)
+        self.__add_lane_surface_workers__(False)
         self.__add_lane_edge_worker__()
         for landmark_type in self.layers.LANDMARK_TYPE:
             self.__add_landmark_worker__(landmark_type)
-        self.worker.start()
+        for worker in self.workers:
+            worker.do_work()
 
     def __add_landmark_worker__(self, landmark_type):
         "..."
         title = landmark_type
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
-        runner = LandmarkRunnerGeneric(layer_manager, self.partition_manager.added_landmark_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        runner = LandmarkRunnerGeneric(layer_manager, ad.map.landmark.getLandmarks())
+        self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_edge_worker__(self):
         "..."
         title = self.layers.LANE_EDGE
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
-        runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        runner = LaneRunnerGeneric(layer_manager, ad.map.lane.getLanes())
+        self.workers.append(Worker(title, layer, runner))
 
-    def __add_lane_surface_workers__(self, hov, hd):
+    def __add_lane_surface_workers__(self, hov):
         "..."
         lane_collection = {}
 
-        # get all lanes from partition_manager
-        for lane_id in self.partition_manager.added_lane_ids:
-            lane = admap.GetLane(lane_id)
-            typ = lane['Type']
+        for lane_id in ad.map.lane.getLanes():
+            lane = ad.map.lane.getLane(lane_id)
+            typ = str(lane.type)
 
             # check lane type and put it in corresponding collection
             if typ not in self.layers.lane_types():
@@ -88,50 +87,50 @@ class ADMapQgs(object):
                     lane_collection[typ] = [lane_id]
 
         # go over collections and add workers
-        for typ, lane_ids in lane_collection.iteritems():
-            title = self.layers.lane_surface_layer_name(typ, hov, hd)
+        for typ, lane_ids in lane_collection.items():
+            title = self.layers.lane_surface_layer_name(typ, hov)
             layer = self.layers.layer[title]
             layer_manager = self.layers.layer_managers[title]
-            runner = LaneRunnerSurface(layer_manager, lane_ids, hd)
-            self.worker = Worker(title, layer, runner, self.worker)
+            runner = LaneRunnerSurface(layer_manager, lane_ids)
+            self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_speed_worker__(self):
         "..."
         layers = self.layers.lane_speed_layers()
-        runner = LaneRunnerSpeed(self, self.partition_manager.added_lane_ids)
-        self.worker = Worker("Speed Limit", layers, runner, self.worker)
+        runner = LaneRunnerSpeed(self, ad.map.lane.getLanes())
+        self.workers.append(Worker("Speed Limit", layers, runner))
 
     def __add_lane_contact_type_worker__(self, contact_type):
         "..."
         title = "Contact " + contact_type
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
-        runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        runner = LaneRunnerGeneric(layer_manager, ad.map.lane.getLanes())
+        self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_topo_worker__(self, position):
         "..."
         title = "Lane " + position
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
-        runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        runner = LaneRunnerGeneric(layer_manager, ad.map.lane.getLanes())
+        self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_dir_worker__(self):
         "..."
         title = self.layers.LANE_DIRECTION
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
-        runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        runner = LaneRunnerGeneric(layer_manager, ad.map.lane.getLanes())
+        self.workers.append(Worker(title, layer, runner))
 
     def __add_lane_orientation_worker__(self):
         "..."
         title = self.layers.LANE_ORIENTATION
         layer = self.layers.layer[title]
         layer_manager = self.layers.layer_managers[title]
-        runner = LaneRunnerGeneric(layer_manager, self.partition_manager.added_lane_ids)
-        self.worker = Worker(title, layer, runner, self.worker)
+        runner = LaneRunnerGeneric(layer_manager, ad.map.lane.getLanes())
+        self.workers.append(Worker(title, layer, runner))
 
     def __draw_new_lane__(self, new_lane_id):
         "..."
@@ -191,7 +190,6 @@ class ADMapQgs(object):
     def remove_partitions(self, partitions):
         "..."
         for partition in partitions:
-            admap.RemovePartition(partition)
             Globs.map_dirty = True
         self.partition_manager.update()
         removed_lane_ids = self.partition_manager.removed_lane_ids

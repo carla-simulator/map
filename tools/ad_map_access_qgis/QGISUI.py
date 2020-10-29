@@ -8,7 +8,9 @@
 "Handling of QGIS Menus and Toolbars"
 
 import os.path
-from PyQt4.QtGui import QAction, QIcon
+from PyQt5.QtWidgets import QAction
+from PyQt5.QtGui import QIcon
+import qgis.PyQt.QtCore
 
 
 class QGISUI(object):

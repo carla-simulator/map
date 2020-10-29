@@ -7,11 +7,12 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-
-import ad_map_access_qgis_python as admap
+import ad.map
+import ad.physics
+from utility import *
 import Globs
 from qgis.gui import QgsMapToolEmitPoint
-from qgis.core import QgsFeatureRequest, QgsRectangle, QgsMapLayerRegistry
+from qgis.core import QgsFeatureRequest, QgsRectangle, QgsProject
 
 
 class MapSnapper(QgsMapToolEmitPoint):
@@ -46,30 +47,32 @@ class MapSnapper(QgsMapToolEmitPoint):
     def canvasReleaseEvent(self, event):  # pylint: disable=invalid-name
         "..."
         lane_id = self.__find_lane_id_at_point__(event.pos())
-        if lane_id is not None:
-            lla_left = admap.GetLaneEdgeLeft(lane_id)
+        lane_id_t = int(lane_id)
+        if lane_id_t is not None:
+            lla_left = GetLaneEdgeLeft(lane_id_t)
             if lla_left is not None:
                 alt_sum = 0
                 for lla in lla_left:
-                    alt_sum = alt_sum + lla[2]
+                    alt_sum = alt_sum + float(lla.altitude)
                 self.altitude = alt_sum / len(lla_left)
                 Globs.log.info("Default altitude set to " + str(self.altitude))
             else:
-                Globs.log.error("Cannot get edge for lane " + str(lane_id))
+                Globs.log.error("Cannot get edge for lane " + str(lane_id_t))
         else:
             Globs.log.error("Cannot find any lane at that point.")
 
     def snap(self, raw_pt):
         "..."
-        geo_pt = (raw_pt.x(), raw_pt.y(), self.altitude)
-        mmpts = admap.FindLanes(geo_pt, self.search_radius)
+        pt_geo = ad.map.point.createGeoPoint(raw_pt.x(), raw_pt.y(), self.altitude)
+        d = ad.physics.Distance(self.search_radius)
+        mmpts = ad.map.match.AdMapMatching.findLanes(pt_geo, d)
         if mmpts is None:
             Globs.log.error("Please select point closer to the road network!")
         return mmpts
 
     def __find_lane_id_at_point__(self, pos):
         "..."
-        registry = QgsMapLayerRegistry.instance()
+        registry = QgsProject.instance()
         layers = registry.mapLayers()
         for layer_name in layers:
             layer = layers[layer_name]

@@ -7,7 +7,9 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad_map_access_qgis_python as admap
+import ad.map
+import Globs
+from utility import *
 from .LayerManager import LayerManager
 
 
@@ -22,26 +24,22 @@ class LayerManagerLaneSurface(LayerManager):
 
     def add(self, lane):
         "..."
-        lane_id = lane['Id']
+        lane_id = lane.id
+        lane_id_int = int(str(lane_id))
         LayerManager.remove_old_feature(self, lane_id)
-        lla_left = admap.GetLaneEdgeLeft(lane_id)
-        lla_right = admap.GetLaneEdgeRight(lane_id)
+        lla_left = GetLaneEdgeLeft(lane_id)
+        lla_right = GetLaneEdgeRight(lane_id)
         attrs = []
-        attrs.append(lane['Id'])
-        attrs.append(lane['Type'])
-        attrs.append(lane['HOV'])
-        attrs.append(lane['ComplianceVer'])
+        attrs.append(str(lane.id))
+        attrs.append(str(lane.type))
+        attrs.append(str(ad.map.lane.getHOV(lane)))
+        if lane_id_int > 10000:
+            attrs.append(int(lane_id_int/10000))
+            attrs.append(int((lane_id_int % 10000)/100))
+            attrs.append((lane_id_int % 10000) % 100)
         feature = self.layer.add_lla2(lla_left, lla_right, attrs)
         LayerManager.add_new_feature(self, lane_id, feature)
 
     def change_attribute_value(self, lane_id, index, val):
         "..."
-        if index == 1:
-            if admap.SetLaneType(lane_id, str(val)):
-                return True
-            return LayerManager.attribute_change_failed(self, lane_id, "Type", val)
-        elif index == 3:
-            if admap.SetLaneComplianceVer(lane_id, int(val)):
-                return True
-            return LayerManager.attribute_change_failed(self, lane_id, "ComplianceVer", val)
-        return LayerManager.change_attribute_value(self, lane_id, index, val)
+        Globs.log.warning("Attribute Change not supported")

@@ -16,3 +16,21 @@
 #include "ad/map/route/LaneSegment.hpp"
 #include "ad/map/route/RoadSegment.hpp"
 #include "ad/map/route/RouteParaPoint.hpp"
+
+namespace ad {
+/*!
+ * @brief namespace map
+ */
+namespace map {
+/*!
+ * @brief namespace lane
+ *
+ * Handling of lanes
+ */
+namespace route {
+
+typedef std::vector<ad::map::route::FullRoute> FullRouteList;
+
+} // namespace lane
+} // namespace map
+} // namespace ad

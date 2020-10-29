@@ -6,7 +6,8 @@
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
-
+import ad.map
+import Globs
 from .LaneRunner import LaneRunner
 
 
@@ -21,11 +22,7 @@ class LaneRunnerSpeed(LaneRunner):
 
     def work_lane(self, lane):
         "..."
-        if "SpeedLimit" in lane.keys():
-            for speed_limit in lane['SpeedLimit']:
-                limit = speed_limit[0]
-                layer_manager = self.admap_qgis.layers.speed_layer_manager(limit)
-                layer_manager.add_speed_limit(lane, speed_limit)
-        else:
-            layer_manager = self.admap_qgis.layers.speed_layer_manager(0)
-            layer_manager.add_speed_limit(lane, (0.0, 0.0, 1.0))
+        for speed_limit in lane.speedLimits:
+            limit = speed_limit.speedLimit
+            layer_manager = self.admap_qgis.layers.speed_layer_manager(limit)
+            layer_manager.add_speed_limit(lane, speed_limit)

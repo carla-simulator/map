@@ -7,7 +7,9 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad_map_access_qgis_python as admap
+
+import Globs
+import ad.map
 from .Runner import Runner
 
 
@@ -23,7 +25,7 @@ class LaneRunner(Runner):
     def work(self):
         "..."
         for lane_id in self.lane_ids:
-            lane = admap.GetLane(lane_id)
+            lane = ad.map.lane.getLane(lane_id)
             if lane is not None:
                 self.work_lane(lane)
             else:

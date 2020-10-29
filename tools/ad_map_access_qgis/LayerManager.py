@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad_map_access_qgis_python as admap
+import ad.map
 import Globs
 from qgis.core import QgsFeatureRequest
 
@@ -113,24 +113,5 @@ class LayerManager(object):
 
     def features_removed(self, _, deleted_feature_ids):
         "..."
-        for feature_id in deleted_feature_ids:
-            if feature_id in self.feature_id_to_lane_id_map_1:
-                lane_id = self.feature_id_to_lane_id_map_1[feature_id]
-                Globs.removed_lanes.append(lane_id)
-                self.remove_old_feature(lane_id, False)
-                if admap.DeleteLane(lane_id):
-                    Globs.map_dirty = True
-                else:
-                    Globs.log.error("Failed to delete lane " + str(lane_id))
-            elif feature_id in self.feature_id_to_lane_id_map_2:
-                lane_id = self.feature_id_to_lane_id_map_2[feature_id]
-                Globs.removed_lanes.append(lane_id)
-                self.remove_old_feature(lane_id, False)
-                if admap.DeleteLane(lane_id):
-                    Globs.map_dirty = True
-                else:
-                    Globs.log.error("Failed to delete lane " + str(lane_id))
-            else:
-                Globs.log.error("Feature to delete not found on layer!?")
-        Globs.log.info(str(len(Globs.removed_lanes)) + " lanes to be deleted")
+        Globs.log.warning("Feature removal not supported")
         Globs.main.map_refresh()

@@ -7,7 +7,8 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad_map_access_qgis_python as admap
+import ad.map
+from utility import *
 from .LayerManager import LayerManager
 
 
@@ -22,10 +23,10 @@ class LayerManagerLaneOrientation(LayerManager):
 
     def add(self, lane):
         "..."
-        lane_id = lane['Id']
+        lane_id = lane.id
         LayerManager.remove_old_feature(self, lane_id)
-        pt0 = admap.GetLaneParamPoint(lane_id, 0.20, 0.5)
-        pt1 = admap.GetLaneParamPoint(lane_id, 0.35, 0.5)
+        pt0 = GetLaneParamPoint(lane_id, 0.20, 0.5)
+        pt1 = GetLaneParamPoint(lane_id, 0.35, 0.5)
         attrs = [lane_id]
         feature = self.layer.add_lla(pt0, pt1, attrs)
         LayerManager.add_new_feature(self, lane_id, feature)

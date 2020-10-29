@@ -23,3 +23,26 @@
 #include "ad/map/lane/LaneIdList.hpp"
 #include "ad/map/lane/LaneIdSet.hpp"
 #include "ad/map/lane/LaneType.hpp"
+
+/*!
+ * @brief namespace ad
+ */
+namespace ad {
+/*!
+ * @brief namespace map
+ */
+namespace map {
+/*!
+ * @brief namespace lane
+ *
+ * Handling of lanes
+ */
+namespace lane {
+
+typedef std::vector<ad::map::lane::ENUBorder> ENUBorderList;
+typedef std::vector<ad::map::lane::ECEFBorder> ECEFBorderList;
+typedef std::vector<ad::map::lane::GeoBorder> GeoBorderList;
+
+} // namespace lane
+} // namespace map
+} // namespace ad

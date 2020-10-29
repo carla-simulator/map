@@ -7,7 +7,8 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad_map_access_qgis_python as admap
+import ad.map
+import Globs
 from .Runner import Runner
 
 
@@ -23,7 +24,7 @@ class LandmarkRunner(Runner):
     def work(self):
         "..."
         for landmark_id in self.landmark_ids:
-            landmark = admap.GetLandmark(landmark_id)
+            landmark = ad.map.landmark.getLandmark(landmark_id)
             if landmark is not None:
                 self.work_landmark(landmark)
             else:
