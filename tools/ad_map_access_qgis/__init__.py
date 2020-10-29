@@ -37,6 +37,7 @@ def classFactory(iface):  # pylint: disable=invalid-name
     Globs.log = Logger.LoggerQgs(iface)
     # If the console logger is needed then the below line can be uncommented to observe the log messages on the console.
     #Globs.log = Logger.LoggerConsole(iface)
+
     Globs.main = Main()
     return Globs.main
 

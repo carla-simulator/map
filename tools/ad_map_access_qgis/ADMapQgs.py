@@ -22,7 +22,6 @@ from .PartitionManager import PartitionManager
 # ADMapQgs Class
 # pylint: disable=C0103, R0902
 
-
 class ADMapQgs(object):
 
     "..."

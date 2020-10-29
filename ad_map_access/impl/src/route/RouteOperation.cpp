@@ -2279,6 +2279,7 @@ std::vector<lane::GeoBorder> getGeoBorderOfRoute(FullRoute const &route)
   return geoBorderList;
 }
 
+
 point::ENUHeading getENUHeadingOfRoute(match::Object const &object, FullRoute const &route)
 {
   FindWaypointResult objectCenterWaypoint = findCenterWaypoint(object, route);
