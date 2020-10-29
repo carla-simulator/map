@@ -161,8 +161,6 @@ physics::Distance calcLength(ECEFBorderList const &borderList);
  */
 physics::Distance calcLength(GeoBorderList const &borderList);
 
-
-
 /** @brief calculate the ENUHeading of the vector<ENUBorder> at the given ENUPoint
  *
  *  If the given ENUPoint is not within the given borders,

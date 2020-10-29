@@ -91,7 +91,8 @@ class Main(object):
         "..."
         if file_name.endswith('.xodr'):
             open_drive_content = open(file_name, 'r').read()
-            ad.map.access.initFromOpenDriveContent(open_drive_content,0.2,ad.map.intersection.IntersectionType.Unknown,ad.map.landmark.TrafficLightType.UNKNOWN)
+            ad.map.access.initFromOpenDriveContent(
+                open_drive_content, 0.2, ad.map.intersection.IntersectionType.Unknown, ad.map.landmark.TrafficLightType.UNKNOWN)
             self.admap = ADMapQgs()
             self.admap.layers.create_all()
             self.admap.data_added()
