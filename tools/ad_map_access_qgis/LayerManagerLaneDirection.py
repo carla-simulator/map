@@ -49,6 +49,4 @@ class LayerManagerLaneDirection(LayerManager):
 
     def change_attribute_value(self, lane_id, index, val):
         "..."
-        if index == 1:
-            return LayerManager.attribute_change_failed(self, lane_id, "Direction", val)
-        return LayerManager.change_attribute_value(self, lane_id, index, val)
+        Globs.log.warning("Attribute change not supported")

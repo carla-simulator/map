@@ -8,6 +8,7 @@
 "..."
 
 import ad.map
+import Globs
 from utility import *
 from .LayerManager import LayerManager
 
@@ -40,6 +41,4 @@ class LayerManagerLaneSpeed(LayerManager):
 
     def change_attribute_value(self, lane_id, index, val):
         "..."
-        if index == 3:
-            return LayerManager.attribute_change_failed(self, lane_id, "Speed Limit", val)
-        return LayerManager.change_attribute_value(self, lane_id, index, val)
+        Globs.log.warning("Attribute change not supported")

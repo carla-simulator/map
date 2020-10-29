@@ -42,8 +42,4 @@ class LayerManagerLaneSurface(LayerManager):
 
     def change_attribute_value(self, lane_id, index, val):
         "..."
-        if index == 1:
-            return LayerManager.attribute_change_failed(self, lane_id, "Type", val)
-        elif index == 3:
-            return LayerManager.attribute_change_failed(self, lane_id, "ComplianceVer", val)
-        return LayerManager.change_attribute_value(self, lane_id, index, val)
+        Globs.log.warning("Attribute Change not supported")

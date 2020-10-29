@@ -2249,6 +2249,7 @@ lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &roadSegment,
 std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRoute const &route)
 {
   std::vector<lane::ENUBorder> enuBorderList;
+  enuBorderList.reserve(route.roadSegments.size());
   for (auto const &roadSegment : route.roadSegments)
   {
     enuBorderList.push_back(getENUBorderOfRoadSegment(roadSegment));
@@ -2259,6 +2260,7 @@ std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRoute const &route)
 std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRoute const &route)
 {
   std::vector<lane::ECEFBorder> ecefBorderList;
+  ecefBorderList.reserve(route.roadSegments.size());
   for (auto const &roadSegment : route.roadSegments)
   {
     ecefBorderList.push_back(getECEFBorderOfRoadSegment(roadSegment));
@@ -2269,6 +2271,7 @@ std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRoute const &route)
 std::vector<lane::GeoBorder> getGeoBorderOfRoute(FullRoute const &route)
 {
   std::vector<lane::GeoBorder> geoBorderList;
+  geoBorderList.reserve(route.roadSegments.size());
   for (auto const &roadSegment : route.roadSegments)
   {
     geoBorderList.push_back(getGeoBorderOfRoadSegment(roadSegment));
@@ -2276,44 +2279,6 @@ std::vector<lane::GeoBorder> getGeoBorderOfRoute(FullRoute const &route)
   return geoBorderList;
 }
 
-std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRouteList const &route)
-{
-  std::vector<lane::ENUBorder> enuBorderList;
-  for (auto each : route)
-  {
-    for (auto const &roadSegment : each.roadSegments)
-    {
-      enuBorderList.push_back(getENUBorderOfRoadSegment(roadSegment));
-    }
-  }
-  return enuBorderList;
-}
-
-std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRouteList const &route)
-{
-  std::vector<lane::ECEFBorder> ecefBorderList;
-  for (auto each : route)
-  {
-    for (auto const &roadSegment : each.roadSegments)
-    {
-      ecefBorderList.push_back(getECEFBorderOfRoadSegment(roadSegment));
-    }
-  }
-  return ecefBorderList;
-}
-
-std::vector<lane::GeoBorder> getGeoBorderOfRoute(FullRouteList const &route)
-{
-  std::vector<lane::GeoBorder> geoBorderList;
-  for (auto each : route)
-  {
-    for (auto const &roadSegment : each.roadSegments)
-    {
-      geoBorderList.push_back(getGeoBorderOfRoadSegment(roadSegment));
-    }
-  }
-  return geoBorderList;
-}
 
 point::ENUHeading getENUHeadingOfRoute(match::Object const &object, FullRoute const &route)
 {
