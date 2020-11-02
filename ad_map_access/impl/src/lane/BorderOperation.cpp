@@ -18,7 +18,7 @@ namespace lane {
 
 physics::Distance calcLength(ENUBorderList const &borderList)
 {
-  physics::Distance total;
+  physics::Distance total(0.);
   for (auto const &value : borderList)
   {
     total = total + calcLength(value);
@@ -28,7 +28,7 @@ physics::Distance calcLength(ENUBorderList const &borderList)
 
 physics::Distance calcLength(ECEFBorderList const &borderList)
 {
-  physics::Distance total;
+  physics::Distance total(0.);
   for (auto const &value : borderList)
   {
     total = total + calcLength(value);
@@ -38,7 +38,7 @@ physics::Distance calcLength(ECEFBorderList const &borderList)
 
 physics::Distance calcLength(GeoBorderList const &borderList)
 {
-  physics::Distance total;
+  physics::Distance total(0.);
   for (auto const &value : borderList)
   {
     total = total + calcLength(value);
@@ -273,7 +273,9 @@ inline bool isPointWithinBorderPoints(point::ENUPoint const &ptLeft,
   auto const towardsLeft = ptLeft - enuPoint;
   auto const towardsRight = ptRight - enuPoint;
   auto const dotProduct = point::vectorDotProduct(towardsLeft, towardsRight);
-  return (dotProduct < 0.);
+  auto const withinBorders = (dotProduct < 0.) || (point::vectorLength(towardsLeft) < physics::Distance(0.01))
+    || (point::vectorLength(towardsRight) < physics::Distance(0.01));
+  return withinBorders;
 }
 
 inline point::ENUHeading createHeadingFromBorderPoints(point::ENUPoint const &ptLeft, point::ENUPoint const &ptRight)

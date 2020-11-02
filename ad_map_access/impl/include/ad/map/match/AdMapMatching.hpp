@@ -278,6 +278,20 @@ public:
    */
   static MapMatchedPositionConfidenceList findLanes(point::GeoPoint const &geoPoint, physics::Distance const &distance);
 
+  /**
+   * @brief Spatial Lane Search.
+   *        Returns the map matched position in respect to all Lanes of the given route.
+   * @param[in] ecefPoint Point that is used as base for the search.
+   * @param[in] route The route providing the lane subset to be searched.
+   *
+   * This static function doesn't make use of any matching hints.
+   *
+   * @returns The individual matching result probabilities are relative to the actual distance of the matchedPoint to
+   * the queryPoint.
+   */
+  static MapMatchedPositionConfidenceList findRouteLanes(point::ECEFPoint const &ecefPoint,
+                                                         route::FullRoute const &route);
+
 private:
   // Copy operators and constructors are deleted to avoid accidental copies
   AdMapMatching(AdMapMatching const &) = delete;

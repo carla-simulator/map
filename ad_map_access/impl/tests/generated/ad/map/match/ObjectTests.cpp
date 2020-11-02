@@ -90,7 +90,7 @@ protected:
       = valueMapMatchedBoundingBoxLaneOccupiedRegionsElementLateralRange;
     valueMapMatchedBoundingBoxLaneOccupiedRegions.resize(1, valueMapMatchedBoundingBoxLaneOccupiedRegionsElement);
     valueMapMatchedBoundingBox.laneOccupiedRegions = valueMapMatchedBoundingBoxLaneOccupiedRegions;
-    std::vector<::ad::map::match::MapMatchedPositionConfidenceList> valueMapMatchedBoundingBoxReferencePointPositions;
+    ::ad::map::match::MapMatchedObjectReferencePositionList valueMapMatchedBoundingBoxReferencePointPositions;
     ::ad::map::match::MapMatchedPositionConfidenceList valueMapMatchedBoundingBoxReferencePointPositionsElement;
     ::ad::map::match::MapMatchedPosition valueMapMatchedBoundingBoxReferencePointPositionsElementElement;
     ::ad::map::match::LanePoint valueMapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint;
@@ -158,9 +158,13 @@ protected:
       = valueMapMatchedBoundingBoxReferencePointPositionsElementElementMatchedPointDistance;
     valueMapMatchedBoundingBoxReferencePointPositionsElement.resize(
       1, valueMapMatchedBoundingBoxReferencePointPositionsElementElement);
-    valueMapMatchedBoundingBoxReferencePointPositions.push_back(
-      valueMapMatchedBoundingBoxReferencePointPositionsElement);
+    valueMapMatchedBoundingBoxReferencePointPositions.resize(1,
+                                                             valueMapMatchedBoundingBoxReferencePointPositionsElement);
     valueMapMatchedBoundingBox.referencePointPositions = valueMapMatchedBoundingBoxReferencePointPositions;
+    ::ad::physics::Distance valueMapMatchedBoundingBoxSamplingDistance(-1e9);
+    valueMapMatchedBoundingBox.samplingDistance = valueMapMatchedBoundingBoxSamplingDistance;
+    ::ad::physics::Distance valueMapMatchedBoundingBoxMatchRadius(-1e9);
+    valueMapMatchedBoundingBox.matchRadius = valueMapMatchedBoundingBoxMatchRadius;
     value.mapMatchedBoundingBox = valueMapMatchedBoundingBox;
     mValue = value;
   }
@@ -288,7 +292,7 @@ TEST_F(ObjectTests, comparisonOperatorMapMatchedBoundingBoxDiffers)
     = mapMatchedBoundingBoxLaneOccupiedRegionsElementLateralRange;
   mapMatchedBoundingBoxLaneOccupiedRegions.resize(2, mapMatchedBoundingBoxLaneOccupiedRegionsElement);
   mapMatchedBoundingBox.laneOccupiedRegions = mapMatchedBoundingBoxLaneOccupiedRegions;
-  std::vector<::ad::map::match::MapMatchedPositionConfidenceList> mapMatchedBoundingBoxReferencePointPositions;
+  ::ad::map::match::MapMatchedObjectReferencePositionList mapMatchedBoundingBoxReferencePointPositions;
   ::ad::map::match::MapMatchedPositionConfidenceList mapMatchedBoundingBoxReferencePointPositionsElement;
   ::ad::map::match::MapMatchedPosition mapMatchedBoundingBoxReferencePointPositionsElementElement;
   ::ad::map::match::LanePoint mapMatchedBoundingBoxReferencePointPositionsElementElementLanePoint;
@@ -351,8 +355,12 @@ TEST_F(ObjectTests, comparisonOperatorMapMatchedBoundingBoxDiffers)
     = mapMatchedBoundingBoxReferencePointPositionsElementElementMatchedPointDistance;
   mapMatchedBoundingBoxReferencePointPositionsElement.resize(
     2, mapMatchedBoundingBoxReferencePointPositionsElementElement);
-  mapMatchedBoundingBoxReferencePointPositions.push_back(mapMatchedBoundingBoxReferencePointPositionsElement);
+  mapMatchedBoundingBoxReferencePointPositions.resize(2, mapMatchedBoundingBoxReferencePointPositionsElement);
   mapMatchedBoundingBox.referencePointPositions = mapMatchedBoundingBoxReferencePointPositions;
+  ::ad::physics::Distance mapMatchedBoundingBoxSamplingDistance(1e9);
+  mapMatchedBoundingBox.samplingDistance = mapMatchedBoundingBoxSamplingDistance;
+  ::ad::physics::Distance mapMatchedBoundingBoxMatchRadius(1e9);
+  mapMatchedBoundingBox.matchRadius = mapMatchedBoundingBoxMatchRadius;
   valueA.mapMatchedBoundingBox = mapMatchedBoundingBox;
   ::ad::map::match::Object valueB = mValue;
 

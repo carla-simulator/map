@@ -34,8 +34,8 @@ class LayerManagerLaneSurface(LayerManager):
         attrs.append(str(lane.type))
         attrs.append(str(ad.map.lane.getHOV(lane)))
         if lane_id_int > 10000:
-            attrs.append(int(lane_id_int/10000))
-            attrs.append(int((lane_id_int % 10000)/100))
+            attrs.append(int(lane_id_int / 10000))
+            attrs.append(int((lane_id_int % 10000) / 100))
             attrs.append((lane_id_int % 10000) % 100)
         feature = self.layer.add_lla2(lla_left, lla_right, attrs)
         LayerManager.add_new_feature(self, lane_id, feature)

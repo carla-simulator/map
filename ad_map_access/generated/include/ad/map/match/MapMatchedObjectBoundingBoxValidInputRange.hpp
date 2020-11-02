@@ -21,7 +21,10 @@
 #include <limits>
 #include "ad/map/match/LaneOccupiedRegionListValidInputRange.hpp"
 #include "ad/map/match/MapMatchedObjectBoundingBox.hpp"
-#include "ad/map/match/MapMatchedPositionConfidenceListValidInputRange.hpp"
+#include "ad/map/match/MapMatchedObjectReferencePositionListValidInputRange.hpp"
+#include "ad/physics/DistanceValidInputRange.hpp"
+#include "spdlog/fmt/ostr.h"
+#include "spdlog/spdlog.h"
 
 /*!
  * \brief check if the given MapMatchedObjectBoundingBox is within valid input range
@@ -37,8 +40,15 @@ inline bool withinValidInputRange(::ad::map::match::MapMatchedObjectBoundingBox 
                                   bool const logErrors = true)
 {
   // check for generic member input ranges
-  (void)input;
-  (void)logErrors;
   bool inValidInputRange = true;
+  inValidInputRange = withinValidInputRange(input.laneOccupiedRegions, logErrors)
+    && withinValidInputRange(input.referencePointPositions, logErrors)
+    && withinValidInputRange(input.samplingDistance, logErrors) && withinValidInputRange(input.matchRadius, logErrors);
+  if (!inValidInputRange && logErrors)
+  {
+    spdlog::error("withinValidInputRange(::ad::map::match::MapMatchedObjectBoundingBox)>> {} has invalid member",
+                  input); // LCOV_EXCL_BR_LINE
+  }
+
   return inValidInputRange;
 }
