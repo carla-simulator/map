@@ -18,6 +18,7 @@
 * Generate list types and tests: ENUBorderList, GeoBorderList, ECEFBorderList,
   FullRouteList, MapMatchedObjectReferencePositionList
 * Fixed issue in reading of some OpenDRIVE maps
+* Fixed point::getParametricRange() for degenerated edges
 * Fixed lane::calcLength(<ENU,ECEF,Geo>BorderList) functions
 * Allow rounding errors in lane::isPointWithinBorderPoints() (might e.g. happen after projection of outside points onto the borders)
 * Fix route::planning::createRoutingPoint(match::LaneOccupiedRegion)
