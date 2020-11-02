@@ -62,17 +62,32 @@ RoutingParaPoint createRoutingPoint(match::LaneOccupiedRegion const &occupiedReg
 {
   point::ParaPoint paraPoint;
   paraPoint.laneId = occupiedRegion.laneId;
-  bool const laneDirectionPositive = lane::isLaneDirectionPositive(paraPoint.laneId);
-  bool const routingDirectionPositive = (routingDirection != RoutingDirection::NEGATIVE);
-  if (laneDirectionPositive ^ routingDirectionPositive)
+  // the current lane direction has no impact if the routing direction is explicitly set
+  // since routing will select neighbor lanes that might have different direction to be able to expand
+  if (routingDirection == RoutingDirection::POSITIVE)
   {
-    // both different
+    paraPoint.parametricOffset = occupiedRegion.longitudinalRange.minimum;
+  }
+  else if (routingDirection == RoutingDirection::NEGATIVE)
+  {
     paraPoint.parametricOffset = occupiedRegion.longitudinalRange.maximum;
   }
   else
   {
-    // both positive or both negative
-    paraPoint.parametricOffset = occupiedRegion.longitudinalRange.minimum;
+    // otherwise we don't know the actual routing direction and take the lane direction
+    // into account
+    bool const laneDirectionPositive = lane::isLaneDirectionPositive(paraPoint.laneId);
+    bool const routingDirectionPositive = (routingDirection != RoutingDirection::NEGATIVE);
+    if (laneDirectionPositive ^ routingDirectionPositive)
+    {
+      // both different
+      paraPoint.parametricOffset = occupiedRegion.longitudinalRange.maximum;
+    }
+    else
+    {
+      // both positive or both negative
+      paraPoint.parametricOffset = occupiedRegion.longitudinalRange.minimum;
+    }
   }
 
   return createRoutingPoint(paraPoint, routingDirection);

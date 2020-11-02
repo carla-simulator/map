@@ -18,11 +18,12 @@
 #pragma once
 
 #include <iostream>
+#include <limits>
 #include <memory>
 #include <sstream>
-#include <vector>
 #include "ad/map/match/LaneOccupiedRegionList.hpp"
-#include "ad/map/match/MapMatchedPositionConfidenceList.hpp"
+#include "ad/map/match/MapMatchedObjectReferencePositionList.hpp"
+#include "ad/physics/Distance.hpp"
 /*!
  * @brief namespace ad
  */
@@ -101,7 +102,8 @@ struct MapMatchedObjectBoundingBox
   bool operator==(const MapMatchedObjectBoundingBox &other) const
   {
     return (laneOccupiedRegions == other.laneOccupiedRegions)
-      && (referencePointPositions == other.referencePointPositions);
+      && (referencePointPositions == other.referencePointPositions) && (samplingDistance == other.samplingDistance)
+      && (matchRadius == other.matchRadius);
   }
 
   /**
@@ -117,8 +119,17 @@ struct MapMatchedObjectBoundingBox
   }
 
   ::ad::map::match::LaneOccupiedRegionList laneOccupiedRegions;
-  typedef std::vector<::ad::map::match::MapMatchedPositionConfidenceList> ReferencePointPositionsType;
-  ReferencePointPositionsType referencePointPositions;
+  ::ad::map::match::MapMatchedObjectReferencePositionList referencePointPositions;
+
+  /*!
+   * Sampling distance used to calculate the bounding box.
+   */
+  ::ad::physics::Distance samplingDistance{0.0};
+
+  /*!
+   * The actual map matching radius around the object.
+   */
+  ::ad::physics::Distance matchRadius{0.0};
 };
 
 } // namespace match
@@ -161,19 +172,13 @@ inline std::ostream &operator<<(std::ostream &os, MapMatchedObjectBoundingBox co
   os << _value.laneOccupiedRegions;
   os << ",";
   os << "referencePointPositions:";
-  os << "[";
-  for (auto it_value_referencePointPositions = _value.referencePointPositions.begin();
-       it_value_referencePointPositions != _value.referencePointPositions.end();
-       it_value_referencePointPositions++)
-  {
-    if (it_value_referencePointPositions != _value.referencePointPositions.begin())
-    {
-      os << ",";
-    }
-    auto &_value_referencePointPositionsVal = *it_value_referencePointPositions;
-    os << _value_referencePointPositionsVal;
-  }
-  os << "]";
+  os << _value.referencePointPositions;
+  os << ",";
+  os << "samplingDistance:";
+  os << _value.samplingDistance;
+  os << ",";
+  os << "matchRadius:";
+  os << _value.matchRadius;
   os << ")";
   return os;
 }

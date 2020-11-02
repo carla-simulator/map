@@ -284,6 +284,9 @@ MapMatchedObjectBoundingBox AdMapMatching::getMapMatchedBoundingBox(ENUObjectPos
                                                                     physics::Distance const &samplingDistance) const
 {
   MapMatchedObjectBoundingBox mapMatchedObjectBoundingBox;
+  mapMatchedObjectBoundingBox.samplingDistance = samplingDistance;
+  mapMatchedObjectBoundingBox.matchRadius
+    = samplingDistance + (0.5 * enuObjectPosition.dimension.length) + (0.5 * enuObjectPosition.dimension.width);
 
   // if the vehicle covers multiple lanes
   // the occupied regions usually don't span up to the borders
@@ -336,8 +339,7 @@ MapMatchedObjectBoundingBox AdMapMatching::getMapMatchedBoundingBox(ENUObjectPos
 
   // filter lanes on large scale first
   auto const relevantLanes = getRelevantLanesInputChecked(referencePoints[int32_t(ObjectReferencePoints::Center)],
-                                                          samplingDistance + (0.5 * enuObjectPosition.dimension.length)
-                                                            + (0.5 * enuObjectPosition.dimension.width));
+                                                          mapMatchedObjectBoundingBox.matchRadius);
 
   mapMatchedObjectBoundingBox.referencePointPositions.resize(size_t(ObjectReferencePoints::NumPoints));
 
@@ -572,6 +574,48 @@ void AdMapMatching::addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
       laneOccupiedRegions.push_back(otherRegion);
     }
   }
+}
+
+MapMatchedPositionConfidenceList AdMapMatching::findRouteLanes(point::ECEFPoint const &ecefPoint,
+                                                               route::FullRoute const &route)
+{
+  if (!isValid(ecefPoint))
+  {
+    access::getLogger()->error("Invalid ECEF Point passed to AdMapMatching::findLanes(): {}", ecefPoint);
+    return MapMatchedPositionConfidenceList();
+  }
+  match::MapMatchedPositionConfidenceList mapMatchingResults;
+  physics::Distance distanceSum(0.);
+  for (auto const &roadSegment : route.roadSegments)
+  {
+    for (auto const &laneSegment : roadSegment.drivableLaneSegments)
+    {
+      MapMatchedPosition mmpt;
+      if (lane::findNearestPointOnLaneInterval(laneSegment.laneInterval, ecefPoint, mmpt))
+      {
+        mapMatchingResults.push_back(mmpt);
+        distanceSum += mmpt.matchedPointDistance;
+      }
+    }
+  }
+
+  // set the result probabilities in respect to matched point distances
+  if (distanceSum > physics::Distance(0.01))
+  {
+    for (auto &mmpt : mapMatchingResults)
+    {
+      mmpt.probability = physics::Probability(1.) - physics::Probability(mmpt.matchedPointDistance / distanceSum);
+    }
+  }
+
+  // sort the final results
+  std::sort(std::begin(mapMatchingResults),
+            std::end(mapMatchingResults),
+            [](MapMatchedPosition const &left, MapMatchedPosition const &right) {
+              return left.probability > right.probability;
+            });
+
+  return mapMatchingResults;
 }
 
 } // namespace match

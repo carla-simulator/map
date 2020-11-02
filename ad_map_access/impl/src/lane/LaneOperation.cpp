@@ -15,6 +15,7 @@
 #include "ad/map/match/AdMapMatching.hpp"
 #include "ad/map/match/MapMatchedOperation.hpp"
 #include "ad/map/point/Operation.hpp"
+#include "ad/map/route/LaneIntervalOperation.hpp"
 #include "ad/physics/RangeOperation.hpp"
 
 namespace ad {
@@ -536,6 +537,51 @@ bool projectPositionToLaneInHeadingDirection(point::ParaPoint const &position,
   return false;
 }
 
+match::MapMatchedPosition calcMapMatchedPosition(Lane const &lane,
+                                                 physics::ParametricValue const &longTLeft,
+                                                 physics::ParametricValue const &longTRight,
+                                                 point::ECEFPoint const &pt)
+{
+  match::MapMatchedPosition mmpos;
+  point::ECEFPoint const pt_left = point::getParametricPoint(lane.edgeLeft, longTLeft);
+  point::ECEFPoint const pt_right = point::getParametricPoint(lane.edgeRight, longTRight);
+
+  mmpos.lanePoint.paraPoint.laneId = lane.id;
+  mmpos.lanePoint.lateralT = point::findNearestPointOnEdge(pt, pt_left, pt_right);
+  physics::ParametricValue nearestT;
+  if (mmpos.lanePoint.lateralT < physics::RatioValue(0.))
+  {
+    nearestT = physics::ParametricValue(0.);
+    mmpos.type = match::MapMatchedPositionType::LANE_LEFT;
+    mmpos.probability = std::max(physics::Probability(0.1),
+                                 physics::Probability(0.5 + static_cast<double>(mmpos.lanePoint.lateralT) / 10.));
+  }
+  else if (mmpos.lanePoint.lateralT > physics::RatioValue(1.))
+  {
+    nearestT = physics::ParametricValue(1.);
+    mmpos.type = match::MapMatchedPositionType::LANE_RIGHT;
+    mmpos.probability
+      = std::max(physics::Probability(0.1),
+                 physics::Probability(0.5 - (static_cast<double>(mmpos.lanePoint.lateralT) - 1.) / 10.));
+  }
+  else
+  {
+    nearestT = physics::ParametricValue(static_cast<double>(mmpos.lanePoint.lateralT));
+    mmpos.type = match::MapMatchedPositionType::LANE_IN;
+    mmpos.probability = physics::Probability(1.)
+      - std::min(physics::Probability(0.5),
+                 physics::Probability(fabs(0.5 - static_cast<double>(mmpos.lanePoint.lateralT))));
+  }
+  mmpos.matchedPoint = point::vectorInterpolate(pt_left, pt_right, nearestT);
+  mmpos.lanePoint.paraPoint.parametricOffset
+    = nearestT * longTLeft + (physics::ParametricValue(1.) - nearestT) * longTRight;
+  mmpos.lanePoint.laneLength = lane.length;
+  mmpos.lanePoint.laneWidth = point::distance(pt_left, pt_right);
+  mmpos.queryPoint = pt;
+  mmpos.matchedPointDistance = point::distance(mmpos.matchedPoint, mmpos.queryPoint);
+  return mmpos;
+}
+
 bool findNearestPointOnLane(Lane const &lane, point::ECEFPoint const &pt, match::MapMatchedPosition &mmpos)
 {
   auto const longTLeft = findNearestPointOnEdge(lane.edgeLeft, pt);
@@ -544,42 +590,49 @@ bool findNearestPointOnLane(Lane const &lane, point::ECEFPoint const &pt, match:
     auto const longTRight = findNearestPointOnEdge(lane.edgeRight, pt);
     if (longTRight.isValid())
     {
-      point::ECEFPoint const pt_left = point::getParametricPoint(lane.edgeLeft, longTLeft);
-      point::ECEFPoint const pt_right = point::getParametricPoint(lane.edgeRight, longTRight);
+      mmpos = calcMapMatchedPosition(lane, longTLeft, longTRight, pt);
+      return true;
+    }
+  }
+  return false;
+}
 
-      mmpos.lanePoint.paraPoint.laneId = lane.id;
-      mmpos.lanePoint.lateralT = point::findNearestPointOnEdge(pt, pt_left, pt_right);
-      physics::ParametricValue nearestT;
-      if (mmpos.lanePoint.lateralT < physics::RatioValue(0.))
+bool findNearestPointOnLaneInterval(route::LaneInterval const &laneInterval,
+                                    point::ECEFPoint const &pt,
+                                    match::MapMatchedPosition &mmpos)
+{
+  auto const &lane = getLane(laneInterval.laneId);
+  auto const laneRange = route::toParametricRange(laneInterval);
+  auto longTLeft = findNearestPointOnEdge(lane.edgeLeft, pt);
+  if (longTLeft.isValid())
+  {
+    auto longTRight = findNearestPointOnEdge(lane.edgeRight, pt);
+    if (longTRight.isValid())
+    {
+      if (!physics::isWithinRange(laneRange, longTLeft))
       {
-        nearestT = physics::ParametricValue(0.);
-        mmpos.type = match::MapMatchedPositionType::LANE_LEFT;
-        mmpos.probability = std::max(physics::Probability(0.1),
-                                     physics::Probability(0.5 + static_cast<double>(mmpos.lanePoint.lateralT) / 10.));
+        if (longTLeft < laneRange.minimum)
+        {
+          longTLeft = laneRange.minimum;
+        }
+        else if (longTLeft > laneRange.maximum)
+        {
+          longTLeft = laneRange.maximum;
+        }
       }
-      else if (mmpos.lanePoint.lateralT > physics::RatioValue(1.))
+      if (!physics::isWithinRange(laneRange, longTRight))
       {
-        nearestT = physics::ParametricValue(1.);
-        mmpos.type = match::MapMatchedPositionType::LANE_RIGHT;
-        mmpos.probability
-          = std::max(physics::Probability(0.1),
-                     physics::Probability(0.5 - (static_cast<double>(mmpos.lanePoint.lateralT) - 1.) / 10.));
+        if (longTRight < laneRange.minimum)
+        {
+          longTRight = laneRange.minimum;
+        }
+        else if (longTRight > laneRange.maximum)
+        {
+          longTRight = laneRange.maximum;
+        }
       }
-      else
-      {
-        nearestT = physics::ParametricValue(static_cast<double>(mmpos.lanePoint.lateralT));
-        mmpos.type = match::MapMatchedPositionType::LANE_IN;
-        mmpos.probability = physics::Probability(1.)
-          - std::min(physics::Probability(0.5),
-                     physics::Probability(fabs(0.5 - static_cast<double>(mmpos.lanePoint.lateralT))));
-      }
-      mmpos.matchedPoint = point::vectorInterpolate(pt_left, pt_right, nearestT);
-      mmpos.lanePoint.paraPoint.parametricOffset
-        = nearestT * longTLeft + (physics::ParametricValue(1.) - nearestT) * longTRight;
-      mmpos.lanePoint.laneLength = lane.length;
-      mmpos.lanePoint.laneWidth = point::distance(pt_left, pt_right);
-      mmpos.queryPoint = pt;
-      mmpos.matchedPointDistance = point::distance(mmpos.matchedPoint, mmpos.queryPoint);
+
+      mmpos = calcMapMatchedPosition(lane, longTLeft, longTRight, pt);
       return true;
     }
   }

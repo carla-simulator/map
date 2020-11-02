@@ -9,8 +9,18 @@
    - Settings for Route Prediction test,Routing Test at run time.
    - For open drive map, the attributes roadId, laneSectionIndex and laneIndex are added.
    - The ENU coordinates of the map snapped point is added as an attribute.
+* Added AdMapMatching::findRouteLanes()
+* Added lane::findNearestPointOnLaneInterval()
+* Added matchRadius and samplingDistance members to match::MapMatchedObjectBoundingBox
+
 #### :ghost: Maintenance
 * Use target python version for build
+* Generate list types and tests: ENUBorderList, GeoBorderList, ECEFBorderList,
+  FullRouteList, MapMatchedObjectReferencePositionList
+* Fixed issue in reading of some OpenDRIVE maps
+* Fixed lane::calcLength(<ENU,ECEF,Geo>BorderList) functions
+* Allow rounding errors in lane::isPointWithinBorderPoints() (might e.g. happen after projection of outside points onto the borders)
+* Fix route::planning::createRoutingPoint(match::LaneOccupiedRegion)
 
 ## Release 2.3.0
 #### :rocket: New Features

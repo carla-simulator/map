@@ -511,7 +511,7 @@ TEST_F(LaneOperationTest, LaneOperation)
   ASSERT_EQ(calcDuration(laneInt1), physics::Duration(2.));
 }
 
-TEST_F(LaneOperationTest, BoarderOperation)
+TEST_F(LaneOperationTest, BorderOperation)
 {
   ENUEdge edge_enu1, edge_enu2, edge_enu3, edge_enu4;
   ENUBorder border_enu1, border_enu2, border_enu3;
@@ -659,6 +659,12 @@ TEST_F(LaneOperationTest, BoarderOperation)
   ASSERT_GT(calcLength(border_enu1.right), calcLength(border_enu3.right));
   physics::Distance leftedge_length = calcLength(border_enu1.left);
   physics::Distance rightedge_length = calcLength(border_enu1.right);
+
+  auto borderLength = calcLength(border_enu1);
+  ASSERT_EQ(0.5 * (leftedge_length + rightedge_length), borderLength);
+
+  lane::ENUBorderList enuBorderList{border_enu1, border_enu1, border_enu1};
+  ASSERT_EQ(3.0 * borderLength, calcLength(enuBorderList));
 
   edge_enu1.clear();
   edge_enu2.clear();

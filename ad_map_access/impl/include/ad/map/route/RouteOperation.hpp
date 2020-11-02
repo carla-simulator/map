@@ -737,7 +737,7 @@ void appendLaneSegmentToRoute(route::LaneInterval const &laneInterval,
  */
 bool extendRouteToDistance(route::FullRoute &route,
                            physics::Distance const &length,
-                           std::vector<route::FullRoute> &additionalRoutes);
+                           route::FullRouteList &additionalRoutes);
 
 /**
  * @brief extends route with the given list of destinations
@@ -928,7 +928,7 @@ inline lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &roadSegment)
  *
  * @param[in] route the route to extract the borders from
  */
-std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRoute const &route);
+lane::ENUBorderList getENUBorderOfRoute(FullRoute const &route);
 
 /** @brief get borders of a full route
  *
@@ -937,7 +937,7 @@ std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRoute const &route);
  *
  * @param[in] route the route to extract the borders from
  */
-std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRoute const &route);
+lane::ECEFBorderList getECEFBorderOfRoute(FullRoute const &route);
 
 /** @brief get borders of a full route
  *
@@ -946,7 +946,7 @@ std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRoute const &route);
  *
  * @param[in] route the route to extract the borders from
  */
-std::vector<lane::GeoBorder> getGeoBorderOfRoute(FullRoute const &route);
+lane::GeoBorderList getGeoBorderOfRoute(FullRoute const &route);
 
 /**
  * @brief get the ENU heading of a route at the location of the object
