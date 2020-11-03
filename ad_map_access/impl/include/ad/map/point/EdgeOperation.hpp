@@ -204,12 +204,19 @@ std::vector<PointType> getParametricRange(std::vector<PointType> const &edge,
       const PointType &pt1 = edge[i + 1];
       physics::Distance d = distance(pt0, pt1);
       physics::Distance length_1 = length + d;
-      if ((d != physics::Distance(0)) && (length_1 >= length_t_start))
+      if (length_1 >= length_t_start)
       {
-        physics::Distance d_t = length_t_start - length;
-        physics::ParametricValue tt(d_t / d);
-        PointType pt_start = vectorInterpolate(pt0, pt1, tt);
-        pts.push_back(pt_start);
+        if (d != physics::Distance(0))
+        {
+          physics::Distance d_t = length_t_start - length;
+          physics::ParametricValue tt(d_t / d);
+          PointType pt_start = vectorInterpolate(pt0, pt1, tt);
+          pts.push_back(pt_start);
+        }
+        else
+        {
+          pts.push_back(pt1);
+        }
         break;
       }
       else
@@ -226,12 +233,19 @@ std::vector<PointType> getParametricRange(std::vector<PointType> const &edge,
         const PointType &pt1 = edge[i + 1];
         physics::Distance d = distance(pt0, pt1);
         physics::Distance length_1 = length + d;
-        if ((d != physics::Distance(0)) && (length_1 >= length_t_end))
+        if (length_1 >= length_t_end)
         {
-          physics::Distance d_t = length_t_end - length;
-          physics::ParametricValue tt(d_t / d);
-          PointType pt_end = vectorInterpolate(pt0, pt1, tt);
-          pts.push_back(pt_end);
+          if (d != physics::Distance(0))
+          {
+            physics::Distance d_t = length_t_end - length;
+            physics::ParametricValue tt(d_t / d);
+            PointType pt_end = vectorInterpolate(pt0, pt1, tt);
+            pts.push_back(pt_end);
+          }
+          else
+          {
+            pts.push_back(pt1);
+          }
           return pts;
         }
         else

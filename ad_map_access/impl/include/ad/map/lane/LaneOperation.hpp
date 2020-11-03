@@ -424,6 +424,21 @@ bool projectPositionToLaneInHeadingDirection(point::ParaPoint const &position,
 bool findNearestPointOnLane(Lane const &lane, point::ECEFPoint const &pt, match::MapMatchedPosition &mmpos);
 
 /**
+ * @brief Finds point on the lane interval nearest to the given point.
+ * @param[in] laneInterval the interval of the lane to be considered.
+ * @param[in] pt Given point.
+ * @param[out] mmpos Resulting map-matched position.
+ *   The resulting probability of the map matched position is derived from lateralT value:
+ *     spans between [0.5; 1.0] for LANE_IN matches
+ *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches
+ *
+ * @returns true if successful.
+ */
+bool findNearestPointOnLaneInterval(route::LaneInterval const &laneInterval,
+                                    point::ECEFPoint const &pt,
+                                    match::MapMatchedPosition &mmpos);
+
+/**
  * @brief get the ENU point of a lane
  *
  */

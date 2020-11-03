@@ -684,7 +684,16 @@ void setSuccessorPredecessor(::opendrive::OpenDriveData &mapData,
     if (laneInfo.link->predecessor_id != 0)
     {
       Id predecessorId = laneId(roadInfo.attributes.id, laneSectionIndex - 1, laneInfo.link->predecessor_id);
-      checkAddPredecessor(mapData.laneMap[currentLaneId], mapData.laneMap[predecessorId]);
+      if (mapData.laneMap.find(predecessorId) != mapData.laneMap.end())
+      {
+        checkAddPredecessor(mapData.laneMap[currentLaneId], mapData.laneMap[predecessorId]);
+      }
+      else
+      {
+        std::cerr << "Warning: predecessorId for road " << roadInfo.attributes.id << " lane "
+                  << laneInfo.link->predecessor_id << " and section " << laneSectionIndex - 1 << " does not exist"
+                  << std::endl;
+      }
     }
   }
 

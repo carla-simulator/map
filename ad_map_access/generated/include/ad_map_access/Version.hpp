@@ -25,7 +25,7 @@
 /*!
  * The minor version of ad_map_access
  */
-#define AD_MAP_ACCESS_VERSION_MINOR 3
+#define AD_MAP_ACCESS_VERSION_MINOR 4
 
 /*!
  * The revision of ad_map_access
@@ -35,4 +35,4 @@
 /*!
  * The version of ad_map_access as string
  */
-#define AD_MAP_ACCESS_VERSION_STRING "2.3.0"
+#define AD_MAP_ACCESS_VERSION_STRING "2.4.0"

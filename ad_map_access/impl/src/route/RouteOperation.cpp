@@ -1177,7 +1177,7 @@ bool extendRouteToDestinations(route::FullRoute &route, const std::vector<point:
 
 bool extendRouteToDistance(route::FullRoute &route,
                            const physics::Distance &length,
-                           std::vector<route::FullRoute> &additionalRoutes)
+                           route::FullRouteList &additionalRoutes)
 {
   if (!additionalRoutes.empty())
   {
@@ -2246,9 +2246,9 @@ lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &roadSegment,
   return result;
 }
 
-std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRoute const &route)
+lane::ENUBorderList getENUBorderOfRoute(FullRoute const &route)
 {
-  std::vector<lane::ENUBorder> enuBorderList;
+  lane::ENUBorderList enuBorderList;
   enuBorderList.reserve(route.roadSegments.size());
   for (auto const &roadSegment : route.roadSegments)
   {
@@ -2257,9 +2257,9 @@ std::vector<lane::ENUBorder> getENUBorderOfRoute(FullRoute const &route)
   return enuBorderList;
 }
 
-std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRoute const &route)
+lane::ECEFBorderList getECEFBorderOfRoute(FullRoute const &route)
 {
-  std::vector<lane::ECEFBorder> ecefBorderList;
+  lane::ECEFBorderList ecefBorderList;
   ecefBorderList.reserve(route.roadSegments.size());
   for (auto const &roadSegment : route.roadSegments)
   {
@@ -2268,9 +2268,9 @@ std::vector<lane::ECEFBorder> getECEFBorderOfRoute(FullRoute const &route)
   return ecefBorderList;
 }
 
-std::vector<lane::GeoBorder> getGeoBorderOfRoute(FullRoute const &route)
+lane::GeoBorderList getGeoBorderOfRoute(FullRoute const &route)
 {
-  std::vector<lane::GeoBorder> geoBorderList;
+  lane::GeoBorderList geoBorderList;
   geoBorderList.reserve(route.roadSegments.size());
   for (auto const &roadSegment : route.roadSegments)
   {

@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2018-2019 Intel Corporation
+# Copyright (C) 2018-2020 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -96,7 +96,7 @@ class LoggerQgs(Logger):
             "       4: errors, warning,s infos and debug infos.\n"
         Logger.__init__(self, reporting_level)
         self.message_bar = iface.messageBar()
-        self.title = "Intel Autonomus Driving Map"
+        self.title = "CARLA ad_map_access"
 
     def log(self, level, msg):
         "Logger implementation."
