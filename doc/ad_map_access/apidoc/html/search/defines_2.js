@@ -66,6 +66,9 @@ var searchData=
   ['gen_5fguard_5fvector_5fad_5fmap_5flane_5fcontactlane',['GEN_GUARD_VECTOR_AD_MAP_LANE_CONTACTLANE',['../ContactLaneList_8hpp.html#a04bd1a9f1dbd32ad072dde644ce6d59f',1,'ContactLaneList.hpp']]],
   ['gen_5fguard_5fvector_5fad_5fmap_5flane_5fcontactlocation',['GEN_GUARD_VECTOR_AD_MAP_LANE_CONTACTLOCATION',['../ContactLocationList_8hpp.html#abe9fa3683c580c24a754822401912e83',1,'ContactLocationList.hpp']]],
   ['gen_5fguard_5fvector_5fad_5fmap_5flane_5fcontacttype',['GEN_GUARD_VECTOR_AD_MAP_LANE_CONTACTTYPE',['../ContactTypeList_8hpp.html#afadaaba08eb348202ed95f12e8a4f3ec',1,'ContactTypeList.hpp']]],
+  ['gen_5fguard_5fvector_5fad_5fmap_5flane_5fecefborder',['GEN_GUARD_VECTOR_AD_MAP_LANE_ECEFBORDER',['../ECEFBorderList_8hpp.html#abc357e9f2c9a76403d5546bba350a740',1,'ECEFBorderList.hpp']]],
+  ['gen_5fguard_5fvector_5fad_5fmap_5flane_5fenuborder',['GEN_GUARD_VECTOR_AD_MAP_LANE_ENUBORDER',['../ENUBorderList_8hpp.html#a77a4d0ddcd152f97aa7cc0686b7cb612',1,'ENUBorderList.hpp']]],
+  ['gen_5fguard_5fvector_5fad_5fmap_5flane_5fgeoborder',['GEN_GUARD_VECTOR_AD_MAP_LANE_GEOBORDER',['../GeoBorderList_8hpp.html#aaaab23c5ad3b01737c9a7487454d8b73',1,'GeoBorderList.hpp']]],
   ['gen_5fguard_5fvector_5fad_5fmap_5flane_5flaneid',['GEN_GUARD_VECTOR_AD_MAP_LANE_LANEID',['../LaneIdList_8hpp.html#a06ce58412fd6e22b642e29d9aef30556',1,'LaneIdList.hpp']]],
   ['gen_5fguard_5fvector_5fad_5fmap_5fmatch_5fenuobjectposition',['GEN_GUARD_VECTOR_AD_MAP_MATCH_ENUOBJECTPOSITION',['../ENUObjectPositionList_8hpp.html#ad3129ef57b3d438d46d87c186db93e5b',1,'ENUObjectPositionList.hpp']]],
   ['gen_5fguard_5fvector_5fad_5fmap_5fmatch_5flaneoccupiedregion',['GEN_GUARD_VECTOR_AD_MAP_MATCH_LANEOCCUPIEDREGION',['../LaneOccupiedRegionList_8hpp.html#a82a882f1f978195c9f97fce08e1cf200',1,'LaneOccupiedRegionList.hpp']]],
@@ -77,6 +80,8 @@ var searchData=
   ['gen_5fguard_5fvector_5fad_5fmap_5frestriction_5frestriction',['GEN_GUARD_VECTOR_AD_MAP_RESTRICTION_RESTRICTION',['../RestrictionList_8hpp.html#af265f5c4eec49ec3ff8c2e38d876c0b9',1,'RestrictionList.hpp']]],
   ['gen_5fguard_5fvector_5fad_5fmap_5frestriction_5froadusertype',['GEN_GUARD_VECTOR_AD_MAP_RESTRICTION_ROADUSERTYPE',['../RoadUserTypeList_8hpp.html#a3692016ddc0406359efc0b1ecc382aa8',1,'RoadUserTypeList.hpp']]],
   ['gen_5fguard_5fvector_5fad_5fmap_5frestriction_5fspeedlimit',['GEN_GUARD_VECTOR_AD_MAP_RESTRICTION_SPEEDLIMIT',['../SpeedLimitList_8hpp.html#a2cebd51870a7799e3006c0efb167df45',1,'SpeedLimitList.hpp']]],
+  ['gen_5fguard_5fvector_5fad_5fmap_5froute_5ffullroute',['GEN_GUARD_VECTOR_AD_MAP_ROUTE_FULLROUTE',['../FullRouteList_8hpp.html#afe7e7520414ec99349af1dd0c6347d1a',1,'FullRouteList.hpp']]],
   ['gen_5fguard_5fvector_5fad_5fmap_5froute_5flanesegment',['GEN_GUARD_VECTOR_AD_MAP_ROUTE_LANESEGMENT',['../LaneSegmentList_8hpp.html#a3765160d5e1bbcc2d48426e002014f12',1,'LaneSegmentList.hpp']]],
-  ['gen_5fguard_5fvector_5fad_5fmap_5froute_5froadsegment',['GEN_GUARD_VECTOR_AD_MAP_ROUTE_ROADSEGMENT',['../RoadSegmentList_8hpp.html#a86b661857c132ef6dee5869401d10cab',1,'RoadSegmentList.hpp']]]
+  ['gen_5fguard_5fvector_5fad_5fmap_5froute_5froadsegment',['GEN_GUARD_VECTOR_AD_MAP_ROUTE_ROADSEGMENT',['../RoadSegmentList_8hpp.html#a86b661857c132ef6dee5869401d10cab',1,'RoadSegmentList.hpp']]],
+  ['gen_5fguard_5fvector_5fvector_5fad_5fmap_5fmatch_5fmapmatchedposition',['GEN_GUARD_VECTOR_VECTOR_AD_MAP_MATCH_MAPMATCHEDPOSITION',['../MapMatchedObjectReferencePositionList_8hpp.html#a2a7e9786538d050f34e856448752c886',1,'MapMatchedObjectReferencePositionList.hpp']]]
 ];

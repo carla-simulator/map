@@ -2,6 +2,7 @@ var searchData=
 [
   ['samedrivingdirection',['SameDrivingDirection',['../namespacead_1_1map_1_1route.html#aaae9bcaf2936b1abe025aebd0fcbd77bab51cd2c8724851ff796ff8cbb1cfa645',1,'ad::map::route']]],
   ['samelaneneighbor',['SameLaneNeighbor',['../classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html#a254bd181ec1e1587e531fd521c60a18aa27b1b73739ebbf173157b315088bf056',1,'ad::map::route::planning::RouteExpander']]],
+  ['samplingdistance',['samplingDistance',['../structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html#a154200f61b84208841a6d7cb142617d0',1,'ad::map::match::MapMatchedObjectBoundingBox']]],
   ['satisfiesfilter',['satisfiesFilter',['../namespacead_1_1map_1_1lane.html#af7f3cc7eab23d8ce5c50d0334cf1b61f',1,'ad::map::lane']]],
   ['save',['save',['../classad_1_1map_1_1access_1_1Store.html#ad40b1310d25eb2bc20976c38dc9c9b6f',1,'ad::map::access::Store']]],
   ['segmentcounter',['SegmentCounter',['../namespacead_1_1map_1_1route.html#a71b421d8921da377162d82c18c438f88',1,'ad::map::route']]],
@@ -46,8 +47,8 @@ var searchData=
   ['stop',['STOP',['../namespacead_1_1map_1_1landmark.html#a1173173052ed303ab4fc23c39359ba6ea615a46af313786fc4e349f34118be111',1,'ad::map::landmark::STOP()'],['../namespacead_1_1map_1_1lane.html#a4465a9f47cadd19ed67f82a11044addfa615a46af313786fc4e349f34118be111',1,'ad::map::lane::STOP()'],['../namespacead_1_1map_1_1intersection.html#a2642065ae69f206651d2b1be9b2f3e15a11a755d598c0c417f9a36758c3da7481',1,'ad::map::intersection::Stop()']]],
   ['stop_5fall',['STOP_ALL',['../namespacead_1_1map_1_1lane.html#a4465a9f47cadd19ed67f82a11044addfa71defb19602bedbaa1cf363dd4b5eed2',1,'ad::map::lane']]],
   ['storagefile',['StorageFile',['../classad_1_1map_1_1serialize_1_1StorageFile.html',1,'ad::map::serialize']]],
-  ['store',['Store',['../classad_1_1map_1_1access_1_1Store.html#a0c5da9a8cfe3707eb41fcc0db20380b7',1,'ad::map::access::Store::Store()'],['../classad_1_1map_1_1access_1_1Store.html#a71b9666ae9093e76afac41a3bc63488c',1,'ad::map::access::Store::Store(Store const &amp;other)=delete'],['../classad_1_1map_1_1access_1_1Store.html#aefecacd396c1d09a1b158f7b58569799',1,'ad::map::access::Store::Store(Store &amp;&amp;other)=delete']]],
   ['store',['Store',['../classad_1_1map_1_1access_1_1Store.html',1,'ad::map::access']]],
+  ['store',['Store',['../classad_1_1map_1_1access_1_1Store.html#a0c5da9a8cfe3707eb41fcc0db20380b7',1,'ad::map::access::Store::Store()'],['../classad_1_1map_1_1access_1_1Store.html#a71b9666ae9093e76afac41a3bc63488c',1,'ad::map::access::Store::Store(Store const &amp;other)=delete'],['../classad_1_1map_1_1access_1_1Store.html#aefecacd396c1d09a1b158f7b58569799',1,'ad::map::access::Store::Store(Store &amp;&amp;other)=delete']]],
   ['straight',['Straight',['../namespacead_1_1map_1_1intersection.html#a9349488e0eeb54f585a0b2e4be98b91bab6bd418b8879851e86bcaccd553b74db',1,'ad::map::intersection']]],
   ['straight_5fred_5fyellow_5fgreen',['STRAIGHT_RED_YELLOW_GREEN',['../namespacead_1_1map_1_1landmark.html#a718de8045627d34fa218de95fdaf35e8ae174ca68e3b422f4cd95f81f00e519b9',1,'ad::map::landmark']]],
   ['street_5flamp',['STREET_LAMP',['../namespacead_1_1map_1_1landmark.html#ae307e7342e34144a0a5df9165b886dd6af3aed1ad903e1f85e1ae9b3dcf420d51',1,'ad::map::landmark']]],

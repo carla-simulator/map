@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">8</td>
@@ -289,16 +289,16 @@
 <span class="lineNum">     218 </span>                :            :    *
 <a name="219"><span class="lineNum">     219 </span>                :            :    * constructs a result with the provided data</a>
 <span class="lineNum">     220 </span>                :            :    */
-<span class="lineNum">     221 </span>                :<span class="lineCov">         86 :   FindWaypointResult(FullRoute const &amp;route,</span>
+<span class="lineNum">     221 </span>                :<span class="lineCov">         87 :   FindWaypointResult(FullRoute const &amp;route,</span>
 <span class="lineNum">     222 </span>                :            :                      point::ParaPoint const &amp;iQueryPosition,
 <span class="lineNum">     223 </span>                :            :                      RoadSegmentList::const_iterator roadSegmentIter,
 <span class="lineNum">     224 </span>                :            :                      LaneSegmentList::const_iterator laneIntervalIter)
 <span class="lineNum">     225 </span>                :            :     : queryRoute(route)
 <span class="lineNum">     226 </span>                :            :     , roadSegmentIterator(roadSegmentIter)
 <span class="lineNum">     227 </span>                :            :     , laneSegmentIterator(laneIntervalIter)
-<span class="lineNum">     228 </span>                :<span class="lineCov">         86 :     , queryPosition(iQueryPosition)</span>
+<span class="lineNum">     228 </span>                :<span class="lineCov">         87 :     , queryPosition(iQueryPosition)</span>
 <span class="lineNum">     229 </span>                :            :   {
-<span class="lineNum">     230 </span>                :<span class="lineCov">         86 :   }</span>
+<span class="lineNum">     230 </span>                :<span class="lineCov">         87 :   }</span>
 <span class="lineNum">     231 </span>                :            : 
 <span class="lineNum">     232 </span>                :            :   /**
 <span class="lineNum">     233 </span>                :            :    * @brief copy constructor
@@ -318,11 +318,11 @@
 <span class="lineNum">     247 </span>                :            :   /**
 <a name="248"><span class="lineNum">     248 </span>                :            :    * @brief checks whether the FindWaypointResult contains valid data</a>
 <span class="lineNum">     249 </span>                :            :    */
-<span class="lineNum">     250 </span>                :<span class="lineCov">        430 :   bool isValid() const</span>
+<span class="lineNum">     250 </span>                :<span class="lineCov">        431 :   bool isValid() const</span>
 <span class="lineNum">     251 </span>                :            :   {
-<span class="lineNum">     252 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 430 times"> + </span>]:<span class="lineCov">       1290 :     return roadSegmentIterator != queryRoute.roadSegments.end()</span>
-<span class="lineNum">     253 </span>[<span class="branchCov" title="Branch 0 was taken 317 times"> + </span><span class="branchCov" title="Branch 1 was taken 113 times"> + </span>][<span class="branchCov" title="Branch 5 was taken 317 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        860 :       &amp;&amp; laneSegmentIterator != roadSegmentIterator-&gt;drivableLaneSegments.end();</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 317 times"> + </span><span class="branchCov" title="Branch 8 was taken 113 times"> + </span>]
+<span class="lineNum">     252 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 431 times"> + </span>]:<span class="lineCov">       1293 :     return roadSegmentIterator != queryRoute.roadSegments.end()</span>
+<span class="lineNum">     253 </span>[<span class="branchCov" title="Branch 0 was taken 319 times"> + </span><span class="branchCov" title="Branch 1 was taken 112 times"> + </span>][<span class="branchCov" title="Branch 5 was taken 319 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        862 :       &amp;&amp; laneSegmentIterator != roadSegmentIterator-&gt;drivableLaneSegments.end();</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 319 times"> + </span><span class="branchCov" title="Branch 8 was taken 112 times"> + </span>]
 <span class="lineNum">     254 </span>                :            :   }
 <span class="lineNum">     255 </span>                :            :   /**
 <span class="lineNum">     256 </span>                :            :    * @brief assignment operator
@@ -809,7 +809,7 @@
 <span class="lineNum">     737 </span>                :            :  */
 <span class="lineNum">     738 </span>                :            : bool extendRouteToDistance(route::FullRoute &amp;route,
 <span class="lineNum">     739 </span>                :            :                            physics::Distance const &amp;length,
-<span class="lineNum">     740 </span>                :            :                            std::vector&lt;route::FullRoute&gt; &amp;additionalRoutes);
+<span class="lineNum">     740 </span>                :            :                            route::FullRouteList &amp;additionalRoutes);
 <span class="lineNum">     741 </span>                :            : 
 <span class="lineNum">     742 </span>                :            : /**
 <span class="lineNum">     743 </span>                :            :  * @brief extends route with the given list of destinations
@@ -1000,7 +1000,7 @@
 <span class="lineNum">     928 </span>                :            :  *
 <span class="lineNum">     929 </span>                :            :  * @param[in] route the route to extract the borders from
 <span class="lineNum">     930 </span>                :            :  */
-<span class="lineNum">     931 </span>                :            : std::vector&lt;lane::ENUBorder&gt; getENUBorderOfRoute(FullRoute const &amp;route);
+<span class="lineNum">     931 </span>                :            : lane::ENUBorderList getENUBorderOfRoute(FullRoute const &amp;route);
 <span class="lineNum">     932 </span>                :            : 
 <span class="lineNum">     933 </span>                :            : /** @brief get borders of a full route
 <span class="lineNum">     934 </span>                :            :  *
@@ -1009,7 +1009,7 @@
 <span class="lineNum">     937 </span>                :            :  *
 <span class="lineNum">     938 </span>                :            :  * @param[in] route the route to extract the borders from
 <span class="lineNum">     939 </span>                :            :  */
-<span class="lineNum">     940 </span>                :            : std::vector&lt;lane::ECEFBorder&gt; getECEFBorderOfRoute(FullRoute const &amp;route);
+<span class="lineNum">     940 </span>                :            : lane::ECEFBorderList getECEFBorderOfRoute(FullRoute const &amp;route);
 <span class="lineNum">     941 </span>                :            : 
 <span class="lineNum">     942 </span>                :            : /** @brief get borders of a full route
 <span class="lineNum">     943 </span>                :            :  *
@@ -1018,7 +1018,7 @@
 <span class="lineNum">     946 </span>                :            :  *
 <span class="lineNum">     947 </span>                :            :  * @param[in] route the route to extract the borders from
 <span class="lineNum">     948 </span>                :            :  */
-<span class="lineNum">     949 </span>                :            : std::vector&lt;lane::GeoBorder&gt; getGeoBorderOfRoute(FullRoute const &amp;route);
+<span class="lineNum">     949 </span>                :            : lane::GeoBorderList getGeoBorderOfRoute(FullRoute const &amp;route);
 <span class="lineNum">     950 </span>                :            : 
 <span class="lineNum">     951 </span>                :            : /**
 <span class="lineNum">     952 </span>                :            :  * @brief get the ENU heading of a route at the location of the object

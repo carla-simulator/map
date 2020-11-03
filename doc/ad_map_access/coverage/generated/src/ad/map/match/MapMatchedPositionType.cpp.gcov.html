@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -89,13 +89,13 @@
 <span class="lineNum">      18 </span>                :            : #include &quot;ad/map/match/MapMatchedPositionType.hpp&quot;
 <a name="19"><span class="lineNum">      19 </span>                :            : #include &lt;stdexcept&gt;</a>
 <span class="lineNum">      20 </span>                :            : 
-<span class="lineNum">      21 </span>                :<span class="lineCov">         37 : std::string toString(::ad::map::match::MapMatchedPositionType const e)</span>
+<span class="lineNum">      21 </span>                :<span class="lineCov">         41 : std::string toString(::ad::map::match::MapMatchedPositionType const e)</span>
 <span class="lineNum">      22 </span>                :            : {
-<span class="lineNum">      23 </span>  [<span class="branchCov" title="Branch 0 was taken 25 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">         37 :   switch (e)</span>
+<span class="lineNum">      23 </span>  [<span class="branchCov" title="Branch 0 was taken 29 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">         41 :   switch (e)</span>
 <span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 5 was taken 7 times"> + </span>]
 <span class="lineNum">      24 </span>                :            :   {
 <span class="lineNum">      25 </span>                :            :     case ::ad::map::match::MapMatchedPositionType::INVALID:
-<span class="lineNum">      26 </span>                :<span class="lineCov">         25 :       return std::string(&quot;::ad::map::match::MapMatchedPositionType::INVALID&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">         29 :       return std::string(&quot;::ad::map::match::MapMatchedPositionType::INVALID&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">      27 </span>                :            :     case ::ad::map::match::MapMatchedPositionType::UNKNOWN:
 <span class="lineNum">      28 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::match::MapMatchedPositionType::UNKNOWN&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">      29 </span>                :            :     case ::ad::map::match::MapMatchedPositionType::LANE_IN:
@@ -105,7 +105,7 @@
 <span class="lineNum">      33 </span>                :            :     case ::ad::map::match::MapMatchedPositionType::LANE_RIGHT:
 <span class="lineNum">      34 </span>                :<span class="lineCov">          1 :       return std::string(&quot;::ad::map::match::MapMatchedPositionType::LANE_RIGHT&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">      35 </span>                :            :     default:
-<span class="lineNum">      36 </span>                :<span class="lineCov">         37 :       return std::string(&quot;UNKNOWN ENUM VALUE&quot;); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">         41 :       return std::string(&quot;UNKNOWN ENUM VALUE&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">      37 </span>                :            :   }
 <a name="38"><span class="lineNum">      38 </span>                :            : }</a>
 <span class="lineNum">      39 </span>                :            : 

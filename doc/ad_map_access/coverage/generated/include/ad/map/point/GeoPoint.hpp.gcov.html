@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -130,7 +130,7 @@
 <span class="lineNum">      59 </span>                :            :   /*!
 <a name="60"><span class="lineNum">      60 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      61 </span>                :            :    */
-<span class="lineNum">      62 </span>                :<span class="lineCov">     888204 :   GeoPoint() = default;</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">     888220 :   GeoPoint() = default;</span>
 <span class="lineNum">      63 </span>                :            : 
 <span class="lineNum">      64 </span>                :            :   /*!
 <span class="lineNum">      65 </span>                :            :    * \brief standard destructor
@@ -239,19 +239,19 @@
 <span class="lineNum">     167 </span>                :            :  * \returns The stream object.
 <a name="168"><span class="lineNum">     168 </span>                :            :  *</a>
 <span class="lineNum">     169 </span>                :            :  */
-<span class="lineNum">     170 </span>                :<span class="lineCov">         49 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, GeoPoint const &amp;_value)</span>
+<span class="lineNum">     170 </span>                :<span class="lineCov">         51 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, GeoPoint const &amp;_value)</span>
 <span class="lineNum">     171 </span>                :            : {
-<span class="lineNum">     172 </span>                :<span class="lineCov">         49 :   os &lt;&lt; &quot;GeoPoint(&quot;;</span>
-<span class="lineNum">     173 </span>                :<span class="lineCov">         49 :   os &lt;&lt; &quot;longitude:&quot;;</span>
-<span class="lineNum">     174 </span>                :<span class="lineCov">         49 :   os &lt;&lt; _value.longitude;</span>
-<span class="lineNum">     175 </span>                :<span class="lineCov">         49 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     176 </span>                :<span class="lineCov">         49 :   os &lt;&lt; &quot;latitude:&quot;;</span>
-<span class="lineNum">     177 </span>                :<span class="lineCov">         49 :   os &lt;&lt; _value.latitude;</span>
-<span class="lineNum">     178 </span>                :<span class="lineCov">         49 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     179 </span>                :<span class="lineCov">         49 :   os &lt;&lt; &quot;altitude:&quot;;</span>
-<span class="lineNum">     180 </span>                :<span class="lineCov">         49 :   os &lt;&lt; _value.altitude;</span>
-<span class="lineNum">     181 </span>                :<span class="lineCov">         49 :   os &lt;&lt; &quot;)&quot;;</span>
-<span class="lineNum">     182 </span>                :<span class="lineCov">         49 :   return os;</span>
+<span class="lineNum">     172 </span>                :<span class="lineCov">         51 :   os &lt;&lt; &quot;GeoPoint(&quot;;</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">         51 :   os &lt;&lt; &quot;longitude:&quot;;</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">         51 :   os &lt;&lt; _value.longitude;</span>
+<span class="lineNum">     175 </span>                :<span class="lineCov">         51 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     176 </span>                :<span class="lineCov">         51 :   os &lt;&lt; &quot;latitude:&quot;;</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">         51 :   os &lt;&lt; _value.latitude;</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">         51 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">         51 :   os &lt;&lt; &quot;altitude:&quot;;</span>
+<span class="lineNum">     180 </span>                :<span class="lineCov">         51 :   os &lt;&lt; _value.altitude;</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">         51 :   os &lt;&lt; &quot;)&quot;;</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">         51 :   return os;</span>
 <span class="lineNum">     183 </span>                :            : }
 <span class="lineNum">     184 </span>                :            : 
 <span class="lineNum">     185 </span>                :            : } // namespace point

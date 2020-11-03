@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -133,10 +133,10 @@
 <span class="lineNum">      62 </span>                :            :  * \returns The stream object.
 <a name="63"><span class="lineNum">      63 </span>                :            :  *</a>
 <span class="lineNum">      64 </span>                :            :  */
-<span class="lineNum">      65 </span>                :<span class="lineCov">         28 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, vector&lt;::ad::map::route::RoadSegment&gt; const &amp;_value)</span>
+<span class="lineNum">      65 </span>                :<span class="lineCov">         31 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, vector&lt;::ad::map::route::RoadSegment&gt; const &amp;_value)</span>
 <span class="lineNum">      66 </span>                :            : {
-<span class="lineNum">      67 </span>                :<span class="lineCov">         28 :   os &lt;&lt; &quot;[&quot;;</span>
-<span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 3 was taken 29 times"> + </span><span class="branchCov" title="Branch 4 was taken 28 times"> + </span>]:<span class="lineCov">         57 :   for (auto it = _value.begin(); it != _value.end(); it++)</span>
+<span class="lineNum">      67 </span>                :<span class="lineCov">         31 :   os &lt;&lt; &quot;[&quot;;</span>
+<span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 3 was taken 29 times"> + </span><span class="branchCov" title="Branch 4 was taken 31 times"> + </span>]:<span class="lineCov">         60 :   for (auto it = _value.begin(); it != _value.end(); it++)</span>
 <span class="lineNum">      69 </span>                :            :   {
 <span class="lineNum">      70 </span>        [<span class="branchCov" title="Branch 2 was taken 10 times"> + </span><span class="branchCov" title="Branch 3 was taken 19 times"> + </span>]:<span class="lineCov">         29 :     if (it != _value.begin())</span>
 <span class="lineNum">      71 </span>                :            :     {
@@ -144,8 +144,8 @@
 <span class="lineNum">      73 </span>                :            :     }
 <span class="lineNum">      74 </span>        [<span class="branchCov" title="Branch 2 was taken 29 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         29 :     os &lt;&lt; *it;</span>
 <span class="lineNum">      75 </span>                :            :   }
-<span class="lineNum">      76 </span>                :<span class="lineCov">         28 :   os &lt;&lt; &quot;]&quot;;</span>
-<span class="lineNum">      77 </span>                :<span class="lineCov">         28 :   return os;</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">         31 :   os &lt;&lt; &quot;]&quot;;</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">         31 :   return os;</span>
 <span class="lineNum">      78 </span>                :            : }
 <span class="lineNum">      79 </span>                :            : } // namespace std
 <span class="lineNum">      80 </span>                :            : 

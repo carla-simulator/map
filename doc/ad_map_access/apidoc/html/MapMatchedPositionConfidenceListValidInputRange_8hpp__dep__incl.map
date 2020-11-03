@@ -1,4 +1,5 @@
 <map id="generated/include/ad/map/match/MapMatchedPositionConfidenceListValidInputRange.hpp" name="generated/include/ad/map/match/MapMatchedPositionConfidenceListValidInputRange.hpp">
-<area shape="rect" id="node2" href="$MapMatchedObjectBoundingBoxValidInputRange_8hpp.html" title="generated/include/ad\l/map/match/MapMatchedObject\lBoundingBoxValidInputRange.hpp" alt="" coords="10,109,246,165"/>
-<area shape="rect" id="node3" href="$ObjectValidInputRange_8hpp.html" title="generated/include/ad\l/map/match/ObjectValidInput\lRange.hpp" alt="" coords="25,213,231,269"/>
+<area shape="rect" id="node2" href="$MapMatchedObjectReferencePositionListValidInputRange_8hpp.html" title="generated/include/ad\l/map/match/MapMatchedObject\lReferencePositionListValidInputRange.hpp" alt="" coords="5,109,292,165"/>
+<area shape="rect" id="node3" href="$MapMatchedObjectBoundingBoxValidInputRange_8hpp.html" title="generated/include/ad\l/map/match/MapMatchedObject\lBoundingBoxValidInputRange.hpp" alt="" coords="31,213,267,269"/>
+<area shape="rect" id="node4" href="$ObjectValidInputRange_8hpp.html" title="generated/include/ad\l/map/match/ObjectValidInput\lRange.hpp" alt="" coords="45,317,252,373"/>
 </map>

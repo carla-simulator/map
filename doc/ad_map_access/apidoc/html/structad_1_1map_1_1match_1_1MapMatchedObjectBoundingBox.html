@@ -122,9 +122,6 @@ typedef std::shared_ptr&lt; <a class="el" href="structad_1_1map_1_1match_1_1MapM
 typedef std::shared_ptr&lt; <a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html">MapMatchedObjectBoundingBox</a> const  &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html#a8e8e97fd74aa957dd03649f51a38343e">ConstPtr</a></td></tr>
 <tr class="memdesc:a8e8e97fd74aa957dd03649f51a38343e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart pointer on constant <a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html" title="DataType MapMatchedObjectBoundingBox. ">MapMatchedObjectBoundingBox</a>. <br /></td></tr>
 <tr class="separator:a8e8e97fd74aa957dd03649f51a38343e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a438c7466a75358cca6207634ebdf0f11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a438c7466a75358cca6207634ebdf0f11"></a>
-typedef std::vector&lt;::<a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">ad::map::match::MapMatchedPositionConfidenceList</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ReferencePointPositionsType</b></td></tr>
-<tr class="separator:a438c7466a75358cca6207634ebdf0f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -162,9 +159,13 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:aa5d2c69a266c2fc4b3837b5c902bc5dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5d2c69a266c2fc4b3837b5c902bc5dc"></a>
 ::<a class="el" href="namespacead_1_1map_1_1match.html#afb10d5eb47f453cb03fd2fc1057ce2bd">ad::map::match::LaneOccupiedRegionList</a>&#160;</td><td class="memItemRight" valign="bottom"><b>laneOccupiedRegions</b></td></tr>
 <tr class="separator:aa5d2c69a266c2fc4b3837b5c902bc5dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3df75683a0c9b87deb4c99e9f726ff5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3df75683a0c9b87deb4c99e9f726ff5f"></a>
-ReferencePointPositionsType&#160;</td><td class="memItemRight" valign="bottom"><b>referencePointPositions</b></td></tr>
-<tr class="separator:a3df75683a0c9b87deb4c99e9f726ff5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7f4c189cf760c25762737edf2f5533e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7f4c189cf760c25762737edf2f5533e"></a>
+::<a class="el" href="namespacead_1_1map_1_1match.html#ae4e6afc8e67a7ae928b4795260158181">ad::map::match::MapMatchedObjectReferencePositionList</a>&#160;</td><td class="memItemRight" valign="bottom"><b>referencePointPositions</b></td></tr>
+<tr class="separator:ab7f4c189cf760c25762737edf2f5533e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a154200f61b84208841a6d7cb142617d0"><td class="memItemLeft" align="right" valign="top">::ad::physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html#a154200f61b84208841a6d7cb142617d0">samplingDistance</a> {0.0}</td></tr>
+<tr class="separator:a154200f61b84208841a6d7cb142617d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4e86870ebce6b9da5cc67b08f417c60"><td class="memItemLeft" align="right" valign="top">::ad::physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html#ab4e86870ebce6b9da5cc67b08f417c60">matchRadius</a> {0.0}</td></tr>
+<tr class="separator:ab4e86870ebce6b9da5cc67b08f417c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>DataType <a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html" title="DataType MapMatchedObjectBoundingBox. ">MapMatchedObjectBoundingBox</a>. </p>
@@ -298,6 +299,33 @@ ReferencePointPositionsType&#160;</td><td class="memItemRight" valign="bottom"><
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if both <a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html" title="DataType MapMatchedObjectBoundingBox. ">MapMatchedObjectBoundingBox</a> are equal </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ab4e86870ebce6b9da5cc67b08f417c60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">::ad::physics::Distance ad::map::match::MapMatchedObjectBoundingBox::matchRadius {0.0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The actual map matching radius around the object. </p>
+
+</div>
+</div>
+<a class="anchor" id="a154200f61b84208841a6d7cb142617d0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">::ad::physics::Distance ad::map::match::MapMatchedObjectBoundingBox::samplingDistance {0.0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sampling distance used to calculate the bounding box. </p>
 
 </div>
 </div>

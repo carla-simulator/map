@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">48</td>
@@ -138,15 +138,15 @@
 <span class="lineNum">      65 </span>                :<span class="lineCov">          1 :   return std::fabs(first.parametricOffset - second.parametricOffset);</span>
 <a name="66"><span class="lineNum">      66 </span>                :            : }</a>
 <span class="lineNum">      67 </span>                :            : 
-<span class="lineNum">      68 </span>                :<span class="lineCov">      11998 : bool isRouteDirectionPositive(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">      11999 : bool isRouteDirectionPositive(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">      69 </span>                :            : {
-<span class="lineNum">      70 </span>        [<span class="branchCov" title="Branch 1 was taken 105 times"> + </span><span class="branchCov" title="Branch 2 was taken 11893 times"> + </span>]:<span class="lineCov">      11998 :   if (laneInterval.start == laneInterval.end)</span>
+<span class="lineNum">      70 </span>        [<span class="branchCov" title="Branch 1 was taken 105 times"> + </span><span class="branchCov" title="Branch 2 was taken 11894 times"> + </span>]:<span class="lineCov">      11999 :   if (laneInterval.start == laneInterval.end)</span>
 <span class="lineNum">      71 </span>                :            :   {
 <span class="lineNum">      72 </span>                :<span class="lineCov">        105 :     return lane::isLaneDirectionPositive(laneInterval.laneId) ^ laneInterval.wrongWay;</span>
 <span class="lineNum">      73 </span>                :            :   }
 <span class="lineNum">      74 </span>                :            :   else
 <span class="lineNum">      75 </span>                :            :   {
-<span class="lineNum">      76 </span>                :<span class="lineCov">      11893 :     return (laneInterval.start &lt; laneInterval.end);</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">      11894 :     return (laneInterval.start &lt; laneInterval.end);</span>
 <span class="lineNum">      77 </span>                :            :   }
 <a name="78"><span class="lineNum">      78 </span>                :            : }</a>
 <span class="lineNum">      79 </span>                :            : 

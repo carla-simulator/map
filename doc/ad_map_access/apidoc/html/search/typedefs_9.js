@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['segmentcounter',['SegmentCounter',['../namespacead_1_1map_1_1route.html#a71b421d8921da377162d82c18c438f88',1,'ad::map::route']]],
-  ['speedlimitlist',['SpeedLimitList',['../namespacead_1_1map_1_1restriction.html#a2e3c5cd0313717504de387a0e0ea272b',1,'ad::map::restriction']]]
+  ['restrictionlist',['RestrictionList',['../namespacead_1_1map_1_1restriction.html#a552b121a44a01334e7b3551263c0f9d1',1,'ad::map::restriction']]],
+  ['roadsegmentlist',['RoadSegmentList',['../namespacead_1_1map_1_1route.html#a83a23df4255ebcbd2b7be9b89d99f095',1,'ad::map::route']]],
+  ['roadusertypelist',['RoadUserTypeList',['../namespacead_1_1map_1_1restriction.html#adb7f13e20a03788f19b120887857f067',1,'ad::map::restriction']]],
+  ['routelaneoffset',['RouteLaneOffset',['../namespacead_1_1map_1_1route.html#adf33d33b9c6c78ec77b2544c09021b6e',1,'ad::map::route']]],
+  ['routeplanningcounter',['RoutePlanningCounter',['../namespacead_1_1map_1_1route.html#ae17721e699ea11ccf5dfbb261d4d1623',1,'ad::map::route']]],
+  ['routingpoint',['RoutingPoint',['../classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html#ab31168a05bd472db83ad724b2b603498',1,'ad::map::route::planning::RouteExpander']]]
 ];

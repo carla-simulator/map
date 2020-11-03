@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">91</td>
@@ -521,25 +521,25 @@
 <span class="lineNum">     444 </span>                :<span class="lineCov">         18 :   return result;</span>
 <a name="445"><span class="lineNum">     445 </span>                :            : }</a>
 <span class="lineNum">     446 </span>                :            : 
-<span class="lineNum">     447 </span>                :<span class="lineCov">        166 : FindWaypointResult::FindWaypointResult(FullRoute const &amp;route)</span>
+<span class="lineNum">     447 </span>                :<span class="lineCov">        165 : FindWaypointResult::FindWaypointResult(FullRoute const &amp;route)</span>
 <span class="lineNum">     448 </span>                :            :   : queryRoute(route)
-<span class="lineNum">     449 </span>                :<span class="lineCov">        166 :   , roadSegmentIterator(queryRoute.roadSegments.end())</span>
+<span class="lineNum">     449 </span>                :<span class="lineCov">        165 :   , roadSegmentIterator(queryRoute.roadSegments.end())</span>
 <span class="lineNum">     450 </span>                :            : {
-<a name="451"><span class="lineNum">     451 </span>                :<span class="lineCov">        166 : }</span></a>
+<a name="451"><span class="lineNum">     451 </span>                :<span class="lineCov">        165 : }</span></a>
 <span class="lineNum">     452 </span>                :            : 
-<span class="lineNum">     453 </span>                :<span class="lineCov">        124 : FindWaypointResult &amp;FindWaypointResult::operator=(FindWaypointResult const &amp;other)</span>
+<span class="lineNum">     453 </span>                :<span class="lineCov">        125 : FindWaypointResult &amp;FindWaypointResult::operator=(FindWaypointResult const &amp;other)</span>
 <span class="lineNum">     454 </span>                :            : {
-<span class="lineNum">     455 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 124 times"> + </span>]:<span class="lineCov">        124 :   if ((&amp;this-&gt;queryRoute) != (&amp;other.queryRoute))</span>
+<span class="lineNum">     455 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 125 times"> + </span>]:<span class="lineCov">        125 :   if ((&amp;this-&gt;queryRoute) != (&amp;other.queryRoute))</span>
 <span class="lineNum">     456 </span>                :            :   {
 <span class="lineNum">     457 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::invalid_argument(&quot;FindWaypointResult::operator= incompatible input parameter&quot;);</span>
 <span class="lineNum">     458 </span>                :            :   }
-<span class="lineNum">     459 </span>        [<span class="branchCov" title="Branch 0 was taken 124 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        124 :   if (this != &amp;other)</span>
+<span class="lineNum">     459 </span>        [<span class="branchCov" title="Branch 0 was taken 125 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        125 :   if (this != &amp;other)</span>
 <span class="lineNum">     460 </span>                :            :   {
-<span class="lineNum">     461 </span>                :<span class="lineCov">        124 :     this-&gt;queryPosition = other.queryPosition;</span>
-<span class="lineNum">     462 </span>                :<span class="lineCov">        124 :     this-&gt;roadSegmentIterator = other.roadSegmentIterator;</span>
-<span class="lineNum">     463 </span>                :<span class="lineCov">        124 :     this-&gt;laneSegmentIterator = other.laneSegmentIterator;</span>
+<span class="lineNum">     461 </span>                :<span class="lineCov">        125 :     this-&gt;queryPosition = other.queryPosition;</span>
+<span class="lineNum">     462 </span>                :<span class="lineCov">        125 :     this-&gt;roadSegmentIterator = other.roadSegmentIterator;</span>
+<span class="lineNum">     463 </span>                :<span class="lineCov">        125 :     this-&gt;laneSegmentIterator = other.laneSegmentIterator;</span>
 <span class="lineNum">     464 </span>                :            :   }
-<span class="lineNum">     465 </span>                :<span class="lineCov">        124 :   return *this;</span>
+<span class="lineNum">     465 </span>                :<span class="lineCov">        125 :   return *this;</span>
 <a name="466"><span class="lineNum">     466 </span>                :            : }</a>
 <span class="lineNum">     467 </span>                :            : 
 <span class="lineNum">     468 </span>                :<span class="lineCov">          7 : FindWaypointResult FindWaypointResult::getLeftLane() const</span>
@@ -661,15 +661,15 @@
 <span class="lineNum">     578 </span>                :            : FindWaypointResult
 <span class="lineNum">     579 </span>                :<span class="lineCov">        125 : findWaypointImpl(point::ParaPoint const &amp;position, route::FullRoute const &amp;route, bool considerRouteStart)</span>
 <span class="lineNum">     580 </span>                :            : {
-<span class="lineNum">     581 </span>        [<span class="branchCov" title="Branch 2 was taken 239 times"> + </span><span class="branchCov" title="Branch 3 was taken 39 times"> + </span>]:<span class="lineCov">        642 :   for (route::RoadSegmentList::const_iterator roadSegmentIter = route.roadSegments.begin();</span>
-<span class="lineNum">     582 </span>                :<span class="lineCov">        278 :        roadSegmentIter != route.roadSegments.end();</span>
+<span class="lineNum">     581 </span>        [<span class="branchCov" title="Branch 2 was taken 238 times"> + </span><span class="branchCov" title="Branch 3 was taken 38 times"> + </span>]:<span class="lineCov">        639 :   for (route::RoadSegmentList::const_iterator roadSegmentIter = route.roadSegments.begin();</span>
+<span class="lineNum">     582 </span>                :<span class="lineCov">        276 :        roadSegmentIter != route.roadSegments.end();</span>
 <span class="lineNum">     583 </span>                :            :        ++roadSegmentIter)
 <span class="lineNum">     584 </span>                :            :   {
-<span class="lineNum">     585 </span>        [<span class="branchCov" title="Branch 3 was taken 337 times"> + </span><span class="branchCov" title="Branch 4 was taken 153 times"> + </span>]:<span class="lineCov">        980 :     for (route::LaneSegmentList::const_iterator laneSegmentIter = roadSegmentIter-&gt;drivableLaneSegments.begin();</span>
-<span class="lineNum">     586 </span>                :<span class="lineCov">        490 :          laneSegmentIter != roadSegmentIter-&gt;drivableLaneSegments.end();</span>
+<span class="lineNum">     585 </span>        [<span class="branchCov" title="Branch 3 was taken 335 times"> + </span><span class="branchCov" title="Branch 4 was taken 151 times"> + </span>]:<span class="lineCov">        972 :     for (route::LaneSegmentList::const_iterator laneSegmentIter = roadSegmentIter-&gt;drivableLaneSegments.begin();</span>
+<span class="lineNum">     586 </span>                :<span class="lineCov">        486 :          laneSegmentIter != roadSegmentIter-&gt;drivableLaneSegments.end();</span>
 <span class="lineNum">     587 </span>                :            :          ++laneSegmentIter)
 <span class="lineNum">     588 </span>                :            :     {
-<span class="lineNum">     589 </span>[<span class="branchCov" title="Branch 2 was taken 337 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 114 times"> + </span><span class="branchCov" title="Branch 5 was taken 223 times"> + </span>]:<span class="lineCov">        337 :       if (position.laneId == laneSegmentIter-&gt;laneInterval.laneId)</span>
+<span class="lineNum">     589 </span>[<span class="branchCov" title="Branch 2 was taken 335 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 114 times"> + </span><span class="branchCov" title="Branch 5 was taken 221 times"> + </span>]:<span class="lineCov">        335 :       if (position.laneId == laneSegmentIter-&gt;laneInterval.laneId)</span>
 <span class="lineNum">     590 </span>                :            :       {
 <span class="lineNum">     591 </span>        [<span class="branchCov" title="Branch 0 was taken 7 times"> + </span><span class="branchCov" title="Branch 1 was taken 107 times"> + </span>]:<span class="lineCov">        114 :         if (!considerRouteStart)</span>
 <span class="lineNum">     592 </span>                :            :         {
@@ -695,7 +695,7 @@
 <span class="lineNum">     612 </span>        [<span class="branchCov" title="Branch 2 was taken 107 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        107 :           laneInterval = extendIntervalFromStart(laneInterval, physics::Distance(0.5));</span>
 <span class="lineNum">     613 </span>        [<span class="branchCov" title="Branch 2 was taken 107 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        107 :           laneInterval = extendIntervalFromEnd(laneInterval, physics::Distance(0.5));</span>
 <span class="lineNum">     614 </span>                :            : 
-<span class="lineNum">     615 </span>[<span class="branchCov" title="Branch 1 was taken 107 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 79 times"> + </span><span class="branchCov" title="Branch 4 was taken 28 times"> + </span>]:<span class="lineCov">        107 :           if (isWithinInterval(laneInterval, position))</span>
+<span class="lineNum">     615 </span>[<span class="branchCov" title="Branch 1 was taken 107 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 80 times"> + </span><span class="branchCov" title="Branch 4 was taken 27 times"> + </span>]:<span class="lineCov">        107 :           if (isWithinInterval(laneInterval, position))</span>
 <span class="lineNum">     616 </span>                :            :           {
 <span class="lineNum">     617 </span>                :<span class="lineCov">        107 :             return FindWaypointResult(route, position, roadSegmentIter, laneSegmentIter);</span>
 <span class="lineNum">     618 </span>                :            :           }
@@ -726,19 +726,19 @@
 <span class="lineNum">     643 </span>        [<span class="branchCov" title="Branch 3 was taken 79 times"> + </span><span class="branchCov" title="Branch 4 was taken 51 times"> + </span>]:<span class="lineCov">        130 :   for (auto const &amp;position : positions)</span>
 <span class="lineNum">     644 </span>                :            :   {
 <span class="lineNum">     645 </span>        [<span class="branchCov" title="Branch 1 was taken 79 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         79 :     auto findResult = findWaypoint(position, route);</span>
-<span class="lineNum">     646 </span>        [<span class="branchCov" title="Branch 1 was taken 54 times"> + </span><span class="branchCov" title="Branch 2 was taken 25 times"> + </span>]:<span class="lineCov">         79 :     if (findResult.isValid())</span>
+<span class="lineNum">     646 </span>        [<span class="branchCov" title="Branch 1 was taken 55 times"> + </span><span class="branchCov" title="Branch 2 was taken 24 times"> + </span>]:<span class="lineCov">         79 :     if (findResult.isValid())</span>
 <span class="lineNum">     647 </span>                :            :     {
-<span class="lineNum">     648 </span>        [<span class="branchCov" title="Branch 0 was taken 40 times"> + </span><span class="branchCov" title="Branch 1 was taken 14 times"> + </span>]:<span class="lineCov">         54 :       if ( // no other result yet</span>
-<span class="lineNum">     649 </span>                :<span class="lineCov">         54 :         (!resultWaypoint.isValid())</span>
+<span class="lineNum">     648 </span>        [<span class="branchCov" title="Branch 0 was taken 40 times"> + </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         55 :       if ( // no other result yet</span>
+<span class="lineNum">     649 </span>                :<span class="lineCov">         55 :         (!resultWaypoint.isValid())</span>
 <span class="lineNum">     650 </span>                :            :         // new result is nearer already on route segment level
-<span class="lineNum">     651 </span>[<span class="branchCov" title="Branch 0 was taken 14 times"> + </span><span class="branchCov" title="Branch 1 was taken 40 times"> + </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 14 times"> + </span>]:<span class="lineCov">         54 :         || (findResult.roadSegmentIterator &lt; resultWaypoint.roadSegmentIterator))</span>
+<span class="lineNum">     651 </span>[<span class="branchCov" title="Branch 0 was taken 15 times"> + </span><span class="branchCov" title="Branch 1 was taken 40 times"> + </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 15 times"> + </span>]:<span class="lineCov">         55 :         || (findResult.roadSegmentIterator &lt; resultWaypoint.roadSegmentIterator))</span>
 <span class="lineNum">     652 </span>                :            :       {
 <span class="lineNum">     653 </span>        [<span class="branchCov" title="Branch 1 was taken 40 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         40 :         resultWaypoint = findResult;</span>
 <span class="lineNum">     654 </span>                :            :       }
-<span class="lineNum">     655 </span>        [<span class="branchCov" title="Branch 1 was taken 13 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">         14 :       else if (findResult.roadSegmentIterator == resultWaypoint.roadSegmentIterator)</span>
+<span class="lineNum">     655 </span>        [<span class="branchCov" title="Branch 1 was taken 14 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">         15 :       else if (findResult.roadSegmentIterator == resultWaypoint.roadSegmentIterator)</span>
 <span class="lineNum">     656 </span>                :            :       {
 <span class="lineNum">     657 </span>                :            :         // new result is on the same segment, so let the parametricOffset value of the query decide
-<span class="lineNum">     658 </span>[<span class="branchCov" title="Branch 2 was taken 13 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 6 times"> + </span><span class="branchCov" title="Branch 5 was taken 7 times"> + </span>]:<span class="lineCov">         13 :         if (isRouteDirectionPositive(resultWaypoint.laneSegmentIterator-&gt;laneInterval))</span>
+<span class="lineNum">     658 </span>[<span class="branchCov" title="Branch 2 was taken 14 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 6 times"> + </span><span class="branchCov" title="Branch 5 was taken 8 times"> + </span>]:<span class="lineCov">         14 :         if (isRouteDirectionPositive(resultWaypoint.laneSegmentIterator-&gt;laneInterval))</span>
 <span class="lineNum">     659 </span>                :            :         {
 <span class="lineNum">     660 </span>[<span class="branchCov" title="Branch 1 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchCov" title="Branch 4 was taken 4 times"> + </span>]:<span class="lineCov">          6 :           if (findResult.queryPosition.parametricOffset &lt; resultWaypoint.queryPosition.parametricOffset)</span>
 <span class="lineNum">     661 </span>                :            :           {
@@ -747,9 +747,9 @@
 <span class="lineNum">     664 </span>                :            :         }
 <span class="lineNum">     665 </span>                :            :         else
 <span class="lineNum">     666 </span>                :            :         {
-<span class="lineNum">     667 </span>[<span class="branchCov" title="Branch 1 was taken 7 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchCov" title="Branch 4 was taken 6 times"> + </span>]:<span class="lineCov">          7 :           if (findResult.queryPosition.parametricOffset &gt; resultWaypoint.queryPosition.parametricOffset)</span>
+<span class="lineNum">     667 </span>[<span class="branchCov" title="Branch 1 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchCov" title="Branch 4 was taken 6 times"> + </span>]:<span class="lineCov">          8 :           if (findResult.queryPosition.parametricOffset &gt; resultWaypoint.queryPosition.parametricOffset)</span>
 <span class="lineNum">     668 </span>                :            :           {
-<span class="lineNum">     669 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :             resultWaypoint = findResult;</span>
+<span class="lineNum">     669 </span>        [<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :             resultWaypoint = findResult;</span>
 <span class="lineNum">     670 </span>                :            :           }
 <span class="lineNum">     671 </span>                :            :         }
 <span class="lineNum">     672 </span>                :            :       }
@@ -1276,7 +1276,7 @@
 <span class="lineNum">    1177 </span>                :            : 
 <span class="lineNum">    1178 </span>                :<span class="lineCov">          3 : bool extendRouteToDistance(route::FullRoute &amp;route,</span>
 <span class="lineNum">    1179 </span>                :            :                            const physics::Distance &amp;length,
-<span class="lineNum">    1180 </span>                :            :                            std::vector&lt;route::FullRoute&gt; &amp;additionalRoutes)
+<span class="lineNum">    1180 </span>                :            :                            route::FullRouteList &amp;additionalRoutes)
 <span class="lineNum">    1181 </span>                :            : {
 <span class="lineNum">    1182 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">          3 :   if (!additionalRoutes.empty())</span>
 <span class="lineNum">    1183 </span>                :            :   {
@@ -2362,9 +2362,9 @@
 <span class="lineNum">    2246 </span>                :<span class="lineCov">          1 :   return result;</span>
 <a name="2247"><span class="lineNum">    2247 </span>                :            : }</a>
 <span class="lineNum">    2248 </span>                :            : 
-<span class="lineNum">    2249 </span>                :<span class="lineCov">          8 : std::vector&lt;lane::ENUBorder&gt; getENUBorderOfRoute(FullRoute const &amp;route)</span>
+<span class="lineNum">    2249 </span>                :<span class="lineCov">          8 : lane::ENUBorderList getENUBorderOfRoute(FullRoute const &amp;route)</span>
 <span class="lineNum">    2250 </span>                :            : {
-<span class="lineNum">    2251 </span>                :<span class="lineCov">          8 :   std::vector&lt;lane::ENUBorder&gt; enuBorderList;</span>
+<span class="lineNum">    2251 </span>                :<span class="lineCov">          8 :   lane::ENUBorderList enuBorderList;</span>
 <span class="lineNum">    2252 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :   enuBorderList.reserve(route.roadSegments.size());</span>
 <span class="lineNum">    2253 </span>        [<span class="branchCov" title="Branch 3 was taken 8 times"> + </span><span class="branchCov" title="Branch 4 was taken 8 times"> + </span>]:<span class="lineCov">         16 :   for (auto const &amp;roadSegment : route.roadSegments)</span>
 <span class="lineNum">    2254 </span>                :            :   {
@@ -2373,9 +2373,9 @@
 <span class="lineNum">    2257 </span>                :<span class="lineCov">          8 :   return enuBorderList;</span>
 <a name="2258"><span class="lineNum">    2258 </span>                :            : }</a>
 <span class="lineNum">    2259 </span>                :            : 
-<span class="lineNum">    2260 </span>                :<span class="lineNoCov">          0 : std::vector&lt;lane::ECEFBorder&gt; getECEFBorderOfRoute(FullRoute const &amp;route)</span>
+<span class="lineNum">    2260 </span>                :<span class="lineNoCov">          0 : lane::ECEFBorderList getECEFBorderOfRoute(FullRoute const &amp;route)</span>
 <span class="lineNum">    2261 </span>                :            : {
-<span class="lineNum">    2262 </span>                :<span class="lineNoCov">          0 :   std::vector&lt;lane::ECEFBorder&gt; ecefBorderList;</span>
+<span class="lineNum">    2262 </span>                :<span class="lineNoCov">          0 :   lane::ECEFBorderList ecefBorderList;</span>
 <span class="lineNum">    2263 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   ecefBorderList.reserve(route.roadSegments.size());</span>
 <span class="lineNum">    2264 </span>        [<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>]:<span class="lineNoCov">          0 :   for (auto const &amp;roadSegment : route.roadSegments)</span>
 <span class="lineNum">    2265 </span>                :            :   {
@@ -2384,9 +2384,9 @@
 <span class="lineNum">    2268 </span>                :<span class="lineNoCov">          0 :   return ecefBorderList;</span>
 <a name="2269"><span class="lineNum">    2269 </span>                :            : }</a>
 <span class="lineNum">    2270 </span>                :            : 
-<span class="lineNum">    2271 </span>                :<span class="lineNoCov">          0 : std::vector&lt;lane::GeoBorder&gt; getGeoBorderOfRoute(FullRoute const &amp;route)</span>
+<span class="lineNum">    2271 </span>                :<span class="lineNoCov">          0 : lane::GeoBorderList getGeoBorderOfRoute(FullRoute const &amp;route)</span>
 <span class="lineNum">    2272 </span>                :            : {
-<span class="lineNum">    2273 </span>                :<span class="lineNoCov">          0 :   std::vector&lt;lane::GeoBorder&gt; geoBorderList;</span>
+<span class="lineNum">    2273 </span>                :<span class="lineNoCov">          0 :   lane::GeoBorderList geoBorderList;</span>
 <span class="lineNum">    2274 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   geoBorderList.reserve(route.roadSegments.size());</span>
 <span class="lineNum">    2275 </span>        [<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>]:<span class="lineNoCov">          0 :   for (auto const &amp;roadSegment : route.roadSegments)</span>
 <span class="lineNum">    2276 </span>                :            :   {

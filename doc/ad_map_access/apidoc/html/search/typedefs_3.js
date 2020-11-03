@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['geoedge',['GeoEdge',['../namespacead_1_1map_1_1point.html#a784bafe105d353ca21158d1875cd0812',1,'ad::map::point']]]
+  ['fullroutelist',['FullRouteList',['../namespacead_1_1map_1_1route.html#a8cb86eafe66b8bfadd78ba5516e19ffe',1,'ad::map::route']]]
 ];

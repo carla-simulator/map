@@ -31,13 +31,13 @@
             <td class="headerValue">ad_map_access</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">3</td>
-            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">9</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntryMed">75.0 %</td>
           </tr>
           <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -92,27 +92,38 @@
 <span class="lineNum">      21 </span>                :            : #include &lt;limits&gt;
 <span class="lineNum">      22 </span>                :            : #include &quot;ad/map/match/LaneOccupiedRegionListValidInputRange.hpp&quot;
 <span class="lineNum">      23 </span>                :            : #include &quot;ad/map/match/MapMatchedObjectBoundingBox.hpp&quot;
-<span class="lineNum">      24 </span>                :            : #include &quot;ad/map/match/MapMatchedPositionConfidenceListValidInputRange.hpp&quot;
-<span class="lineNum">      25 </span>                :            : 
-<span class="lineNum">      26 </span>                :            : /*!
-<span class="lineNum">      27 </span>                :            :  * \brief check if the given MapMatchedObjectBoundingBox is within valid input range
-<span class="lineNum">      28 </span>                :            :  *
-<span class="lineNum">      29 </span>                :            :  * \param[in] input the MapMatchedObjectBoundingBox as an input value
-<span class="lineNum">      30 </span>                :            :  * \param[in] logErrors enables error logging
+<span class="lineNum">      24 </span>                :            : #include &quot;ad/map/match/MapMatchedObjectReferencePositionListValidInputRange.hpp&quot;
+<span class="lineNum">      25 </span>                :            : #include &quot;ad/physics/DistanceValidInputRange.hpp&quot;
+<span class="lineNum">      26 </span>                :            : #include &quot;spdlog/fmt/ostr.h&quot;
+<span class="lineNum">      27 </span>                :            : #include &quot;spdlog/spdlog.h&quot;
+<span class="lineNum">      28 </span>                :            : 
+<span class="lineNum">      29 </span>                :            : /*!
+<span class="lineNum">      30 </span>                :            :  * \brief check if the given MapMatchedObjectBoundingBox is within valid input range
 <span class="lineNum">      31 </span>                :            :  *
-<span class="lineNum">      32 </span>                :            :  * \returns \c true if MapMatchedObjectBoundingBox is considered to be within the specified input range
-<span class="lineNum">      33 </span>                :            :  *
-<a name="34"><span class="lineNum">      34 </span>                :            :  * \note the specified input range is defined by the ranges of all members</a>
-<span class="lineNum">      35 </span>                :            :  */
-<span class="lineNum">      36 </span>                :<span class="lineCov">          2 : inline bool withinValidInputRange(::ad::map::match::MapMatchedObjectBoundingBox const &amp;input,</span>
-<span class="lineNum">      37 </span>                :            :                                   bool const logErrors = true)
-<span class="lineNum">      38 </span>                :            : {
-<span class="lineNum">      39 </span>                :            :   // check for generic member input ranges
-<span class="lineNum">      40 </span>                :            :   (void)input;
-<span class="lineNum">      41 </span>                :            :   (void)logErrors;
-<span class="lineNum">      42 </span>                :<span class="lineCov">          2 :   bool inValidInputRange = true;</span>
-<span class="lineNum">      43 </span>                :<span class="lineCov">          2 :   return inValidInputRange;</span>
-<span class="lineNum">      44 </span>                :            : }
+<span class="lineNum">      32 </span>                :            :  * \param[in] input the MapMatchedObjectBoundingBox as an input value
+<span class="lineNum">      33 </span>                :            :  * \param[in] logErrors enables error logging
+<span class="lineNum">      34 </span>                :            :  *
+<span class="lineNum">      35 </span>                :            :  * \returns \c true if MapMatchedObjectBoundingBox is considered to be within the specified input range
+<span class="lineNum">      36 </span>                :            :  *
+<a name="37"><span class="lineNum">      37 </span>                :            :  * \note the specified input range is defined by the ranges of all members</a>
+<span class="lineNum">      38 </span>                :            :  */
+<span class="lineNum">      39 </span>                :<span class="lineCov">         10 : inline bool withinValidInputRange(::ad::map::match::MapMatchedObjectBoundingBox const &amp;input,</span>
+<span class="lineNum">      40 </span>                :            :                                   bool const logErrors = true)
+<span class="lineNum">      41 </span>                :            : {
+<span class="lineNum">      42 </span>                :            :   // check for generic member input ranges
+<span class="lineNum">      43 </span>                :<span class="lineCov">         10 :   bool inValidInputRange = true;</span>
+<span class="lineNum">      44 </span>                :<span class="lineCov">         10 :   inValidInputRange = withinValidInputRange(input.laneOccupiedRegions, logErrors)</span>
+<span class="lineNum">      45 </span>        [<span class="branchCov" title="Branch 1 was taken 10 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         10 :     &amp;&amp; withinValidInputRange(input.referencePointPositions, logErrors)</span>
+<span class="lineNum">      46 </span>[<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 5 times"> + </span><span class="branchCov" title="Branch 4 was taken 5 times"> + </span>]:<span class="lineCov">         20 :     &amp;&amp; withinValidInputRange(input.samplingDistance, logErrors) &amp;&amp; withinValidInputRange(input.matchRadius, logErrors);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 2 times"> + </span><span class="branchCov" title="Branch 7 was taken 3 times"> + </span>]
+<span class="lineNum">      47 </span>[<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         10 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      48 </span>                :            :   {
+<span class="lineNum">      49 </span>                :<span class="lineCov">         16 :     spdlog::error(&quot;withinValidInputRange(::ad::map::match::MapMatchedObjectBoundingBox)&gt;&gt; {} has invalid member&quot;,</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">          8 :                   input); // LCOV_EXCL_BR_LINE</span>
+<span class="lineNum">      51 </span>                :            :   }
+<span class="lineNum">      52 </span>                :            : 
+<span class="lineNum">      53 </span>                :<span class="lineCov">         10 :   return inValidInputRange;</span>
+<span class="lineNum">      54 </span>                :            : }
 </pre>
       </td>
     </tr>

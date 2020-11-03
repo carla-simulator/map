@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -179,9 +179,9 @@
 <span class="lineNum">     108 </span>                :            :   * @brief Computes distance between ENU points.
 <a name="109"><span class="lineNum">     109 </span>                :            :   * @returns Distance between two points in meters.</a>
 <span class="lineNum">     110 </span>                :            :   */
-<span class="lineNum">     111 </span>                :<span class="lineCov">        465 : inline physics::Distance distance(ENUPoint const &amp;point, ENUPoint const &amp;other)</span>
+<span class="lineNum">     111 </span>                :<span class="lineCov">        489 : inline physics::Distance distance(ENUPoint const &amp;point, ENUPoint const &amp;other)</span>
 <span class="lineNum">     112 </span>                :            : {
-<span class="lineNum">     113 </span>        [<span class="branchCov" title="Branch 2 was taken 465 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        465 :   return vectorLength(vectorSub(point, other));</span>
+<span class="lineNum">     113 </span>        [<span class="branchCov" title="Branch 2 was taken 489 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        489 :   return vectorLength(vectorSub(point, other));</span>
 <span class="lineNum">     114 </span>                :            : }
 <span class="lineNum">     115 </span>                :            : 
 <span class="lineNum">     116 </span>                :            : /** @brief calculate the length of the provided border as distance value

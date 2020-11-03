@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -249,9 +249,9 @@
 <span class="lineNum">     178 </span>                :            : /**
 <a name="179"><span class="lineNum">     179 </span>                :            :  * @returns true if direction is POSITIVE or BIDIRECTIONAL.</a>
 <span class="lineNum">     180 </span>                :            :  */
-<span class="lineNum">     181 </span>                :<span class="lineCov">     179337 : inline bool isLaneDirectionPositive(Lane const &amp;lane)</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">     179319 : inline bool isLaneDirectionPositive(Lane const &amp;lane)</span>
 <span class="lineNum">     182 </span>                :            : {
-<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 119653 times"> + </span><span class="branchCov" title="Branch 1 was taken 59684 times"> + </span>][<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 119653 times"> + </span>]:<span class="lineCov">     179337 :   return lane.direction == LaneDirection::POSITIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span>
+<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 119649 times"> + </span><span class="branchCov" title="Branch 1 was taken 59670 times"> + </span>][<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 119649 times"> + </span>]:<span class="lineCov">     179319 :   return lane.direction == LaneDirection::POSITIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span>
 <span class="lineNum">     184 </span>                :            : }
 <span class="lineNum">     185 </span>                :            : 
 <span class="lineNum">     186 </span>                :            : /**
@@ -495,43 +495,58 @@
 <span class="lineNum">     424 </span>                :            : bool findNearestPointOnLane(Lane const &amp;lane, point::ECEFPoint const &amp;pt, match::MapMatchedPosition &amp;mmpos);
 <span class="lineNum">     425 </span>                :            : 
 <span class="lineNum">     426 </span>                :            : /**
-<span class="lineNum">     427 </span>                :            :  * @brief get the ENU point of a lane
-<span class="lineNum">     428 </span>                :            :  *
-<span class="lineNum">     429 </span>                :            :  */
-<span class="lineNum">     430 </span>                :            : point::ENUPoint getENULanePoint(point::ParaPoint const parametricPoint,
-<span class="lineNum">     431 </span>                :            :                                 physics::ParametricValue const &amp;lateralOffset = physics::ParametricValue(0.5));
-<span class="lineNum">     432 </span>                :            : 
-<span class="lineNum">     433 </span>                :            : /** @brief calculate length of a lane with a given id
-<span class="lineNum">     434 </span>                :            :  */
-<span class="lineNum">     435 </span>                :            : physics::Distance calcLength(LaneId const &amp;laneId);
-<span class="lineNum">     436 </span>                :            : 
-<span class="lineNum">     437 </span>                :            : /** @brief calculate length of a lane occupied region
-<span class="lineNum">     438 </span>                :            :  */
-<span class="lineNum">     439 </span>                :            : physics::Distance calcLength(match::LaneOccupiedRegion const &amp;laneOccupiedRegion);
+<span class="lineNum">     427 </span>                :            :  * @brief Finds point on the lane interval nearest to the given point.
+<span class="lineNum">     428 </span>                :            :  * @param[in] laneInterval the interval of the lane to be considered.
+<span class="lineNum">     429 </span>                :            :  * @param[in] pt Given point.
+<span class="lineNum">     430 </span>                :            :  * @param[out] mmpos Resulting map-matched position.
+<span class="lineNum">     431 </span>                :            :  *   The resulting probability of the map matched position is derived from lateralT value:
+<span class="lineNum">     432 </span>                :            :  *     spans between [0.5; 1.0] for LANE_IN matches
+<span class="lineNum">     433 </span>                :            :  *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches
+<span class="lineNum">     434 </span>                :            :  *
+<span class="lineNum">     435 </span>                :            :  * @returns true if successful.
+<span class="lineNum">     436 </span>                :            :  */
+<span class="lineNum">     437 </span>                :            : bool findNearestPointOnLaneInterval(route::LaneInterval const &amp;laneInterval,
+<span class="lineNum">     438 </span>                :            :                                     point::ECEFPoint const &amp;pt,
+<span class="lineNum">     439 </span>                :            :                                     match::MapMatchedPosition &amp;mmpos);
 <span class="lineNum">     440 </span>                :            : 
-<span class="lineNum">     441 </span>                :            : /** @brief calculate the width of the lane at the provided lanePoint
-<span class="lineNum">     442 </span>                :            :  */
-<span class="lineNum">     443 </span>                :            : physics::Distance calcWidth(point::ParaPoint const &amp;paraPoint);
-<span class="lineNum">     444 </span>                :            : 
-<span class="lineNum">     445 </span>                :            : /** @brief calculate the width of the provided lane at the provided longitudinal position
-<span class="lineNum">     446 </span>                :            :  */
-<span class="lineNum">     447 </span>                :            : physics::Distance calcWidth(LaneId const &amp;laneId, physics::ParametricValue const &amp;longOffset);
-<span class="lineNum">     448 </span>                :            : 
-<span class="lineNum">     449 </span>                :            : /**
-<span class="lineNum">     450 </span>                :            :  * @brief calculate the width of a lane at the provided ENU position
-<span class="lineNum">     451 </span>                :            :  *
-<span class="lineNum">     452 </span>                :            :  * @return -1 in case the enuPoint could not be found on a lane
+<span class="lineNum">     441 </span>                :            : /**
+<span class="lineNum">     442 </span>                :            :  * @brief get the ENU point of a lane
+<span class="lineNum">     443 </span>                :            :  *
+<span class="lineNum">     444 </span>                :            :  */
+<span class="lineNum">     445 </span>                :            : point::ENUPoint getENULanePoint(point::ParaPoint const parametricPoint,
+<span class="lineNum">     446 </span>                :            :                                 physics::ParametricValue const &amp;lateralOffset = physics::ParametricValue(0.5));
+<span class="lineNum">     447 </span>                :            : 
+<span class="lineNum">     448 </span>                :            : /** @brief calculate length of a lane with a given id
+<span class="lineNum">     449 </span>                :            :  */
+<span class="lineNum">     450 </span>                :            : physics::Distance calcLength(LaneId const &amp;laneId);
+<span class="lineNum">     451 </span>                :            : 
+<span class="lineNum">     452 </span>                :            : /** @brief calculate length of a lane occupied region
 <span class="lineNum">     453 </span>                :            :  */
-<span class="lineNum">     454 </span>                :            : physics::Distance calcWidth(point::ENUPoint const &amp;enuPoint);
+<span class="lineNum">     454 </span>                :            : physics::Distance calcLength(match::LaneOccupiedRegion const &amp;laneOccupiedRegion);
 <span class="lineNum">     455 </span>                :            : 
-<span class="lineNum">     456 </span>                :            : /** @brief calculate width of a lane occupied region
-<span class="lineNum">     457 </span>                :            :  *  scales the with at the center of the occupied region by the lateral extend of the region
-<span class="lineNum">     458 </span>                :            :  */
-<span class="lineNum">     459 </span>                :            : physics::Distance calcWidth(match::LaneOccupiedRegion const &amp;laneOccupiedRegion);
-<span class="lineNum">     460 </span>                :            : 
-<span class="lineNum">     461 </span>                :            : } // namespace lane
-<span class="lineNum">     462 </span>                :            : } // namespace map
-<span class="lineNum">     463 </span>                :            : } // namespace ad
+<span class="lineNum">     456 </span>                :            : /** @brief calculate the width of the lane at the provided lanePoint
+<span class="lineNum">     457 </span>                :            :  */
+<span class="lineNum">     458 </span>                :            : physics::Distance calcWidth(point::ParaPoint const &amp;paraPoint);
+<span class="lineNum">     459 </span>                :            : 
+<span class="lineNum">     460 </span>                :            : /** @brief calculate the width of the provided lane at the provided longitudinal position
+<span class="lineNum">     461 </span>                :            :  */
+<span class="lineNum">     462 </span>                :            : physics::Distance calcWidth(LaneId const &amp;laneId, physics::ParametricValue const &amp;longOffset);
+<span class="lineNum">     463 </span>                :            : 
+<span class="lineNum">     464 </span>                :            : /**
+<span class="lineNum">     465 </span>                :            :  * @brief calculate the width of a lane at the provided ENU position
+<span class="lineNum">     466 </span>                :            :  *
+<span class="lineNum">     467 </span>                :            :  * @return -1 in case the enuPoint could not be found on a lane
+<span class="lineNum">     468 </span>                :            :  */
+<span class="lineNum">     469 </span>                :            : physics::Distance calcWidth(point::ENUPoint const &amp;enuPoint);
+<span class="lineNum">     470 </span>                :            : 
+<span class="lineNum">     471 </span>                :            : /** @brief calculate width of a lane occupied region
+<span class="lineNum">     472 </span>                :            :  *  scales the with at the center of the occupied region by the lateral extend of the region
+<span class="lineNum">     473 </span>                :            :  */
+<span class="lineNum">     474 </span>                :            : physics::Distance calcWidth(match::LaneOccupiedRegion const &amp;laneOccupiedRegion);
+<span class="lineNum">     475 </span>                :            : 
+<span class="lineNum">     476 </span>                :            : } // namespace lane
+<span class="lineNum">     477 </span>                :            : } // namespace map
+<span class="lineNum">     478 </span>                :            : } // namespace ad
 </pre>
       </td>
     </tr>

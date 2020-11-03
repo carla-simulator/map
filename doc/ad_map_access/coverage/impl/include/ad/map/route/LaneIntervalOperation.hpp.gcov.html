@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -236,7 +236,7 @@
 <span class="lineNum">     165 </span>                :            :   }
 <span class="lineNum">     166 </span>                :            :   else
 <span class="lineNum">     167 </span>                :            :   {
-<span class="lineNum">     168 </span>[<span class="branchCov" title="Branch 1 was taken 66 times"> + </span><span class="branchCov" title="Branch 2 was taken 8 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 46 times"> + </span><span class="branchCov" title="Branch 5 was taken 20 times"> + </span>]:<span class="lineCov">         74 :     return (laneInterval.end &lt;= parametricOffset) &amp;&amp; (parametricOffset &lt;= laneInterval.start);</span>
+<span class="lineNum">     168 </span>[<span class="branchCov" title="Branch 1 was taken 66 times"> + </span><span class="branchCov" title="Branch 2 was taken 8 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 47 times"> + </span><span class="branchCov" title="Branch 5 was taken 19 times"> + </span>]:<span class="lineCov">         74 :     return (laneInterval.end &lt;= parametricOffset) &amp;&amp; (parametricOffset &lt;= laneInterval.start);</span>
 <span class="lineNum">     169 </span>                :            :   }
 <span class="lineNum">     170 </span>                :            : }
 <span class="lineNum">     171 </span>                :            : 
@@ -249,7 +249,7 @@
 <span class="lineNum">     178 </span>                :            :  */
 <span class="lineNum">     179 </span>                :<span class="lineCov">        108 : inline bool isWithinInterval(LaneInterval const &amp;laneInterval, point::ParaPoint const &amp;point)</span>
 <span class="lineNum">     180 </span>                :            : {
-<span class="lineNum">     181 </span>[<span class="branchCov" title="Branch 1 was taken 108 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 80 times"> + </span><span class="branchCov" title="Branch 5 was taken 28 times"> + </span>]:<span class="lineCov">        108 :   return (point.laneId == laneInterval.laneId) &amp;&amp; isWithinInterval(laneInterval, point.parametricOffset);</span>
+<span class="lineNum">     181 </span>[<span class="branchCov" title="Branch 1 was taken 108 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 81 times"> + </span><span class="branchCov" title="Branch 5 was taken 27 times"> + </span>]:<span class="lineCov">        108 :   return (point.laneId == laneInterval.laneId) &amp;&amp; isWithinInterval(laneInterval, point.parametricOffset);</span>
 <span class="lineNum">     182 </span>                :            : }
 <span class="lineNum">     183 </span>                :            : 
 <span class="lineNum">     184 </span>                :            : /**

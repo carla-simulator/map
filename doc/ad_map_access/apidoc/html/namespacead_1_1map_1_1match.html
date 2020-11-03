@@ -132,6 +132,9 @@ typedef std::vector&lt;::<a class="el" href="structad_1_1map_1_1match_1_1ENUObje
 typedef std::vector&lt;::<a class="el" href="structad_1_1map_1_1match_1_1LaneOccupiedRegion.html">ad::map::match::LaneOccupiedRegion</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1match.html#afb10d5eb47f453cb03fd2fc1057ce2bd">LaneOccupiedRegionList</a></td></tr>
 <tr class="memdesc:afb10d5eb47f453cb03fd2fc1057ce2bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType LaneOccupiedRegionList. <br /></td></tr>
 <tr class="separator:afb10d5eb47f453cb03fd2fc1057ce2bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4e6afc8e67a7ae928b4795260158181"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt;::<a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">ad::map::match::MapMatchedPositionConfidenceList</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1match.html#ae4e6afc8e67a7ae928b4795260158181">MapMatchedObjectReferencePositionList</a></td></tr>
+<tr class="memdesc:ae4e6afc8e67a7ae928b4795260158181"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType MapMatchedObjectReferencePositionList.  <a href="#ae4e6afc8e67a7ae928b4795260158181">More...</a><br /></td></tr>
+<tr class="separator:ae4e6afc8e67a7ae928b4795260158181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaed86807265fc30096de4c1e809f715c"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt;::<a class="el" href="structad_1_1map_1_1match_1_1MapMatchedPosition.html">ad::map::match::MapMatchedPosition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a></td></tr>
 <tr class="memdesc:aaed86807265fc30096de4c1e809f715c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType MapMatchedPositionConfidenceList.  <a href="#aaed86807265fc30096de4c1e809f715c">More...</a><br /></td></tr>
 <tr class="separator:aaed86807265fc30096de4c1e809f715c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -211,6 +214,21 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isLaneType</b> (<a cl
 <div class="textblock"><p>namespace match </p>
 <p>Map matching </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ae4e6afc8e67a7ae928b4795260158181"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;::<a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">ad::map::match::MapMatchedPositionConfidenceList</a>&gt; <a class="el" href="namespacead_1_1map_1_1match.html#ae4e6afc8e67a7ae928b4795260158181">ad::map::match::MapMatchedObjectReferencePositionList</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>DataType MapMatchedObjectReferencePositionList. </p>
+<p>The list of the MapMatchedPositionConfidenceList of all ObjectReferencePoints. </p>
+
+</div>
+</div>
 <a class="anchor" id="aaed86807265fc30096de4c1e809f715c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -399,50 +417,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isLaneType</b> (<a cl
 
 </div>
 </div>
-<a class="anchor" id="a8585076aa2782c908f20e8e99204146f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; ad::map::match::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html">MapMatchedObjectBoundingBox</a> const &amp;&#160;</td>
-          <td class="paramname"><em>_value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>standard ostream operator </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html" title="DataType MapMatchedObjectBoundingBox. ">MapMatchedObjectBoundingBox</a> value</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a62740eb75aa74529a8aab67ef344e9af"></a>
 <div class="memitem">
 <div class="memproto">
@@ -524,6 +498,50 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isLaneType</b> (<a cl
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1match_1_1LaneOccupiedRegion.html" title="DataType LaneOccupiedRegion. ">LaneOccupiedRegion</a> value</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8585076aa2782c908f20e8e99204146f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; ad::map::match::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html">MapMatchedObjectBoundingBox</a> const &amp;&#160;</td>
+          <td class="paramname"><em>_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>standard ostream operator </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html" title="DataType MapMatchedObjectBoundingBox. ">MapMatchedObjectBoundingBox</a> value</td></tr>
   </table>
   </dd>
 </dl>

@@ -179,6 +179,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a659fef7bd8e1717f40259cae5001ce3f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#a659fef7bd8e1717f40259cae5001ce3f">findLanes</a> (<a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;geoPoint, physics::Distance const &amp;distance)</td></tr>
 <tr class="memdesc:a659fef7bd8e1717f40259cae5001ce3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spatial Lane Search. Returns all Lanes where any part of surface is less than specified physics::Distance from given point.  <a href="#a659fef7bd8e1717f40259cae5001ce3f">More...</a><br /></td></tr>
 <tr class="separator:a659fef7bd8e1717f40259cae5001ce3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36ec15da3f24940ab0ae6b56814ca023"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#a36ec15da3f24940ab0ae6b56814ca023">findRouteLanes</a> (<a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;ecefPoint, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> const &amp;route)</td></tr>
+<tr class="memdesc:a36ec15da3f24940ab0ae6b56814ca023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spatial Lane Search. Returns the map matched position in respect to all Lanes of the given route.  <a href="#a36ec15da3f24940ab0ae6b56814ca023">More...</a><br /></td></tr>
+<tr class="separator:a36ec15da3f24940ab0ae6b56814ca023"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>performs map matching of a given point to the map </p>
@@ -384,6 +387,51 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <p>This static function doesn't make use of any matching hints.</p>
 <dl class="section return"><dt>Returns</dt><dd>Map matching results that satisfy search criteria. The individual matching result probabilities are equal. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a36ec15da3f24940ab0ae6b56814ca023"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a> ad::map::match::AdMapMatching::findRouteLanes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>ecefPoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> const &amp;&#160;</td>
+          <td class="paramname"><em>route</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Spatial Lane Search. Returns the map matched position in respect to all Lanes of the given route. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ecefPoint</td><td>Point that is used as base for the search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">route</td><td>The route providing the lane subset to be searched.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This static function doesn't make use of any matching hints.</p>
+<dl class="section return"><dt>Returns</dt><dd>The individual matching result probabilities are relative to the actual distance of the matchedPoint to the queryPoint. </dd></dl>
 
 </div>
 </div>

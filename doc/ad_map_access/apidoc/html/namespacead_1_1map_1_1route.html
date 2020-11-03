@@ -130,6 +130,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a8cb86eafe66b8bfadd78ba5516e19ffe"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt;::<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">ad::map::route::FullRoute</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a8cb86eafe66b8bfadd78ba5516e19ffe">FullRouteList</a></td></tr>
+<tr class="memdesc:a8cb86eafe66b8bfadd78ba5516e19ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType FullRouteList.  <a href="#a8cb86eafe66b8bfadd78ba5516e19ffe">More...</a><br /></td></tr>
+<tr class="separator:a8cb86eafe66b8bfadd78ba5516e19ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af238c949adaf82d03c9edac92b60e054"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt;::<a class="el" href="structad_1_1map_1_1route_1_1LaneSegment.html">ad::map::route::LaneSegment</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#af238c949adaf82d03c9edac92b60e054">LaneSegmentList</a></td></tr>
 <tr class="memdesc:af238c949adaf82d03c9edac92b60e054"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType LaneSegmentList.  <a href="#af238c949adaf82d03c9edac92b60e054">More...</a><br /></td></tr>
 <tr class="separator:af238c949adaf82d03c9edac92b60e054"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,9 +149,6 @@ typedef uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <tr class="memitem:a71b421d8921da377162d82c18c438f88"><td class="memItemLeft" align="right" valign="top">typedef uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a71b421d8921da377162d82c18c438f88">SegmentCounter</a></td></tr>
 <tr class="memdesc:a71b421d8921da377162d82c18c438f88"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType SegmentCounter.  <a href="#a71b421d8921da377162d82c18c438f88">More...</a><br /></td></tr>
 <tr class="separator:a71b421d8921da377162d82c18c438f88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2cd20b2ad94b417ca4ae92fc1ee5e1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2cd20b2ad94b417ca4ae92fc1ee5e1b"></a>
-typedef std::vector&lt; <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">ad::map::route::FullRoute</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>FullRouteList</b></td></tr>
-<tr class="separator:af2cd20b2ad94b417ca4ae92fc1ee5e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -517,9 +517,9 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <tr class="memitem:a07efded828e2021148ba627e06d51b4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a07efded828e2021148ba627e06d51b4c">appendLaneSegmentToRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1LaneInterval.html">route::LaneInterval</a> const &amp;laneInterval, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, <a class="el" href="namespacead_1_1map_1_1route.html#a71b421d8921da377162d82c18c438f88">route::SegmentCounter</a> const segmentCountFromDestination=0u)</td></tr>
 <tr class="memdesc:a07efded828e2021148ba627e06d51b4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to append a new lane interval to a road segment list  <a href="#a07efded828e2021148ba627e06d51b4c">More...</a><br /></td></tr>
 <tr class="separator:a07efded828e2021148ba627e06d51b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a324156f17408d4aa2c91fb3ee5ea8841"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a324156f17408d4aa2c91fb3ee5ea8841">extendRouteToDistance</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, physics::Distance const &amp;length, std::vector&lt; <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &gt; &amp;additionalRoutes)</td></tr>
-<tr class="memdesc:a324156f17408d4aa2c91fb3ee5ea8841"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route to have at least the given length  <a href="#a324156f17408d4aa2c91fb3ee5ea8841">More...</a><br /></td></tr>
-<tr class="separator:a324156f17408d4aa2c91fb3ee5ea8841"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8218338c605ddac8b2b8ad994437b23b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a8218338c605ddac8b2b8ad994437b23b">extendRouteToDistance</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, physics::Distance const &amp;length, <a class="el" href="namespacead_1_1map_1_1route.html#a8cb86eafe66b8bfadd78ba5516e19ffe">route::FullRouteList</a> &amp;additionalRoutes)</td></tr>
+<tr class="memdesc:a8218338c605ddac8b2b8ad994437b23b"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route to have at least the given length  <a href="#a8218338c605ddac8b2b8ad994437b23b">More...</a><br /></td></tr>
+<tr class="separator:a8218338c605ddac8b2b8ad994437b23b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a336e7510d56fddfbb3458f0fa9bcdaa1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a336e7510d56fddfbb3458f0fa9bcdaa1">extendRouteToDestinations</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, const std::vector&lt; <a class="el" href="structad_1_1map_1_1route_1_1planning_1_1RoutingParaPoint.html">route::planning::RoutingParaPoint</a> &gt; &amp;dest)</td></tr>
 <tr class="memdesc:a336e7510d56fddfbb3458f0fa9bcdaa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route with the given list of destinations  <a href="#a336e7510d56fddfbb3458f0fa9bcdaa1">More...</a><br /></td></tr>
 <tr class="separator:a336e7510d56fddfbb3458f0fa9bcdaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -563,15 +563,15 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <tr class="memitem:ace048225308a13f5a679a041b170ff0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html">lane::GeoBorder</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#ace048225308a13f5a679a041b170ff0f">getGeoBorderOfRoadSegment</a> (<a class="el" href="structad_1_1map_1_1route_1_1RoadSegment.html">RoadSegment</a> const &amp;roadSegment)</td></tr>
 <tr class="memdesc:ace048225308a13f5a679a041b170ff0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">get borders of a road segment  <a href="#ace048225308a13f5a679a041b170ff0f">More...</a><br /></td></tr>
 <tr class="separator:ace048225308a13f5a679a041b170ff0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0bc4e2da2bc59b2ca630e0f95fb377c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">lane::ENUBorder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#ab0bc4e2da2bc59b2ca630e0f95fb377c">getENUBorderOfRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;route)</td></tr>
-<tr class="memdesc:ab0bc4e2da2bc59b2ca630e0f95fb377c"><td class="mdescLeft">&#160;</td><td class="mdescRight">get borders of a full route  <a href="#ab0bc4e2da2bc59b2ca630e0f95fb377c">More...</a><br /></td></tr>
-<tr class="separator:ab0bc4e2da2bc59b2ca630e0f95fb377c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a748be5cae987dda757d7e76f4a410773"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html">lane::ECEFBorder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a748be5cae987dda757d7e76f4a410773">getECEFBorderOfRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;route)</td></tr>
-<tr class="memdesc:a748be5cae987dda757d7e76f4a410773"><td class="mdescLeft">&#160;</td><td class="mdescRight">get borders of a full route  <a href="#a748be5cae987dda757d7e76f4a410773">More...</a><br /></td></tr>
-<tr class="separator:a748be5cae987dda757d7e76f4a410773"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed2fb266a9276f534ce8aaf373f878a5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html">lane::GeoBorder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#aed2fb266a9276f534ce8aaf373f878a5">getGeoBorderOfRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;route)</td></tr>
-<tr class="memdesc:aed2fb266a9276f534ce8aaf373f878a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">get borders of a full route  <a href="#aed2fb266a9276f534ce8aaf373f878a5">More...</a><br /></td></tr>
-<tr class="separator:aed2fb266a9276f534ce8aaf373f878a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f2488ff0e8400f9e4f4588b0878ef63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#a00ad8891bdb4c04eaebad6511ee47829">lane::ENUBorderList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a3f2488ff0e8400f9e4f4588b0878ef63">getENUBorderOfRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;route)</td></tr>
+<tr class="memdesc:a3f2488ff0e8400f9e4f4588b0878ef63"><td class="mdescLeft">&#160;</td><td class="mdescRight">get borders of a full route  <a href="#a3f2488ff0e8400f9e4f4588b0878ef63">More...</a><br /></td></tr>
+<tr class="separator:a3f2488ff0e8400f9e4f4588b0878ef63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8f14ee5e3c8b668eddd7c7925b748c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#affbbb4ff457044f17bf7ed620a013a0a">lane::ECEFBorderList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#af8f14ee5e3c8b668eddd7c7925b748c0">getECEFBorderOfRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;route)</td></tr>
+<tr class="memdesc:af8f14ee5e3c8b668eddd7c7925b748c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">get borders of a full route  <a href="#af8f14ee5e3c8b668eddd7c7925b748c0">More...</a><br /></td></tr>
+<tr class="separator:af8f14ee5e3c8b668eddd7c7925b748c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0346a464faafb784bf2988fa90d3dd68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#a581a2cb5308cc92a81657645c5a9e621">lane::GeoBorderList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a0346a464faafb784bf2988fa90d3dd68">getGeoBorderOfRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;route)</td></tr>
+<tr class="memdesc:a0346a464faafb784bf2988fa90d3dd68"><td class="mdescLeft">&#160;</td><td class="mdescRight">get borders of a full route  <a href="#a0346a464faafb784bf2988fa90d3dd68">More...</a><br /></td></tr>
+<tr class="separator:a0346a464faafb784bf2988fa90d3dd68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abed34621501e49d81fa4dc0383d9bd5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#abed34621501e49d81fa4dc0383d9bd5b">getENUHeadingOfRoute</a> (<a class="el" href="structad_1_1map_1_1match_1_1Object.html">match::Object</a> const &amp;object, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;route)</td></tr>
 <tr class="memdesc:abed34621501e49d81fa4dc0383d9bd5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the ENU heading of a route at the location of the object  <a href="#abed34621501e49d81fa4dc0383d9bd5b">More...</a><br /></td></tr>
 <tr class="separator:abed34621501e49d81fa4dc0383d9bd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -587,10 +587,23 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>namespace route </p>
-<p>namespace lane</p>
-<p>Handling of routes</p>
-<p>Handling of lanes </p>
+<p>Handling of routes </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="a8cb86eafe66b8bfadd78ba5516e19ffe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;::<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">ad::map::route::FullRoute</a>&gt; <a class="el" href="namespacead_1_1map_1_1route.html#a8cb86eafe66b8bfadd78ba5516e19ffe">ad::map::route::FullRouteList</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>DataType FullRouteList. </p>
+<p>List of <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html" title="DataType FullRoute. ">FullRoute</a> elements </p>
+
+</div>
+</div>
 <a class="anchor" id="af238c949adaf82d03c9edac92b60e054"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1572,7 +1585,7 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="a324156f17408d4aa2c91fb3ee5ea8841"></a>
+<a class="anchor" id="a8218338c605ddac8b2b8ad994437b23b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1591,7 +1604,7 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1route.html#a8cb86eafe66b8bfadd78ba5516e19ffe">route::FullRouteList</a> &amp;&#160;</td>
           <td class="paramname"><em>additionalRoutes</em>&#160;</td>
         </tr>
         <tr>
@@ -1888,12 +1901,12 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="a748be5cae987dda757d7e76f4a410773"></a>
+<a class="anchor" id="af8f14ee5e3c8b668eddd7c7925b748c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html">lane::ECEFBorder</a>&gt; ad::map::route::getECEFBorderOfRoute </td>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1lane.html#affbbb4ff457044f17bf7ed620a013a0a">lane::ECEFBorderList</a> ad::map::route::getECEFBorderOfRoute </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;&#160;</td>
           <td class="paramname"><em>route</em></td><td>)</td>
@@ -2001,12 +2014,12 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="ab0bc4e2da2bc59b2ca630e0f95fb377c"></a>
+<a class="anchor" id="a3f2488ff0e8400f9e4f4588b0878ef63"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">lane::ENUBorder</a>&gt; ad::map::route::getENUBorderOfRoute </td>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1lane.html#a00ad8891bdb4c04eaebad6511ee47829">lane::ENUBorderList</a> ad::map::route::getENUBorderOfRoute </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;&#160;</td>
           <td class="paramname"><em>route</em></td><td>)</td>
@@ -2155,12 +2168,12 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="aed2fb266a9276f534ce8aaf373f878a5"></a>
+<a class="anchor" id="a0346a464faafb784bf2988fa90d3dd68"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html">lane::GeoBorder</a>&gt; ad::map::route::getGeoBorderOfRoute </td>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1lane.html#a581a2cb5308cc92a81657645c5a9e621">lane::GeoBorderList</a> ad::map::route::getGeoBorderOfRoute </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">FullRoute</a> const &amp;&#160;</td>
           <td class="paramname"><em>route</em></td><td>)</td>

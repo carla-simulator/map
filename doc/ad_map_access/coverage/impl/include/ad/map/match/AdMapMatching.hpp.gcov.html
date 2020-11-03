@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -349,50 +349,64 @@
 <span class="lineNum">     278 </span>                :            :    */
 <span class="lineNum">     279 </span>                :            :   static MapMatchedPositionConfidenceList findLanes(point::GeoPoint const &amp;geoPoint, physics::Distance const &amp;distance);
 <span class="lineNum">     280 </span>                :            : 
-<span class="lineNum">     281 </span>                :            : private:
-<span class="lineNum">     282 </span>                :            :   // Copy operators and constructors are deleted to avoid accidental copies
-<span class="lineNum">     283 </span>                :            :   AdMapMatching(AdMapMatching const &amp;) = delete;
-<span class="lineNum">     284 </span>                :            :   AdMapMatching(AdMapMatching &amp;&amp;) = delete;
-<span class="lineNum">     285 </span>                :            :   AdMapMatching &amp;operator=(AdMapMatching &amp;&amp;) = delete;
-<span class="lineNum">     286 </span>                :            :   AdMapMatching &amp;operator=(AdMapMatching const &amp;) = delete;
-<span class="lineNum">     287 </span>                :            : 
-<span class="lineNum">     288 </span>                :            :   static match::MapMatchedPositionConfidenceList findLanesInputChecked(point::ECEFPoint const &amp;ecefPoint,
-<span class="lineNum">     289 </span>                :            :                                                                        physics::Distance const &amp;distance);
-<span class="lineNum">     290 </span>                :            : 
-<span class="lineNum">     291 </span>                :            :   static match::MapMatchedPositionConfidenceList
-<span class="lineNum">     292 </span>                :            :   findLanesInputChecked(std::vector&lt;lane::Lane::ConstPtr&gt; const &amp;relevantLanes,
-<span class="lineNum">     293 </span>                :            :                         point::ECEFPoint const &amp;ecefPoint,
-<span class="lineNum">     294 </span>                :            :                         physics::Distance const &amp;distance);
-<span class="lineNum">     295 </span>                :            : 
-<span class="lineNum">     296 </span>                :            :   static std::vector&lt;lane::Lane::ConstPtr&gt; getRelevantLanesInputChecked(point::ECEFPoint const &amp;ecefPoint,
-<span class="lineNum">     297 </span>                :            :                                                                         physics::Distance const &amp;distance);
-<span class="lineNum">     298 </span>                :            : 
-<span class="lineNum">     299 </span>                :            :   /**
-<span class="lineNum">     300 </span>                :            :    * @brief extract the mapMatchedPositions and write them into a map of occuppied regions
-<span class="lineNum">     301 </span>                :            :    *
-<span class="lineNum">     302 </span>                :            :    * @param[in,out] laneOccupiedRegions vector containing the occupied regions
-<span class="lineNum">     303 </span>                :            :    * @param[in] mapMatchedPositions
-<span class="lineNum">     304 </span>                :            :    */
-<span class="lineNum">     305 </span>                :            : 
-<span class="lineNum">     306 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
-<span class="lineNum">     307 </span>                :            :                       MapMatchedPositionConfidenceList const &amp;mapMatchedPositions) const;
-<span class="lineNum">     308 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
-<span class="lineNum">     309 </span>                :            :                       LaneOccupiedRegionList const &amp;otherLaneOccupiedRegions) const;
-<span class="lineNum">     310 </span>                :            : 
-<span class="lineNum">     311 </span>                :            :   MapMatchedPositionConfidenceList considerMapMatchingHints(MapMatchedPositionConfidenceList const &amp;mapMatchedPositions,
-<span class="lineNum">     312 </span>                :            :                                                             physics::Probability const &amp;minProbability) const;
-<span class="lineNum">     313 </span>                :            :   bool isLanePartOfRouteHints(lane::LaneId const &amp;laneId) const;
-<span class="lineNum">     314 </span>                :            :   double getHeadingFactor(MapMatchedPosition const &amp;matchedPosition) const;
-<span class="lineNum">     315 </span>                :            : 
-<span class="lineNum">     316 </span>                :            :   std::list&lt;point::ECEFHeading&gt; mHeadingHints;
-<span class="lineNum">     317 </span>                :            :   double mHeadingHintFactor{2.};
-<span class="lineNum">     318 </span>                :            :   std::list&lt;route::FullRoute&gt; mRouteHints;
-<span class="lineNum">     319 </span>                :            :   double mRouteHintFactor{10.};
-<span class="lineNum">     320 </span>                :            : };
-<span class="lineNum">     321 </span>                :            : 
-<span class="lineNum">     322 </span>                :            : } // namespace match
-<span class="lineNum">     323 </span>                :            : } // namespace map
-<span class="lineNum">     324 </span>                :            : } // namespace ad
+<span class="lineNum">     281 </span>                :            :   /**
+<span class="lineNum">     282 </span>                :            :    * @brief Spatial Lane Search.
+<span class="lineNum">     283 </span>                :            :    *        Returns the map matched position in respect to all Lanes of the given route.
+<span class="lineNum">     284 </span>                :            :    * @param[in] ecefPoint Point that is used as base for the search.
+<span class="lineNum">     285 </span>                :            :    * @param[in] route The route providing the lane subset to be searched.
+<span class="lineNum">     286 </span>                :            :    *
+<span class="lineNum">     287 </span>                :            :    * This static function doesn't make use of any matching hints.
+<span class="lineNum">     288 </span>                :            :    *
+<span class="lineNum">     289 </span>                :            :    * @returns The individual matching result probabilities are relative to the actual distance of the matchedPoint to
+<span class="lineNum">     290 </span>                :            :    * the queryPoint.
+<span class="lineNum">     291 </span>                :            :    */
+<span class="lineNum">     292 </span>                :            :   static MapMatchedPositionConfidenceList findRouteLanes(point::ECEFPoint const &amp;ecefPoint,
+<span class="lineNum">     293 </span>                :            :                                                          route::FullRoute const &amp;route);
+<span class="lineNum">     294 </span>                :            : 
+<span class="lineNum">     295 </span>                :            : private:
+<span class="lineNum">     296 </span>                :            :   // Copy operators and constructors are deleted to avoid accidental copies
+<span class="lineNum">     297 </span>                :            :   AdMapMatching(AdMapMatching const &amp;) = delete;
+<span class="lineNum">     298 </span>                :            :   AdMapMatching(AdMapMatching &amp;&amp;) = delete;
+<span class="lineNum">     299 </span>                :            :   AdMapMatching &amp;operator=(AdMapMatching &amp;&amp;) = delete;
+<span class="lineNum">     300 </span>                :            :   AdMapMatching &amp;operator=(AdMapMatching const &amp;) = delete;
+<span class="lineNum">     301 </span>                :            : 
+<span class="lineNum">     302 </span>                :            :   static match::MapMatchedPositionConfidenceList findLanesInputChecked(point::ECEFPoint const &amp;ecefPoint,
+<span class="lineNum">     303 </span>                :            :                                                                        physics::Distance const &amp;distance);
+<span class="lineNum">     304 </span>                :            : 
+<span class="lineNum">     305 </span>                :            :   static match::MapMatchedPositionConfidenceList
+<span class="lineNum">     306 </span>                :            :   findLanesInputChecked(std::vector&lt;lane::Lane::ConstPtr&gt; const &amp;relevantLanes,
+<span class="lineNum">     307 </span>                :            :                         point::ECEFPoint const &amp;ecefPoint,
+<span class="lineNum">     308 </span>                :            :                         physics::Distance const &amp;distance);
+<span class="lineNum">     309 </span>                :            : 
+<span class="lineNum">     310 </span>                :            :   static std::vector&lt;lane::Lane::ConstPtr&gt; getRelevantLanesInputChecked(point::ECEFPoint const &amp;ecefPoint,
+<span class="lineNum">     311 </span>                :            :                                                                         physics::Distance const &amp;distance);
+<span class="lineNum">     312 </span>                :            : 
+<span class="lineNum">     313 </span>                :            :   /**
+<span class="lineNum">     314 </span>                :            :    * @brief extract the mapMatchedPositions and write them into a map of occuppied regions
+<span class="lineNum">     315 </span>                :            :    *
+<span class="lineNum">     316 </span>                :            :    * @param[in,out] laneOccupiedRegions vector containing the occupied regions
+<span class="lineNum">     317 </span>                :            :    * @param[in] mapMatchedPositions
+<span class="lineNum">     318 </span>                :            :    */
+<span class="lineNum">     319 </span>                :            : 
+<span class="lineNum">     320 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
+<span class="lineNum">     321 </span>                :            :                       MapMatchedPositionConfidenceList const &amp;mapMatchedPositions) const;
+<span class="lineNum">     322 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
+<span class="lineNum">     323 </span>                :            :                       LaneOccupiedRegionList const &amp;otherLaneOccupiedRegions) const;
+<span class="lineNum">     324 </span>                :            : 
+<span class="lineNum">     325 </span>                :            :   MapMatchedPositionConfidenceList considerMapMatchingHints(MapMatchedPositionConfidenceList const &amp;mapMatchedPositions,
+<span class="lineNum">     326 </span>                :            :                                                             physics::Probability const &amp;minProbability) const;
+<span class="lineNum">     327 </span>                :            :   bool isLanePartOfRouteHints(lane::LaneId const &amp;laneId) const;
+<span class="lineNum">     328 </span>                :            :   double getHeadingFactor(MapMatchedPosition const &amp;matchedPosition) const;
+<span class="lineNum">     329 </span>                :            : 
+<span class="lineNum">     330 </span>                :            :   std::list&lt;point::ECEFHeading&gt; mHeadingHints;
+<span class="lineNum">     331 </span>                :            :   double mHeadingHintFactor{2.};
+<span class="lineNum">     332 </span>                :            :   std::list&lt;route::FullRoute&gt; mRouteHints;
+<span class="lineNum">     333 </span>                :            :   double mRouteHintFactor{10.};
+<span class="lineNum">     334 </span>                :            : };
+<span class="lineNum">     335 </span>                :            : 
+<span class="lineNum">     336 </span>                :            : } // namespace match
+<span class="lineNum">     337 </span>                :            : } // namespace map
+<span class="lineNum">     338 </span>                :            : } // namespace ad
 </pre>
       </td>
     </tr>

@@ -4,6 +4,8 @@ var searchData=
   ['mapentryvalidinputrange_2ehpp',['MapEntryValidInputRange.hpp',['../MapEntryValidInputRange_8hpp.html',1,'']]],
   ['mapmatchedobjectboundingbox_2ehpp',['MapMatchedObjectBoundingBox.hpp',['../MapMatchedObjectBoundingBox_8hpp.html',1,'']]],
   ['mapmatchedobjectboundingboxvalidinputrange_2ehpp',['MapMatchedObjectBoundingBoxValidInputRange.hpp',['../MapMatchedObjectBoundingBoxValidInputRange_8hpp.html',1,'']]],
+  ['mapmatchedobjectreferencepositionlist_2ehpp',['MapMatchedObjectReferencePositionList.hpp',['../MapMatchedObjectReferencePositionList_8hpp.html',1,'']]],
+  ['mapmatchedobjectreferencepositionlistvalidinputrange_2ehpp',['MapMatchedObjectReferencePositionListValidInputRange.hpp',['../MapMatchedObjectReferencePositionListValidInputRange_8hpp.html',1,'']]],
   ['mapmatchedposition_2ehpp',['MapMatchedPosition.hpp',['../MapMatchedPosition_8hpp.html',1,'']]],
   ['mapmatchedpositionconfidencelist_2ehpp',['MapMatchedPositionConfidenceList.hpp',['../MapMatchedPositionConfidenceList_8hpp.html',1,'']]],
   ['mapmatchedpositionconfidencelistvalidinputrange_2ehpp',['MapMatchedPositionConfidenceListValidInputRange.hpp',['../MapMatchedPositionConfidenceListValidInputRange_8hpp.html',1,'']]],

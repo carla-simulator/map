@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -129,7 +129,7 @@
 <span class="lineNum">      58 </span>                :            :   /*!
 <a name="59"><span class="lineNum">      59 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      60 </span>                :            :    */
-<span class="lineNum">      61 </span>                :<span class="lineCov">        178 :   ENUObjectPosition() = default;</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">        186 :   ENUObjectPosition() = default;</span>
 <span class="lineNum">      62 </span>                :            : 
 <span class="lineNum">      63 </span>                :            :   /*!
 <span class="lineNum">      64 </span>                :            :    * \brief standard destructor
@@ -244,22 +244,22 @@
 <span class="lineNum">     172 </span>                :            :  * \returns The stream object.
 <a name="173"><span class="lineNum">     173 </span>                :            :  *</a>
 <span class="lineNum">     174 </span>                :            :  */
-<span class="lineNum">     175 </span>                :<span class="lineCov">         23 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, ENUObjectPosition const &amp;_value)</span>
+<span class="lineNum">     175 </span>                :<span class="lineCov">         25 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, ENUObjectPosition const &amp;_value)</span>
 <span class="lineNum">     176 </span>                :            : {
-<span class="lineNum">     177 </span>                :<span class="lineCov">         23 :   os &lt;&lt; &quot;ENUObjectPosition(&quot;;</span>
-<span class="lineNum">     178 </span>                :<span class="lineCov">         23 :   os &lt;&lt; &quot;centerPoint:&quot;;</span>
-<span class="lineNum">     179 </span>                :<span class="lineCov">         23 :   os &lt;&lt; _value.centerPoint;</span>
-<span class="lineNum">     180 </span>                :<span class="lineCov">         23 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     181 </span>                :<span class="lineCov">         23 :   os &lt;&lt; &quot;heading:&quot;;</span>
-<span class="lineNum">     182 </span>                :<span class="lineCov">         23 :   os &lt;&lt; _value.heading;</span>
-<span class="lineNum">     183 </span>                :<span class="lineCov">         23 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     184 </span>                :<span class="lineCov">         23 :   os &lt;&lt; &quot;enuReferencePoint:&quot;;</span>
-<span class="lineNum">     185 </span>                :<span class="lineCov">         23 :   os &lt;&lt; _value.enuReferencePoint;</span>
-<span class="lineNum">     186 </span>                :<span class="lineCov">         23 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     187 </span>                :<span class="lineCov">         23 :   os &lt;&lt; &quot;dimension:&quot;;</span>
-<span class="lineNum">     188 </span>                :<span class="lineCov">         23 :   os &lt;&lt; _value.dimension;</span>
-<span class="lineNum">     189 </span>                :<span class="lineCov">         23 :   os &lt;&lt; &quot;)&quot;;</span>
-<span class="lineNum">     190 </span>                :<span class="lineCov">         23 :   return os;</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">         25 :   os &lt;&lt; &quot;ENUObjectPosition(&quot;;</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">         25 :   os &lt;&lt; &quot;centerPoint:&quot;;</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">         25 :   os &lt;&lt; _value.centerPoint;</span>
+<span class="lineNum">     180 </span>                :<span class="lineCov">         25 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">         25 :   os &lt;&lt; &quot;heading:&quot;;</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">         25 :   os &lt;&lt; _value.heading;</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">         25 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     184 </span>                :<span class="lineCov">         25 :   os &lt;&lt; &quot;enuReferencePoint:&quot;;</span>
+<span class="lineNum">     185 </span>                :<span class="lineCov">         25 :   os &lt;&lt; _value.enuReferencePoint;</span>
+<span class="lineNum">     186 </span>                :<span class="lineCov">         25 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     187 </span>                :<span class="lineCov">         25 :   os &lt;&lt; &quot;dimension:&quot;;</span>
+<span class="lineNum">     188 </span>                :<span class="lineCov">         25 :   os &lt;&lt; _value.dimension;</span>
+<span class="lineNum">     189 </span>                :<span class="lineCov">         25 :   os &lt;&lt; &quot;)&quot;;</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">         25 :   return os;</span>
 <span class="lineNum">     191 </span>                :            : }
 <span class="lineNum">     192 </span>                :            : 
 <span class="lineNum">     193 </span>                :            : } // namespace match

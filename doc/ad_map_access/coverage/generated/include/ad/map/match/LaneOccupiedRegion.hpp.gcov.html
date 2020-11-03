@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-11-02 12:35:37</td>
+            <td class="headerValue">2020-11-03 17:13:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -129,7 +129,7 @@
 <span class="lineNum">      58 </span>                :            :   /*!
 <a name="59"><span class="lineNum">      59 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      60 </span>                :            :    */
-<span class="lineNum">      61 </span>                :<span class="lineCov">        190 :   LaneOccupiedRegion() = default;</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">        208 :   LaneOccupiedRegion() = default;</span>
 <span class="lineNum">      62 </span>                :            : 
 <span class="lineNum">      63 </span>                :            :   /*!
 <span class="lineNum">      64 </span>                :            :    * \brief standard destructor
@@ -171,10 +171,10 @@
 <span class="lineNum">     100 </span>                :            :    *
 <a name="101"><span class="lineNum">     101 </span>                :            :    * \returns \c true if both LaneOccupiedRegion are equal</a>
 <span class="lineNum">     102 </span>                :            :    */
-<span class="lineNum">     103 </span>                :<span class="lineCov">         24 :   bool operator==(const LaneOccupiedRegion &amp;other) const</span>
+<span class="lineNum">     103 </span>                :<span class="lineCov">         30 :   bool operator==(const LaneOccupiedRegion &amp;other) const</span>
 <span class="lineNum">     104 </span>                :            :   {
-<span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 2 was taken 20 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">         46 :     return (laneId == other.laneId) &amp;&amp; (longitudinalRange == other.longitudinalRange)</span>
-<span class="lineNum">     106 </span>[<span class="branchCov" title="Branch 0 was taken 22 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 18 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">         46 :       &amp;&amp; (lateralRange == other.lateralRange);</span>
+<span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 2 was taken 26 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">         58 :     return (laneId == other.laneId) &amp;&amp; (longitudinalRange == other.longitudinalRange)</span>
+<span class="lineNum">     106 </span>[<span class="branchCov" title="Branch 0 was taken 28 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 24 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">         58 :       &amp;&amp; (lateralRange == other.lateralRange);</span>
 <span class="lineNum">     107 </span>                :            :   }
 <span class="lineNum">     108 </span>                :            : 
 <span class="lineNum">     109 </span>                :            :   /**
@@ -227,19 +227,19 @@
 <span class="lineNum">     156 </span>                :            :  * \returns The stream object.
 <a name="157"><span class="lineNum">     157 </span>                :            :  *</a>
 <span class="lineNum">     158 </span>                :            :  */
-<span class="lineNum">     159 </span>                :<span class="lineCov">         15 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, LaneOccupiedRegion const &amp;_value)</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">         19 : inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, LaneOccupiedRegion const &amp;_value)</span>
 <span class="lineNum">     160 </span>                :            : {
-<span class="lineNum">     161 </span>                :<span class="lineCov">         15 :   os &lt;&lt; &quot;LaneOccupiedRegion(&quot;;</span>
-<span class="lineNum">     162 </span>                :<span class="lineCov">         15 :   os &lt;&lt; &quot;laneId:&quot;;</span>
-<span class="lineNum">     163 </span>                :<span class="lineCov">         15 :   os &lt;&lt; _value.laneId;</span>
-<span class="lineNum">     164 </span>                :<span class="lineCov">         15 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     165 </span>                :<span class="lineCov">         15 :   os &lt;&lt; &quot;longitudinalRange:&quot;;</span>
-<span class="lineNum">     166 </span>                :<span class="lineCov">         15 :   os &lt;&lt; _value.longitudinalRange;</span>
-<span class="lineNum">     167 </span>                :<span class="lineCov">         15 :   os &lt;&lt; &quot;,&quot;;</span>
-<span class="lineNum">     168 </span>                :<span class="lineCov">         15 :   os &lt;&lt; &quot;lateralRange:&quot;;</span>
-<span class="lineNum">     169 </span>                :<span class="lineCov">         15 :   os &lt;&lt; _value.lateralRange;</span>
-<span class="lineNum">     170 </span>                :<span class="lineCov">         15 :   os &lt;&lt; &quot;)&quot;;</span>
-<span class="lineNum">     171 </span>                :<span class="lineCov">         15 :   return os;</span>
+<span class="lineNum">     161 </span>                :<span class="lineCov">         19 :   os &lt;&lt; &quot;LaneOccupiedRegion(&quot;;</span>
+<span class="lineNum">     162 </span>                :<span class="lineCov">         19 :   os &lt;&lt; &quot;laneId:&quot;;</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">         19 :   os &lt;&lt; _value.laneId;</span>
+<span class="lineNum">     164 </span>                :<span class="lineCov">         19 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">         19 :   os &lt;&lt; &quot;longitudinalRange:&quot;;</span>
+<span class="lineNum">     166 </span>                :<span class="lineCov">         19 :   os &lt;&lt; _value.longitudinalRange;</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">         19 :   os &lt;&lt; &quot;,&quot;;</span>
+<span class="lineNum">     168 </span>                :<span class="lineCov">         19 :   os &lt;&lt; &quot;lateralRange:&quot;;</span>
+<span class="lineNum">     169 </span>                :<span class="lineCov">         19 :   os &lt;&lt; _value.lateralRange;</span>
+<span class="lineNum">     170 </span>                :<span class="lineCov">         19 :   os &lt;&lt; &quot;)&quot;;</span>
+<span class="lineNum">     171 </span>                :<span class="lineCov">         19 :   return os;</span>
 <span class="lineNum">     172 </span>                :            : }
 <span class="lineNum">     173 </span>                :            : 
 <span class="lineNum">     174 </span>                :            : } // namespace match

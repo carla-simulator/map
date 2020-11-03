@@ -1,6 +1,8 @@
 var searchData=
 [
   ['geoborder_2ehpp',['GeoBorder.hpp',['../GeoBorder_8hpp.html',1,'']]],
+  ['geoborderlist_2ehpp',['GeoBorderList.hpp',['../GeoBorderList_8hpp.html',1,'']]],
+  ['geoborderlistvalidinputrange_2ehpp',['GeoBorderListValidInputRange.hpp',['../GeoBorderListValidInputRange_8hpp.html',1,'']]],
   ['geobordervalidinputrange_2ehpp',['GeoBorderValidInputRange.hpp',['../GeoBorderValidInputRange_8hpp.html',1,'']]],
   ['geoedge_2ehpp',['GeoEdge.hpp',['../GeoEdge_8hpp.html',1,'']]],
   ['geoedgevalidinputrange_2ehpp',['GeoEdgeValidInputRange.hpp',['../GeoEdgeValidInputRange_8hpp.html',1,'']]],
