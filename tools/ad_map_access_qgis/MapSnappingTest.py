@@ -6,7 +6,7 @@
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
-import ad.map
+import ad_map_access as ad
 import Globs
 from qgis.gui import QgsMapToolEmitPoint
 from qgis.core import QgsField
@@ -58,22 +58,22 @@ class MapSnappingTest(QgsMapToolEmitPoint):
         pt_geo = ad.map.point.createGeoPoint(raw_pt.x(), raw_pt.y(), 0)
         enu_pt = ad.map.point.toENU(pt_geo)
         mmpts = self.snapper.snap(raw_pt)
-        Globs.log.info(str(enu_pt))
+        Globs.log.info("{} -> {}".format(pt_geo, enu_pt))
         if mmpts is not None:
             for mmpt in mmpts:
                 self.layer.add_lla(mmpt.matchedPoint, [
-                                   mmpt.lanePoint.paraPoint, mmpt.type, mmpt.lanePoint.lateralT, mmpt.lanePoint.laneWidth, mmpt.lanePoint.laneLength, enu_pt])
+                                   str(mmpt.lanePoint.paraPoint.laneId), str(mmpt.type), float(mmpt.lanePoint.lateralT), float(mmpt.lanePoint.laneWidth), float(mmpt.lanePoint.laneLength), str(enu_pt)])
         self.layer.refresh()
 
     def __create_layer__(self):
         "..."
         if self.layer is None:
-            attrs = [QgsField("Lane Id", QVariant.LongLong),
+            attrs = [QgsField("Lane Id", QVariant.String),
                      QgsField("Pos Type", QVariant.String),
                      QgsField("Long-T-Left", QVariant.Double),
                      QgsField("Long-T-Right", QVariant.Double),
                      QgsField("Lateral-T", QVariant.Double),
-                     QgsField("ENU Point", QVariant.Double)]
+                     QgsField("ENU Point", QVariant.String)]
             self.layer = WGS84PointLayer(Globs.iface,
                                          self.TITLE,
                                          self.SYMBOL,

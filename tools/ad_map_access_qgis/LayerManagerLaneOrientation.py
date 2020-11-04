@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad.map
+import ad_map_access as ad
 from utility import *
 from .LayerManager import LayerManager
 
@@ -27,6 +27,6 @@ class LayerManagerLaneOrientation(LayerManager):
         LayerManager.remove_old_feature(self, lane_id)
         pt0 = GetLaneParamPoint(lane_id, 0.20, 0.5)
         pt1 = GetLaneParamPoint(lane_id, 0.35, 0.5)
-        attrs = [lane_id]
+        attrs = [str(lane_id)]
         feature = self.layer.add_lla(pt0, pt1, attrs)
         LayerManager.add_new_feature(self, lane_id, feature)

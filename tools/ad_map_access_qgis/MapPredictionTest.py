@@ -13,7 +13,7 @@ from PyQt5.Qt import QDialogButtonBox, QVBoxLayout, QStringListModel, QInputDial
 from PyQt5 import QtGui, uic, QtWidgets, QtCore
 from PyQt5.QtGui import QIcon
 
-import ad.map
+import ad_map_access as ad
 from utility import *
 import Globs
 from qgis.gui import QgsMapToolEmitPoint

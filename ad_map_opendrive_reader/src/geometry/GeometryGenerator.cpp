@@ -109,9 +109,17 @@ void generateTrafficSignal(TrafficSignalInformation &trafficSignalInfo,
     landmark.orientation += M_PI;
   }
 
-  landmark.type = stoi(trafficSignalInfo.type);
   landmark.id = trafficSignalInfo.id;
-  landmark.subtype = stoi(trafficSignalInfo.type);
+  try
+  {
+    landmark.type = stoi(trafficSignalInfo.type);
+    landmark.subtype = stoi(trafficSignalInfo.subtype);
+  }
+  catch (...)
+  {
+    landmark.type = -1;
+    landmark.subtype = -1;
+  }
 
   if (landmark.id == -1)
   {

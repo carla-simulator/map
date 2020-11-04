@@ -11,7 +11,7 @@ from PyQt5.QtCore import QVariant
 from PyQt5.QtGui import QColor
 from qgis.core import QgsField, QgsProject
 
-import ad.map
+import ad_map_access as ad
 import Globs
 from .QGISLayer import WGS84ArrowLayer, WGS84PolylineLayer, WGS84SurfaceLayer, WGS84PointLayer, WGS84SVGPointLayer
 from .LayerManagerLaneEdge import LayerManagerLaneEdge

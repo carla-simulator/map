@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad.map
+import ad_map_access as ad
 from utility import *
 import Globs
 from qgis._core import QgsVectorLayerSimpleLabeling

@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import QAction, QFileDialog
 from qgis.PyQt.QtGui import *
 from qgis.PyQt.QtWidgets import *
 
-import ad.map
+import ad_map_access as ad
 import Globs
 import Logger
 from .ADMapQgs import ADMapQgs
@@ -91,9 +91,16 @@ class Main(object):
     def __open_first_map__(self, file_name):
         "..."
         if file_name.endswith('.xodr'):
-            open_drive_content = open(file_name, 'r').read()
+            open_drive_file = open(file_name, 'r')
+            open_drive_content = open_drive_file.read()
+            open_drive_file.close()
             ad.map.access.initFromOpenDriveContent(
                 open_drive_content, 0.2, ad.map.intersection.IntersectionType.Unknown, ad.map.landmark.TrafficLightType.UNKNOWN)
+            if not ad.map.access.isENUReferencePointSet():
+                ad.map.access.setENUReferencePoint(ad.map.point.createGeoPoint(ad.map.point.Longitude(
+                    8.4421163), ad.map.point.Latitude(49.0192671), ad.map.point.Altitude(0.)))
+                Globs.log.warning("OpenDrive file '{}' doesn't provide GEO reference point. Setting a default at {}".format(
+                    file_name, ad.map.access.getENUReferencePoint()))
             self.admap = ADMapQgs()
             self.admap.layers.create_all()
             self.admap.data_added()

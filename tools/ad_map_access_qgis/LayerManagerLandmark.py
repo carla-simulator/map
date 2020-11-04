@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad.map
+import ad_map_access as ad
 import Globs
 from .LayerManager import LayerManager
 
@@ -40,6 +40,6 @@ class LayerManagerLandmark(LayerManager):
 
         heading = ad.map.landmark.getENUHeading(landmark)
         orientation = round(float(heading), 5)
-        attrs = [landmark_id, typ, orientation]
+        attrs = [str(landmark_id), str(typ), orientation]
         feature_1 = self.layer.add_lla(pt0, attrs)
         LayerManager.add_new_feature(self, landmark_id, feature_1)

@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad.map
+import ad_map_access as ad
 from utility import *
 import Globs
 from qgis.core import QgsFeatureRequest
@@ -29,8 +29,8 @@ class LayerManagerLaneEdge(LayerManager):
         LayerManager.remove_old_feature(self, lane_id)
         lla_left = GetLaneEdgeLeft(lane_id)
         lla_right = GetLaneEdgeRight(lane_id)
-        attrs_left = [lane_id, "Left"]
-        attrs_right = [lane_id, "Right"]
+        attrs_left = [str(lane_id), "Left"]
+        attrs_right = [str(lane_id), "Right"]
         left_feature = self.layer.add_lla(lla_left, attrs_left)
         right_feature = self.layer.add_lla(lla_right, attrs_right)
         LayerManager.add_new_feature(self, lane_id, left_feature, right_feature)
