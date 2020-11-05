@@ -61,18 +61,18 @@ class MapSnappingTest(QgsMapToolEmitPoint):
         Globs.log.info("{} -> {}".format(pt_geo, enu_pt))
         if mmpts is not None:
             for mmpt in mmpts:
-                self.layer.add_lla(mmpt.matchedPoint, [
-                                   str(mmpt.lanePoint.paraPoint.laneId), str(mmpt.type), float(mmpt.lanePoint.lateralT), float(mmpt.lanePoint.laneWidth), float(mmpt.lanePoint.laneLength), str(enu_pt)])
+                self.layer.add_ecef(mmpt.matchedPoint, [
+                                    int(mmpt.lanePoint.paraPoint.laneId), str(mmpt.type), float(mmpt.lanePoint.lateralT), float(mmpt.lanePoint.laneWidth), float(mmpt.lanePoint.laneLength), str(enu_pt)])
         self.layer.refresh()
 
     def __create_layer__(self):
         "..."
         if self.layer is None:
-            attrs = [QgsField("Lane Id", QVariant.String),
+            attrs = [QgsField("Lane Id", QVariant.LongLong),
                      QgsField("Pos Type", QVariant.String),
-                     QgsField("Long-T-Left", QVariant.Double),
-                     QgsField("Long-T-Right", QVariant.Double),
                      QgsField("Lateral-T", QVariant.Double),
+                     QgsField("Lane-Width", QVariant.Double),
+                     QgsField("Lane-Length", QVariant.Double),
                      QgsField("ENU Point", QVariant.String)]
             self.layer = WGS84PointLayer(Globs.iface,
                                          self.TITLE,

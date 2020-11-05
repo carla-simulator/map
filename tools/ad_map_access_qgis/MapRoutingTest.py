@@ -116,17 +116,15 @@ class MapRoutingTest(QgsMapToolEmitPoint):
         self.layer_waypoints.remove_all_features()
         self.layer_route.remove_all_features()
         self.pt_start = mmpt.matchedPoint
-        attrs = ["Start", mmpt.lanePoint.paraPoint, mmpt.type, mmpt.lanePoint.lateralT,
-                 mmpt.lanePoint.laneWidth, mmpt.lanePoint.laneLength]
-        self.layer_waypoints.add_lla(self.pt_start, attrs)
+        attrs = ["Start", str(mmpt.lanePoint)]
+        self.layer_waypoints.add_ecef(self.pt_start, attrs)
         self.state = self.DESTINATION_SELECTION
 
     def __set_destination__(self, mmpt):
         "..."
         self.pt_dest = mmpt.matchedPoint
-        attrs = ["Destination", mmpt.lanePoint.paraPoint, mmpt.type,
-                 mmpt.lanePoint.lateralT, mmpt.lanePoint.laneWidth, mmpt.lanePoint.laneLength]
-        self.layer_waypoints.add_lla(self.pt_dest, attrs)
+        attrs = ["Destination", str(mmpt.lanePoint)]
+        self.layer_waypoints.add_ecef(self.pt_dest, attrs)
         self.state = self.START_SELECTION
 
     def __calculate_route__(self):
@@ -156,11 +154,7 @@ class MapRoutingTest(QgsMapToolEmitPoint):
                                                  self.layer_group)
         if self.layer_waypoints is None:
             attrs = [QgsField("Waypoint", QVariant.String),
-                     QgsField("Lane Id", QVariant.LongLong),
-                     QgsField("Pos Type", QVariant.String),
-                     QgsField("Long-T-Left", QVariant.Double),
-                     QgsField("Long-T-Right", QVariant.Double),
-                     QgsField("Lateral-T", QVariant.Double)]
+                     QgsField("LanePoint", QVariant.String)]
             self.layer_waypoints = WGS84PointLayer(Globs.iface,
                                                    self.WAYPOINT_TITLE,
                                                    self.WAYPOINT_SYMBOL,
