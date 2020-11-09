@@ -13,7 +13,7 @@ from PyQt5.Qt import QDialogButtonBox, QVBoxLayout, QStringListModel, QInputDial
 from PyQt5 import QtGui, uic, QtWidgets, QtCore
 from PyQt5.QtGui import QIcon
 
-import ad.map
+import ad_map_access as ad
 from utility import *
 import Globs
 from qgis.gui import QgsMapToolEmitPoint
@@ -106,9 +106,8 @@ class MapPredictionTest(QgsMapToolEmitPoint):
         for layer_route in self.layer_routes:
             layer_route.remove_all_features()
         self.pt_start = mmpt.matchedPoint
-        attrs = ["Start", mmpt.lanePoint.paraPoint, mmpt.type, mmpt.lanePoint.lateralT,
-                 mmpt.lanePoint.laneWidth, mmpt.lanePoint.laneLength]
-        self.layer_waypoints.add_lla(self.pt_start, attrs)
+        attrs = ["Start", str(mmpt.lanePoint)]
+        self.layer_waypoints.add_ecef(self.pt_start, attrs)
 
     def __calculate_predictions__(self):
         "..."
@@ -149,11 +148,7 @@ class MapPredictionTest(QgsMapToolEmitPoint):
         "..."
         if self.layer_waypoints is None:
             attrs = [QgsField("Waypoint", QVariant.String),
-                     QgsField("Lane Id", QVariant.LongLong),
-                     QgsField("Pos Type", QVariant.String),
-                     QgsField("Long-T-Left", QVariant.Double),
-                     QgsField("Long-T-Right", QVariant.Double),
-                     QgsField("Lateral-T", QVariant.Double)]
+                     QgsField("LanePoint", QVariant.String)]
             self.layer_waypoints = WGS84PointLayer(Globs.iface,
                                                    self.WAYPOINT_TITLE,
                                                    self.WAYPOINT_SYMBOL,

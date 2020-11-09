@@ -9,7 +9,7 @@
 
 
 import Globs
-import ad.map
+import ad_map_access as ad
 from .Runner import Runner
 
 

@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import QAction, QFileDialog
 from qgis.PyQt.QtGui import *
 from qgis.PyQt.QtWidgets import *
 
-import ad.map
+import ad_map_access as ad
 import Globs
 import Logger
 from .ADMapQgs import ADMapQgs
@@ -88,12 +88,24 @@ class Main(object):
         self.ui.destroy()
         Globs.log.info("CARLA ad_map_access Plug-in removed.")
 
-    def __open_first_map__(self, file_name):
+    def __open_map__(self, file_name):
         "..."
+        init_map_succeeded = False
         if file_name.endswith('.xodr'):
-            open_drive_content = open(file_name, 'r').read()
-            ad.map.access.initFromOpenDriveContent(
+            open_drive_file = open(file_name, 'r')
+            open_drive_content = open_drive_file.read()
+            open_drive_file.close()
+            init_map_succeeded = ad.map.access.initFromOpenDriveContent(
                 open_drive_content, 0.2, ad.map.intersection.IntersectionType.Unknown, ad.map.landmark.TrafficLightType.UNKNOWN)
+            if init_map_succeeded and not ad.map.access.isENUReferencePointSet():
+                ad.map.access.setENUReferencePoint(ad.map.point.createGeoPoint(ad.map.point.Longitude(
+                    8.4421163), ad.map.point.Latitude(49.0192671), ad.map.point.Altitude(0.)))
+                Globs.log.warning("OpenDrive file '{}' doesn't provide GEO reference point. Setting a default at {}".format(
+                    file_name, ad.map.access.getENUReferencePoint()))
+        else:
+            init_map_succeeded = ad.map.access.init(file_name)
+
+        if init_map_succeeded:
             self.admap = ADMapQgs()
             self.admap.layers.create_all()
             self.admap.data_added()
@@ -101,22 +113,8 @@ class Main(object):
             self.update_ui()
             return True
         else:
-            ad.map.access.init(file_name)
-            self.admap = ADMapQgs()
-            self.admap.layers.create_all()
-            self.admap.data_added()
-            self.__create_map_tools__()
-            self.update_ui()
-            return True
-        return False
+            Globs.log.error("Failed to init ad_map_access with map file '{}'".format(file_name))
 
-    def __open_next_map__(self, file_name):
-        "..."
-        if Open(file_name):
-            Globs.map_dirty = True
-            self.admap.data_added()
-            self.update_ui()
-            return True
         return False
 
     def __select_file_name__(self):
@@ -130,7 +128,7 @@ class Main(object):
         self.__select_file_name__()
         if self.file_name:
             Globs.log.info("Loading data from " + self.file_name[0] + " ...")
-            if self.__open_first_map__(self.file_name[0]):
+            if self.__open_map__(self.file_name[0]):
                 Globs.log.info("Map loaded from from " + self.file_name[0] + ".")
             else:
                 Globs.log.error("Can't load map from  " + self.file_name[0] + ".")

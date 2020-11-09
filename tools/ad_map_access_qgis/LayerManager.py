@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad.map
+import ad_map_access as ad
 import Globs
 from qgis.core import QgsFeatureRequest
 

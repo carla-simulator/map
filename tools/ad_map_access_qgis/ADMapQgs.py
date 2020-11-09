@@ -8,7 +8,7 @@
 "..."
 
 import Globs
-import ad.map
+import ad_map_access as ad
 
 from .ADMapQgsLayers import ADMapQgsLayers
 from .Worker import Worker

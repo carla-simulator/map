@@ -7,8 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad.map
-import ad.physics
+import ad_map_access as ad
 from utility import *
 import Globs
 from qgis.gui import QgsMapToolEmitPoint
@@ -19,7 +18,7 @@ class MapSnapper(QgsMapToolEmitPoint):
 
     "..."
     DEFAULT_ALTITUDE = 0
-    DEFAULT_SEARCH_RADIUS = 0.025
+    DEFAULT_SEARCH_RADIUS = 2.
 
     def __init__(self, action):
         "..."
@@ -66,8 +65,9 @@ class MapSnapper(QgsMapToolEmitPoint):
         pt_geo = ad.map.point.createGeoPoint(raw_pt.x(), raw_pt.y(), self.altitude)
         d = ad.physics.Distance(self.search_radius)
         mmpts = ad.map.match.AdMapMatching.findLanes(pt_geo, d)
-        if mmpts is None:
+        if len(mmpts) == 0:
             Globs.log.error("Please select point closer to the road network!")
+            return None
         return mmpts
 
     def __find_lane_id_at_point__(self, pos):
@@ -84,7 +84,8 @@ class MapSnapper(QgsMapToolEmitPoint):
                 layer_attrs = layer.attributeList()
                 if layer_attrs is not None:
                     attr0_name = layer.attributeDisplayName(0)
-                    if attr0_name == "Id":
+                    attr2_name = layer.attributeDisplayName(2)
+                    if attr0_name == "Id" and attr2_name == "HOV":
                         feats = layer.getFeatures(request)
                         for feat in feats:
                             attrs = feat.attributes()

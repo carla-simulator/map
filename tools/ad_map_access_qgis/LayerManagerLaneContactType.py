@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad.map
+import ad_map_access as ad
 import Globs
 from utility import *
 from .LayerManager import LayerManager
@@ -41,6 +41,6 @@ class LayerManagerLaneContactType(LayerManager):
         for contact_type in contact_types:
             if str(contact_type) == self.contact_type:
                 pt0 = GetLaneParamPoint(lane_id, tlon, 0.5)
-                attrs = [lane_id, to_lane_id, contact_type]
+                attrs = [str(lane_id), str(to_lane_id), str(contact_type)]
                 feature = self.layer.add_lla(pt0, attrs)
                 LayerManager.add_new_feature(self, lane_id, feature)

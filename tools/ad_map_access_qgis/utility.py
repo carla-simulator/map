@@ -7,8 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 import Globs
-import ad.map
-import ad.physics
+import ad_map_access as ad
 
 
 def GetLaneParamPoint(lane_id, pt1, pt2):
@@ -74,7 +73,7 @@ def Predictions(pt, createMode, length, duration):
     else:
         entryMode = ad.map.route.RouteCreationMode.Undefined
 
-    default_radius = ad.physics.Distance(0.05)
+    default_radius = ad.physics.Distance(2.)
     mmpts_start = ad.map.match.AdMapMatching.findLanes(pt, default_radius)
 
     default_prediction_length = ad.physics.Distance(length)
@@ -96,7 +95,7 @@ def Route(start_pt, end_pt, createMode):
     else:
         entryMode = ad.map.route.RouteCreationMode.Undefined
 
-    default_radius = ad.physics.Distance(0.05)
+    default_radius = ad.physics.Distance(2.)
     mmpts_start = ad.map.match.AdMapMatching.findLanes(start_pt, default_radius)
     mmpts_dest = ad.map.match.AdMapMatching.findLanes(end_pt, default_radius)
     para_start = ad.map.route.createRoutingPoint(mmpts_start[0].lanePoint.paraPoint)

@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad.map
+import ad_map_access as ad
 import Globs
 from utility import *
 from .LayerManager import LayerManager
@@ -35,7 +35,7 @@ class LayerManagerLaneSpeed(LayerManager):
         LayerManager.remove_old_feature(self, lane_id)
         lla_left = GetLaneSubEdgeLeft(lane_id, tstart, tend)
         lla_right = GetLaneSubEdgeRight(lane_id, tstart, tend)
-        attrs = [str(lane_id), tstart, tend, str(limit)]
+        attrs = [str(lane_id), str(tstart), str(tend), str(limit)]
         feature = self.layer.add_lla2(lla_left, lla_right, attrs)
         LayerManager.add_new_feature(self, lane_id, feature)
 

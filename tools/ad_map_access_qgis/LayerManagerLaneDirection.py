@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 import Globs
-import ad.map
+import ad_map_access as ad
 from utility import *
 from .LayerManager import LayerManager
 
@@ -28,21 +28,21 @@ class LayerManagerLaneDirection(LayerManager):
         pt0 = GetLaneParamPoint(lane_id, 0.45, 0.5)
         pt1 = GetLaneParamPoint(lane_id, 0.55, 0.5)
         direction = lane.direction
-        attrs = [lane_id, direction]
+        attrs = [str(lane_id), str(direction)]
         feature_1 = None
         feature_2 = None
-        if direction == 'POSITIVE':
+        if str(direction) == 'POSITIVE':
             feature_1 = self.layer.add_lla(pt0, pt1, attrs)
-        if direction == 'NEGATIVE':
+        if str(direction) == 'NEGATIVE':
             feature_1 = self.layer.add_lla(pt1, pt0, attrs)
-        if direction == 'REVERSABLE':
+        if str(direction) == 'REVERSABLE':
             pt0 = GetLaneParamPoint(lane_id, 0.45, 0.4)
             pt1 = GetLaneParamPoint(lane_id, 0.55, 0.4)
             pt2 = GetLaneParamPoint(lane_id, 0.45, 0.6)
             pt3 = GetLaneParamPoint(lane_id, 0.55, 0.6)
             feature_1 = self.layer.add_lla(pt0, pt1, attrs)
             feature_2 = self.layer.add_lla(pt2, pt3, attrs)
-        if direction == 'BIDIRECTIONAL':
+        if str(direction) == 'BIDIRECTIONAL':
             feature_1 = self.layer.add_lla(pt0, pt1, attrs)
             feature_2 = self.layer.add_lla(pt1, pt0, attrs)
         LayerManager.add_new_feature(self, lane_id, feature_1, feature_2)

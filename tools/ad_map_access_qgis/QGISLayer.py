@@ -18,6 +18,7 @@ from PyQt5.QtGui import *
 from qgis.gui import *
 import os.path
 import Globs
+import ad_map_access as ad
 
 # Too many arguments
 # pylint: disable=R0913
@@ -197,6 +198,13 @@ class WGS84PointLayer(WGS84Layer):
     def add_lla(self, point, attributes):
         "..."
         qgs_point = QgsPointXY(point.x, point.y)
+        geometry = QgsGeometry.fromPointXY(qgs_point)
+        return self.add_feature(geometry, attributes)
+
+    def add_ecef(self, point, attributes):
+        "..."
+        geo_point = ad.map.point.toGeo(point)
+        qgs_point = QgsPointXY(float(geo_point.longitude), float(geo_point.latitude))
         geometry = QgsGeometry.fromPointXY(qgs_point)
         return self.add_feature(geometry, attributes)
 

@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
-import ad.map
+import ad_map_access as ad
 import Globs
 from utility import *
 from .LayerManager import LayerManager
@@ -47,7 +47,7 @@ class LayerManagerLaneTopology(LayerManager):
                 key = (lane_id, to_lane_id)
                 LayerManager.remove_old_feature(self, key)
                 types = conn.types
-                attrs = [lane_id, to_lane_id, str(types)]
+                attrs = [str(lane_id), str(to_lane_id), str(types)]
                 pts_to = self.__generate_alt_points__(to_lane_id, self.tlon, self.tlat)
                 feature = self.__add_shortest_arrow__(self.layer, pts_from, pts_to, attrs)
                 LayerManager.add_new_feature(self, key, feature)
