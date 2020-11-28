@@ -1,0 +1,31 @@
+name: Build and Test Documentation
+
+on:
+  push:
+    branches: master
+  pull_request:
+    branches: master
+
+jobs:
+  ubuntu16job:
+
+    name: Build and Test Documentation
+    runs-on: ubuntu-16.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        submodules: true
+
+    - name: Install Dependencies
+      run: bash .github/workflows/install_dependencies.sh && sudo apt-get install doxygen graphviz lcov
+
+    - name: Build and Test
+      run: |
+        GTEST_OUTPUT="xml:test_results"
+        colcon build --event-handlers console_direct+ --executor sequential --packages-up-to ad_map_access ad_physics --cmake-args -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_APIDOC=ON
+        colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics
+        colcon test-result
+        bash .github/workflows/code_coverage.sh
+        bash .github/workflows/deploy.sh false
