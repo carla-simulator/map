@@ -8,8 +8,9 @@
 ##
 
 # prepare
-cp -r doc/ doctmp/ && cp README.md README.md.tmp && cp mkdocs.yml mkdocs.yml.tmp
+mv doc/ doctmp/ && mv README.md README.md.tmp && mv mkdocs.yml mkdocs.yml.tmp
 git checkout origin/doc
+if [ $? -ne 0 ]; then echo "GIT checkout failure"; exit 1; fi
 git checkout -b doc
 
 # clean old
