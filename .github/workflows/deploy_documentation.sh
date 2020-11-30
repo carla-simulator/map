@@ -34,11 +34,12 @@ rm -rf build install log doctmp README.md.tmp
 git add doc/ README.md
 git status
 
-git commit -m "Updated documentation" --no-edit || true
-git remote add origin-doc https://${GITHUB_TOKEN}@github.com/carla-simulator/map.git > /dev/null 2>&1
+git config user.email "noemail@email.com"
+git config user.name "Github Action"
+git commit -m "Updated documentation" --no-edit
 
 if [ "$1" = true ]; then
-  git push --set-upstream origin-doc doc
+  git push origin doc
 else
   echo "Only testing mode - No deployment"
 fi
