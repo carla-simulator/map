@@ -24,3 +24,4 @@ get_coverage() {
 
 get_coverage build/ad_physics ad_physics ad_physics
 get_coverage build/ad_map_access ad_map_access ad_map_access
+
