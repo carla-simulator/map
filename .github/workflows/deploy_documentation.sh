@@ -8,7 +8,7 @@
 ##
 
 # prepare
-cp -r doc/ doctmp/ && cp README.md README.md.tmp
+cp -r doc/ doctmp/ && cp README.md README.md.tmp && cp mkdocs.yml mkdocs.yml.tmp
 git checkout origin/doc
 git checkout -b doc
 
@@ -17,7 +17,7 @@ rm -rf doc
 mkdir doc
 
 # copy new doc
-cp -r doctmp/* doc/. && cp README.md.tmp README.md
+cp -r doctmp/* doc/. && cp README.md.tmp README.md && cp mkdocs.yml.tmp mkdocs.yml
 
 # apidoc
 cp -r build/ad_physics/apidoc doc/ad_physics/.
@@ -28,10 +28,10 @@ mv coverage/ad_physics doc/ad_physics/coverage
 mv coverage/ad_map_access doc/ad_map_access/coverage
 
 # cleanup
-rm -rf build install log doctmp README.md.tmp
+rm -rf build install log doctmp README.md.tmp mkdocs.yml.tmp
 
 # commit
-git add doc/ README.md
+git add doc/ README.md mkdocs.yml
 git status
 
 git config user.email "noemail@email.com"
