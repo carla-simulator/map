@@ -1,0 +1,13 @@
+Source: ad-map
+Section: misc
+Priority: optional
+Maintainer: CARLA Team <info-carla@oscf.org>
+Build-Depends: debhelper (>=9)
+Standards-Version: 4.1.2
+Homepage: https://github.com/carla-simulator/map
+
+Package: ad-map
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Libraries and tools to support the handling of maps for Automated Driving
+

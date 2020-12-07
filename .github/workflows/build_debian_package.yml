@@ -1,0 +1,94 @@
+name: Create Debian Package for AD-Map Library
+
+on:
+  release:
+    types: [published]
+  push:
+    branches: master
+  pull_request:
+    branches: master
+
+jobs:
+  ubuntu16job:
+    name: Ubuntu 16.04
+    runs-on: ubuntu-16.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          submodules: true
+
+    - name: Install Dependencies
+      run: bash .github/workflows/install_dependencies.sh && sudo apt-get install fakeroot dpkg-dev debhelper
+
+    - name: Build Libraries
+      run: |
+        colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_PYTHON_BINDING=ON
+
+    - name: Build Debian Package
+      run: |
+        dpkg-buildpackage -us -uc
+        cp ../ad-map_*.deb .
+        echo "VERSION=$(ls ad-map_* | cut -d _ -f 2 | cut -c1-5)" >> $GITHUB_ENV
+        
+    - uses: actions/upload-artifact@v2
+      if: ${{ github.event_name == 'release'}}
+      with:
+        name: admap-${{ env.VERSION }}-ubuntu1604.deb
+        path: ad-map_${{ env.VERSION }}_amd64.deb
+
+  ubuntu18job:
+    name: Ubuntu 18.04
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          submodules: true
+
+    - name: Install Dependencies
+      run: bash .github/workflows/install_dependencies.sh && sudo apt-get install fakeroot dpkg-dev debhelper
+
+    - name: Build Libraries
+      run: |
+        colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_PYTHON_BINDING=ON
+
+    - name: Build Debian Package
+      run: |
+        dpkg-buildpackage -us -uc
+        cp ../ad-map_*.deb .
+        echo "VERSION=$(ls ad-map_* | cut -d _ -f 2 | cut -c1-5)" >> $GITHUB_ENV
+        
+    - uses: actions/upload-artifact@v2
+      if: ${{ github.event_name == 'release'}}
+      with:
+        name: admap-${{ env.VERSION }}-ubuntu1804.deb
+        path: ad-map_${{ env.VERSION }}_amd64.deb
+
+  ubuntu20job:
+    name: Ubuntu 20.04
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          submodules: true
+
+    - name: Install Dependencies
+      run: bash .github/workflows/install_dependencies.sh && sudo apt-get install fakeroot dpkg-dev debhelper
+
+    - name: Build Libraries
+      run: |
+        colcon build --event-handlers console_direct+ --executor sequential --cmake-args -DBUILD_HARDENING=ON -DBUILD_PYTHON_BINDING=ON
+
+    - name: Build Debian Package
+      run: |
+        dpkg-buildpackage -us -uc
+        cp ../ad-map_*.deb .
+        echo "VERSION=$(ls ad-map_* | cut -d _ -f 2 | cut -c1-5)" >> $GITHUB_ENV
+        
+    - uses: actions/upload-artifact@v2
+      if: ${{ github.event_name == 'release'}}
+      with:
+        name: admap-${{ env.VERSION }}-ubuntu2004.deb
+        path: ad-map_${{ env.VERSION }}_amd64.deb

@@ -1,0 +1,10 @@
+install/ad_map_access opt/ad-map/
+install/ad_map_access_qgis/* usr/
+install/ad_map_opendrive_reader opt/ad-map/
+install/ad_physics opt/ad-map/
+install/PROJ4 opt/ad-map/dependencies/
+install/spdlog opt/ad-map/dependencies/
+install/local_* opt/ad-map/
+install/_local* opt/ad-map/
+install/setup*  opt/ad-map/
+debian/set_vars.sh opt/ad-map/
