@@ -257,14 +257,14 @@ ECEFPoint CoordinateTransform::ENU2ECEF(const ENUPoint &pt) const
     }
     else
     {
-      access::getLogger()->error("Cannot convert from ENU to ECEF: ENU Reference Point invalid.");
-      throw std::invalid_argument("Cannot convert from ENU to ECEF: ENU Reference Point invalid.");
+      access::getLogger()->error("Cannot convert from ENU to ECEF: Input Point invalid.");
+      throw std::invalid_argument("Cannot convert from ENU to ECEF: Input Point invalid.");
     }
   }
   else
   {
-    access::getLogger()->error("Cannot convert from ENU to ECEF: Input Point invalid.");
-    throw std::invalid_argument("Cannot convert from ENU to ECEF: Input Point invalid.");
+    access::getLogger()->error("Cannot convert from ENU to ECEF: ENU Reference Point invalid.");
+    throw std::invalid_argument("Cannot convert from ENU to ECEF: ENU Reference Point invalid.");
   }
 }
 
@@ -285,14 +285,14 @@ ENUPoint CoordinateTransform::ECEF2ENU(const ECEFPoint &pt) const
     }
     else
     {
-      access::getLogger()->error("Cannot convert from ECEF to ENU: ENU Reference Point invalid.");
-      throw std::invalid_argument("Cannot convert from ECEF to ENU: ENU Reference Point invalid.");
+      access::getLogger()->error("Cannot convert from ECEF to ENU: Input Point invalid.");
+      throw std::invalid_argument("Cannot convert from ECEF to ENU: Input Point invalid.");
     }
   }
   else
   {
-    access::getLogger()->error("Cannot convert from ECEF to ENU: Input Point invalid.");
-    throw std::invalid_argument("Cannot convert from ECEF to ENU: Input Point invalid.");
+    access::getLogger()->error("Cannot convert from ECEF to ENU: ENU Reference Point invalid.");
+    throw std::invalid_argument("Cannot convert from ECEF to ENU: ENU Reference Point invalid.");
   }
 }
 
