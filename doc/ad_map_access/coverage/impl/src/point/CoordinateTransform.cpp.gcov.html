@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2020-12-01 08:06:28</td>
+            <td class="headerValue">2020-12-11 15:49:16</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">16</td>
@@ -328,14 +328,14 @@
 <span class="lineNum">     257 </span>                :            :     }
 <span class="lineNum">     258 </span>                :            :     else
 <span class="lineNum">     259 </span>                :            :     {
-<span class="lineNum">     260 </span>        [<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          1 :       access::getLogger()-&gt;error(&quot;Cannot convert from ENU to ECEF: ENU Reference Point invalid.&quot;);</span>
-<span class="lineNum">     261 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :       throw std::invalid_argument(&quot;Cannot convert from ENU to ECEF: ENU Reference Point invalid.&quot;);</span>
+<span class="lineNum">     260 </span>        [<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          1 :       access::getLogger()-&gt;error(&quot;Cannot convert from ENU to ECEF: Input Point invalid.&quot;);</span>
+<span class="lineNum">     261 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :       throw std::invalid_argument(&quot;Cannot convert from ENU to ECEF: Input Point invalid.&quot;);</span>
 <span class="lineNum">     262 </span>                :            :     }
 <span class="lineNum">     263 </span>                :            :   }
 <span class="lineNum">     264 </span>                :            :   else
 <span class="lineNum">     265 </span>                :            :   {
-<span class="lineNum">     266 </span>        [<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Cannot convert from ENU to ECEF: Input Point invalid.&quot;);</span>
-<span class="lineNum">     267 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     throw std::invalid_argument(&quot;Cannot convert from ENU to ECEF: Input Point invalid.&quot;);</span>
+<span class="lineNum">     266 </span>        [<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Cannot convert from ENU to ECEF: ENU Reference Point invalid.&quot;);</span>
+<span class="lineNum">     267 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     throw std::invalid_argument(&quot;Cannot convert from ENU to ECEF: ENU Reference Point invalid.&quot;);</span>
 <span class="lineNum">     268 </span>                :            :   }
 <a name="269"><span class="lineNum">     269 </span>                :            : }</a>
 <span class="lineNum">     270 </span>                :            : 
@@ -356,14 +356,14 @@
 <span class="lineNum">     285 </span>                :            :     }
 <span class="lineNum">     286 </span>                :            :     else
 <span class="lineNum">     287 </span>                :            :     {
-<span class="lineNum">     288 </span>        [<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          1 :       access::getLogger()-&gt;error(&quot;Cannot convert from ECEF to ENU: ENU Reference Point invalid.&quot;);</span>
-<span class="lineNum">     289 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :       throw std::invalid_argument(&quot;Cannot convert from ECEF to ENU: ENU Reference Point invalid.&quot;);</span>
+<span class="lineNum">     288 </span>        [<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          1 :       access::getLogger()-&gt;error(&quot;Cannot convert from ECEF to ENU: Input Point invalid.&quot;);</span>
+<span class="lineNum">     289 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :       throw std::invalid_argument(&quot;Cannot convert from ECEF to ENU: Input Point invalid.&quot;);</span>
 <span class="lineNum">     290 </span>                :            :     }
 <span class="lineNum">     291 </span>                :            :   }
 <span class="lineNum">     292 </span>                :            :   else
 <span class="lineNum">     293 </span>                :            :   {
-<span class="lineNum">     294 </span>        [<span class="branchCov" title="Branch 3 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          3 :     access::getLogger()-&gt;error(&quot;Cannot convert from ECEF to ENU: Input Point invalid.&quot;);</span>
-<span class="lineNum">     295 </span>        [<span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          3 :     throw std::invalid_argument(&quot;Cannot convert from ECEF to ENU: Input Point invalid.&quot;);</span>
+<span class="lineNum">     294 </span>        [<span class="branchCov" title="Branch 3 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          3 :     access::getLogger()-&gt;error(&quot;Cannot convert from ECEF to ENU: ENU Reference Point invalid.&quot;);</span>
+<span class="lineNum">     295 </span>        [<span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          3 :     throw std::invalid_argument(&quot;Cannot convert from ECEF to ENU: ENU Reference Point invalid.&quot;);</span>
 <span class="lineNum">     296 </span>                :            :   }
 <span class="lineNum">     297 </span>                :            : }
 <span class="lineNum">     298 </span>                :            : 
