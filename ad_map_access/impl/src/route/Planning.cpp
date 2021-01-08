@@ -328,22 +328,27 @@ FullRoute planRoute(const RoutingParaPoint &routingStart,
   }
   return createFullRoute(rawRoute, routeCreationMode);
 }
-
+  
 FullRoute planRoute(const match::MapMatchedPositionConfidenceList &mapMatchingResults,
                     const RoutingParaPoint &routingStart,
                     RouteCreationMode const routeCreationMode)
 {
   FullRoute resultRoute;
   physics::Distance resultDistance = std::numeric_limits<physics::Distance>::max();
+
   for (const auto &mapMatchingResult : mapMatchingResults)
   {
     FullRoute route
       = planRoute(routingStart, createRoutingPoint(mapMatchingResult.lanePoint.paraPoint), routeCreationMode);
-    physics::Distance const routeDistance = calcLength(route);
-    if (routeDistance < resultDistance)
-    {
-      resultDistance = routeDistance;
-      resultRoute = route;
+    physics::Distance routeDistance;
+
+    if (route.roadSegments.size() > 0) {
+      physics::Distance const routeDistance = calcLength(route);
+      
+      if (routeDistance < resultDistance){
+        resultDistance = routeDistance;
+        resultRoute = route;
+      }
     }
   }
   return resultRoute;
