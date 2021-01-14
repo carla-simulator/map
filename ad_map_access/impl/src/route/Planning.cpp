@@ -328,7 +328,7 @@ FullRoute planRoute(const RoutingParaPoint &routingStart,
   }
   return createFullRoute(rawRoute, routeCreationMode);
 }
-  
+
 FullRoute planRoute(const match::MapMatchedPositionConfidenceList &mapMatchingResults,
                     const RoutingParaPoint &routingStart,
                     RouteCreationMode const routeCreationMode)
@@ -341,10 +341,12 @@ FullRoute planRoute(const match::MapMatchedPositionConfidenceList &mapMatchingRe
     FullRoute route
       = planRoute(routingStart, createRoutingPoint(mapMatchingResult.lanePoint.paraPoint), routeCreationMode);
 
-    if (route.roadSegments.size() > 0) {
+    if (route.roadSegments.size() > 0)
+    {
       physics::Distance const routeDistance = calcLength(route);
-      
-      if (routeDistance < resultDistance){
+
+      if (routeDistance < resultDistance)
+      {
         resultDistance = routeDistance;
         resultRoute = route;
       }
