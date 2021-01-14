@@ -340,7 +340,6 @@ FullRoute planRoute(const match::MapMatchedPositionConfidenceList &mapMatchingRe
   {
     FullRoute route
       = planRoute(routingStart, createRoutingPoint(mapMatchingResult.lanePoint.paraPoint), routeCreationMode);
-    physics::Distance routeDistance;
 
     if (route.roadSegments.size() > 0) {
       physics::Distance const routeDistance = calcLength(route);
