@@ -1,5 +1,8 @@
 {
     "names": {
+        "ad_map_access_qgis": {
+            "dependencies": ["ad_map_access"]
+        },
         "PROJ4": {
             "cmake-args": ["-DCMAKE_POSITION_INDEPENDENT_CODE=ON"]
         },
