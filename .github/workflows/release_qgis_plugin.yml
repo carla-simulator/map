@@ -2,6 +2,11 @@ name: Create Release Package for AD-Map QGIS Plugin
 
 on:
   release:
+    types: [published]
+  push:
+    branches: master
+  pull_request:
+    branches: master
 
 jobs:
   ubuntu18job:
