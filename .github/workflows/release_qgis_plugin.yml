@@ -1,0 +1,57 @@
+name: Create Release Package for AD-Map QGIS Plugin
+
+on:
+  release:
+
+jobs:
+  ubuntu18job:
+    name: Ubuntu 18.04
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          submodules: true
+
+    - name: Install Dependencies
+      run: bash .github/workflows/install_dependencies.sh
+
+    - name: Build Libraries
+      run: |
+        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --build-base build-static --install-base install-static
+
+    - name: Build Package
+      run: |
+        cd install-static
+        cp -r ad_map_access/lib/python3.6/ad_map_access ad_map_access_qgis/share/qgis/python/plugins/ad_map_access_qgis/.
+        
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ad_map_access_qgis_ubuntu1804
+        path: install-static/ad_map_access_qgis/share/qgis/python/plugins/ 
+
+  ubuntu20job:
+    name: Ubuntu 20.04
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          submodules: true
+
+    - name: Install Dependencies
+      run: bash .github/workflows/install_dependencies.sh
+
+    - name: Build Libraries
+      run: |
+        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --build-base build-static --install-base install-static
+
+    - name: Build Package
+      run: |
+        cd install-static
+        cp -r ad_map_access/lib/python3.8/ad_map_access ad_map_access_qgis/share/qgis/python/plugins/ad_map_access_qgis/.
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ad_map_access_qgis_ubuntu2004
+        path: install-static/ad_map_access_qgis/share/qgis/python/plugins/
