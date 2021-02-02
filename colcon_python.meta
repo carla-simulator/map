@@ -9,6 +9,9 @@
         "ad_map_opendrive_reader": {
             "cmake-args": ["-DBUILD_SHARED_LIBS=OFF", "-DCMAKE_POSITION_INDEPENDENT_CODE=ON", "-DCMAKE_BUILD_TYPE=RelWithDebInfo"]
         },
+        "ad_map_access_qgis": {
+            "dependencies": ["ad_map_access"]
+        },
         "PROJ4": {
             "cmake-args": ["-DBUILD_SHARED_LIBS=OFF", "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"]
         },
