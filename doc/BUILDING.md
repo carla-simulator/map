@@ -95,10 +95,12 @@ __colcon_python.meta__ enables python build (-DBUILD_PYTHON_BINDING=ON) and
 as well static build (-DBUILD_SHARED_LIBS=OFF) to ease the usage of the python modules
 as they don't require extending the LD_LIBRARY_PATH when linked statically against its non-system dependencies.
 
-Furthermore, building the QGIS Plugin is also encouraged with static libraries for the same reason. To build this one you might want to call:
+Furthermore, building the QGIS Plugin is also encouraged with static libraries for the same reason. To build this one you might want to call
+(you have to adapt to your python version used):
 ```bash
  map$> colcon build --metas colcon_python.meta --packages-up-to ad_map_access_qgis --build-base build-static --install-base install-static
  map$> echo "QGIS plugin built! Let's test it out:"
+ map$> export PYTHONPATH=<path/to/>map/install-static/ad_map_access/lib/python3.6
  map$> export QGIS_PLUGINPATH=<path/to/>map/install-static/ad_map_access_qgis/share/qgis/python/plugins
  map$> qgis
 ```
