@@ -8,15 +8,23 @@ on:
   pull_request:
     branches: master
 
+
 jobs:
-  ubuntu18job:
-    name: Ubuntu 18.04
-    runs-on: ubuntu-18.04
+  publish:
+    name: Publish for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-18.04
+            artifact_name: ad_map_access_qgis_ubuntu1804.zip
+          - os: ubuntu-20.04
+            artifact_name: ad_map_access_qgis_ubuntu2004.zip
 
     steps:
     - uses: actions/checkout@v2
       with:
-          submodules: true
+        submodules: true
 
     - name: Install Dependencies
       run: bash .github/workflows/install_dependencies.sh
@@ -28,37 +36,15 @@ jobs:
     - name: Build Package
       run: |
         cd install-static
-        cp -r ad_map_access/lib/python3.6/ad_map_access ad_map_access_qgis/share/qgis/python/plugins/ad_map_access_qgis/.
-        
-    - uses: actions/upload-artifact@v2
+        cp -r ad_map_access/lib/python3.*/ad_map_access ad_map_access_qgis/share/qgis/python/plugins/ad_map_access_qgis/.
+        cd ad_map_access_qgis/share/qgis/python/plugins/
+        zip -r ${{ matrix.artifact_name }} ad_map_access_qgis/
+        mv ${{ matrix.artifact_name }} ../../../../../../
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
       if: ${{ github.event_name == 'release'}}
       with:
-        name: ad_map_access_qgis_ubuntu1804
-        path: install-static/ad_map_access_qgis/share/qgis/python/plugins/ 
-
-  ubuntu20job:
-    name: Ubuntu 20.04
-    runs-on: ubuntu-20.04
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-          submodules: true
-
-    - name: Install Dependencies
-      run: bash .github/workflows/install_dependencies.sh
-
-    - name: Build Libraries
-      run: |
-        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --build-base build-static --install-base install-static
-
-    - name: Build Package
-      run: |
-        cd install-static
-        cp -r ad_map_access/lib/python3.8/ad_map_access ad_map_access_qgis/share/qgis/python/plugins/ad_map_access_qgis/.
-
-    - uses: actions/upload-artifact@v2
-      if: ${{ github.event_name == 'release'}}
-      with:
-        name: ad_map_access_qgis_ubuntu2004
-        path: install-static/ad_map_access_qgis/share/qgis/python/plugins/
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ matrix.artifact_name }}
+        tag: ${{ github.ref }}
