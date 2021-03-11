@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-02-03 16:35:58</td>
+            <td class="headerValue">2021-03-11 16:09:24</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">19</td>
@@ -147,9 +147,9 @@
 <span class="lineNum">      72 </span>                :<span class="lineCov">        188 :   return true;</span>
 <a name="73"><span class="lineNum">      73 </span>                :            : }</a>
 <span class="lineNum">      74 </span>                :            : 
-<span class="lineNum">      75 </span>                :<span class="lineCov">    6580074 : bool MapConfigFileHandler::isInitialized() const</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">    6580075 : bool MapConfigFileHandler::isInitialized() const</span>
 <span class="lineNum">      76 </span>                :            : {
-<span class="lineNum">      77 </span>                :<span class="lineCov">    6580074 :   return !mConfigFileName.empty();</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">    6580075 :   return !mConfigFileName.empty();</span>
 <a name="78"><span class="lineNum">      78 </span>                :            : }</a>
 <span class="lineNum">      79 </span>                :            : 
 <span class="lineNum">      80 </span>                :<span class="lineCov">         71 : std::vector&lt;PointOfInterest&gt; const &amp;MapConfigFileHandler::pointsOfInterest() const</span>
@@ -393,14 +393,14 @@
 <span class="lineNum">     293 </span>                :<span class="lineCov">        288 :   return mAdMapEntry;</span>
 <a name="294"><span class="lineNum">     294 </span>                :            : }</a>
 <span class="lineNum">     295 </span>                :            : 
-<span class="lineNum">     296 </span>                :<span class="lineCov">        649 : void MapConfigFileHandler::reset()</span>
+<span class="lineNum">     296 </span>                :<span class="lineCov">        652 : void MapConfigFileHandler::reset()</span>
 <span class="lineNum">     297 </span>                :            : {
-<span class="lineNum">     298 </span>                :<span class="lineCov">        649 :   mConfigFileName = &quot;&quot;;</span>
-<span class="lineNum">     299 </span>                :<span class="lineCov">        649 :   mAdMapEntry = MapEntry();</span>
-<span class="lineNum">     300 </span>                :<span class="lineCov">        649 :   mPointsOfInterest.clear();</span>
-<span class="lineNum">     301 </span>                :<span class="lineCov">        649 :   mDefaultEnuReference = point::GeoPoint();</span>
-<span class="lineNum">     302 </span>                :<span class="lineCov">        649 :   mBaseDir.clear();</span>
-<a name="303"><span class="lineNum">     303 </span>                :<span class="lineCov">        649 : }</span></a>
+<span class="lineNum">     298 </span>                :<span class="lineCov">        652 :   mConfigFileName = &quot;&quot;;</span>
+<span class="lineNum">     299 </span>                :<span class="lineCov">        652 :   mAdMapEntry = MapEntry();</span>
+<span class="lineNum">     300 </span>                :<span class="lineCov">        652 :   mPointsOfInterest.clear();</span>
+<span class="lineNum">     301 </span>                :<span class="lineCov">        652 :   mDefaultEnuReference = point::GeoPoint();</span>
+<span class="lineNum">     302 </span>                :<span class="lineCov">        652 :   mBaseDir.clear();</span>
+<a name="303"><span class="lineNum">     303 </span>                :<span class="lineCov">        652 : }</span></a>
 <span class="lineNum">     304 </span>                :            : 
 <span class="lineNum">     305 </span>                :<span class="lineCov">        143 : point::GeoPoint MapConfigFileHandler::defaultEnuReference() const</span>
 <span class="lineNum">     306 </span>                :            : {

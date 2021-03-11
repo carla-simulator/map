@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-02-03 16:35:58</td>
+            <td class="headerValue">2021-03-11 16:09:24</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -84,11 +84,11 @@
 <span class="lineNum">      13 </span>                :            : namespace map {
 <a name="14"><span class="lineNum">      14 </span>                :            : namespace opendrive {</a>
 <span class="lineNum">      15 </span>                :            : 
-<span class="lineNum">      16 </span>                :<span class="lineCov">        962 : landmark::LandmarkType toLandmarkType(int type)</span>
+<span class="lineNum">      16 </span>                :<span class="lineCov">        963 : landmark::LandmarkType toLandmarkType(int type)</span>
 <span class="lineNum">      17 </span>                :            : {
 <span class="lineNum">      18 </span>                :            :   // as defined on the OpenDRIVEv1.4 spec chapter 6.11 Signal Types
 <span class="lineNum">      19 </span>                :            :   // and on the OpenDRIVEv1.5 spec chapter 6.11 Signal Types
-<span class="lineNum">      20 </span>     [<span class="branchCov" title="Branch 0 was taken 939 times"> + </span><span class="branchCov" title="Branch 1 was taken 11 times"> + </span><span class="branchCov" title="Branch 2 was taken 12 times"> + </span>]:<span class="lineCov">        962 :   switch (type)</span>
+<span class="lineNum">      20 </span>     [<span class="branchCov" title="Branch 0 was taken 940 times"> + </span><span class="branchCov" title="Branch 1 was taken 11 times"> + </span><span class="branchCov" title="Branch 2 was taken 12 times"> + </span>]:<span class="lineCov">        963 :   switch (type)</span>
 <span class="lineNum">      21 </span>                :            :   {
 <span class="lineNum">      22 </span>                :            :     case 1000001:
 <span class="lineNum">      23 </span>                :            :     case 1000002:
@@ -105,7 +105,7 @@
 <span class="lineNum">      34 </span>                :            :     case 1000018:
 <span class="lineNum">      35 </span>                :            :     case 1000019:
 <span class="lineNum">      36 </span>                :            :     case 1000020:
-<span class="lineNum">      37 </span>                :<span class="lineCov">        939 :       return landmark::LandmarkType::TRAFFIC_LIGHT;</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">        940 :       return landmark::LandmarkType::TRAFFIC_LIGHT;</span>
 <span class="lineNum">      38 </span>                :            :     case 1000003: // pedestrian crossing
 <span class="lineNum">      39 </span>                :            :     case 1000004: // bicycle crossing
 <span class="lineNum">      40 </span>                :<span class="lineCov">         11 :       return landmark::LandmarkType::OTHER;</span>
@@ -206,10 +206,10 @@
 <span class="lineNum">     130 </span>                :            :   }
 <a name="131"><span class="lineNum">     131 </span>                :            : }</a>
 <span class="lineNum">     132 </span>                :            : 
-<span class="lineNum">     133 </span>                :<span class="lineCov">       2394 : lane::ContactType toContactType(int type)</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">       2397 : lane::ContactType toContactType(int type)</span>
 <span class="lineNum">     134 </span>                :            : {
-<span class="lineNum">     135 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">       2394 :   switch (type)</span>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 2329 times"> + </span><span class="branchCov" title="Branch 5 was taken 61 times"> + </span>]
+<span class="lineNum">     135 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">       2397 :   switch (type)</span>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 2332 times"> + </span><span class="branchCov" title="Branch 5 was taken 61 times"> + </span>]
 <span class="lineNum">     136 </span>                :            :   {
 <span class="lineNum">     137 </span>                :            :     case 205:
 <span class="lineNum">     138 </span>                :<span class="lineCov">          1 :       return lane::ContactType::YIELD;</span>
@@ -225,15 +225,15 @@
 <span class="lineNum">     148 </span>                :            :     case 1000010:
 <span class="lineNum">     149 </span>                :            :     case 1000011:
 <span class="lineNum">     150 </span>                :            :     case 1000012:
-<span class="lineNum">     151 </span>                :<span class="lineCov">       2329 :       return lane::ContactType::TRAFFIC_LIGHT;</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">       2332 :       return lane::ContactType::TRAFFIC_LIGHT;</span>
 <span class="lineNum">     152 </span>                :            :     default:
 <span class="lineNum">     153 </span>                :<span class="lineCov">         61 :       return lane::ContactType::UNKNOWN;</span>
 <span class="lineNum">     154 </span>                :            :   }
 <a name="155"><span class="lineNum">     155 </span>                :            : }</a>
 <span class="lineNum">     156 </span>                :            : 
-<span class="lineNum">     157 </span>                :<span class="lineCov">       2392 : lane::ContactLocation toContactLocation(::opendrive::SignalReference const &amp;signalReference, bool const &amp;isJunction)</span>
+<span class="lineNum">     157 </span>                :<span class="lineCov">       2395 : lane::ContactLocation toContactLocation(::opendrive::SignalReference const &amp;signalReference, bool const &amp;isJunction)</span>
 <span class="lineNum">     158 </span>                :            : {
-<span class="lineNum">     159 </span>        [<span class="branchCov" title="Branch 0 was taken 696 times"> + </span><span class="branchCov" title="Branch 1 was taken 1696 times"> + </span>]:<span class="lineCov">       2392 :   if (isJunction)</span>
+<span class="lineNum">     159 </span>        [<span class="branchCov" title="Branch 0 was taken 696 times"> + </span><span class="branchCov" title="Branch 1 was taken 1699 times"> + </span>]:<span class="lineCov">       2395 :   if (isJunction)</span>
 <span class="lineNum">     160 </span>                :            :   {
 <span class="lineNum">     161 </span>        [<span class="branchCov" title="Branch 0 was taken 394 times"> + </span><span class="branchCov" title="Branch 1 was taken 302 times"> + </span>]:<span class="lineCov">        696 :     if (signalReference.parametricPosition &gt;= 0.5)</span>
 <span class="lineNum">     162 </span>                :            :     {
@@ -246,25 +246,25 @@
 <span class="lineNum">     169 </span>                :            :   }
 <span class="lineNum">     170 </span>                :            :   else
 <span class="lineNum">     171 </span>                :            :   {
-<span class="lineNum">     172 </span>        [<span class="branchCov" title="Branch 0 was taken 769 times"> + </span><span class="branchCov" title="Branch 1 was taken 927 times"> + </span>]:<span class="lineCov">       1696 :     if (signalReference.inLaneOrientation)</span>
+<span class="lineNum">     172 </span>        [<span class="branchCov" title="Branch 0 was taken 769 times"> + </span><span class="branchCov" title="Branch 1 was taken 930 times"> + </span>]:<span class="lineCov">       1699 :     if (signalReference.inLaneOrientation)</span>
 <span class="lineNum">     173 </span>                :            :     {
 <span class="lineNum">     174 </span>                :<span class="lineCov">        769 :       return lane::ContactLocation::SUCCESSOR;</span>
 <span class="lineNum">     175 </span>                :            :     }
 <span class="lineNum">     176 </span>                :            :     else
 <span class="lineNum">     177 </span>                :            :     {
-<span class="lineNum">     178 </span>                :<span class="lineCov">        927 :       return lane::ContactLocation::PREDECESSOR;</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">        930 :       return lane::ContactLocation::PREDECESSOR;</span>
 <span class="lineNum">     179 </span>                :            :     }
 <span class="lineNum">     180 </span>                :            :   }
 <a name="181"><span class="lineNum">     181 </span>                :            : }</a>
 <span class="lineNum">     182 </span>                :            : 
-<span class="lineNum">     183 </span>                :<span class="lineCov">        955 : landmark::TrafficLightType toTrafficLightType(int type, int subtype)</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">        956 : landmark::TrafficLightType toTrafficLightType(int type, int subtype)</span>
 <span class="lineNum">     184 </span>                :            : {
-<span class="lineNum">     185 </span>  [<span class="branchCov" title="Branch 0 was taken 939 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">        955 :   switch (type)</span>
+<span class="lineNum">     185 </span>  [<span class="branchCov" title="Branch 0 was taken 940 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">        956 :   switch (type)</span>
 <span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span><span class="branchCov" title="Branch 6 was taken 6 times"> + </span><span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span> 
 <span class="lineNum">         </span>      <span class="branchCov" title="Branch 9 was taken 1 time"> + </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]
 <span class="lineNum">     186 </span>                :            :   {
 <span class="lineNum">     187 </span>                :            :     case 1000001:
-<span class="lineNum">     188 </span>                :<span class="lineCov">        939 :       return landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN;</span>
+<span class="lineNum">     188 </span>                :<span class="lineCov">        940 :       return landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN;</span>
 <span class="lineNum">     189 </span>                :            :     case 1000002:
 <span class="lineNum">     190 </span>                :<span class="lineCov">          1 :       return landmark::TrafficLightType::PEDESTRIAN_RED_GREEN;</span>
 <span class="lineNum">     191 </span>                :            :     case 1000007:
@@ -313,22 +313,22 @@
 <span class="lineNum">     234 </span>                :            :   }
 <a name="235"><span class="lineNum">     235 </span>                :            : }</a>
 <span class="lineNum">     236 </span>                :            : 
-<span class="lineNum">     237 </span>                :<span class="lineCov">      20705 : lane::LaneType toLaneType(::opendrive::LaneType const &amp;laneType)</span>
+<span class="lineNum">     237 </span>                :<span class="lineCov">      20711 : lane::LaneType toLaneType(::opendrive::LaneType const &amp;laneType)</span>
 <span class="lineNum">     238 </span>                :            : {
-<span class="lineNum">     239 </span>  [<span class="branchCov" title="Branch 0 was taken 7933 times"> + </span><span class="branchCov" title="Branch 1 was taken 7207 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 4336 times"> + </span> :<span class="lineCov">      20705 :   switch (laneType)</span>
+<span class="lineNum">     239 </span>  [<span class="branchCov" title="Branch 0 was taken 7935 times"> + </span><span class="branchCov" title="Branch 1 was taken 7209 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 4338 times"> + </span> :<span class="lineCov">      20711 :   switch (laneType)</span>
 <span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 1229 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
 <span class="lineNum">     240 </span>                :            :   {
 <span class="lineNum">     241 </span>                :            :     case ::opendrive::LaneType::Driving:
 <span class="lineNum">     242 </span>                :            :     case ::opendrive::LaneType::Bidirectional:
-<span class="lineNum">     243 </span>                :<span class="lineCov">       7933 :       return lane::LaneType::NORMAL;</span>
+<span class="lineNum">     243 </span>                :<span class="lineCov">       7935 :       return lane::LaneType::NORMAL;</span>
 <span class="lineNum">     244 </span>                :            :     case ::opendrive::LaneType::Shoulder:
 <span class="lineNum">     245 </span>                :            :     case ::opendrive::LaneType::Border:
 <span class="lineNum">     246 </span>                :            :     case ::opendrive::LaneType::Parking:
-<span class="lineNum">     247 </span>                :<span class="lineCov">       7207 :       return lane::LaneType::SHOULDER;</span>
+<span class="lineNum">     247 </span>                :<span class="lineCov">       7209 :       return lane::LaneType::SHOULDER;</span>
 <span class="lineNum">     248 </span>                :            :     case ::opendrive::LaneType::Biking:
 <span class="lineNum">     249 </span>                :<span class="lineNoCov">          0 :       return lane::LaneType::BIKE;</span>
 <span class="lineNum">     250 </span>                :            :     case ::opendrive::LaneType::Sidewalk:
-<span class="lineNum">     251 </span>                :<span class="lineCov">       4336 :       return lane::LaneType::PEDESTRIAN;</span>
+<span class="lineNum">     251 </span>                :<span class="lineCov">       4338 :       return lane::LaneType::PEDESTRIAN;</span>
 <span class="lineNum">     252 </span>                :            :     case ::opendrive::LaneType::Stop:
 <span class="lineNum">     253 </span>                :<span class="lineNoCov">          0 :       return lane::LaneType::EMERGENCY;</span>
 <span class="lineNum">     254 </span>                :            :     case ::opendrive::LaneType::Entry:
@@ -351,27 +351,27 @@
 <span class="lineNum">     271 </span>                :            :   }
 <a name="272"><span class="lineNum">     272 </span>                :            : }</a>
 <span class="lineNum">     273 </span>                :            : 
-<span class="lineNum">     274 </span>                :<span class="lineCov">      20705 : lane::LaneDirection toLaneDirection(::opendrive::Lane const &amp;lane, bool rightHandTraffic)</span>
+<span class="lineNum">     274 </span>                :<span class="lineCov">      20711 : lane::LaneDirection toLaneDirection(::opendrive::Lane const &amp;lane, bool rightHandTraffic)</span>
 <span class="lineNum">     275 </span>                :            : {
 <span class="lineNum">     276 </span>                :            :   lane::LaneDirection direction;
 <span class="lineNum">     277 </span>                :            : 
 <span class="lineNum">     278 </span>                :            :   // First determine the lane direction based on the position of the lane (right hand traffic)
-<span class="lineNum">     279 </span>        [<span class="branchCov" title="Branch 0 was taken 9929 times"> + </span><span class="branchCov" title="Branch 1 was taken 10776 times"> + </span>]:<span class="lineCov">      20705 :   if (lane.index &lt;= 0)</span>
+<span class="lineNum">     279 </span>        [<span class="branchCov" title="Branch 0 was taken 9932 times"> + </span><span class="branchCov" title="Branch 1 was taken 10779 times"> + </span>]:<span class="lineCov">      20711 :   if (lane.index &lt;= 0)</span>
 <span class="lineNum">     280 </span>                :            :   {
-<span class="lineNum">     281 </span>        [<span class="branchCov" title="Branch 0 was taken 9929 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       9929 :     if (rightHandTraffic)</span>
+<span class="lineNum">     281 </span>        [<span class="branchCov" title="Branch 0 was taken 9932 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       9932 :     if (rightHandTraffic)</span>
 <span class="lineNum">     282 </span>                :            :     {
-<span class="lineNum">     283 </span>                :<span class="lineCov">       9929 :       direction = lane::LaneDirection::POSITIVE;</span>
+<span class="lineNum">     283 </span>                :<span class="lineCov">       9932 :       direction = lane::LaneDirection::POSITIVE;</span>
 <span class="lineNum">     284 </span>                :            :     }
 <span class="lineNum">     285 </span>                :            :     else
 <span class="lineNum">     286 </span>                :            :     {
-<span class="lineNum">     287 </span>                :<span class="lineCov">       9929 :       direction = lane::LaneDirection::NEGATIVE;</span>
+<span class="lineNum">     287 </span>                :<span class="lineCov">       9932 :       direction = lane::LaneDirection::NEGATIVE;</span>
 <span class="lineNum">     288 </span>                :            :     }
 <span class="lineNum">     289 </span>                :            :   }
 <span class="lineNum">     290 </span>                :            :   else
 <span class="lineNum">     291 </span>                :            :   {
-<span class="lineNum">     292 </span>        [<span class="branchCov" title="Branch 0 was taken 10776 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      10776 :     if (rightHandTraffic)</span>
+<span class="lineNum">     292 </span>        [<span class="branchCov" title="Branch 0 was taken 10779 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      10779 :     if (rightHandTraffic)</span>
 <span class="lineNum">     293 </span>                :            :     {
-<span class="lineNum">     294 </span>                :<span class="lineCov">      10776 :       direction = lane::LaneDirection::NEGATIVE;</span>
+<span class="lineNum">     294 </span>                :<span class="lineCov">      10779 :       direction = lane::LaneDirection::NEGATIVE;</span>
 <span class="lineNum">     295 </span>                :            :     }
 <span class="lineNum">     296 </span>                :            :     else
 <span class="lineNum">     297 </span>                :            :     {
@@ -380,7 +380,7 @@
 <span class="lineNum">     300 </span>                :            :   }
 <span class="lineNum">     301 </span>                :            : 
 <span class="lineNum">     302 </span>                :            :   // Then based on the lane type adjust the lane direction as needed
-<span class="lineNum">     303 </span>  [<span class="branchCov" title="Branch 0 was taken 84 times"> + </span><span class="branchCov" title="Branch 1 was taken 7933 times"> + </span><span class="branchCov" title="Branch 2 was taken 12688 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">      20705 :   switch (lane.type)</span>
+<span class="lineNum">     303 </span>  [<span class="branchCov" title="Branch 0 was taken 84 times"> + </span><span class="branchCov" title="Branch 1 was taken 7935 times"> + </span><span class="branchCov" title="Branch 2 was taken 12692 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">      20711 :   switch (lane.type)</span>
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 4 was not taken"> - </span>]
 <span class="lineNum">     304 </span>                :            :   {
 <span class="lineNum">     305 </span>                :            :     case ::opendrive::LaneType::Bidirectional:
@@ -397,13 +397,13 @@
 <span class="lineNum">     316 </span>                :            :     case ::opendrive::LaneType::Special1:
 <span class="lineNum">     317 </span>                :            :     case ::opendrive::LaneType::Special2:
 <span class="lineNum">     318 </span>                :            :     case ::opendrive::LaneType::Special3:
-<span class="lineNum">     319 </span>                :<span class="lineCov">       7933 :       return direction;</span>
+<span class="lineNum">     319 </span>                :<span class="lineCov">       7935 :       return direction;</span>
 <span class="lineNum">     320 </span>                :            :     case ::opendrive::LaneType::None:
 <span class="lineNum">     321 </span>                :            :     case ::opendrive::LaneType::Shoulder:
 <span class="lineNum">     322 </span>                :            :     case ::opendrive::LaneType::Border:
 <span class="lineNum">     323 </span>                :            :     case ::opendrive::LaneType::Sidewalk:
 <span class="lineNum">     324 </span>                :            :     case ::opendrive::LaneType::Parking:
-<span class="lineNum">     325 </span>                :<span class="lineCov">      12688 :       return lane::LaneDirection::NONE;</span>
+<span class="lineNum">     325 </span>                :<span class="lineCov">      12692 :       return lane::LaneDirection::NONE;</span>
 <span class="lineNum">     326 </span>                :            :     case ::opendrive::LaneType::RoadWorks:
 <span class="lineNum">     327 </span>                :            :     case ::opendrive::LaneType::Tram:
 <span class="lineNum">     328 </span>                :            :     case ::opendrive::LaneType::Rail:
@@ -413,26 +413,26 @@
 <span class="lineNum">     332 </span>                :            :   }
 <a name="333"><span class="lineNum">     333 </span>                :            : }</a>
 <span class="lineNum">     334 </span>                :            : 
-<span class="lineNum">     335 </span>                :<span class="lineCov">     406402 : point::GeoPoint toGeo(::opendrive::Point const &amp;point)</span>
+<span class="lineNum">     335 </span>                :<span class="lineCov">     406427 : point::GeoPoint toGeo(::opendrive::Point const &amp;point)</span>
 <span class="lineNum">     336 </span>                :            : {
-<span class="lineNum">     337 </span>        [<span class="branchCov" title="Branch 4 was taken 406402 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     406402 :   return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(0.));</span>
+<span class="lineNum">     337 </span>        [<span class="branchCov" title="Branch 4 was taken 406427 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     406427 :   return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(0.));</span>
 <a name="338"><span class="lineNum">     338 </span>                :            : }</a>
 <span class="lineNum">     339 </span>                :            : 
-<span class="lineNum">     340 </span>                :<span class="lineCov">     406402 : point::ECEFPoint toECEF(::opendrive::Point const &amp;point)</span>
+<span class="lineNum">     340 </span>                :<span class="lineCov">     406427 : point::ECEFPoint toECEF(::opendrive::Point const &amp;point)</span>
 <span class="lineNum">     341 </span>                :            : {
 <span class="lineNum">     342 </span>                :            :   // points expected to be geo points
-<span class="lineNum">     343 </span>        [<span class="branchCov" title="Branch 2 was taken 406402 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     406402 :   return point::toECEF(toGeo(point));</span>
+<span class="lineNum">     343 </span>        [<span class="branchCov" title="Branch 2 was taken 406427 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     406427 :   return point::toECEF(toGeo(point));</span>
 <a name="344"><span class="lineNum">     344 </span>                :            : }</a>
 <span class="lineNum">     345 </span>                :            : 
-<span class="lineNum">     346 </span>                :<span class="lineCov">      41410 : point::Geometry toGeometry(std::vector&lt;::opendrive::Point&gt; edgePoints)</span>
+<span class="lineNum">     346 </span>                :<span class="lineCov">      41422 : point::Geometry toGeometry(std::vector&lt;::opendrive::Point&gt; edgePoints)</span>
 <span class="lineNum">     347 </span>                :            : {
-<span class="lineNum">     348 </span>                :<span class="lineCov">      82820 :   point::ECEFEdge ecefEdge;</span>
-<span class="lineNum">     349 </span>        [<span class="branchCov" title="Branch 3 was taken 405444 times"> + </span><span class="branchCov" title="Branch 4 was taken 41410 times"> + </span>]:<span class="lineCov">     446854 :   for (auto const &amp;point : edgePoints)</span>
+<span class="lineNum">     348 </span>                :<span class="lineCov">      82844 :   point::ECEFEdge ecefEdge;</span>
+<span class="lineNum">     349 </span>        [<span class="branchCov" title="Branch 3 was taken 405468 times"> + </span><span class="branchCov" title="Branch 4 was taken 41422 times"> + </span>]:<span class="lineCov">     446890 :   for (auto const &amp;point : edgePoints)</span>
 <span class="lineNum">     350 </span>                :            :   {
-<span class="lineNum">     351 </span>[<span class="branchCov" title="Branch 1 was taken 405444 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 405444 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     405444 :     ecefEdge.push_back(toECEF(point));</span>
+<span class="lineNum">     351 </span>[<span class="branchCov" title="Branch 1 was taken 405468 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 405468 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     405468 :     ecefEdge.push_back(toECEF(point));</span>
 <span class="lineNum">     352 </span>                :            :   }
 <span class="lineNum">     353 </span>                :            : 
-<span class="lineNum">     354 </span>        [<span class="branchCov" title="Branch 1 was taken 41410 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      82820 :   return point::createGeometry(ecefEdge, false);</span>
+<span class="lineNum">     354 </span>        [<span class="branchCov" title="Branch 1 was taken 41422 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      82844 :   return point::createGeometry(ecefEdge, false);</span>
 <span class="lineNum">     355 </span>                :            : }
 <span class="lineNum">     356 </span>                :            : 
 <a name="357"><span class="lineNum">     357 </span>                :            : } // namespace opendrive</a>

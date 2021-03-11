@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-02-03 16:35:58</td>
+            <td class="headerValue">2021-03-11 16:09:24</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -88,16 +88,16 @@
 <span class="lineNum">      17 </span>                :            : namespace map {
 <a name="18"><span class="lineNum">      18 </span>                :            : namespace point {</a>
 <span class="lineNum">      19 </span>                :            : 
-<span class="lineNum">      20 </span>                :<span class="lineCov">      42249 : Geometry createGeometry(const ECEFEdge &amp;points, bool closed)</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">      42261 : Geometry createGeometry(const ECEFEdge &amp;points, bool closed)</span>
 <span class="lineNum">      21 </span>                :            : {
-<span class="lineNum">      22 </span>                :<span class="lineCov">      42249 :   Geometry geometry;</span>
-<span class="lineNum">      23 </span>                :<span class="lineCov">      42249 :   geometry.isClosed = closed;</span>
-<span class="lineNum">      24 </span>        [<span class="branchCov" title="Branch 1 was taken 42249 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      42249 :   geometry.ecefEdge = points;</span>
-<span class="lineNum">      25 </span>                :<span class="lineCov">      42249 :   geometry.private_enuEdgeCache.enuVersion = 0;</span>
-<span class="lineNum">      26 </span>[<span class="branchCov" title="Branch 1 was taken 42245 times"> + </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 42245 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      42249 :   geometry.isValid = (points.size() &gt;= 2) &amp;&amp; isValid(points);</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 42245 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
-<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 1 was taken 42249 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      42249 :   geometry.length = calcLength(points);</span>
-<span class="lineNum">      28 </span>                :<span class="lineCov">      42249 :   return geometry;</span>
+<span class="lineNum">      22 </span>                :<span class="lineCov">      42261 :   Geometry geometry;</span>
+<span class="lineNum">      23 </span>                :<span class="lineCov">      42261 :   geometry.isClosed = closed;</span>
+<span class="lineNum">      24 </span>        [<span class="branchCov" title="Branch 1 was taken 42261 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      42261 :   geometry.ecefEdge = points;</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">      42261 :   geometry.private_enuEdgeCache.enuVersion = 0;</span>
+<span class="lineNum">      26 </span>[<span class="branchCov" title="Branch 1 was taken 42257 times"> + </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 42257 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      42261 :   geometry.isValid = (points.size() &gt;= 2) &amp;&amp; isValid(points);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 6 was taken 42257 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
+<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 1 was taken 42261 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      42261 :   geometry.length = calcLength(points);</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">      42261 :   return geometry;</span>
 <a name="29"><span class="lineNum">      29 </span>                :            : }</a>
 <span class="lineNum">      30 </span>                :            : 
 <span class="lineNum">      31 </span>                :<span class="lineCov">         40 : ENUEdge getCachedENUEdge(Geometry const &amp;geometry)</span>

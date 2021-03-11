@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-02-03 16:35:58</td>
+            <td class="headerValue">2021-03-11 16:09:24</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -101,9 +101,9 @@
 <span class="lineNum">      30 </span>                :            :  *
 <a name="31"><span class="lineNum">      31 </span>                :            :  * The point is valid if it's within valid input range.</a>
 <span class="lineNum">      32 </span>                :            :  */
-<span class="lineNum">      33 </span>                :<span class="lineCov">     534388 : inline bool isValid(GeoPoint const &amp;point, bool const logErrors = true)</span>
+<span class="lineNum">      33 </span>                :<span class="lineCov">     534418 : inline bool isValid(GeoPoint const &amp;point, bool const logErrors = true)</span>
 <span class="lineNum">      34 </span>                :            : {
-<span class="lineNum">      35 </span>                :<span class="lineCov">     534388 :   return withinValidInputRange(point, logErrors);</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">     534418 :   return withinValidInputRange(point, logErrors);</span>
 <span class="lineNum">      36 </span>                :            : }
 <span class="lineNum">      37 </span>                :            : 
 <span class="lineNum">      38 </span>                :            : /**
@@ -121,9 +121,9 @@
 <span class="lineNum">      50 </span>                :            :  * @param[in] deg Decimal degrees.
 <a name="51"><span class="lineNum">      51 </span>                :            :  * @return Radians.</a>
 <span class="lineNum">      52 </span>                :            :  */
-<span class="lineNum">      53 </span>                :<span class="lineCov">     890526 : inline double degree2radians(double degree)</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">     890582 : inline double degree2radians(double degree)</span>
 <span class="lineNum">      54 </span>                :            : {
-<span class="lineNum">      55 </span>                :<span class="lineCov">     890526 :   return degree * M_PI / 180.0;</span>
+<span class="lineNum">      55 </span>                :<span class="lineCov">     890582 :   return degree * M_PI / 180.0;</span>
 <span class="lineNum">      56 </span>                :            : }
 <span class="lineNum">      57 </span>                :            : 
 <span class="lineNum">      58 </span>                :            : /**
@@ -141,9 +141,9 @@
 <span class="lineNum">      70 </span>                :            :  * @param[in] latitude latitude
 <a name="71"><span class="lineNum">      71 </span>                :            :  * @return latitude in radians.</a>
 <span class="lineNum">      72 </span>                :            :  */
-<span class="lineNum">      73 </span>                :<span class="lineCov">     445357 : inline double toRadians(Latitude const &amp;latitude)</span>
+<span class="lineNum">      73 </span>                :<span class="lineCov">     445385 : inline double toRadians(Latitude const &amp;latitude)</span>
 <span class="lineNum">      74 </span>                :            : {
-<span class="lineNum">      75 </span>                :<span class="lineCov">     445357 :   return degree2radians(static_cast&lt;double&gt;(latitude));</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">     445385 :   return degree2radians(static_cast&lt;double&gt;(latitude));</span>
 <span class="lineNum">      76 </span>                :            : }
 <span class="lineNum">      77 </span>                :            : 
 <span class="lineNum">      78 </span>                :            : /**
@@ -151,9 +151,9 @@
 <span class="lineNum">      80 </span>                :            :  * @param[in] longitude longitude
 <a name="81"><span class="lineNum">      81 </span>                :            :  * @return longitude in radians.</a>
 <span class="lineNum">      82 </span>                :            :  */
-<span class="lineNum">      83 </span>                :<span class="lineCov">     445057 : inline double toRadians(Longitude const &amp;longitude)</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">     445085 : inline double toRadians(Longitude const &amp;longitude)</span>
 <span class="lineNum">      84 </span>                :            : {
-<span class="lineNum">      85 </span>                :<span class="lineCov">     445057 :   return degree2radians(static_cast&lt;double&gt;(longitude));</span>
+<span class="lineNum">      85 </span>                :<span class="lineCov">     445085 :   return degree2radians(static_cast&lt;double&gt;(longitude));</span>
 <span class="lineNum">      86 </span>                :            : }
 <span class="lineNum">      87 </span>                :            : 
 <span class="lineNum">      88 </span>                :            : /**
@@ -163,13 +163,13 @@
 <span class="lineNum">      92 </span>                :            :  * @param[in] latitude latitude of the point
 <a name="93"><span class="lineNum">      93 </span>                :            :  * @param[in] altitude altitude of the point</a>
 <span class="lineNum">      94 </span>                :            :  */
-<span class="lineNum">      95 </span>                :<span class="lineCov">     439284 : inline GeoPoint createGeoPoint(Longitude const longitude, Latitude const latitude, Altitude const altitude)</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">     439310 : inline GeoPoint createGeoPoint(Longitude const longitude, Latitude const latitude, Altitude const altitude)</span>
 <span class="lineNum">      96 </span>                :            : {
-<span class="lineNum">      97 </span>                :<span class="lineCov">     439284 :   GeoPoint result;</span>
-<span class="lineNum">      98 </span>                :<span class="lineCov">     439284 :   result.longitude = longitude;</span>
-<span class="lineNum">      99 </span>                :<span class="lineCov">     439284 :   result.latitude = latitude;</span>
-<span class="lineNum">     100 </span>                :<span class="lineCov">     439284 :   result.altitude = altitude;</span>
-<span class="lineNum">     101 </span>                :<span class="lineCov">     439284 :   return result;</span>
+<span class="lineNum">      97 </span>                :<span class="lineCov">     439310 :   GeoPoint result;</span>
+<span class="lineNum">      98 </span>                :<span class="lineCov">     439310 :   result.longitude = longitude;</span>
+<span class="lineNum">      99 </span>                :<span class="lineCov">     439310 :   result.latitude = latitude;</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">     439310 :   result.altitude = altitude;</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">     439310 :   return result;</span>
 <span class="lineNum">     102 </span>                :            : }
 <span class="lineNum">     103 </span>                :            : 
 <span class="lineNum">     104 </span>                :            : /**

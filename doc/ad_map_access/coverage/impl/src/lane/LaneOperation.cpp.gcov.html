@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-02-03 16:35:58</td>
+            <td class="headerValue">2021-03-11 16:09:24</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">49</td>
@@ -497,20 +497,20 @@
 <span class="lineNum">     411 </span>                :<span class="lineCov">          5 :   return false;</span>
 <a name="412"><span class="lineNum">     412 </span>                :            : }</a>
 <span class="lineNum">     413 </span>                :            : 
-<span class="lineNum">     414 </span>                :<span class="lineCov">      20774 : void updateLaneLengths(Lane &amp;lane)</span>
+<span class="lineNum">     414 </span>                :<span class="lineCov">      20780 : void updateLaneLengths(Lane &amp;lane)</span>
 <span class="lineNum">     415 </span>                :            : {
-<span class="lineNum">     416 </span>        [<span class="branchCov" title="Branch 1 was taken 20772 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">      20774 :   if (isValid(lane.edgeLeft))</span>
+<span class="lineNum">     416 </span>        [<span class="branchCov" title="Branch 1 was taken 20778 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">      20780 :   if (isValid(lane.edgeLeft))</span>
 <span class="lineNum">     417 </span>                :            :   {
-<span class="lineNum">     418 </span>        [<span class="branchCov" title="Branch 1 was taken 20771 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      20772 :     if (isValid(lane.edgeRight))</span>
+<span class="lineNum">     418 </span>        [<span class="branchCov" title="Branch 1 was taken 20777 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      20778 :     if (isValid(lane.edgeRight))</span>
 <span class="lineNum">     419 </span>                :            :     {
-<span class="lineNum">     420 </span>        [<span class="branchCov" title="Branch 1 was taken 20771 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20771 :       lane.lengthRange.minimum = std::min(lane.edgeLeft.length, lane.edgeRight.length);</span>
-<span class="lineNum">     421 </span>        [<span class="branchCov" title="Branch 1 was taken 20771 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20771 :       lane.lengthRange.maximum = std::max(lane.edgeLeft.length, lane.edgeRight.length);</span>
-<span class="lineNum">     422 </span>[<span class="branchCov" title="Branch 1 was taken 20771 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 20771 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      20771 :       lane.length = (lane.edgeLeft.length + lane.edgeRight.length) * 0.5;</span>
+<span class="lineNum">     420 </span>        [<span class="branchCov" title="Branch 1 was taken 20777 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20777 :       lane.lengthRange.minimum = std::min(lane.edgeLeft.length, lane.edgeRight.length);</span>
+<span class="lineNum">     421 </span>        [<span class="branchCov" title="Branch 1 was taken 20777 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20777 :       lane.lengthRange.maximum = std::max(lane.edgeLeft.length, lane.edgeRight.length);</span>
+<span class="lineNum">     422 </span>[<span class="branchCov" title="Branch 1 was taken 20777 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 20777 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      20777 :       lane.length = (lane.edgeLeft.length + lane.edgeRight.length) * 0.5;</span>
 <span class="lineNum">     423 </span>                :            : 
 <span class="lineNum">     424 </span>                :            :       auto widthRangeResult = calculateWidthRange(
-<span class="lineNum">     425 </span>        [<span class="branchCov" title="Branch 1 was taken 20771 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20771 :         lane.edgeLeft.ecefEdge, lane.edgeLeft.length, lane.edgeRight.ecefEdge, lane.edgeRight.length);</span>
-<span class="lineNum">     426 </span>                :<span class="lineCov">      20771 :       lane.widthRange = widthRangeResult.first;</span>
-<span class="lineNum">     427 </span>                :<span class="lineCov">      20771 :       lane.width = widthRangeResult.second;</span>
+<span class="lineNum">     425 </span>        [<span class="branchCov" title="Branch 1 was taken 20777 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20777 :         lane.edgeLeft.ecefEdge, lane.edgeLeft.length, lane.edgeRight.ecefEdge, lane.edgeRight.length);</span>
+<span class="lineNum">     426 </span>                :<span class="lineCov">      20777 :       lane.widthRange = widthRangeResult.first;</span>
+<span class="lineNum">     427 </span>                :<span class="lineCov">      20777 :       lane.width = widthRangeResult.second;</span>
 <span class="lineNum">     428 </span>                :            :     }
 <span class="lineNum">     429 </span>                :            :     else
 <span class="lineNum">     430 </span>                :            :     {
@@ -519,7 +519,7 @@
 <span class="lineNum">     433 </span>                :<span class="lineCov">          1 :       lane.lengthRange.maximum = lane.length;</span>
 <span class="lineNum">     434 </span>                :<span class="lineCov">          1 :       lane.width = physics::Distance(0);</span>
 <span class="lineNum">     435 </span>                :<span class="lineCov">          1 :       lane.widthRange.minimum = lane.width;</span>
-<span class="lineNum">     436 </span>                :<span class="lineCov">      20772 :       lane.widthRange.maximum = lane.width;</span>
+<span class="lineNum">     436 </span>                :<span class="lineCov">      20778 :       lane.widthRange.maximum = lane.width;</span>
 <span class="lineNum">     437 </span>                :            :     }
 <span class="lineNum">     438 </span>                :            :   }
 <span class="lineNum">     439 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">          2 :   else if (isValid(lane.edgeRight))</span>
@@ -540,7 +540,7 @@
 <span class="lineNum">     454 </span>                :<span class="lineCov">          1 :     lane.widthRange.minimum = lane.width;</span>
 <span class="lineNum">     455 </span>                :<span class="lineCov">          1 :     lane.widthRange.maximum = lane.width;</span>
 <span class="lineNum">     456 </span>                :            :   }
-<a name="457"><span class="lineNum">     457 </span>                :<span class="lineCov">      20774 : }</span></a>
+<a name="457"><span class="lineNum">     457 </span>                :<span class="lineCov">      20780 : }</span></a>
 <span class="lineNum">     458 </span>                :            : 
 <span class="lineNum">     459 </span>                :<span class="lineCov">         34 : point::ENUHeading getLaneENUHeading(point::ParaPoint const &amp;position)</span>
 <span class="lineNum">     460 </span>                :            : {
