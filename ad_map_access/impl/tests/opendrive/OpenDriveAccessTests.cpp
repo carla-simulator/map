@@ -19,6 +19,10 @@
 #include <ad/map/serialize/SerializerFileCRC32.hpp>
 #include <gtest/gtest.h>
 
+#include <fstream>
+#include <streambuf>
+#include <string>
+
 using namespace ::ad;
 using namespace ::ad::map;
 using namespace ::ad::map::opendrive;
@@ -417,4 +421,19 @@ TEST_F(OpenDriveAccessTests, DataTypeConversion)
   signalReference.inLaneOrientation = false;
   ASSERT_EQ(lane::ContactLocation::PREDECESSOR, toContactLocation(signalReference, false));
   ASSERT_EQ(landmark::LandmarkId(100), toLandmarkId((int)100));
+}
+
+TEST_F(OpenDriveAccessTests, read_karlsruhe_map_with_other_proj_string)
+{
+  access::cleanup();
+  std::ifstream mapFile("test_files/Karlsruhe.xodr");
+  std::stringstream openDriveContentStream;
+
+  openDriveContentStream << mapFile.rdbuf();
+  std::string openDriveContent = openDriveContentStream.str();
+  ASSERT_TRUE(access::initFromOpenDriveContent(openDriveContent, 0.2, intersection::IntersectionType::TrafficLight));
+  ASSERT_TRUE(access::isENUReferencePointSet());
+  const auto refPoint = access::getENUReferencePoint();
+  ASSERT_EQ(refPoint.latitude, ad::map::point::Latitude(49.02067835));
+  ASSERT_EQ(refPoint.longitude, ad::map::point::Longitude(8.43531364));
 }
