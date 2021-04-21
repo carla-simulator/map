@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019-2020 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -98,17 +98,19 @@ struct Point
 {
   double x{0.};
   double y{0.};
+  double z{0.};
 
-  Point(double _x, double _y)
+  Point(double _x, double _y, double _z)
     : x(_x)
     , y(_y)
+    , z(_z)
   {
   }
 
   bool operator==(const Point &rhs) const
   {
     // Points are treated as equal when below 1 mm
-    return (std::fabs(x - rhs.x) < 1e-3) && (std::fabs(y - rhs.y) < 1e-3);
+    return (std::fabs(x - rhs.x) < 1e-3) && (std::fabs(y - rhs.y) < 1e-3) && (std::fabs(z - rhs.z) < 1e-3);
   }
   bool operator!=(const Point &rhs) const
   {
@@ -127,13 +129,13 @@ struct Point
 
   double dot(const Point &other) const
   {
-    return x * other.x + y * other.y;
+    return x * other.x + y * other.y + z * other.z;
   }
 };
 
 inline Point operator-(const Point &left, const Point &right)
 {
-  return Point(left.x - right.x, left.y - right.y);
+  return Point(left.x - right.x, left.y - right.y, left.z - right.z);
 }
 
 struct GeometryAttributes
@@ -147,6 +149,7 @@ struct GeometryAttributes
 
   double start_position_x; // [meters]
   double start_position_y; // [meters]
+  double start_position_z;
 };
 
 struct GeometryAttributesArc : public GeometryAttributes
@@ -548,7 +551,7 @@ struct GeoLocation
   double altitude{0.0};
   std::string projection;
 };
-}
+} // namespace geom
 
 /////////////////////////////////////////////////////////////////
 struct Lane
@@ -574,7 +577,7 @@ struct Landmark
   int id{-1};
   int type{-1};
   int subtype{-1};
-  Point position{0., 0.};
+  Point position{0., 0., 0.};
   double orientation{0.};
 };
 using LaneMap = std::unordered_map<Id, Lane>;
@@ -592,4 +595,4 @@ struct OpenDriveData
   LandmarkMap landmarks;
   std::unordered_map<int, std::vector<Id>> intersectionLaneIds;
 };
-}
+} // namespace opendrive

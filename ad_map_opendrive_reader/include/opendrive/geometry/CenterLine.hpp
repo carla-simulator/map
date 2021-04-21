@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -27,6 +27,7 @@ struct CenterLine
   LaneOffsetVector offsetVector;
 
   double length{0.};
+  std::vector<ElevationProfile> elevation;
 
   /**
    * @brief Evalues the center line at the given position along the curve and returns a DirectedPoint
@@ -52,5 +53,5 @@ struct CenterLine
  * Returns false if invalid geometry definitions are present.
  */
 bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine);
-}
-}
+} // namespace geometry
+} // namespace opendrive

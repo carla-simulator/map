@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -40,20 +40,17 @@ bool OpenDriveParser::Parse(const char *xml,
   unsigned int const parse_options_ensure_no_doctype = pugi::parse_default & ~pugi::parse_doctype;
   switch (inputType)
   {
-    case XmlInputType::FILE:
-    {
+    case XmlInputType::FILE: {
       pugiParseResult = xmlDoc.load_file(xml, parse_options_ensure_no_doctype);
     }
     break;
 
-    case XmlInputType::CONTENT:
-    {
+    case XmlInputType::CONTENT: {
       pugiParseResult = xmlDoc.load_string(xml, parse_options_ensure_no_doctype);
     }
     break;
 
-    default:
-    {
+    default: {
       // TODO: Log some kind of error
       return false;
     }
@@ -138,5 +135,5 @@ bool OpenDriveParser::Parse(const char *xml,
 
   return true;
 }
-}
-}
+} // namespace parser
+} // namespace opendrive

@@ -1,5 +1,26 @@
 ## Latest changes
 
+## Release 2.4.4
+#### :rocket: New Features
+* Add elevation profile to road geometry on OpenDRIVE import
+* Added support for point::AltitudeUnknown in match::AdMapMatching
+
+## Release 2.4.3
+#### :rocket: New Features
+* Enabled use of Proj4 reference strings in OpenDRIVE maps
+
+## Release 2.4.2
+#### :ghost: Maintenance
+* Fix plan route: Ignore empty routes (of length 0) when searching for the shortest route
+* CoordinateTransform: Fix error messages
+* Opendrive reader: handle exception when traffic signal type is no integer
+* ad_map_access_qgis
+  - Adapt ad_map_access imports
+  - Close opendrive file after usage and provide default Geo reference if required (i.e. if not present in xodr file)
+  - Snapping: fix error handling, increase search radius
+  - Fix visibility of feature attributes
+  - Fix point layer useage in tests
+
 ## Release 2.4.0
 #### :rocket: New Features
 * Qgis 2.18 to QGis 3.14

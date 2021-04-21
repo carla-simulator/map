@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -24,5 +24,5 @@ public:
   static ::opendrive::geom::GeoLocation Parse(const std::string &geo_reference_string);
 };
 
-} // parser
-} // opendrive
+} // namespace parser
+} // namespace opendrive

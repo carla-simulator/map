@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -31,4 +31,4 @@ bool GenerateLaneMap(opendrive::OpenDriveData &open_drive_data, double const ove
 {
   return geometry::GenerateGeometry(open_drive_data, overlapMargin);
 }
-}
+} // namespace opendrive

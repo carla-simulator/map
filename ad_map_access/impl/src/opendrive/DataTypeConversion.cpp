@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2019-2020 Intel Corporation
+// Copyright (C) 2019-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -334,7 +334,7 @@ lane::LaneDirection toLaneDirection(::opendrive::Lane const &lane, bool rightHan
 
 point::GeoPoint toGeo(::opendrive::Point const &point)
 {
-  return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(0.));
+  return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(point.z));
 }
 
 point::ECEFPoint toECEF(::opendrive::Point const &point)

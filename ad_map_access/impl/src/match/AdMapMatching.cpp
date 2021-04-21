@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -42,6 +42,13 @@ AdMapMatching::findLanesInputChecked(std::vector<lane::Lane::ConstPtr> const &re
     }
   }
 
+  normalizeResults(mapMatchingResults, probabilitySum);
+  return mapMatchingResults;
+}
+
+void AdMapMatching::normalizeResults(match::MapMatchedPositionConfidenceList &mapMatchingResults,
+                                     physics::Probability const &probabilitySum)
+{
   // normalize result probabilities
   if (probabilitySum > physics::Probability(0.01))
   {
@@ -57,8 +64,50 @@ AdMapMatching::findLanesInputChecked(std::vector<lane::Lane::ConstPtr> const &re
             [](MapMatchedPosition const &left, MapMatchedPosition const &right) {
               return left.probability > right.probability;
             });
+}
 
-  return mapMatchingResults;
+match::MapMatchedPositionConfidenceList
+AdMapMatching::findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geo_point, physics::Distance const &distance)
+{
+  match::MapMatchedPositionConfidenceList map_matching_results;
+  physics::Probability probability_sum(0.);
+  for (auto lane_id : access::getStore().getLanes())
+  {
+    auto lane = access::getStore().getLanePtr(lane_id);
+    if (lane)
+    {
+      auto const altitude_range = calcLaneAltitudeRange(*lane);
+      auto geo_point_check = geo_point;
+      auto const altitude_delta_2 = (altitude_range.maximum - altitude_range.minimum) / 2.;
+      geo_point_check.altitude = altitude_range.minimum + altitude_delta_2;
+      point::BoundingSphere matchingSphere;
+      matchingSphere.center = point::toECEF(geo_point_check);
+      matchingSphere.radius = distance + physics::Distance(static_cast<double>(altitude_delta_2));
+      if (lane::isNear(*lane, matchingSphere))
+      {
+        MapMatchedPosition mmpt;
+        if (lane::findNearestPointOnLane(*lane, matchingSphere.center, mmpt))
+        {
+          if (mmpt.matchedPointDistance <= matchingSphere.radius)
+          {
+            // now correct query point and assume the matched point's altitude to perform final local decision
+            geo_point_check.altitude = point::toGeo(mmpt.matchedPoint).altitude;
+            matchingSphere.center = point::toECEF(geo_point_check);
+            if (lane::findNearestPointOnLane(*lane, matchingSphere.center, mmpt))
+            {
+              if (mmpt.matchedPointDistance <= distance)
+              {
+                map_matching_results.push_back(mmpt);
+                probability_sum += mmpt.probability;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  normalizeResults(map_matching_results, probability_sum);
+  return map_matching_results;
 }
 
 std::vector<lane::Lane::ConstPtr> AdMapMatching::getRelevantLanesInputChecked(point::ECEFPoint const &ecefPoint,
@@ -103,7 +152,14 @@ match::MapMatchedPositionConfidenceList AdMapMatching::findLanes(point::GeoPoint
     access::getLogger()->error("Invalid radius passed to AdMapMatching::findLanes(): {}", distance);
     return MapMatchedPositionConfidenceList();
   }
-  return findLanesInputChecked(point::toECEF(geoPoint), distance);
+  if (geoPoint.altitude == point::AltitudeUnknown)
+  {
+    return findLanesInputCheckedAltitudeUnknown(geoPoint, distance);
+  }
+  else
+  {
+    return findLanesInputChecked(point::toECEF(geoPoint), distance);
+  }
 }
 
 match::MapMatchedPositionConfidenceList AdMapMatching::findLanes(point::ECEFPoint const &ecefPoint,

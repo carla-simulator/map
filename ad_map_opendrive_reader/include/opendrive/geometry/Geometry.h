@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -24,9 +24,9 @@ struct DirectedPoint
 {
   DirectedPoint();
   DirectedPoint(const Point &point, double t);
-  DirectedPoint(double x, double y, double t);
+  DirectedPoint(double x, double y, double z, double t);
 
-  Point location = {0, 0};
+  Point location = {0, 0, 0};
   double tangent = 0.0; // [radians]
 
   /**
@@ -156,5 +156,5 @@ private:
   double _dV;
 };
 
-} // namespace
-} // namespace
+} // namespace geometry
+} // namespace opendrive

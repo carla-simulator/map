@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -25,7 +25,6 @@ void opendrive::parser::ProfilesParser::ParseElevation(const pugi::xml_node &xml
     elevationProfile.slope = std::stod(laneSection.attribute("b").value());
     elevationProfile.vertical_curvature = std::stod(laneSection.attribute("c").value());
     elevationProfile.curvature_change = std::stod(laneSection.attribute("d").value());
-
     out_elevation_profile.emplace_back(elevationProfile);
   }
 }
@@ -52,6 +51,16 @@ void opendrive::parser::ProfilesParser::Parse(const pugi::xml_node &xmlNode, ope
 {
   opendrive::parser::ProfilesParser profilesParser;
 
-  profilesParser.ParseElevation(xmlNode.child("elevationProfile"), out_road_profiles.elevation_profile);
-  profilesParser.ParseLateral(xmlNode.child("lateralProfile"), out_road_profiles.lateral_profile);
+  const pugi::xml_node predecessorNode = xmlNode.child("elevationProfile");
+  const pugi::xml_node successorNode = xmlNode.child("lateralProfile");
+
+  if (predecessorNode)
+  {
+    profilesParser.ParseElevation(xmlNode.child("elevationProfile"), out_road_profiles.elevation_profile);
+  }
+
+  if (successorNode)
+  {
+    profilesParser.ParseLateral(xmlNode.child("lateralProfile"), out_road_profiles.lateral_profile);
+  }
 }

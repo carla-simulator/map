@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -473,6 +473,21 @@ physics::Distance calcWidth(point::ENUPoint const &enuPoint);
  */
 physics::Distance calcWidth(match::LaneOccupiedRegion const &laneOccupiedRegion);
 
+/**
+ * @brief Struct to hold the altitude range of a lane
+ */
+struct LaneAltitudeRange
+{
+  point::Altitude minimum;
+  point::Altitude maximum;
+};
+
+/**
+ * @brief Calculates the altitude range of a lane
+ *
+ * @returns The range of the lanes altitude
+ */
+LaneAltitudeRange calcLaneAltitudeRange(Lane const &lane);
 } // namespace lane
 } // namespace map
 } // namespace ad

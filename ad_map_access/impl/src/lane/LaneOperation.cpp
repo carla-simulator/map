@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -775,6 +775,35 @@ point::ENUPoint getENULanePoint(point::ParaPoint const parametricPoint, physics:
   auto enuPoint = point::toENU(ecefPoint);
   return enuPoint;
 }
+
+LaneAltitudeRange calcLaneAltitudeRange(Lane const &lane)
+{
+  LaneAltitudeRange altitude_range;
+  bool initialize = true;
+  for (auto const &pt : lane.edgeLeft.ecefEdge)
+  {
+    auto const pt_geo = point::toGeo(pt);
+    if (initialize)
+    {
+      initialize = false;
+      altitude_range.minimum = pt_geo.altitude;
+      altitude_range.maximum = pt_geo.altitude;
+    }
+    else
+    {
+      altitude_range.minimum = std::min(altitude_range.minimum, pt_geo.altitude);
+      altitude_range.maximum = std::max(altitude_range.maximum, pt_geo.altitude);
+    }
+  }
+  for (auto const &pt : lane.edgeRight.ecefEdge)
+  {
+    auto const pt_geo = point::toGeo(pt);
+    altitude_range.minimum = std::min(altitude_range.minimum, pt_geo.altitude);
+    altitude_range.maximum = std::max(altitude_range.maximum, pt_geo.altitude);
+  }
+  return altitude_range;
+}
+
 } // namespace lane
 } // namespace map
 } // namespace ad

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019-2020 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -36,6 +36,24 @@ double laneWidth(std::vector<LaneWidth> const &laneWidthVector, double s)
     {
       auto poly = boost::array<double, 4>{{it->a, it->b, it->c, it->d}};
       return boost::math::tools::evaluate_polynomial(poly, s - it->soffset);
+    }
+  }
+  return 0.0;
+}
+
+double laneHeight(std::vector<ElevationProfile> elevationVector, double s)
+{
+  if (s < 0.)
+  {
+    s = 0;
+  }
+
+  for (auto it = elevationVector.rbegin(); it != elevationVector.rend(); it++)
+  {
+    if (s >= it->start_position)
+    {
+      auto poly = boost::array<double, 4>{{it->elevation, it->slope, it->vertical_curvature, it->curvature_change}};
+      return boost::math::tools::evaluate_polynomial(poly, s - it->start_position);
     }
   }
   return 0.0;
@@ -268,7 +286,7 @@ void normalizeEdge(Id const id, std::string const &what, Edge &edge)
     return;
   }
   std::size_t pointsToDrop = 0u;
-  Point previousEdgeDir(0., 0.);
+  Point previousEdgeDir(0., 0., 0.);
   for (std::size_t i = 1u; i < edge.size(); ++i)
   {
     // i-pointsToDrop > 0
@@ -287,7 +305,7 @@ void normalizeEdge(Id const id, std::string const &what, Edge &edge)
     {
       //  moving the middle line in a narrow curve often leads to artifacts (circles) which are removed by the below
       auto nextEdgeDir = edge[i - pointsToDrop] - edge[i - pointsToDrop - 1];
-      if (previousEdgeDir != Point(0., 0.))
+      if (previousEdgeDir != Point(0., 0., 0.))
       {
         auto dotProduct = previousEdgeDir.dot(nextEdgeDir);
         if (dotProduct < 0.)
@@ -312,7 +330,7 @@ void normalizeEdge(Id const id, std::string const &what, Edge &edge)
     std::size_t const newEdgeSize = std::max(std::size_t(2u), edge.size() - pointsToDrop);
     // std::cerr<< "normalizeEdge[" << id << "] dropping points from " << what << " edge: " << pointsToDrop << "
     // remaining: " << newEdgeSize << std::endl;
-    edge.resize(newEdgeSize, Point(0., 0.));
+    edge.resize(newEdgeSize, Point(0., 0., 0.));
   }
 }
 
@@ -925,7 +943,6 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
     auto geoPoint = pj_inv(enuPoint, projPtr);
     point.x = geoPoint.u * RAD_TO_DEG;
     point.y = geoPoint.v * RAD_TO_DEG;
-
   };
 
   for (auto &element : mapData.laneMap)
@@ -984,5 +1001,5 @@ bool GenerateGeometry(opendrive::OpenDriveData &open_drive_data, double const ov
 
   return ok;
 }
-}
-}
+} // namespace geometry
+} // namespace opendrive

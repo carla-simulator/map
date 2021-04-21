@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019-2020 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -50,6 +50,8 @@ inline double parametricPosition(double startPosition, LaneSection const &laneSe
   return (startPosition - laneSection.start_position) / (laneSection.end_position - laneSection.start_position);
 }
 
+double laneHeight(std::vector<ElevationProfile> elevationVector, double s);
+
 /**
  * @brief Generates a full geometry description of the OpenDRIVE data.
  * The OpenDRIVE data geometry is sampled, and left and right borders are created for every lane.
@@ -62,5 +64,5 @@ inline double parametricPosition(double startPosition, LaneSection const &laneSe
  *
  */
 bool GenerateGeometry(opendrive::OpenDriveData &open_drive_data, double const overlapMargin);
-}
-}
+} // namespace geometry
+} // namespace opendrive

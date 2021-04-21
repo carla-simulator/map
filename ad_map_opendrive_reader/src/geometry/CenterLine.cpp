@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -14,6 +14,7 @@
 #include <boost/math/tools/rational.hpp>
 #include <cmath>
 #include <iostream>
+#include "opendrive/geometry/GeometryGenerator.hpp"
 
 namespace opendrive {
 namespace geometry {
@@ -37,12 +38,16 @@ geometry::DirectedPoint CenterLine::eval(double s, bool applyLateralOffset) cons
       {
         directedPoint.ApplyLateralOffset(calculateOffset(s));
       }
+
+      directedPoint.location.z = laneHeight(elevation, s);
       return directedPoint;
     }
   }
 
   auto &lastGeometry = geometry.back();
-  return lastGeometry->PosFromDist(s - lastGeometry->GetStartOffset());
+  auto directed_point = lastGeometry->PosFromDist(s - lastGeometry->GetStartOffset());
+  directed_point.location.z = laneHeight(elevation, s);
+  return directed_point;
 }
 
 std::vector<double> CenterLine::samplingPoints() const
@@ -134,49 +139,46 @@ bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
   centerLine.geometry.clear();
   centerLine.length = roadInfo.attributes.length;
   centerLine.offsetVector = roadInfo.lanes.lane_offset;
+  centerLine.elevation = roadInfo.road_profiles.elevation_profile;
 
   // Add geometry information
   for (auto &geometry_attribute : roadInfo.geometry_attributes)
   {
-    Point start(geometry_attribute->start_position_x, geometry_attribute->start_position_y);
+    Point start(
+      geometry_attribute->start_position_x, geometry_attribute->start_position_y, geometry_attribute->start_position_z);
 
     try
     {
       switch (geometry_attribute->type)
       {
-        case ::opendrive::GeometryType::ARC:
-        {
+        case ::opendrive::GeometryType::ARC: {
           auto arc = static_cast<GeometryAttributesArc *>(geometry_attribute.get());
           centerLine.geometry.emplace_back(std::make_unique<geometry::GeometryArc>(
             arc->start_position, arc->length, arc->heading, start, arc->curvature));
           break;
         }
-        case ::opendrive::GeometryType::LINE:
-        {
+        case ::opendrive::GeometryType::LINE: {
           auto line = static_cast<GeometryAttributesLine *>(geometry_attribute.get());
           centerLine.geometry.emplace_back(
             std::make_unique<geometry::GeometryLine>(line->start_position, line->length, line->heading, start));
           break;
         }
         break;
-        case ::opendrive::GeometryType::SPIRAL:
-        {
+        case ::opendrive::GeometryType::SPIRAL: {
           // currently not yet supported
           std::cerr << "generateCenterLine() spirals are currently not supported yet\n";
           ok = false;
           break;
         }
         break;
-        case ::opendrive::GeometryType::POLY3:
-        {
+        case ::opendrive::GeometryType::POLY3: {
           auto poly3 = static_cast<GeometryAttributesPoly3 *>(geometry_attribute.get());
           centerLine.geometry.emplace_back(std::make_unique<geometry::GeometryPoly3>(
             poly3->start_position, poly3->length, poly3->heading, start, poly3->a, poly3->b, poly3->c, poly3->d));
           break;
         }
         break;
-        case ::opendrive::GeometryType::PARAMPOLY3:
-        {
+        case ::opendrive::GeometryType::PARAMPOLY3: {
           auto paramPoly3 = static_cast<GeometryAttributesParamPoly3 *>(geometry_attribute.get());
           centerLine.geometry.emplace_back(std::make_unique<geometry::GeometryParamPoly3>(paramPoly3->start_position,
                                                                                           paramPoly3->length,
@@ -206,5 +208,5 @@ bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
 
   return ok;
 }
-}
-}
+} // namespace geometry
+} // namespace opendrive
