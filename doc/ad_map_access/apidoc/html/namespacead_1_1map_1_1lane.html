@@ -115,6 +115,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane. ">Lane</a>.  <a href="structad_1_1map_1_1lane_1_1Lane.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structad_1_1map_1_1lane_1_1LaneAltitudeRange.html">LaneAltitudeRange</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct to hold the altitude range of a lane.  <a href="structad_1_1map_1_1lane_1_1LaneAltitudeRange.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId. ">LaneId</a>.  <a href="classad_1_1map_1_1lane_1_1LaneId.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -458,6 +461,9 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ae9516999ba35dd617026ba4907c0dfc2">calcWidth</a> (<a class="el" href="structad_1_1map_1_1match_1_1LaneOccupiedRegion.html">match::LaneOccupiedRegion</a> const &amp;laneOccupiedRegion)</td></tr>
 <tr class="memdesc:ae9516999ba35dd617026ba4907c0dfc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate width of a lane occupied region scales the with at the center of the occupied region by the lateral extend of the region <br /></td></tr>
 <tr class="separator:ae9516999ba35dd617026ba4907c0dfc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedf866dd50b62a1bdbb0f2f32aaa57d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1lane_1_1LaneAltitudeRange.html">LaneAltitudeRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#aedf866dd50b62a1bdbb0f2f32aaa57d6">calcLaneAltitudeRange</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="memdesc:aedf866dd50b62a1bdbb0f2f32aaa57d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the altitude range of a lane.  <a href="#aedf866dd50b62a1bdbb0f2f32aaa57d6">More...</a><br /></td></tr>
+<tr class="separator:aedf866dd50b62a1bdbb0f2f32aaa57d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>namespace lane </p>
@@ -811,6 +817,25 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="aedf866dd50b62a1bdbb0f2f32aaa57d6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1lane_1_1LaneAltitudeRange.html">LaneAltitudeRange</a> ad::map::lane::calcLaneAltitudeRange </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the altitude range of a lane. </p>
+<dl class="section return"><dt>Returns</dt><dd>The range of the lanes altitude </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a8b41254ac0807d5cab9999858eceaaa6"></a>
 <div class="memitem">
 <div class="memproto">

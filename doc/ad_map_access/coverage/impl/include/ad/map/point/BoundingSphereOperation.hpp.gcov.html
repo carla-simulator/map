@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-03-11 16:09:24</td>
+            <td class="headerValue">2021-04-28 12:53:33</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -88,9 +88,9 @@
 <span class="lineNum">      17 </span>                :            : namespace point {
 <span class="lineNum">      18 </span>                :            : 
 <span class="lineNum">      19 </span>                :            : /**
-<span class="lineNum">      20 </span>                :            :   * @brief Computes distance between BoundingSpheres.
-<a name="21"><span class="lineNum">      21 </span>                :            :   * @returns Distance between two bounding spheres in meters.</a>
-<span class="lineNum">      22 </span>                :            :   */
+<span class="lineNum">      20 </span>                :            :  * @brief Computes distance between BoundingSpheres.
+<a name="21"><span class="lineNum">      21 </span>                :            :  * @returns Distance between two bounding spheres in meters.</a>
+<span class="lineNum">      22 </span>                :            :  */
 <span class="lineNum">      23 </span>                :<span class="lineCov">    6247128 : inline physics::Distance distance(BoundingSphere const &amp;left, BoundingSphere const &amp;right)</span>
 <span class="lineNum">      24 </span>                :            : {
 <span class="lineNum">      25 </span>        [<span class="branchCov" title="Branch 1 was taken 6247128 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    6247128 :   physics::Distance const distanceCenter = distance(left.center, right.center);</span>

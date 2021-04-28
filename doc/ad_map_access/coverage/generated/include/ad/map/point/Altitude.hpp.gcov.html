@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-03-11 16:09:24</td>
+            <td class="headerValue">2021-04-28 12:53:33</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">29</td>
@@ -117,13 +117,13 @@
 <span class="lineNum">      46 </span>                :            : 
 <span class="lineNum">      47 </span>                :            : #if SAFE_DATATYPES_EXPLICIT_CONVERSION
 <span class="lineNum">      48 </span>                :            : /*!
-<span class="lineNum">      49 </span>                :            : * \brief Enable/Disable explicit conversion. Currently set to &quot;only explicit conversion&quot;.
-<span class="lineNum">      50 </span>                :            : */
+<span class="lineNum">      49 </span>                :            :  * \brief Enable/Disable explicit conversion. Currently set to &quot;only explicit conversion&quot;.
+<span class="lineNum">      50 </span>                :            :  */
 <span class="lineNum">      51 </span>                :            : #define _AD_MAP_POINT_ALTITUDE_EXPLICIT_CONVERSION_ explicit
 <span class="lineNum">      52 </span>                :            : #else
 <span class="lineNum">      53 </span>                :            : /*!
-<span class="lineNum">      54 </span>                :            : * \brief Enable/Disable explicit conversion. Currently set to &quot;implicit conversion allowed&quot;.
-<span class="lineNum">      55 </span>                :            : */
+<span class="lineNum">      54 </span>                :            :  * \brief Enable/Disable explicit conversion. Currently set to &quot;implicit conversion allowed&quot;.
+<span class="lineNum">      55 </span>                :            :  */
 <span class="lineNum">      56 </span>                :            : #define _AD_MAP_POINT_ALTITUDE_EXPLICIT_CONVERSION_
 <span class="lineNum">      57 </span>                :            : #endif
 <span class="lineNum">      58 </span>                :            : 
@@ -210,11 +210,11 @@
 <span class="lineNum">     139 </span>                :            :    *
 <a name="140"><span class="lineNum">     140 </span>                :            :    * \returns \c true if both Altitude are valid and can be taken as numerically equal</a>
 <span class="lineNum">     141 </span>                :            :    */
-<span class="lineNum">     142 </span>                :<span class="lineCov">        125 :   bool operator==(const Altitude &amp;other) const</span>
+<span class="lineNum">     142 </span>                :<span class="lineCov">      21377 :   bool operator==(const Altitude &amp;other) const</span>
 <span class="lineNum">     143 </span>                :            :   {
-<span class="lineNum">     144 </span>                :<span class="lineCov">        125 :     ensureValid();</span>
-<span class="lineNum">     145 </span>                :<span class="lineCov">        123 :     other.ensureValid();</span>
-<span class="lineNum">     146 </span>                :<span class="lineCov">        121 :     return std::fabs(mAltitude - other.mAltitude) &lt; cPrecisionValue;</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">      21377 :     ensureValid();</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">      21375 :     other.ensureValid();</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">      21373 :     return std::fabs(mAltitude - other.mAltitude) &lt; cPrecisionValue;</span>
 <span class="lineNum">     147 </span>                :            :   }
 <span class="lineNum">     148 </span>                :            : 
 <span class="lineNum">     149 </span>                :            :   /**
@@ -458,11 +458,11 @@
 <span class="lineNum">     387 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="388"><span class="lineNum">     388 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     389 </span>                :            :    */
-<span class="lineNum">     390 </span>                :<span class="lineCov">    4807392 :   bool isValid() const</span>
+<span class="lineNum">     390 </span>                :<span class="lineCov">    4849896 :   bool isValid() const</span>
 <span class="lineNum">     391 </span>                :            :   {
-<span class="lineNum">     392 </span>                :<span class="lineCov">    4807392 :     auto const valueClass = std::fpclassify(mAltitude);</span>
-<span class="lineNum">     393 </span>[<span class="branchCov" title="Branch 0 was taken 2369288 times"> + </span><span class="branchCov" title="Branch 1 was taken 41 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4807351 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    4807392 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mAltitude)</span>
-<span class="lineNum">     394 </span>[<span class="branchCov" title="Branch 0 was taken 2369329 times"> + </span><span class="branchCov" title="Branch 1 was taken 2438063 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4807351 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    9614784 :       &amp;&amp; (mAltitude &lt;= cMaxValue);</span>
+<span class="lineNum">     392 </span>                :<span class="lineCov">    4849896 :     auto const valueClass = std::fpclassify(mAltitude);</span>
+<span class="lineNum">     393 </span>[<span class="branchCov" title="Branch 0 was taken 1925038 times"> + </span><span class="branchCov" title="Branch 1 was taken 41 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4849855 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    4849896 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mAltitude)</span>
+<span class="lineNum">     394 </span>[<span class="branchCov" title="Branch 0 was taken 1925079 times"> + </span><span class="branchCov" title="Branch 1 was taken 2924817 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4849855 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    9699792 :       &amp;&amp; (mAltitude &lt;= cMaxValue);</span>
 <span class="lineNum">     395 </span>                :            :   }
 <span class="lineNum">     396 </span>                :            : 
 <span class="lineNum">     397 </span>                :            :   /*!
@@ -471,16 +471,16 @@
 <span class="lineNum">     400 </span>                :            :    * Throws an std::out_of_range() exception if the Altitude
 <a name="401"><span class="lineNum">     401 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     402 </span>                :            :    */
-<span class="lineNum">     403 </span>                :<span class="lineCov">    4273269 :   void ensureValid() const</span>
+<span class="lineNum">     403 </span>                :<span class="lineCov">    4315773 :   void ensureValid() const</span>
 <span class="lineNum">     404 </span>                :            :   {
-<span class="lineNum">     405 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 4273235 times"> + </span>]:<span class="lineCov">    4273269 :     if (!isValid())</span>
+<span class="lineNum">     405 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 4315739 times"> + </span>]:<span class="lineCov">    4315773 :     if (!isValid())</span>
 <span class="lineNum">     406 </span>                :            :     {
 <span class="lineNum">     407 </span>                :<span class="lineCov">         34 :       spdlog::info(&quot;ensureValid(::ad::map::point::Altitude)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     408 </span>                :            : #if (AD_MAP_POINT_ALTITUDE_THROWS_EXCEPTION == 1)
 <span class="lineNum">     409 </span>                :<span class="lineCov">         34 :       throw std::out_of_range(&quot;Altitude value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     410 </span>                :            : #endif
 <span class="lineNum">     411 </span>                :            :     }
-<span class="lineNum">     412 </span>                :<span class="lineCov">    4273235 :   }</span>
+<span class="lineNum">     412 </span>                :<span class="lineCov">    4315739 :   }</span>
 <span class="lineNum">     413 </span>                :            : 
 <span class="lineNum">     414 </span>                :            :   /*!
 <span class="lineNum">     415 </span>                :            :    * \brief ensure that the Altitude is valid and non zero

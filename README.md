@@ -48,8 +48,8 @@ The initial release of the map C++ software libraries.
 ## Getting started <a name="started"></a>
 
 #### Installation of dependencies
-Currently, the focused operating system is Ubuntu 16.04. Nevertheless, the library should work in a similar way for any other Linux OS.
-To install the dependencies for Ubuntu 16.04 execute the following command:
+Currently, the focused operating system is Ubuntu 20.04. Nevertheless, the library should work in a similar way for any other Linux OS.
+To install the dependencies for Ubuntu 20.04 execute the following command:
 ```bash
  user$> sudo apt-get install git build-essential cmake
 ```
@@ -67,17 +67,17 @@ To download the library, you may run:
 ```
 
 #### Supported systems <a name="systems"></a>
-Development systems are Ubuntu 16.04 and Ubuntu 18.04.
+Development systems are Ubuntu 18.04 and Ubuntu 20.04. The use of Ubuntu 16.04 is no longer recommended, and support will end with the next release.
 Following compiler combinations are [tested continously](https://github.com/carla-simulator/map/blob/master/.travis.yml):
 
 |                 | Ubuntu 16.04 | Ubuntu 18.04 | Ubuntu 20.04 |
 |:---------------:|:------------:|:------------:|:------------:|
-|  Clang 5.0      |      x       |              |              |
-|  Clang 6.0      |      x       |              |              |
+|  Clang 5.0      |  deprecated  |              |              |
+|  Clang 6.0      |  deprecated  |              |              |
 |  Clang 7        |              |       x      |              |
 |  Clang 8        |              |       x      |              |
-|   GCC 5         |      x       |              |              |
-|   GCC 6         |      x       |              |              |
+|   GCC 5         |  deprecated  |              |              |
+|   GCC 6         |  deprecated  |              |              |
 |   GCC 7         |              |       x      |              |
 |   GCC 8         |              |       x      |              |
 |   GCC 9         |              |       x      |       x      |
@@ -93,8 +93,8 @@ Contibutions are very welcome!
 Before submitting a pull request, please ensure that your code compiles successfully and that the tests run successfully.
 Please also check that your code formatting complies to the provided clang style. To do so, you can run:
 ```bash
-map$> sudo apt-get install clang-format-3.9
-map$> find -iname *.cpp -o -iname *.hpp | xargs clang-format-3.9 -style=file -i
+map$> sudo apt-get install clang-format-10
+map$> find -iname *.cpp -o -iname *.hpp | xargs clang-format-10 -style=file -i
 ```
 This command will automatically update the code formatting to be compliant with our style.
 

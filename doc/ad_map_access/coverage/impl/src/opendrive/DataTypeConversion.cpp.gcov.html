@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-03-11 16:09:24</td>
+            <td class="headerValue">2021-04-28 12:53:33</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -71,7 +71,7 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <span class="lineNum">       2 </span>                :            : //
-<span class="lineNum">       3 </span>                :            : // Copyright (C) 2019-2020 Intel Corporation
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2019-2021 Intel Corporation
 <span class="lineNum">       4 </span>                :            : //
 <span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
 <span class="lineNum">       6 </span>                :            : //
@@ -415,7 +415,7 @@
 <span class="lineNum">     334 </span>                :            : 
 <span class="lineNum">     335 </span>                :<span class="lineCov">     406427 : point::GeoPoint toGeo(::opendrive::Point const &amp;point)</span>
 <span class="lineNum">     336 </span>                :            : {
-<span class="lineNum">     337 </span>        [<span class="branchCov" title="Branch 4 was taken 406427 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     406427 :   return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(0.));</span>
+<span class="lineNum">     337 </span>        [<span class="branchCov" title="Branch 4 was taken 406427 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     406427 :   return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(point.z));</span>
 <a name="338"><span class="lineNum">     338 </span>                :            : }</a>
 <span class="lineNum">     339 </span>                :            : 
 <span class="lineNum">     340 </span>                :<span class="lineCov">     406427 : point::ECEFPoint toECEF(::opendrive::Point const &amp;point)</span>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-03-11 16:09:24</td>
+            <td class="headerValue">2021-04-28 12:53:33</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">26</td>
@@ -241,9 +241,9 @@
 <span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 26077 times"> + </span><span class="branchCov" title="Branch 9 was taken 194 times"> + </span>]
 <span class="lineNum">     167 </span>                :<span class="lineCov">      26271 :       isRouteable(*lane)</span>
 <span class="lineNum">     168 </span>                :            :       &amp;&amp; ( // max distance and max duration are not yet reached
-<span class="lineNum">     169 </span>[<span class="branchCov" title="Branch 1 was taken 26271 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 25905 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      52176 :            ((origin.second.routeDistance &lt; mMaxDistance) &amp;&amp; (origin.second.routeDuration &lt; mMaxDuration))</span>
-<span class="lineNum">     170 </span>                :            :            // or we are within an intersection
-<span class="lineNum">     171 </span>                :<span class="lineCov">        370 :            || lane::isLanePartOfAnIntersection(*lane)))</span>
+<span class="lineNum">     169 </span>[<span class="branchCov" title="Branch 1 was taken 26271 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 25905 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      52176 :         ((origin.second.routeDistance &lt; mMaxDistance) &amp;&amp; (origin.second.routeDuration &lt; mMaxDuration))</span>
+<span class="lineNum">     170 </span>                :            :         // or we are within an intersection
+<span class="lineNum">     171 </span>                :<span class="lineCov">        370 :         || lane::isLanePartOfAnIntersection(*lane)))</span>
 <span class="lineNum">     172 </span>                :            :     {
 <span class="lineNum">     173 </span>        [<span class="branchCov" title="Branch 2 was taken 26077 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      26077 :       expandSameLaneNeighbors(lane, origin);</span>
 <span class="lineNum">     174 </span>        [<span class="branchCov" title="Branch 2 was taken 26077 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      26077 :       expandLongitudinalNeighbors(lane, origin);</span>

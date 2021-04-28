@@ -32,17 +32,17 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">321</td>
-            <td class="headerCovTableEntry">372</td>
-            <td class="headerCovTableEntryMed">86.3 %</td>
+            <td class="headerCovTableEntry">388</td>
+            <td class="headerCovTableEntryMed">82.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-03-11 16:09:24</td>
+            <td class="headerValue">2021-04-28 12:53:33</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">49</td>
-            <td class="headerCovTableEntry">50</td>
-            <td class="headerCovTableEntryHi">98.0 %</td>
+            <td class="headerCovTableEntry">51</td>
+            <td class="headerCovTableEntryHi">96.1 %</td>
           </tr>
           <tr>
             <td></td>
@@ -50,8 +50,8 @@
             <td></td>
             <td class="headerItem">Branches:</td>
             <td class="headerCovTableEntry">293</td>
-            <td class="headerCovTableEntry">582</td>
-            <td class="headerCovTableEntryLo">50.3 %</td>
+            <td class="headerCovTableEntry">600</td>
+            <td class="headerCovTableEntryLo">48.8 %</td>
           </tr>
           <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -71,7 +71,7 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <span class="lineNum">       2 </span>                :            : //
-<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2021 Intel Corporation
 <span class="lineNum">       4 </span>                :            : //
 <span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
 <span class="lineNum">       6 </span>                :            : //
@@ -864,10 +864,39 @@
 <span class="lineNum">     774 </span>        [<span class="branchCov" title="Branch 1 was taken 11 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         11 :   auto ecefPoint = getParametricPoint(lane, parametricPoint.parametricOffset, lateralOffset);</span>
 <span class="lineNum">     775 </span>        [<span class="branchCov" title="Branch 1 was taken 11 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         11 :   auto enuPoint = point::toENU(ecefPoint);</span>
 <span class="lineNum">     776 </span>                :<span class="lineCov">         22 :   return enuPoint;</span>
-<span class="lineNum">     777 </span>                :            : }
-<a name="778"><span class="lineNum">     778 </span>                :            : } // namespace lane</a>
-<span class="lineNum">     779 </span>                :            : } // namespace map
-<span class="lineNum">     780 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 : } // namespace ad</span>
+<a name="777"><span class="lineNum">     777 </span>                :            : }</a>
+<span class="lineNum">     778 </span>                :            : 
+<span class="lineNum">     779 </span>                :<span class="lineNoCov">          0 : LaneAltitudeRange calcLaneAltitudeRange(Lane const &amp;lane)</span>
+<span class="lineNum">     780 </span>                :            : {
+<span class="lineNum">     781 </span>                :<span class="lineNoCov">          0 :   LaneAltitudeRange altitude_range;</span>
+<span class="lineNum">     782 </span>                :<span class="lineNoCov">          0 :   bool initialize = true;</span>
+<span class="lineNum">     783 </span>        [<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>]:<span class="lineNoCov">          0 :   for (auto const &amp;pt : lane.edgeLeft.ecefEdge)</span>
+<span class="lineNum">     784 </span>                :            :   {
+<span class="lineNum">     785 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :     auto const pt_geo = point::toGeo(pt);</span>
+<span class="lineNum">     786 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     if (initialize)</span>
+<span class="lineNum">     787 </span>                :            :     {
+<span class="lineNum">     788 </span>                :<span class="lineNoCov">          0 :       initialize = false;</span>
+<span class="lineNum">     789 </span>                :<span class="lineNoCov">          0 :       altitude_range.minimum = pt_geo.altitude;</span>
+<span class="lineNum">     790 </span>                :<span class="lineNoCov">          0 :       altitude_range.maximum = pt_geo.altitude;</span>
+<span class="lineNum">     791 </span>                :            :     }
+<span class="lineNum">     792 </span>                :            :     else
+<span class="lineNum">     793 </span>                :            :     {
+<span class="lineNum">     794 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :       altitude_range.minimum = std::min(altitude_range.minimum, pt_geo.altitude);</span>
+<span class="lineNum">     795 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :       altitude_range.maximum = std::max(altitude_range.maximum, pt_geo.altitude);</span>
+<span class="lineNum">     796 </span>                :            :     }
+<span class="lineNum">     797 </span>                :            :   }
+<span class="lineNum">     798 </span>        [<span class="branchNoExec" title="Branch 3 was not executed"> # </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span>]:<span class="lineNoCov">          0 :   for (auto const &amp;pt : lane.edgeRight.ecefEdge)</span>
+<span class="lineNum">     799 </span>                :            :   {
+<span class="lineNum">     800 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :     auto const pt_geo = point::toGeo(pt);</span>
+<span class="lineNum">     801 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :     altitude_range.minimum = std::min(altitude_range.minimum, pt_geo.altitude);</span>
+<span class="lineNum">     802 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :     altitude_range.maximum = std::max(altitude_range.maximum, pt_geo.altitude);</span>
+<span class="lineNum">     803 </span>                :            :   }
+<span class="lineNum">     804 </span>                :<span class="lineNoCov">          0 :   return altitude_range;</span>
+<span class="lineNum">     805 </span>                :            : }
+<span class="lineNum">     806 </span>                :            : 
+<a name="807"><span class="lineNum">     807 </span>                :            : } // namespace lane</a>
+<span class="lineNum">     808 </span>                :            : } // namespace map
+<span class="lineNum">     809 </span>[<span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          8 : } // namespace ad</span>
 </pre>
       </td>
     </tr>

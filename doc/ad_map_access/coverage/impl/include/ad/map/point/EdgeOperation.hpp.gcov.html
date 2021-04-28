@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-03-11 16:09:24</td>
+            <td class="headerValue">2021-04-28 12:53:33</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">23</td>
@@ -101,28 +101,28 @@
 <span class="lineNum">      30 </span>                :<span class="lineCov">         71 : physics::Distance const cEdgePointBorderDistance{0.1};</span>
 <span class="lineNum">      31 </span>                :            : 
 <span class="lineNum">      32 </span>                :            : /**
-<span class="lineNum">      33 </span>                :            :   * @brief Find point nearest to the line formed by two points.
-<span class="lineNum">      34 </span>                :            :   *
-<span class="lineNum">      35 </span>                :            :   * @param[in] a point to search for
-<span class="lineNum">      36 </span>                :            :   * @param[in] pt0 First point of the line.
-<span class="lineNum">      37 </span>                :            :   * @param[in] pt1 Second point of the line.
-<span class="lineNum">      38 </span>                :            :   * @returns Value of t;  nearest point to a can be calculated as (1-t)*pt0+t*pt1.
-<a name="39"><span class="lineNum">      39 </span>                :            :   */</a>
+<span class="lineNum">      33 </span>                :            :  * @brief Find point nearest to the line formed by two points.
+<span class="lineNum">      34 </span>                :            :  *
+<span class="lineNum">      35 </span>                :            :  * @param[in] a point to search for
+<span class="lineNum">      36 </span>                :            :  * @param[in] pt0 First point of the line.
+<span class="lineNum">      37 </span>                :            :  * @param[in] pt1 Second point of the line.
+<span class="lineNum">      38 </span>                :            :  * @returns Value of t;  nearest point to a can be calculated as (1-t)*pt0+t*pt1.
+<a name="39"><span class="lineNum">      39 </span>                :            :  */</a>
 <span class="lineNum">      40 </span>                :            : template &lt;typename PointType&gt;
-<span class="lineNum">      41 </span>                :<span class="lineCov">   21281010 : physics::RatioValue findNearestPointOnEdge(PointType const &amp;a, const PointType &amp;pt0, const PointType &amp;pt1)</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">   21282248 : physics::RatioValue findNearestPointOnEdge(PointType const &amp;a, const PointType &amp;pt0, const PointType &amp;pt1)</span>
 <span class="lineNum">      42 </span>                :            : {
-<span class="lineNum">      43 </span>        [<span class="branchCov" title="Branch 1 was taken 21281010 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   21281010 :   PointType line = pt1 - pt0;</span>
-<span class="lineNum">      44 </span>        [<span class="branchCov" title="Branch 1 was taken 21281010 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   21281010 :   PointType pt02a = a - pt0;</span>
-<span class="lineNum">      45 </span>                :<span class="lineCov">   21281010 :   auto const divisor = vectorDotProduct(line, line);</span>
-<span class="lineNum">      46 </span>[<span class="branchCov" title="Branch 3 was taken 21281010 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 21067645 times"> + </span><span class="branchCov" title="Branch 6 was taken 213365 times"> + </span>]:<span class="lineCov">   21281010 :   if (physics::Distance(divisor) &gt; physics::Distance(0))</span>
+<span class="lineNum">      43 </span>        [<span class="branchCov" title="Branch 1 was taken 21282248 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   21282248 :   PointType line = pt1 - pt0;</span>
+<span class="lineNum">      44 </span>        [<span class="branchCov" title="Branch 1 was taken 21282248 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   21282248 :   PointType pt02a = a - pt0;</span>
+<span class="lineNum">      45 </span>                :<span class="lineCov">   21282248 :   auto const divisor = vectorDotProduct(line, line);</span>
+<span class="lineNum">      46 </span>[<span class="branchCov" title="Branch 3 was taken 21282248 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 21068883 times"> + </span><span class="branchCov" title="Branch 6 was taken 213365 times"> + </span>]:<span class="lineCov">   21282248 :   if (physics::Distance(divisor) &gt; physics::Distance(0))</span>
 <span class="lineNum">      47 </span>                :            :   {
-<span class="lineNum">      48 </span>                :<span class="lineCov">   21067645 :     auto const dividend = vectorDotProduct(pt02a, line);</span>
-<span class="lineNum">      49 </span>                :<span class="lineCov">   21067645 :     auto result = dividend / divisor;</span>
-<span class="lineNum">      50 </span>                :<span class="lineCov">   21067645 :     return physics::RatioValue(result);</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">   21068883 :     auto const dividend = vectorDotProduct(pt02a, line);</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">   21068883 :     auto result = dividend / divisor;</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">   21068883 :     return physics::RatioValue(result);</span>
 <span class="lineNum">      51 </span>                :            :   }
 <span class="lineNum">      52 </span>                :            :   else
 <span class="lineNum">      53 </span>                :            :   {
-<span class="lineNum">      54 </span>                :<span class="lineCov">   21281010 :     return physics::RatioValue(0.5);</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">   21282248 :     return physics::RatioValue(0.5);</span>
 <span class="lineNum">      55 </span>                :            :   }
 <span class="lineNum">      56 </span>                :            : }
 <span class="lineNum">      57 </span>                :            : 
@@ -136,20 +136,20 @@
 <span class="lineNum">      65 </span>                :            :  *
 <a name="66"><span class="lineNum">      66 </span>                :            :  */</a>
 <span class="lineNum">      67 </span>                :            : template &lt;typename PointType&gt;
-<span class="lineNum">      68 </span>                :<span class="lineCov">   20991757 : physics::ParametricValue findNearestPointOnSegment(PointType const &amp;a, const PointType &amp;pt0, const PointType &amp;pt1)</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">   20992995 : physics::ParametricValue findNearestPointOnSegment(PointType const &amp;a, const PointType &amp;pt0, const PointType &amp;pt1)</span>
 <span class="lineNum">      69 </span>                :            : {
-<span class="lineNum">      70 </span>        [<span class="branchCov" title="Branch 1 was taken 20991757 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   20991757 :   auto const t = findNearestPointOnEdge(a, pt0, pt1);</span>
-<span class="lineNum">      71 </span>[<span class="branchCov" title="Branch 2 was taken 20991757 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 9215802 times"> + </span><span class="branchCov" title="Branch 5 was taken 11775955 times"> + </span>]:<span class="lineCov">   20991757 :   if (t &lt; physics::RatioValue(0.))</span>
+<span class="lineNum">      70 </span>        [<span class="branchCov" title="Branch 1 was taken 20992995 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   20992995 :   auto const t = findNearestPointOnEdge(a, pt0, pt1);</span>
+<span class="lineNum">      71 </span>[<span class="branchCov" title="Branch 2 was taken 20992995 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 9217114 times"> + </span><span class="branchCov" title="Branch 5 was taken 11775881 times"> + </span>]:<span class="lineCov">   20992995 :   if (t &lt; physics::RatioValue(0.))</span>
 <span class="lineNum">      72 </span>                :            :   {
-<span class="lineNum">      73 </span>                :<span class="lineCov">    9215802 :     return physics::ParametricValue(0.);</span>
+<span class="lineNum">      73 </span>                :<span class="lineCov">    9217114 :     return physics::ParametricValue(0.);</span>
 <span class="lineNum">      74 </span>                :            :   }
-<span class="lineNum">      75 </span>[<span class="branchCov" title="Branch 2 was taken 11775955 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 9603978 times"> + </span><span class="branchCov" title="Branch 5 was taken 2171977 times"> + </span>]:<span class="lineCov">   11775955 :   else if (t &gt; physics::RatioValue(1.))</span>
+<span class="lineNum">      75 </span>[<span class="branchCov" title="Branch 2 was taken 11775881 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 9604569 times"> + </span><span class="branchCov" title="Branch 5 was taken 2171312 times"> + </span>]:<span class="lineCov">   11775881 :   else if (t &gt; physics::RatioValue(1.))</span>
 <span class="lineNum">      76 </span>                :            :   {
-<span class="lineNum">      77 </span>                :<span class="lineCov">    9603978 :     return physics::ParametricValue(1.);</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">    9604569 :     return physics::ParametricValue(1.);</span>
 <span class="lineNum">      78 </span>                :            :   }
 <span class="lineNum">      79 </span>                :            :   else
 <span class="lineNum">      80 </span>                :            :   {
-<span class="lineNum">      81 </span>                :<span class="lineCov">   20991757 :     return physics::ParametricValue(static_cast&lt;double&gt;(t));</span>
+<span class="lineNum">      81 </span>                :<span class="lineCov">   20992995 :     return physics::ParametricValue(static_cast&lt;double&gt;(t));</span>
 <span class="lineNum">      82 </span>                :            :   }
 <span class="lineNum">      83 </span>                :            : }
 <span class="lineNum">      84 </span>                :            : 
@@ -203,39 +203,39 @@
 <span class="lineNum">     132 </span>                :            :  * @return Parametric point on the edge.
 <a name="133"><span class="lineNum">     133 </span>                :            :  */</a>
 <span class="lineNum">     134 </span>                :            : template &lt;typename PointType&gt;
-<span class="lineNum">     135 </span>                :<span class="lineCov">    4363976 : PointType getParametricPoint(std::vector&lt;PointType&gt; const &amp;edge,</span>
+<span class="lineNum">     135 </span>                :<span class="lineCov">    4365664 : PointType getParametricPoint(std::vector&lt;PointType&gt; const &amp;edge,</span>
 <span class="lineNum">     136 </span>                :            :                              physics::Distance const &amp;edgeLength,
 <span class="lineNum">     137 </span>                :            :                              const physics::ParametricValue &amp;t)
 <span class="lineNum">     138 </span>                :            : {
-<span class="lineNum">     139 </span>        [<span class="branchCov" title="Branch 1 was taken 4363975 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">    4363976 :   if (!edge.empty())</span>
+<span class="lineNum">     139 </span>        [<span class="branchCov" title="Branch 1 was taken 4365663 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">    4365664 :   if (!edge.empty())</span>
 <span class="lineNum">     140 </span>                :            :   {
-<span class="lineNum">     141 </span>                :<span class="lineCov">    4363975 :     physics::Distance length(0);</span>
-<span class="lineNum">     142 </span>        [<span class="branchCov" title="Branch 1 was taken 4363975 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    4363975 :     physics::Distance length_t = edgeLength * t;</span>
-<span class="lineNum">     143 </span>        [<span class="branchCov" title="Branch 1 was taken 24394189 times"> + </span><span class="branchCov" title="Branch 2 was taken 252 times"> + </span>]:<span class="lineCov">   24394441 :     for (size_t i = 0; i &lt; edge.size() - 1; i++)</span>
+<span class="lineNum">     141 </span>                :<span class="lineCov">    4365663 :     physics::Distance length(0);</span>
+<span class="lineNum">     142 </span>        [<span class="branchCov" title="Branch 1 was taken 4365663 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    4365663 :     physics::Distance length_t = edgeLength * t;</span>
+<span class="lineNum">     143 </span>        [<span class="branchCov" title="Branch 1 was taken 24395675 times"> + </span><span class="branchCov" title="Branch 2 was taken 252 times"> + </span>]:<span class="lineCov">   24395927 :     for (size_t i = 0; i &lt; edge.size() - 1; i++)</span>
 <span class="lineNum">     144 </span>                :            :     {
-<span class="lineNum">     145 </span>                :<span class="lineCov">   24394189 :       const auto &amp;pt0 = edge[i];</span>
-<span class="lineNum">     146 </span>                :<span class="lineCov">   24394189 :       const auto &amp;pt1 = edge[i + 1];</span>
-<span class="lineNum">     147 </span>        [<span class="branchCov" title="Branch 1 was taken 24394189 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   24394189 :       auto d = distance(pt0, pt1);</span>
-<span class="lineNum">     148 </span>[<span class="branchCov" title="Branch 2 was taken 24394189 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 24393937 times"> + </span><span class="branchCov" title="Branch 5 was taken 252 times"> + </span>]:<span class="lineCov">   24394189 :       if (d != physics::Distance(0.))</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">   24395675 :       const auto &amp;pt0 = edge[i];</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">   24395675 :       const auto &amp;pt1 = edge[i + 1];</span>
+<span class="lineNum">     147 </span>        [<span class="branchCov" title="Branch 1 was taken 24395675 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   24395675 :       auto d = distance(pt0, pt1);</span>
+<span class="lineNum">     148 </span>[<span class="branchCov" title="Branch 2 was taken 24395675 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 24395423 times"> + </span><span class="branchCov" title="Branch 5 was taken 252 times"> + </span>]:<span class="lineCov">   24395675 :       if (d != physics::Distance(0.))</span>
 <span class="lineNum">     149 </span>                :            :       {
-<span class="lineNum">     150 </span>        [<span class="branchCov" title="Branch 1 was taken 24393937 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   24393937 :         auto length_1 = length + d;</span>
-<span class="lineNum">     151 </span>[<span class="branchCov" title="Branch 1 was taken 24393937 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 4363723 times"> + </span><span class="branchCov" title="Branch 4 was taken 20030214 times"> + </span>]:<span class="lineCov">   24393937 :         if (length_1 &gt;= length_t)</span>
+<span class="lineNum">     150 </span>        [<span class="branchCov" title="Branch 1 was taken 24395423 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   24395423 :         auto length_1 = length + d;</span>
+<span class="lineNum">     151 </span>[<span class="branchCov" title="Branch 1 was taken 24395423 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 4365411 times"> + </span><span class="branchCov" title="Branch 4 was taken 20030012 times"> + </span>]:<span class="lineCov">   24395423 :         if (length_1 &gt;= length_t)</span>
 <span class="lineNum">     152 </span>                :            :         {
-<span class="lineNum">     153 </span>        [<span class="branchCov" title="Branch 1 was taken 4363723 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    4363723 :           auto d_t = length_t - length;</span>
-<span class="lineNum">     154 </span>        [<span class="branchCov" title="Branch 1 was taken 4363723 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    4363723 :           physics::ParametricValue tt(d_t / d);</span>
-<span class="lineNum">     155 </span>        [<span class="branchCov" title="Branch 1 was taken 4363723 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    4363723 :           return vectorInterpolate(pt0, pt1, tt);</span>
+<span class="lineNum">     153 </span>        [<span class="branchCov" title="Branch 1 was taken 4365411 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    4365411 :           auto d_t = length_t - length;</span>
+<span class="lineNum">     154 </span>        [<span class="branchCov" title="Branch 1 was taken 4365411 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    4365411 :           physics::ParametricValue tt(d_t / d);</span>
+<span class="lineNum">     155 </span>        [<span class="branchCov" title="Branch 1 was taken 4365411 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    4365411 :           return vectorInterpolate(pt0, pt1, tt);</span>
 <span class="lineNum">     156 </span>                :            :         }
 <span class="lineNum">     157 </span>                :            :         else
 <span class="lineNum">     158 </span>                :            :         {
-<span class="lineNum">     159 </span>                :<span class="lineCov">   20030214 :           length = length_1;</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">   20030012 :           length = length_1;</span>
 <span class="lineNum">     160 </span>                :            :         }
 <span class="lineNum">     161 </span>                :            :       }
 <span class="lineNum">     162 </span>                :            :     }
-<span class="lineNum">     163 </span>                :<span class="lineCov">    4363975 :     return edge.back();</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">    4365663 :     return edge.back();</span>
 <span class="lineNum">     164 </span>                :            :   }
 <span class="lineNum">     165 </span>                :            :   else
 <span class="lineNum">     166 </span>                :            :   {
-<span class="lineNum">     167 </span>                :<span class="lineCov">    4363976 :     return PointType();</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">    4365664 :     return PointType();</span>
 <span class="lineNum">     168 </span>                :            :   }
 <span class="lineNum">     169 </span>                :            : }
 <span class="lineNum">     170 </span>                :            : 
@@ -358,46 +358,46 @@
 <span class="lineNum">     281 </span>                :            :  */
 <a name="282"><span class="lineNum">     282 </span>                :            : template &lt;typename PointType&gt;</a>
 <span class="lineNum">     283 </span>                :            : physics::ParametricValue
-<span class="lineNum">     284 </span>                :<span class="lineCov">    2042628 : findNearestPointOnEdge(std::vector&lt;PointType&gt; const &amp;edge, physics::Distance const &amp;edgeLength, const PointType &amp;pt)</span>
+<span class="lineNum">     284 </span>                :<span class="lineCov">    2043472 : findNearestPointOnEdge(std::vector&lt;PointType&gt; const &amp;edge, physics::Distance const &amp;edgeLength, const PointType &amp;pt)</span>
 <span class="lineNum">     285 </span>                :            : {
-<span class="lineNum">     286 </span>        [<span class="branchCov" title="Branch 1 was taken 2042628 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    2042628 :   if (isValid(pt))</span>
+<span class="lineNum">     286 </span>        [<span class="branchCov" title="Branch 1 was taken 2043472 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    2043472 :   if (isValid(pt))</span>
 <span class="lineNum">     287 </span>                :            :   {
-<span class="lineNum">     288 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2042628 times"> + </span>]:<span class="lineCov">    2042628 :     if (edge.size() == 0)</span>
+<span class="lineNum">     288 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2043472 times"> + </span>]:<span class="lineCov">    2043472 :     if (edge.size() == 0)</span>
 <span class="lineNum">     289 </span>                :            :     {
 <span class="lineNum">     290 </span>                :<span class="lineNoCov">          0 :       return physics::ParametricValue();</span>
 <span class="lineNum">     291 </span>                :            :     }
-<span class="lineNum">     292 </span>[<span class="branchCov" title="Branch 1 was taken 2042628 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 2042628 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">    2042628 :     else if ((edge.size() == 1) || (edgeLength == physics::Distance(0.)))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 126 times"> + </span><span class="branchCov" title="Branch 8 was taken 2042502 times"> + </span>][<span class="branchCov" title="Branch 9 was taken 2042628 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
-<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 11 was taken 126 times"> + </span><span class="branchCov" title="Branch 12 was taken 2042502 times"> + </span><span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>]
+<span class="lineNum">     292 </span>[<span class="branchCov" title="Branch 1 was taken 2043472 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 2043472 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">    2043472 :     else if ((edge.size() == 1) || (edgeLength == physics::Distance(0.)))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 126 times"> + </span><span class="branchCov" title="Branch 8 was taken 2043346 times"> + </span>][<span class="branchCov" title="Branch 9 was taken 2043472 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 11 was taken 126 times"> + </span><span class="branchCov" title="Branch 12 was taken 2043346 times"> + </span><span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>]
 <span class="lineNum">     293 </span>                :            :     {
 <span class="lineNum">     294 </span>                :<span class="lineCov">        126 :       return physics::ParametricValue(0);</span>
 <span class="lineNum">     295 </span>                :            :     }
 <span class="lineNum">     296 </span>                :            :     else
 <span class="lineNum">     297 </span>                :            :     {
-<span class="lineNum">     298 </span>        [<span class="branchCov" title="Branch 3 was taken 2042502 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    2042502 :       physics::ParametricValue t_one = findNearestPointOnSegment(pt, edge[0], edge[1]);</span>
-<span class="lineNum">     299 </span>        [<span class="branchCov" title="Branch 3 was taken 2042502 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    2042502 :       PointType pt_nearest = vectorInterpolate(edge[0], edge[1], t_one);</span>
-<span class="lineNum">     300 </span>        [<span class="branchCov" title="Branch 1 was taken 2042502 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    2042502 :       physics::Distance d_nearest = distance(pt, pt_nearest);</span>
-<span class="lineNum">     301 </span>        [<span class="branchCov" title="Branch 2 was taken 2042502 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    2042502 :       physics::Distance offset_nearest = distance(pt_nearest, edge[0]);</span>
-<span class="lineNum">     302 </span>                :<span class="lineCov">    2042502 :       physics::Distance running_offset = physics::Distance(0);</span>
-<span class="lineNum">     303 </span>        [<span class="branchCov" title="Branch 1 was taken 18949251 times"> + </span><span class="branchCov" title="Branch 2 was taken 2042502 times"> + </span>]:<span class="lineCov">   20991753 :       for (size_t i = 1; i + 1 &lt; edge.size(); i++)</span>
+<span class="lineNum">     298 </span>        [<span class="branchCov" title="Branch 3 was taken 2043346 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    2043346 :       physics::ParametricValue t_one = findNearestPointOnSegment(pt, edge[0], edge[1]);</span>
+<span class="lineNum">     299 </span>        [<span class="branchCov" title="Branch 3 was taken 2043346 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    2043346 :       PointType pt_nearest = vectorInterpolate(edge[0], edge[1], t_one);</span>
+<span class="lineNum">     300 </span>        [<span class="branchCov" title="Branch 1 was taken 2043346 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    2043346 :       physics::Distance d_nearest = distance(pt, pt_nearest);</span>
+<span class="lineNum">     301 </span>        [<span class="branchCov" title="Branch 2 was taken 2043346 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    2043346 :       physics::Distance offset_nearest = distance(pt_nearest, edge[0]);</span>
+<span class="lineNum">     302 </span>                :<span class="lineCov">    2043346 :       physics::Distance running_offset = physics::Distance(0);</span>
+<span class="lineNum">     303 </span>        [<span class="branchCov" title="Branch 1 was taken 18949645 times"> + </span><span class="branchCov" title="Branch 2 was taken 2043346 times"> + </span>]:<span class="lineCov">   20992991 :       for (size_t i = 1; i + 1 &lt; edge.size(); i++)</span>
 <span class="lineNum">     304 </span>                :            :       {
-<span class="lineNum">     305 </span>        [<span class="branchCov" title="Branch 3 was taken 18949251 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">   18949251 :         physics::ParametricValue t = findNearestPointOnSegment(pt, edge[i], edge[i + 1]);</span>
-<span class="lineNum">     306 </span>        [<span class="branchCov" title="Branch 3 was taken 18949251 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">   18949251 :         PointType pt_candidate = vectorInterpolate(edge[i], edge[i + 1], t);</span>
-<span class="lineNum">     307 </span>        [<span class="branchCov" title="Branch 1 was taken 18949251 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   18949251 :         physics::Distance d = distance(pt_candidate, pt);</span>
-<span class="lineNum">     308 </span>[<span class="branchCov" title="Branch 3 was taken 18949251 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 18949251 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">   18949251 :         running_offset += distance(edge[i - 1], edge[i]);</span>
-<span class="lineNum">     309 </span>[<span class="branchCov" title="Branch 1 was taken 18949251 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 9487020 times"> + </span><span class="branchCov" title="Branch 4 was taken 9462231 times"> + </span>]:<span class="lineCov">   18949251 :         if (d &lt; d_nearest)</span>
+<span class="lineNum">     305 </span>        [<span class="branchCov" title="Branch 3 was taken 18949645 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">   18949645 :         physics::ParametricValue t = findNearestPointOnSegment(pt, edge[i], edge[i + 1]);</span>
+<span class="lineNum">     306 </span>        [<span class="branchCov" title="Branch 3 was taken 18949645 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">   18949645 :         PointType pt_candidate = vectorInterpolate(edge[i], edge[i + 1], t);</span>
+<span class="lineNum">     307 </span>        [<span class="branchCov" title="Branch 1 was taken 18949645 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">   18949645 :         physics::Distance d = distance(pt_candidate, pt);</span>
+<span class="lineNum">     308 </span>[<span class="branchCov" title="Branch 3 was taken 18949645 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 18949645 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">   18949645 :         running_offset += distance(edge[i - 1], edge[i]);</span>
+<span class="lineNum">     309 </span>[<span class="branchCov" title="Branch 1 was taken 18949645 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 9486932 times"> + </span><span class="branchCov" title="Branch 4 was taken 9462713 times"> + </span>]:<span class="lineCov">   18949645 :         if (d &lt; d_nearest)</span>
 <span class="lineNum">     310 </span>                :            :         {
-<span class="lineNum">     311 </span>                :<span class="lineCov">    9487020 :           pt_nearest = pt_candidate;</span>
-<span class="lineNum">     312 </span>                :<span class="lineCov">    9487020 :           d_nearest = d;</span>
-<span class="lineNum">     313 </span>[<span class="branchCov" title="Branch 2 was taken 9487020 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 9487020 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">    9487020 :           offset_nearest = running_offset + distance(pt_nearest, edge[i]);</span>
+<span class="lineNum">     311 </span>                :<span class="lineCov">    9486932 :           pt_nearest = pt_candidate;</span>
+<span class="lineNum">     312 </span>                :<span class="lineCov">    9486932 :           d_nearest = d;</span>
+<span class="lineNum">     313 </span>[<span class="branchCov" title="Branch 2 was taken 9486932 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 9486932 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">    9486932 :           offset_nearest = running_offset + distance(pt_nearest, edge[i]);</span>
 <span class="lineNum">     314 </span>                :            :         }
 <span class="lineNum">     315 </span>                :            :       }
-<span class="lineNum">     316 </span>        [<span class="branchCov" title="Branch 1 was taken 2042502 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    2042502 :       return physics::ParametricValue(offset_nearest / edgeLength);</span>
+<span class="lineNum">     316 </span>        [<span class="branchCov" title="Branch 1 was taken 2043346 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    2043346 :       return physics::ParametricValue(offset_nearest / edgeLength);</span>
 <span class="lineNum">     317 </span>                :            :     }
 <span class="lineNum">     318 </span>                :            :   }
 <span class="lineNum">     319 </span>                :            :   else
 <span class="lineNum">     320 </span>                :            :   {
-<span class="lineNum">     321 </span>                :<span class="lineCov">    2042628 :     return physics::ParametricValue();</span>
+<span class="lineNum">     321 </span>                :<span class="lineCov">    2043472 :     return physics::ParametricValue();</span>
 <span class="lineNum">     322 </span>                :            :   }
 <span class="lineNum">     323 </span>                :            : }
 <span class="lineNum">     324 </span>                :            : 
@@ -446,47 +446,47 @@
 <span class="lineNum">     367 </span>                :            :   }
 <span class="lineNum">     368 </span>                :<span class="lineCov">      20777 :   physics::ParametricValue longitudinalOffset(0.);</span>
 <span class="lineNum">     369 </span>                :<span class="lineCov">      20777 :   bool endReached = false;</span>
-<span class="lineNum">     370 </span>        [<span class="branchCov" title="Branch 0 was taken 704054 times"> + </span><span class="branchCov" title="Branch 1 was taken 20777 times"> + </span>]:<span class="lineCov">     724831 :   do</span>
+<span class="lineNum">     370 </span>        [<span class="branchCov" title="Branch 0 was taken 704476 times"> + </span><span class="branchCov" title="Branch 1 was taken 20777 times"> + </span>]:<span class="lineCov">     725253 :   do</span>
 <span class="lineNum">     371 </span>                :            :   {
-<span class="lineNum">     372 </span>        [<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     724831 :     auto const pt0 = getParametricPoint(edgeLeft, edgeLeftLength, longitudinalOffset);</span>
-<span class="lineNum">     373 </span>        [<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     724831 :     auto const pt1 = getParametricPoint(edgeRight, edgeRightLength, longitudinalOffset);</span>
-<span class="lineNum">     374 </span>[<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     724831 :     if (!isValid(pt1) || !isValid(pt1))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 724831 times"> + </span>]
-<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 724831 times"> + </span>]
+<span class="lineNum">     372 </span>        [<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     725253 :     auto const pt0 = getParametricPoint(edgeLeft, edgeLeftLength, longitudinalOffset);</span>
+<span class="lineNum">     373 </span>        [<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     725253 :     auto const pt1 = getParametricPoint(edgeRight, edgeRightLength, longitudinalOffset);</span>
+<span class="lineNum">     374 </span>[<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     725253 :     if (!isValid(pt1) || !isValid(pt1))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 725253 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 725253 times"> + </span>]
 <span class="lineNum">     375 </span>                :            :     {
 <span class="lineNum">     376 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       return std::make_pair(physics::MetricRange(), physics::Distance());</span>
 <span class="lineNum">     377 </span>                :            :     }
-<span class="lineNum">     378 </span>        [<span class="branchCov" title="Branch 2 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     724831 :     auto const centerPoint = point::vectorInterpolate(pt0, pt1, physics::ParametricValue(0.5));</span>
-<span class="lineNum">     379 </span>[<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 724831 times"> + </span>]:<span class="lineCov">     724831 :     if (!isValid(centerPoint))</span>
+<span class="lineNum">     378 </span>        [<span class="branchCov" title="Branch 2 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     725253 :     auto const centerPoint = point::vectorInterpolate(pt0, pt1, physics::ParametricValue(0.5));</span>
+<span class="lineNum">     379 </span>[<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 725253 times"> + </span>]:<span class="lineCov">     725253 :     if (!isValid(centerPoint))</span>
 <span class="lineNum">     380 </span>                :            :     {
 <span class="lineNum">     381 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       return std::make_pair(physics::MetricRange(), physics::Distance());</span>
 <span class="lineNum">     382 </span>                :            :     }
-<span class="lineNum">     383 </span>        [<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     724831 :     auto const longTLeft = findNearestPointOnEdge(edgeLeft, edgeLeftLength, centerPoint);</span>
-<span class="lineNum">     384 </span>        [<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     724831 :     auto const longTRight = findNearestPointOnEdge(edgeRight, edgeRightLength, centerPoint);</span>
-<span class="lineNum">     385 </span>[<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     724831 :     if (!isRangeValid(longTLeft) || !isRangeValid(longTRight))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 724831 times"> + </span>]
-<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 724831 times"> + </span>]
+<span class="lineNum">     383 </span>        [<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     725253 :     auto const longTLeft = findNearestPointOnEdge(edgeLeft, edgeLeftLength, centerPoint);</span>
+<span class="lineNum">     384 </span>        [<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     725253 :     auto const longTRight = findNearestPointOnEdge(edgeRight, edgeRightLength, centerPoint);</span>
+<span class="lineNum">     385 </span>[<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     725253 :     if (!isRangeValid(longTLeft) || !isRangeValid(longTRight))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 725253 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 725253 times"> + </span>]
 <span class="lineNum">     386 </span>                :            :     {
 <span class="lineNum">     387 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       return std::make_pair(physics::MetricRange(), physics::Distance());</span>
 <span class="lineNum">     388 </span>                :            :     }
-<span class="lineNum">     389 </span>        [<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     724831 :     auto const pointOnLeftEdge = getParametricPoint(edgeLeft, edgeLeftLength, longTLeft);</span>
-<span class="lineNum">     390 </span>        [<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     724831 :     auto const pointOnRightEdge = getParametricPoint(edgeRight, edgeRightLength, longTRight);</span>
-<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     724831 :     if (!isValid(pointOnLeftEdge) || !isValid(pointOnRightEdge))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 724831 times"> + </span>]
-<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 724831 times"> + </span>]
+<span class="lineNum">     389 </span>        [<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     725253 :     auto const pointOnLeftEdge = getParametricPoint(edgeLeft, edgeLeftLength, longTLeft);</span>
+<span class="lineNum">     390 </span>        [<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     725253 :     auto const pointOnRightEdge = getParametricPoint(edgeRight, edgeRightLength, longTRight);</span>
+<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     725253 :     if (!isValid(pointOnLeftEdge) || !isValid(pointOnRightEdge))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 725253 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 725253 times"> + </span>]
 <span class="lineNum">     392 </span>                :            :     {
 <span class="lineNum">     393 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       return std::make_pair(physics::MetricRange(), physics::Distance());</span>
 <span class="lineNum">     394 </span>                :            :     }
-<span class="lineNum">     395 </span>        [<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     724831 :     physics::Distance const width = distance(pointOnLeftEdge, pointOnRightEdge);</span>
-<span class="lineNum">     396 </span>        [<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     724831 :     unionRangeWith(widthRange, width);</span>
-<span class="lineNum">     397 </span>        [<span class="branchCov" title="Branch 1 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     724831 :     widthSum += width;</span>
-<span class="lineNum">     398 </span>                :<span class="lineCov">     724831 :     widthSumCount++;</span>
-<span class="lineNum">     399 </span>[<span class="branchCov" title="Branch 2 was taken 724831 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 704054 times"> + </span><span class="branchCov" title="Branch 5 was taken 20777 times"> + </span>]:<span class="lineCov">     724831 :     if (longitudinalOffset &lt; physics::ParametricValue(1.))</span>
+<span class="lineNum">     395 </span>        [<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     725253 :     physics::Distance const width = distance(pointOnLeftEdge, pointOnRightEdge);</span>
+<span class="lineNum">     396 </span>        [<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     725253 :     unionRangeWith(widthRange, width);</span>
+<span class="lineNum">     397 </span>        [<span class="branchCov" title="Branch 1 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     725253 :     widthSum += width;</span>
+<span class="lineNum">     398 </span>                :<span class="lineCov">     725253 :     widthSumCount++;</span>
+<span class="lineNum">     399 </span>[<span class="branchCov" title="Branch 2 was taken 725253 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 704476 times"> + </span><span class="branchCov" title="Branch 5 was taken 20777 times"> + </span>]:<span class="lineCov">     725253 :     if (longitudinalOffset &lt; physics::ParametricValue(1.))</span>
 <span class="lineNum">     400 </span>                :            :     {
-<span class="lineNum">     401 </span>        [<span class="branchCov" title="Branch 1 was taken 704054 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     704054 :       longitudinalOffset += parametricStepsize;</span>
-<span class="lineNum">     402 </span>[<span class="branchCov" title="Branch 2 was taken 704054 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 16468 times"> + </span><span class="branchCov" title="Branch 5 was taken 687586 times"> + </span>]:<span class="lineCov">     704054 :       if (longitudinalOffset &gt; physics::ParametricValue(1.))</span>
+<span class="lineNum">     401 </span>        [<span class="branchCov" title="Branch 1 was taken 704476 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     704476 :       longitudinalOffset += parametricStepsize;</span>
+<span class="lineNum">     402 </span>[<span class="branchCov" title="Branch 2 was taken 704476 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 16685 times"> + </span><span class="branchCov" title="Branch 5 was taken 687791 times"> + </span>]:<span class="lineCov">     704476 :       if (longitudinalOffset &gt; physics::ParametricValue(1.))</span>
 <span class="lineNum">     403 </span>                :            :       {
-<span class="lineNum">     404 </span>                :<span class="lineCov">      16468 :         longitudinalOffset = physics::ParametricValue(1.);</span>
+<span class="lineNum">     404 </span>                :<span class="lineCov">      16685 :         longitudinalOffset = physics::ParametricValue(1.);</span>
 <span class="lineNum">     405 </span>                :            :       }
 <span class="lineNum">     406 </span>                :            :     }
 <span class="lineNum">     407 </span>                :            :     else

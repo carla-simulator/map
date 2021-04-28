@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-03-11 16:09:24</td>
+            <td class="headerValue">2021-04-28 12:53:33</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -71,7 +71,7 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <span class="lineNum">       2 </span>                :            : //
-<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2021 Intel Corporation
 <span class="lineNum">       4 </span>                :            : //
 <span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
 <span class="lineNum">       6 </span>                :            : //
@@ -380,33 +380,38 @@
 <span class="lineNum">     309 </span>                :            : 
 <span class="lineNum">     310 </span>                :            :   static std::vector&lt;lane::Lane::ConstPtr&gt; getRelevantLanesInputChecked(point::ECEFPoint const &amp;ecefPoint,
 <span class="lineNum">     311 </span>                :            :                                                                         physics::Distance const &amp;distance);
-<span class="lineNum">     312 </span>                :            : 
-<span class="lineNum">     313 </span>                :            :   /**
-<span class="lineNum">     314 </span>                :            :    * @brief extract the mapMatchedPositions and write them into a map of occuppied regions
-<span class="lineNum">     315 </span>                :            :    *
-<span class="lineNum">     316 </span>                :            :    * @param[in,out] laneOccupiedRegions vector containing the occupied regions
-<span class="lineNum">     317 </span>                :            :    * @param[in] mapMatchedPositions
-<span class="lineNum">     318 </span>                :            :    */
-<span class="lineNum">     319 </span>                :            : 
-<span class="lineNum">     320 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
-<span class="lineNum">     321 </span>                :            :                       MapMatchedPositionConfidenceList const &amp;mapMatchedPositions) const;
-<span class="lineNum">     322 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
-<span class="lineNum">     323 </span>                :            :                       LaneOccupiedRegionList const &amp;otherLaneOccupiedRegions) const;
+<span class="lineNum">     312 </span>                :            :   static void normalizeResults(match::MapMatchedPositionConfidenceList &amp;mapMatchingResults,
+<span class="lineNum">     313 </span>                :            :                                physics::Probability const &amp;probabilitySum);
+<span class="lineNum">     314 </span>                :            : 
+<span class="lineNum">     315 </span>                :            :   static match::MapMatchedPositionConfidenceList
+<span class="lineNum">     316 </span>                :            :   findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &amp;geoPoint, physics::Distance const &amp;distance);
+<span class="lineNum">     317 </span>                :            : 
+<span class="lineNum">     318 </span>                :            :   /**
+<span class="lineNum">     319 </span>                :            :    * @brief extract the mapMatchedPositions and write them into a map of occuppied regions
+<span class="lineNum">     320 </span>                :            :    *
+<span class="lineNum">     321 </span>                :            :    * @param[in,out] laneOccupiedRegions vector containing the occupied regions
+<span class="lineNum">     322 </span>                :            :    * @param[in] mapMatchedPositions
+<span class="lineNum">     323 </span>                :            :    */
 <span class="lineNum">     324 </span>                :            : 
-<span class="lineNum">     325 </span>                :            :   MapMatchedPositionConfidenceList considerMapMatchingHints(MapMatchedPositionConfidenceList const &amp;mapMatchedPositions,
-<span class="lineNum">     326 </span>                :            :                                                             physics::Probability const &amp;minProbability) const;
-<span class="lineNum">     327 </span>                :            :   bool isLanePartOfRouteHints(lane::LaneId const &amp;laneId) const;
-<span class="lineNum">     328 </span>                :            :   double getHeadingFactor(MapMatchedPosition const &amp;matchedPosition) const;
+<span class="lineNum">     325 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
+<span class="lineNum">     326 </span>                :            :                       MapMatchedPositionConfidenceList const &amp;mapMatchedPositions) const;
+<span class="lineNum">     327 </span>                :            :   void addLaneRegions(LaneOccupiedRegionList &amp;laneOccupiedRegions,
+<span class="lineNum">     328 </span>                :            :                       LaneOccupiedRegionList const &amp;otherLaneOccupiedRegions) const;
 <span class="lineNum">     329 </span>                :            : 
-<span class="lineNum">     330 </span>                :            :   std::list&lt;point::ECEFHeading&gt; mHeadingHints;
-<span class="lineNum">     331 </span>                :            :   double mHeadingHintFactor{2.};
-<span class="lineNum">     332 </span>                :            :   std::list&lt;route::FullRoute&gt; mRouteHints;
-<span class="lineNum">     333 </span>                :            :   double mRouteHintFactor{10.};
-<span class="lineNum">     334 </span>                :            : };
-<span class="lineNum">     335 </span>                :            : 
-<span class="lineNum">     336 </span>                :            : } // namespace match
-<span class="lineNum">     337 </span>                :            : } // namespace map
-<span class="lineNum">     338 </span>                :            : } // namespace ad
+<span class="lineNum">     330 </span>                :            :   MapMatchedPositionConfidenceList considerMapMatchingHints(MapMatchedPositionConfidenceList const &amp;mapMatchedPositions,
+<span class="lineNum">     331 </span>                :            :                                                             physics::Probability const &amp;minProbability) const;
+<span class="lineNum">     332 </span>                :            :   bool isLanePartOfRouteHints(lane::LaneId const &amp;laneId) const;
+<span class="lineNum">     333 </span>                :            :   double getHeadingFactor(MapMatchedPosition const &amp;matchedPosition) const;
+<span class="lineNum">     334 </span>                :            : 
+<span class="lineNum">     335 </span>                :            :   std::list&lt;point::ECEFHeading&gt; mHeadingHints;
+<span class="lineNum">     336 </span>                :            :   double mHeadingHintFactor{2.};
+<span class="lineNum">     337 </span>                :            :   std::list&lt;route::FullRoute&gt; mRouteHints;
+<span class="lineNum">     338 </span>                :            :   double mRouteHintFactor{10.};
+<span class="lineNum">     339 </span>                :            : };
+<span class="lineNum">     340 </span>                :            : 
+<span class="lineNum">     341 </span>                :            : } // namespace match
+<span class="lineNum">     342 </span>                :            : } // namespace map
+<span class="lineNum">     343 </span>                :            : } // namespace ad
 </pre>
       </td>
     </tr>
