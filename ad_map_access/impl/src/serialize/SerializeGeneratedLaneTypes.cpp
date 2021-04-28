@@ -21,9 +21,11 @@ bool doSerialize(ISerializer &serializer, lane::Lane &lane)
     && serializer.serialize(lane.type) && serializer.serialize(lane.direction)
     && doSerialize(serializer, lane.restrictions) && doSerialize(serializer, lane.length)
     && doSerialize(serializer, lane.lengthRange) && doSerialize(serializer, lane.width)
-    && doSerialize(serializer, lane.widthRange) && serializer.serializeObjectVector(lane.speedLimits)
+    && doSerialize(serializer, lane.widthRange)
+    && serializer.serializeObjectVector(lane.speedLimits)
     // @toDo: version 0.4 compat: keep Edge in for backward compat
-    && serializer.serialize(SerializeableMagic::Edge) && doSerialize(serializer, lane.edgeLeft)
+    && serializer.serialize(SerializeableMagic::Edge)
+    && doSerialize(serializer, lane.edgeLeft)
     // @toDo: version 0.4 compat: keep Edge in for backward compat
     && serializer.serialize(SerializeableMagic::Edge) && doSerialize(serializer, lane.edgeRight)
     && serializer.serializeObjectVector(lane.contactLanes) && serializer.serialize(SerializeableMagic::ComplianceVer)

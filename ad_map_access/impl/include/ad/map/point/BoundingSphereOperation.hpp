@@ -17,9 +17,9 @@ namespace map {
 namespace point {
 
 /**
-  * @brief Computes distance between BoundingSpheres.
-  * @returns Distance between two bounding spheres in meters.
-  */
+ * @brief Computes distance between BoundingSpheres.
+ * @returns Distance between two bounding spheres in meters.
+ */
 inline physics::Distance distance(BoundingSphere const &left, BoundingSphere const &right)
 {
   physics::Distance const distanceCenter = distance(left.center, right.center);

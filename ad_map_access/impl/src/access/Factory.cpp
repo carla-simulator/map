@@ -71,8 +71,7 @@ lane::LaneId Factory::add(PartitionId pid,
     point::Geometry const right_edge = point::createGeometry(right_ecef, false);
     set(new_lane_id, left_edge, right_edge);
     if (!autoConnect(new_lane_id, lane_id_0) || !autoConnect(new_lane_id, lane_id_1)
-        || !autoConnect(lane_id_0, new_lane_id)
-        || !autoConnect(lane_id_1, new_lane_id))
+        || !autoConnect(lane_id_0, new_lane_id) || !autoConnect(lane_id_1, new_lane_id))
     {
       throw std::runtime_error("AutoConnect failed");
     }

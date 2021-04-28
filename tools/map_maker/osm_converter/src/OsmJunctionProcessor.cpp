@@ -243,8 +243,7 @@ OsmJunctionArm OsmJunctionProcessor::getOsmArm(::osmium::object_id_type centerNo
   }
 
   throw std::runtime_error("Unable to extract OsmJunctionArm for center " + std::to_string(centerNode)
-                           + std::string(" and entry ")
-                           + std::to_string(entryNode));
+                           + std::string(" and entry ") + std::to_string(entryNode));
 }
 
 bool OsmJunctionProcessor::armIsRamp(OsmJunctionArm const &arm) const

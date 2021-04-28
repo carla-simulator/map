@@ -39,8 +39,8 @@ struct RouteAstarScore
 class RouteAstar : public RouteExpander<RouteAstarScore>
 {
 public:
-  using RouteExpander::RoutingPoint;
   using RouteExpander::RoutingCost;
+  using RouteExpander::RoutingPoint;
 
   /**
    * @brief Constructor. Calculates route between two points.

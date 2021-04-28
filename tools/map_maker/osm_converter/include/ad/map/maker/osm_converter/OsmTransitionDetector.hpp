@@ -96,8 +96,8 @@ private:
   };
 
   /**
-  * @brief 3-way merge junction
-  */
+   * @brief 3-way merge junction
+   */
   struct MergeJunction
   {
     uint32_t leftArmIndex{0u};

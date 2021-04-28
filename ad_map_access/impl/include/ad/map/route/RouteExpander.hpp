@@ -166,9 +166,9 @@ void RouteExpander<RoutingCostData>::expandNeighbors(
     if ( // lane has to be routable to expand
       isRouteable(*lane)
       && ( // max distance and max duration are not yet reached
-           ((origin.second.routeDistance < mMaxDistance) && (origin.second.routeDuration < mMaxDuration))
-           // or we are within an intersection
-           || lane::isLanePartOfAnIntersection(*lane)))
+        ((origin.second.routeDistance < mMaxDistance) && (origin.second.routeDuration < mMaxDuration))
+        // or we are within an intersection
+        || lane::isLanePartOfAnIntersection(*lane)))
     {
       expandSameLaneNeighbors(lane, origin);
       expandLongitudinalNeighbors(lane, origin);

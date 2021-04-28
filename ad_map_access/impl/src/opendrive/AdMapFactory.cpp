@@ -9,7 +9,6 @@
 #include "ad/map/opendrive/AdMapFactory.hpp"
 
 #include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string.hpp>
 #include <opendrive/OpenDrive.hpp>
 #include "DataTypeConversion.hpp"
 #include "ad/map/access/Logging.hpp"

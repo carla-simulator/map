@@ -46,17 +46,17 @@ std::vector<std::string> splitString(std::string const &splitString, const char 
 std::string replace(std::string const &needle, std::string const &pitchfork, std::string const &haystack);
 
 /**
-* Read in a string from the given stream. The string may be enclosed with double-quotes
-*
-* @return true if a string was read
-*/
+ * Read in a string from the given stream. The string may be enclosed with double-quotes
+ *
+ * @return true if a string was read
+ */
 bool readStringWithOptionalQuotes(std::istream &input, std::string &result);
 
 /**
-* Add quotes to given string, if the string hasn't already one.
-*
-* @return return changed string
-*/
+ * Add quotes to given string, if the string hasn't already one.
+ *
+ * @return return changed string
+ */
 std::string writeStringParam(std::string const &param);
 
 template <typename T> void readParameter(std::istream &input, T &t, std::string const parameter)

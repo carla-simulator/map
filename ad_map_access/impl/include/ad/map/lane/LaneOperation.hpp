@@ -67,37 +67,37 @@ Lane const &getLane(lane::LaneId const &id);
 LaneIdList getLanes();
 
 /**
-* @return lane heading at a mapMatchedPosition
-*/
+ * @return lane heading at a mapMatchedPosition
+ */
 point::ECEFHeading getLaneECEFHeading(match::MapMatchedPosition const &mapMatchedPosition);
 
 /**
-* @return lane heading at a paraPoint
-*/
+ * @return lane heading at a paraPoint
+ */
 point::ECEFHeading getLaneECEFHeading(point::ParaPoint const &paraPoint);
 
 /**
-* @return lane heading at a mapMatchedPosition
-*/
+ * @return lane heading at a mapMatchedPosition
+ */
 point::ENUHeading getLaneENUHeading(match::MapMatchedPosition const &mapMatchedPosition);
 
 /**
-* @return lane heading at a paraPoint with given gnssReference
-*/
+ * @return lane heading at a paraPoint with given gnssReference
+ */
 point::ENUHeading getLaneENUHeading(point::ParaPoint const &paraPoint, point::GeoPoint const &gnssReference);
 
 /**
-* @return lane id at given location
-*
-* Throws if there is more than one lane at the given position
-*/
+ * @return lane id at given location
+ *
+ * Throws if there is more than one lane at the given position
+ */
 LaneId uniqueLaneId(point::GeoPoint const &point);
 
 /**
-* @return parametric point at given location
-*
-* Throws if there is more than one lane at the given position
-*/
+ * @return parametric point at given location
+ *
+ * Throws if there is more than one lane at the given position
+ */
 point::ParaPoint uniqueParaPoint(point::GeoPoint const &point);
 
 /**
@@ -314,11 +314,11 @@ bool isVanishingLaneStart(Lane const &lane);
 bool isVanishingLaneEnd(Lane const &lane);
 
 /**
-* @brief Checks if Lane satisfies filter condition.
-* @param[in] typeFilter    Type of the lane as string.
-* @param[in] isHov         True if only lanes with HOV restriction shall be returned.
-* @returns true if Lane satisfies filter condition.
-*/
+ * @brief Checks if Lane satisfies filter condition.
+ * @param[in] typeFilter    Type of the lane as string.
+ * @param[in] isHov         True if only lanes with HOV restriction shall be returned.
+ * @returns true if Lane satisfies filter condition.
+ */
 bool satisfiesFilter(Lane const &lane, std::string const &typeFilter, bool isHov);
 
 /**

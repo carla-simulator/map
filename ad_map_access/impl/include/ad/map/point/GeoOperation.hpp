@@ -102,9 +102,9 @@ inline GeoPoint createGeoPoint(Longitude const longitude, Latitude const latitud
 }
 
 /**
-  * @brief Computes distance between geo points.
-  * @returns Distance between two points in meters.
-  */
+ * @brief Computes distance between geo points.
+ * @returns Distance between two points in meters.
+ */
 physics::Distance distance(GeoPoint const &point, GeoPoint const &other);
 
 /**
@@ -145,12 +145,12 @@ bool isOnTheLeft(GeoPoint const &point, const GeoPoint &pt0, const GeoPoint &pt1
 bool haveSameOrientation(const GeoEdge &pts0, const GeoEdge &pts1);
 
 /**
-  * @brief Checks if one polyline is on the left side of another polyline.
-  * @param[in] pts0 First GeoEdge
-  * @param[in] pts1 Second GeoEdge
-  * @returns true if pts0 is left of pts1.
-  * \note Altitude is not taken in the account!
-  */
+ * @brief Checks if one polyline is on the left side of another polyline.
+ * @param[in] pts0 First GeoEdge
+ * @param[in] pts1 Second GeoEdge
+ * @returns true if pts0 is left of pts1.
+ * \note Altitude is not taken in the account!
+ */
 bool isOnTheLeft(const GeoEdge &pts0, const GeoEdge &pts1);
 
 /** @brief calculate the length of the provided border as distance value

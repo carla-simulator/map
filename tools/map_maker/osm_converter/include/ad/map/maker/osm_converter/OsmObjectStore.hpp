@@ -99,7 +99,7 @@ struct OsmObjectStore : public OsmDataBuilder
   virtual ::osmium::object_id_type buildWay(std::vector<::osmium::object_id_type> const &nodes,
                                             ::osmium::object_id_type const id) override;
   virtual ::osmium::object_id_type
-  buildRelation(std::function<void(::osmium::memory::Buffer &, ::osmium::builder::RelationBuilder *)>) override;
+    buildRelation(std::function<void(::osmium::memory::Buffer &, ::osmium::builder::RelationBuilder *)>) override;
   virtual ::osmium::object_id_type
   buildRelation(std::function<void(::osmium::memory::Buffer &, ::osmium::builder::RelationBuilder *)>,
                 ::osmium::object_id_type const id) override;

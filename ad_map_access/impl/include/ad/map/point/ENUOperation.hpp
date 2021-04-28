@@ -105,9 +105,9 @@ inline ENUPoint getEnuUpAxis()
 }
 
 /**
-  * @brief Computes distance between ENU points.
-  * @returns Distance between two points in meters.
-  */
+ * @brief Computes distance between ENU points.
+ * @returns Distance between two points in meters.
+ */
 inline physics::Distance distance(ENUPoint const &point, ENUPoint const &other)
 {
   return vectorLength(vectorSub(point, other));

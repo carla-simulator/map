@@ -94,10 +94,10 @@ LandmarkIdList getVisibleLandmarks(lane::LaneId const &laneId);
 LandmarkIdList getVisibleLandmarks(LandmarkType const &landmarkType, lane::LaneId const &laneId);
 
 /**
-* @brief Method to be called to search the nearest landmarkid given the geo point
-* @param[in] The geo point given
-* @returns returns search result of Landmarkid from given geo point.
-*/
+ * @brief Method to be called to search the nearest landmarkid given the geo point
+ * @param[in] The geo point given
+ * @returns returns search result of Landmarkid from given geo point.
+ */
 LandmarkId uniqueLandmarkId(point::GeoPoint const &geoPoint);
 
 /**

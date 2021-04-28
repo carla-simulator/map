@@ -41,8 +41,8 @@ void OsmPoiExtractor::extractHighwayRelatedPoi(::osmium::Node const &node)
         }
         else if (strcmp("pelican", crossing_ref) == 0)
         {
-          mLog(common::LogLevel::Verbose) << "Mark node " << node.id()
-                                          << " as pedestrian crossing with traffic lights\n";
+          mLog(common::LogLevel::Verbose)
+            << "Mark node " << node.id() << " as pedestrian crossing with traffic lights\n";
           mPois[PoiType::PelicanCrossing].insert(node.id());
         }
       }

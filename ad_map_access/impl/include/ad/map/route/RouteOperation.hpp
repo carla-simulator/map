@@ -27,7 +27,7 @@ namespace intersection {
  * @brief forward declaration of Intersection class
  */
 class Intersection;
-}
+} // namespace intersection
 
 /* @brief namespace route */
 namespace route {

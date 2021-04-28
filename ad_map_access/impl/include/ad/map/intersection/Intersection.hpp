@@ -337,11 +337,11 @@ private:
   bool isSolidTrafficLight(landmark::LandmarkId trafficLightId);
 
   /**
-    * @brief Extract traffic light type for a specific traffic light id .
-    *
-    * @param[in] trafficLightId TrafficLightId.
-    * @return traffic light type.
-    */
+   * @brief Extract traffic light type for a specific traffic light id .
+   *
+   * @param[in] trafficLightId TrafficLightId.
+   * @return traffic light type.
+   */
   landmark::TrafficLightType extractTrafficLightType(landmark::LandmarkId trafficLightId);
 
   /**

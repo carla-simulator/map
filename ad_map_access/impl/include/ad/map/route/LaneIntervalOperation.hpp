@@ -239,7 +239,7 @@ inline bool isAfterInterval(LaneInterval const &laneInterval, point::ParaPoint c
  *
  * @returns @c true if parametric offset is before the interval
  * Be aware: if the route interval is degenerated isAfterInterval() and isBeforeInterval() return the same value
-  */
+ */
 inline bool isBeforeInterval(LaneInterval const &laneInterval, physics::ParametricValue const parametricOffset)
 {
   if (isRouteDirectionPositive(laneInterval))

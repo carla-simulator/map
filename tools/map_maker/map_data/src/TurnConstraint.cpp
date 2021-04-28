@@ -55,26 +55,22 @@ bool isTurnAllowed(const TurnConstraint &turnConstraint, const LanePosition &lan
       return false;
     case TurnConstraint::LeftAndRight:
       if (lanePosition == LanePosition::Left || lanePosition == LanePosition::SlightlyLeft
-          || lanePosition == LanePosition::Right
-          || lanePosition == LanePosition::SlightlyRight
-          || lanePosition == LanePosition::SharpLeft
-          || lanePosition == LanePosition::SharpRight)
+          || lanePosition == LanePosition::Right || lanePosition == LanePosition::SlightlyRight
+          || lanePosition == LanePosition::SharpLeft || lanePosition == LanePosition::SharpRight)
       {
         return true;
       }
       return false;
     case TurnConstraint::LeftAndThrough:
       if (lanePosition == LanePosition::Left || lanePosition == LanePosition::SlightlyLeft
-          || lanePosition == LanePosition::Front
-          || lanePosition == LanePosition::SharpLeft)
+          || lanePosition == LanePosition::Front || lanePosition == LanePosition::SharpLeft)
       {
         return true;
       }
       return false;
     case TurnConstraint::RightAndThrough:
       if (lanePosition == LanePosition::Right || lanePosition == LanePosition::SlightlyRight
-          || lanePosition == LanePosition::Front
-          || lanePosition == LanePosition::SharpRight)
+          || lanePosition == LanePosition::Front || lanePosition == LanePosition::SharpRight)
       {
         return true;
       }
