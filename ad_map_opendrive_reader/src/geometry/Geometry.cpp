@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -23,7 +23,7 @@ namespace opendrive {
 namespace geometry {
 
 DirectedPoint::DirectedPoint()
-  : location(0, 0)
+  : location(0, 0, 0)
   , tangent(0)
 {
 }
@@ -32,8 +32,8 @@ DirectedPoint::DirectedPoint(const Point &point, double t)
   , tangent(t)
 {
 }
-DirectedPoint::DirectedPoint(double x, double y, double t)
-  : location(x, y)
+DirectedPoint::DirectedPoint(double x, double y, double z, double t)
+  : location(x, y, z)
   , tangent(t)
 {
 }
@@ -111,10 +111,11 @@ const DirectedPoint GeometryArc::PosFromDist(double dist) const
   const double theta = _heading - M_PI_2;
   double x = _start_position.x - radius * (cos(theta) - cos(theta + dist * _curvature));
   double y = _start_position.y - radius * (sin(theta) - sin(theta + dist * _curvature));
+  double z = _start_position.z;
 
   double tangent = _heading + dist * _curvature;
 
-  DirectedPoint p(x, y, tangent);
+  DirectedPoint p(x, y, z, tangent);
 
   return p;
 }
@@ -146,15 +147,17 @@ const DirectedPoint GeometryPoly3::PosFromDist(const double dist) const
 
   double x0 = _start_position.x;
   double y0 = _start_position.y;
+  double z0 = _start_position.z;
   double x = u * cos_t - v * sin_t;
   double y = u * sin_t + v * cos_t;
+  double z = 0.0;
 
   auto tangentPoly = boost::array<double, 4>{{_b, 2.0 * _c, 3.0 * _d}};
 
   double tangentV = boost::math::tools::evaluate_polynomial(tangentPoly, u);
   double theta = atan2(tangentV, 1.0);
 
-  DirectedPoint point(x0 + x, y0 + y, _heading + theta);
+  DirectedPoint point(x0 + x, y0 + y, z0 + z, _heading + theta);
   return point;
 }
 
@@ -196,8 +199,10 @@ const DirectedPoint GeometryParamPoly3::PosFromDist(const double dist) const
   const double sin_t = std::sin(_heading);
   double x0 = _start_position.x;
   double y0 = _start_position.y;
+  double z0 = _start_position.z;
   double x = u * cos_t - v * sin_t;
   double y = u * sin_t + v * cos_t;
+  double z = 0.0;
 
   auto tangentPolyU = boost::array<double, 4>{{_bU, 2.0 * _cU, 3.0 * _dU, 0.0}};
   auto tangentPolyV = boost::array<double, 4>{{_bV, 2.0 * _cV, 3.0 * _dV, 0.0}};
@@ -206,9 +211,9 @@ const DirectedPoint GeometryParamPoly3::PosFromDist(const double dist) const
   double tangentV = boost::math::tools::evaluate_polynomial(tangentPolyV, p);
   double theta = atan2(tangentV, tangentU);
 
-  DirectedPoint point(x0 + x, y0 + y, _heading + theta);
+  DirectedPoint point(x0 + x, y0 + y, z0 + z, _heading + theta);
   return point;
 }
 
-} // namespace
-} // namespace
+} // namespace geometry
+} // namespace opendrive

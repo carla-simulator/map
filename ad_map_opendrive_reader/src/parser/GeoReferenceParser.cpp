@@ -68,5 +68,5 @@ namespace parser {
   return result;
 }
 
-} // parser
-} // opendrive
+} // namespace parser
+} // namespace opendrive

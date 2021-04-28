@@ -57,12 +57,12 @@ class OsmMultiLaneInterpolation
 {
 public:
   /**
-  * @brief OsmMultiLaneInterpolation
-  * @param start setup of lanes at start
-  * @param end setup of lanes at end
-  *
-  * Provide an interpolation over the widths of a road segment.
-  */
+   * @brief OsmMultiLaneInterpolation
+   * @param start setup of lanes at start
+   * @param end setup of lanes at end
+   *
+   * Provide an interpolation over the widths of a road segment.
+   */
   OsmMultiLaneInterpolation(OsmMultiLane const &start, OsmMultiLane const &end);
 
   bool hasNext() const;

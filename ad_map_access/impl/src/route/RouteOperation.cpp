@@ -880,7 +880,7 @@ ShortenRouteResult shortenRoute(point::ParaPointList const &currentPositions,
     ShortenRouteResult result = ShortenRouteResult::Succeeded;
     if ((shortenRouteMode == ShortenRouteMode::DontCutIntersectionAndPrependIfSucceededBeforeRoute)
         && (intersection::Intersection::isLanePartOfAnIntersection(
-             findWaypointResult.laneSegmentIterator->laneInterval.laneId)))
+          findWaypointResult.laneSegmentIterator->laneInterval.laneId)))
     {
       // check for intersection
       // check if we are right before the route ---> do not clear in this case

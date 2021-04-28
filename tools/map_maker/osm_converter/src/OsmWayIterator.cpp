@@ -34,8 +34,7 @@ OsmWayIterator OsmWayIterator::setupWayIteratorForJunctionArm(std::shared_ptr<Os
     logging(common::LogLevel::Error) << "Unable to create iterator for way " << osmArm.mWayId << " and starting node "
                                      << osmArm.mArmId << "\n";
     throw std::runtime_error("Unable to create iterator for way " + std::to_string(osmArm.mWayId)
-                             + std::string(" and starting node ")
-                             + std::to_string(osmArm.mArmId));
+                             + std::string(" and starting node ") + std::to_string(osmArm.mArmId));
   }
 
   // only rewind if the arm is an incoming arm
@@ -49,8 +48,7 @@ OsmWayIterator OsmWayIterator::setupWayIteratorForJunctionArm(std::shared_ptr<Os
     logging(common::LogLevel::Error) << "Invalid iterator after rewind for way " << osmArm.mWayId
                                      << " and starting node " << osmArm.mArmId << "\n";
     throw std::runtime_error("Invalid iterator after rewind for way " + std::to_string(osmArm.mWayId)
-                             + std::string(" and starting node ")
-                             + std::to_string(osmArm.mArmId));
+                             + std::string(" and starting node ") + std::to_string(osmArm.mArmId));
   }
   return it;
   // TODO does OsmWayIterator need an explicit move constructor (OsmWayIterator&&)?

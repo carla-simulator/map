@@ -71,9 +71,9 @@ bool Polyline2d::shift(const double distStart,
     double scaling = std::sin(shiftDirection.orientation - directionBefore.orientation);
     if (scaling < 0.001)
     {
-      logChannel(common::LogLevel::Warning) << " segment have a bisection angle close to 180 degree, value is "
-                                            << (shiftDirection.orientation - directionBefore.orientation) * 180. / M_PI
-                                            << " limiting scaling to 0.01\n";
+      logChannel(common::LogLevel::Warning)
+        << " segment have a bisection angle close to 180 degree, value is "
+        << (shiftDirection.orientation - directionBefore.orientation) * 180. / M_PI << " limiting scaling to 0.01\n";
       scaling = 0.01;
     }
 

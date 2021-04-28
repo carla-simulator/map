@@ -69,9 +69,9 @@ inline ECEFPoint createECEFPoint(ECEFCoordinate const x, ECEFCoordinate const y,
 }
 
 /**
-  * @brief Computes distance between ECEF points.
-  * @returns Distance between two points in meters.
-  */
+ * @brief Computes distance between ECEF points.
+ * @returns Distance between two points in meters.
+ */
 inline physics::Distance distance(ECEFPoint const &point, ECEFPoint const &other)
 {
   return vectorLength(vectorSub(point, other));

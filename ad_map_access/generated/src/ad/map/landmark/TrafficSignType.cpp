@@ -225,7 +225,7 @@ template <>::ad::map::landmark::TrafficSignType fromString(std::string const &st
   }
   if (str
       == std::string(
-           "::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE")) // LCOV_EXCL_BR_LINE
+        "::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE")) // LCOV_EXCL_BR_LINE
   {
     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE;
   }
@@ -233,8 +233,9 @@ template <>::ad::map::landmark::TrafficSignType fromString(std::string const &st
   {
     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE;
   }
-  if (str == std::string(
-               "::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE")) // LCOV_EXCL_BR_LINE
+  if (str
+      == std::string(
+        "::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE")) // LCOV_EXCL_BR_LINE
   {
     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE;
   }
@@ -299,8 +300,9 @@ template <>::ad::map::landmark::TrafficSignType fromString(std::string const &st
   {
     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_FORESTAL_ALLOWED;
   }
-  if (str == std::string(
-               "::ad::map::landmark::TrafficSignType::SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED")) // LCOV_EXCL_BR_LINE
+  if (str
+      == std::string(
+        "::ad::map::landmark::TrafficSignType::SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED")) // LCOV_EXCL_BR_LINE
   {
     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED;
   }
@@ -308,8 +310,9 @@ template <>::ad::map::landmark::TrafficSignType fromString(std::string const &st
   {
     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_CONSTRUCTION_VEHICLE_ALLOWED;
   }
-  if (str == std::string(
-               "::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN")) // LCOV_EXCL_BR_LINE
+  if (str
+      == std::string(
+        "::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN")) // LCOV_EXCL_BR_LINE
   {
     return ::ad::map::landmark::TrafficSignType::SUPPLEMENT_ENVIRONMENT_ZONE_YELLOW_GREEN;
   }

@@ -131,8 +131,8 @@ void AdMapMatchingTest::compareMapMatching(int line,
   if ((mRouteHint.roadSegments.size() > 0u) && (testResults.size() > 0u))
   {
     ASSERT_EQ(1u, mRouteHint.roadSegments.size()) << " compareMapMatching called from " << line << "\n";
-    ASSERT_EQ(1u, mRouteHint.roadSegments[0].drivableLaneSegments.size()) << " compareMapMatching called from " << line
-                                                                          << "\n";
+    ASSERT_EQ(1u, mRouteHint.roadSegments[0].drivableLaneSegments.size())
+      << " compareMapMatching called from " << line << "\n";
     ASSERT_LT(0u, testResults.size()) << " compareMapMatching called from " << line << "\n";
     ASSERT_EQ(mRouteHint.roadSegments[0].drivableLaneSegments[0].laneInterval.laneId,
               testResults[0].mapMatchedPosition.lanePoint.paraPoint.laneId)

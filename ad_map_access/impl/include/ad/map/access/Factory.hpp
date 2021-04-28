@@ -248,7 +248,7 @@ public: // Atomic Operations -- Set Lane Attribute
    * @param[in] id          Identifier of this lane.
    * @param[in] type        Type of the lane.
    * @returns true if successful (lane exists).
-  */
+   */
   bool set(const lane::LaneId &id, lane::LaneType type);
 
   /**
@@ -256,7 +256,7 @@ public: // Atomic Operations -- Set Lane Attribute
    * @param[in] id              Identifier of this lane.
    * @param[in] compliance_ver  Data version compliance of this lane.
    * @returns true if successful (lane exists).
-  */
+   */
   bool set(const lane::LaneId &id, lane::ComplianceVersion compliance_ver);
 
   /**

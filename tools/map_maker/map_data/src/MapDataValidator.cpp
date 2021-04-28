@@ -234,8 +234,8 @@ bool MapDataValidator::validateBordersOfIntersection(MapDataId intersectionId)
         {
           MapDataId endRoad = intersection.mRoads.at(e);
           auto const &endLine = mStore.polyLine(mStore.road(endRoad).mCenterLineId).mNodes;
-          mLog(common::LogLevel::Verbose) << " second road " << endRoad << " (" << mStore.road(endRoad).mCenterLineId
-                                          << ")";
+          mLog(common::LogLevel::Verbose)
+            << " second road " << endRoad << " (" << mStore.road(endRoad).mCenterLineId << ")";
           if ((armPoint == endLine.front()) || (armPoint == endLine.back()))
           {
             mLog << " used\n";

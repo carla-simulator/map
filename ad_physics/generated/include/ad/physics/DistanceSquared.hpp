@@ -40,13 +40,13 @@ namespace physics {
 
 #if SAFE_DATATYPES_EXPLICIT_CONVERSION
 /*!
-* \brief Enable/Disable explicit conversion. Currently set to "only explicit conversion".
-*/
+ * \brief Enable/Disable explicit conversion. Currently set to "only explicit conversion".
+ */
 #define _AD_PHYSICS_DISTANCESQUARED_EXPLICIT_CONVERSION_ explicit
 #else
 /*!
-* \brief Enable/Disable explicit conversion. Currently set to "implicit conversion allowed".
-*/
+ * \brief Enable/Disable explicit conversion. Currently set to "implicit conversion allowed".
+ */
 #define _AD_PHYSICS_DISTANCESQUARED_EXPLICIT_CONVERSION_
 #endif
 

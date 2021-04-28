@@ -1240,8 +1240,9 @@ std::set<MapDataId> Intersection::roadsConnectedTo(MapDataId const connectedRoad
   std::set<MapDataId> result;
   for (auto const &internalRoadId : mRoads)
   {
-    if (mStore.hasRoad(internalRoadId) && (mStore.road(internalRoadId).mPredecessor == connectedRoadId
-                                           || mStore.road(internalRoadId).mSuccessor == connectedRoadId))
+    if (mStore.hasRoad(internalRoadId)
+        && (mStore.road(internalRoadId).mPredecessor == connectedRoadId
+            || mStore.road(internalRoadId).mSuccessor == connectedRoadId))
     {
       result.insert(internalRoadId);
     }
@@ -1253,8 +1254,9 @@ MapDataId Intersection::roadConnectedTo(MapDataId const connectedRoadId) const
 {
   for (auto const &internalRoadId : mRoads)
   {
-    if (mStore.hasRoad(internalRoadId) && ((mStore.road(internalRoadId).mPredecessor == connectedRoadId)
-                                           || (mStore.road(internalRoadId).mSuccessor == connectedRoadId)))
+    if (mStore.hasRoad(internalRoadId)
+        && ((mStore.road(internalRoadId).mPredecessor == connectedRoadId)
+            || (mStore.road(internalRoadId).mSuccessor == connectedRoadId)))
     {
       return internalRoadId;
     }

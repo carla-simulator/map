@@ -234,22 +234,22 @@ bool OsmTransitionDetector::isYJunction(map_data::MapDataStore const &store, Mer
   double gamma = fabs(geometry::minimumAngleDifference(firstArm.orientation, secondArm.orientation));
 
   /**
-  * Angles for a Y junction
-  * Y connection
-  *     gamma
-  *    \     /
-  *     \   /
-  *      \ /
-  * alpha x beta
-  *       |
-  *       |
-  *       |
-  * The junction is considered a Y junction if
-  * gamma < M_PI_2
-  * alpha < M_PI
-  * beta  < M_PI
-  *                            a T junction otherwise
-  */
+   * Angles for a Y junction
+   * Y connection
+   *     gamma
+   *    \     /
+   *     \   /
+   *      \ /
+   * alpha x beta
+   *       |
+   *       |
+   *       |
+   * The junction is considered a Y junction if
+   * gamma < M_PI_2
+   * alpha < M_PI
+   * beta  < M_PI
+   *                            a T junction otherwise
+   */
 
   if ((gamma < M_PI_2) && (alpha < M_PI) && (beta < M_PI))
   {

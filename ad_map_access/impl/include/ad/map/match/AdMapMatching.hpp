@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -309,6 +309,11 @@ private:
 
   static std::vector<lane::Lane::ConstPtr> getRelevantLanesInputChecked(point::ECEFPoint const &ecefPoint,
                                                                         physics::Distance const &distance);
+  static void normalizeResults(match::MapMatchedPositionConfidenceList &mapMatchingResults,
+                               physics::Probability const &probabilitySum);
+
+  static match::MapMatchedPositionConfidenceList
+  findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geoPoint, physics::Distance const &distance);
 
   /**
    * @brief extract the mapMatchedPositions and write them into a map of occuppied regions

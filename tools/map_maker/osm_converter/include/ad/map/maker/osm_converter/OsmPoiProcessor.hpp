@@ -21,7 +21,7 @@
 
 namespace osmium {
 class Node;
-} // osmium
+} // namespace osmium
 
 namespace ad {
 namespace map {

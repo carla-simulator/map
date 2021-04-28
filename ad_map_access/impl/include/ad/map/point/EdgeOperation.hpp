@@ -30,13 +30,13 @@ namespace point {
 physics::Distance const cEdgePointBorderDistance{0.1};
 
 /**
-  * @brief Find point nearest to the line formed by two points.
-  *
-  * @param[in] a point to search for
-  * @param[in] pt0 First point of the line.
-  * @param[in] pt1 Second point of the line.
-  * @returns Value of t;  nearest point to a can be calculated as (1-t)*pt0+t*pt1.
-  */
+ * @brief Find point nearest to the line formed by two points.
+ *
+ * @param[in] a point to search for
+ * @param[in] pt0 First point of the line.
+ * @param[in] pt1 Second point of the line.
+ * @returns Value of t;  nearest point to a can be calculated as (1-t)*pt0+t*pt1.
+ */
 template <typename PointType>
 physics::RatioValue findNearestPointOnEdge(PointType const &a, const PointType &pt0, const PointType &pt1)
 {

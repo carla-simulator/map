@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -14,6 +14,7 @@
 #include <boost/math/tools/rational.hpp>
 #include <cmath>
 #include <iostream>
+#include "opendrive/geometry/GeometryGenerator.hpp"
 
 namespace opendrive {
 namespace geometry {
@@ -37,12 +38,16 @@ geometry::DirectedPoint CenterLine::eval(double s, bool applyLateralOffset) cons
       {
         directedPoint.ApplyLateralOffset(calculateOffset(s));
       }
+
+      directedPoint.location.z = laneHeight(elevation, s);
       return directedPoint;
     }
   }
 
   auto &lastGeometry = geometry.back();
-  return lastGeometry->PosFromDist(s - lastGeometry->GetStartOffset());
+  auto directed_point = lastGeometry->PosFromDist(s - lastGeometry->GetStartOffset());
+  directed_point.location.z = laneHeight(elevation, s);
+  return directed_point;
 }
 
 std::vector<double> CenterLine::samplingPoints() const
@@ -134,11 +139,13 @@ bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
   centerLine.geometry.clear();
   centerLine.length = roadInfo.attributes.length;
   centerLine.offsetVector = roadInfo.lanes.lane_offset;
+  centerLine.elevation = roadInfo.road_profiles.elevation_profile;
 
   // Add geometry information
   for (auto &geometry_attribute : roadInfo.geometry_attributes)
   {
-    Point start(geometry_attribute->start_position_x, geometry_attribute->start_position_y);
+    Point start(
+      geometry_attribute->start_position_x, geometry_attribute->start_position_y, geometry_attribute->start_position_z);
 
     try
     {
@@ -206,5 +213,5 @@ bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
 
   return ok;
 }
-}
-}
+} // namespace geometry
+} // namespace opendrive

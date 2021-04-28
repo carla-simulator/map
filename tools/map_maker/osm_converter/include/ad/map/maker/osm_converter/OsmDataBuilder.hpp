@@ -52,7 +52,7 @@ public:
                                             ::osmium::object_id_type const id)
     = 0;
   virtual ::osmium::object_id_type
-  buildRelation(std::function<void(::osmium::memory::Buffer &, ::osmium::builder::RelationBuilder *)>)
+    buildRelation(std::function<void(::osmium::memory::Buffer &, ::osmium::builder::RelationBuilder *)>)
     = 0;
   virtual ::osmium::object_id_type
   buildRelation(std::function<void(::osmium::memory::Buffer &, ::osmium::builder::RelationBuilder *)>,

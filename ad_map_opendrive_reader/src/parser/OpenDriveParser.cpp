@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -138,5 +138,5 @@ bool OpenDriveParser::Parse(const char *xml,
 
   return true;
 }
-}
-}
+} // namespace parser
+} // namespace opendrive
