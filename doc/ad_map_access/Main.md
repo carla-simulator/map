@@ -58,7 +58,7 @@ There is also a python binding for the *ad_map_access* library available: [*ad_m
 
 ### QGIS <a name="qgis"></a>
 Visualization of the map data is crucial to be able to inspect the data and work with it.
-Therefore a plugin for the free [QGIS](https://qgis.org/) tool (currently Version 2.18) is available providing insight
+Therefore a plugin for the free [QGIS](https://qgis.org/) tool (currently Version 3.1x) is available providing insight
 into the inner [data model of the map](#mapdatamodel). The following shows a screenshot with
 active ad_map_access_qgis plugin:
 
