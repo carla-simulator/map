@@ -230,8 +230,8 @@ class WGS84PolylineLayer(WGS84Layer):
         if len(polyline) > 1:
             poly = []
             for point in polyline:
-                poly.append(QgsPointXY(float(point.longitude), float(point.latitude)))
-            geometry = QgsGeometry.fromPolylineXY(poly)
+                poly.append(QgsPoint(point.longitude, point.latitude, point.altitude))
+            geometry = QgsGeometry.fromPolyline(poly)
             return self.add_feature(geometry, attributes)
         return None
 
@@ -255,11 +255,11 @@ class WGS84ArrowLayer(WGS84Layer):
     def add_lla(self, pt_from, pt_to, attributes):
         "..."
         poly = []
-        pt = QgsPointXY(pt_from.longitude, pt_from.latitude)
+        pt = QgsPoint(pt_from.longitude, pt_from.latitude, pt_from.altitude)
         poly.append(pt)
-        pt1 = QgsPointXY(pt_to.longitude, pt_to.latitude)
+        pt1 = QgsPoint(pt_to.longitude, pt_to.latitude, pt_to.altitude)
         poly.append(pt1)
-        geometry = QgsGeometry.fromPolylineXY(poly)
+        geometry = QgsGeometry.fromPolyline(poly)
         return self.add_feature(geometry, attributes)
 
 
