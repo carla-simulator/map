@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2019-2020 Intel Corporation
+# Copyright (C) 2019-2021 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -8,22 +8,35 @@
 
 cmake_minimum_required(VERSION 3.5)
 
+project(ad_map_opendrive_reader)
+
+include(../cmake/compile-options.cmake)
+include(../cmake/hardening.cmake)
+include(../cmake/testing.cmake)
+include(../cmake/warnings.cmake)
+include(../cmake/apidoc.cmake)
+
+#convert list to string
+string (REPLACE ";" " " TARGET_LINK_FLAGS "${TARGET_LINK_OPTIONS}")
+
+project(ad_map_opendrive_reader VERSION 3.0.0)
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-project(ad_map_opendrive_reader VERSION 1.0.0)
-
-option(BUILD_SHARED_LIBS "Build shared libraries (.dll/.so) instead of static ones (.lib/.a)" ON)
-
 set(CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 14)
+
+option(BUILD_SHARED_LIBS "Build shared libraries instead of static ones" ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(PROJECT_SOURCE_LIST
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/ControllerParser.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/GeometryParser.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/GeoReferenceParser.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/JunctionParser.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/LaneParser.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/ObjectParser.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/OpenDriveParser.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/ProfilesParser.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/RoadLinkParser.cpp
@@ -33,6 +46,7 @@ set(PROJECT_SOURCE_LIST
   ${CMAKE_CURRENT_SOURCE_DIR}/src/geometry/CenterLine.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/geometry/Geometry.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/geometry/GeometryGenerator.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/geometry/LaneSectionSampling.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/geometry/LaneUtils.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/OpenDrive.cpp
 )
@@ -44,6 +58,8 @@ add_library(${PROJECT_NAME} ${PROJECT_SOURCE_LIST})
 #####################################################################
 
 find_package(Boost REQUIRED)
+
+find_package(spdlog REQUIRED CONFIG)
 
 #pugixml
 find_library(PUGIXML_LIBRARIES
@@ -82,6 +98,12 @@ target_link_libraries(${PROJECT_NAME}
   ${PROJ_LIBRARIES}
 )
 
+target_link_libraries(${PROJECT_NAME}
+  PRIVATE
+  ${PUGIXML_LIBRARIES}
+  spdlog::spdlog
+  ${PROJ_LIBRARIES}
+)
 
 set(PROJECT_PUBLIC_HEADER_LIST
   "${CMAKE_CURRENT_SOURCE_DIR}/include/opendrive/types.hpp"
@@ -89,6 +111,11 @@ set(PROJECT_PUBLIC_HEADER_LIST
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${PROJECT_PUBLIC_HEADER_LIST}")
+
+
+target_compile_definitions(${PROJECT_NAME} PUBLIC ${TARGET_COMPILE_DEFINITIONS})
+target_compile_options(${PROJECT_NAME} PRIVATE ${TARGET_COMPILE_OPTIONS})
+set_property(TARGET ${PROJECT_NAME} APPEND_STRING PROPERTY LINK_FLAGS ${TARGET_LINK_FLAGS})
 
 #####################################################################
 # installation
@@ -119,6 +146,12 @@ configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/Config.cmake.in
   INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
 )
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/install/${PROJECT_NAME}Config.cmake"
+write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/install/${PROJECT_NAME}ConfigVersion.cmake
+  COMPATIBILITY SameMajorVersion
+)
+
+install(FILES 
+  "${CMAKE_CURRENT_BINARY_DIR}/install/${PROJECT_NAME}Config.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/install/${PROJECT_NAME}ConfigVersion.cmake"
   DESTINATION ${CMAKECONFIG_INSTALL_DIR}
 )

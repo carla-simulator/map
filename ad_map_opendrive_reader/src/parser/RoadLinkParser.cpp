@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -45,7 +45,7 @@ opendrive::ContactPoint toContactPoint(std::string const contactPoint)
 void opendrive::parser::RoadLinkParser::ParseLink(const pugi::xml_node &xmlNode,
                                                   opendrive::RoadLinkInformation *out_link_information)
 {
-  out_link_information->id = std::atoi(xmlNode.attribute("elementId").value());
+  out_link_information->id = std::stoi(xmlNode.attribute("elementId").value());
   out_link_information->element_type = toElementType(xmlNode.attribute("elementType").value());
   out_link_information->contact_point = toContactPoint(xmlNode.attribute("contactPoint").value());
 }

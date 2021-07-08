@@ -1,4 +1,5 @@
 ## Latest changes
+* Complete geometry import of OpenDRIVE reader
 
 ## Release 2.4.4
 #### :rocket: New Features

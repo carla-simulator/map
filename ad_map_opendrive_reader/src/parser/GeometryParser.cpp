@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -61,6 +61,7 @@ void opendrive::parser::GeometryParser::ParseParamPoly3(
   out_geometry_param_poly3->bV = std::stod(xmlNode.attribute("bV").value());
   out_geometry_param_poly3->cV = std::stod(xmlNode.attribute("cV").value());
   out_geometry_param_poly3->dV = std::stod(xmlNode.attribute("dV").value());
+  out_geometry_param_poly3->p_range = xmlNode.attribute("pRange").value();
 }
 
 void opendrive::parser::GeometryParser::Parse(

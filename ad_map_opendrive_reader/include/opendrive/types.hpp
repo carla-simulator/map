@@ -14,7 +14,9 @@
 
 #include <cmath>
 #include <limits>
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -100,6 +102,8 @@ struct Point
   double y{0.};
   double z{0.};
 
+  Point() = default;
+
   Point(double _x, double _y, double _z)
     : x(_x)
     , y(_y)
@@ -107,19 +111,21 @@ struct Point
   {
   }
 
+  static constexpr double cCoordinateTolerance = 1e-3;
+
   bool operator==(const Point &rhs) const
   {
     // Points are treated as equal when below 1 mm
-    return (std::fabs(x - rhs.x) < 1e-3) && (std::fabs(y - rhs.y) < 1e-3) && (std::fabs(z - rhs.z) < 1e-3);
+    return (std::fabs(x - rhs.x) < cCoordinateTolerance) && (std::fabs(y - rhs.y) < cCoordinateTolerance)
+      && (std::fabs(z - rhs.z) < cCoordinateTolerance);
   }
   bool operator!=(const Point &rhs) const
   {
     return !operator==(rhs);
   }
-
   double normSquared() const
   {
-    return x * x + y * y;
+    return x * x + y * y + z * z;
   }
 
   double norm() const
@@ -136,6 +142,19 @@ struct Point
 inline Point operator-(const Point &left, const Point &right)
 {
   return Point(left.x - right.x, left.y - right.y, left.z - right.z);
+}
+inline Point operator+(const Point &left, const Point &right)
+{
+  return Point(left.x + right.x, left.y + right.y, left.z + right.z);
+}
+inline Point operator*(const double &scalar, const Point &point)
+{
+  return Point(scalar * point.x, scalar * point.y, scalar * point.z);
+}
+
+inline Point operator*(const Point &point, const double &scalar)
+{
+  return operator*(scalar, point);
 }
 
 struct GeometryAttributes
@@ -195,21 +214,34 @@ struct LaneAttributes
 {
   int id;
   LaneType type;
-  std::string level;
+  bool level;
 };
 
-struct LaneWidth
+struct OffsetPoly3
 {
-  double soffset; // start position (s-offset) [meters]
-  double a;       // a - width [meters]
-  double b;       // b
-  double c;       // c
-  double d;       // d
+  // f(s) = a + b*s + c*s*s + d*s*s*s
+  double start_offset; // start position (s - start_offset)[meters]]
+  double a;            // a - polynomial value at start_offset=0
+  double b;            // b
+  double c;            // c
+  double d;            // d
+
+  double eval(double const s);
+  bool operator<(OffsetPoly3 const &other) const
+  {
+    return start_offset < other.start_offset;
+  }
 };
+
+struct LaneWidth : public OffsetPoly3
+{
+};
+
+typedef std::set<LaneWidth> LaneWidthSet;
 
 struct LaneRoadMark
 {
-  double soffset = 0.0;
+  double start_offset = 0.0;
   double width = 0.0;
 
   std::string type;
@@ -223,16 +255,77 @@ struct LaneRoadMark
   std::string lane_change = "none";
 };
 
-struct LaneOffset
+struct LaneRoadMarkLine
 {
-  double s, a, b, c, d;
+  double length = 0.0;
+  double space = 0.0;
+  double t = 0.0;
+  double start_offset = 0.0;
+  std::string rule = "";
+  double width = 0.0;
 };
+
+struct LaneRoadMarkType
+{
+  std::string name = "";
+  double width = 0.0;
+};
+
+struct LaneMaterial
+{
+  double start_offset = 0.0;
+  std::string surface = "";
+  double friction = 0.0;
+  double roughness = 0.0;
+};
+
+struct LaneVisibility
+{
+  double start_offset = 0.0;
+  double forward = 0.0;
+  double back = 0.0;
+  double left = 0.0;
+  double right = 0.0;
+};
+
+struct LaneAccess
+{
+  double start_offset = 0.0;
+  std::string restriction = "";
+};
+
+struct LaneHeight
+{
+  double start_offset = 0.0;
+  double inner = 0.0;
+  double outer = 0.0;
+  bool operator<(LaneHeight const &other) const
+  {
+    return start_offset < other.start_offset;
+  }
+};
+typedef std::set<LaneHeight> LaneHeightSet;
+
+struct LaneRule
+{
+  double start_offset = 0.0;
+  std::string value = "";
+};
+
+struct LaneBorder : public OffsetPoly3
+{
+};
+
+struct LaneOffset : public OffsetPoly3
+{
+};
+typedef std::set<LaneOffset> LaneOffsetSet;
 
 struct LaneSpeed
 {
-  double soffset;   // start position(s - offset from the
-                    // current lane section) [meters]
-  double max_speed; // maximum allowed speed [meters/second]
+  double start_offset; // start position(s - offset from the
+                       // current lane section) [meters]
+  double max_speed;    // maximum allowed speed [meters/second]
   std::string unit;
 };
 
@@ -262,12 +355,33 @@ struct ParametricSpeed
   }
 };
 
+struct Validity
+{
+  static int const LOWER_BOUND{-100};
+  static int const UPPER_BOUND{100};
+  int from_lane{LOWER_BOUND};
+  int to_lane{UPPER_BOUND};
+  bool IsWithinRange(int id) const
+  {
+    if ((from_lane <= id) && (id <= to_lane))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+};
+
 struct TrafficSignalReference
 {
   int id{-1};
   double start_position{0.}; // s
   double track_position{0.}; // t
   std::string orientation{""};
+  std::string relation{""};
+  Validity validityInfo;
 };
 
 struct SignalReference
@@ -275,6 +389,7 @@ struct SignalReference
   int id{-1};
   double parametricPosition{0.0};
   bool inLaneOrientation{false};
+  std::string turnRelation{""};
 };
 
 using Id = uint64_t;
@@ -285,10 +400,19 @@ struct LaneInfo
   std::vector<LaneSpeed> lane_speed;
 
   LaneAttributes attributes;
-  std::vector<LaneWidth> lane_width;
-
+  LaneWidthSet lane_width;
+  std::vector<LaneMaterial> lane_materials;
+  std::vector<LaneVisibility> lane_visibility;
+  std::vector<LaneAccess> lane_access;
+  LaneHeightSet lane_height;
+  std::vector<LaneRule> lane_rule;
+  std::vector<LaneBorder> lane_border;
+  std::vector<LaneRoadMarkLine> road_marker_line;
   std::vector<LaneRoadMark> road_marker;
+  std::vector<LaneRoadMarkType> road_marker_type;
   std::unique_ptr<LaneLink> link;
+
+  std::vector<TrafficSignalReference> lane_trafficlight_references;
 };
 
 struct LaneSection
@@ -300,39 +424,66 @@ struct LaneSection
 
 struct Lanes
 {
-  std::vector<LaneOffset> lane_offset;
+  LaneOffsetSet lane_offset;
   std::vector<LaneSection> lane_sections;
 };
 
 /////////////////////////////////////////////////////////////////
 
-struct ElevationProfile
+struct ElevationProfile : public OffsetPoly3
 {
-  double start_position;     // (S) start position(s -
-                             // offset)[meters]
-  double elevation;          // (A) elevation [meters]
-  double slope;              // (B)
-  double vertical_curvature; // (C)
-  double curvature_change;   // (D)
+};
+typedef std::set<ElevationProfile> ElevationProfileSet;
+
+struct LateralProfileSuperelevation : public OffsetPoly3
+{
+};
+typedef std::set<LateralProfileSuperelevation> LateralProfileSuperelevationSet;
+
+struct LateralProfileShape : public OffsetPoly3
+{
+  double s_position; // Shape polynomial is in t-axis direction, a set of this is placed at different s-positions
 };
 
-struct LateralProfile
-{
-  double start_position;     // (S) start position(s -
-                             // offset)[meters]
-  double elevation;          // (A) elevation [meters]
-  double slope;              // (B)
-  double vertical_curvature; // (C)
-  double curvature_change;   // (D)
-};
+typedef std::set<LateralProfileShape> LateralProfileShapeSet;
+typedef std::map<double, LateralProfileShapeSet> LateralProfileShapeSetMap;
 
 struct RoadProfiles
 {
-  std::vector<ElevationProfile> elevation_profile;
-  std::vector<LateralProfile> lateral_profile;
+  ElevationProfileSet elevation_profile;
+  LateralProfileSuperelevationSet lateral_profile_superelevation;
+  LateralProfileShapeSetMap lateral_profile_shape;
 };
 
 /////////////////////////////////////////////////////////////////
+struct TrafficSignalDependency
+{
+  int dependent_signal_id;
+  std::string type;
+};
+
+struct TrafficSignPositionInertial
+{
+  bool valid{false};
+  Point location; // point of the location
+  double hdg;     // rad: Heading of the signal, relative to the inertial system
+  double pitch; // rad: Pitch angle of the signal after applying heading, relative to the inertial system (x’y’-plane)
+  double roll; // rad: Roll angle of the signal after applying heading and pitch, relative to the inertial system
+               // (x’’y’’-plane)
+};
+
+struct TrafficSignPositionRoad
+{
+  bool valid{false};
+  int reference_road_id; // Unique ID of the referenced road
+  double sOffset;        // s: s-coordinate
+  double tOffset;        // m: t-coordinate
+  double zOffset;        // m: z offset from road level to bottom edge of the signal
+  double hOffset;        // rad: Heading offset of the signal (relative to @orientation)
+  double pitch; // rad: Pitch angle of the signal after applying hOffset, relative to the inertial system (x’y’-plane)
+  double roll; // rad: Roll angle of the signal after applying hOffset and pitch, relative to the inertial system
+               // (x’’y’’-plane)
+};
 
 struct TrafficSignalInformation
 {
@@ -355,11 +506,25 @@ struct TrafficSignalInformation
                            // negative track direction; "none"
                            // = valid in both directions
 
-  std::string country; // country code of the signa
+  std::string country; // country code of the signal
   std::string type;    // type identifier according to
                        // country code or "-1" / "none"
   std::string subtype; // subtype identifier according to
                        // country code or "-1" / "none"
+
+  Validity validityInformation; // for which lanes is the signal valid.
+
+  std::string unit;
+  double height;
+  double width;
+  std::string text;
+  double hoffset;
+  double pitch;
+  double roll;
+
+  std::vector<TrafficSignalDependency> dependencies;
+  TrafficSignPositionInertial physical_position_inertial;
+  TrafficSignPositionRoad physical_position_road;
 };
 
 /////////////////////////////////////////////////////////////////
@@ -413,6 +578,28 @@ struct RoadLink
   std::unique_ptr<RoadLinkInformation> predecessor;
 };
 
+struct RoadOutline
+{
+  double u;
+  double v;
+  double z;
+};
+
+struct RoadObjects
+{
+  std::string type;
+  std::string name;
+  RoadOutline outline;
+  double speed;
+
+  RoadObjects()
+    : type("")
+    , name("")
+    , speed(0.0)
+  {
+  }
+};
+
 struct RoadInformation
 {
   RoadLink road_link;
@@ -425,6 +612,8 @@ struct RoadInformation
   std::vector<TrafficSignalReference> traffic_signal_references;
 
   std::vector<std::unique_ptr<GeometryAttributes>> geometry_attributes;
+  // std::vector<Validity> validity;
+  std::vector<RoadObjects> road_objects;
 };
 
 /////////////////////////////////////////////////////////////////
@@ -455,6 +644,15 @@ struct JunctionConnectionAttributes
   }
 };
 
+struct JunctionControllerAttributes
+{
+  int id;
+  JunctionControllerAttributes()
+    : id(-1)
+  {
+  }
+};
+
 struct JunctionLaneLink
 {
   int from;
@@ -467,6 +665,11 @@ struct JunctionLaneLink
   }
 };
 
+struct JunctionController
+{
+  JunctionControllerAttributes attributes;
+};
+
 struct JunctionConnection
 {
   JunctionConnectionAttributes attributes;
@@ -477,6 +680,7 @@ struct Junction
 {
   JunctionAttribues attributes;
   std::vector<JunctionConnection> connections;
+  std::vector<JunctionController> controllers;
 };
 
 struct BoxComponent
@@ -542,6 +746,30 @@ struct TrafficSign
   }
 };
 
+struct Controller
+{
+  int id;
+  std::string name;
+  int sequence;
+  Controller()
+    : id(0)
+    , name("")
+    , sequence(0)
+  {
+  }
+};
+
+struct ControllerSignal
+{
+  int id;
+  std::string type;
+  ControllerSignal()
+    : id(0)
+    , type("")
+  {
+  }
+};
+
 /////////////////////////////////////////////////////////////////
 namespace geom {
 struct GeoLocation
@@ -560,9 +788,9 @@ struct Lane
   LaneType type;
   Edge leftEdge;
   Edge rightEdge;
-  std::vector<Id> successors;
-  std::vector<Id> predecessors;
-  std::vector<Id> overlaps;
+  std::set<Id> successors;
+  std::set<Id> predecessors;
+  std::set<Id> overlaps;
   std::vector<ParametricSpeed> speed;
   std::vector<SignalReference> signalReferences;
 
@@ -580,6 +808,7 @@ struct Landmark
   Point position{0., 0., 0.};
   double orientation{0.};
 };
+
 using LaneMap = std::unordered_map<Id, Lane>;
 using LandmarkMap = std::unordered_map<int, Landmark>;
 
@@ -590,6 +819,8 @@ struct OpenDriveData
   std::vector<Junction> junctions;
   std::vector<TrafficLightGroup> trafficlightgroups;
   std::vector<TrafficSign> trafficsigns;
+  std::vector<Controller> controllers;
+  std::vector<ControllerSignal> controllersignals;
 
   LaneMap laneMap;
   LandmarkMap landmarks;

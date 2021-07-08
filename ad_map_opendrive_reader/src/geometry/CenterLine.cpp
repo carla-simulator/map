@@ -9,15 +9,21 @@
  */
 
 #include "opendrive/geometry/CenterLine.hpp"
-
 #include <boost/array.hpp>
 #include <boost/math/tools/rational.hpp>
 #include <cmath>
 #include <iostream>
+#include <spdlog/spdlog.h>
 #include "opendrive/geometry/GeometryGenerator.hpp"
+#include "opendrive/geometry/LaneUtils.hpp"
 
 namespace opendrive {
 namespace geometry {
+
+double laneHeight(ElevationProfileSet const &elevationSet, double s)
+{
+  return evalPoly3(elevationSet, s);
+}
 
 geometry::DirectedPoint CenterLine::eval(double s, bool applyLateralOffset) const
 {
@@ -50,20 +56,15 @@ geometry::DirectedPoint CenterLine::eval(double s, bool applyLateralOffset) cons
   return directed_point;
 }
 
-std::vector<double> CenterLine::samplingPoints() const
+std::list<double> CenterLine::samplingPoints() const
 {
-  std::vector<double> points;
+  std::list<double> points;
 
   points.push_back(length);
-  double const maxError = 1e-2; // max curve sampling error expected
 
   for (auto it = geometry.rbegin(); it != geometry.rend(); it++)
   {
-    if ((*it)->GetType() == ::opendrive::GeometryType::LINE)
-    {
-      // only start and end point
-    }
-    else if ((*it)->GetType() == ::opendrive::GeometryType::ARC)
+    if ((*it)->GetType() == ::opendrive::GeometryType::ARC)
     {
       auto arc = static_cast<::opendrive::geometry::GeometryArc *>((*it).get());
       double theta = fabs(arc->GetCurvature()) * (*it)->GetLength();
@@ -75,7 +76,7 @@ std::vector<double> CenterLine::samplingPoints() const
       else
       {
         double c = fabs(arc->GetCurvature());
-        double dsmax = 2.0 / c * acos(1.0 - c * maxError);
+        double dsmax = 2.0 / c * acos(1.0 - c * Geometry::cMaxSamplingError);
         int segments = static_cast<int>((*it)->GetLength() / dsmax);
         for (auto k = segments - 1; k > 0; --k)
         {
@@ -84,30 +85,48 @@ std::vector<double> CenterLine::samplingPoints() const
         }
       }
     }
-    else if ((*it)->GetType() == ::opendrive::GeometryType::POLY3)
-    {
-      int segments = 10;
-      for (auto k = segments - 1; k > 0; --k)
-      {
-        double r = static_cast<double>(k) / static_cast<double>(segments);
-        points.insert(points.begin(), (*it)->GetStartOffset() + r * (*it)->GetLength());
-      }
-    }
-    else if ((*it)->GetType() == ::opendrive::GeometryType::PARAMPOLY3)
-    {
-      int segments = 10;
-      for (auto k = segments - 1; k > 0; --k)
-      {
-        double r = static_cast<double>(k) / static_cast<double>(segments);
-        points.insert(points.begin(), (*it)->GetStartOffset() + r * (*it)->GetLength());
-      }
-    }
     else
     {
-      // nothing to do
+      // only start and end point for now
     }
 
     points.insert(points.begin(), (*it)->GetStartOffset());
+  }
+
+  auto const maxErrorSquared = Geometry::cMaxSamplingError * Geometry::cMaxSamplingError;
+  // now refine sampling points according to actual points influenced by lateralOffset and elevation
+  auto iter = points.begin();
+  while (iter != points.end())
+  {
+    auto nextIter = iter;
+    nextIter++;
+    if (nextIter == points.end())
+    {
+      break;
+    }
+    auto const startPosition = *iter;
+    auto const endPosition = *nextIter;
+    if (endPosition - startPosition < Geometry::cMaxSamplingError)
+    {
+      // sampling below the maxError longitudinal distance makes no sense
+      ++iter;
+      continue;
+    }
+    auto const centerPosition = 0.5 * startPosition + 0.5 * endPosition;
+
+    auto const start = eval(startPosition).location;
+    auto const end = eval(endPosition).location;
+    auto const centerLinearInterpolated = 0.5 * start + 0.5 * end;
+    auto const centerActual = eval(centerPosition).location;
+    auto errorSquared = (centerActual - centerLinearInterpolated).normSquared();
+    if (errorSquared > maxErrorSquared)
+    {
+      points.insert(nextIter, centerPosition);
+    }
+    else
+    {
+      iter++;
+    }
   }
 
   return points;
@@ -115,21 +134,7 @@ std::vector<double> CenterLine::samplingPoints() const
 
 double CenterLine::calculateOffset(double s) const
 {
-  if (s < 0.)
-  {
-    return calculateOffset(0.);
-  }
-
-  for (auto it = offsetVector.rbegin(); it != offsetVector.rend(); it++)
-  {
-    if (s >= it->s)
-    {
-      auto poly = boost::array<double, 4>{{it->a, it->b, it->c, it->d}};
-      return boost::math::tools::evaluate_polynomial(poly, s - it->s);
-    }
-  }
-
-  return 0.0;
+  return evalPoly3(laneOffsetSet, s);
 }
 
 bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
@@ -138,7 +143,7 @@ bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
 
   centerLine.geometry.clear();
   centerLine.length = roadInfo.attributes.length;
-  centerLine.offsetVector = roadInfo.lanes.lane_offset;
+  centerLine.laneOffsetSet = roadInfo.lanes.lane_offset;
   centerLine.elevation = roadInfo.road_profiles.elevation_profile;
 
   // Add geometry information
@@ -169,7 +174,7 @@ bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
         case ::opendrive::GeometryType::SPIRAL:
         {
           // currently not yet supported
-          std::cerr << "generateCenterLine() spirals are currently not supported yet\n";
+          spdlog::error("generateCenterLine() spirals are currently not supported yet");
           ok = false;
           break;
         }
@@ -185,18 +190,20 @@ bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
         case ::opendrive::GeometryType::PARAMPOLY3:
         {
           auto paramPoly3 = static_cast<GeometryAttributesParamPoly3 *>(geometry_attribute.get());
-          centerLine.geometry.emplace_back(std::make_unique<geometry::GeometryParamPoly3>(paramPoly3->start_position,
-                                                                                          paramPoly3->length,
-                                                                                          paramPoly3->heading,
-                                                                                          start,
-                                                                                          paramPoly3->aU,
-                                                                                          paramPoly3->bU,
-                                                                                          paramPoly3->cU,
-                                                                                          paramPoly3->dU,
-                                                                                          paramPoly3->aV,
-                                                                                          paramPoly3->bV,
-                                                                                          paramPoly3->cV,
-                                                                                          paramPoly3->dV));
+          centerLine.geometry.emplace_back(
+            std::make_unique<geometry::GeometryParamPoly3>(paramPoly3->start_position,
+                                                           paramPoly3->length,
+                                                           paramPoly3->heading,
+                                                           start,
+                                                           paramPoly3->aU,
+                                                           paramPoly3->bU,
+                                                           paramPoly3->cU,
+                                                           paramPoly3->dU,
+                                                           paramPoly3->aV,
+                                                           paramPoly3->bV,
+                                                           paramPoly3->cV,
+                                                           paramPoly3->dV,
+                                                           paramPoly3->p_range == "normalized"));
           break;
         }
         break;
@@ -206,7 +213,7 @@ bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
     }
     catch (...)
     {
-      std::cerr << "generateCenterLine() Invalid geometry definition\n";
+      spdlog::error("generateCenterLine() Invalid geometry definition");
       ok = false;
     }
   }

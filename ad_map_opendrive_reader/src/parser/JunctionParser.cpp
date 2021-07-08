@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019 Intel Corporation
+ * Copyright (C) 2019-2020 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -21,12 +21,13 @@ void opendrive::parser::JunctionParser::Parse(const pugi::xml_node &xmlNode,
   junction.attributes.id = std::atoi(xmlNode.attribute("id").value());
   junction.attributes.name = xmlNode.attribute("name").value();
 
-  parser.ParseConnection(xmlNode, junction.connections);
+  parser.ParseConnection(xmlNode, junction.connections, junction.controllers);
   out_junction.emplace_back(junction);
 }
 
 void opendrive::parser::JunctionParser::ParseConnection(const pugi::xml_node &xmlNode,
-                                                        std::vector<opendrive::JunctionConnection> &out_connections)
+                                                        std::vector<opendrive::JunctionConnection> &out_connections,
+                                                        std::vector<opendrive::JunctionController> &out_controllers)
 {
   for (pugi::xml_node junctionConnection = xmlNode.child("connection"); junctionConnection;
        junctionConnection = junctionConnection.next_sibling("connection"))
@@ -41,6 +42,13 @@ void opendrive::parser::JunctionParser::ParseConnection(const pugi::xml_node &xm
 
     ParseLaneLink(junctionConnection, jConnection.links);
     out_connections.emplace_back(jConnection);
+  }
+
+  for (pugi::xml_node junctionController : xmlNode.child("controller"))
+  {
+    opendrive::JunctionController jController;
+    jController.attributes.id = std::atoi(junctionController.attribute("id").value());
+    out_controllers.emplace_back(jController);
   }
 }
 

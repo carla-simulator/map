@@ -10,13 +10,11 @@
  * ----------------- END LICENSE BLOCK -----------------------------------
  */
 
-#include "opendrive/geometry/Geometry.h"
-
-#include "opendrive/types.hpp"
-
+#include "opendrive/geometry/Geometry.hpp"
 #include <boost/array.hpp>
 #include <boost/math/tools/rational.hpp>
 #include <cmath>
+#include <opendrive/types.hpp>
 #include <stdexcept>
 
 namespace opendrive {
@@ -40,10 +38,17 @@ DirectedPoint::DirectedPoint(double x, double y, double z, double t)
 
 void DirectedPoint::ApplyLateralOffset(double lateral_offset)
 {
+  location = getLateralOffsetPoint(lateral_offset);
+}
+
+Point DirectedPoint::getLateralOffsetPoint(double lateral_offset) const
+{
   auto normal_x = -std::sin(tangent);
   auto normal_y = std::cos(tangent);
-  location.x += lateral_offset * normal_x;
-  location.y += lateral_offset * normal_y;
+  Point result = location;
+  result.x += lateral_offset * normal_x;
+  result.y += lateral_offset * normal_y;
+  return result;
 }
 
 GeometryType Geometry::GetType() const
@@ -75,7 +80,7 @@ Geometry::Geometry(GeometryType type, double start_offset, double length, double
   , _heading(heading)
   , _start_position(start_pos)
 {
-  if (_length == 0.)
+  if (DirectedPoint::floatCompare(_length, 0.))
   {
     throw std::invalid_argument("Geometry of length 0");
   }
@@ -172,7 +177,8 @@ GeometryParamPoly3::GeometryParamPoly3(double start_offset,
                                        double aV,
                                        double bV,
                                        double cV,
-                                       double dV)
+                                       double dV,
+                                       bool p_range_is_normalized)
   : Geometry(GeometryType::PARAMPOLY3, start_offset, length, heading, start_pos)
   , _aU{aU}
   , _bU{bU}
@@ -182,12 +188,17 @@ GeometryParamPoly3::GeometryParamPoly3(double start_offset,
   , _bV{bV}
   , _cV{cV}
   , _dV{dV}
+  , _p_range_is_normalized(p_range_is_normalized)
 {
 }
 
 const DirectedPoint GeometryParamPoly3::PosFromDist(const double dist) const
 {
-  double p = std::min(1.0, dist / _length);
+  double p = dist;
+  if (_p_range_is_normalized)
+  {
+    std::min(1.0, dist / _length);
+  }
 
   auto polyU = boost::array<double, 4>{{_aU, _bU, _cU, _dU}};
   auto polyV = boost::array<double, 4>{{_aV, _bV, _cV, _dV}};

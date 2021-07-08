@@ -10,8 +10,6 @@
  * ----------------- END LICENSE BLOCK -----------------------------------
  */
 
-#pragma once
-
 #include "opendrive/types.hpp"
 
 #include <pugixml.hpp>
@@ -19,15 +17,10 @@
 namespace opendrive {
 namespace parser {
 
-class TrafficGroupParser
+class ObjectParser
 {
-private:
-  void ParseTrafficLight(const pugi::xml_node &xmlNode, std::vector<opendrive::TrafficLight> &out_trafficLights);
-
-  void ParseBoxAreas(const pugi::xml_node &xmlNode, std::vector<opendrive::BoxComponent> &out_boxareas);
-
 public:
-  static void Parse(const pugi::xml_node &xmlNode, std::vector<opendrive::TrafficLightGroup> &out_trafficlightgroup);
+  static void Parse(const pugi::xml_node &xmlNode, std::vector<opendrive::RoadObjects> &out_objects);
 };
 
 } // namespace parser

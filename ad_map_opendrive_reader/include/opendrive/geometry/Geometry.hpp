@@ -12,13 +12,15 @@
 
 #pragma once
 
+#include <boost/array.hpp>
+#include <boost/math/tools/rational.hpp>
 #include "opendrive/types.hpp"
 
 namespace opendrive {
 namespace geometry {
 
 /**
- * @brief DirectedPoint is composed of a 2 dimensional position and an orientation
+ * @brief DirectedPoint is composed of a 3 dimensional position and an orientation
  */
 struct DirectedPoint
 {
@@ -29,23 +31,43 @@ struct DirectedPoint
   Point location = {0, 0, 0};
   double tangent = 0.0; // [radians]
 
+  static bool floatCompare(double f1, double f2)
+  {
+    static constexpr auto epsilon = 1.0e-09f;
+    if (std::fabs(f1 - f2) <= epsilon)
+      return true;
+    return std::fabs(f1 - f2) <= epsilon * std::max(std::fabs(f1), std::fabs(f2));
+  }
+
   /**
    * @brief Shifts the point by lateral_offset meters in the normal direction of the tangent
    */
   void ApplyLateralOffset(double lateral_offset);
 
   /**
+   * @returns the point shifted by lateral_offset meters in the normal direction of the tangent
+   */
+  Point getLateralOffsetPoint(double lateral_offset) const;
+
+  /**
    * @brief Compares two points, returns true if their parameters are identical
    */
-  friend bool operator==(const DirectedPoint &lhs, const DirectedPoint &rhs)
+  bool operator==(const DirectedPoint &lhs)
   {
-    return (lhs.location == rhs.location) && (lhs.tangent == rhs.tangent);
+    if ((lhs.location == location) && (floatCompare(lhs.tangent, tangent)))
+    {
+      return true;
+    }
+    return false;
   }
 };
 
 class Geometry
 {
 public:
+  // max sampling error expected
+  static constexpr double cMaxSamplingError = 1e-2;
+
   /**
    * @brief Returns the GeometryType associated to this geometry.
    */
@@ -141,7 +163,8 @@ public:
                      double aV,
                      double bV,
                      double cV,
-                     double dV);
+                     double dV,
+                     bool p_range_is_normalized);
 
   const DirectedPoint PosFromDist(const double dist) const override;
 
@@ -154,7 +177,26 @@ private:
   double _bV;
   double _cV;
   double _dV;
+  bool _p_range_is_normalized;
 };
+
+template <class T> double evalPoly3(std::set<T> const &sOffsetPoly3Set, double s)
+{
+  T search;
+  search.start_offset = s;
+  auto smallerOrEqual = sOffsetPoly3Set.upper_bound(search);
+  if (smallerOrEqual != sOffsetPoly3Set.begin())
+  {
+    // upper_bound is first larger element
+    smallerOrEqual--;
+  }
+  if (smallerOrEqual != sOffsetPoly3Set.end())
+  {
+    auto poly = boost::array<double, 4>{{smallerOrEqual->a, smallerOrEqual->b, smallerOrEqual->c, smallerOrEqual->d}};
+    return boost::math::tools::evaluate_polynomial(poly, s - smallerOrEqual->start_offset);
+  }
+  return 0.0;
+}
 
 } // namespace geometry
 } // namespace opendrive
