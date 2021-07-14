@@ -12,15 +12,18 @@
 
 #include "opendrive/parser/OpenDriveParser.hpp"
 
+#include "opendrive/parser/ControllerParser.h"
 #include "opendrive/parser/GeoReferenceParser.h"
 #include "opendrive/parser/GeometryParser.h"
 #include "opendrive/parser/JunctionParser.h"
 #include "opendrive/parser/LaneParser.h"
+#include "opendrive/parser/ObjectParser.h"
 #include "opendrive/parser/ProfilesParser.h"
 #include "opendrive/parser/RoadLinkParser.h"
 #include "opendrive/parser/TrafficGroupParser.h"
 #include "opendrive/parser/TrafficSignParser.h"
 #include "opendrive/parser/TrafficSignalsParser.h"
+#include "spdlog/spdlog.h"
 
 #include <pugixml.hpp>
 
@@ -54,7 +57,7 @@ bool OpenDriveParser::Parse(const char *xml,
 
     default:
     {
-      // TODO: Log some kind of error
+      spdlog::error("OpenDriveParser::Parse >> invalid XmlInputType provided {}.", inputType);
       return false;
     }
     break;
@@ -70,14 +73,15 @@ bool OpenDriveParser::Parse(const char *xml,
     return false;
   }
 
+  // Extracting road information
   for (pugi::xml_node road = xmlDoc.child("OpenDRIVE").child("road"); road; road = road.next_sibling("road"))
   {
     opendrive::RoadInformation openDriveRoadInformation;
 
     openDriveRoadInformation.attributes.name = road.attribute("name").value();
-    openDriveRoadInformation.attributes.id = std::atoi(road.attribute("id").value());
+    openDriveRoadInformation.attributes.id = std::stoi(road.attribute("id").value());
     openDriveRoadInformation.attributes.length = std::stod(road.attribute("length").value());
-    openDriveRoadInformation.attributes.junction = std::atoi(road.attribute("junction").value());
+    openDriveRoadInformation.attributes.junction = std::stoi(road.attribute("junction").value());
 
     // types
     for (pugi::xml_node node_type : road.children("type"))
@@ -102,6 +106,7 @@ bool OpenDriveParser::Parse(const char *xml,
 
     ///////////////////////////////////////////////////////////////////////////////
 
+    odp::ObjectParser::Parse(road, openDriveRoadInformation.road_objects);
     odp::ProfilesParser::Parse(road, openDriveRoadInformation.road_profiles);
 
     odp::RoadLinkParser::Parse(road.child("link"), openDriveRoadInformation.road_link);
@@ -111,20 +116,16 @@ bool OpenDriveParser::Parse(const char *xml,
 
     odp::LaneParser::Parse(road.child("lanes"), openDriveRoadInformation.lanes);
     odp::GeometryParser::Parse(road.child("planView"), openDriveRoadInformation.geometry_attributes);
+    odp::ControllerParser::Parse(road, out_open_drive_data.controllers, out_open_drive_data.controllersignals);
 
     out_open_drive_data.roads.emplace_back(std::move(openDriveRoadInformation));
   }
 
+  // Extracting junction information
   for (pugi::xml_node junction = xmlDoc.child("OpenDRIVE").child("junction"); junction;
        junction = junction.next_sibling("junction"))
   {
     odp::JunctionParser::Parse(junction, out_open_drive_data.junctions);
-  }
-
-  for (pugi::xml_node tlgroup = xmlDoc.child("OpenDRIVE").child("tlGroup"); tlgroup;
-       tlgroup = tlgroup.next_sibling("tlGroup"))
-  {
-    odp::TrafficGroupParser::Parse(tlgroup, out_open_drive_data.trafficlightgroups);
   }
 
   for (pugi::xml_node trafficsigns = xmlDoc.child("OpenDRIVE").child("trafficsign"); trafficsigns;

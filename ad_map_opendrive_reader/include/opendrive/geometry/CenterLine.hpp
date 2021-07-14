@@ -10,8 +10,9 @@
 
 #pragma once
 
+#include <list>
 #include <vector>
-#include "opendrive/geometry/Geometry.h"
+#include "opendrive/geometry/Geometry.hpp"
 #include "opendrive/types.hpp"
 
 namespace opendrive {
@@ -24,10 +25,10 @@ struct CenterLine
 
   GeometryVector geometry;
 
-  LaneOffsetVector offsetVector;
+  LaneOffsetSet laneOffsetSet;
 
   double length{0.};
-  std::vector<ElevationProfile> elevation;
+  ElevationProfileSet elevation;
 
   /**
    * @brief Evalues the center line at the given position along the curve and returns a DirectedPoint
@@ -45,7 +46,7 @@ struct CenterLine
    * @brief Generates a list of sampling points along the center line between [0, arclength].
    * The sampling points are optimized depending of the type of geometry of the inner segments.
    */
-  std::vector<double> samplingPoints() const;
+  std::list<double> samplingPoints() const;
 };
 
 /**

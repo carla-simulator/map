@@ -11,7 +11,7 @@
 #pragma once
 
 #include <algorithm>
-#include "opendrive/geometry/Geometry.h"
+#include "opendrive/geometry/Geometry.hpp"
 #include "opendrive/types.hpp"
 
 namespace opendrive {
@@ -49,8 +49,6 @@ inline double parametricPosition(double startPosition, LaneSection const &laneSe
 {
   return (startPosition - laneSection.start_position) / (laneSection.end_position - laneSection.start_position);
 }
-
-double laneHeight(std::vector<ElevationProfile> elevationVector, double s);
 
 /**
  * @brief Generates a full geometry description of the OpenDRIVE data.

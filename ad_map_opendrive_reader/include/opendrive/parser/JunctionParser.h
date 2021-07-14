@@ -22,12 +22,15 @@ namespace parser {
 class JunctionParser
 {
 private:
-  void ParseConnection(const pugi::xml_node &xmlNode, std::vector<opendrive::JunctionConnection> &out_connections);
+  void ParseConnection(const pugi::xml_node &xmlNode,
+                       std::vector<opendrive::JunctionConnection> &out_connections,
+                       std::vector<opendrive::JunctionController> &out_controllers);
 
   void ParseLaneLink(const pugi::xml_node &xmlNode, std::vector<opendrive::JunctionLaneLink> &out_lane_link);
 
 public:
   static void Parse(const pugi::xml_node &xmlNode, std::vector<opendrive::Junction> &out_junction);
 };
+
 } // namespace parser
 } // namespace opendrive

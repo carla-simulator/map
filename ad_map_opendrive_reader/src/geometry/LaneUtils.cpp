@@ -7,14 +7,12 @@
  *
  * ----------------- END LICENSE BLOCK -----------------------------------
  */
-
 #include "opendrive/geometry/LaneUtils.hpp"
-#include "opendrive/geometry/Geometry.h"
-
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include <vector>
+#include "opendrive/geometry/Geometry.hpp"
 
 namespace opendrive {
 namespace geometry {
@@ -143,7 +141,7 @@ void invertLaneAndNeighbors(LaneMap &laneMap, Lane &lane)
     }
     else
     {
-      std::cerr << "invertLaneAndNeighbors(" << lane.id << ") recursion" << std::endl;
+      spdlog::error("invertLaneAndNeighbors( {} ) recursion", lane.id);
       leftNeighbor = 0u;
     }
   }
@@ -157,7 +155,7 @@ void invertLaneAndNeighbors(LaneMap &laneMap, Lane &lane)
     }
     else
     {
-      std::cerr << "invertLaneAndNeighbors(" << lane.id << ") recursion" << std::endl;
+      spdlog::error("invertLaneAndNeighbors( {} ) recursion", lane.id);
       rightNeighbor = 0u;
     }
   }
@@ -171,12 +169,12 @@ ContactPlace contactPlace(Lane const &leftLane, Lane const &rightLane)
 {
   if (leftLane.leftEdge.empty() || leftLane.rightEdge.empty())
   {
-    std::cerr << "Empty left lane " << leftLane.id << "\n";
+    spdlog::error("Empty left lane {}", leftLane.id);
     return ContactPlace::None;
   }
   if (rightLane.leftEdge.empty() || rightLane.rightEdge.empty())
   {
-    std::cerr << "Empty right lane " << leftLane.id << "\n";
+    spdlog::error("Empty right lane {}", rightLane.id);
     return ContactPlace::None;
   }
   auto const thisLeftStart = leftLane.leftEdge.front();
@@ -226,11 +224,11 @@ void checkAddPredecessor(Lane &lane, Lane const &otherLane)
   if ((near(thisLeftStart, otherLeftEnd) && near(thisRightStart, otherRightEnd))
       || (near(thisLeftStart, otherRightStart) && near(thisRightStart, otherLeftStart)))
   {
-    lane.predecessors.push_back(otherLane.id);
+    lane.predecessors.insert(otherLane.id);
   }
   else
   {
-    // std::cerr << "checkAddPredecessor[" << lane.id << "] rejecting other lane:" << otherLane.id << std::endl;
+    spdlog::debug("checkAddPredecessor[ {} ] rejecting other lane: {}", lane.id, otherLane.id);
   }
 }
 
@@ -246,24 +244,29 @@ void checkAddSuccessor(Lane &lane, Lane const &otherLane)
   if ((near(thisLeftEnd, otherLeftStart) && near(thisRightEnd, otherRightStart))
       || (near(thisLeftEnd, otherRightEnd) && near(thisRightEnd, otherLeftEnd)))
   {
-    lane.successors.push_back(otherLane.id);
+    lane.successors.insert(otherLane.id);
   }
   else
   {
-    // std::cerr << "checkAddSuccessor[" << lane.id << "] rejecting other lane:" << otherLane.id << std::endl;
+    spdlog::debug("checkAddSuccessor[ {} ] rejecting other lane: {}", lane.id, otherLane.id);
   }
 }
 
 Id laneId(int roadId, int laneSectionIndex, int laneIndex)
 {
-  if (roadId < 0)
-  {
-    std::cerr << "Invalid road id " << roadId << "\n";
-  }
-
   if (laneSectionIndex < 0)
   {
-    std::cerr << "Invalid lane section index" << roadId << "\n";
+    spdlog::error("Invalid lane section index {}", laneSectionIndex);
+  }
+
+  return laneId(roadId, static_cast<uint64_t>(laneSectionIndex), laneIndex);
+}
+
+Id laneId(int roadId, uint64_t laneSectionIndex, int laneIndex)
+{
+  if (roadId < 0)
+  {
+    spdlog::error("Invalid road Id {}", roadId);
   }
 
   Id road = static_cast<Id>(roadId) * 10000;
@@ -294,7 +297,7 @@ bool lanesOverlap(Lane const &leftLane, Lane const &rightLane, double const over
   }
   catch (...)
   {
-    std::cerr << "Error while checking overlap between lanes " << leftLane.id << " and " << rightLane.id << "\n";
+    spdlog::error("Error while checking overlap between lanes {} and {} ", leftLane.id, rightLane.id);
     return false;
   }
 }

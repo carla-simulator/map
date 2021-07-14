@@ -22,9 +22,11 @@ namespace parser {
 class ProfilesParser
 {
 private:
-  void ParseElevation(const pugi::xml_node &xmlNode, std::vector<opendrive::ElevationProfile> &out_elevation_profile);
+  void ParseElevation(const pugi::xml_node &xmlNode, opendrive::ElevationProfileSet &out_elevation_profile);
 
-  void ParseLateral(const pugi::xml_node &xmlNode, std::vector<opendrive::LateralProfile> &out_lateral_profile);
+  void ParseShape(const pugi::xml_node &xmlNode, opendrive::LateralProfileShapeSetMap &out_lateral_profile_shape);
+  void ParseSuperelevation(const pugi::xml_node &xmlNode,
+                           LateralProfileSuperelevationSet &out_lateral_profile_superelevation);
 
 public:
   static void Parse(const pugi::xml_node &xmlNode, opendrive::RoadProfiles &out_road_profiles);

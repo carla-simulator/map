@@ -28,7 +28,7 @@ enum class ContactPlace
 
 ContactPlace contactPlace(Lane const &leftLane, Lane const &rightLane);
 
-inline bool near(Point const &left, Point const &right, double resolution = 1e-3)
+inline bool near(Point const &left, Point const &right, double resolution = 1e-2)
 {
   auto diff = left - right;
   return (fabs(diff.x) < resolution) && (fabs(diff.y) < resolution);
@@ -40,5 +40,6 @@ void checkAddSuccessor(Lane &lane, Lane const &otherLane);
 void checkAddPredecessor(Lane &lane, Lane const &otherLane);
 
 Id laneId(int roadId, int laneSectionIndex, int laneIndex);
+Id laneId(int roadId, uint64_t laneSectionIndex, int laneIndex);
 } // namespace geometry
 } // namespace opendrive

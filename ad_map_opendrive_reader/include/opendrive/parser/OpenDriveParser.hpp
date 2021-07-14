@@ -30,6 +30,10 @@ struct OpenDriveParser
                     opendrive::OpenDriveData &out_open_drive_data,
                     XmlInputType inputType,
                     std::string *out_error = nullptr);
+  static bool Load(const char *xml,
+                   opendrive::OpenDriveData &out_open_drive_data,
+                   XmlInputType inputType,
+                   std::string *out_error = nullptr);
 };
 } // namespace parser
 } // namespace opendrive
