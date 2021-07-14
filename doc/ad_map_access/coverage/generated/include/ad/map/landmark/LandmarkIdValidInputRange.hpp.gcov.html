@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -106,22 +106,22 @@
 <span class="lineNum">      35 </span>                :            :  *       std::numeric_limits&lt;::ad::map::landmark::LandmarkId&gt;::lowest() &lt;= \c input &lt;=
 <a name="36"><span class="lineNum">      36 </span>                :            :  * std::numeric_limits&lt;::ad::map::landmark::LandmarkId&gt;::max()</a>
 <span class="lineNum">      37 </span>                :            :  */
-<span class="lineNum">      38 </span>                :<span class="lineCov">       5417 : inline bool withinValidInputRange(::ad::map::landmark::LandmarkId const &amp;input, bool const logErrors = true)</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">       4720 : inline bool withinValidInputRange(::ad::map::landmark::LandmarkId const &amp;input, bool const logErrors = true)</span>
 <span class="lineNum">      39 </span>                :            : {
 <span class="lineNum">      40 </span>                :            :   // check for generic numeric limits of the type
-<span class="lineNum">      41 </span>[<span class="branchCov" title="Branch 3 was taken 5417 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 5417 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">      21668 :   bool inValidInputRange = input.isValid() &amp;&amp; (std::numeric_limits&lt;::ad::map::landmark::LandmarkId&gt;::lowest() &lt;= input)</span>
-<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 5417 times"> + </span>][<span class="branchNoExec" title="Branch 9 was not executed"> # </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span>]
-<span class="lineNum">      42 </span>[<span class="branchCov" title="Branch 0 was taken 5417 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 5417 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      16251 :     &amp;&amp; (input &lt;= std::numeric_limits&lt;::ad::map::landmark::LandmarkId&gt;::max());</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 5417 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 5417 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">      41 </span>[<span class="branchCov" title="Branch 3 was taken 4720 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 4720 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">      18880 :   bool inValidInputRange = input.isValid() &amp;&amp; (std::numeric_limits&lt;::ad::map::landmark::LandmarkId&gt;::lowest() &lt;= input)</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 4720 times"> + </span>][<span class="branchNoExec" title="Branch 9 was not executed"> # </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span>]
+<span class="lineNum">      42 </span>[<span class="branchCov" title="Branch 0 was taken 4720 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 4720 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      14160 :     &amp;&amp; (input &lt;= std::numeric_limits&lt;::ad::map::landmark::LandmarkId&gt;::max());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 4720 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 4720 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
-<span class="lineNum">      43 </span>[<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 5417 times"> + </span>][<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineCov">       5417 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      43 </span>[<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4720 times"> + </span>][<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineCov">       4720 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
 <span class="lineNum">      44 </span>                :            :   {
 <span class="lineNum">      45 </span>                :<span class="lineNoCov">          0 :     spdlog::error(&quot;withinValidInputRange(::ad::map::landmark::LandmarkId)&gt;&gt; {} out of numerical limits [{}, {}]&quot;,</span>
 <span class="lineNum">      46 </span>                :            :                   input,
 <span class="lineNum">      47 </span>                :<span class="lineNoCov">          0 :                   std::numeric_limits&lt;::ad::map::landmark::LandmarkId&gt;::lowest(),</span>
 <span class="lineNum">      48 </span>                :<span class="lineNoCov">          0 :                   std::numeric_limits&lt;::ad::map::landmark::LandmarkId&gt;::max()); // LCOV_EXCL_BR_LINE</span>
 <a name="49"><span class="lineNum">      49 </span>                :            :   }</a>
-<span class="lineNum">      50 </span>                :<span class="lineCov">       5417 :   return inValidInputRange;</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">       4720 :   return inValidInputRange;</span>
 <span class="lineNum">      51 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          4 : }</span>
 </pre>
       </td>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">99</td>
@@ -117,60 +117,60 @@
 <span class="lineNum">      46 </span>                :            :   }
 <a name="47"><span class="lineNum">      47 </span>                :            : </a>
 <span class="lineNum">      48 </span>                :            : public: // Operations
-<span class="lineNum">      49 </span>                :<span class="lineCov">     656308 :   template &lt;typename T&gt; bool serialize(T &amp;x)</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">     655648 :   template &lt;typename T&gt; bool serialize(T &amp;x)</span>
 <span class="lineNum">      50 </span>                :            :   {
-<span class="lineNum">      51 </span>[<span class="branchCov" title="Branch 0 was taken 13867 times"> + </span><span class="branchCov" title="Branch 1 was taken 433514 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 3721 times"> + </span><span class="branchCov" title="Branch 3 was taken 90280 times"> + </span>]:<span class="lineCov">     656308 :     if (mIsStoring)</span>
+<span class="lineNum">      51 </span>[<span class="branchCov" title="Branch 0 was taken 13537 times"> + </span><span class="branchCov" title="Branch 1 was taken 433184 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 3721 times"> + </span><span class="branchCov" title="Branch 3 was taken 90280 times"> + </span>]:<span class="lineCov">     655648 :     if (mIsStoring)</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 1098 times"> + </span><span class="branchCov" title="Branch 5 was taken 56282 times"> + </span>][<span class="branchCov" title="Branch 6 was taken 921 times"> + </span><span class="branchCov" title="Branch 7 was taken 25310 times"> + </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 8 was not executed"> # </span><span class="branchNoExec" title="Branch 9 was not executed"> # </span>][<span class="branchCov" title="Branch 10 was taken 188 times"> + </span><span class="branchCov" title="Branch 11 was taken 31127 times"> + </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 12 was not executed"> # </span><span class="branchNoExec" title="Branch 13 was not executed"> # </span>]
 <span class="lineNum">      52 </span>                :            :     {
-<span class="lineNum">      53 </span>                :<span class="lineCov">      19795 :       return write(x);</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">      19465 :       return write(x);</span>
 <span class="lineNum">      54 </span>                :            :     }
 <span class="lineNum">      55 </span>                :            :     else
 <span class="lineNum">      56 </span>                :            :     {
-<span class="lineNum">      57 </span>                :<span class="lineCov">     636513 :       return read(x);</span>
+<span class="lineNum">      57 </span>                :<span class="lineCov">     636183 :       return read(x);</span>
 <span class="lineNum">      58 </span>                :            :     }
 <a name="59"><span class="lineNum">      59 </span>                :            :   }</a>
 <span class="lineNum">      60 </span>                :            : 
-<span class="lineNum">      61 </span>                :<span class="lineCov">    5322078 :   bool serialize(SerializeableMagic const &amp;magic)</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">    5367690 :   bool serialize(SerializeableMagic const &amp;magic)</span>
 <span class="lineNum">      62 </span>                :            :   {
-<span class="lineNum">      63 </span>        [<span class="branchCov" title="Branch 0 was taken 5165138 times"> + </span><span class="branchCov" title="Branch 1 was taken 156940 times"> + </span>]:<span class="lineCov">    5322078 :     if (mUseMagic)</span>
+<span class="lineNum">      63 </span>        [<span class="branchCov" title="Branch 0 was taken 5188494 times"> + </span><span class="branchCov" title="Branch 1 was taken 179196 times"> + </span>]:<span class="lineCov">    5367690 :     if (mUseMagic)</span>
 <span class="lineNum">      64 </span>                :            :     {
-<span class="lineNum">      65 </span>        [<span class="branchCov" title="Branch 0 was taken 53225 times"> + </span><span class="branchCov" title="Branch 1 was taken 5111913 times"> + </span>]:<span class="lineCov">    5165138 :       if (mIsStoring)</span>
+<span class="lineNum">      65 </span>        [<span class="branchCov" title="Branch 0 was taken 64903 times"> + </span><span class="branchCov" title="Branch 1 was taken 5123591 times"> + </span>]:<span class="lineCov">    5188494 :       if (mIsStoring)</span>
 <span class="lineNum">      66 </span>                :            :       {
-<span class="lineNum">      67 </span>        [<span class="branchCov" title="Branch 1 was taken 53225 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      53225 :         return write(static_cast&lt;uint16_t&gt;(magic));</span>
+<span class="lineNum">      67 </span>        [<span class="branchCov" title="Branch 1 was taken 64903 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      64903 :         return write(static_cast&lt;uint16_t&gt;(magic));</span>
 <span class="lineNum">      68 </span>                :            :       }
 <span class="lineNum">      69 </span>                :            :       else
 <span class="lineNum">      70 </span>                :            :       {
 <span class="lineNum">      71 </span>                :            :         uint16_t magicRead;
-<span class="lineNum">      72 </span>[<span class="branchCov" title="Branch 1 was taken 5111913 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 5111913 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    5111913 :         auto const ok = read(magicRead) &amp;&amp; (static_cast&lt;uint16_t&gt;(magic) == magicRead);</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 5 was taken 5111912 times"> + </span><span class="branchCov" title="Branch 6 was taken 1 time"> + </span>]
-<span class="lineNum">      73 </span>                :<span class="lineCov">    5111913 :         return ok;</span>
+<span class="lineNum">      72 </span>[<span class="branchCov" title="Branch 1 was taken 5123591 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 5123591 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    5123591 :         auto const ok = read(magicRead) &amp;&amp; (static_cast&lt;uint16_t&gt;(magic) == magicRead);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 5 was taken 5123590 times"> + </span><span class="branchCov" title="Branch 6 was taken 1 time"> + </span>]
+<span class="lineNum">      73 </span>                :<span class="lineCov">    5123591 :         return ok;</span>
 <span class="lineNum">      74 </span>                :            :       }
 <span class="lineNum">      75 </span>                :            :     }
 <span class="lineNum">      76 </span>                :            :     else
 <span class="lineNum">      77 </span>                :            :     {
-<span class="lineNum">      78 </span>                :<span class="lineCov">    5322078 :       return true;</span>
+<span class="lineNum">      78 </span>                :<span class="lineCov">    5367690 :       return true;</span>
 <span class="lineNum">      79 </span>                :            :     }
 <a name="80"><span class="lineNum">      80 </span>                :            :   }</a>
 <span class="lineNum">      81 </span>                :            : 
-<span class="lineNum">      82 </span>                :<span class="lineCov">    3309845 :   template &lt;typename T, typename SerializeBaseType, SerializeableMagic magic&gt; bool serializeGeneratedType(T &amp;x)</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">    3345539 :   template &lt;typename T, typename SerializeBaseType, SerializeableMagic magic&gt; bool serializeGeneratedType(T &amp;x)</span>
 <span class="lineNum">      83 </span>                :            :   {
-<span class="lineNum">      84 </span>[<span class="branchCov" title="Branch 1 was taken 1385398 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1385397 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">    3309845 :     if (serialize(magic))</span>
+<span class="lineNum">      84 </span>[<span class="branchCov" title="Branch 1 was taken 1384738 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1384737 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span>]:<span class="lineCov">    3345539 :     if (serialize(magic))</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 279 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 279 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 1580127 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>][<span class="branchCov" title="Branch 15 was taken 1580127 times"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 1616481 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>][<span class="branchCov" title="Branch 15 was taken 1616481 times"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 19 was taken 26047 times"> + </span><span class="branchNoCov" title="Branch 20 was not taken"> - </span>][<span class="branchCov" title="Branch 21 was taken 26047 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 25 was taken 265900 times"> + </span><span class="branchNoCov" title="Branch 26 was not taken"> - </span>][<span class="branchCov" title="Branch 27 was taken 265900 times"> + </span><span class="branchNoCov" title="Branch 28 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 31 was taken 52094 times"> + </span><span class="branchNoCov" title="Branch 32 was not taken"> - </span>][<span class="branchCov" title="Branch 33 was taken 52094 times"> + </span><span class="branchNoCov" title="Branch 34 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 37 was not executed"> # </span><span class="branchNoExec" title="Branch 38 was not executed"> # </span>][<span class="branchNoExec" title="Branch 39 was not executed"> # </span><span class="branchNoExec" title="Branch 40 was not executed"> # </span>]
 <span class="lineNum">      85 </span>                :            :     {
-<span class="lineNum">      86 </span>[<span class="branchCov" title="Branch 0 was taken 14671 times"> + </span><span class="branchCov" title="Branch 1 was taken 1370726 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 17 times"> + </span><span class="branchCov" title="Branch 3 was taken 262 times"> + </span>]:<span class="lineCov">    3309844 :       if (mIsStoring)</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 42051 times"> + </span><span class="branchCov" title="Branch 5 was taken 1538076 times"> + </span>][<span class="branchCov" title="Branch 6 was taken 900 times"> + </span><span class="branchCov" title="Branch 7 was taken 25147 times"> + </span>]
+<span class="lineNum">      86 </span>[<span class="branchCov" title="Branch 0 was taken 14341 times"> + </span><span class="branchCov" title="Branch 1 was taken 1370396 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 17 times"> + </span><span class="branchCov" title="Branch 3 was taken 262 times"> + </span>]:<span class="lineCov">    3345538 :       if (mIsStoring)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 60228 times"> + </span><span class="branchCov" title="Branch 5 was taken 1556253 times"> + </span>][<span class="branchCov" title="Branch 6 was taken 900 times"> + </span><span class="branchCov" title="Branch 7 was taken 25147 times"> + </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 8378 times"> + </span><span class="branchCov" title="Branch 9 was taken 257522 times"> + </span>][<span class="branchCov" title="Branch 10 was taken 1800 times"> + </span><span class="branchCov" title="Branch 11 was taken 50294 times"> + </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 12 was not executed"> # </span><span class="branchNoExec" title="Branch 13 was not executed"> # </span>]
 <span class="lineNum">      87 </span>                :            :       {
-<span class="lineNum">      88 </span>[<span class="branchCov" title="Branch 2 was taken 14671 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]:<span class="lineCov">      67817 :         return write(static_cast&lt;SerializeBaseType&gt;(x));</span>
-<span class="lineNum">         </span>     [<span class="branchCov" title="Branch 11 was taken 4266 times"> + </span><span class="branchCov" title="Branch 12 was taken 37785 times"> + </span><span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<span class="lineNum">      88 </span>[<span class="branchCov" title="Branch 2 was taken 14341 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]:<span class="lineCov">      85664 :         return write(static_cast&lt;SerializeBaseType&gt;(x));</span>
+<span class="lineNum">         </span>     [<span class="branchCov" title="Branch 11 was taken 4101 times"> + </span><span class="branchCov" title="Branch 12 was taken 56127 times"> + </span><span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
 <span class="lineNum">         </span>     [<span class="branchCov" title="Branch 16 was taken 900 times"> + </span><span class="branchNoCov" title="Branch 17 was not taken"> - </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
 <span class="lineNum">         </span>     [<span class="branchNoExec" title="Branch 21 was not executed"> # </span><span class="branchCov" title="Branch 22 was taken 8378 times"> + </span><span class="branchNoCov" title="Branch 23 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 26 was taken 1800 times"> + </span><span class="branchNoCov" title="Branch 27 was not taken"> - </span>][<span class="branchNoExec" title="Branch 31 was not executed"> # </span><span class="branchNoExec" title="Branch 32 was not executed"> # </span>]
@@ -178,50 +178,50 @@
 <span class="lineNum">      90 </span>                :            :       else
 <span class="lineNum">      91 </span>                :            :       {
 <span class="lineNum">      92 </span>                :            :         SerializeBaseType xD;
-<span class="lineNum">      93 </span>[<span class="branchCov" title="Branch 1 was taken 1370726 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1370726 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    3242027 :         if (read(xD))</span>
+<span class="lineNum">      93 </span>[<span class="branchCov" title="Branch 1 was taken 1370396 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1370396 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    3259874 :         if (read(xD))</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 262 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 262 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 1538076 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 1538076 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 1556253 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 1556253 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 16 was taken 25147 times"> + </span><span class="branchNoCov" title="Branch 17 was not taken"> - </span>][<span class="branchCov" title="Branch 18 was taken 25147 times"> + </span><span class="branchNoCov" title="Branch 19 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 21 was taken 257522 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>][<span class="branchCov" title="Branch 23 was taken 257522 times"> + </span><span class="branchNoCov" title="Branch 24 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 26 was taken 50294 times"> + </span><span class="branchNoCov" title="Branch 27 was not taken"> - </span>][<span class="branchCov" title="Branch 28 was taken 50294 times"> + </span><span class="branchNoCov" title="Branch 29 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 31 was not executed"> # </span><span class="branchNoExec" title="Branch 32 was not executed"> # </span>][<span class="branchNoExec" title="Branch 33 was not executed"> # </span><span class="branchNoExec" title="Branch 34 was not executed"> # </span>]
 <span class="lineNum">      94 </span>                :            :         {
-<span class="lineNum">      95 </span>                :<span class="lineCov">    3155669 :           x = T(xD);</span>
-<span class="lineNum">      96 </span>                :<span class="lineCov">    3242027 :           return true;</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">    3173681 :           x = T(xD);</span>
+<span class="lineNum">      96 </span>                :<span class="lineCov">    3259874 :           return true;</span>
 <span class="lineNum">      97 </span>                :            :         }
 <span class="lineNum">      98 </span>                :            :         else
 <span class="lineNum">      99 </span>                :            :         {
-<span class="lineNum">     100 </span>                :<span class="lineCov">    3242027 :           return false;</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">    3259874 :           return false;</span>
 <span class="lineNum">     101 </span>                :            :         }
 <span class="lineNum">     102 </span>                :            :       }
 <span class="lineNum">     103 </span>                :            :     }
-<span class="lineNum">     104 </span>                :<span class="lineCov">    3309845 :     return false;</span>
+<span class="lineNum">     104 </span>                :<span class="lineCov">    3345539 :     return false;</span>
 <a name="105"><span class="lineNum">     105 </span>                :            :   }</a>
 <span class="lineNum">     106 </span>                :            : 
-<span class="lineNum">     107 </span>                :<span class="lineCov">     248506 :   template &lt;typename T&gt; bool serializeVector(std::vector&lt;T&gt; &amp;x)</span>
+<span class="lineNum">     107 </span>                :<span class="lineCov">     247846 :   template &lt;typename T&gt; bool serializeVector(std::vector&lt;T&gt; &amp;x)</span>
 <span class="lineNum">     108 </span>                :            :   {
-<span class="lineNum">     109 </span>[<span class="branchCov" title="Branch 0 was taken 5350 times"> + </span><span class="branchCov" title="Branch 1 was taken 152532 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4266 times"> + </span><span class="branchCov" title="Branch 3 was taken 86358 times"> + </span>]:<span class="lineCov">     248506 :     if (mIsStoring)</span>
+<span class="lineNum">     109 </span>[<span class="branchCov" title="Branch 0 was taken 5185 times"> + </span><span class="branchCov" title="Branch 1 was taken 152367 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4101 times"> + </span><span class="branchCov" title="Branch 3 was taken 86193 times"> + </span>]:<span class="lineCov">     247846 :     if (mIsStoring)</span>
 <span class="lineNum">     110 </span>                :            :     {
-<span class="lineNum">     111 </span>                :<span class="lineCov">       9616 :       return writeVector(x);</span>
+<span class="lineNum">     111 </span>                :<span class="lineCov">       9286 :       return writeVector(x);</span>
 <span class="lineNum">     112 </span>                :            :     }
 <span class="lineNum">     113 </span>                :            :     else
 <span class="lineNum">     114 </span>                :            :     {
-<span class="lineNum">     115 </span>                :<span class="lineCov">     238890 :       return readVector(x);</span>
+<span class="lineNum">     115 </span>                :<span class="lineCov">     238560 :       return readVector(x);</span>
 <span class="lineNum">     116 </span>                :            :     }
 <span class="lineNum">     117 </span>                :            :   }
 <a name="118"><span class="lineNum">     118 </span>                :            : </a>
 <span class="lineNum">     119 </span>                :            :   template &lt;typename T&gt;
-<span class="lineNum">     120 </span>                :<span class="lineCov">     529534 :   bool serializeObjectVector(std::vector&lt;T&gt; &amp;x, SerializeableMagic const &amp;magic = SerializeableMagic::ObjectVectorType)</span>
+<span class="lineNum">     120 </span>                :<span class="lineCov">     528874 :   bool serializeObjectVector(std::vector&lt;T&gt; &amp;x, SerializeableMagic const &amp;magic = SerializeableMagic::ObjectVectorType)</span>
 <span class="lineNum">     121 </span>                :            :   {
-<span class="lineNum">     122 </span>[<span class="branchCov" title="Branch 0 was taken 2918 times"> + </span><span class="branchCov" title="Branch 1 was taken 106592 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 910 times"> + </span><span class="branchCov" title="Branch 3 was taken 25155 times"> + </span>]:<span class="lineCov">     529534 :     if (mIsStoring)</span>
+<span class="lineNum">     122 </span>[<span class="branchCov" title="Branch 0 was taken 2918 times"> + </span><span class="branchCov" title="Branch 1 was taken 106592 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 910 times"> + </span><span class="branchCov" title="Branch 3 was taken 25155 times"> + </span>]:<span class="lineCov">     528874 :     if (mIsStoring)</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 910 times"> + </span><span class="branchCov" title="Branch 5 was taken 25155 times"> + </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 12520 times"> + </span><span class="branchCov" title="Branch 9 was taken 355374 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 12190 times"> + </span><span class="branchCov" title="Branch 9 was taken 355044 times"> + </span>]
 <span class="lineNum">     123 </span>                :            :     {
-<span class="lineNum">     124 </span>                :<span class="lineCov">      17258 :       return writeObjectVector(x, magic);</span>
+<span class="lineNum">     124 </span>                :<span class="lineCov">      16928 :       return writeObjectVector(x, magic);</span>
 <span class="lineNum">     125 </span>                :            :     }
 <span class="lineNum">     126 </span>                :            :     else
 <span class="lineNum">     127 </span>                :            :     {
-<span class="lineNum">     128 </span>                :<span class="lineCov">     512276 :       return readObjectVector(x, magic);</span>
+<span class="lineNum">     128 </span>                :<span class="lineCov">     511946 :       return readObjectVector(x, magic);</span>
 <span class="lineNum">     129 </span>                :            :     }
 <a name="130"><span class="lineNum">     130 </span>                :            :   }</a>
 <span class="lineNum">     131 </span>                :            : 
@@ -372,23 +372,23 @@
 <span class="lineNum">     276 </span>                :            : /////////////////
 <a name="277"><span class="lineNum">     277 </span>                :            : // Implementation</a>
 <span class="lineNum">     278 </span>                :            : 
-<span class="lineNum">     279 </span>                :<span class="lineCov">       8328 : template &lt;&gt; inline bool ISerializer::write&lt;bool&gt;(bool const &amp;x)</span>
+<span class="lineNum">     279 </span>                :<span class="lineCov">       8163 : template &lt;&gt; inline bool ISerializer::write&lt;bool&gt;(bool const &amp;x)</span>
 <span class="lineNum">     280 </span>                :            : {
-<span class="lineNum">     281 </span>        [<span class="branchCov" title="Branch 0 was taken 1993 times"> + </span><span class="branchCov" title="Branch 1 was taken 6335 times"> + </span>]:<span class="lineCov">       8328 :   uint8_t b = static_cast&lt;uint8_t&gt;(x ? 1 : 0);</span>
-<span class="lineNum">     282 </span>        [<span class="branchCov" title="Branch 1 was taken 8328 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       8328 :   return write(b);</span>
+<span class="lineNum">     281 </span>        [<span class="branchCov" title="Branch 0 was taken 1993 times"> + </span><span class="branchCov" title="Branch 1 was taken 6170 times"> + </span>]:<span class="lineCov">       8163 :   uint8_t b = static_cast&lt;uint8_t&gt;(x ? 1 : 0);</span>
+<span class="lineNum">     282 </span>        [<span class="branchCov" title="Branch 1 was taken 8163 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       8163 :   return write(b);</span>
 <a name="283"><span class="lineNum">     283 </span>                :            : }</a>
 <span class="lineNum">     284 </span>                :            : 
-<span class="lineNum">     285 </span>                :<span class="lineCov">     249854 : template &lt;&gt; inline bool ISerializer::read&lt;bool&gt;(bool &amp;x)</span>
+<span class="lineNum">     285 </span>                :<span class="lineCov">     249689 : template &lt;&gt; inline bool ISerializer::read&lt;bool&gt;(bool &amp;x)</span>
 <span class="lineNum">     286 </span>                :            : {
 <span class="lineNum">     287 </span>                :            :   uint8_t b;
-<span class="lineNum">     288 </span>[<span class="branchCov" title="Branch 1 was taken 249854 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 249854 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     249854 :   if (read(b))</span>
+<span class="lineNum">     288 </span>[<span class="branchCov" title="Branch 1 was taken 249689 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 249689 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     249689 :   if (read(b))</span>
 <span class="lineNum">     289 </span>                :            :   {
-<span class="lineNum">     290 </span>                :<span class="lineCov">     249854 :     x = b != 0;</span>
-<span class="lineNum">     291 </span>                :<span class="lineCov">     249854 :     return true;</span>
+<span class="lineNum">     290 </span>                :<span class="lineCov">     249689 :     x = b != 0;</span>
+<span class="lineNum">     291 </span>                :<span class="lineCov">     249689 :     return true;</span>
 <span class="lineNum">     292 </span>                :            :   }
 <span class="lineNum">     293 </span>                :            :   else
 <span class="lineNum">     294 </span>                :            :   {
-<span class="lineNum">     295 </span>                :<span class="lineCov">     249854 :     return false;</span>
+<span class="lineNum">     295 </span>                :<span class="lineCov">     249689 :     return false;</span>
 <span class="lineNum">     296 </span>                :            :   }
 <a name="297"><span class="lineNum">     297 </span>                :            : }</a>
 <span class="lineNum">     298 </span>                :            : 
@@ -427,45 +427,45 @@
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 10 was taken 31315 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>][<span class="branchNoExec" title="Branch 12 was not executed"> # </span><span class="branchNoExec" title="Branch 13 was not executed"> # </span>]
 <a name="329"><span class="lineNum">     329 </span>                :            : }</a>
 <span class="lineNum">     330 </span>                :            : 
-<span class="lineNum">     331 </span>                :<span class="lineCov">     185752 : template &lt;typename T&gt; inline bool ISerializer::write(T const &amp;x)</span>
+<span class="lineNum">     331 </span>                :<span class="lineCov">     213627 : template &lt;typename T&gt; inline bool ISerializer::write(T const &amp;x)</span>
 <span class="lineNum">     332 </span>                :            : {
 <span class="lineNum">     333 </span>                :            : #ifndef __GNUC__
 <span class="lineNum">     334 </span>                :            :   static_assert(std::is_trivially_copyable&lt;T&gt;::value, &quot;Type needs non-trivial serialization!&quot;);
 <span class="lineNum">     335 </span>                :            : #endif
-<span class="lineNum">     336 </span>[<span class="branchCov" title="Branch 1 was taken 5540 times"> + </span><span class="branchCov" title="Branch 2 was taken 60082 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 12980 times"> + </span><span class="branchCov" title="Branch 5 was taken 8328 times"> + </span>]:<span class="lineCov">     185752 :   if (std::is_enum&lt;T&gt;())</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 5538 times"> + </span><span class="branchCov" title="Branch 8 was taken 42590 times"> + </span>][<span class="branchCov" title="Branch 10 was taken 921 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 910 times"> + </span><span class="branchCov" title="Branch 14 was taken 48863 times"> + </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<span class="lineNum">     336 </span>[<span class="branchCov" title="Branch 1 was taken 5375 times"> + </span><span class="branchCov" title="Branch 2 was taken 71595 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 12485 times"> + </span><span class="branchCov" title="Branch 5 was taken 8163 times"> + </span>]:<span class="lineCov">     213627 :   if (std::is_enum&lt;T&gt;())</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 5373 times"> + </span><span class="branchCov" title="Branch 8 was taken 41600 times"> + </span>][<span class="branchCov" title="Branch 10 was taken 921 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 910 times"> + </span><span class="branchCov" title="Branch 14 was taken 67205 times"> + </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 19 was not executed"> # </span><span class="branchNoExec" title="Branch 20 was not executed"> # </span>][<span class="branchNoExec" title="Branch 22 was not executed"> # </span><span class="branchNoExec" title="Branch 23 was not executed"> # </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 25 was not executed"> # </span><span class="branchNoExec" title="Branch 26 was not executed"> # </span>]
 <span class="lineNum">     337 </span>                :            :   {
-<span class="lineNum">     338 </span>                :<span class="lineCov">      25889 :     EnumSerializationType v = static_cast&lt;EnumSerializationType&gt;(x);</span>
-<span class="lineNum">     339 </span>[<span class="branchCov" title="Branch 1 was taken 5540 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 12980 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      25889 :     return write(&amp;v, sizeof(v));</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 5538 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 10 was taken 921 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">     338 </span>                :<span class="lineCov">      25064 :     EnumSerializationType v = static_cast&lt;EnumSerializationType&gt;(x);</span>
+<span class="lineNum">     339 </span>[<span class="branchCov" title="Branch 1 was taken 5375 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 12485 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      25064 :     return write(&amp;v, sizeof(v));</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 5373 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 10 was taken 921 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 910 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 19 was not executed"> # </span><span class="branchNoExec" title="Branch 20 was not executed"> # </span>][<span class="branchNoExec" title="Branch 22 was not executed"> # </span><span class="branchNoExec" title="Branch 23 was not executed"> # </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 25 was not executed"> # </span><span class="branchNoExec" title="Branch 26 was not executed"> # </span>]
 <span class="lineNum">     340 </span>                :            :   }
 <span class="lineNum">     341 </span>                :            :   else
 <span class="lineNum">     342 </span>                :            :   {
-<span class="lineNum">     343 </span>                :<span class="lineCov">     185752 :     return write(&amp;x, sizeof(x));</span>
+<span class="lineNum">     343 </span>                :<span class="lineCov">     213627 :     return write(&amp;x, sizeof(x));</span>
 <span class="lineNum">     344 </span>                :            :   }
 <a name="345"><span class="lineNum">     345 </span>                :            : }</a>
 <span class="lineNum">     346 </span>                :            : 
-<span class="lineNum">     347 </span>                :<span class="lineCov">   10123283 : template &lt;typename T&gt; inline bool ISerializer::read(T &amp;x)</span>
+<span class="lineNum">     347 </span>                :<span class="lineCov">   10151158 : template &lt;typename T&gt; inline bool ISerializer::read(T &amp;x)</span>
 <span class="lineNum">     348 </span>                :            : {
 <span class="lineNum">     349 </span>                :            : #ifndef __GNUC__
 <span class="lineNum">     350 </span>                :            :   static_assert(std::is_trivially_copyable&lt;T&gt;::value, &quot;Type needs non-trivial serialization!&quot;);
 <span class="lineNum">     351 </span>                :            : #endif
-<span class="lineNum">     352 </span>[<span class="branchCov" title="Branch 1 was taken 183661 times"> + </span><span class="branchCov" title="Branch 2 was taken 5231801 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 290195 times"> + </span><span class="branchCov" title="Branch 5 was taken 249854 times"> + </span>]:<span class="lineCov">   10123283 :   if (std::is_enum&lt;T&gt;())</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 183659 times"> + </span><span class="branchCov" title="Branch 8 was taken 2148967 times"> + </span>][<span class="branchCov" title="Branch 10 was taken 25310 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 25155 times"> + </span><span class="branchCov" title="Branch 14 was taken 1784681 times"> + </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<span class="lineNum">     352 </span>[<span class="branchCov" title="Branch 1 was taken 183496 times"> + </span><span class="branchCov" title="Branch 2 was taken 5243314 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 289700 times"> + </span><span class="branchCov" title="Branch 5 was taken 249689 times"> + </span>]:<span class="lineCov">   10151158 :   if (std::is_enum&lt;T&gt;())</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 183494 times"> + </span><span class="branchCov" title="Branch 8 was taken 2147977 times"> + </span>][<span class="branchCov" title="Branch 10 was taken 25310 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 25155 times"> + </span><span class="branchCov" title="Branch 14 was taken 1803023 times"> + </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 19 was not executed"> # </span><span class="branchNoExec" title="Branch 20 was not executed"> # </span>][<span class="branchNoExec" title="Branch 22 was not executed"> # </span><span class="branchNoExec" title="Branch 23 was not executed"> # </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 25 was not executed"> # </span><span class="branchNoExec" title="Branch 26 was not executed"> # </span>]
 <span class="lineNum">     353 </span>                :            :   {
 <span class="lineNum">     354 </span>                :            :     EnumSerializationType v;
-<span class="lineNum">     355 </span>[<span class="branchCov" title="Branch 1 was taken 183661 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 183661 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     707980 :     if (read(&amp;v, sizeof(v)))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 290195 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 290195 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 183659 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 183659 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<span class="lineNum">     355 </span>[<span class="branchCov" title="Branch 1 was taken 183496 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 183496 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     707155 :     if (read(&amp;v, sizeof(v)))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 289700 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 289700 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 183494 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 183494 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 16 was taken 25310 times"> + </span><span class="branchNoCov" title="Branch 17 was not taken"> - </span>][<span class="branchCov" title="Branch 18 was taken 25310 times"> + </span><span class="branchNoCov" title="Branch 19 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 21 was taken 25155 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>][<span class="branchCov" title="Branch 23 was taken 25155 times"> + </span><span class="branchNoCov" title="Branch 24 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 26 was not executed"> # </span><span class="branchNoExec" title="Branch 27 was not executed"> # </span>][<span class="branchNoExec" title="Branch 28 was not executed"> # </span><span class="branchNoExec" title="Branch 29 was not executed"> # </span>]
@@ -473,143 +473,143 @@
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 36 was not executed"> # </span><span class="branchNoExec" title="Branch 37 was not executed"> # </span>][<span class="branchNoExec" title="Branch 38 was not executed"> # </span><span class="branchNoExec" title="Branch 39 was not executed"> # </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 41 was not executed"> # </span><span class="branchNoExec" title="Branch 42 was not executed"> # </span>][<span class="branchNoExec" title="Branch 43 was not executed"> # </span><span class="branchNoExec" title="Branch 44 was not executed"> # </span>]
 <span class="lineNum">     356 </span>                :            :     {
-<span class="lineNum">     357 </span>                :<span class="lineCov">     707980 :       x = static_cast&lt;T&gt;(v);</span>
-<span class="lineNum">     358 </span>                :<span class="lineCov">     707980 :       return true;</span>
+<span class="lineNum">     357 </span>                :<span class="lineCov">     707155 :       x = static_cast&lt;T&gt;(v);</span>
+<span class="lineNum">     358 </span>                :<span class="lineCov">     707155 :       return true;</span>
 <span class="lineNum">     359 </span>                :            :     }
 <span class="lineNum">     360 </span>                :            :     else
 <span class="lineNum">     361 </span>                :            :     {
-<span class="lineNum">     362 </span>                :<span class="lineCov">     707980 :       return false;</span>
+<span class="lineNum">     362 </span>                :<span class="lineCov">     707155 :       return false;</span>
 <span class="lineNum">     363 </span>                :            :     }
 <span class="lineNum">     364 </span>                :            :   }
 <span class="lineNum">     365 </span>                :            :   else
 <span class="lineNum">     366 </span>                :            :   {
-<span class="lineNum">     367 </span>                :<span class="lineCov">   10123283 :     return read(&amp;x, sizeof(x));</span>
+<span class="lineNum">     367 </span>                :<span class="lineCov">   10151158 :     return read(&amp;x, sizeof(x));</span>
 <span class="lineNum">     368 </span>                :            :   }
 <a name="369"><span class="lineNum">     369 </span>                :            : }</a>
 <span class="lineNum">     370 </span>                :            : 
-<span class="lineNum">     371 </span>                :<span class="lineCov">       9616 : template &lt;typename T&gt; inline bool ISerializer::writeVector(std::vector&lt;T&gt; &amp;x)</span>
+<span class="lineNum">     371 </span>                :<span class="lineCov">       9286 : template &lt;typename T&gt; inline bool ISerializer::writeVector(std::vector&lt;T&gt; &amp;x)</span>
 <span class="lineNum">     372 </span>                :            : {
-<span class="lineNum">     373 </span>[<span class="branchCov" title="Branch 1 was taken 5350 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 5350 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       9616 :   if (serialize(SerializeableMagic::VectorType))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 4266 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 4266 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<span class="lineNum">     373 </span>[<span class="branchCov" title="Branch 1 was taken 5185 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 5185 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       9286 :   if (serialize(SerializeableMagic::VectorType))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 4101 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 4101 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
 <span class="lineNum">     374 </span>                :            :   {
-<span class="lineNum">     375 </span>                :<span class="lineCov">       9616 :     size_t n = x.size();</span>
-<span class="lineNum">     376 </span>        [<span class="branchCov" title="Branch 1 was taken 5350 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       9616 :     if (write(n))</span>
-<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 3 was taken 5350 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 4266 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 4266 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">     375 </span>                :<span class="lineCov">       9286 :     size_t n = x.size();</span>
+<span class="lineNum">     376 </span>        [<span class="branchCov" title="Branch 1 was taken 5185 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       9286 :     if (write(n))</span>
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 3 was taken 5185 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 4101 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 4101 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
 <span class="lineNum">     377 </span>                :            :     {
-<span class="lineNum">     378 </span>[<span class="branchCov" title="Branch 0 was taken 5352 times"> + </span><span class="branchCov" title="Branch 1 was taken 5350 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 12792 times"> + </span><span class="branchCov" title="Branch 3 was taken 4266 times"> + </span>]:<span class="lineCov">      27760 :       for (size_t i = 0; i &lt; n; i++)</span>
+<span class="lineNum">     378 </span>[<span class="branchCov" title="Branch 0 was taken 5187 times"> + </span><span class="branchCov" title="Branch 1 was taken 5185 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 12297 times"> + </span><span class="branchCov" title="Branch 3 was taken 4101 times"> + </span>]:<span class="lineCov">      26770 :       for (size_t i = 0; i &lt; n; i++)</span>
 <span class="lineNum">     379 </span>                :            :       {
-<span class="lineNum">     380 </span>[<span class="branchCov" title="Branch 2 was taken 5352 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 5352 times"> + </span>]:<span class="lineCov">      18144 :         if (!write(x[i]))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 12792 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 12792 times"> + </span>]
+<span class="lineNum">     380 </span>[<span class="branchCov" title="Branch 2 was taken 5187 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 5187 times"> + </span>]:<span class="lineCov">      17484 :         if (!write(x[i]))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 12297 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 12297 times"> + </span>]
 <span class="lineNum">     381 </span>                :            :         {
-<span class="lineNum">     382 </span>                :<span class="lineCov">       9616 :           return false;</span>
+<span class="lineNum">     382 </span>                :<span class="lineCov">       9286 :           return false;</span>
 <span class="lineNum">     383 </span>                :            :         }
 <span class="lineNum">     384 </span>                :            :       }
-<span class="lineNum">     385 </span>                :<span class="lineCov">       9616 :       return true;</span>
+<span class="lineNum">     385 </span>                :<span class="lineCov">       9286 :       return true;</span>
 <span class="lineNum">     386 </span>                :            :     }
 <span class="lineNum">     387 </span>                :            :   }
-<span class="lineNum">     388 </span>                :<span class="lineCov">       9616 :   return false;</span>
+<span class="lineNum">     388 </span>                :<span class="lineCov">       9286 :   return false;</span>
 <a name="389"><span class="lineNum">     389 </span>                :            : }</a>
 <span class="lineNum">     390 </span>                :            : 
-<span class="lineNum">     391 </span>                :<span class="lineCov">     238890 : template &lt;typename T&gt; inline bool ISerializer::readVector(std::vector&lt;T&gt; &amp;x)</span>
+<span class="lineNum">     391 </span>                :<span class="lineCov">     238560 : template &lt;typename T&gt; inline bool ISerializer::readVector(std::vector&lt;T&gt; &amp;x)</span>
 <span class="lineNum">     392 </span>                :            : {
-<span class="lineNum">     393 </span>[<span class="branchCov" title="Branch 1 was taken 152532 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 152532 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     238890 :   if (serialize(SerializeableMagic::VectorType))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 86358 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 86358 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<span class="lineNum">     393 </span>[<span class="branchCov" title="Branch 1 was taken 152367 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 152367 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     238560 :   if (serialize(SerializeableMagic::VectorType))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 86193 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 86193 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
 <span class="lineNum">     394 </span>                :            :   {
 <span class="lineNum">     395 </span>                :            :     size_t n;
-<span class="lineNum">     396 </span>[<span class="branchCov" title="Branch 1 was taken 152532 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 152532 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     238890 :     if (read(n))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 86358 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 86358 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">     396 </span>[<span class="branchCov" title="Branch 1 was taken 152367 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 152367 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     238560 :     if (read(n))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 86193 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 86193 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
 <span class="lineNum">     397 </span>                :            :     {
-<span class="lineNum">     398 </span>[<span class="branchCov" title="Branch 0 was taken 152534 times"> + </span><span class="branchCov" title="Branch 1 was taken 152532 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 259068 times"> + </span><span class="branchCov" title="Branch 3 was taken 86358 times"> + </span>]:<span class="lineCov">     650492 :       for (size_t i = 0; i &lt; n; i++)</span>
+<span class="lineNum">     398 </span>[<span class="branchCov" title="Branch 0 was taken 152369 times"> + </span><span class="branchCov" title="Branch 1 was taken 152367 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 258573 times"> + </span><span class="branchCov" title="Branch 3 was taken 86193 times"> + </span>]:<span class="lineCov">     649502 :       for (size_t i = 0; i &lt; n; i++)</span>
 <span class="lineNum">     399 </span>                :            :       {
 <span class="lineNum">     400 </span>                :            :         T xi;
-<span class="lineNum">     401 </span>[<span class="branchCov" title="Branch 1 was taken 152534 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 152534 times"> + </span>]:<span class="lineCov">     411602 :         if (!read(xi))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 259068 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 259068 times"> + </span>]
+<span class="lineNum">     401 </span>[<span class="branchCov" title="Branch 1 was taken 152369 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 152369 times"> + </span>]:<span class="lineCov">     410942 :         if (!read(xi))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 258573 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 258573 times"> + </span>]
 <span class="lineNum">     402 </span>                :            :         {
 <span class="lineNum">     403 </span>                :<span class="lineNoCov">          0 :           return false;</span>
 <span class="lineNum">     404 </span>                :            :         }
-<span class="lineNum">     405 </span>[<span class="branchCov" title="Branch 1 was taken 152534 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 259068 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     411602 :         x.push_back(xi);</span>
+<span class="lineNum">     405 </span>[<span class="branchCov" title="Branch 1 was taken 152369 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 258573 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     410942 :         x.push_back(xi);</span>
 <span class="lineNum">     406 </span>                :            :       }
-<span class="lineNum">     407 </span>                :<span class="lineCov">     238890 :       return true;</span>
+<span class="lineNum">     407 </span>                :<span class="lineCov">     238560 :       return true;</span>
 <span class="lineNum">     408 </span>                :            :     }
 <span class="lineNum">     409 </span>                :            :   }
-<span class="lineNum">     410 </span>                :<span class="lineCov">     238890 :   return false;</span>
+<span class="lineNum">     410 </span>                :<span class="lineCov">     238560 :   return false;</span>
 <a name="411"><span class="lineNum">     411 </span>                :            : }</a>
 <span class="lineNum">     412 </span>                :            : 
-<span class="lineNum">     413 </span>                :<span class="lineCov">      17275 : template &lt;typename T&gt; inline bool ISerializer::writeObjectVector(std::vector&lt;T&gt; &amp;x, SerializeableMagic const &amp;magic)</span>
+<span class="lineNum">     413 </span>                :<span class="lineCov">      16945 : template &lt;typename T&gt; inline bool ISerializer::writeObjectVector(std::vector&lt;T&gt; &amp;x, SerializeableMagic const &amp;magic)</span>
 <span class="lineNum">     414 </span>                :            : {
-<span class="lineNum">     415 </span>[<span class="branchCov" title="Branch 1 was taken 918 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 919 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      17275 :   if (serialize(magic))</span>
+<span class="lineNum">     415 </span>[<span class="branchCov" title="Branch 1 was taken 918 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 919 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      16945 :   if (serialize(magic))</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 2918 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 13 was taken 12520 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 13 was taken 12190 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
 <span class="lineNum">     416 </span>                :            :   {
-<span class="lineNum">     417 </span>                :<span class="lineCov">      17275 :     size_t n = x.size();</span>
-<span class="lineNum">     418 </span>        [<span class="branchCov" title="Branch 1 was taken 918 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      17275 :     if (write(n))</span>
+<span class="lineNum">     417 </span>                :<span class="lineCov">      16945 :     size_t n = x.size();</span>
+<span class="lineNum">     418 </span>        [<span class="branchCov" title="Branch 1 was taken 918 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      16945 :     if (write(n))</span>
 <span class="lineNum">         </span>  [<span class="branchCov" title="Branch 3 was taken 918 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 919 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
 <span class="lineNum">         </span>  [<span class="branchCov" title="Branch 8 was taken 919 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 2918 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
 <span class="lineNum">         </span>  [<span class="branchCov" title="Branch 13 was taken 2918 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span><span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
-<span class="lineNum">         </span>  [<span class="branchNoExec" title="Branch 18 was not executed"> # </span><span class="branchNoExec" title="Branch 19 was not executed"> # </span><span class="branchCov" title="Branch 21 was taken 12520 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 23 was taken 12520 times"> + </span><span class="branchNoCov" title="Branch 24 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchNoExec" title="Branch 18 was not executed"> # </span><span class="branchNoExec" title="Branch 19 was not executed"> # </span><span class="branchCov" title="Branch 21 was taken 12190 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 23 was taken 12190 times"> + </span><span class="branchNoCov" title="Branch 24 was not taken"> - </span>]
 <span class="lineNum">     419 </span>                :            :     {
-<span class="lineNum">     420 </span>[<span class="branchCov" title="Branch 0 was taken 265 times"> + </span><span class="branchCov" title="Branch 1 was taken 918 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 6260 times"> + </span><span class="branchCov" title="Branch 3 was taken 919 times"> + </span>]:<span class="lineCov">      40275 :       for (size_t i = 0; i &lt; n; i++)</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 12209 times"> + </span><span class="branchCov" title="Branch 5 was taken 2918 times"> + </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 4266 times"> + </span><span class="branchCov" title="Branch 9 was taken 12520 times"> + </span>]
+<span class="lineNum">     420 </span>[<span class="branchCov" title="Branch 0 was taken 265 times"> + </span><span class="branchCov" title="Branch 1 was taken 918 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 6095 times"> + </span><span class="branchCov" title="Branch 3 was taken 919 times"> + </span>]:<span class="lineCov">      45729 :       for (size_t i = 0; i &lt; n; i++)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 18323 times"> + </span><span class="branchCov" title="Branch 5 was taken 2918 times"> + </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 4101 times"> + </span><span class="branchCov" title="Branch 9 was taken 12190 times"> + </span>]
 <span class="lineNum">     421 </span>                :            :       {
-<span class="lineNum">     422 </span>[<span class="branchCov" title="Branch 2 was taken 265 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 265 times"> + </span>]:<span class="lineCov">      23000 :         if (!doSerialize(*this, x[i]))</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 6260 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 6260 times"> + </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 14 was taken 12209 times"> + </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span>][<span class="branchNoCov" title="Branch 16 was not taken"> - </span><span class="branchCov" title="Branch 17 was taken 12209 times"> + </span>]
+<span class="lineNum">     422 </span>[<span class="branchCov" title="Branch 2 was taken 265 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 265 times"> + </span>]:<span class="lineCov">      28784 :         if (!doSerialize(*this, x[i]))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 6095 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 6095 times"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 14 was taken 18323 times"> + </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span>][<span class="branchNoCov" title="Branch 16 was not taken"> - </span><span class="branchCov" title="Branch 17 was taken 18323 times"> + </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>][<span class="branchNoExec" title="Branch 22 was not executed"> # </span><span class="branchNoExec" title="Branch 23 was not executed"> # </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 26 was taken 4266 times"> + </span><span class="branchNoCov" title="Branch 27 was not taken"> - </span>][<span class="branchNoCov" title="Branch 28 was not taken"> - </span><span class="branchCov" title="Branch 29 was taken 4266 times"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 26 was taken 4101 times"> + </span><span class="branchNoCov" title="Branch 27 was not taken"> - </span>][<span class="branchNoCov" title="Branch 28 was not taken"> - </span><span class="branchCov" title="Branch 29 was taken 4101 times"> + </span>]
 <span class="lineNum">     423 </span>                :            :         {
-<span class="lineNum">     424 </span>                :<span class="lineCov">      17275 :           return false;</span>
+<span class="lineNum">     424 </span>                :<span class="lineCov">      16945 :           return false;</span>
 <span class="lineNum">     425 </span>                :            :         }
 <span class="lineNum">     426 </span>                :            :       }
-<span class="lineNum">     427 </span>                :<span class="lineCov">      17275 :       return true;</span>
+<span class="lineNum">     427 </span>                :<span class="lineCov">      16945 :       return true;</span>
 <span class="lineNum">     428 </span>                :            :     }
 <span class="lineNum">     429 </span>                :            :   }
-<span class="lineNum">     430 </span>                :<span class="lineCov">      17275 :   return false;</span>
+<span class="lineNum">     430 </span>                :<span class="lineCov">      16945 :   return false;</span>
 <a name="431"><span class="lineNum">     431 </span>                :            : }</a>
 <span class="lineNum">     432 </span>                :            : 
-<span class="lineNum">     433 </span>                :<span class="lineCov">     512538 : template &lt;typename T&gt; inline bool ISerializer::readObjectVector(std::vector&lt;T&gt; &amp;x, SerializeableMagic const &amp;magic)</span>
+<span class="lineNum">     433 </span>                :<span class="lineCov">     512208 : template &lt;typename T&gt; inline bool ISerializer::readObjectVector(std::vector&lt;T&gt; &amp;x, SerializeableMagic const &amp;magic)</span>
 <span class="lineNum">     434 </span>                :            : {
-<span class="lineNum">     435 </span>[<span class="branchCov" title="Branch 1 was taken 25265 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 25307 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     512538 :   if (serialize(magic))</span>
+<span class="lineNum">     435 </span>[<span class="branchCov" title="Branch 1 was taken 25265 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 25307 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     512208 :   if (serialize(magic))</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 106592 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 13 was taken 355374 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 13 was taken 355044 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
 <span class="lineNum">     436 </span>                :            :   {
 <span class="lineNum">     437 </span>                :            :     size_t n;
-<span class="lineNum">     438 </span>[<span class="branchCov" title="Branch 1 was taken 25265 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 25265 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     512538 :     if (read(n))</span>
+<span class="lineNum">     438 </span>[<span class="branchCov" title="Branch 1 was taken 25265 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 25265 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     512208 :     if (read(n))</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 25307 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 25307 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 106592 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 106592 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>][<span class="branchNoExec" title="Branch 18 was not executed"> # </span><span class="branchNoExec" title="Branch 19 was not executed"> # </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 21 was taken 355374 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>][<span class="branchCov" title="Branch 23 was taken 355374 times"> + </span><span class="branchNoCov" title="Branch 24 was not taken"> - </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 21 was taken 355044 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>][<span class="branchCov" title="Branch 23 was taken 355044 times"> + </span><span class="branchNoCov" title="Branch 24 was not taken"> - </span>]
 <span class="lineNum">     439 </span>                :            :     {
-<span class="lineNum">     440 </span>[<span class="branchCov" title="Branch 0 was taken 927399 times"> + </span><span class="branchCov" title="Branch 1 was taken 25264 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 177632 times"> + </span><span class="branchCov" title="Branch 3 was taken 25307 times"> + </span>]:<span class="lineCov">    2125570 :       for (size_t i = 0; i &lt; n; i++)</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 396497 times"> + </span><span class="branchCov" title="Branch 5 was taken 81437 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 25147 times"> + </span><span class="branchCov" title="Branch 5 was taken 25155 times"> + </span>]
-<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>][<span class="branchCov" title="Branch 8 was taken 86358 times"> + </span><span class="branchCov" title="Branch 9 was taken 355374 times"> + </span>]
+<span class="lineNum">     440 </span>[<span class="branchCov" title="Branch 0 was taken 927399 times"> + </span><span class="branchCov" title="Branch 1 was taken 25264 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 177467 times"> + </span><span class="branchCov" title="Branch 3 was taken 25307 times"> + </span>]:<span class="lineCov">    2131024 :       for (size_t i = 0; i &lt; n; i++)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 402611 times"> + </span><span class="branchCov" title="Branch 5 was taken 81437 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 25147 times"> + </span><span class="branchCov" title="Branch 5 was taken 25155 times"> + </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>][<span class="branchCov" title="Branch 8 was taken 86193 times"> + </span><span class="branchCov" title="Branch 9 was taken 355044 times"> + </span>]
 <span class="lineNum">     441 </span>                :            :       {
-<span class="lineNum">     442 </span>[<span class="branchCov" title="Branch 2 was taken 152532 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 396497 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    1851923 :         T xi;</span>
+<span class="lineNum">     442 </span>[<span class="branchCov" title="Branch 2 was taken 152367 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 402611 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    1857377 :         T xi;</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 25147 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoExec" title="Branch 9 was not executed"> # </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span>]
-<span class="lineNum">     443 </span>        [<span class="branchCov" title="Branch 1 was taken 927399 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    1613033 :         if (doSerialize(*this, xi))</span>
+<span class="lineNum">     443 </span>        [<span class="branchCov" title="Branch 1 was taken 927399 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    1618817 :         if (doSerialize(*this, xi))</span>
 <span class="lineNum">         </span>  [<span class="branchCov" title="Branch 3 was taken 927398 times"> + </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 6 was taken 25100 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
-<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 6 was taken 152532 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 25100 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 8 was taken 152532 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 396497 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
-<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 11 was taken 25147 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span><span class="branchCov" title="Branch 13 was taken 396497 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 6 was taken 152367 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 25100 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 8 was taken 152367 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 402611 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 11 was taken 25147 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span><span class="branchCov" title="Branch 13 was taken 402611 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 25147 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
-<span class="lineNum">         </span>  [<span class="branchNoExec" title="Branch 18 was not executed"> # </span><span class="branchNoExec" title="Branch 19 was not executed"> # </span><span class="branchCov" title="Branch 21 was taken 86358 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 23 was taken 86358 times"> + </span><span class="branchNoCov" title="Branch 24 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchNoExec" title="Branch 18 was not executed"> # </span><span class="branchNoExec" title="Branch 19 was not executed"> # </span><span class="branchCov" title="Branch 21 was taken 86193 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 23 was taken 86193 times"> + </span><span class="branchNoCov" title="Branch 24 was not taken"> - </span>]
 <span class="lineNum">     444 </span>                :            :         {
-<span class="lineNum">     445 </span>[<span class="branchCov" title="Branch 1 was taken 927398 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 177632 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">    1613032 :           x.push_back(xi);</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 396497 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 25147 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
-<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>][<span class="branchCov" title="Branch 13 was taken 86358 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<span class="lineNum">     445 </span>[<span class="branchCov" title="Branch 1 was taken 927398 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 177467 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">    1618816 :           x.push_back(xi);</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 402611 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 25147 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>][<span class="branchCov" title="Branch 13 was taken 86193 times"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
 <span class="lineNum">     446 </span>                :            :         }
 <span class="lineNum">     447 </span>                :            :         else
 <span class="lineNum">     448 </span>                :            :         {
-<span class="lineNum">     449 </span>[<span class="branchCov" title="Branch 1 was taken 152532 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 86358 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     238891 :           return false;</span>
+<span class="lineNum">     449 </span>[<span class="branchCov" title="Branch 1 was taken 152367 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 86193 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     238561 :           return false;</span>
 <span class="lineNum">     450 </span>                :            :         }
 <span class="lineNum">     451 </span>                :            :       }
-<span class="lineNum">     452 </span>                :<span class="lineCov">     512538 :       return true;</span>
+<span class="lineNum">     452 </span>                :<span class="lineCov">     512208 :       return true;</span>
 <span class="lineNum">     453 </span>                :            :     }
 <span class="lineNum">     454 </span>                :            :   }
-<span class="lineNum">     455 </span>                :<span class="lineCov">     512538 :   return false;</span>
+<span class="lineNum">     455 </span>                :<span class="lineCov">     512208 :   return false;</span>
 <a name="456"><span class="lineNum">     456 </span>                :            : }</a>
 <span class="lineNum">     457 </span>                :            : 
 <span class="lineNum">     458 </span>                :<span class="lineCov">          2 : template &lt;typename T, typename U, typename Comp&gt; inline bool ISerializer::writeObjectMap(std::map&lt;T, U, Comp&gt; &amp;x)</span>

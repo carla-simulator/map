@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">91</td>
@@ -1872,14 +1872,14 @@
 <span class="lineNum">    1763 </span>                :<span class="lineCov">          5 :   return result;</span>
 <a name="1764"><span class="lineNum">    1764 </span>                :            : }</a>
 <span class="lineNum">    1765 </span>                :            : 
-<span class="lineNum">    1766 </span>                :<span class="lineCov">      26064 : void addLaneIdUnique(lane::LaneIdList &amp;laneIds, lane::LaneId const laneId)</span>
+<span class="lineNum">    1766 </span>                :<span class="lineCov">      27428 : void addLaneIdUnique(lane::LaneIdList &amp;laneIds, lane::LaneId const laneId)</span>
 <span class="lineNum">    1767 </span>                :            : {
-<span class="lineNum">    1768 </span>        [<span class="branchCov" title="Branch 3 was taken 26064 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      26064 :   auto findResult = std::find(std::begin(laneIds), std::end(laneIds), laneId);</span>
-<span class="lineNum">    1769 </span>        [<span class="branchCov" title="Branch 2 was taken 20600 times"> + </span><span class="branchCov" title="Branch 3 was taken 5464 times"> + </span>]:<span class="lineCov">      26064 :   if (findResult == std::end(laneIds))</span>
+<span class="lineNum">    1768 </span>        [<span class="branchCov" title="Branch 3 was taken 27428 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      27428 :   auto findResult = std::find(std::begin(laneIds), std::end(laneIds), laneId);</span>
+<span class="lineNum">    1769 </span>        [<span class="branchCov" title="Branch 2 was taken 20600 times"> + </span><span class="branchCov" title="Branch 3 was taken 6828 times"> + </span>]:<span class="lineCov">      27428 :   if (findResult == std::end(laneIds))</span>
 <span class="lineNum">    1770 </span>                :            :   {
 <span class="lineNum">    1771 </span>        [<span class="branchCov" title="Branch 1 was taken 20600 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20600 :     laneIds.push_back(laneId);</span>
 <span class="lineNum">    1772 </span>                :            :   }
-<a name="1773"><span class="lineNum">    1773 </span>                :<span class="lineCov">      26064 : }</span></a>
+<a name="1773"><span class="lineNum">    1773 </span>                :<span class="lineCov">      27428 : }</span></a>
 <span class="lineNum">    1774 </span>                :            : 
 <span class="lineNum">    1775 </span>                :<span class="lineCov">      14186 : void addRoutePredecessorRelationToNewSegment(lane::Lane const &amp;lane,</span>
 <span class="lineNum">    1776 </span>                :            :                                              route::LaneSegment &amp;laneSegment,
@@ -1890,22 +1890,22 @@
 <span class="lineNum">    1781 </span>                :            :   {
 <span class="lineNum">    1782 </span>                :<span class="lineCov">       3668 :     return;</span>
 <span class="lineNum">    1783 </span>                :            :   }
-<span class="lineNum">    1784 </span>        [<span class="branchCov" title="Branch 1 was taken 19441 times"> + </span><span class="branchCov" title="Branch 2 was taken 10518 times"> + </span>]:<span class="lineCov">      29959 :   for (auto predecessorLaneContact : lane::getContactLanes(</span>
-<span class="lineNum">    1785 </span>[<span class="branchCov" title="Branch 0 was taken 6395 times"> + </span><span class="branchCov" title="Branch 1 was taken 4123 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 10518 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      63586 :          lane, routeDirectionPositive ? lane::ContactLocation::PREDECESSOR : lane::ContactLocation::SUCCESSOR))</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 19441 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<span class="lineNum">    1784 </span>        [<span class="branchCov" title="Branch 1 was taken 20123 times"> + </span><span class="branchCov" title="Branch 2 was taken 10518 times"> + </span>]:<span class="lineCov">      30641 :   for (auto predecessorLaneContact : lane::getContactLanes(</span>
+<span class="lineNum">    1785 </span>[<span class="branchCov" title="Branch 0 was taken 6395 times"> + </span><span class="branchCov" title="Branch 1 was taken 4123 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 10518 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      64950 :          lane, routeDirectionPositive ? lane::ContactLocation::PREDECESSOR : lane::ContactLocation::SUCCESSOR))</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 20123 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
 <span class="lineNum">    1786 </span>                :            :   {
-<span class="lineNum">    1787 </span>                :<span class="lineCov">      19441 :     auto predecessorLaneId = predecessorLaneContact.toLane;</span>
-<a name="1788"><span class="lineNum">    1788 </span>                :<span class="lineCov">      19441 :     auto predecessorLaneSegmentIter = std::find_if(std::begin(route.roadSegments.back().drivableLaneSegments),</span></a>
-<span class="lineNum">    1789 </span>                :<span class="lineCov">      19441 :                                                    std::end(route.roadSegments.back().drivableLaneSegments),</span>
-<span class="lineNum">    1790 </span>                :<span class="lineCov">      25244 :                                                    [&amp;predecessorLaneId](route::LaneSegment const &amp;innerLaneSegment) {</span>
-<span class="lineNum">    1791 </span>                :<span class="lineCov">      25244 :                                                      return innerLaneSegment.laneInterval.laneId == predecessorLaneId;</span>
-<span class="lineNum">    1792 </span>        [<span class="branchCov" title="Branch 3 was taken 19441 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      64126 :                                                    });</span>
+<span class="lineNum">    1787 </span>                :<span class="lineCov">      20123 :     auto predecessorLaneId = predecessorLaneContact.toLane;</span>
+<a name="1788"><span class="lineNum">    1788 </span>                :<span class="lineCov">      20123 :     auto predecessorLaneSegmentIter = std::find_if(std::begin(route.roadSegments.back().drivableLaneSegments),</span></a>
+<span class="lineNum">    1789 </span>                :<span class="lineCov">      20123 :                                                    std::end(route.roadSegments.back().drivableLaneSegments),</span>
+<span class="lineNum">    1790 </span>                :<span class="lineCov">      26202 :                                                    [&amp;predecessorLaneId](route::LaneSegment const &amp;innerLaneSegment) {</span>
+<span class="lineNum">    1791 </span>                :<span class="lineCov">      26202 :                                                      return innerLaneSegment.laneInterval.laneId == predecessorLaneId;</span>
+<span class="lineNum">    1792 </span>        [<span class="branchCov" title="Branch 3 was taken 20123 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      66448 :                                                    });</span>
 <span class="lineNum">    1793 </span>                :            : 
-<span class="lineNum">    1794 </span>        [<span class="branchCov" title="Branch 3 was taken 13032 times"> + </span><span class="branchCov" title="Branch 4 was taken 6409 times"> + </span>]:<span class="lineCov">      19441 :     if (predecessorLaneSegmentIter != std::end(route.roadSegments.back().drivableLaneSegments))</span>
+<span class="lineNum">    1794 </span>        [<span class="branchCov" title="Branch 3 was taken 13714 times"> + </span><span class="branchCov" title="Branch 4 was taken 6409 times"> + </span>]:<span class="lineCov">      20123 :     if (predecessorLaneSegmentIter != std::end(route.roadSegments.back().drivableLaneSegments))</span>
 <span class="lineNum">    1795 </span>                :            :     {
-<span class="lineNum">    1796 </span>        [<span class="branchCov" title="Branch 2 was taken 13032 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      13032 :       addLaneIdUnique(predecessorLaneSegmentIter-&gt;successors, laneSegment.laneInterval.laneId);</span>
-<span class="lineNum">    1797 </span>        [<span class="branchCov" title="Branch 1 was taken 13032 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      13032 :       addLaneIdUnique(laneSegment.predecessors, predecessorLaneId);</span>
-<span class="lineNum">    1798 </span>                :<span class="lineCov">      13032 :       laneSegment.routeLaneOffset = predecessorLaneSegmentIter-&gt;routeLaneOffset;</span>
+<span class="lineNum">    1796 </span>        [<span class="branchCov" title="Branch 2 was taken 13714 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      13714 :       addLaneIdUnique(predecessorLaneSegmentIter-&gt;successors, laneSegment.laneInterval.laneId);</span>
+<span class="lineNum">    1797 </span>        [<span class="branchCov" title="Branch 1 was taken 13714 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      13714 :       addLaneIdUnique(laneSegment.predecessors, predecessorLaneId);</span>
+<span class="lineNum">    1798 </span>                :<span class="lineCov">      13714 :       laneSegment.routeLaneOffset = predecessorLaneSegmentIter-&gt;routeLaneOffset;</span>
 <span class="lineNum">    1799 </span>                :            :     }
 <span class="lineNum">    1800 </span>                :            :   }
 <a name="1801"><span class="lineNum">    1801 </span>                :            : }</a>

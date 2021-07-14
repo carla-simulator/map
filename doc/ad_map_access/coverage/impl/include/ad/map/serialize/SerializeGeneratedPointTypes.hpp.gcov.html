@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -104,9 +104,9 @@
 <span class="lineNum">      33 </span>                :            : /**
 <a name="34"><span class="lineNum">      34 </span>                :            :  * @brief Serializer for point::ECEFCoordinate</a>
 <span class="lineNum">      35 </span>                :            :  */
-<span class="lineNum">      36 </span>                :<span class="lineCov">    1489503 : inline bool doSerialize(ISerializer &amp;serializer, point::ECEFCoordinate &amp;x)</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">    1526187 : inline bool doSerialize(ISerializer &amp;serializer, point::ECEFCoordinate &amp;x)</span>
 <span class="lineNum">      37 </span>                :            : {
-<span class="lineNum">      38 </span>                :<span class="lineCov">    1489503 :   return serializer.serializeGeneratedType&lt;point::ECEFCoordinate, double, SerializeableMagic::ECEFCoordinate&gt;(x);</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">    1526187 :   return serializer.serializeGeneratedType&lt;point::ECEFCoordinate, double, SerializeableMagic::ECEFCoordinate&gt;(x);</span>
 <span class="lineNum">      39 </span>                :            : }
 <span class="lineNum">      40 </span>                :            : 
 <span class="lineNum">      41 </span>                :            : /**
@@ -163,15 +163,15 @@
 <span class="lineNum">      92 </span>                :            : /**
 <a name="93"><span class="lineNum">      93 </span>                :            :  * @brief Serializer for point::ECEFPoint</a>
 <span class="lineNum">      94 </span>                :            :  */
-<span class="lineNum">      95 </span>                :<span class="lineCov">     496501 : inline bool doSerialize(ISerializer &amp;serializer, point::ECEFPoint &amp;ecefPoint)</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">     508729 : inline bool doSerialize(ISerializer &amp;serializer, point::ECEFPoint &amp;ecefPoint)</span>
 <span class="lineNum">      96 </span>                :            : {
 <span class="lineNum">      97 </span>                :            :   //@todo: fix ECEFCoordinate -&gt; ECEFPoint: currently here for backward compat
-<span class="lineNum">      98 </span>[<span class="branchCov" title="Branch 1 was taken 496501 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 496501 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">    1986004 :   return serializer.serialize(SerializeableMagic::ECEFCoordinate) &amp;&amp; doSerialize(serializer, ecefPoint.x)</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 496501 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 496501 times"> + </span>]
+<span class="lineNum">      98 </span>[<span class="branchCov" title="Branch 1 was taken 508729 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 508729 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">    2034916 :   return serializer.serialize(SerializeableMagic::ECEFCoordinate) &amp;&amp; doSerialize(serializer, ecefPoint.x)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 6 was taken 508729 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>][<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 508729 times"> + </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
-<span class="lineNum">      99 </span>[<span class="branchCov" title="Branch 0 was taken 496501 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 496501 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    1986004 :     &amp;&amp; doSerialize(serializer, ecefPoint.y) &amp;&amp; doSerialize(serializer, ecefPoint.z);</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 496501 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 496501 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 10 was taken 496501 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">      99 </span>[<span class="branchCov" title="Branch 0 was taken 508729 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 508729 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">    2034916 :     &amp;&amp; doSerialize(serializer, ecefPoint.y) &amp;&amp; doSerialize(serializer, ecefPoint.z);</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 508729 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 508729 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 10 was taken 508729 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <span class="lineNum">     100 </span>                :            : }
 <span class="lineNum">     101 </span>                :            : 
 <span class="lineNum">     102 </span>                :            : /**

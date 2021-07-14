@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">49</td>
@@ -93,20 +93,20 @@
 <span class="lineNum">      22 </span>                :            : namespace map {
 <a name="23"><span class="lineNum">      23 </span>                :            : namespace lane {</a>
 <span class="lineNum">      24 </span>                :            : 
-<span class="lineNum">      25 </span>                :<span class="lineCov">     301521 : Lane::ConstPtr getLanePtr(LaneId const &amp;id)</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">     301772 : Lane::ConstPtr getLanePtr(LaneId const &amp;id)</span>
 <span class="lineNum">      26 </span>                :            : {
-<span class="lineNum">      27 </span>                :<span class="lineCov">     301521 :   auto const lane = access::getStore().getLanePtr(id);</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">     301772 :   auto const lane = access::getStore().getLanePtr(id);</span>
 <span class="lineNum">      28 </span>                :            : 
-<span class="lineNum">      29 </span>        [<span class="branchCov" title="Branch 1 was taken 3 times"> + </span><span class="branchCov" title="Branch 2 was taken 301518 times"> + </span>]:<span class="lineCov">     301521 :   if (!bool(lane))</span>
+<span class="lineNum">      29 </span>        [<span class="branchCov" title="Branch 1 was taken 3 times"> + </span><span class="branchCov" title="Branch 2 was taken 301769 times"> + </span>]:<span class="lineCov">     301772 :   if (!bool(lane))</span>
 <span class="lineNum">      30 </span>                :            :   {
 <span class="lineNum">      31 </span>        [<span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          3 :     throw std::invalid_argument(&quot;ad::map::lane::getLane: LaneId not found in store&quot;);</span>
 <span class="lineNum">      32 </span>                :            :   }
-<span class="lineNum">      33 </span>                :<span class="lineCov">     301518 :   return lane;</span>
+<span class="lineNum">      33 </span>                :<span class="lineCov">     301769 :   return lane;</span>
 <a name="34"><span class="lineNum">      34 </span>                :            : }</a>
 <span class="lineNum">      35 </span>                :            : 
-<span class="lineNum">      36 </span>                :<span class="lineCov">     215433 : Lane const &amp;getLane(LaneId const &amp;id)</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">     215738 : Lane const &amp;getLane(LaneId const &amp;id)</span>
 <span class="lineNum">      37 </span>                :            : {
-<span class="lineNum">      38 </span>                :<span class="lineCov">     215433 :   return *getLanePtr(id);</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">     215738 :   return *getLanePtr(id);</span>
 <a name="39"><span class="lineNum">      39 </span>                :            : }</a>
 <span class="lineNum">      40 </span>                :            : 
 <span class="lineNum">      41 </span>                :<span class="lineCov">         16 : LaneIdList getLanes()</span>
@@ -130,20 +130,20 @@
 <span class="lineNum">      59 </span>        [<span class="branchCov" title="Branch 2 was taken 138031 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     138031 :     physics::ParametricValue deltaOffset(physics::Distance(0.1) / length);</span>
 <span class="lineNum">      60 </span>        [<span class="branchCov" title="Branch 1 was taken 138031 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     138031 :     physics::ParametricValue deltaOffsetHalf = deltaOffset / 2.;</span>
 <span class="lineNum">      61 </span>[<span class="branchCov" title="Branch 2 was taken 138031 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 138031 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">     138031 :     if (headingT &gt; physics::ParametricValue(1.) - deltaOffsetHalf)</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 28219 times"> + </span><span class="branchCov" title="Branch 8 was taken 109812 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 28257 times"> + </span><span class="branchCov" title="Branch 8 was taken 109774 times"> + </span>]
 <span class="lineNum">      62 </span>                :            :     {
-<span class="lineNum">      63 </span>        [<span class="branchCov" title="Branch 2 was taken 28219 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      28219 :       longTStart = physics::ParametricValue(1.) - deltaOffset;</span>
-<span class="lineNum">      64 </span>                :<span class="lineCov">      28219 :       longTEnd = physics::ParametricValue(1.);</span>
+<span class="lineNum">      63 </span>        [<span class="branchCov" title="Branch 2 was taken 28257 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      28257 :       longTStart = physics::ParametricValue(1.) - deltaOffset;</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">      28257 :       longTEnd = physics::ParametricValue(1.);</span>
 <span class="lineNum">      65 </span>                :            :     }
-<span class="lineNum">      66 </span>[<span class="branchCov" title="Branch 1 was taken 109812 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 28428 times"> + </span><span class="branchCov" title="Branch 4 was taken 81384 times"> + </span>]:<span class="lineCov">     109812 :     else if (headingT &lt; deltaOffsetHalf)</span>
+<span class="lineNum">      66 </span>[<span class="branchCov" title="Branch 1 was taken 109774 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 28426 times"> + </span><span class="branchCov" title="Branch 4 was taken 81348 times"> + </span>]:<span class="lineCov">     109774 :     else if (headingT &lt; deltaOffsetHalf)</span>
 <span class="lineNum">      67 </span>                :            :     {
-<span class="lineNum">      68 </span>                :<span class="lineCov">      28428 :       longTStart = physics::ParametricValue(0.);</span>
-<span class="lineNum">      69 </span>                :<span class="lineCov">      28428 :       longTEnd = deltaOffset;</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">      28426 :       longTStart = physics::ParametricValue(0.);</span>
+<span class="lineNum">      69 </span>                :<span class="lineCov">      28426 :       longTEnd = deltaOffset;</span>
 <span class="lineNum">      70 </span>                :            :     }
 <span class="lineNum">      71 </span>                :            :     else
 <span class="lineNum">      72 </span>                :            :     {
-<span class="lineNum">      73 </span>        [<span class="branchCov" title="Branch 1 was taken 81384 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      81384 :       longTStart = headingT - deltaOffsetHalf;</span>
-<span class="lineNum">      74 </span>        [<span class="branchCov" title="Branch 1 was taken 81384 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     138031 :       longTEnd = headingT + deltaOffsetHalf;</span>
+<span class="lineNum">      73 </span>        [<span class="branchCov" title="Branch 1 was taken 81348 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      81348 :       longTStart = headingT - deltaOffsetHalf;</span>
+<span class="lineNum">      74 </span>        [<span class="branchCov" title="Branch 1 was taken 81348 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     138031 :       longTEnd = headingT + deltaOffsetHalf;</span>
 <span class="lineNum">      75 </span>                :            :     }
 <span class="lineNum">      76 </span>                :            :   }
 <a name="77"><span class="lineNum">      77 </span>                :<span class="lineCov">     138031 : }</span></a>
@@ -170,9 +170,9 @@
 <span class="lineNum">      98 </span>[<span class="branchCov" title="Branch 1 was taken 138031 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 138031 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     276062 :   auto lane = getLane(paraPoint.laneId);</span>
 <span class="lineNum">      99 </span>                :            : 
 <span class="lineNum">     100 </span>        [<span class="branchCov" title="Branch 1 was taken 138031 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     138031 :   point::ECEFHeading laneDrivingDirection = getLaneECEFDirection(lane, paraPoint);</span>
-<span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 1 was taken 101341 times"> + </span><span class="branchCov" title="Branch 2 was taken 36690 times"> + </span>]:<span class="lineCov">     138031 :   if (!isLaneDirectionPositive(lane))</span>
+<span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 1 was taken 101338 times"> + </span><span class="branchCov" title="Branch 2 was taken 36693 times"> + </span>]:<span class="lineCov">     138031 :   if (!isLaneDirectionPositive(lane))</span>
 <span class="lineNum">     102 </span>                :            :   {
-<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 101341 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     101341 :     laneDrivingDirection = -1. * laneDrivingDirection;</span>
+<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 101338 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     101338 :     laneDrivingDirection = -1. * laneDrivingDirection;</span>
 <span class="lineNum">     104 </span>                :            :   }
 <span class="lineNum">     105 </span>                :<span class="lineCov">     276062 :   return laneDrivingDirection;</span>
 <a name="106"><span class="lineNum">     106 </span>                :            : }</a>
@@ -286,11 +286,11 @@
 <span class="lineNum">     213 </span>                :<span class="lineNoCov">          0 :     std::runtime_error(&quot;LaneOperation::getContactLanes() location is INVALID&quot;);</span>
 <span class="lineNum">     214 </span>                :            :   }
 <span class="lineNum">     215 </span>                :<span class="lineCov">     134914 :   ContactLaneList contactLanes;</span>
-<span class="lineNum">     216 </span>        [<span class="branchCov" title="Branch 3 was taken 999278 times"> + </span><span class="branchCov" title="Branch 4 was taken 134914 times"> + </span>]:<span class="lineCov">    1134192 :   for (auto const &amp;contactLane : lane.contactLanes)</span>
+<span class="lineNum">     216 </span>        [<span class="branchCov" title="Branch 3 was taken 1002777 times"> + </span><span class="branchCov" title="Branch 4 was taken 134914 times"> + </span>]:<span class="lineCov">    1137691 :   for (auto const &amp;contactLane : lane.contactLanes)</span>
 <span class="lineNum">     217 </span>                :            :   {
-<span class="lineNum">     218 </span>        [<span class="branchCov" title="Branch 0 was taken 137329 times"> + </span><span class="branchCov" title="Branch 1 was taken 861949 times"> + </span>]:<span class="lineCov">     999278 :     if (contactLane.location == location)</span>
+<span class="lineNum">     218 </span>        [<span class="branchCov" title="Branch 0 was taken 138209 times"> + </span><span class="branchCov" title="Branch 1 was taken 864568 times"> + </span>]:<span class="lineCov">    1002777 :     if (contactLane.location == location)</span>
 <span class="lineNum">     219 </span>                :            :     {
-<span class="lineNum">     220 </span>        [<span class="branchCov" title="Branch 1 was taken 137329 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     137329 :       contactLanes.push_back(contactLane);</span>
+<span class="lineNum">     220 </span>        [<span class="branchCov" title="Branch 1 was taken 138209 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     138209 :       contactLanes.push_back(contactLane);</span>
 <span class="lineNum">     221 </span>                :            :     }
 <span class="lineNum">     222 </span>                :            :   }
 <span class="lineNum">     223 </span>                :<span class="lineCov">     134914 :   return contactLanes;</span>
@@ -307,19 +307,19 @@
 <span class="lineNum">     234 </span>                :<span class="lineCov">      26377 :   return contactLanes;</span>
 <a name="235"><span class="lineNum">     235 </span>                :            : }</a>
 <span class="lineNum">     236 </span>                :            : 
-<span class="lineNum">     237 </span>                :<span class="lineCov">      24581 : ContactLocation getContactLocation(Lane const &amp;lane, LaneId const &amp;to_lane_id)</span>
+<span class="lineNum">     237 </span>                :<span class="lineCov">      24527 : ContactLocation getContactLocation(Lane const &amp;lane, LaneId const &amp;to_lane_id)</span>
 <span class="lineNum">     238 </span>                :            : {
-<span class="lineNum">     239 </span>        [<span class="branchCov" title="Branch 1 was taken 24581 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      24581 :   if (isValid(to_lane_id))</span>
+<span class="lineNum">     239 </span>        [<span class="branchCov" title="Branch 1 was taken 24527 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      24527 :   if (isValid(to_lane_id))</span>
 <span class="lineNum">     240 </span>                :            :   {
-<span class="lineNum">     241 </span>        [<span class="branchCov" title="Branch 3 was taken 61904 times"> + </span><span class="branchCov" title="Branch 4 was taken 8 times"> + </span>]:<span class="lineCov">      61912 :     for (auto const &amp;contact_lane : lane.contactLanes)</span>
+<span class="lineNum">     241 </span>        [<span class="branchCov" title="Branch 3 was taken 61732 times"> + </span><span class="branchCov" title="Branch 4 was taken 8 times"> + </span>]:<span class="lineCov">      61740 :     for (auto const &amp;contact_lane : lane.contactLanes)</span>
 <span class="lineNum">     242 </span>                :            :     {
-<span class="lineNum">     243 </span>[<span class="branchCov" title="Branch 1 was taken 61904 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 24573 times"> + </span><span class="branchCov" title="Branch 4 was taken 37331 times"> + </span>]:<span class="lineCov">      61904 :       if (contact_lane.toLane == to_lane_id)</span>
+<span class="lineNum">     243 </span>[<span class="branchCov" title="Branch 1 was taken 61732 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 24519 times"> + </span><span class="branchCov" title="Branch 4 was taken 37213 times"> + </span>]:<span class="lineCov">      61732 :       if (contact_lane.toLane == to_lane_id)</span>
 <span class="lineNum">     244 </span>                :            :       {
-<span class="lineNum">     245 </span>                :<span class="lineCov">      24573 :         return contact_lane.location;</span>
+<span class="lineNum">     245 </span>                :<span class="lineCov">      24519 :         return contact_lane.location;</span>
 <span class="lineNum">     246 </span>                :            :       }
 <span class="lineNum">     247 </span>                :            :     }
 <span class="lineNum">     248 </span>                :            :   }
-<span class="lineNum">     249 </span>                :<span class="lineCov">      24581 :   return ContactLocation::INVALID;</span>
+<span class="lineNum">     249 </span>                :<span class="lineCov">      24527 :   return ContactLocation::INVALID;</span>
 <a name="250"><span class="lineNum">     250 </span>                :            : }</a>
 <span class="lineNum">     251 </span>                :            : 
 <span class="lineNum">     252 </span>                :<span class="lineCov">     437240 : point::ECEFPoint getParametricPoint(Lane const &amp;lane,</span>
@@ -624,65 +624,65 @@
 <span class="lineNum">     537 </span>                :<span class="lineNoCov">          0 :   return false;</span>
 <a name="538"><span class="lineNum">     538 </span>                :            : }</a>
 <span class="lineNum">     539 </span>                :            : 
-<span class="lineNum">     540 </span>                :<span class="lineCov">     289252 : match::MapMatchedPosition calcMapMatchedPosition(Lane const &amp;lane,</span>
+<span class="lineNum">     540 </span>                :<span class="lineCov">     289231 : match::MapMatchedPosition calcMapMatchedPosition(Lane const &amp;lane,</span>
 <span class="lineNum">     541 </span>                :            :                                                  physics::ParametricValue const &amp;longTLeft,
 <span class="lineNum">     542 </span>                :            :                                                  physics::ParametricValue const &amp;longTRight,
 <span class="lineNum">     543 </span>                :            :                                                  point::ECEFPoint const &amp;pt)
 <span class="lineNum">     544 </span>                :            : {
-<span class="lineNum">     545 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :   match::MapMatchedPosition mmpos;</span>
-<span class="lineNum">     546 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :   point::ECEFPoint const pt_left = point::getParametricPoint(lane.edgeLeft, longTLeft);</span>
-<span class="lineNum">     547 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :   point::ECEFPoint const pt_right = point::getParametricPoint(lane.edgeRight, longTRight);</span>
+<span class="lineNum">     545 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :   match::MapMatchedPosition mmpos;</span>
+<span class="lineNum">     546 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :   point::ECEFPoint const pt_left = point::getParametricPoint(lane.edgeLeft, longTLeft);</span>
+<span class="lineNum">     547 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :   point::ECEFPoint const pt_right = point::getParametricPoint(lane.edgeRight, longTRight);</span>
 <span class="lineNum">     548 </span>                :            : 
-<span class="lineNum">     549 </span>                :<span class="lineCov">     289252 :   mmpos.lanePoint.paraPoint.laneId = lane.id;</span>
-<span class="lineNum">     550 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :   mmpos.lanePoint.lateralT = point::findNearestPointOnEdge(pt, pt_left, pt_right);</span>
-<span class="lineNum">     551 </span>                :<span class="lineCov">     289252 :   physics::ParametricValue nearestT;</span>
-<span class="lineNum">     552 </span>[<span class="branchCov" title="Branch 2 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 160481 times"> + </span><span class="branchCov" title="Branch 5 was taken 128771 times"> + </span>]:<span class="lineCov">     289252 :   if (mmpos.lanePoint.lateralT &lt; physics::RatioValue(0.))</span>
+<span class="lineNum">     549 </span>                :<span class="lineCov">     289231 :   mmpos.lanePoint.paraPoint.laneId = lane.id;</span>
+<span class="lineNum">     550 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :   mmpos.lanePoint.lateralT = point::findNearestPointOnEdge(pt, pt_left, pt_right);</span>
+<span class="lineNum">     551 </span>                :<span class="lineCov">     289231 :   physics::ParametricValue nearestT;</span>
+<span class="lineNum">     552 </span>[<span class="branchCov" title="Branch 2 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 160506 times"> + </span><span class="branchCov" title="Branch 5 was taken 128725 times"> + </span>]:<span class="lineCov">     289231 :   if (mmpos.lanePoint.lateralT &lt; physics::RatioValue(0.))</span>
 <span class="lineNum">     553 </span>                :            :   {
-<span class="lineNum">     554 </span>                :<span class="lineCov">     160481 :     nearestT = physics::ParametricValue(0.);</span>
-<span class="lineNum">     555 </span>                :<span class="lineCov">     160481 :     mmpos.type = match::MapMatchedPositionType::LANE_LEFT;</span>
+<span class="lineNum">     554 </span>                :<span class="lineCov">     160506 :     nearestT = physics::ParametricValue(0.);</span>
+<span class="lineNum">     555 </span>                :<span class="lineCov">     160506 :     mmpos.type = match::MapMatchedPositionType::LANE_LEFT;</span>
 <span class="lineNum">     556 </span>                :            :     mmpos.probability = std::max(physics::Probability(0.1),
-<span class="lineNum">     557 </span>        [<span class="branchCov" title="Branch 4 was taken 160481 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     160481 :                                  physics::Probability(0.5 + static_cast&lt;double&gt;(mmpos.lanePoint.lateralT) / 10.));</span>
+<span class="lineNum">     557 </span>        [<span class="branchCov" title="Branch 4 was taken 160506 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     160506 :                                  physics::Probability(0.5 + static_cast&lt;double&gt;(mmpos.lanePoint.lateralT) / 10.));</span>
 <span class="lineNum">     558 </span>                :            :   }
-<span class="lineNum">     559 </span>[<span class="branchCov" title="Branch 2 was taken 128771 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 82741 times"> + </span><span class="branchCov" title="Branch 5 was taken 46030 times"> + </span>]:<span class="lineCov">     128771 :   else if (mmpos.lanePoint.lateralT &gt; physics::RatioValue(1.))</span>
+<span class="lineNum">     559 </span>[<span class="branchCov" title="Branch 2 was taken 128725 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 82779 times"> + </span><span class="branchCov" title="Branch 5 was taken 45946 times"> + </span>]:<span class="lineCov">     128725 :   else if (mmpos.lanePoint.lateralT &gt; physics::RatioValue(1.))</span>
 <span class="lineNum">     560 </span>                :            :   {
-<span class="lineNum">     561 </span>                :<span class="lineCov">      82741 :     nearestT = physics::ParametricValue(1.);</span>
-<span class="lineNum">     562 </span>                :<span class="lineCov">      82741 :     mmpos.type = match::MapMatchedPositionType::LANE_RIGHT;</span>
+<span class="lineNum">     561 </span>                :<span class="lineCov">      82779 :     nearestT = physics::ParametricValue(1.);</span>
+<span class="lineNum">     562 </span>                :<span class="lineCov">      82779 :     mmpos.type = match::MapMatchedPositionType::LANE_RIGHT;</span>
 <span class="lineNum">     563 </span>                :            :     mmpos.probability
 <span class="lineNum">     564 </span>                :            :       = std::max(physics::Probability(0.1),
-<span class="lineNum">     565 </span>        [<span class="branchCov" title="Branch 4 was taken 82741 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      82741 :                  physics::Probability(0.5 - (static_cast&lt;double&gt;(mmpos.lanePoint.lateralT) - 1.) / 10.));</span>
+<span class="lineNum">     565 </span>        [<span class="branchCov" title="Branch 4 was taken 82779 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      82779 :                  physics::Probability(0.5 - (static_cast&lt;double&gt;(mmpos.lanePoint.lateralT) - 1.) / 10.));</span>
 <span class="lineNum">     566 </span>                :            :   }
 <span class="lineNum">     567 </span>                :            :   else
 <span class="lineNum">     568 </span>                :            :   {
-<span class="lineNum">     569 </span>                :<span class="lineCov">      46030 :     nearestT = physics::ParametricValue(static_cast&lt;double&gt;(mmpos.lanePoint.lateralT));</span>
-<span class="lineNum">     570 </span>                :<span class="lineCov">      46030 :     mmpos.type = match::MapMatchedPositionType::LANE_IN;</span>
+<span class="lineNum">     569 </span>                :<span class="lineCov">      45946 :     nearestT = physics::ParametricValue(static_cast&lt;double&gt;(mmpos.lanePoint.lateralT));</span>
+<span class="lineNum">     570 </span>                :<span class="lineCov">      45946 :     mmpos.type = match::MapMatchedPositionType::LANE_IN;</span>
 <span class="lineNum">     571 </span>                :            :     mmpos.probability = physics::Probability(1.)
 <span class="lineNum">     572 </span>                :            :       - std::min(physics::Probability(0.5),
-<span class="lineNum">     573 </span>[<span class="branchCov" title="Branch 4 was taken 46030 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 46030 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">      46030 :                  physics::Probability(fabs(0.5 - static_cast&lt;double&gt;(mmpos.lanePoint.lateralT))));</span>
+<span class="lineNum">     573 </span>[<span class="branchCov" title="Branch 4 was taken 45946 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 45946 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">      45946 :                  physics::Probability(fabs(0.5 - static_cast&lt;double&gt;(mmpos.lanePoint.lateralT))));</span>
 <span class="lineNum">     574 </span>                :            :   }
-<span class="lineNum">     575 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :   mmpos.matchedPoint = point::vectorInterpolate(pt_left, pt_right, nearestT);</span>
+<span class="lineNum">     575 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :   mmpos.matchedPoint = point::vectorInterpolate(pt_left, pt_right, nearestT);</span>
 <span class="lineNum">     576 </span>                :            :   mmpos.lanePoint.paraPoint.parametricOffset
-<span class="lineNum">     577 </span>[<span class="branchCov" title="Branch 2 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">     289252 :     = nearestT * longTLeft + (physics::ParametricValue(1.) - nearestT) * longTRight;</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
-<span class="lineNum">     578 </span>                :<span class="lineCov">     289252 :   mmpos.lanePoint.laneLength = lane.length;</span>
-<span class="lineNum">     579 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :   mmpos.lanePoint.laneWidth = point::distance(pt_left, pt_right);</span>
-<span class="lineNum">     580 </span>                :<span class="lineCov">     289252 :   mmpos.queryPoint = pt;</span>
-<span class="lineNum">     581 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :   mmpos.matchedPointDistance = point::distance(mmpos.matchedPoint, mmpos.queryPoint);</span>
-<span class="lineNum">     582 </span>                :<span class="lineCov">     289252 :   return mmpos;</span>
+<span class="lineNum">     577 </span>[<span class="branchCov" title="Branch 2 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">     289231 :     = nearestT * longTLeft + (physics::ParametricValue(1.) - nearestT) * longTRight;</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">     578 </span>                :<span class="lineCov">     289231 :   mmpos.lanePoint.laneLength = lane.length;</span>
+<span class="lineNum">     579 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :   mmpos.lanePoint.laneWidth = point::distance(pt_left, pt_right);</span>
+<span class="lineNum">     580 </span>                :<span class="lineCov">     289231 :   mmpos.queryPoint = pt;</span>
+<span class="lineNum">     581 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :   mmpos.matchedPointDistance = point::distance(mmpos.matchedPoint, mmpos.queryPoint);</span>
+<span class="lineNum">     582 </span>                :<span class="lineCov">     289231 :   return mmpos;</span>
 <a name="583"><span class="lineNum">     583 </span>                :            : }</a>
 <span class="lineNum">     584 </span>                :            : 
-<span class="lineNum">     585 </span>                :<span class="lineCov">     289252 : bool findNearestPointOnLane(Lane const &amp;lane, point::ECEFPoint const &amp;pt, match::MapMatchedPosition &amp;mmpos)</span>
+<span class="lineNum">     585 </span>                :<span class="lineCov">     289231 : bool findNearestPointOnLane(Lane const &amp;lane, point::ECEFPoint const &amp;pt, match::MapMatchedPosition &amp;mmpos)</span>
 <span class="lineNum">     586 </span>                :            : {
-<span class="lineNum">     587 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :   auto const longTLeft = findNearestPointOnEdge(lane.edgeLeft, pt);</span>
-<span class="lineNum">     588 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :   if (longTLeft.isValid())</span>
+<span class="lineNum">     587 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :   auto const longTLeft = findNearestPointOnEdge(lane.edgeLeft, pt);</span>
+<span class="lineNum">     588 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :   if (longTLeft.isValid())</span>
 <span class="lineNum">     589 </span>                :            :   {
-<span class="lineNum">     590 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :     auto const longTRight = findNearestPointOnEdge(lane.edgeRight, pt);</span>
-<span class="lineNum">     591 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :     if (longTRight.isValid())</span>
+<span class="lineNum">     590 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :     auto const longTRight = findNearestPointOnEdge(lane.edgeRight, pt);</span>
+<span class="lineNum">     591 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :     if (longTRight.isValid())</span>
 <span class="lineNum">     592 </span>                :            :     {
-<span class="lineNum">     593 </span>        [<span class="branchCov" title="Branch 1 was taken 289252 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289252 :       mmpos = calcMapMatchedPosition(lane, longTLeft, longTRight, pt);</span>
-<span class="lineNum">     594 </span>                :<span class="lineCov">     289252 :       return true;</span>
+<span class="lineNum">     593 </span>        [<span class="branchCov" title="Branch 1 was taken 289231 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     289231 :       mmpos = calcMapMatchedPosition(lane, longTLeft, longTRight, pt);</span>
+<span class="lineNum">     594 </span>                :<span class="lineCov">     289231 :       return true;</span>
 <span class="lineNum">     595 </span>                :            :     }
 <span class="lineNum">     596 </span>                :            :   }
-<span class="lineNum">     597 </span>                :<span class="lineCov">     289252 :   return false;</span>
+<span class="lineNum">     597 </span>                :<span class="lineCov">     289231 :   return false;</span>
 <a name="598"><span class="lineNum">     598 </span>                :            : }</a>
 <span class="lineNum">     599 </span>                :            : 
 <span class="lineNum">     600 </span>                :<span class="lineNoCov">          0 : bool findNearestPointOnLaneInterval(route::LaneInterval const &amp;laneInterval,</span>
@@ -833,9 +833,9 @@
 <span class="lineNum">     743 </span>                :            :   {
 <a name="744"><span class="lineNum">     744 </span>        [<span class="branchCov" title="Branch 1 was taken 27934 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      47497 :     auto contactLanes = getContactLanes(lane, contactLocation);</span></a>
 <span class="lineNum">     745 </span>                :            :     auto findResult
-<span class="lineNum">     746 </span>                :<span class="lineCov">      23629 :       = std::find_if(std::begin(contactLanes), std::end(contactLanes), [checkLaneId](ContactLane const &amp;contactLane) {</span>
-<span class="lineNum">     747 </span>                :<span class="lineCov">      23629 :           return contactLane.toLane == checkLaneId;</span>
-<span class="lineNum">     748 </span>        [<span class="branchCov" title="Branch 3 was taken 27934 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      51563 :         });</span>
+<span class="lineNum">     746 </span>                :<span class="lineCov">      23878 :       = std::find_if(std::begin(contactLanes), std::end(contactLanes), [checkLaneId](ContactLane const &amp;contactLane) {</span>
+<span class="lineNum">     747 </span>                :<span class="lineCov">      23878 :           return contactLane.toLane == checkLaneId;</span>
+<span class="lineNum">     748 </span>        [<span class="branchCov" title="Branch 3 was taken 27934 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      51812 :         });</span>
 <span class="lineNum">     749 </span>        [<span class="branchCov" title="Branch 2 was taken 8371 times"> + </span><span class="branchCov" title="Branch 3 was taken 19563 times"> + </span>]:<span class="lineCov">      27934 :     if (findResult != std::end(contactLanes))</span>
 <span class="lineNum">     750 </span>                :            :     {
 <span class="lineNum">     751 </span>        [<span class="branchCov" title="Branch 1 was taken 19563 times"> + </span><span class="branchCov" title="Branch 2 was taken 8371 times"> + </span>]:<span class="lineCov">      27934 :       return contactLocation;</span>

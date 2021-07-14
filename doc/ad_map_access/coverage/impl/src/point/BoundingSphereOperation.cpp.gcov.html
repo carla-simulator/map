@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -83,15 +83,15 @@
 <span class="lineNum">      12 </span>                :            : namespace map {
 <a name="13"><span class="lineNum">      13 </span>                :            : namespace point {</a>
 <span class="lineNum">      14 </span>                :            : 
-<span class="lineNum">      15 </span>                :<span class="lineCov">     793228 : void expandBounds(point::ECEFPoint &amp;upperBound, point::ECEFPoint &amp;lowerBound, point::ECEFPoint const &amp;point)</span>
+<span class="lineNum">      15 </span>                :<span class="lineCov">    1074464 : void expandBounds(point::ECEFPoint &amp;upperBound, point::ECEFPoint &amp;lowerBound, point::ECEFPoint const &amp;point)</span>
 <span class="lineNum">      16 </span>                :            : {
-<span class="lineNum">      17 </span>                :<span class="lineCov">     793228 :   upperBound.x = std::max(upperBound.x, point.x);</span>
-<span class="lineNum">      18 </span>                :<span class="lineCov">     793228 :   upperBound.y = std::max(upperBound.y, point.y);</span>
-<span class="lineNum">      19 </span>                :<span class="lineCov">     793228 :   upperBound.z = std::max(upperBound.z, point.z);</span>
-<span class="lineNum">      20 </span>                :<span class="lineCov">     793228 :   lowerBound.x = std::min(lowerBound.x, point.x);</span>
-<span class="lineNum">      21 </span>                :<span class="lineCov">     793228 :   lowerBound.y = std::min(lowerBound.y, point.y);</span>
-<span class="lineNum">      22 </span>                :<span class="lineCov">     793228 :   lowerBound.z = std::min(lowerBound.z, point.z);</span>
-<a name="23"><span class="lineNum">      23 </span>                :<span class="lineCov">     793228 : }</span></a>
+<span class="lineNum">      17 </span>                :<span class="lineCov">    1074464 :   upperBound.x = std::max(upperBound.x, point.x);</span>
+<span class="lineNum">      18 </span>                :<span class="lineCov">    1074464 :   upperBound.y = std::max(upperBound.y, point.y);</span>
+<span class="lineNum">      19 </span>                :<span class="lineCov">    1074464 :   upperBound.z = std::max(upperBound.z, point.z);</span>
+<span class="lineNum">      20 </span>                :<span class="lineCov">    1074464 :   lowerBound.x = std::min(lowerBound.x, point.x);</span>
+<span class="lineNum">      21 </span>                :<span class="lineCov">    1074464 :   lowerBound.y = std::min(lowerBound.y, point.y);</span>
+<span class="lineNum">      22 </span>                :<span class="lineCov">    1074464 :   lowerBound.z = std::min(lowerBound.z, point.z);</span>
+<a name="23"><span class="lineNum">      23 </span>                :<span class="lineCov">    1074464 : }</span></a>
 <span class="lineNum">      24 </span>                :            : 
 <span class="lineNum">      25 </span>                :<span class="lineCov">      45027 : point::BoundingSphere calcBoundingSphere(Geometry const &amp;geometryLeft, Geometry const &amp;geometryRight)</span>
 <span class="lineNum">      26 </span>                :            : {
@@ -115,13 +115,13 @@
 <span class="lineNum">      43 </span>                :            :   }
 <span class="lineNum">      44 </span>                :<span class="lineCov">      45026 :   lowerBound = upperBound;</span>
 <span class="lineNum">      45 </span>                :            : 
-<span class="lineNum">      46 </span>        [<span class="branchCov" title="Branch 3 was taken 396814 times"> + </span><span class="branchCov" title="Branch 4 was taken 45026 times"> + </span>]:<span class="lineCov">     441840 :   for (auto const &amp;point : geometryLeft.ecefEdge)</span>
+<span class="lineNum">      46 </span>        [<span class="branchCov" title="Branch 3 was taken 537645 times"> + </span><span class="branchCov" title="Branch 4 was taken 45026 times"> + </span>]:<span class="lineCov">     582671 :   for (auto const &amp;point : geometryLeft.ecefEdge)</span>
 <span class="lineNum">      47 </span>                :            :   {
-<span class="lineNum">      48 </span>        [<span class="branchCov" title="Branch 1 was taken 396814 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     396814 :     expandBounds(upperBound, lowerBound, point);</span>
+<span class="lineNum">      48 </span>        [<span class="branchCov" title="Branch 1 was taken 537645 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     537645 :     expandBounds(upperBound, lowerBound, point);</span>
 <span class="lineNum">      49 </span>                :            :   }
-<span class="lineNum">      50 </span>        [<span class="branchCov" title="Branch 3 was taken 396414 times"> + </span><span class="branchCov" title="Branch 4 was taken 45026 times"> + </span>]:<span class="lineCov">     441440 :   for (auto const &amp;point : geometryRight.ecefEdge)</span>
+<span class="lineNum">      50 </span>        [<span class="branchCov" title="Branch 3 was taken 536819 times"> + </span><span class="branchCov" title="Branch 4 was taken 45026 times"> + </span>]:<span class="lineCov">     581845 :   for (auto const &amp;point : geometryRight.ecefEdge)</span>
 <span class="lineNum">      51 </span>                :            :   {
-<span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 1 was taken 396414 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     396414 :     expandBounds(upperBound, lowerBound, point);</span>
+<span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 1 was taken 536819 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     536819 :     expandBounds(upperBound, lowerBound, point);</span>
 <span class="lineNum">      53 </span>                :            :   }
 <span class="lineNum">      54 </span>                :            : 
 <span class="lineNum">      55 </span>        [<span class="branchCov" title="Branch 1 was taken 45026 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      45026 :   point::ECEFPoint const diagonalVector = upperBound - lowerBound;</span>

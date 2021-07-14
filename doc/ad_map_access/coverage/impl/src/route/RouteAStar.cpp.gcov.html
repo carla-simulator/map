@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -234,7 +234,7 @@
 <span class="lineNum">     162 </span>                :<span class="lineCov">      37805 :   return d;</span>
 <a name="163"><span class="lineNum">     163 </span>                :            : }</a>
 <span class="lineNum">     164 </span>                :            : 
-<span class="lineNum">     165 </span>                :<span class="lineCov">      50435 : void RouteAstar::addNeighbor(lane::Lane::ConstPtr originLane,</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">      50407 : void RouteAstar::addNeighbor(lane::Lane::ConstPtr originLane,</span>
 <span class="lineNum">     166 </span>                :            :                              RoutingPoint const &amp;origin,
 <span class="lineNum">     167 </span>                :            :                              lane::Lane::ConstPtr neighborLane,
 <span class="lineNum">     168 </span>                :            :                              RoutingPoint const &amp;neighbor,
@@ -243,24 +243,24 @@
 <span class="lineNum">     171 </span>                :            :   (void)originLane;
 <span class="lineNum">     172 </span>                :            :   (void)expandReason;
 <span class="lineNum">     173 </span>                :            : 
-<span class="lineNum">     174 </span>[<span class="branchCov" title="Branch 2 was taken 50435 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 47119 times"> + </span><span class="branchCov" title="Branch 6 was taken 3316 times"> + </span>]:<span class="lineCov">      50435 :   if (mProcessedPoints.find(neighbor.first) == mProcessedPoints.end())</span>
+<span class="lineNum">     174 </span>[<span class="branchCov" title="Branch 2 was taken 50407 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 47091 times"> + </span><span class="branchCov" title="Branch 6 was taken 3316 times"> + </span>]:<span class="lineCov">      50407 :   if (mProcessedPoints.find(neighbor.first) == mProcessedPoints.end())</span>
 <span class="lineNum">     175 </span>                :            :   {
-<span class="lineNum">     176 </span>        [<span class="branchCov" title="Branch 1 was taken 47119 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      47119 :     auto insertResult = mProcessingMap.insert(neighbor);</span>
-<span class="lineNum">     177 </span>        [<span class="branchCov" title="Branch 0 was taken 35082 times"> + </span><span class="branchCov" title="Branch 1 was taken 12037 times"> + </span>]:<span class="lineCov">      47119 :     if ( // insertion succeeded</span>
-<span class="lineNum">     178 </span>[<span class="branchCov" title="Branch 0 was taken 13129 times"> + </span><span class="branchCov" title="Branch 1 was taken 33990 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1092 times"> + </span><span class="branchCov" title="Branch 3 was taken 12037 times"> + </span>]:<span class="lineCov">      60248 :       insertResult.second ||</span>
+<span class="lineNum">     176 </span>        [<span class="branchCov" title="Branch 1 was taken 47091 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      47091 :     auto insertResult = mProcessingMap.insert(neighbor);</span>
+<span class="lineNum">     177 </span>        [<span class="branchCov" title="Branch 0 was taken 35082 times"> + </span><span class="branchCov" title="Branch 1 was taken 12009 times"> + </span>]:<span class="lineCov">      47091 :     if ( // insertion succeeded</span>
+<span class="lineNum">     178 </span>[<span class="branchCov" title="Branch 0 was taken 13101 times"> + </span><span class="branchCov" title="Branch 1 was taken 33990 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1092 times"> + </span><span class="branchCov" title="Branch 3 was taken 12009 times"> + </span>]:<span class="lineCov">      60192 :       insertResult.second ||</span>
 <span class="lineNum">     179 </span>                :            :       // actual distance of new neighbor is smaller than the found duplicate
-<span class="lineNum">     180 </span>        [<span class="branchCov" title="Branch 2 was taken 13129 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      13129 :       (neighbor.second.routeDistance &lt; insertResult.first-&gt;second.routeDistance))</span>
+<span class="lineNum">     180 </span>        [<span class="branchCov" title="Branch 2 was taken 13101 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      13101 :       (neighbor.second.routeDistance &lt; insertResult.first-&gt;second.routeDistance))</span>
 <span class="lineNum">     181 </span>                :            :     {
 <span class="lineNum">     182 </span>        [<span class="branchCov" title="Branch 2 was taken 35082 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      35082 :       auto const estimatedDestCost = costEstimate(neighborLane, neighbor.first.point);</span>
 <span class="lineNum">     183 </span>                :<span class="lineCov">      35082 :       insertResult.first-&gt;second.routeDistance = neighbor.second.routeDistance;</span>
 <span class="lineNum">     184 </span>        [<span class="branchCov" title="Branch 2 was taken 35082 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      35082 :       insertResult.first-&gt;second.costData.estimatedDistanceToTarget = neighbor.second.routeDistance + estimatedDestCost;</span>
-<span class="lineNum">     185 </span>        [<span class="branchCov" title="Branch 1 was taken 35082 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      47119 :       mCameFrom[neighbor.first] = origin.first;</span>
+<span class="lineNum">     185 </span>        [<span class="branchCov" title="Branch 1 was taken 35082 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      47091 :       mCameFrom[neighbor.first] = origin.first;</span>
 <span class="lineNum">     186 </span>                :            : #if DEBUG_OUTPUT
 <span class="lineNum">     187 </span>                :            :       std::cout &lt;&lt; &quot;Inserted: &quot; &lt;&lt; *insertResult.first &lt;&lt; std::endl;
 <span class="lineNum">     188 </span>                :            : #endif
 <span class="lineNum">     189 </span>                :            :     }
 <span class="lineNum">     190 </span>                :            :   }
-<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">      50435 : }</span></a>
+<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">      50407 : }</span></a>
 <span class="lineNum">     192 </span>                :            : 
 <span class="lineNum">     193 </span>                :<span class="lineCov">       2709 : void RouteAstar::reconstructPath(RoutingPoint const &amp;dest)</span>
 <span class="lineNum">     194 </span>                :            : {

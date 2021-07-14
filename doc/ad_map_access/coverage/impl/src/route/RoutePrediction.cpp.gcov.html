@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -151,7 +151,7 @@
 <span class="lineNum">      80 </span>                :<span class="lineCov">         33 :   return isValid();</span>
 <a name="81"><span class="lineNum">      81 </span>                :            : }</a>
 <span class="lineNum">      82 </span>                :            : 
-<span class="lineNum">      83 </span>                :<span class="lineCov">       2745 : void RoutePrediction::addNeighbor(lane::Lane::ConstPtr originLane,</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">       2719 : void RoutePrediction::addNeighbor(lane::Lane::ConstPtr originLane,</span>
 <span class="lineNum">      84 </span>                :            :                                   RoutingPoint const &amp;origin,
 <span class="lineNum">      85 </span>                :            :                                   lane::Lane::ConstPtr neighborLane,
 <span class="lineNum">      86 </span>                :            :                                   RoutingPoint const &amp;neighbor,
@@ -160,16 +160,16 @@
 <span class="lineNum">      89 </span>                :            :   (void)originLane;
 <span class="lineNum">      90 </span>                :            :   (void)neighborLane;
 <span class="lineNum">      91 </span>                :            : 
-<span class="lineNum">      92 </span>        [<span class="branchCov" title="Branch 0 was taken 34 times"> + </span><span class="branchCov" title="Branch 1 was taken 2711 times"> + </span>]:<span class="lineCov">       2745 :   if (expandReason == ExpandReason::Destination)</span>
+<span class="lineNum">      92 </span>        [<span class="branchCov" title="Branch 0 was taken 34 times"> + </span><span class="branchCov" title="Branch 1 was taken 2685 times"> + </span>]:<span class="lineCov">       2719 :   if (expandReason == ExpandReason::Destination)</span>
 <span class="lineNum">      93 </span>                :            :   {
-<span class="lineNum">      94 </span>                :<span class="lineCov">       2745 :     return;</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">       2719 :     return;</span>
 <span class="lineNum">      95 </span>                :            :   }
 <span class="lineNum">      96 </span>                :            : 
-<span class="lineNum">      97 </span>                :<span class="lineCov">       4278 :   auto currentTreeElement = mElementsToProcess.front();</span>
+<span class="lineNum">      97 </span>                :<span class="lineCov">       4252 :   auto currentTreeElement = mElementsToProcess.front();</span>
 <span class="lineNum">      98 </span>                :            : 
-<span class="lineNum">      99 </span>[<span class="branchCov" title="Branch 2 was taken 2711 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 1567 times"> + </span><span class="branchCov" title="Branch 6 was taken 1144 times"> + </span>]:<span class="lineCov">       5422 :   auto newChildElement = std::make_shared&lt;RouteTreeElement&gt;(currentTreeElement.get(), neighbor);</span>
-<span class="lineNum">     100 </span>[<span class="branchCov" title="Branch 1 was taken 2711 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 2711 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       2711 :   auto insertProcessedResult = mProcessedTransitions[origin.first].insert(newChildElement);</span>
-<span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 0 was taken 1567 times"> + </span><span class="branchCov" title="Branch 1 was taken 1144 times"> + </span>]:<span class="lineCov">       2711 :   if (insertProcessedResult.second)</span>
+<span class="lineNum">      99 </span>[<span class="branchCov" title="Branch 2 was taken 2685 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 1567 times"> + </span><span class="branchCov" title="Branch 6 was taken 1118 times"> + </span>]:<span class="lineCov">       5370 :   auto newChildElement = std::make_shared&lt;RouteTreeElement&gt;(currentTreeElement.get(), neighbor);</span>
+<span class="lineNum">     100 </span>[<span class="branchCov" title="Branch 1 was taken 2685 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 2685 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       2685 :   auto insertProcessedResult = mProcessedTransitions[origin.first].insert(newChildElement);</span>
+<span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 0 was taken 1567 times"> + </span><span class="branchCov" title="Branch 1 was taken 1118 times"> + </span>]:<span class="lineCov">       2685 :   if (insertProcessedResult.second)</span>
 <span class="lineNum">     102 </span>                :            :   {
 <span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 2 was taken 1567 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       1567 :     auto insertToProcessResult = currentTreeElement-&gt;children.insert(newChildElement);</span>
 <span class="lineNum">     104 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1567 times"> + </span>]:<span class="lineCov">       1567 :     if (!insertToProcessResult.second)</span>
@@ -181,15 +181,15 @@
 <span class="lineNum">     110 </span>                :            :   else
 <span class="lineNum">     111 </span>                :            :   {
 <span class="lineNum">     112 </span>                :            :     // a similar child (a twin) was already already expanded, take that one as our child
-<span class="lineNum">     113 </span>        [<span class="branchCov" title="Branch 3 was taken 1144 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       1144 :     currentTreeElement-&gt;children.insert(*insertProcessedResult.first);</span>
+<span class="lineNum">     113 </span>        [<span class="branchCov" title="Branch 3 was taken 1118 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       1118 :     currentTreeElement-&gt;children.insert(*insertProcessedResult.first);</span>
 <span class="lineNum">     114 </span>                :            :     // nothing further to be done since already processed
-<span class="lineNum">     115 </span>                :<span class="lineCov">       1144 :     return;</span>
+<span class="lineNum">     115 </span>                :<span class="lineCov">       1118 :     return;</span>
 <span class="lineNum">     116 </span>                :            :   }
 <span class="lineNum">     117 </span>                :            : 
 <span class="lineNum">     118 </span>                :            : #if DEBUG_OUTPUT
 <span class="lineNum">     119 </span>                :            :   std::cout &lt;&lt; &quot;Adding neighbor&quot; &lt;&lt; *(newChildElement.get()) &lt;&lt; std::endl;
 <span class="lineNum">     120 </span>                :            : #endif
-<span class="lineNum">     121 </span>[<span class="branchCov" title="Branch 1 was taken 1567 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1567 times"> + </span><span class="branchCov" title="Branch 5 was taken 1144 times"> + </span>]:<span class="lineCov">       2711 :   mElementsToProcess.push_back(newChildElement);</span>
+<span class="lineNum">     121 </span>[<span class="branchCov" title="Branch 1 was taken 1567 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1567 times"> + </span><span class="branchCov" title="Branch 5 was taken 1118 times"> + </span>]:<span class="lineCov">       2685 :   mElementsToProcess.push_back(newChildElement);</span>
 <a name="122"><span class="lineNum">     122 </span>                :            : }</a>
 <span class="lineNum">     123 </span>                :            : 
 <span class="lineNum">     124 </span>                :<span class="lineCov">         33 : void RoutePrediction::reconstructPaths()</span>

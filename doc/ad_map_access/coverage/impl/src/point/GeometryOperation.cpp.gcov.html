@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -202,9 +202,9 @@
 <span class="lineNum">     125 </span>                :            :   }
 <a name="126"><span class="lineNum">     126 </span>                :            : }</a>
 <span class="lineNum">     127 </span>                :            : 
-<span class="lineNum">     128 </span>                :<span class="lineCov">    1464638 : point::ECEFPoint getParametricPoint(Geometry const &amp;geometry, const physics::ParametricValue &amp;t)</span>
+<span class="lineNum">     128 </span>                :<span class="lineCov">    1464596 : point::ECEFPoint getParametricPoint(Geometry const &amp;geometry, const physics::ParametricValue &amp;t)</span>
 <span class="lineNum">     129 </span>                :            : {
-<span class="lineNum">     130 </span>                :<span class="lineCov">    1464638 :   return point::getParametricPoint(geometry.ecefEdge, geometry.length, t);</span>
+<span class="lineNum">     130 </span>                :<span class="lineCov">    1464596 :   return point::getParametricPoint(geometry.ecefEdge, geometry.length, t);</span>
 <a name="131"><span class="lineNum">     131 </span>                :            : }</a>
 <span class="lineNum">     132 </span>                :            : 
 <span class="lineNum">     133 </span>                :<span class="lineCov">         14 : void getParametricRange(Geometry const &amp;geometry,</span>
@@ -250,9 +250,9 @@
 <span class="lineNum">     173 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     geometry.ecefEdge, geometry.length, other.ecefEdge, other.length, physics::ParametricValue(0.5));</span>
 <a name="174"><span class="lineNum">     174 </span>                :            : }</a>
 <span class="lineNum">     175 </span>                :            : 
-<span class="lineNum">     176 </span>                :<span class="lineCov">     592949 : physics::ParametricValue findNearestPointOnEdge(Geometry const &amp;geometry, const point::ECEFPoint &amp;pt)</span>
+<span class="lineNum">     176 </span>                :<span class="lineCov">     592907 : physics::ParametricValue findNearestPointOnEdge(Geometry const &amp;geometry, const point::ECEFPoint &amp;pt)</span>
 <span class="lineNum">     177 </span>                :            : {
-<span class="lineNum">     178 </span>                :<span class="lineCov">     592949 :   return findNearestPointOnEdge(geometry.ecefEdge, geometry.length, pt);</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">     592907 :   return findNearestPointOnEdge(geometry.ecefEdge, geometry.length, pt);</span>
 <span class="lineNum">     179 </span>                :            : }
 <span class="lineNum">     180 </span>                :            : 
 <a name="181"><span class="lineNum">     181 </span>                :            : } // namespace point</a>

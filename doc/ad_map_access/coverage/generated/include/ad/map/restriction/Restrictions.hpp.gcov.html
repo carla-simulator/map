@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -110,7 +110,7 @@
 <span class="lineNum">      39 </span>                :            : /*!
 <a name="40"><span class="lineNum">      40 </span>                :            :  * \brief DataType Restrictions</a>
 <span class="lineNum">      41 </span>                :            :  */
-<span class="lineNum">      42 </span>                :<span class="lineCov">     239116 : struct Restrictions</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">     207380 : struct Restrictions</span>
 <span class="lineNum">      43 </span>                :            : {
 <span class="lineNum">      44 </span>                :            :   /*!
 <span class="lineNum">      45 </span>                :            :    * \brief Smart pointer on Restrictions
@@ -125,22 +125,22 @@
 <span class="lineNum">      54 </span>                :            :   /*!
 <a name="55"><span class="lineNum">      55 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      56 </span>                :            :    */
-<span class="lineNum">      57 </span>                :<span class="lineCov">     865622 :   Restrictions() = default;</span>
+<span class="lineNum">      57 </span>                :<span class="lineCov">     803076 :   Restrictions() = default;</span>
 <span class="lineNum">      58 </span>                :            : 
 <span class="lineNum">      59 </span>                :            :   /*!
 <a name="60"><span class="lineNum">      60 </span>                :            :    * \brief standard destructor</a>
 <span class="lineNum">      61 </span>                :            :    */
-<span class="lineNum">      62 </span>                :<span class="lineCov">    5860538 :   ~Restrictions() = default;</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">    5744818 :   ~Restrictions() = default;</span>
 <span class="lineNum">      63 </span>                :            : 
 <span class="lineNum">      64 </span>                :            :   /*!
 <a name="65"><span class="lineNum">      65 </span>                :            :    * \brief standard copy constructor</a>
 <span class="lineNum">      66 </span>                :            :    */
-<span class="lineNum">      67 </span>        [<span class="branchCov" title="Branch 2 was taken 2148046 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    2148046 :   Restrictions(const Restrictions &amp;other) = default;</span>
+<span class="lineNum">      67 </span>        [<span class="branchCov" title="Branch 2 was taken 2118887 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    2118887 :   Restrictions(const Restrictions &amp;other) = default;</span>
 <span class="lineNum">      68 </span>                :            : 
 <span class="lineNum">      69 </span>                :            :   /*!
 <a name="70"><span class="lineNum">      70 </span>                :            :    * \brief standard move constructor</a>
 <span class="lineNum">      71 </span>                :            :    */
-<span class="lineNum">      72 </span>                :<span class="lineCov">     698824 :   Restrictions(Restrictions &amp;&amp;other) = default;</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">     703968 :   Restrictions(Restrictions &amp;&amp;other) = default;</span>
 <span class="lineNum">      73 </span>                :            : 
 <span class="lineNum">      74 </span>                :            :   /**
 <span class="lineNum">      75 </span>                :            :    * \brief standard assignment operator
@@ -167,9 +167,9 @@
 <span class="lineNum">      96 </span>                :            :    *
 <a name="97"><span class="lineNum">      97 </span>                :            :    * \returns \c true if both Restrictions are equal</a>
 <span class="lineNum">      98 </span>                :            :    */
-<span class="lineNum">      99 </span>                :<span class="lineCov">      16395 :   bool operator==(const Restrictions &amp;other) const</span>
+<span class="lineNum">      99 </span>                :<span class="lineCov">         74 :   bool operator==(const Restrictions &amp;other) const</span>
 <span class="lineNum">     100 </span>                :            :   {
-<span class="lineNum">     101 </span>[<span class="branchCov" title="Branch 1 was taken 16389 times"> + </span><span class="branchCov" title="Branch 2 was taken 6 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 16387 times"> + </span><span class="branchCov" title="Branch 5 was taken 2 times"> + </span>]:<span class="lineCov">      16395 :     return (conjunctions == other.conjunctions) &amp;&amp; (disjunctions == other.disjunctions);</span>
+<span class="lineNum">     101 </span>[<span class="branchCov" title="Branch 1 was taken 68 times"> + </span><span class="branchCov" title="Branch 2 was taken 6 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 66 times"> + </span><span class="branchCov" title="Branch 5 was taken 2 times"> + </span>]:<span class="lineCov">         74 :     return (conjunctions == other.conjunctions) &amp;&amp; (disjunctions == other.disjunctions);</span>
 <span class="lineNum">     102 </span>                :            :   }
 <span class="lineNum">     103 </span>                :            : 
 <span class="lineNum">     104 </span>                :            :   /**

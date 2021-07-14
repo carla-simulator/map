@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">16</td>
@@ -164,16 +164,16 @@
 <span class="lineNum">      92 </span>                :<span class="lineCov">         37 :   return convertToAdMap(openDriveData, defaultIntersectionType, defaultTrafficLightType);</span>
 <a name="93"><span class="lineNum">      93 </span>                :            : }</a>
 <span class="lineNum">      94 </span>                :            : 
-<span class="lineNum">      95 </span>                :<span class="lineCov">      79273 : restriction::Restrictions AdMapFactory::createRoadRestrictions() const</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">      74264 : restriction::Restrictions AdMapFactory::createRoadRestrictions() const</span>
 <span class="lineNum">      96 </span>                :            : {
-<span class="lineNum">      97 </span>                :<span class="lineCov">     158546 :   restriction::Restriction roadRestriction;</span>
-<span class="lineNum">      98 </span>                :<span class="lineCov">      79273 :   roadRestriction.negated = false;</span>
-<span class="lineNum">      99 </span>                :<span class="lineCov">      79273 :   roadRestriction.passengersMin = 0.;</span>
+<span class="lineNum">      97 </span>                :<span class="lineCov">     148528 :   restriction::Restriction roadRestriction;</span>
+<span class="lineNum">      98 </span>                :<span class="lineCov">      74264 :   roadRestriction.negated = false;</span>
+<span class="lineNum">      99 </span>                :<span class="lineCov">      74264 :   roadRestriction.passengersMin = 0.;</span>
 <span class="lineNum">     100 </span>                :            :   roadRestriction.roadUserTypes
-<span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 1 was taken 79273 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      79273 :     = {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK};</span>
-<span class="lineNum">     102 </span>                :<span class="lineCov">      79273 :   restriction::Restrictions roadRestrictions;</span>
-<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 79273 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      79273 :   roadRestrictions.conjunctions.push_back(roadRestriction);</span>
-<span class="lineNum">     104 </span>                :<span class="lineCov">     158546 :   return roadRestrictions;</span>
+<span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 1 was taken 74264 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      74264 :     = {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK};</span>
+<span class="lineNum">     102 </span>                :<span class="lineCov">      74264 :   restriction::Restrictions roadRestrictions;</span>
+<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 74264 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      74264 :   roadRestrictions.conjunctions.push_back(roadRestriction);</span>
+<span class="lineNum">     104 </span>                :<span class="lineCov">     148528 :   return roadRestrictions;</span>
 <a name="105"><span class="lineNum">     105 </span>                :            : }</a>
 <span class="lineNum">     106 </span>                :            : 
 <span class="lineNum">     107 </span>                :<span class="lineCov">      20711 : bool AdMapFactory::setLaneSpeed(::opendrive::Lane const &amp;lane)</span>
@@ -301,35 +301,35 @@
 <span class="lineNum">     226 </span>                :<span class="lineCov">      20711 :   return ok;</span>
 <a name="227"><span class="lineNum">     227 </span>                :            : }</a>
 <span class="lineNum">     228 </span>                :            : 
-<span class="lineNum">     229 </span>                :<span class="lineCov">       2391 : bool AdMapFactory::addSpecialContact(::opendrive::Lane const &amp;lane,</span>
+<span class="lineNum">     229 </span>                :<span class="lineCov">       2358 : bool AdMapFactory::addSpecialContact(::opendrive::Lane const &amp;lane,</span>
 <span class="lineNum">     230 </span>                :            :                                      ::opendrive::Landmark const &amp;landmark,
 <span class="lineNum">     231 </span>                :            :                                      lane::ContactLocation const &amp;location)
 <span class="lineNum">     232 </span>                :            : {
-<span class="lineNum">     233 </span>                :<span class="lineCov">       2391 :   bool ok = true;</span>
-<span class="lineNum">     234 </span>        [<span class="branchCov" title="Branch 1 was taken 2391 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2391 :   auto const contact = ::ad::map::opendrive::toContactType(landmark.type);</span>
-<span class="lineNum">     235 </span>        [<span class="branchCov" title="Branch 0 was taken 60 times"> + </span><span class="branchCov" title="Branch 1 was taken 2331 times"> + </span>]:<span class="lineCov">       2391 :   if ((contact == lane::ContactType::UNKNOWN))</span>
+<span class="lineNum">     233 </span>                :<span class="lineCov">       2358 :   bool ok = true;</span>
+<span class="lineNum">     234 </span>        [<span class="branchCov" title="Branch 1 was taken 2358 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2358 :   auto const contact = ::ad::map::opendrive::toContactType(landmark.type);</span>
+<span class="lineNum">     235 </span>        [<span class="branchCov" title="Branch 0 was taken 120 times"> + </span><span class="branchCov" title="Branch 1 was taken 2238 times"> + </span>]:<span class="lineCov">       2358 :   if ((contact == lane::ContactType::UNKNOWN))</span>
 <span class="lineNum">     236 </span>                :            :   {
 <span class="lineNum">     237 </span>                :            :     // The landmark does not generate any contact
-<span class="lineNum">     238 </span>                :<span class="lineCov">         60 :     return true;</span>
+<span class="lineNum">     238 </span>                :<span class="lineCov">        120 :     return true;</span>
 <span class="lineNum">     239 </span>                :            :   }
-<span class="lineNum">     240 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2331 times"> + </span>]:<span class="lineCov">       2331 :   else if (contact == lane::ContactType::INVALID)</span>
+<span class="lineNum">     240 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2238 times"> + </span>]:<span class="lineCov">       2238 :   else if (contact == lane::ContactType::INVALID)</span>
 <span class="lineNum">     241 </span>                :            :   {
 <span class="lineNum">     242 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 5 was not executed"> # </span><span class="branchNoExec" title="Branch 6 was not executed"> # </span>]:<span class="lineNoCov">          0 :     access::getLogger()-&gt;warn(&quot;addSpecialContact() Invalid contact type&quot;);</span>
 <span class="lineNum">     243 </span>                :<span class="lineNoCov">          0 :     return false;</span>
 <span class="lineNum">     244 </span>                :            :   }
 <span class="lineNum">     245 </span>                :            : 
-<span class="lineNum">     246 </span>        [<span class="branchCov" title="Branch 2 was taken 2331 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       4722 :   auto const contacts = lane::ContactTypeList{contact};</span>
-<span class="lineNum">     247 </span>        [<span class="branchCov" title="Branch 1 was taken 2331 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       4662 :   auto const restrictions = createRoadRestrictions(); // to do generate restrictions from traffic signs</span>
-<span class="lineNum">     248 </span>        [<span class="branchCov" title="Branch 0 was taken 1161 times"> + </span><span class="branchCov" title="Branch 1 was taken 1170 times"> + </span>]:<span class="lineCov">       2331 :   auto const &amp;laneContacts = (location == lane::ContactLocation::SUCCESSOR) ? lane.successors : lane.predecessors;</span>
+<span class="lineNum">     246 </span>        [<span class="branchCov" title="Branch 2 was taken 2238 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       4596 :   auto const contacts = lane::ContactTypeList{contact};</span>
+<span class="lineNum">     247 </span>        [<span class="branchCov" title="Branch 1 was taken 2238 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       4476 :   auto const restrictions = createRoadRestrictions(); // to do generate restrictions from traffic signs</span>
+<span class="lineNum">     248 </span>        [<span class="branchCov" title="Branch 0 was taken 1100 times"> + </span><span class="branchCov" title="Branch 1 was taken 1138 times"> + </span>]:<span class="lineCov">       2238 :   auto const &amp;laneContacts = (location == lane::ContactLocation::SUCCESSOR) ? lane.successors : lane.predecessors;</span>
 <span class="lineNum">     249 </span>                :            : 
-<span class="lineNum">     250 </span>        [<span class="branchCov" title="Branch 3 was taken 2925 times"> + </span><span class="branchCov" title="Branch 4 was taken 2331 times"> + </span>]:<span class="lineCov">       5256 :   for (auto const &amp;contactId : laneContacts)</span>
+<span class="lineNum">     250 </span>        [<span class="branchCov" title="Branch 3 was taken 2228 times"> + </span><span class="branchCov" title="Branch 4 was taken 2238 times"> + </span>]:<span class="lineCov">       4466 :   for (auto const &amp;contactId : laneContacts)</span>
 <span class="lineNum">     251 </span>                :            :   {
-<span class="lineNum">     252 </span>        [<span class="branchCov" title="Branch 0 was taken 2925 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2925 :     if (contact == lane::ContactType::TRAFFIC_LIGHT)</span>
+<span class="lineNum">     252 </span>        [<span class="branchCov" title="Branch 0 was taken 2228 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2228 :     if (contact == lane::ContactType::TRAFFIC_LIGHT)</span>
 <span class="lineNum">     253 </span>                :            :     {
-<span class="lineNum">     254 </span>                :<span class="lineCov">       2925 :       landmark::LandmarkId trafficLightId(toLandmarkId(landmark.id));</span>
-<span class="lineNum">     255 </span>[<span class="branchCov" title="Branch 3 was taken 2925 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 2925 times"> + </span>]:<span class="lineCov">       2925 :       if (!add(toLaneId(lane.id), toLaneId(contactId), location, contacts, restrictions, trafficLightId))</span>
+<span class="lineNum">     254 </span>                :<span class="lineCov">       2228 :       landmark::LandmarkId trafficLightId(toLandmarkId(landmark.id));</span>
+<span class="lineNum">     255 </span>[<span class="branchCov" title="Branch 3 was taken 2228 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 2228 times"> + </span>]:<span class="lineCov">       2228 :       if (!add(toLaneId(lane.id), toLaneId(contactId), location, contacts, restrictions, trafficLightId))</span>
 <span class="lineNum">     256 </span>                :            :       {
-<span class="lineNum">     257 </span>                :<span class="lineCov">       2925 :         ok = false;</span>
+<span class="lineNum">     257 </span>                :<span class="lineCov">       2228 :         ok = false;</span>
 <span class="lineNum">     258 </span>                :            :       }
 <span class="lineNum">     259 </span>                :            :     }
 <span class="lineNum">     260 </span>                :            :     else
@@ -340,17 +340,17 @@
 <span class="lineNum">     265 </span>                :            :       }
 <span class="lineNum">     266 </span>                :            :     }
 <span class="lineNum">     267 </span>                :            :   }
-<span class="lineNum">     268 </span>                :<span class="lineCov">       2331 :   return ok;</span>
+<span class="lineNum">     268 </span>                :<span class="lineCov">       2238 :   return ok;</span>
 <a name="269"><span class="lineNum">     269 </span>                :            : }</a>
 <span class="lineNum">     270 </span>                :            : 
 <span class="lineNum">     271 </span>                :<span class="lineCov">      20711 : bool AdMapFactory::addSpecialContacts(::opendrive::Lane const &amp;lane, ::opendrive::LandmarkMap const &amp;landmarks)</span>
 <span class="lineNum">     272 </span>                :            : {
 <span class="lineNum">     273 </span>                :<span class="lineCov">      20711 :   bool ok = true;</span>
-<span class="lineNum">     274 </span>        [<span class="branchCov" title="Branch 3 was taken 2391 times"> + </span><span class="branchCov" title="Branch 4 was taken 20711 times"> + </span>]:<span class="lineCov">      23102 :   for (auto const &amp;signalReference : lane.signalReferences)</span>
+<span class="lineNum">     274 </span>        [<span class="branchCov" title="Branch 3 was taken 2358 times"> + </span><span class="branchCov" title="Branch 4 was taken 20711 times"> + </span>]:<span class="lineCov">      23069 :   for (auto const &amp;signalReference : lane.signalReferences)</span>
 <span class="lineNum">     275 </span>                :            :   {
-<span class="lineNum">     276 </span>        [<span class="branchCov" title="Branch 1 was taken 2391 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2391 :     auto const location = toContactLocation(signalReference, lane.junction != -1);</span>
-<span class="lineNum">     277 </span>        [<span class="branchCov" title="Branch 1 was taken 2391 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2391 :     auto const &amp;landmark = landmarks.at(signalReference.id);</span>
-<span class="lineNum">     278 </span>[<span class="branchCov" title="Branch 1 was taken 2391 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 2391 times"> + </span>]:<span class="lineCov">       2391 :     if (!addSpecialContact(lane, landmark, location))</span>
+<span class="lineNum">     276 </span>        [<span class="branchCov" title="Branch 1 was taken 2358 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2358 :     auto const location = toContactLocation(signalReference, lane.junction != -1);</span>
+<span class="lineNum">     277 </span>        [<span class="branchCov" title="Branch 1 was taken 2358 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       2358 :     auto const &amp;landmark = landmarks.at(signalReference.id);</span>
+<span class="lineNum">     278 </span>[<span class="branchCov" title="Branch 1 was taken 2358 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 2358 times"> + </span>]:<span class="lineCov">       2358 :     if (!addSpecialContact(lane, landmark, location))</span>
 <span class="lineNum">     279 </span>                :            :     {
 <span class="lineNum">     280 </span>                :<span class="lineNoCov">          0 :       ok = false;</span>
 <span class="lineNum">     281 </span>                :            :     }
@@ -444,23 +444,23 @@
 <span class="lineNum">     367 </span>                :            :     }
 <span class="lineNum">     368 </span>                :            :   }
 <span class="lineNum">     369 </span>                :            : 
-<span class="lineNum">     370 </span>        [<span class="branchCov" title="Branch 3 was taken 22548 times"> + </span><span class="branchCov" title="Branch 4 was taken 20711 times"> + </span>]:<span class="lineCov">      43259 :   for (auto const &amp;successorId : lane.successors)</span>
+<span class="lineNum">     370 </span>        [<span class="branchCov" title="Branch 3 was taken 20104 times"> + </span><span class="branchCov" title="Branch 4 was taken 20711 times"> + </span>]:<span class="lineCov">      40815 :   for (auto const &amp;successorId : lane.successors)</span>
 <span class="lineNum">     371 </span>                :            :   {
-<span class="lineNum">     372 </span>        [<span class="branchCov" title="Branch 1 was taken 22548 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      45096 :     auto restrictions = createRoadRestrictions();</span>
-<span class="lineNum">     373 </span>[<span class="branchCov" title="Branch 2 was taken 22548 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 22548 times"> + </span>]:<span class="lineCov">      22548 :     if (!add(laneId, toLaneId(successorId), succ, laneContinuation, restrictions))</span>
+<span class="lineNum">     372 </span>        [<span class="branchCov" title="Branch 1 was taken 20104 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      40208 :     auto restrictions = createRoadRestrictions();</span>
+<span class="lineNum">     373 </span>[<span class="branchCov" title="Branch 2 was taken 20104 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 20104 times"> + </span>]:<span class="lineCov">      20104 :     if (!add(laneId, toLaneId(successorId), succ, laneContinuation, restrictions))</span>
 <span class="lineNum">     374 </span>                :            :     {
 <span class="lineNum">     375 </span>                :<span class="lineNoCov">          0 :       ok = false;</span>
 <span class="lineNum">     376 </span>                :            :     }
 <span class="lineNum">     377 </span>                :            : 
-<span class="lineNum">     378 </span>        [<span class="branchCov" title="Branch 0 was taken 17655 times"> + </span><span class="branchCov" title="Branch 1 was taken 4893 times"> + </span>]:<span class="lineCov">      22548 :     if (adlane.type != lane::LaneType::INTERSECTION)</span>
+<span class="lineNum">     378 </span>        [<span class="branchCov" title="Branch 0 was taken 15205 times"> + </span><span class="branchCov" title="Branch 1 was taken 4899 times"> + </span>]:<span class="lineCov">      20104 :     if (adlane.type != lane::LaneType::INTERSECTION)</span>
 <span class="lineNum">     379 </span>                :            :     {
-<span class="lineNum">     380 </span>[<span class="branchCov" title="Branch 2 was taken 17655 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 22548 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">      40203 :       auto successorPtr = mStore.getLanePtr(toLaneId(successorId));</span>
-<span class="lineNum">     381 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 17655 times"> + </span>]:<span class="lineCov">      17655 :       if (!successorPtr)</span>
+<span class="lineNum">     380 </span>[<span class="branchCov" title="Branch 2 was taken 15205 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 20104 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">      35309 :       auto successorPtr = mStore.getLanePtr(toLaneId(successorId));</span>
+<span class="lineNum">     381 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 15205 times"> + </span>]:<span class="lineCov">      15205 :       if (!successorPtr)</span>
 <span class="lineNum">     382 </span>                :            :       {
 <span class="lineNum">     383 </span>                :<span class="lineNoCov">          0 :         return false;</span>
 <span class="lineNum">     384 </span>                :            :       }
-<span class="lineNum">     385 </span>[<span class="branchCov" title="Branch 2 was taken 17655 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 17655 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">      35310 :       auto successor = *successorPtr;</span>
-<span class="lineNum">     386 </span>        [<span class="branchCov" title="Branch 0 was taken 3972 times"> + </span><span class="branchCov" title="Branch 1 was taken 13683 times"> + </span>]:<span class="lineCov">      17655 :       if (successor.type == lane::LaneType::INTERSECTION)</span>
+<span class="lineNum">     385 </span>[<span class="branchCov" title="Branch 2 was taken 15205 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 15205 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">      30410 :       auto successor = *successorPtr;</span>
+<span class="lineNum">     386 </span>        [<span class="branchCov" title="Branch 0 was taken 3972 times"> + </span><span class="branchCov" title="Branch 1 was taken 11233 times"> + </span>]:<span class="lineCov">      15205 :       if (successor.type == lane::LaneType::INTERSECTION)</span>
 <span class="lineNum">     387 </span>                :            :       {
 <span class="lineNum">     388 </span>                :            :         //@todo: determine the correct right of way for that intersection
 <span class="lineNum">     389 </span>        [<span class="branchCov" title="Branch 1 was taken 1728 times"> + </span><span class="branchCov" title="Branch 2 was taken 2244 times"> + </span>]:<span class="lineCov">       3972 :         if (!defaultIntersectionContact.empty())</span>
@@ -484,26 +484,26 @@
 <span class="lineNum">     407 </span>                :            :     }
 <span class="lineNum">     408 </span>                :            :   }
 <span class="lineNum">     409 </span>                :            : 
-<span class="lineNum">     410 </span>        [<span class="branchCov" title="Branch 3 was taken 22540 times"> + </span><span class="branchCov" title="Branch 4 was taken 20711 times"> + </span>]:<span class="lineCov">      43251 :   for (auto const &amp;predecessorId : lane.predecessors)</span>
+<span class="lineNum">     410 </span>        [<span class="branchCov" title="Branch 3 was taken 20068 times"> + </span><span class="branchCov" title="Branch 4 was taken 20711 times"> + </span>]:<span class="lineCov">      40779 :   for (auto const &amp;predecessorId : lane.predecessors)</span>
 <span class="lineNum">     411 </span>                :            :   {
-<span class="lineNum">     412 </span>        [<span class="branchCov" title="Branch 1 was taken 22540 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      45080 :     auto restrictions = createRoadRestrictions();</span>
-<span class="lineNum">     413 </span>[<span class="branchCov" title="Branch 2 was taken 22540 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 22540 times"> + </span>]:<span class="lineCov">      22540 :     if (!add(laneId, toLaneId(predecessorId), pred, laneContinuation, restrictions))</span>
+<span class="lineNum">     412 </span>        [<span class="branchCov" title="Branch 1 was taken 20068 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      40136 :     auto restrictions = createRoadRestrictions();</span>
+<span class="lineNum">     413 </span>[<span class="branchCov" title="Branch 2 was taken 20068 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 20068 times"> + </span>]:<span class="lineCov">      20068 :     if (!add(laneId, toLaneId(predecessorId), pred, laneContinuation, restrictions))</span>
 <span class="lineNum">     414 </span>                :            :     {
 <span class="lineNum">     415 </span>                :<span class="lineNoCov">          0 :       ok = false;</span>
 <span class="lineNum">     416 </span>                :            :     }
 <span class="lineNum">     417 </span>                :            : 
-<span class="lineNum">     418 </span>        [<span class="branchCov" title="Branch 0 was taken 17652 times"> + </span><span class="branchCov" title="Branch 1 was taken 4888 times"> + </span>]:<span class="lineCov">      22540 :     if (adlane.type != lane::LaneType::INTERSECTION)</span>
+<span class="lineNum">     418 </span>        [<span class="branchCov" title="Branch 0 was taken 15176 times"> + </span><span class="branchCov" title="Branch 1 was taken 4892 times"> + </span>]:<span class="lineCov">      20068 :     if (adlane.type != lane::LaneType::INTERSECTION)</span>
 <span class="lineNum">     419 </span>                :            :     {
-<span class="lineNum">     420 </span>[<span class="branchCov" title="Branch 2 was taken 17652 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 22540 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">      40192 :       auto predecessorPtr = mStore.getLanePtr(toLaneId(predecessorId));</span>
-<span class="lineNum">     421 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 17652 times"> + </span>]:<span class="lineCov">      17652 :       if (!predecessorPtr)</span>
+<span class="lineNum">     420 </span>[<span class="branchCov" title="Branch 2 was taken 15176 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 20068 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">      35244 :       auto predecessorPtr = mStore.getLanePtr(toLaneId(predecessorId));</span>
+<span class="lineNum">     421 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 15176 times"> + </span>]:<span class="lineCov">      15176 :       if (!predecessorPtr)</span>
 <span class="lineNum">     422 </span>                :            :       {
 <span class="lineNum">     423 </span>                :<span class="lineNoCov">          0 :         return false;</span>
 <span class="lineNum">     424 </span>                :            :       }
-<span class="lineNum">     425 </span>[<span class="branchCov" title="Branch 2 was taken 17652 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 17652 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">      35304 :       auto predecessor = *predecessorPtr;</span>
-<span class="lineNum">     426 </span>        [<span class="branchCov" title="Branch 0 was taken 3927 times"> + </span><span class="branchCov" title="Branch 1 was taken 13725 times"> + </span>]:<span class="lineCov">      17652 :       if (predecessor.type == lane::LaneType::INTERSECTION)</span>
+<span class="lineNum">     425 </span>[<span class="branchCov" title="Branch 2 was taken 15176 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 15176 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">      30352 :       auto predecessor = *predecessorPtr;</span>
+<span class="lineNum">     426 </span>        [<span class="branchCov" title="Branch 0 was taken 3929 times"> + </span><span class="branchCov" title="Branch 1 was taken 11247 times"> + </span>]:<span class="lineCov">      15176 :       if (predecessor.type == lane::LaneType::INTERSECTION)</span>
 <span class="lineNum">     427 </span>                :            :       {
 <span class="lineNum">     428 </span>                :            :         //@todo: determine the correct right of way for that intersection
-<span class="lineNum">     429 </span>        [<span class="branchCov" title="Branch 1 was taken 1728 times"> + </span><span class="branchCov" title="Branch 2 was taken 2199 times"> + </span>]:<span class="lineCov">       3927 :         if (!defaultIntersectionContact.empty())</span>
+<span class="lineNum">     429 </span>        [<span class="branchCov" title="Branch 1 was taken 1728 times"> + </span><span class="branchCov" title="Branch 2 was taken 2201 times"> + </span>]:<span class="lineCov">       3929 :         if (!defaultIntersectionContact.empty())</span>
 <span class="lineNum">     430 </span>                :            :         {
 <span class="lineNum">     431 </span>        [<span class="branchCov" title="Branch 1 was taken 1152 times"> + </span><span class="branchCov" title="Branch 2 was taken 576 times"> + </span>]:<span class="lineCov">       1728 :           if (defaultIntersectionContact.front() == lane::ContactType::TRAFFIC_LIGHT)</span>
 <span class="lineNum">     432 </span>                :            :           {
@@ -525,11 +525,11 @@
 <span class="lineNum">     448 </span>                :            :     }
 <span class="lineNum">     449 </span>                :            :   }
 <span class="lineNum">     450 </span>                :            : 
-<span class="lineNum">     451 </span>        [<span class="branchCov" title="Branch 3 was taken 35704 times"> + </span><span class="branchCov" title="Branch 4 was taken 20711 times"> + </span>]:<span class="lineCov">      56415 :   for (auto const &amp;overlappingLaneId : lane.overlaps)</span>
+<span class="lineNum">     451 </span>        [<span class="branchCov" title="Branch 3 was taken 25461 times"> + </span><span class="branchCov" title="Branch 4 was taken 20711 times"> + </span>]:<span class="lineCov">      46172 :   for (auto const &amp;overlappingLaneId : lane.overlaps)</span>
 <span class="lineNum">     452 </span>                :            :   {
-<span class="lineNum">     453 </span>  [<span class="branchCov" title="Branch 3 was taken 35704 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 35704 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">      71408 :     if (!add(laneId,</span>
-<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 35704 times"> + </span>]
-<span class="lineNum">     454 </span>                :<span class="lineCov">      35704 :              toLaneId(overlappingLaneId),</span>
+<span class="lineNum">     453 </span>  [<span class="branchCov" title="Branch 3 was taken 25461 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 25461 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">      50922 :     if (!add(laneId,</span>
+<span class="lineNum">         </span>        [<span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 25461 times"> + </span>]
+<span class="lineNum">     454 </span>                :<span class="lineCov">      25461 :              toLaneId(overlappingLaneId),</span>
 <span class="lineNum">     455 </span>                :            :              lane::ContactLocation::OVERLAP,
 <span class="lineNum">     456 </span>                :            :              {lane::ContactType::UNKNOWN},
 <span class="lineNum">     457 </span>                :            :              restriction::Restrictions()))

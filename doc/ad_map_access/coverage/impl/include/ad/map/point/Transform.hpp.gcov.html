@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">9</td>
@@ -93,9 +93,9 @@
 <span class="lineNum">      22 </span>                :            : /**
 <a name="23"><span class="lineNum">      23 </span>                :            :  * @brief perform coordinate transformation from GeoPoint to ECEFPoint</a>
 <span class="lineNum">      24 </span>                :            :  */
-<span class="lineNum">      25 </span>                :<span class="lineCov">     439163 : inline ECEFPoint toECEF(GeoPoint const &amp;point)</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">     720399 : inline ECEFPoint toECEF(GeoPoint const &amp;point)</span>
 <span class="lineNum">      26 </span>                :            : {
-<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 3 was taken 439163 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     439163 :   return access::getCoordinateTransform()-&gt;Geo2ECEF(point);</span>
+<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 3 was taken 720399 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">     720399 :   return access::getCoordinateTransform()-&gt;Geo2ECEF(point);</span>
 <span class="lineNum">      28 </span>                :            : }
 <span class="lineNum">      29 </span>                :            : 
 <span class="lineNum">      30 </span>                :            : /**

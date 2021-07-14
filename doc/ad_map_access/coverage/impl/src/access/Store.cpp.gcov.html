@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">18</td>
@@ -130,19 +130,19 @@
 <span class="lineNum">      59 </span>                :<span class="lineCov">          2 :   return part_ids;</span>
 <a name="60"><span class="lineNum">      60 </span>                :            : }</a>
 <span class="lineNum">      61 </span>                :            : 
-<span class="lineNum">      62 </span>                :<span class="lineCov">    6604693 : lane::Lane::ConstPtr Store::getLanePtr(lane::LaneId const &amp;id) const</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">    6600018 : lane::Lane::ConstPtr Store::getLanePtr(lane::LaneId const &amp;id) const</span>
 <span class="lineNum">      63 </span>                :            : {
-<span class="lineNum">      64 </span>                :<span class="lineCov">    6604693 :   lane::Lane::ConstPtr lane_ptr;</span>
-<span class="lineNum">      65 </span>        [<span class="branchCov" title="Branch 1 was taken 6604693 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    6604693 :   auto id_and_lane = lane_map_.find(id);</span>
-<span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 2 was taken 6604688 times"> + </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span>]:<span class="lineCov">    6604693 :   if (id_and_lane != lane_map_.end())</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">    6600018 :   lane::Lane::ConstPtr lane_ptr;</span>
+<span class="lineNum">      65 </span>        [<span class="branchCov" title="Branch 1 was taken 6600018 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    6600018 :   auto id_and_lane = lane_map_.find(id);</span>
+<span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 2 was taken 6600013 times"> + </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span>]:<span class="lineCov">    6600018 :   if (id_and_lane != lane_map_.end())</span>
 <span class="lineNum">      67 </span>                :            :   {
-<span class="lineNum">      68 </span>                :<span class="lineCov">    6604688 :     lane_ptr = id_and_lane-&gt;second;</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">    6600013 :     lane_ptr = id_and_lane-&gt;second;</span>
 <span class="lineNum">      69 </span>                :            :   }
 <span class="lineNum">      70 </span>                :            :   else
 <span class="lineNum">      71 </span>                :            :   {
 <span class="lineNum">      72 </span>[<span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          5 :     access::getLogger()-&gt;warn(&quot;Lane not in the Store. ID: {}&quot;, id);</span>
 <span class="lineNum">      73 </span>                :            :   }
-<span class="lineNum">      74 </span>                :<span class="lineCov">    6604693 :   return lane_ptr;</span>
+<span class="lineNum">      74 </span>                :<span class="lineCov">    6600018 :   return lane_ptr;</span>
 <a name="75"><span class="lineNum">      75 </span>                :            : }</a>
 <span class="lineNum">      76 </span>                :            : 
 <span class="lineNum">      77 </span>                :<span class="lineCov">      21290 : lane::LaneIdList Store::getLanes() const</span>
@@ -212,19 +212,19 @@
 <span class="lineNum">     140 </span>                :<span class="lineCov">          1 :   return landmark::LandmarkIdList();</span>
 <a name="141"><span class="lineNum">     141 </span>                :            : }</a>
 <span class="lineNum">     142 </span>                :            : 
-<span class="lineNum">     143 </span>                :<span class="lineCov">       9037 : landmark::Landmark::ConstPtr Store::getLandmarkPtr(landmark::LandmarkId id) const</span>
+<span class="lineNum">     143 </span>                :<span class="lineCov">       9035 : landmark::Landmark::ConstPtr Store::getLandmarkPtr(landmark::LandmarkId id) const</span>
 <span class="lineNum">     144 </span>                :            : {
-<span class="lineNum">     145 </span>                :<span class="lineCov">       9037 :   landmark::Landmark::ConstPtr landmark_ptr;</span>
-<span class="lineNum">     146 </span>        [<span class="branchCov" title="Branch 1 was taken 9037 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       9037 :   auto id_and_landmark = landmark_map_.find(id);</span>
-<span class="lineNum">     147 </span>        [<span class="branchCov" title="Branch 2 was taken 9036 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">       9037 :   if (id_and_landmark != landmark_map_.end())</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">       9035 :   landmark::Landmark::ConstPtr landmark_ptr;</span>
+<span class="lineNum">     146 </span>        [<span class="branchCov" title="Branch 1 was taken 9035 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       9035 :   auto id_and_landmark = landmark_map_.find(id);</span>
+<span class="lineNum">     147 </span>        [<span class="branchCov" title="Branch 2 was taken 9034 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">       9035 :   if (id_and_landmark != landmark_map_.end())</span>
 <span class="lineNum">     148 </span>                :            :   {
-<span class="lineNum">     149 </span>                :<span class="lineCov">       9036 :     landmark_ptr = id_and_landmark-&gt;second;</span>
+<span class="lineNum">     149 </span>                :<span class="lineCov">       9034 :     landmark_ptr = id_and_landmark-&gt;second;</span>
 <span class="lineNum">     150 </span>                :            :   }
 <span class="lineNum">     151 </span>                :            :   else
 <span class="lineNum">     152 </span>                :            :   {
 <span class="lineNum">     153 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;warn(&quot;Landmark is not in the Store: {}&quot;, id);</span>
 <span class="lineNum">     154 </span>                :            :   }
-<span class="lineNum">     155 </span>                :<span class="lineCov">       9037 :   return landmark_ptr;</span>
+<span class="lineNum">     155 </span>                :<span class="lineCov">       9035 :   return landmark_ptr;</span>
 <a name="156"><span class="lineNum">     156 </span>                :            : }</a>
 <span class="lineNum">     157 </span>                :            : 
 <span class="lineNum">     158 </span>                :<span class="lineCov">         59 : landmark::LandmarkIdList Store::getLandmarks() const</span>

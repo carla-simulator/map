@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-05-27 15:06:11</td>
+            <td class="headerValue">2021-07-14 09:02:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -206,10 +206,10 @@
 <span class="lineNum">     130 </span>                :            :   }
 <a name="131"><span class="lineNum">     131 </span>                :            : }</a>
 <span class="lineNum">     132 </span>                :            : 
-<span class="lineNum">     133 </span>                :<span class="lineCov">       2397 : lane::ContactType toContactType(int type)</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">       2364 : lane::ContactType toContactType(int type)</span>
 <span class="lineNum">     134 </span>                :            : {
-<span class="lineNum">     135 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">       2397 :   switch (type)</span>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 2332 times"> + </span><span class="branchCov" title="Branch 5 was taken 61 times"> + </span>]
+<span class="lineNum">     135 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">       2364 :   switch (type)</span>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 2239 times"> + </span><span class="branchCov" title="Branch 5 was taken 121 times"> + </span>]
 <span class="lineNum">     136 </span>                :            :   {
 <span class="lineNum">     137 </span>                :            :     case 205:
 <span class="lineNum">     138 </span>                :<span class="lineCov">          1 :       return lane::ContactType::YIELD;</span>
@@ -225,34 +225,34 @@
 <span class="lineNum">     148 </span>                :            :     case 1000010:
 <span class="lineNum">     149 </span>                :            :     case 1000011:
 <span class="lineNum">     150 </span>                :            :     case 1000012:
-<span class="lineNum">     151 </span>                :<span class="lineCov">       2332 :       return lane::ContactType::TRAFFIC_LIGHT;</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">       2239 :       return lane::ContactType::TRAFFIC_LIGHT;</span>
 <span class="lineNum">     152 </span>                :            :     default:
-<span class="lineNum">     153 </span>                :<span class="lineCov">         61 :       return lane::ContactType::UNKNOWN;</span>
+<span class="lineNum">     153 </span>                :<span class="lineCov">        121 :       return lane::ContactType::UNKNOWN;</span>
 <span class="lineNum">     154 </span>                :            :   }
 <a name="155"><span class="lineNum">     155 </span>                :            : }</a>
 <span class="lineNum">     156 </span>                :            : 
-<span class="lineNum">     157 </span>                :<span class="lineCov">       2395 : lane::ContactLocation toContactLocation(::opendrive::SignalReference const &amp;signalReference, bool const &amp;isJunction)</span>
+<span class="lineNum">     157 </span>                :<span class="lineCov">       2362 : lane::ContactLocation toContactLocation(::opendrive::SignalReference const &amp;signalReference, bool const &amp;isJunction)</span>
 <span class="lineNum">     158 </span>                :            : {
-<span class="lineNum">     159 </span>        [<span class="branchCov" title="Branch 0 was taken 696 times"> + </span><span class="branchCov" title="Branch 1 was taken 1699 times"> + </span>]:<span class="lineCov">       2395 :   if (isJunction)</span>
+<span class="lineNum">     159 </span>        [<span class="branchCov" title="Branch 0 was taken 2180 times"> + </span><span class="branchCov" title="Branch 1 was taken 182 times"> + </span>]:<span class="lineCov">       2362 :   if (isJunction)</span>
 <span class="lineNum">     160 </span>                :            :   {
-<span class="lineNum">     161 </span>        [<span class="branchCov" title="Branch 0 was taken 394 times"> + </span><span class="branchCov" title="Branch 1 was taken 302 times"> + </span>]:<span class="lineCov">        696 :     if (signalReference.parametricPosition &gt;= 0.5)</span>
+<span class="lineNum">     161 </span>        [<span class="branchCov" title="Branch 0 was taken 1071 times"> + </span><span class="branchCov" title="Branch 1 was taken 1109 times"> + </span>]:<span class="lineCov">       2180 :     if (signalReference.parametricPosition &gt;= 0.5)</span>
 <span class="lineNum">     162 </span>                :            :     {
-<span class="lineNum">     163 </span>                :<span class="lineCov">        394 :       return lane::ContactLocation::SUCCESSOR;</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">       1071 :       return lane::ContactLocation::SUCCESSOR;</span>
 <span class="lineNum">     164 </span>                :            :     }
 <span class="lineNum">     165 </span>                :            :     else
 <span class="lineNum">     166 </span>                :            :     {
-<span class="lineNum">     167 </span>                :<span class="lineCov">        302 :       return lane::ContactLocation::PREDECESSOR;</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">       1109 :       return lane::ContactLocation::PREDECESSOR;</span>
 <span class="lineNum">     168 </span>                :            :     }
 <span class="lineNum">     169 </span>                :            :   }
 <span class="lineNum">     170 </span>                :            :   else
 <span class="lineNum">     171 </span>                :            :   {
-<span class="lineNum">     172 </span>        [<span class="branchCov" title="Branch 0 was taken 769 times"> + </span><span class="branchCov" title="Branch 1 was taken 930 times"> + </span>]:<span class="lineCov">       1699 :     if (signalReference.inLaneOrientation)</span>
+<span class="lineNum">     172 </span>        [<span class="branchCov" title="Branch 0 was taken 91 times"> + </span><span class="branchCov" title="Branch 1 was taken 91 times"> + </span>]:<span class="lineCov">        182 :     if (signalReference.inLaneOrientation)</span>
 <span class="lineNum">     173 </span>                :            :     {
-<span class="lineNum">     174 </span>                :<span class="lineCov">        769 :       return lane::ContactLocation::SUCCESSOR;</span>
+<span class="lineNum">     174 </span>                :<span class="lineCov">         91 :       return lane::ContactLocation::SUCCESSOR;</span>
 <span class="lineNum">     175 </span>                :            :     }
 <span class="lineNum">     176 </span>                :            :     else
 <span class="lineNum">     177 </span>                :            :     {
-<span class="lineNum">     178 </span>                :<span class="lineCov">        930 :       return lane::ContactLocation::PREDECESSOR;</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">         91 :       return lane::ContactLocation::PREDECESSOR;</span>
 <span class="lineNum">     179 </span>                :            :     }
 <span class="lineNum">     180 </span>                :            :   }
 <a name="181"><span class="lineNum">     181 </span>                :            : }</a>
@@ -413,23 +413,23 @@
 <span class="lineNum">     332 </span>                :            :   }
 <a name="333"><span class="lineNum">     333 </span>                :            : }</a>
 <span class="lineNum">     334 </span>                :            : 
-<span class="lineNum">     335 </span>                :<span class="lineCov">     406427 : point::GeoPoint toGeo(::opendrive::Point const &amp;point)</span>
+<span class="lineNum">     335 </span>                :<span class="lineCov">     687663 : point::GeoPoint toGeo(::opendrive::Point const &amp;point)</span>
 <span class="lineNum">     336 </span>                :            : {
-<span class="lineNum">     337 </span>        [<span class="branchCov" title="Branch 4 was taken 406427 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     406427 :   return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(point.z));</span>
+<span class="lineNum">     337 </span>        [<span class="branchCov" title="Branch 4 was taken 687663 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     687663 :   return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(point.z));</span>
 <a name="338"><span class="lineNum">     338 </span>                :            : }</a>
 <span class="lineNum">     339 </span>                :            : 
-<span class="lineNum">     340 </span>                :<span class="lineCov">     406427 : point::ECEFPoint toECEF(::opendrive::Point const &amp;point)</span>
+<span class="lineNum">     340 </span>                :<span class="lineCov">     687663 : point::ECEFPoint toECEF(::opendrive::Point const &amp;point)</span>
 <span class="lineNum">     341 </span>                :            : {
 <span class="lineNum">     342 </span>                :            :   // points expected to be geo points
-<span class="lineNum">     343 </span>        [<span class="branchCov" title="Branch 2 was taken 406427 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     406427 :   return point::toECEF(toGeo(point));</span>
+<span class="lineNum">     343 </span>        [<span class="branchCov" title="Branch 2 was taken 687663 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     687663 :   return point::toECEF(toGeo(point));</span>
 <a name="344"><span class="lineNum">     344 </span>                :            : }</a>
 <span class="lineNum">     345 </span>                :            : 
 <span class="lineNum">     346 </span>                :<span class="lineCov">      41422 : point::Geometry toGeometry(std::vector&lt;::opendrive::Point&gt; edgePoints)</span>
 <span class="lineNum">     347 </span>                :            : {
 <span class="lineNum">     348 </span>                :<span class="lineCov">      82844 :   point::ECEFEdge ecefEdge;</span>
-<span class="lineNum">     349 </span>        [<span class="branchCov" title="Branch 3 was taken 405468 times"> + </span><span class="branchCov" title="Branch 4 was taken 41422 times"> + </span>]:<span class="lineCov">     446890 :   for (auto const &amp;point : edgePoints)</span>
+<span class="lineNum">     349 </span>        [<span class="branchCov" title="Branch 3 was taken 686704 times"> + </span><span class="branchCov" title="Branch 4 was taken 41422 times"> + </span>]:<span class="lineCov">     728126 :   for (auto const &amp;point : edgePoints)</span>
 <span class="lineNum">     350 </span>                :            :   {
-<span class="lineNum">     351 </span>[<span class="branchCov" title="Branch 1 was taken 405468 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 405468 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     405468 :     ecefEdge.push_back(toECEF(point));</span>
+<span class="lineNum">     351 </span>[<span class="branchCov" title="Branch 1 was taken 686704 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 686704 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     686704 :     ecefEdge.push_back(toECEF(point));</span>
 <span class="lineNum">     352 </span>                :            :   }
 <span class="lineNum">     353 </span>                :            : 
 <span class="lineNum">     354 </span>        [<span class="branchCov" title="Branch 1 was taken 41422 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      82844 :   return point::createGeometry(ecefEdge, false);</span>
