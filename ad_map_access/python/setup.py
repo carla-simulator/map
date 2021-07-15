@@ -27,6 +27,7 @@ setup(
     version="2.4.5",
     author='CARLA Simulator Team',
     author_email='carla.simulator@gmail.com',
+    license="MIT",
     classifiers=[
         programming_language_classifier,
         "License :: OSI Approved :: MIT License",
