@@ -59,7 +59,6 @@ set_target_properties(${target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURR
 target_include_directories(${target}
   PRIVATE
   ${PYTHON_BINDING_PACKAGE_INCLUDE_DIRS}
-  ${AD_PHYSICS_PYTHON_INCLUDES}
   ${CMAKE_CURRENT_BINARY_DIR}
 )
 target_link_libraries(${target} PRIVATE

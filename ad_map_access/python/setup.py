@@ -17,6 +17,7 @@ class Install(_install):
         if self.distribution.has_ext_modules():
             self.install_lib = self.install_platlib
 
+programming_language_classifier = "Programming Language :: Python :: {}".format(sys.version_info.major)
 
 setup(
     name="ad-map-access",
@@ -24,11 +25,28 @@ setup(
     package_dir={"": sys.argv.pop(-1)},
     package_data={"ad_map_access": ["*.so"]},
     version="2.4.5",
-    maintainer='CARLA Simulator Team',
-    maintainer_email='carla.simulator@gmail.com',
-    license='MIT',
+    author='CARLA Simulator Team',
+    author_email='carla.simulator@gmail.com',
+    classifiers=[
+        programming_language_classifier,
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
     url="https://ad-map-access.readthedocs.io/en/latest/",
     description="python binding of the C++ Library for Accessing Automated Driving Maps",
+    long_description="ad-map-access provides the python binding of a C++ implementation for accessing and operating on AD map data.\
+*ad-map-access* transfers a-priori AD map information from a standardized\
+[OpenDRIVE](https://www.asam.net/standards/detail/opendrive/) file format into an internal\
+representation. Optionally, the internal representation can be stored/read in a proprietary binary format.\
+\
+On top of the internal representation *ad-map-access* provides an API to access the map data\
+(like road, lanes or landmarks and their semantics), perform coordinate transformations and other\
+operations on geometry data. Furthermore, some higher level operations are available to perform\
+map matching, route planning and other analysis operations required for automated driving, like e.g.\
+right-of-way within intersections.\
+\
+See See [project webpage](https://ad-map-access.readthedocs.io/en/latest/) or [doxygen docu](https://ad-map-access.readthedocs.io/en/latest/ad_map_access/apidoc/html/index.html) for a full interface description.",
+    long_description_content_type="text/markdown",
     install_requires=["ad_physics>=2.4.5"],
     distclass=BinaryDistribution,
     cmdclass={'install': Install}
