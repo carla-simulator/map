@@ -24,7 +24,7 @@ setup(
     package_dir={"": sys.argv.pop(-1)},
     package_data={"ad_physics": ["*.so"]},
     version="2.4.5",
-    description="AD Map access library ",
+    description="AD Physics library ",
     distclass=BinaryDistribution,
     cmdclass={'install': Install}
 )

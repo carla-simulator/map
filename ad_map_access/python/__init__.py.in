@@ -14,5 +14,5 @@ import sys
 import os.path
 sys.path.append(os.path.dirname(__file__))
 
-import ad_physics
-from ad_map_access_@PYTHON_BINDING_NAME@_module import *
+from ad_physics import *
+from ad_map_access_@PYTHON_BINDING_NAME@ import *
