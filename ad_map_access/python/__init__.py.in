@@ -7,11 +7,12 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 
 """
-Import ad_map_access module for @binding_string@
+Import ad_map_access module for @PYTHON_BINDING_NAME@
 """
 
 import sys
 import os.path
 sys.path.append(os.path.dirname(__file__))
 
-from ad_map_access_@binding_string@_module import *
+import ad_physics
+from ad_map_access_@PYTHON_BINDING_NAME@_module import *

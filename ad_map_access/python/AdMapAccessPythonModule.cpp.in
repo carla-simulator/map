@@ -7,13 +7,9 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include <boost/python.hpp>
-#include <ad/physics/python/AdPhysicsPython.hpp>
 #include <ad/map/python/AdMapAccessPython.hpp>
 
-BOOST_PYTHON_MODULE(ad_map_access_@binding_string@_module)
+BOOST_PYTHON_MODULE(ad_map_access_@PYTHON_BINDING_NAME@_module)
 {
-  // resolve dependency to physics
-  export_ad_physics_python();
-  // and export ad_map_access
   export_ad_map_access_python();
 }

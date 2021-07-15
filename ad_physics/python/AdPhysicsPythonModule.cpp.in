@@ -9,7 +9,7 @@
 #include <boost/python.hpp>
 #include <ad/physics/python/AdPhysicsPython.hpp>
 
-BOOST_PYTHON_MODULE(ad_physics_@binding_string@_module)
+BOOST_PYTHON_MODULE(ad_physics_@PYTHON_BINDING_NAME@_module)
 {
   export_ad_physics_python();
 }
