@@ -27,7 +27,7 @@ jobs:
            EXTRA_PACKAGES: g++-6
            CC: /usr/bin/gcc-6
            CXX: /usr/bin/g++-6
-           PYTHON_BINDING_VERSION: "2.7"
+           PYTHON_BINDING_VERSION: "3.5"
          - compiler: clang5
            EXTRA_PACKAGES: clang-5.0
            CC: /usr/bin/clang-5.0

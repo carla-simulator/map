@@ -65,6 +65,6 @@ if (BUILD_TESTING)
     COMMAND ${PYTHON_EXECUTABLE} -m interface_test
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/tests
   )
-  get_python_test_environment(${PYTHON_BINDING_NAME})
+  get_python_test_environment()
   set_tests_properties(${PROJECT_NAME}_test_${PYTHON_BINDING_NAME} PROPERTIES ENVIRONMENT "${PYTHON_TEST_ENVIRONMENT}")
 endif()

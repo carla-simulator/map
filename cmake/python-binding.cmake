@@ -59,6 +59,9 @@ function(find_python_binding_packages)
   set(PYTHON_BINDING_NAME
     "python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR}"
     PARENT_SCOPE)
+  set(PYTHON_BINDING_FOLDER_NAME
+    "python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}"
+    PARENT_SCOPE)
   set(PYTHON_BINDING_PACKAGE_INCLUDE_DIRS
     ${Boost_INCLUDE_DIRS}
     ${PYTHON_INCLUDE_DIRS}
@@ -70,9 +73,9 @@ function(find_python_binding_packages)
 
 endfunction()
 
-function(get_python_test_environment python_binding)
+function(get_python_test_environment)
   set(TEST_LD_LIBRARY_PATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
-  set(TEST_PYTHONPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${python_binding}")
+  set(TEST_PYTHONPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${PYTHON_BINDING_FOLDER_NAME}/site-packages")
   foreach(dep ${ARGN})
     get_target_property(dep_configurations ${dep} IMPORTED_CONFIGURATIONS)
     set(TEST_${dep}_LOCATION False)
@@ -85,7 +88,7 @@ function(get_python_test_environment python_binding)
     endforeach()
     if(TEST_${dep}_LOCATION)
       set(TEST_LD_LIBRARY_PATH "${LD_LIBRARY_PATH}:${TEST_${dep}_LOCATION}")
-      set(TEST_PYTHONPATH "${TEST_PYTHONPATH}:${TEST_${dep}_LOCATION}/${python_binding}")
+      set(TEST_PYTHONPATH "${TEST_PYTHONPATH}:${TEST_${dep}_LOCATION}/${PYTHON_BINDING_FOLDER_NAME}/site-packages")
     else()
       message(WARNING "Failed to query mandatory location of dependency ${dep}")
     endif()
