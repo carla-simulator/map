@@ -31,12 +31,12 @@ jobs:
 
     - name: Build Libraries
       run: |
-        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --build-base build-static --install-base install-static
+        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --build-base build-static --install-base install-static --cmake-args -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 
     - name: Build Package
       run: |
         cd install-static
-        cp -r ad_map_access/lib/python3.*/ad_map_access ad_map_access_qgis/share/qgis/python/plugins/ad_map_access_qgis/.
+        cp -r ad_map_access/lib/python3.*/site-packages/ad_map_access ad_map_access_qgis/share/qgis/python/plugins/ad_map_access_qgis/.
         cd ad_map_access_qgis/share/qgis/python/plugins/
         zip -r ${{ matrix.artifact_name }} ad_map_access_qgis/
         mv ${{ matrix.artifact_name }} ../../../../../../
