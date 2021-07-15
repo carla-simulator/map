@@ -18,8 +18,10 @@ jobs:
         include:
           - os: ubuntu-18.04
             artifact_name: ad_map_access_qgis_ubuntu1804.zip
+            PYTHON_BINDING_VERSION: "3.6"
           - os: ubuntu-20.04
             artifact_name: ad_map_access_qgis_ubuntu2004.zip
+            PYTHON_BINDING_VERSION: "3.8"
 
     steps:
     - uses: actions/checkout@v2
@@ -30,8 +32,10 @@ jobs:
       run: bash .github/workflows/install_dependencies.sh
 
     - name: Build Libraries
+      env:
+          PYTHON_BINDING_VERSION: ${{ matrix.PYTHON_BINDING_VERSION }}
       run: |
-        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --build-base build-static --install-base install-static --cmake-args -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --build-base build-static --install-base install-static --cmake-args -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DPYTHON_BINDING_VERSION=${PYTHON_BINDING_VERSION}
 
     - name: Build Package
       run: |

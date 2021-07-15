@@ -24,7 +24,11 @@ setup(
     package_dir={"": sys.argv.pop(-1)},
     package_data={"ad_physics": ["*.so"]},
     version="2.4.5",
-    description="AD Physics library ",
+    maintainer='CARLA Simulator Team',
+    maintainer_email='carla.simulator@gmail.com',
+    license='MIT',
+    url="https://ad-map-access.readthedocs.io/en/latest/",
+    description="python binding of the C++ library for Automated Driving physics data types",
     distclass=BinaryDistribution,
     cmdclass={'install': Install}
 )

@@ -24,7 +24,11 @@ setup(
     package_dir={"": sys.argv.pop(-1)},
     package_data={"ad_map_access": ["*.so"]},
     version="2.4.5",
-    description="AD Map access library ",
+    maintainer='CARLA Simulator Team',
+    maintainer_email='carla.simulator@gmail.com',
+    license='MIT',
+    url="https://ad-map-access.readthedocs.io/en/latest/",
+    description="python binding of the C++ Library for Accessing Automated Driving Maps",
     install_requires=["ad_physics>=2.4.5"],
     distclass=BinaryDistribution,
     cmdclass={'install': Install}
