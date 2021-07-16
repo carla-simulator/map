@@ -25,17 +25,18 @@ jobs:
         run: |
           colcon build --packages-up-to ad_map_access --meta colcon_python.meta --event-handlers console_direct+ --cmake-args -DPYTHON_BINDING_VERSION=${PYTHON_BINDING_VERSION}
       - name: Repair wheels
+        shell: bash
         run: |
+          source install/setup.bash
           for whl in install/ad_physics/dist/*.whl; do
             auditwheel repair $whl --plat ${WHEEL_PLATFORM} --wheel-dir wheelhouse
           done
           for whl in install/ad_map_access/dist/*.whl; do
             auditwheel repair $whl --plat ${WHEEL_PLATFORM} --wheel-dir wheelhouse
           done
-      # - name: Publish wheels to PyPI
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     user: __token__
-      #     password: ${{ secrets.PYPI_API_TOKEN }}
-      #     repository_url: https://test.pypi.org/legacy/
-      #     packages_dir: wheelhouse/
+      - name: Publish wheels to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages_dir: wheelhouse/
