@@ -46,7 +46,7 @@ operations on geometry data. Furthermore, some higher level operations are avail
 map matching, route planning and other analysis operations required for automated driving, like e.g.\
 right-of-way within intersections.\
 \
-See See [project webpage](https://ad-map-access.readthedocs.io/en/latest/) or [doxygen docu](https://ad-map-access.readthedocs.io/en/latest/ad_map_access/apidoc/html/index.html) for a full interface description.",
+See [project webpage](https://ad-map-access.readthedocs.io/en/latest/) or [doxygen docu](https://ad-map-access.readthedocs.io/en/latest/ad_map_access/apidoc/html/index.html) for a full interface description.",
     long_description_content_type="text/markdown",
     install_requires=["ad_physics>=2.4.5"],
     distclass=BinaryDistribution,

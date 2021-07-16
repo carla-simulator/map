@@ -39,7 +39,7 @@ setup(
 This includes type safe implemenations of e.g. Distance, Speed, Duration and Acceleration and operations on those.\
 In addition, the types define AD specific precision, minima, maxima and input range values.\
 \
-See See [project webpage](https://ad-map-access.readthedocs.io/en/latest/) or [doxygen docu](https://ad-map-access.readthedocs.io/en/latest/ad_physics/apidoc/html/index.html) for a full interface description.",
+See [project webpage](https://ad-map-access.readthedocs.io/en/latest/) or [doxygen docu](https://ad-map-access.readthedocs.io/en/latest/ad_physics/apidoc/html/index.html) for a full interface description.",
     long_description_content_type="text/markdown",
     distclass=BinaryDistribution,
     cmdclass={'install': Install}
