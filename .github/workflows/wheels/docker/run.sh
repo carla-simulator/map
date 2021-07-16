@@ -38,5 +38,5 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 docker run \
     -it \
     --rm \
-    -v ${SCRIPT_DIR}/..:/workspace/map \
+    -v ${SCRIPT_DIR}/../../../..:/workspace/map \
     map:${PYTHON_VERSION} /bin/bash
