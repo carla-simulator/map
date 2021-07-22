@@ -3,6 +3,10 @@ name: Build and Publish wheels for AD-Map Library
 on:
   release:
     types: [published]
+  push:
+    branches: master
+  pull_request:
+    branches: master
 
 jobs:
   wheels:
@@ -36,6 +40,7 @@ jobs:
           done
       - name: Publish wheels to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        if: ${{ github.event_name == 'release'}}
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
