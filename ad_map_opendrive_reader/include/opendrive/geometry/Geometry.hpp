@@ -66,7 +66,7 @@ class Geometry
 {
 public:
   // max sampling error expected
-  static constexpr double cMaxSamplingError = 1e-2;
+  static constexpr double cMaxSamplingError = 5e-2;
 
   /**
    * @brief Returns the GeometryType associated to this geometry.
