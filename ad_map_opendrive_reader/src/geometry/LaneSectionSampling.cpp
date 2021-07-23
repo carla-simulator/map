@@ -69,32 +69,41 @@ void normalizeEdge(Id const id, std::string const &what, Edge &edge)
     {
       edge[i - pointsToDrop] = edge[i];
     }
-    if (edge[i - pointsToDrop] == edge[i - pointsToDrop - 1])
+    // last point must not be dropped
+    if (i < edge.size() - 1)
     {
-      // drop identical points
-      spdlog::trace("normalizeEdge {} dropping identical point from {} edge at index {}", id, what, i);
-      pointsToDrop++;
-    }
-    else
-    {
-      //  moving the middle line in a narrow curve often leads to artifacts (circles) which are removed by the below
-      auto nextEdgeDir = edge[i - pointsToDrop] - edge[i - pointsToDrop - 1];
-      if (previousEdgeDir != Point(0., 0., 0.))
+      // eliminate z-component from normalization
+      auto from = edge[i - pointsToDrop];
+      from.z = 0;
+      auto to = edge[i - pointsToDrop - 1];
+      to.z = 0;
+      if (from == to)
       {
-        auto dotProduct = previousEdgeDir.dot(nextEdgeDir);
-        if (dotProduct < 0.)
+        // drop identical points
+        spdlog::trace("normalizeEdge {} dropping identical point from {} edge at index {}", id, what, i);
+        pointsToDrop++;
+      }
+      else
+      {
+        //  moving the middle line in a narrow curve often leads to artifacts (circles) which are removed by the below
+        auto nextEdgeDir = from - to;
+        if (previousEdgeDir != Point(0., 0., 0.))
         {
-          spdlog::trace("normalizeEdge {} extreme direction changing point from {} edge at index {}", id, what, i);
-          pointsToDrop++;
+          auto dotProduct = previousEdgeDir.dot(nextEdgeDir);
+          if (dotProduct < 0.)
+          {
+            spdlog::trace("normalizeEdge {} extreme direction changing point from {} edge at index {}", id, what, i);
+            pointsToDrop++;
+          }
+          else
+          {
+            previousEdgeDir = nextEdgeDir;
+          }
         }
         else
         {
           previousEdgeDir = nextEdgeDir;
         }
-      }
-      else
-      {
-        previousEdgeDir = nextEdgeDir;
       }
     }
   }
@@ -322,9 +331,7 @@ LaneSectionSampling::LaneSectionProfile LaneSectionSampling::interpolateProfile(
     {
       LaneBorderPoint point;
       point.rightEdgePoint = 0.5 * (startLaneBorderPoint.second.rightEdgePoint + findEnd->second.rightEdgePoint);
-      ;
       point.leftEdgePoint = 0.5 * (startLaneBorderPoint.second.leftEdgePoint + findEnd->second.leftEdgePoint);
-      ;
       profile.laneBorderPoints[startLaneBorderPoint.first] = point;
     }
   }
@@ -360,19 +367,24 @@ void LaneSectionSampling::LaneSectionProfile::dropPointsWithAcceptedError(
 
 void LaneSectionSampling::writeLaneMap(LaneMap &laneMap)
 {
+  std::set<Id> lanesToProcess;
   for (auto const &profile : profiles)
   {
     for (auto const &laneBorderPoint : profile.laneBorderPoints)
     {
       laneMap[laneBorderPoint.first].leftEdge.push_back(laneBorderPoint.second.leftEdgePoint);
       laneMap[laneBorderPoint.first].rightEdge.push_back(laneBorderPoint.second.rightEdgePoint);
+      lanesToProcess.insert(laneBorderPoint.first);
     }
   }
 
   for (auto &lane : laneMap)
   {
-    normalizeEdge(lane.first, "left", lane.second.leftEdge);
-    normalizeEdge(lane.first, "right", lane.second.rightEdge);
+    if (lanesToProcess.count(lane.first) > 0u)
+    {
+      normalizeEdge(lane.first, "left", lane.second.leftEdge);
+      normalizeEdge(lane.first, "right", lane.second.rightEdge);
+    }
   }
 }
 

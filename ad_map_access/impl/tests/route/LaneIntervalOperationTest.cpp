@@ -293,7 +293,7 @@ TEST_F(LaneIntervalOperationTest, GetProjectedENUEdgeOnTown01)
   ASSERT_TRUE(access::init("test_files/Town01.txt"));
 
   ENUPoint point_edu1 = createENUPoint(4.453, -4.560, 0);
-  ASSERT_NEAR((double)lane::calcWidth(point_edu1), 3.9986, 0.0001);
+  ASSERT_NEAR((double)lane::calcWidth(point_edu1), 3.99, 0.0001);
   GeoPoint point_geo1 = toGeo(point_edu1);
   auto startLaneId = lane::uniqueLaneId(point_geo1);
   laneInt1.laneId = startLaneId;
