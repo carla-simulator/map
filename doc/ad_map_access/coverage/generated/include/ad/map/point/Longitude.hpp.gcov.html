@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-07-14 09:02:02</td>
+            <td class="headerValue">2021-07-23 10:09:25</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">29</td>
@@ -168,10 +168,10 @@
 <span class="lineNum">      97 </span>                :            :    *
 <a name="98"><span class="lineNum">      98 </span>                :            :    * \note \ref \_AD_MAP_POINT_LONGITUDE_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
 <span class="lineNum">      99 </span>                :            :    */
-<span class="lineNum">     100 </span>                :<span class="lineCov">    4708715 :   _AD_MAP_POINT_LONGITUDE_EXPLICIT_CONVERSION_ Longitude(double const iLongitude)</span>
-<span class="lineNum">     101 </span>                :<span class="lineCov">    4708715 :     : mLongitude(iLongitude)</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">    2803547 :   _AD_MAP_POINT_LONGITUDE_EXPLICIT_CONVERSION_ Longitude(double const iLongitude)</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">    2803547 :     : mLongitude(iLongitude)</span>
 <span class="lineNum">     102 </span>                :            :   {
-<span class="lineNum">     103 </span>                :<span class="lineCov">    4708715 :   }</span>
+<span class="lineNum">     103 </span>                :<span class="lineCov">    2803547 :   }</span>
 <span class="lineNum">     104 </span>                :            : 
 <span class="lineNum">     105 </span>                :            :   /*!
 <span class="lineNum">     106 </span>                :            :    * \brief standard copy constructor
@@ -284,11 +284,11 @@
 <span class="lineNum">     213 </span>                :            :    *   this Longitude is numerically smaller than other.
 <a name="214"><span class="lineNum">     214 </span>                :            :    * \note the precision of Longitude is considered</a>
 <span class="lineNum">     215 </span>                :            :    */
-<span class="lineNum">     216 </span>                :<span class="lineCov">    3261882 :   bool operator&lt;=(const Longitude &amp;other) const</span>
+<span class="lineNum">     216 </span>                :<span class="lineCov">    1991578 :   bool operator&lt;=(const Longitude &amp;other) const</span>
 <span class="lineNum">     217 </span>                :            :   {
-<span class="lineNum">     218 </span>                :<span class="lineCov">    3261882 :     ensureValid();</span>
-<span class="lineNum">     219 </span>                :<span class="lineCov">    3261881 :     other.ensureValid();</span>
-<span class="lineNum">     220 </span>[<span class="branchCov" title="Branch 0 was taken 29 times"> + </span><span class="branchCov" title="Branch 1 was taken 3261851 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 19 times"> + </span><span class="branchCov" title="Branch 4 was taken 10 times"> + </span>]:<span class="lineCov">    3261880 :     return ((mLongitude &lt; other.mLongitude) || operator==(other));</span>
+<span class="lineNum">     218 </span>                :<span class="lineCov">    1991578 :     ensureValid();</span>
+<span class="lineNum">     219 </span>                :<span class="lineCov">    1991577 :     other.ensureValid();</span>
+<span class="lineNum">     220 </span>[<span class="branchCov" title="Branch 0 was taken 29 times"> + </span><span class="branchCov" title="Branch 1 was taken 1991547 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 19 times"> + </span><span class="branchCov" title="Branch 4 was taken 10 times"> + </span>]:<span class="lineCov">    1991576 :     return ((mLongitude &lt; other.mLongitude) || operator==(other));</span>
 <span class="lineNum">     221 </span>                :            :   }
 <span class="lineNum">     222 </span>                :            : 
 <span class="lineNum">     223 </span>                :            :   /**
@@ -444,9 +444,9 @@
 <span class="lineNum">     373 </span>                :            :    * \note the conversion to the base type removes the physical unit.
 <a name="374"><span class="lineNum">     374 </span>                :            :    *       \ref \_AD_MAP_POINT_LONGITUDE_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.</a>
 <span class="lineNum">     375 </span>                :            :    */
-<span class="lineNum">     376 </span>                :<span class="lineCov">     726519 :   _AD_MAP_POINT_LONGITUDE_EXPLICIT_CONVERSION_ operator double() const</span>
+<span class="lineNum">     376 </span>                :<span class="lineCov">     409087 :   _AD_MAP_POINT_LONGITUDE_EXPLICIT_CONVERSION_ operator double() const</span>
 <span class="lineNum">     377 </span>                :            :   {
-<span class="lineNum">     378 </span>                :<span class="lineCov">     726519 :     return mLongitude;</span>
+<span class="lineNum">     378 </span>                :<span class="lineCov">     409087 :     return mLongitude;</span>
 <span class="lineNum">     379 </span>                :            :   }
 <span class="lineNum">     380 </span>                :            : 
 <span class="lineNum">     381 </span>                :            :   /*!
@@ -456,11 +456,11 @@
 <span class="lineNum">     385 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="386"><span class="lineNum">     386 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     387 </span>                :            :    */
-<span class="lineNum">     388 </span>                :<span class="lineCov">    7340081 :   bool isValid() const</span>
+<span class="lineNum">     388 </span>                :<span class="lineCov">    4481897 :   bool isValid() const</span>
 <span class="lineNum">     389 </span>                :            :   {
-<span class="lineNum">     390 </span>                :<span class="lineCov">    7340081 :     auto const valueClass = std::fpclassify(mLongitude);</span>
-<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 0 was taken 313660 times"> + </span><span class="branchCov" title="Branch 1 was taken 383 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 7339698 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    7340081 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mLongitude)</span>
-<span class="lineNum">     392 </span>[<span class="branchCov" title="Branch 0 was taken 314043 times"> + </span><span class="branchCov" title="Branch 1 was taken 7026038 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 7339698 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">   14680162 :       &amp;&amp; (mLongitude &lt;= cMaxValue);</span>
+<span class="lineNum">     390 </span>                :<span class="lineCov">    4481897 :     auto const valueClass = std::fpclassify(mLongitude);</span>
+<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 0 was taken 312940 times"> + </span><span class="branchCov" title="Branch 1 was taken 383 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4481514 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    4481897 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mLongitude)</span>
+<span class="lineNum">     392 </span>[<span class="branchCov" title="Branch 0 was taken 313323 times"> + </span><span class="branchCov" title="Branch 1 was taken 4168574 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4481514 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    8963794 :       &amp;&amp; (mLongitude &lt;= cMaxValue);</span>
 <span class="lineNum">     393 </span>                :            :   }
 <span class="lineNum">     394 </span>                :            : 
 <span class="lineNum">     395 </span>                :            :   /*!
@@ -469,16 +469,16 @@
 <span class="lineNum">     398 </span>                :            :    * Throws an std::out_of_range() exception if the Longitude
 <a name="399"><span class="lineNum">     399 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     400 </span>                :            :    */
-<span class="lineNum">     401 </span>                :<span class="lineCov">    6524251 :   void ensureValid() const</span>
+<span class="lineNum">     401 </span>                :<span class="lineCov">    3983643 :   void ensureValid() const</span>
 <span class="lineNum">     402 </span>                :            :   {
-<span class="lineNum">     403 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 6524217 times"> + </span>]:<span class="lineCov">    6524251 :     if (!isValid())</span>
+<span class="lineNum">     403 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 3983609 times"> + </span>]:<span class="lineCov">    3983643 :     if (!isValid())</span>
 <span class="lineNum">     404 </span>                :            :     {
 <span class="lineNum">     405 </span>                :<span class="lineCov">         34 :       spdlog::info(&quot;ensureValid(::ad::map::point::Longitude)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     406 </span>                :            : #if (AD_MAP_POINT_LONGITUDE_THROWS_EXCEPTION == 1)
 <span class="lineNum">     407 </span>                :<span class="lineCov">         34 :       throw std::out_of_range(&quot;Longitude value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     408 </span>                :            : #endif
 <span class="lineNum">     409 </span>                :            :     }
-<span class="lineNum">     410 </span>                :<span class="lineCov">    6524217 :   }</span>
+<span class="lineNum">     410 </span>                :<span class="lineCov">    3983609 :   }</span>
 <span class="lineNum">     411 </span>                :            : 
 <span class="lineNum">     412 </span>                :            :   /*!
 <span class="lineNum">     413 </span>                :            :    * \brief ensure that the Longitude is valid and non zero
@@ -501,17 +501,17 @@
 <span class="lineNum">     430 </span>                :            :   /*!
 <a name="431"><span class="lineNum">     431 </span>                :            :    * \brief get minimum valid Longitude (i.e. \ref cMinValue)</a>
 <span class="lineNum">     432 </span>                :            :    */
-<span class="lineNum">     433 </span>                :<span class="lineCov">     815480 :   static Longitude getMin()</span>
+<span class="lineNum">     433 </span>                :<span class="lineCov">     497904 :   static Longitude getMin()</span>
 <span class="lineNum">     434 </span>                :            :   {
-<span class="lineNum">     435 </span>                :<span class="lineCov">     815480 :     return Longitude(cMinValue);</span>
+<span class="lineNum">     435 </span>                :<span class="lineCov">     497904 :     return Longitude(cMinValue);</span>
 <span class="lineNum">     436 </span>                :            :   }
 <span class="lineNum">     437 </span>                :            : 
 <span class="lineNum">     438 </span>                :            :   /*!
 <a name="439"><span class="lineNum">     439 </span>                :            :    * \brief get maximum valid Longitude (i.e. \ref cMaxValue)</a>
 <span class="lineNum">     440 </span>                :            :    */
-<span class="lineNum">     441 </span>                :<span class="lineCov">     815480 :   static Longitude getMax()</span>
+<span class="lineNum">     441 </span>                :<span class="lineCov">     497904 :   static Longitude getMax()</span>
 <span class="lineNum">     442 </span>                :            :   {
-<span class="lineNum">     443 </span>                :<span class="lineCov">     815480 :     return Longitude(cMaxValue);</span>
+<span class="lineNum">     443 </span>                :<span class="lineCov">     497904 :     return Longitude(cMaxValue);</span>
 <span class="lineNum">     444 </span>                :            :   }
 <span class="lineNum">     445 </span>                :            : 
 <span class="lineNum">     446 </span>                :            :   /*!
@@ -576,16 +576,16 @@
 <span class="lineNum">     505 </span>                :            :   /*!
 <a name="506"><span class="lineNum">     506 </span>                :            :    * \see std::numeric_limits::lowest()</a>
 <span class="lineNum">     507 </span>                :            :    */
-<span class="lineNum">     508 </span>                :<span class="lineCov">     815478 :   static inline ::ad::map::point::Longitude lowest()</span>
+<span class="lineNum">     508 </span>                :<span class="lineCov">     497902 :   static inline ::ad::map::point::Longitude lowest()</span>
 <span class="lineNum">     509 </span>                :            :   {
-<span class="lineNum">     510 </span>                :<span class="lineCov">     815478 :     return ::ad::map::point::Longitude::getMin();</span>
+<span class="lineNum">     510 </span>                :<span class="lineCov">     497902 :     return ::ad::map::point::Longitude::getMin();</span>
 <span class="lineNum">     511 </span>                :            :   }
 <span class="lineNum">     512 </span>                :            :   /*!
 <a name="513"><span class="lineNum">     513 </span>                :            :    * \see std::numeric_limits::max()</a>
 <span class="lineNum">     514 </span>                :            :    */
-<span class="lineNum">     515 </span>                :<span class="lineCov">     815478 :   static inline ::ad::map::point::Longitude max()</span>
+<span class="lineNum">     515 </span>                :<span class="lineCov">     497902 :   static inline ::ad::map::point::Longitude max()</span>
 <span class="lineNum">     516 </span>                :            :   {
-<span class="lineNum">     517 </span>                :<span class="lineCov">     815478 :     return ::ad::map::point::Longitude::getMax();</span>
+<span class="lineNum">     517 </span>                :<span class="lineCov">     497902 :     return ::ad::map::point::Longitude::getMax();</span>
 <span class="lineNum">     518 </span>                :            :   }
 <span class="lineNum">     519 </span>                :            : 
 <span class="lineNum">     520 </span>                :            :   /*!

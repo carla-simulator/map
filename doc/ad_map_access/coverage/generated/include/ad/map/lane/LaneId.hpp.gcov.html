@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-07-14 09:02:02</td>
+            <td class="headerValue">2021-07-23 10:09:25</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">21</td>
@@ -163,10 +163,10 @@
 <span class="lineNum">      92 </span>                :            :    *
 <a name="93"><span class="lineNum">      93 </span>                :            :    * \note \ref \_AD_MAP_LANE_LANEID_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
 <span class="lineNum">      94 </span>                :            :    */
-<span class="lineNum">      95 </span>                :<span class="lineCov">    1568604 :   _AD_MAP_LANE_LANEID_EXPLICIT_CONVERSION_ LaneId(uint64_t const iLaneId)</span>
-<span class="lineNum">      96 </span>                :<span class="lineCov">    1568604 :     : mLaneId(iLaneId)</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">    1568594 :   _AD_MAP_LANE_LANEID_EXPLICIT_CONVERSION_ LaneId(uint64_t const iLaneId)</span>
+<span class="lineNum">      96 </span>                :<span class="lineCov">    1568594 :     : mLaneId(iLaneId)</span>
 <span class="lineNum">      97 </span>                :            :   {
-<span class="lineNum">      98 </span>                :<span class="lineCov">    1568604 :   }</span>
+<span class="lineNum">      98 </span>                :<span class="lineCov">    1568594 :   }</span>
 <span class="lineNum">      99 </span>                :            : 
 <span class="lineNum">     100 </span>                :            :   /*!
 <span class="lineNum">     101 </span>                :            :    * \brief standard copy constructor
@@ -203,11 +203,11 @@
 <span class="lineNum">     132 </span>                :            :    *
 <a name="133"><span class="lineNum">     133 </span>                :            :    * \returns \c true if both LaneId are valid and can be taken as numerically equal</a>
 <span class="lineNum">     134 </span>                :            :    */
-<span class="lineNum">     135 </span>                :<span class="lineCov">   27696355 :   bool operator==(const LaneId &amp;other) const</span>
+<span class="lineNum">     135 </span>                :<span class="lineCov">   27695948 :   bool operator==(const LaneId &amp;other) const</span>
 <span class="lineNum">     136 </span>                :            :   {
-<span class="lineNum">     137 </span>                :<span class="lineCov">   27696355 :     ensureValid();</span>
-<span class="lineNum">     138 </span>                :<span class="lineCov">   27696355 :     other.ensureValid();</span>
-<span class="lineNum">     139 </span>                :<span class="lineCov">   27696355 :     return mLaneId == other.mLaneId;</span>
+<span class="lineNum">     137 </span>                :<span class="lineCov">   27695948 :     ensureValid();</span>
+<span class="lineNum">     138 </span>                :<span class="lineCov">   27695948 :     other.ensureValid();</span>
+<span class="lineNum">     139 </span>                :<span class="lineCov">   27695948 :     return mLaneId == other.mLaneId;</span>
 <span class="lineNum">     140 </span>                :            :   }
 <span class="lineNum">     141 </span>                :            : 
 <span class="lineNum">     142 </span>                :            :   /**
@@ -217,9 +217,9 @@
 <span class="lineNum">     146 </span>                :            :    *
 <a name="147"><span class="lineNum">     147 </span>                :            :    * \returns \c true if one of the LaneId is not valid or they can be taken as numerically different</a>
 <span class="lineNum">     148 </span>                :            :    */
-<span class="lineNum">     149 </span>                :<span class="lineCov">   26774687 :   bool operator!=(const LaneId &amp;other) const</span>
+<span class="lineNum">     149 </span>                :<span class="lineCov">   26774561 :   bool operator!=(const LaneId &amp;other) const</span>
 <span class="lineNum">     150 </span>                :            :   {
-<span class="lineNum">     151 </span>                :<span class="lineCov">   26774687 :     return !operator==(other);</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">   26774561 :     return !operator==(other);</span>
 <span class="lineNum">     152 </span>                :            :   }
 <span class="lineNum">     153 </span>                :            : 
 <span class="lineNum">     154 </span>                :            :   /**
@@ -247,11 +247,11 @@
 <span class="lineNum">     176 </span>                :            :    *   this LaneId is strictly numerically smaller than other.
 <a name="177"><span class="lineNum">     177 </span>                :            :    * \note the precision of LaneId is considered</a>
 <span class="lineNum">     178 </span>                :            :    */
-<span class="lineNum">     179 </span>                :<span class="lineCov">   70669450 :   bool operator&lt;(const LaneId &amp;other) const</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">   70669153 :   bool operator&lt;(const LaneId &amp;other) const</span>
 <span class="lineNum">     180 </span>                :            :   {
-<span class="lineNum">     181 </span>                :<span class="lineCov">   70669450 :     ensureValid();</span>
-<span class="lineNum">     182 </span>                :<span class="lineCov">   70669450 :     other.ensureValid();</span>
-<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 26757927 times"> + </span><span class="branchCov" title="Branch 1 was taken 43911523 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 26757927 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">   70669450 :     return (mLaneId &lt; other.mLaneId) &amp;&amp; operator!=(other);</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">   70669153 :     ensureValid();</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">   70669153 :     other.ensureValid();</span>
+<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 0 was taken 26757801 times"> + </span><span class="branchCov" title="Branch 1 was taken 43911352 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 26757801 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">   70669153 :     return (mLaneId &lt; other.mLaneId) &amp;&amp; operator!=(other);</span>
 <span class="lineNum">     184 </span>                :            :   }
 <span class="lineNum">     185 </span>                :            : 
 <span class="lineNum">     186 </span>                :            :   /**
@@ -380,11 +380,11 @@
 <span class="lineNum">     309 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="310"><span class="lineNum">     310 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     311 </span>                :            :    */
-<span class="lineNum">     312 </span>                :<span class="lineCov">  196960410 :   bool isValid() const</span>
+<span class="lineNum">     312 </span>                :<span class="lineCov">  196959002 :   bool isValid() const</span>
 <span class="lineNum">     313 </span>                :            :   {
-<span class="lineNum">     314 </span>                :<span class="lineCov">  196960410 :     auto const valueClass = std::fpclassify(mLaneId);</span>
-<span class="lineNum">     315 </span>[<span class="branchCov" title="Branch 0 was taken 35229 times"> + </span><span class="branchCov" title="Branch 1 was taken 196925181 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 35229 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">  196960410 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mLaneId) &amp;&amp; (mLaneId &lt;= cMaxValue);</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 196960410 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 196960410 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
+<span class="lineNum">     314 </span>                :<span class="lineCov">  196959002 :     auto const valueClass = std::fpclassify(mLaneId);</span>
+<span class="lineNum">     315 </span>[<span class="branchCov" title="Branch 0 was taken 35229 times"> + </span><span class="branchCov" title="Branch 1 was taken 196923773 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 35229 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">  196959002 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mLaneId) &amp;&amp; (mLaneId &lt;= cMaxValue);</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 4 was taken 196959002 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 196959002 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
 <span class="lineNum">     316 </span>                :            :   }
 <span class="lineNum">     317 </span>                :            : 
 <span class="lineNum">     318 </span>                :            :   /*!
@@ -393,16 +393,16 @@
 <span class="lineNum">     321 </span>                :            :    * Throws an std::out_of_range() exception if the LaneId
 <a name="322"><span class="lineNum">     322 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     323 </span>                :            :    */
-<span class="lineNum">     324 </span>                :<span class="lineCov">  196927725 :   void ensureValid() const</span>
+<span class="lineNum">     324 </span>                :<span class="lineCov">  196926317 :   void ensureValid() const</span>
 <span class="lineNum">     325 </span>                :            :   {
-<span class="lineNum">     326 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 196927725 times"> + </span>]:<span class="lineCov">  196927725 :     if (!isValid())</span>
+<span class="lineNum">     326 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 196926317 times"> + </span>]:<span class="lineCov">  196926317 :     if (!isValid())</span>
 <span class="lineNum">     327 </span>                :            :     {
 <span class="lineNum">     328 </span>                :<span class="lineNoCov">          0 :       spdlog::info(&quot;ensureValid(::ad::map::lane::LaneId)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     329 </span>                :            : #if (AD_MAP_LANE_LANEID_THROWS_EXCEPTION == 1)
 <span class="lineNum">     330 </span>                :<span class="lineNoCov">          0 :       throw std::out_of_range(&quot;LaneId value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     331 </span>                :            : #endif
 <span class="lineNum">     332 </span>                :            :     }
-<span class="lineNum">     333 </span>                :<span class="lineCov">  196927725 :   }</span>
+<span class="lineNum">     333 </span>                :<span class="lineCov">  196926317 :   }</span>
 <span class="lineNum">     334 </span>                :            : 
 <span class="lineNum">     335 </span>                :            :   /*!
 <span class="lineNum">     336 </span>                :            :    * \brief ensure that the LaneId is valid and non zero

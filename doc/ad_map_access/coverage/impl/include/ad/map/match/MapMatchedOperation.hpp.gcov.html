@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-07-14 09:02:02</td>
+            <td class="headerValue">2021-07-23 10:09:25</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -92,11 +92,11 @@
 <span class="lineNum">      21 </span>                :            : /** @brief get the list of ParaPoints out of the map matched positions */
 <a name="22"><span class="lineNum">      22 </span>                :            : point::ParaPointList getParaPoints(MapMatchedPositionConfidenceList const &amp;inMapMatchedPositions);</a>
 <span class="lineNum">      23 </span>                :            : 
-<span class="lineNum">      24 </span>                :<span class="lineCov">     144172 : inline bool isLaneType(MapMatchedPositionType const &amp;mapMatchedPositionType)</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">     144175 : inline bool isLaneType(MapMatchedPositionType const &amp;mapMatchedPositionType)</span>
 <span class="lineNum">      25 </span>                :            : {
-<span class="lineNum">      26 </span>                :<span class="lineCov">     144172 :   return mapMatchedPositionType == MapMatchedPositionType::LANE_IN</span>
-<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 0 was taken 47274 times"> + </span><span class="branchCov" title="Branch 1 was taken 51848 times"> + </span>]:<span class="lineCov">      99122 :     || mapMatchedPositionType == MapMatchedPositionType::LANE_LEFT</span>
-<span class="lineNum">      28 </span>[<span class="branchCov" title="Branch 0 was taken 99122 times"> + </span><span class="branchCov" title="Branch 1 was taken 45050 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 47274 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     243294 :     || mapMatchedPositionType == MapMatchedPositionType::LANE_RIGHT;</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">     144175 :   return mapMatchedPositionType == MapMatchedPositionType::LANE_IN</span>
+<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 0 was taken 47230 times"> + </span><span class="branchCov" title="Branch 1 was taken 51816 times"> + </span>]:<span class="lineCov">      99046 :     || mapMatchedPositionType == MapMatchedPositionType::LANE_LEFT</span>
+<span class="lineNum">      28 </span>[<span class="branchCov" title="Branch 0 was taken 99046 times"> + </span><span class="branchCov" title="Branch 1 was taken 45129 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 47230 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     243221 :     || mapMatchedPositionType == MapMatchedPositionType::LANE_RIGHT;</span>
 <span class="lineNum">      29 </span>                :            : }
 <span class="lineNum">      30 </span>                :            : 
 <span class="lineNum">      31 </span>                :            : /**

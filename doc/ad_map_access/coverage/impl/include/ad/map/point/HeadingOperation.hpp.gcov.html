@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-07-14 09:02:02</td>
+            <td class="headerValue">2021-07-23 10:09:25</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -280,9 +280,9 @@
 <span class="lineNum">     209 </span>                :            :  *
 <a name="210"><span class="lineNum">     210 </span>                :            :  * @returns value d = a * b</a>
 <span class="lineNum">     211 </span>                :            :  */
-<span class="lineNum">     212 </span>                :<span class="lineCov">     138099 : inline double operator*(::ad::map::point::ECEFHeading const &amp;a, ::ad::map::point::ECEFHeading const &amp;b)</span>
+<span class="lineNum">     212 </span>                :<span class="lineCov">     138102 : inline double operator*(::ad::map::point::ECEFHeading const &amp;a, ::ad::map::point::ECEFHeading const &amp;b)</span>
 <span class="lineNum">     213 </span>                :            : {
-<span class="lineNum">     214 </span>                :<span class="lineCov">     138099 :   return ::ad::map::point::vectorDotProduct(a, b);</span>
+<span class="lineNum">     214 </span>                :<span class="lineCov">     138102 :   return ::ad::map::point::vectorDotProduct(a, b);</span>
 <span class="lineNum">     215 </span>                :            : }
 <span class="lineNum">     216 </span>                :            : 
 <span class="lineNum">     217 </span>                :            : /**
@@ -320,9 +320,9 @@
 <span class="lineNum">     249 </span>                :            :  * @param[in] b scalar b
 <a name="250"><span class="lineNum">     250 </span>                :            :  * @param[in] a vector a</a>
 <span class="lineNum">     251 </span>                :            :  */
-<span class="lineNum">     252 </span>                :<span class="lineCov">     101338 : inline ::ad::map::point::ECEFHeading operator*(double const &amp;b, ::ad::map::point::ECEFHeading const &amp;a)</span>
+<span class="lineNum">     252 </span>                :<span class="lineCov">     101347 : inline ::ad::map::point::ECEFHeading operator*(double const &amp;b, ::ad::map::point::ECEFHeading const &amp;a)</span>
 <span class="lineNum">     253 </span>                :            : {
-<span class="lineNum">     254 </span>                :<span class="lineCov">     101338 :   return ::ad::map::point::vectorMultiplyScalar(a, b);</span>
+<span class="lineNum">     254 </span>                :<span class="lineCov">     101347 :   return ::ad::map::point::vectorMultiplyScalar(a, b);</span>
 <span class="lineNum">     255 </span>                :            : }
 </pre>
       </td>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-07-14 09:02:02</td>
+            <td class="headerValue">2021-07-23 10:09:25</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -91,14 +91,14 @@
 <span class="lineNum">      20 </span>                :            : namespace map {
 <a name="21"><span class="lineNum">      21 </span>                :            : namespace point {</a>
 <span class="lineNum">      22 </span>                :            : 
-<span class="lineNum">      23 </span>                :<span class="lineCov">     141667 : ECEFHeading createECEFHeading(ECEFPoint const &amp;start, ECEFPoint const &amp;end)</span>
+<span class="lineNum">      23 </span>                :<span class="lineCov">     141670 : ECEFHeading createECEFHeading(ECEFPoint const &amp;start, ECEFPoint const &amp;end)</span>
 <span class="lineNum">      24 </span>                :            : {
-<span class="lineNum">      25 </span>[<span class="branchCov" title="Branch 1 was taken 141667 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 141667 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     141667 :   ECEFPoint const heading = vectorNorm(end - start);</span>
-<span class="lineNum">      26 </span>        [<span class="branchCov" title="Branch 1 was taken 141667 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141667 :   ECEFHeading result;</span>
-<span class="lineNum">      27 </span>                :<span class="lineCov">     141667 :   result.x = heading.x;</span>
-<span class="lineNum">      28 </span>                :<span class="lineCov">     141667 :   result.y = heading.y;</span>
-<span class="lineNum">      29 </span>                :<span class="lineCov">     141667 :   result.z = heading.z;</span>
-<span class="lineNum">      30 </span>                :<span class="lineCov">     141667 :   return result;</span>
+<span class="lineNum">      25 </span>[<span class="branchCov" title="Branch 1 was taken 141670 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 141670 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     141670 :   ECEFPoint const heading = vectorNorm(end - start);</span>
+<span class="lineNum">      26 </span>        [<span class="branchCov" title="Branch 1 was taken 141670 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141670 :   ECEFHeading result;</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">     141670 :   result.x = heading.x;</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">     141670 :   result.y = heading.y;</span>
+<span class="lineNum">      29 </span>                :<span class="lineCov">     141670 :   result.z = heading.z;</span>
+<span class="lineNum">      30 </span>                :<span class="lineCov">     141670 :   return result;</span>
 <a name="31"><span class="lineNum">      31 </span>                :            : }</a>
 <span class="lineNum">      32 </span>                :            : 
 <span class="lineNum">      33 </span>                :<span class="lineCov">        312 : ECEFHeading createECEFHeading(ENUHeading const &amp;yaw, GeoPoint const &amp;enuReferencePoint)</span>

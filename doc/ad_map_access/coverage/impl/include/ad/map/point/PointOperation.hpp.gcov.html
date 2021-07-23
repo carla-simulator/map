@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-07-14 09:02:02</td>
+            <td class="headerValue">2021-07-23 10:09:25</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">26</td>
@@ -119,10 +119,10 @@
 <span class="lineNum">      48 </span>                :            :  *
 <a name="49"><span class="lineNum">      49 </span>                :            :  * @returns value d = a * b</a>
 <span class="lineNum">      50 </span>                :            :  */
-<span class="lineNum">      51 </span>                :<span class="lineCov">  214231973 : template &lt;typename PointType&gt; double vectorDotProduct(PointType const &amp;a, PointType const &amp;b)</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">  115502487 : template &lt;typename PointType&gt; double vectorDotProduct(PointType const &amp;a, PointType const &amp;b)</span>
 <span class="lineNum">      52 </span>                :            : {
-<span class="lineNum">      53 </span>                :<span class="lineCov">  214232023 :   return static_cast&lt;double&gt;(a.x) * static_cast&lt;double&gt;(b.x) + static_cast&lt;double&gt;(a.y) * static_cast&lt;double&gt;(b.y)</span>
-<span class="lineNum">      54 </span>                :<span class="lineCov">  214231973 :     + static_cast&lt;double&gt;(a.z) * static_cast&lt;double&gt;(b.z);</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">  115502537 :   return static_cast&lt;double&gt;(a.x) * static_cast&lt;double&gt;(b.x) + static_cast&lt;double&gt;(a.y) * static_cast&lt;double&gt;(b.y)</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">  115502487 :     + static_cast&lt;double&gt;(a.z) * static_cast&lt;double&gt;(b.z);</span>
 <span class="lineNum">      55 </span>                :            : }
 <span class="lineNum">      56 </span>                :            : 
 <span class="lineNum">      57 </span>                :            : /**
@@ -130,13 +130,13 @@
 <span class="lineNum">      59 </span>                :            :  * @param[in] a vector a
 <a name="60"><span class="lineNum">      60 </span>                :            :  * @param[in] b scalar b</a>
 <span class="lineNum">      61 </span>                :            :  */
-<span class="lineNum">      62 </span>                :<span class="lineCov">     149881 : template &lt;typename PointType&gt; PointType vectorMultiplyScalar(PointType const &amp;a, double const &amp;b)</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">     149890 : template &lt;typename PointType&gt; PointType vectorMultiplyScalar(PointType const &amp;a, double const &amp;b)</span>
 <span class="lineNum">      63 </span>                :            : {
-<span class="lineNum">      64 </span>                :<span class="lineCov">     149881 :   PointType result;</span>
-<span class="lineNum">      65 </span>                :<span class="lineCov">     149881 :   result.x = a.x * b;</span>
-<span class="lineNum">      66 </span>                :<span class="lineCov">     149881 :   result.y = a.y * b;</span>
-<span class="lineNum">      67 </span>                :<span class="lineCov">     149881 :   result.z = a.z * b;</span>
-<span class="lineNum">      68 </span>                :<span class="lineCov">     149881 :   return result;</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">     149890 :   PointType result;</span>
+<span class="lineNum">      65 </span>                :<span class="lineCov">     149890 :   result.x = a.x * b;</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">     149890 :   result.y = a.y * b;</span>
+<span class="lineNum">      67 </span>                :<span class="lineCov">     149890 :   result.z = a.z * b;</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">     149890 :   return result;</span>
 <span class="lineNum">      69 </span>                :            : }
 <span class="lineNum">      70 </span>                :            : 
 <span class="lineNum">      71 </span>                :            : /**
@@ -156,10 +156,10 @@
 <span class="lineNum">      85 </span>                :            :  *
 <a name="86"><span class="lineNum">      86 </span>                :            :  * @returns value d = |a|</a>
 <span class="lineNum">      87 </span>                :            :  */
-<span class="lineNum">      88 </span>                :<span class="lineCov">  140365281 : template &lt;typename PointType&gt; physics::Distance vectorLength(PointType const &amp;a)</span>
+<span class="lineNum">      88 </span>                :<span class="lineCov">   76998994 : template &lt;typename PointType&gt; physics::Distance vectorLength(PointType const &amp;a)</span>
 <span class="lineNum">      89 </span>                :            : {
-<span class="lineNum">      90 </span>                :<span class="lineCov">  140365281 :   physics::Distance const length(std::sqrt(static_cast&lt;double&gt;(vectorDotProduct(a, a))));</span>
-<span class="lineNum">      91 </span>                :<span class="lineCov">  140365281 :   return length;</span>
+<span class="lineNum">      90 </span>                :<span class="lineCov">   76998994 :   physics::Distance const length(std::sqrt(static_cast&lt;double&gt;(vectorDotProduct(a, a))));</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">   76998994 :   return length;</span>
 <span class="lineNum">      92 </span>                :            : }
 <span class="lineNum">      93 </span>                :            : 
 <span class="lineNum">      94 </span>                :            : /**
@@ -169,18 +169,18 @@
 <span class="lineNum">      98 </span>                :            :  *
 <a name="99"><span class="lineNum">      99 </span>                :            :  * @returns vector c = a  / |a|</a>
 <span class="lineNum">     100 </span>                :            :  */
-<span class="lineNum">     101 </span>                :<span class="lineCov">     141725 : template &lt;typename PointType&gt; PointType vectorNorm(PointType const &amp;a)</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">     141728 : template &lt;typename PointType&gt; PointType vectorNorm(PointType const &amp;a)</span>
 <span class="lineNum">     102 </span>                :            : {
-<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 141725 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141725 :   physics::Distance const length = vectorLength(a);</span>
-<span class="lineNum">     104 </span>[<span class="branchCov" title="Branch 2 was taken 141725 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 141725 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     141725 :   if (length &gt; physics::Distance(0.))</span>
+<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 141728 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141728 :   physics::Distance const length = vectorLength(a);</span>
+<span class="lineNum">     104 </span>[<span class="branchCov" title="Branch 2 was taken 141728 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 141728 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     141728 :   if (length &gt; physics::Distance(0.))</span>
 <span class="lineNum">     105 </span>                :            :   {
-<span class="lineNum">     106 </span>        [<span class="branchCov" title="Branch 1 was taken 141725 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141725 :     PointType result;</span>
-<span class="lineNum">     107 </span>        [<span class="branchCov" title="Branch 1 was taken 141725 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141725 :     result.x = a.x / length;</span>
-<span class="lineNum">     108 </span>        [<span class="branchCov" title="Branch 1 was taken 141725 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141725 :     result.y = a.y / length;</span>
-<span class="lineNum">     109 </span>        [<span class="branchCov" title="Branch 1 was taken 141725 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141725 :     result.z = a.z / length;</span>
-<span class="lineNum">     110 </span>                :<span class="lineCov">     141725 :     return result;</span>
+<span class="lineNum">     106 </span>        [<span class="branchCov" title="Branch 1 was taken 141728 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141728 :     PointType result;</span>
+<span class="lineNum">     107 </span>        [<span class="branchCov" title="Branch 1 was taken 141728 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141728 :     result.x = a.x / length;</span>
+<span class="lineNum">     108 </span>        [<span class="branchCov" title="Branch 1 was taken 141728 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141728 :     result.y = a.y / length;</span>
+<span class="lineNum">     109 </span>        [<span class="branchCov" title="Branch 1 was taken 141728 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     141728 :     result.z = a.z / length;</span>
+<span class="lineNum">     110 </span>                :<span class="lineCov">     141728 :     return result;</span>
 <span class="lineNum">     111 </span>                :            :   }
-<span class="lineNum">     112 </span>                :<span class="lineCov">     141725 :   return a;</span>
+<span class="lineNum">     112 </span>                :<span class="lineCov">     141728 :   return a;</span>
 <span class="lineNum">     113 </span>                :            : }
 <span class="lineNum">     114 </span>                :            : 
 <span class="lineNum">     115 </span>                :            : /**
@@ -208,13 +208,13 @@
 <span class="lineNum">     137 </span>                :            :  *
 <a name="138"><span class="lineNum">     138 </span>                :            :  * @returns c = a - b</a>
 <span class="lineNum">     139 </span>                :            :  */
-<span class="lineNum">     140 </span>                :<span class="lineCov">  214444066 : template &lt;typename PointType&gt; PointType vectorSub(PointType const &amp;a, PointType const &amp;b)</span>
+<span class="lineNum">     140 </span>                :<span class="lineCov">  115582089 : template &lt;typename PointType&gt; PointType vectorSub(PointType const &amp;a, PointType const &amp;b)</span>
 <span class="lineNum">     141 </span>                :            : {
-<span class="lineNum">     142 </span>                :<span class="lineCov">  214444016 :   PointType result;</span>
-<span class="lineNum">     143 </span>                :<span class="lineCov">  214444066 :   result.x = a.x - b.x;</span>
-<span class="lineNum">     144 </span>                :<span class="lineCov">  214444066 :   result.y = a.y - b.y;</span>
-<span class="lineNum">     145 </span>                :<span class="lineCov">  214444066 :   result.z = a.z - b.z;</span>
-<span class="lineNum">     146 </span>                :<span class="lineCov">  214444066 :   return result;</span>
+<span class="lineNum">     142 </span>                :<span class="lineCov">  115582039 :   PointType result;</span>
+<span class="lineNum">     143 </span>                :<span class="lineCov">  115582089 :   result.x = a.x - b.x;</span>
+<span class="lineNum">     144 </span>                :<span class="lineCov">  115582089 :   result.y = a.y - b.y;</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">  115582089 :   result.z = a.z - b.z;</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">  115582089 :   return result;</span>
 <span class="lineNum">     147 </span>                :            : }
 <span class="lineNum">     148 </span>                :            : 
 <span class="lineNum">     149 </span>                :            : /**
@@ -229,9 +229,9 @@
 <span class="lineNum">     158 </span>                :            :  *          with tparam==1, it will return point b.
 <a name="159"><span class="lineNum">     159 </span>                :            :  */</a>
 <span class="lineNum">     160 </span>                :            : template &lt;typename PointType&gt;
-<span class="lineNum">     161 </span>                :<span class="lineCov">   42573192 : PointType vectorInterpolate(PointType const &amp;a, PointType const &amp;b, physics::ParametricValue const &amp;tparam)</span>
+<span class="lineNum">     161 </span>                :<span class="lineCov">   24825378 : PointType vectorInterpolate(PointType const &amp;a, PointType const &amp;b, physics::ParametricValue const &amp;tparam)</span>
 <span class="lineNum">     162 </span>                :            : {
-<span class="lineNum">     163 </span>[<span class="branchCov" title="Branch 2 was taken 42573192 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]:<span class="lineCov">   42573192 :   return vectorExtrapolate(a, b, static_cast&lt;double&gt;(tparam));</span>
+<span class="lineNum">     163 </span>[<span class="branchCov" title="Branch 2 was taken 24825378 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]:<span class="lineCov">   24825378 :   return vectorExtrapolate(a, b, static_cast&lt;double&gt;(tparam));</span>
 <span class="lineNum">     164 </span>                :            : }
 <span class="lineNum">     165 </span>                :            : 
 <span class="lineNum">     166 </span>                :            : /**
@@ -245,17 +245,17 @@
 <span class="lineNum">     174 </span>                :            :  *          with scalar==0, it will return point a;
 <a name="175"><span class="lineNum">     175 </span>                :            :  *          with scalar==1, it will return point b.</a>
 <span class="lineNum">     176 </span>                :            :  */
-<span class="lineNum">     177 </span>                :<span class="lineCov">   42573190 : template &lt;typename PointType&gt; PointType vectorExtrapolate(PointType const &amp;a, PointType const &amp;b, double const &amp;scalar)</span>
+<span class="lineNum">     177 </span>                :<span class="lineCov">   24825376 : template &lt;typename PointType&gt; PointType vectorExtrapolate(PointType const &amp;a, PointType const &amp;b, double const &amp;scalar)</span>
 <span class="lineNum">     178 </span>                :            : {
-<span class="lineNum">     179 </span>                :<span class="lineCov">   42573190 :   PointType result;</span>
-<span class="lineNum">     180 </span>        [<span class="branchCov" title="Branch 2 was taken 42573190 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">   42573190 :   result.x = (1 - scalar) * a.x + scalar * b.x;</span>
-<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 5 was taken 42573190 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">     179 </span>                :<span class="lineCov">   24825376 :   PointType result;</span>
+<span class="lineNum">     180 </span>        [<span class="branchCov" title="Branch 2 was taken 24825376 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">   24825376 :   result.x = (1 - scalar) * a.x + scalar * b.x;</span>
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 5 was taken 24825376 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
 <span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>]
-<span class="lineNum">     181 </span>[<span class="branchCov" title="Branch 2 was taken 42573190 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 42573190 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">   42573190 :   result.y = (1 - scalar) * a.y + scalar * b.y;</span>
+<span class="lineNum">     181 </span>[<span class="branchCov" title="Branch 2 was taken 24825376 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 24825376 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">   24825376 :   result.y = (1 - scalar) * a.y + scalar * b.y;</span>
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>][<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>]
-<span class="lineNum">     182 </span>[<span class="branchCov" title="Branch 2 was taken 42573190 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 42573190 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">   42573190 :   result.z = (1 - scalar) * a.z + scalar * b.z;</span>
+<span class="lineNum">     182 </span>[<span class="branchCov" title="Branch 2 was taken 24825376 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 24825376 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">   24825376 :   result.z = (1 - scalar) * a.z + scalar * b.z;</span>
 <span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 9 was not executed"> # </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span>][<span class="branchNoExec" title="Branch 12 was not executed"> # </span><span class="branchNoExec" title="Branch 13 was not executed"> # </span>]
-<span class="lineNum">     183 </span>                :<span class="lineCov">   42573190 :   return result;</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">   24825376 :   return result;</span>
 <span class="lineNum">     184 </span>                :            : }
 <span class="lineNum">     185 </span>                :            : 
 <span class="lineNum">     186 </span>                :            : } // namespace point

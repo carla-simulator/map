@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-07-14 09:02:02</td>
+            <td class="headerValue">2021-07-23 10:09:25</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">29</td>
@@ -168,10 +168,10 @@
 <span class="lineNum">      97 </span>                :            :    *
 <a name="98"><span class="lineNum">      98 </span>                :            :    * \note \ref \_AD_MAP_POINT_LATITUDE_EXPLICIT_CONVERSION\_ defines, if only an explicit conversion is allowed.</a>
 <span class="lineNum">      99 </span>                :            :    */
-<span class="lineNum">     100 </span>                :<span class="lineCov">    4708662 :   _AD_MAP_POINT_LATITUDE_EXPLICIT_CONVERSION_ Latitude(double const iLatitude)</span>
-<span class="lineNum">     101 </span>                :<span class="lineCov">    4708662 :     : mLatitude(iLatitude)</span>
+<span class="lineNum">     100 </span>                :<span class="lineCov">    2803494 :   _AD_MAP_POINT_LATITUDE_EXPLICIT_CONVERSION_ Latitude(double const iLatitude)</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">    2803494 :     : mLatitude(iLatitude)</span>
 <span class="lineNum">     102 </span>                :            :   {
-<span class="lineNum">     103 </span>                :<span class="lineCov">    4708662 :   }</span>
+<span class="lineNum">     103 </span>                :<span class="lineCov">    2803494 :   }</span>
 <span class="lineNum">     104 </span>                :            : 
 <span class="lineNum">     105 </span>                :            :   /*!
 <span class="lineNum">     106 </span>                :            :    * \brief standard copy constructor
@@ -284,11 +284,11 @@
 <span class="lineNum">     213 </span>                :            :    *   this Latitude is numerically smaller than other.
 <a name="214"><span class="lineNum">     214 </span>                :            :    * \note the precision of Latitude is considered</a>
 <span class="lineNum">     215 </span>                :            :    */
-<span class="lineNum">     216 </span>                :<span class="lineCov">    3261857 :   bool operator&lt;=(const Latitude &amp;other) const</span>
+<span class="lineNum">     216 </span>                :<span class="lineCov">    1991553 :   bool operator&lt;=(const Latitude &amp;other) const</span>
 <span class="lineNum">     217 </span>                :            :   {
-<span class="lineNum">     218 </span>                :<span class="lineCov">    3261857 :     ensureValid();</span>
-<span class="lineNum">     219 </span>                :<span class="lineCov">    3261856 :     other.ensureValid();</span>
-<span class="lineNum">     220 </span>[<span class="branchCov" title="Branch 0 was taken 22 times"> + </span><span class="branchCov" title="Branch 1 was taken 3261833 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 17 times"> + </span><span class="branchCov" title="Branch 4 was taken 5 times"> + </span>]:<span class="lineCov">    3261855 :     return ((mLatitude &lt; other.mLatitude) || operator==(other));</span>
+<span class="lineNum">     218 </span>                :<span class="lineCov">    1991553 :     ensureValid();</span>
+<span class="lineNum">     219 </span>                :<span class="lineCov">    1991552 :     other.ensureValid();</span>
+<span class="lineNum">     220 </span>[<span class="branchCov" title="Branch 0 was taken 22 times"> + </span><span class="branchCov" title="Branch 1 was taken 1991529 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 17 times"> + </span><span class="branchCov" title="Branch 4 was taken 5 times"> + </span>]:<span class="lineCov">    1991551 :     return ((mLatitude &lt; other.mLatitude) || operator==(other));</span>
 <span class="lineNum">     221 </span>                :            :   }
 <span class="lineNum">     222 </span>                :            : 
 <span class="lineNum">     223 </span>                :            :   /**
@@ -444,9 +444,9 @@
 <span class="lineNum">     373 </span>                :            :    * \note the conversion to the base type removes the physical unit.
 <a name="374"><span class="lineNum">     374 </span>                :            :    *       \ref \_AD_MAP_POINT_LATITUDE_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.</a>
 <span class="lineNum">     375 </span>                :            :    */
-<span class="lineNum">     376 </span>                :<span class="lineCov">     726796 :   _AD_MAP_POINT_LATITUDE_EXPLICIT_CONVERSION_ operator double() const</span>
+<span class="lineNum">     376 </span>                :<span class="lineCov">     409364 :   _AD_MAP_POINT_LATITUDE_EXPLICIT_CONVERSION_ operator double() const</span>
 <span class="lineNum">     377 </span>                :            :   {
-<span class="lineNum">     378 </span>                :<span class="lineCov">     726796 :     return mLatitude;</span>
+<span class="lineNum">     378 </span>                :<span class="lineCov">     409364 :     return mLatitude;</span>
 <span class="lineNum">     379 </span>                :            :   }
 <span class="lineNum">     380 </span>                :            : 
 <span class="lineNum">     381 </span>                :            :   /*!
@@ -456,11 +456,11 @@
 <span class="lineNum">     385 </span>                :            :    * - It is normal or zero (see std::fpclassify())
 <a name="386"><span class="lineNum">     386 </span>                :            :    * - \ref cMinValue &lt;= value &lt;= \ref cMaxValue</a>
 <span class="lineNum">     387 </span>                :            :    */
-<span class="lineNum">     388 </span>                :<span class="lineCov">    7339608 :   bool isValid() const</span>
+<span class="lineNum">     388 </span>                :<span class="lineCov">    4481424 :   bool isValid() const</span>
 <span class="lineNum">     389 </span>                :            :   {
-<span class="lineNum">     390 </span>                :<span class="lineCov">    7339608 :     auto const valueClass = std::fpclassify(mLatitude);</span>
-<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 0 was taken 313657 times"> + </span><span class="branchCov" title="Branch 1 was taken 41 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 7339567 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    7339608 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mLatitude)</span>
-<span class="lineNum">     392 </span>[<span class="branchCov" title="Branch 0 was taken 313698 times"> + </span><span class="branchCov" title="Branch 1 was taken 7025910 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 7339567 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">   14679216 :       &amp;&amp; (mLatitude &lt;= cMaxValue);</span>
+<span class="lineNum">     390 </span>                :<span class="lineCov">    4481424 :     auto const valueClass = std::fpclassify(mLatitude);</span>
+<span class="lineNum">     391 </span>[<span class="branchCov" title="Branch 0 was taken 312937 times"> + </span><span class="branchCov" title="Branch 1 was taken 41 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4481383 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    4481424 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mLatitude)</span>
+<span class="lineNum">     392 </span>[<span class="branchCov" title="Branch 0 was taken 312978 times"> + </span><span class="branchCov" title="Branch 1 was taken 4168446 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 4481383 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">    8962848 :       &amp;&amp; (mLatitude &lt;= cMaxValue);</span>
 <span class="lineNum">     393 </span>                :            :   }
 <span class="lineNum">     394 </span>                :            : 
 <span class="lineNum">     395 </span>                :            :   /*!
@@ -469,16 +469,16 @@
 <span class="lineNum">     398 </span>                :            :    * Throws an std::out_of_range() exception if the Latitude
 <a name="399"><span class="lineNum">     399 </span>                :            :    * in not valid (i.e. isValid() returns false)</a>
 <span class="lineNum">     400 </span>                :            :    */
-<span class="lineNum">     401 </span>                :<span class="lineCov">    6524127 :   void ensureValid() const</span>
+<span class="lineNum">     401 </span>                :<span class="lineCov">    3983519 :   void ensureValid() const</span>
 <span class="lineNum">     402 </span>                :            :   {
-<span class="lineNum">     403 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 6524093 times"> + </span>]:<span class="lineCov">    6524127 :     if (!isValid())</span>
+<span class="lineNum">     403 </span>        [<span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 3983485 times"> + </span>]:<span class="lineCov">    3983519 :     if (!isValid())</span>
 <span class="lineNum">     404 </span>                :            :     {
 <span class="lineNum">     405 </span>                :<span class="lineCov">         34 :       spdlog::info(&quot;ensureValid(::ad::map::point::Latitude)&gt;&gt; {} value out of range&quot;, *this); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     406 </span>                :            : #if (AD_MAP_POINT_LATITUDE_THROWS_EXCEPTION == 1)
 <span class="lineNum">     407 </span>                :<span class="lineCov">         34 :       throw std::out_of_range(&quot;Latitude value out of range&quot;); // LCOV_EXCL_BR_LINE</span>
 <span class="lineNum">     408 </span>                :            : #endif
 <span class="lineNum">     409 </span>                :            :     }
-<span class="lineNum">     410 </span>                :<span class="lineCov">    6524093 :   }</span>
+<span class="lineNum">     410 </span>                :<span class="lineCov">    3983485 :   }</span>
 <span class="lineNum">     411 </span>                :            : 
 <span class="lineNum">     412 </span>                :            :   /*!
 <span class="lineNum">     413 </span>                :            :    * \brief ensure that the Latitude is valid and non zero
@@ -501,17 +501,17 @@
 <span class="lineNum">     430 </span>                :            :   /*!
 <a name="431"><span class="lineNum">     431 </span>                :            :    * \brief get minimum valid Latitude (i.e. \ref cMinValue)</a>
 <span class="lineNum">     432 </span>                :            :    */
-<span class="lineNum">     433 </span>                :<span class="lineCov">     815467 :   static Latitude getMin()</span>
+<span class="lineNum">     433 </span>                :<span class="lineCov">     497891 :   static Latitude getMin()</span>
 <span class="lineNum">     434 </span>                :            :   {
-<span class="lineNum">     435 </span>                :<span class="lineCov">     815467 :     return Latitude(cMinValue);</span>
+<span class="lineNum">     435 </span>                :<span class="lineCov">     497891 :     return Latitude(cMinValue);</span>
 <span class="lineNum">     436 </span>                :            :   }
 <span class="lineNum">     437 </span>                :            : 
 <span class="lineNum">     438 </span>                :            :   /*!
 <a name="439"><span class="lineNum">     439 </span>                :            :    * \brief get maximum valid Latitude (i.e. \ref cMaxValue)</a>
 <span class="lineNum">     440 </span>                :            :    */
-<span class="lineNum">     441 </span>                :<span class="lineCov">     815467 :   static Latitude getMax()</span>
+<span class="lineNum">     441 </span>                :<span class="lineCov">     497891 :   static Latitude getMax()</span>
 <span class="lineNum">     442 </span>                :            :   {
-<span class="lineNum">     443 </span>                :<span class="lineCov">     815467 :     return Latitude(cMaxValue);</span>
+<span class="lineNum">     443 </span>                :<span class="lineCov">     497891 :     return Latitude(cMaxValue);</span>
 <span class="lineNum">     444 </span>                :            :   }
 <span class="lineNum">     445 </span>                :            : 
 <span class="lineNum">     446 </span>                :            :   /*!
@@ -576,16 +576,16 @@
 <span class="lineNum">     505 </span>                :            :   /*!
 <a name="506"><span class="lineNum">     506 </span>                :            :    * \see std::numeric_limits::lowest()</a>
 <span class="lineNum">     507 </span>                :            :    */
-<span class="lineNum">     508 </span>                :<span class="lineCov">     815465 :   static inline ::ad::map::point::Latitude lowest()</span>
+<span class="lineNum">     508 </span>                :<span class="lineCov">     497889 :   static inline ::ad::map::point::Latitude lowest()</span>
 <span class="lineNum">     509 </span>                :            :   {
-<span class="lineNum">     510 </span>                :<span class="lineCov">     815465 :     return ::ad::map::point::Latitude::getMin();</span>
+<span class="lineNum">     510 </span>                :<span class="lineCov">     497889 :     return ::ad::map::point::Latitude::getMin();</span>
 <span class="lineNum">     511 </span>                :            :   }
 <span class="lineNum">     512 </span>                :            :   /*!
 <a name="513"><span class="lineNum">     513 </span>                :            :    * \see std::numeric_limits::max()</a>
 <span class="lineNum">     514 </span>                :            :    */
-<span class="lineNum">     515 </span>                :<span class="lineCov">     815465 :   static inline ::ad::map::point::Latitude max()</span>
+<span class="lineNum">     515 </span>                :<span class="lineCov">     497889 :   static inline ::ad::map::point::Latitude max()</span>
 <span class="lineNum">     516 </span>                :            :   {
-<span class="lineNum">     517 </span>                :<span class="lineCov">     815465 :     return ::ad::map::point::Latitude::getMax();</span>
+<span class="lineNum">     517 </span>                :<span class="lineCov">     497889 :     return ::ad::map::point::Latitude::getMax();</span>
 <span class="lineNum">     518 </span>                :            :   }
 <span class="lineNum">     519 </span>                :            : 
 <span class="lineNum">     520 </span>                :            :   /*!

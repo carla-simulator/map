@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-07-14 09:02:02</td>
+            <td class="headerValue">2021-07-23 10:09:25</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -413,23 +413,23 @@
 <span class="lineNum">     332 </span>                :            :   }
 <a name="333"><span class="lineNum">     333 </span>                :            : }</a>
 <span class="lineNum">     334 </span>                :            : 
-<span class="lineNum">     335 </span>                :<span class="lineCov">     687663 : point::GeoPoint toGeo(::opendrive::Point const &amp;point)</span>
+<span class="lineNum">     335 </span>                :<span class="lineCov">     370231 : point::GeoPoint toGeo(::opendrive::Point const &amp;point)</span>
 <span class="lineNum">     336 </span>                :            : {
-<span class="lineNum">     337 </span>        [<span class="branchCov" title="Branch 4 was taken 687663 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     687663 :   return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(point.z));</span>
+<span class="lineNum">     337 </span>        [<span class="branchCov" title="Branch 4 was taken 370231 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     370231 :   return point::createGeoPoint(point::Longitude(point.x), point::Latitude(point.y), point::Altitude(point.z));</span>
 <a name="338"><span class="lineNum">     338 </span>                :            : }</a>
 <span class="lineNum">     339 </span>                :            : 
-<span class="lineNum">     340 </span>                :<span class="lineCov">     687663 : point::ECEFPoint toECEF(::opendrive::Point const &amp;point)</span>
+<span class="lineNum">     340 </span>                :<span class="lineCov">     370231 : point::ECEFPoint toECEF(::opendrive::Point const &amp;point)</span>
 <span class="lineNum">     341 </span>                :            : {
 <span class="lineNum">     342 </span>                :            :   // points expected to be geo points
-<span class="lineNum">     343 </span>        [<span class="branchCov" title="Branch 2 was taken 687663 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     687663 :   return point::toECEF(toGeo(point));</span>
+<span class="lineNum">     343 </span>        [<span class="branchCov" title="Branch 2 was taken 370231 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     370231 :   return point::toECEF(toGeo(point));</span>
 <a name="344"><span class="lineNum">     344 </span>                :            : }</a>
 <span class="lineNum">     345 </span>                :            : 
 <span class="lineNum">     346 </span>                :<span class="lineCov">      41422 : point::Geometry toGeometry(std::vector&lt;::opendrive::Point&gt; edgePoints)</span>
 <span class="lineNum">     347 </span>                :            : {
 <span class="lineNum">     348 </span>                :<span class="lineCov">      82844 :   point::ECEFEdge ecefEdge;</span>
-<span class="lineNum">     349 </span>        [<span class="branchCov" title="Branch 3 was taken 686704 times"> + </span><span class="branchCov" title="Branch 4 was taken 41422 times"> + </span>]:<span class="lineCov">     728126 :   for (auto const &amp;point : edgePoints)</span>
+<span class="lineNum">     349 </span>        [<span class="branchCov" title="Branch 3 was taken 369272 times"> + </span><span class="branchCov" title="Branch 4 was taken 41422 times"> + </span>]:<span class="lineCov">     410694 :   for (auto const &amp;point : edgePoints)</span>
 <span class="lineNum">     350 </span>                :            :   {
-<span class="lineNum">     351 </span>[<span class="branchCov" title="Branch 1 was taken 686704 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 686704 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     686704 :     ecefEdge.push_back(toECEF(point));</span>
+<span class="lineNum">     351 </span>[<span class="branchCov" title="Branch 1 was taken 369272 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 369272 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">     369272 :     ecefEdge.push_back(toECEF(point));</span>
 <span class="lineNum">     352 </span>                :            :   }
 <span class="lineNum">     353 </span>                :            : 
 <span class="lineNum">     354 </span>        [<span class="branchCov" title="Branch 1 was taken 41422 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      82844 :   return point::createGeometry(ecefEdge, false);</span>
