@@ -1,4 +1,7 @@
 ## Latest changes
+* Add creation of python wheels
+
+## Release 2.4.5
 * Complete geometry import of OpenDRIVE reader
 
 ## Release 2.4.4

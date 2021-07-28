@@ -41,7 +41,7 @@ def main():
     )
 
     additional_replacements = {("BOOST_PYTHON_MODULE(physics){",
-         "void export_ad_physics(){\n\n" +
+                                "BOOST_PYTHON_MODULE(ad_physics_@PYTHON_BINDING_NAME@){\n" +
          "  bp::object ad_physics_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"physics\"))));\n" +
          "  bp::scope().attr(\"physics\") = ad_physics_module;\n" +
          "  bp::scope submodule_scope = ad_physics_module;\n\n" +

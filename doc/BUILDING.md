@@ -51,7 +51,7 @@ $>  sudo apt-get install libboost-all-dev libpugixml-dev libgtest-dev libpython-
 Additional dependencies for the python bindings:
 ```bash
 $>  sudo apt-get install castxml
-$>  pip install --user pygccxml pyplusplus xmlrunner
+$>  pip install --user python-wheel pygccxml pyplusplus xmlrunner
 ```
 
 Remaining dependencies are present as GIT submodules; also to fix the version of these:
@@ -91,20 +91,27 @@ colcon meta file:
 ```bash
  map$> colcon build --metas colcon_python.meta
 ```
-__colcon_python.meta__ enables python build (-DBUILD_PYTHON_BINDING=ON) and
-as well static build (-DBUILD_SHARED_LIBS=OFF) to ease the usage of the python modules
-as they don't require extending the LD_LIBRARY_PATH when linked statically against its non-system dependencies.
+__colcon_python.meta__ enables python build (-DBUILD_PYTHON_BINDING=ON). To specify the python version to be used you call e.g.:
+```bash
+ map$> colcon build --metas colcon_python.meta --cmake-args -DPYTHON_BINDING_VERSION=3.8
+```
+
+If you want to use static libraries to ease the usage of the python modules as they don't require extending the LD_LIBRARY_PATH when linked
+statically against its non-system dependencies you have to provide addition cmake args:
+```bash
+ map$> colcon build --metas colcon_python.meta --cmake-args -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+```
 
 Furthermore, building the QGIS Plugin is also encouraged with static libraries for the same reason. To build this one you might want to call
 (you have to adapt to your python version used):
 ```bash
- map$> colcon build --metas colcon_python.meta --packages-up-to ad_map_access_qgis --build-base build-static --install-base install-static
+ map$> colcon build --metas colcon_python.meta --packages-up-to ad_map_access_qgis --build-base build-static --install-base install-static --cmake-args -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON
  map$> echo "QGIS plugin built! Let's test it out:"
- map$> export PYTHONPATH=<path/to/>map/install-static/ad_map_access/lib/python3.6
+ map$> export PYTHONPATH=<path/to/>map/install-static/ad_physics/lib/python3.8/site-packages:<path/to/>map/install-static/ad_map_access/lib/python3.8/site-packages
  map$> export QGIS_PLUGINPATH=<path/to/>map/install-static/ad_map_access_qgis/share/qgis/python/plugins
  map$> qgis
 ```
-You should have seen 'Intel AD Map Plug-in loaded' on successful loading of the plugin by qgis. For sure you don't require to change build and install folders.
+You should have seen 'CARLA AD Map Plug-in loaded' on successful loading of the plugin by qgis. For sure you don't require to change build and install folders.
 But like this, you can have the pure-static (python) builds separated from the standard shared library builds.
 
 ### Plain CMake build
@@ -171,13 +178,14 @@ Building the QGIS plugin in addition then looks like:
  map/build/ad_map_access_qgis$> make install
  map/build/ad_map_access_qgis$> cd ../..
  map$> echo "Hurray, QGIS plugin built! Let's try to run it:"
+ map$> export PYTHONPATH=<path/to/>map/install/ad_physics/lib/python3.8/site-packages:<path/to/>map/install/ad_map_access/lib/python3.8/site-packages
  map$> export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<path/to/>map/install/spdlog/lib:<path/to/>map/install/ad_physics/lib:<path/to/>map/install/ad_map_opendrive_reader/lib:<path/to/>map/install/ad_map_access/lib:<path/to/>map/install/ad_map_access_qgis_python/lib
  map$> export QGIS_PLUGINPATH=<path/to/>map/install/ad_map_access_qgis/share/qgis/python/plugins
  map$> qgis
- map$> echo "We should have seen 'Intel AD Map Plug-in loaded' on success"
+ map$> echo "We should have seen 'CARLA AD Map Plug-in loaded' on success"
 ```
 
-If building all libraries (ad_physics,ad_map_opendrive_reader,ad_map_access) with static build option "-DBUILD_SHARED_LIBS=OFF", the LD_LIBRARY_PATH can be left out. Sometimes we observed that the integrated copy step of the 'ad_map_access_qgis_python.so' fails, so that in addition setting of the 'export PYTHONPATH=$PYTHONPATH:<path/to/>map/install/lib/ad_map_access_qgis/python2.7/' coud become necessary.
+If building all libraries (ad_physics,ad_map_opendrive_reader,ad_map_access) with static build option "-DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON", the LD_LIBRARY_PATH can be left out. Sometimes we observed that the integrated copy step of the 'ad_map_access_qgis_python.so' fails, so that in addition setting of the 'export PYTHONPATH=$PYTHONPATH:<path/to/>map/install/lib/ad_map_access_qgis/python2.7/' coud become necessary.
 
 ## CMake options
 There are some build options available:
@@ -186,7 +194,7 @@ There are some build options available:
  - BUILD_APIDOC: Enables API documentation building
  - BUILD_HARDENING: Enables hardening compiler and linker flags
  - BUILD_PYTHON_BINDING: Enables the build of the respective python bindings
- - PYTHON_BINDING_VERSIONS: standard search for python boost bindings is for multiple versions e.g. "2.7 3.5 3.6. 3.7" (see cmake/python-binding.cmake for details); this search can be restricted from outside if this variable is set
+ - PYTHON_BINDING_VERSION: the python version to be used e.g. "2.7 3.5 3.6. 3.7 3.8"
 
 By default, all options are set to off. Any of these could be activate by adding them to the initial cmake call above as "-D<OPTION>=[ON|OFF]",
 e.g. "-DBUILD_TESTING=ON -DBUILD_APIDOC=ON".
@@ -217,12 +225,10 @@ hardening flags to ensure the code is compatible to respective flags. To enable 
 
 #### Python binding
 With this option enabled, Python bindings are generated and compiled.
-When compiling Python bindings it's recommended to build and link the other
-libraries statically to prevent from dependencies on the LD_LIBRARY_PATH at execution time.
 This option is disabled by default.
 You have to enable the python binding also on the respective dependent component. ad_physics in this case.
 ```bash
- map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader" -DBUILD_PYTHON_BINDING=ON -DBUILD_SHARED_LIBS=OFF
+ map/build/ad_map_access$> cmake ../../ad_map_access -DCMAKE_INSTALL_PREFIX=../../install/ad_map_access -DCMAKE_PREFIX_PATH="../../install/spdlog;../../install/ad_physics;../../install/ad_map_opendrive_reader" -DBUILD_PYTHON_BINDING=ON
  map/build/ad_map_access$> make install
 ```
 

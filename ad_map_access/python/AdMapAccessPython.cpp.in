@@ -20,7 +20,7 @@ extern void export_ad_map_route();
 
 namespace bp = boost::python;
 
-void export_ad_map_access_python()
+BOOST_PYTHON_MODULE(ad_map_access_@PYTHON_BINDING_NAME@)
 {
   // create/import the map module scope
   bp::object ad_map_access_module(bp::handle<>(bp::borrowed(PyImport_AddModule("map"))));

@@ -7,11 +7,11 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 
 """
-Import ad_physics module for @binding_string@
+Import ad_physics module for @PYTHON_BINDING_NAME@
 """
 
 import sys
 import os.path
 sys.path.append(os.path.dirname(__file__))
 
-from ad_physics_@binding_string@_module import *
+from ad_physics_@PYTHON_BINDING_NAME@ import *
