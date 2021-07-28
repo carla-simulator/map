@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-07-23 10:09:25</td>
+            <td class="headerValue">2021-07-28 09:26:50</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">29</td>
@@ -462,8 +462,8 @@
 <span class="lineNum">     391 </span>                :<span class="lineCov"> 1766066311 :   bool isValid() const</span>
 <span class="lineNum">     392 </span>                :            :   {
 <span class="lineNum">     393 </span>                :<span class="lineCov"> 1766066311 :     auto const valueClass = std::fpclassify(mECEFCoordinate);</span>
-<span class="lineNum">     394 </span>[<span class="branchCov" title="Branch 0 was taken 106095518 times"> + </span><span class="branchCov" title="Branch 1 was taken 61 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1766066246 times"> + </span><span class="branchCov" title="Branch 3 was taken 4 times"> + </span>]:<span class="lineCov"> 1766066311 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mECEFCoordinate)</span>
-<span class="lineNum">     395 </span>[<span class="branchCov" title="Branch 0 was taken 106095579 times"> + </span><span class="branchCov" title="Branch 1 was taken 1659970732 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1766066240 times"> + </span><span class="branchCov" title="Branch 3 was taken 6 times"> + </span>]:<span class="lineCov"> 3532132622 :       &amp;&amp; (mECEFCoordinate &lt;= cMaxValue);</span>
+<span class="lineNum">     394 </span>[<span class="branchCov" title="Branch 0 was taken 106093349 times"> + </span><span class="branchCov" title="Branch 1 was taken 61 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1766066246 times"> + </span><span class="branchCov" title="Branch 3 was taken 4 times"> + </span>]:<span class="lineCov"> 1766066311 :     return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) &amp;&amp; (cMinValue &lt;= mECEFCoordinate)</span>
+<span class="lineNum">     395 </span>[<span class="branchCov" title="Branch 0 was taken 106093410 times"> + </span><span class="branchCov" title="Branch 1 was taken 1659972901 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1766066240 times"> + </span><span class="branchCov" title="Branch 3 was taken 6 times"> + </span>]:<span class="lineCov"> 3532132622 :       &amp;&amp; (mECEFCoordinate &lt;= cMaxValue);</span>
 <span class="lineNum">     396 </span>                :            :   }
 <span class="lineNum">     397 </span>                :            : 
 <span class="lineNum">     398 </span>                :            :   /*!
