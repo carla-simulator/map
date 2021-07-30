@@ -144,7 +144,7 @@ Therefore, a full list of step by step calls could look like e.g.:
 
  # Build ad_map_opendrive_reader
  map/build/ad_physics$> cd ../ad_map_opendrive_reader
- map/build/ad_map_opendrive_reader$> cmake ../../ad_map_opendrive_reader -DCMAKE_INSTALL_PREFIX=../../install/ad_map_opendrive_reader -DCMAKE_PREFIX_PATH="../../install/proj;../../install/spdlog;../../install/ad_physics"
+ map/build/ad_map_opendrive_reader$> cmake ../../ad_map_opendrive_reader -DCMAKE_INSTALL_PREFIX=../../install/ad_map_opendrive_reader -DCMAKE_PREFIX_PATH="../../install/proj;../../install/spdlog;../../install/ad_physics" -DPROJ_INCLUDE_DIR=../../install/proj/include
  map/build/ad_map_opendrive_reader$> make install
 
  # Build ad_map_access
