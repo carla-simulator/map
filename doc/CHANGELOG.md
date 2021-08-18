@@ -2,6 +2,7 @@
 #### :ghost: Maintenance
 * Fixed version numbers
 * Fixed OpenDRIVE import
+* Removed outdated and error prone plain cmake build from documentation
 
 ## Release 2.4.6
 #### :rocket: New Features
