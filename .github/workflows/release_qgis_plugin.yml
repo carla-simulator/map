@@ -24,7 +24,7 @@ jobs:
 
     - name: Build Libraries
       run: |
-        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --cmake-args -DPYTHON_BINDING_VERSION=${PYTHON_BINDING_VERSION}
+        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --packages-select ad_map_access_qgis
 
     - name: Build Package
       run: |
