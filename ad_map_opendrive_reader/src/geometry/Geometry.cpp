@@ -197,7 +197,7 @@ const DirectedPoint GeometryParamPoly3::PosFromDist(const double dist) const
   double p = dist;
   if (_p_range_is_normalized)
   {
-    std::min(1.0, dist / _length);
+    p = std::min(1.0, dist / _length);
   }
 
   auto polyU = boost::array<double, 4>{{_aU, _bU, _cU, _dU}};

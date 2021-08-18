@@ -11,9 +11,9 @@ name=CARLA ad_map_access
 qgisMinimumVersion=3.10
 qgisMaximumVersion=3.99
 description=CARLA ad_map_access
-version= version 1.2
-author=Intel Corp.
-email=todo@intel.com
+version= version 2.4.7
+author=CARLA Simulator Team
+email=carla.simulator@gmail.com
 
 about=CARLA ad_map_access
 
@@ -37,4 +37,3 @@ experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False
-

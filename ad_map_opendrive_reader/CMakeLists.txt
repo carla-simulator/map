@@ -19,7 +19,7 @@ include(../cmake/apidoc.cmake)
 #convert list to string
 string (REPLACE ";" " " TARGET_LINK_FLAGS "${TARGET_LINK_OPTIONS}")
 
-project(ad_map_opendrive_reader VERSION 3.0.0)
+project(ad_map_opendrive_reader VERSION 2.4.7)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -150,7 +150,7 @@ write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/install/${PROJECT_N
   COMPATIBILITY SameMajorVersion
 )
 
-install(FILES 
+install(FILES
   "${CMAKE_CURRENT_BINARY_DIR}/install/${PROJECT_NAME}Config.cmake"
   "${CMAKE_CURRENT_BINARY_DIR}/install/${PROJECT_NAME}ConfigVersion.cmake"
   DESTINATION ${CMAKECONFIG_INSTALL_DIR}

@@ -11,17 +11,8 @@ on:
 
 jobs:
   publish:
-    name: Publish for ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-18.04
-            artifact_name: ad_map_access_qgis_ubuntu1804.zip
-            PYTHON_BINDING_VERSION: "3.6"
-          - os: ubuntu-20.04
-            artifact_name: ad_map_access_qgis_ubuntu2004.zip
-            PYTHON_BINDING_VERSION: "3.8"
+    name: Publish AD-Map QGIS Plugin
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v2
@@ -32,23 +23,19 @@ jobs:
       run: bash .github/workflows/install_dependencies.sh
 
     - name: Build Libraries
-      env:
-          PYTHON_BINDING_VERSION: ${{ matrix.PYTHON_BINDING_VERSION }}
       run: |
-        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --build-base build-static --install-base install-static --cmake-args -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DPYTHON_BINDING_VERSION=${PYTHON_BINDING_VERSION}
+        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --packages-up-to ad_map_access_qgis
 
     - name: Build Package
       run: |
-        cd install-static
-        cp -r ad_map_access/lib/python3.*/site-packages/ad_map_access ad_map_access_qgis/share/qgis/python/plugins/ad_map_access_qgis/.
-        cd ad_map_access_qgis/share/qgis/python/plugins/
-        zip -r ${{ matrix.artifact_name }} ad_map_access_qgis/
-        mv ${{ matrix.artifact_name }} ../../../../../../
+        cd install/ad_map_access_qgis/share/qgis/python/plugins/
+        zip -r ad_map_access_qgis.zip ad_map_access_qgis/
+        mv ad_map_access_qgis.zip ../../../../../../
 
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       if: ${{ github.event_name == 'release'}}
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ matrix.artifact_name }}
+        file: ad_map_access_qgis.zip
         tag: ${{ github.ref }}

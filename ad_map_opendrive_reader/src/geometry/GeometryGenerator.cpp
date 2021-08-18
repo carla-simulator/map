@@ -966,6 +966,7 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
   }
 
   auto convertENUToGeo = [&projPtr](Point &point) {
+    point.ensureValid();
     projXY enuPoint;
     enuPoint.u = point.x;
     enuPoint.v = point.y;
@@ -973,18 +974,28 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
     auto geoPoint = pj_inv(enuPoint, projPtr);
     point.x = geoPoint.u * RAD_TO_DEG;
     point.y = geoPoint.v * RAD_TO_DEG;
+    point.ensureValid();
   };
 
   for (auto &element : mapData.laneMap)
   {
     auto &lane = element.second;
-    for (auto &point : lane.leftEdge)
+    try
     {
-      convertENUToGeo(point);
+      for (auto &point : lane.leftEdge)
+      {
+        convertENUToGeo(point);
+      }
+      for (auto &point : lane.rightEdge)
+      {
+        convertENUToGeo(point);
+      }
     }
-    for (auto &point : lane.rightEdge)
+    catch (...)
     {
-      convertENUToGeo(point);
+      spdlog::error("convertToGeoPoints>> error converting ENU points of lane {} to Geo Points", lane.id);
+      lane.leftEdge.resize(0);
+      lane.rightEdge.resize(0);
     }
   }
 

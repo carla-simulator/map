@@ -190,8 +190,20 @@ bool AdMapFactory::addLane(::opendrive::Lane const &lane)
   bool ok = true;
   if ((lane.leftEdge.size() < 2) || (lane.rightEdge.size() < 2))
   {
-    // Invalid number of points for lane"
-    access::getLogger()->error("Invalid number of points for lane {}", lane.id);
+    access::getLogger()->error("Invalid number of points for lane {}. Skip lane.", lane.id);
+    return false;
+  }
+
+  point::Geometry leftEcefEdge;
+  point::Geometry rightEcefEdge;
+  try
+  {
+    leftEcefEdge = toGeometry(lane.leftEdge);
+    rightEcefEdge = toGeometry(lane.rightEdge);
+  }
+  catch (...)
+  {
+    access::getLogger()->error("Invalid points for lane {}. Skip lane.", lane.id);
     return false;
   }
 
@@ -212,8 +224,6 @@ bool AdMapFactory::addLane(::opendrive::Lane const &lane)
   {
     ok = false;
   }
-  auto const leftEcefEdge = toGeometry(lane.leftEdge);
-  auto const rightEcefEdge = toGeometry(lane.rightEdge);
   if (!set(laneId, leftEcefEdge, rightEcefEdge))
   {
     ok = false;

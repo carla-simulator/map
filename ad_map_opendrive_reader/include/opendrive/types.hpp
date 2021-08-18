@@ -17,6 +17,7 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <spdlog/spdlog.h>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -116,45 +117,78 @@ struct Point
 
   bool operator==(const Point &rhs) const
   {
+    ensureValid();
+    rhs.ensureValid();
     // Points are treated as equal when below 1 mm
     return (std::fabs(x - rhs.x) < cCoordinateTolerance) && (std::fabs(y - rhs.y) < cCoordinateTolerance)
       && (std::fabs(z - rhs.z) < cCoordinateTolerance);
   }
   bool operator!=(const Point &rhs) const
   {
+    ensureValid();
+    rhs.ensureValid();
     return !operator==(rhs);
   }
   double normSquared() const
   {
+    ensureValid();
     return x * x + y * y + z * z;
   }
 
   double norm() const
   {
+    ensureValid();
     return sqrt(normSquared());
   }
 
   double dot(const Point &other) const
   {
+    ensureValid();
+    other.ensureValid();
     return x * other.x + y * other.y + z * other.z;
+  }
+
+  void ensureValid() const
+  {
+    if (!isValid())
+    {
+      spdlog::error("ensureValid(Point)>> {},{},{} value out of range", x, y, z);
+      throw std::out_of_range("Point value out of range");
+    }
+  }
+
+  bool isValid() const
+  {
+    auto const valueClassX = std::fpclassify(x);
+    auto const valueClassY = std::fpclassify(y);
+    auto const valueClassZ = std::fpclassify(z);
+    return ((valueClassX == FP_NORMAL) || (valueClassX == FP_ZERO))
+      && ((valueClassY == FP_NORMAL) || (valueClassY == FP_ZERO))
+      && ((valueClassZ == FP_NORMAL) || (valueClassZ == FP_ZERO));
   }
 };
 
 inline Point operator-(const Point &left, const Point &right)
 {
+  left.ensureValid();
+  right.ensureValid();
   return Point(left.x - right.x, left.y - right.y, left.z - right.z);
 }
 inline Point operator+(const Point &left, const Point &right)
 {
+  left.ensureValid();
+  right.ensureValid();
   return Point(left.x + right.x, left.y + right.y, left.z + right.z);
 }
 inline Point operator*(const double &scalar, const Point &point)
 {
+  point.ensureValid();
   return Point(scalar * point.x, scalar * point.y, scalar * point.z);
 }
 
 inline Point operator*(const Point &point, const double &scalar)
 {
+  point.ensureValid();
   return operator*(scalar, point);
 }
 
