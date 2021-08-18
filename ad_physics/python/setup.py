@@ -24,7 +24,7 @@ setup(
     packages=["ad_physics"],
     package_dir={"": sys.argv.pop(-1)},
     package_data={"ad_physics": ["*.so"]},
-    version="2.4.5",
+    version="2.4.7",
     author='CARLA Simulator Team',
     author_email='carla.simulator@gmail.com',
     license="MIT",

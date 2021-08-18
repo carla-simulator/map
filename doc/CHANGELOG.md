@@ -1,7 +1,14 @@
-## Latest changes
+## Release 2.4.7
+#### :ghost: Maintenance
+* Fixed version numbers
+* Fixed OpenDRIVE import
+
+## Release 2.4.6
+#### :rocket: New Features
 * Add creation of python wheels
 
 ## Release 2.4.5
+#### :rocket: New Features
 * Complete geometry import of OpenDRIVE reader
 
 ## Release 2.4.4
