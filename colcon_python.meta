@@ -1,5 +1,11 @@
 {
     "names": {
+        "PROJ4": {
+            "cmake-args": ["-DCMAKE_POSITION_INDEPENDENT_CODE=ON"]
+        },
+        "spdlog": {
+            "cmake-args": ["-DCMAKE_POSITION_INDEPENDENT_CODE=ON", "-DSPDLOG_BUILD_TESTS=OFF", "-DSPDLOG_BUILD_EXAMPLE=Off"]
+        },
         "ad_physics": {
             "cmake-args": ["-DBUILD_PYTHON_BINDING=ON"]
         },
@@ -11,12 +17,6 @@
         },
         "ad_map_access_qgis": {
             "dependencies": ["ad_map_access"]
-        },
-        "PROJ4": {
-            "cmake-args": ["-DCMAKE_POSITION_INDEPENDENT_CODE=ON"]
-        },
-        "spdlog": {
-            "cmake-args": ["-DCMAKE_POSITION_INDEPENDENT_CODE=ON", "-DSPDLOG_BUILD_TESTS=OFF", "-DSPDLOG_BUILD_EXAMPLE=Off"]
         }
     }
 }
