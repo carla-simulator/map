@@ -16,6 +16,7 @@
             "dependencies": ["PROJ4"]
         },
         "ad_map_access_qgis": {
+            "cmake-args": ["-DBUILD_PYTHON_BINDING=ON"],
             "dependencies": ["ad_map_access"]
         }
     }

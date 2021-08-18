@@ -9,6 +9,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(ad_map_access_qgis)
+include(../../cmake/python-binding.cmake)
 include(GNUInstallDirs)
 
 if(BUILD_PYTHON_BINDING)
