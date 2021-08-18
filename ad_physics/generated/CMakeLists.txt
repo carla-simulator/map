@@ -14,7 +14,7 @@
 ##
 
 cmake_minimum_required(VERSION 3.5)
-project(ad_physics VERSION 2.4.0)
+project(ad_physics VERSION 2.4.5)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -123,4 +123,3 @@ endif()
 if (ad_physics_TOOLS_DIR)
   add_subdirectory(${ad_physics_TOOLS_DIR} ad_physics_tools)
 endif()
-

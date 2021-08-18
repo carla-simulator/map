@@ -30,9 +30,9 @@
 /*!
  * The revision of ad_map_access_test_support
  */
-#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_REVISION 0
+#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_REVISION 5
 
 /*!
  * The version of ad_map_access_test_support as string
  */
-#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_STRING "2.4.0"
+#define AD_MAP_ACCESS_TEST_SUPPORT_VERSION_STRING "2.4.5"
