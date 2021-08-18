@@ -21,6 +21,34 @@ The following map data is e.g. visualized there:
 
 Also basic tools to test the map matching and routing functionality, prediction test(with runtime selection of route creation mode, prediction duration and length) are also provided.
 
+### Download and Install (without building)
+You can download the latest version of the plugin from the [Release](https://github.com/carla-simulator/map/releases/latest) artifacts as *zip* file.
+
+1. Install ad-map-access python via pip
+```bash
+ $> pip install --user ad-map-access
+```
+
+2. Then you run qgis and install the plugin from the plugins menu (`Plugins > Manage and Install Plugins > Install from ZIP`),
+choose the zip file that was previously downloaded.
+
+![Install from ZIP](images/InstallZip.png)
+
+3. Change to `Installed` tab and make sure `CARLA ad_map_access` is enabled.
+4. Enjoy!
+
+### After building
+If you are building the tool from sources
+(see also [Build instructions](https://ad-map-access.readthedocs.io/en/latest/BUILDING/index.html))
+you have to set the PYTHONPATH, LD_LIBRARY_PATH and QGIS_PLUGINPATH before starting:
+```bash
+ map$> echo "Setting PYTHONPATH and LD_LIBRARY_PATH:"
+ map$> source install/setup.bash
+ map$> echo "QGIS plugin built! Let's test it out:"
+ map$> export QGIS_PLUGINPATH=<path/to/>map/install/ad_map_access_qgis/share/qgis/python/plugins
+ map$> qgis
+```
+
 ### CARLA ad_map_access toolbar <a name="toolbar"></a>
 The CARLA ad_map_access toolbar looks like this when the plugin is loaded:
 
@@ -47,11 +75,6 @@ The different features provided by the plugin are:
  ![Enable All](images/ID.png) : Generally it is required to select each layer(INTERSECTION, NORMAL, OTHER or UNKNOWN) under Lane Types, and then activate the lane id attribute to visualize the lane ids on the map. Enabling this button helps the user to bypass those steps, and directly visualize the lane ids on the map. Also, disabling the button removes the lane IDs from the map.
 
 ### How to use the tool <a name="howtouse"></a>
-- The python path is set to the current python bindings and the working folder.
-*$map> export PYTHONPATH=$PYTHONPATH:<path/to/>install/ad_map_access/lib/python3.6*
-- Load qgis from the working folder where the python environment was set.
-- The QGIS_PLUGINPATH can be configured optionally as a shell script file to avoid loading the plugin everytime, QGis is opened.
-  QGIS_PLUGINPATH=<path/to/>install/ad_map_access_qgis/share/qgis/python/plugins
 - Once the plugin is loaded, the CARLA ad_map_access toolbar is now available for use.
 - The map is loaded using the load map icon on the CARLA ad_map_access toolbar.
   Currently, it is possible to directly load a txt configuration file and xodr files from ad_map_access.

@@ -33,27 +33,14 @@ When you are asked for a file name, make sure that you select ".osm" as file for
 If you have built the osm_to_adm tool, and downloaded the osm file, then you just execute the tool on the osm file; e.g.:
 
 ```bash
-$> osm_to_adm MyDownloadedMap.osm -o MyDownloadedMap.adm -t secondary,tertiary,residential
-```
-
-You might have to set the LD_LIBRARY_PATH before:
-```bash
-$> export LD_LIBRARY_PATH=install/ad_physics/lib:install/ad_map_access/lib:install/ad_map_opendrive_reader/lib
-```
-
-Or you build it with the static (python) colcon configuration to get rid of the LD_LIBRARY_PATH [described here](../BUILDING/#colcon-build).
-```bash
-$> colcon build --metas colcon_python.meta --packages-up-to MapMaker --build-base build-static --install-base install-static
-```
-
-Then you can omit the LD_LIBRARY_PATH and call it directly
-```bash
-$> ./install-static/MapMaker/bin/osm_to_adm
+ map$> echo "Setting PYTHONPATH and LD_LIBRARY_PATH:"
+ map$> source install/setup.bash
+ map$> osm_to_adm MyDownloadedMap.osm -o MyDownloadedMap.adm -t secondary,tertiary,residential
 ```
 
 For more options on conversion, you can just call
 ```bash
-$> ./install-static/MapMaker/bin/osm_to_adm --help
+ map$> osm_to_adm --help
 ```
 
 ## Logging
