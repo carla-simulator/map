@@ -24,18 +24,19 @@ Also basic tools to test the map matching and routing functionality, prediction 
 ### Download and Install (without building)
 You can download the latest version of the plugin from the [Release](https://github.com/carla-simulator/map/releases/latest) artifacts as *zip* file.
 
-1. Install ad-map-access python via pip
-```bash
- $> pip install --user ad-map-access
-```
+  1. Install ad-map-access python via pip
+  ```bash
+   $> pip install --user ad-map-access
+  ```
 
-2. Then you run qgis and install the plugin from the plugins menu (`Plugins > Manage and Install Plugins > Install from ZIP`),
-choose the zip file that was previously downloaded.
+  2. Then you run qgis and install the plugin from the plugins menu (`Plugins > Manage and Install Plugins > Install from ZIP`),
+  choose the zip file that was previously downloaded.
 
-![Install from ZIP](images/InstallZip.png)
+  ![Install from ZIP](images/InstallZip.png)
 
-3. Change to `Installed` tab and make sure `CARLA ad_map_access` is enabled.
-4. Enjoy!
+  3. Change to `Installed` tab and make sure `CARLA ad_map_access` is enabled.
+
+  4. Enjoy!
 
 ### After building
 If you are building the tool from sources
