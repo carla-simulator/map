@@ -103,8 +103,11 @@ There are some CMake options affecting what or how the components are built.
  - PYTHON_BINDING_VERSION: Select the python version to use explicitly e.g. "3.8". (Note: If that's not one of the system installed python versions,
    you have to ensure that the boost-python binding for that python version is available!)
 
-By default, all options are set to off. Any of these could be activate by adding them via the colcon call above as "--cmake-args -D<OPTION>=[ON|OFF]",
-e.g. "--cmake-args -DBUILD_TESTING=ON -DBUILD_APIDOC=ON -DBUILD_PYTHON_BINDING=ON -DPYTHON_BINDING_VERSION=3.8".
+By default, all options are set to off. Any of these could be activate by adding them via the colcon call above as "--cmake-args -D&lt;OPTION&gt;=[ON|OFF]",
+e.g.:
+```bash
+ map$> colcon build --cmake-args -DBUILD_TESTING=ON -DBUILD_APIDOC=ON -DBUILD_PYTHON_BINDING=ON -DPYTHON_BINDING_VERSION=3.8
+```
 
 ### Unit tests
 ```bash
