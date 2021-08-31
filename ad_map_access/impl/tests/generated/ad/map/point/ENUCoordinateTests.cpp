@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -29,14 +29,14 @@ TEST(ENUCoordinateTests, defaultConstructionIsInvalid)
 
 TEST(ENUCoordinateTests, minIsDefinedAsExpected)
 {
-  EXPECT_DOUBLE_EQ(-1e6, ::ad::map::point::ENUCoordinate::cMinValue);
+  EXPECT_DOUBLE_EQ(-1e9, ::ad::map::point::ENUCoordinate::cMinValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue,
                    static_cast<double>(::ad::map::point::ENUCoordinate::getMin()));
 }
 
 TEST(ENUCoordinateTests, maxIsDefinedAsExpected)
 {
-  EXPECT_DOUBLE_EQ(1e6, ::ad::map::point::ENUCoordinate::cMaxValue);
+  EXPECT_DOUBLE_EQ(1e9, ::ad::map::point::ENUCoordinate::cMaxValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMaxValue,
                    static_cast<double>(::ad::map::point::ENUCoordinate::getMax()));
 }

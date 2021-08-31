@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -21,11 +21,11 @@
 TEST(ENUPointValidInputRangeTests, testValidInputRange)
 {
   ::ad::map::point::ENUPoint value;
-  ::ad::map::point::ENUCoordinate valueX(-16384);
+  ::ad::map::point::ENUCoordinate valueX(-1e6);
   value.x = valueX;
-  ::ad::map::point::ENUCoordinate valueY(-16384);
+  ::ad::map::point::ENUCoordinate valueY(-1e6);
   value.y = valueY;
-  ::ad::map::point::ENUCoordinate valueZ(-16384);
+  ::ad::map::point::ENUCoordinate valueZ(-1e6);
   value.z = valueZ;
   ASSERT_TRUE(withinValidInputRange(value));
 }
@@ -33,15 +33,15 @@ TEST(ENUPointValidInputRangeTests, testValidInputRange)
 TEST(ENUPointValidInputRangeTests, testValidInputRangeXTooSmall)
 {
   ::ad::map::point::ENUPoint value;
-  ::ad::map::point::ENUCoordinate valueX(-16384);
+  ::ad::map::point::ENUCoordinate valueX(-1e6);
   value.x = valueX;
-  ::ad::map::point::ENUCoordinate valueY(-16384);
+  ::ad::map::point::ENUCoordinate valueY(-1e6);
   value.y = valueY;
-  ::ad::map::point::ENUCoordinate valueZ(-16384);
+  ::ad::map::point::ENUCoordinate valueZ(-1e6);
   value.z = valueZ;
 
   // override member with data type value below input range minimum
-  ::ad::map::point::ENUCoordinate invalidInitializedMember(-16384 * 1.1);
+  ::ad::map::point::ENUCoordinate invalidInitializedMember(-1e6 * 1.1);
   value.x = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -49,15 +49,15 @@ TEST(ENUPointValidInputRangeTests, testValidInputRangeXTooSmall)
 TEST(ENUPointValidInputRangeTests, testValidInputRangeXTooBig)
 {
   ::ad::map::point::ENUPoint value;
-  ::ad::map::point::ENUCoordinate valueX(-16384);
+  ::ad::map::point::ENUCoordinate valueX(-1e6);
   value.x = valueX;
-  ::ad::map::point::ENUCoordinate valueY(-16384);
+  ::ad::map::point::ENUCoordinate valueY(-1e6);
   value.y = valueY;
-  ::ad::map::point::ENUCoordinate valueZ(-16384);
+  ::ad::map::point::ENUCoordinate valueZ(-1e6);
   value.z = valueZ;
 
   // override member with data type value above input range maximum
-  ::ad::map::point::ENUCoordinate invalidInitializedMember(16384 * 1.1);
+  ::ad::map::point::ENUCoordinate invalidInitializedMember(1e6 * 1.1);
   value.x = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -73,15 +73,15 @@ TEST(ENUPointValidInputRangeTests, testValidInputRangexDefault)
 TEST(ENUPointValidInputRangeTests, testValidInputRangeYTooSmall)
 {
   ::ad::map::point::ENUPoint value;
-  ::ad::map::point::ENUCoordinate valueX(-16384);
+  ::ad::map::point::ENUCoordinate valueX(-1e6);
   value.x = valueX;
-  ::ad::map::point::ENUCoordinate valueY(-16384);
+  ::ad::map::point::ENUCoordinate valueY(-1e6);
   value.y = valueY;
-  ::ad::map::point::ENUCoordinate valueZ(-16384);
+  ::ad::map::point::ENUCoordinate valueZ(-1e6);
   value.z = valueZ;
 
   // override member with data type value below input range minimum
-  ::ad::map::point::ENUCoordinate invalidInitializedMember(-16384 * 1.1);
+  ::ad::map::point::ENUCoordinate invalidInitializedMember(-1e6 * 1.1);
   value.y = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -89,15 +89,15 @@ TEST(ENUPointValidInputRangeTests, testValidInputRangeYTooSmall)
 TEST(ENUPointValidInputRangeTests, testValidInputRangeYTooBig)
 {
   ::ad::map::point::ENUPoint value;
-  ::ad::map::point::ENUCoordinate valueX(-16384);
+  ::ad::map::point::ENUCoordinate valueX(-1e6);
   value.x = valueX;
-  ::ad::map::point::ENUCoordinate valueY(-16384);
+  ::ad::map::point::ENUCoordinate valueY(-1e6);
   value.y = valueY;
-  ::ad::map::point::ENUCoordinate valueZ(-16384);
+  ::ad::map::point::ENUCoordinate valueZ(-1e6);
   value.z = valueZ;
 
   // override member with data type value above input range maximum
-  ::ad::map::point::ENUCoordinate invalidInitializedMember(16384 * 1.1);
+  ::ad::map::point::ENUCoordinate invalidInitializedMember(1e6 * 1.1);
   value.y = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -113,15 +113,15 @@ TEST(ENUPointValidInputRangeTests, testValidInputRangeyDefault)
 TEST(ENUPointValidInputRangeTests, testValidInputRangeZTooSmall)
 {
   ::ad::map::point::ENUPoint value;
-  ::ad::map::point::ENUCoordinate valueX(-16384);
+  ::ad::map::point::ENUCoordinate valueX(-1e6);
   value.x = valueX;
-  ::ad::map::point::ENUCoordinate valueY(-16384);
+  ::ad::map::point::ENUCoordinate valueY(-1e6);
   value.y = valueY;
-  ::ad::map::point::ENUCoordinate valueZ(-16384);
+  ::ad::map::point::ENUCoordinate valueZ(-1e6);
   value.z = valueZ;
 
   // override member with data type value below input range minimum
-  ::ad::map::point::ENUCoordinate invalidInitializedMember(-16384 * 1.1);
+  ::ad::map::point::ENUCoordinate invalidInitializedMember(-1e6 * 1.1);
   value.z = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -129,15 +129,15 @@ TEST(ENUPointValidInputRangeTests, testValidInputRangeZTooSmall)
 TEST(ENUPointValidInputRangeTests, testValidInputRangeZTooBig)
 {
   ::ad::map::point::ENUPoint value;
-  ::ad::map::point::ENUCoordinate valueX(-16384);
+  ::ad::map::point::ENUCoordinate valueX(-1e6);
   value.x = valueX;
-  ::ad::map::point::ENUCoordinate valueY(-16384);
+  ::ad::map::point::ENUCoordinate valueY(-1e6);
   value.y = valueY;
-  ::ad::map::point::ENUCoordinate valueZ(-16384);
+  ::ad::map::point::ENUCoordinate valueZ(-1e6);
   value.z = valueZ;
 
   // override member with data type value above input range maximum
-  ::ad::map::point::ENUCoordinate invalidInitializedMember(16384 * 1.1);
+  ::ad::map::point::ENUCoordinate invalidInitializedMember(1e6 * 1.1);
   value.z = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }

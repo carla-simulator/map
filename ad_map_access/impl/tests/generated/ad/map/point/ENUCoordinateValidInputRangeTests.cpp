@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -26,13 +26,13 @@ TEST(ENUCoordinateValidInputRangeTests, testValidInputRangeUninitialized)
 
 TEST(ENUCoordinateValidInputRangeTests, testValidInputRangeMinOk)
 {
-  ::ad::map::point::ENUCoordinate value(-1e6);
+  ::ad::map::point::ENUCoordinate value(-1e9);
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
 TEST(ENUCoordinateValidInputRangeTests, testValidInputRangeMaxOk)
 {
-  ::ad::map::point::ENUCoordinate value(1e6);
+  ::ad::map::point::ENUCoordinate value(1e9);
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
@@ -50,24 +50,24 @@ TEST(ENUCoordinateValidInputRangeTests, testValidInputRangeExceedsMax)
 
 TEST(ENUCoordinateValidInputRangeTests, testValidInputRangeInputMinOk)
 {
-  ::ad::map::point::ENUCoordinate value(-16384);
+  ::ad::map::point::ENUCoordinate value(-1e6);
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
 TEST(ENUCoordinateValidInputRangeTests, testValidInputRangeInputMaxOk)
 {
-  ::ad::map::point::ENUCoordinate value(16384);
+  ::ad::map::point::ENUCoordinate value(1e6);
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
 TEST(ENUCoordinateValidInputRangeTests, testValidInputRangeBelowInputMin)
 {
-  ::ad::map::point::ENUCoordinate value(-16384 * 1.1);
+  ::ad::map::point::ENUCoordinate value(-1e6 * 1.1);
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
 TEST(ENUCoordinateValidInputRangeTests, testValidInputRangeExceedsInputMax)
 {
-  ::ad::map::point::ENUCoordinate value(16384 * 1.1);
+  ::ad::map::point::ENUCoordinate value(1e6 * 1.1);
   ASSERT_FALSE(withinValidInputRange(value));
 }
