@@ -11,7 +11,7 @@ name=CARLA ad_map_access
 qgisMinimumVersion=3.10
 qgisMaximumVersion=3.99
 description=CARLA ad_map_access
-version= version 2.4.7
+version= version 2.4.8
 author=CARLA Simulator Team
 email=carla.simulator@gmail.com
 

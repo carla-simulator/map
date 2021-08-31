@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2021 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -32,9 +32,9 @@ namespace map {
  */
 namespace point {
 
-const double ENUCoordinate::cMinValue = -1e6;
+const double ENUCoordinate::cMinValue = -1e9;
 
-const double ENUCoordinate::cMaxValue = 1e6;
+const double ENUCoordinate::cMaxValue = 1e9;
 
 const double ENUCoordinate::cPrecisionValue = 1e-3;
 

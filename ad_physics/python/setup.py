@@ -1,3 +1,12 @@
+#!/usr/bin/python
+# ----------------- BEGIN LICENSE BLOCK ---------------------------------
+#
+# Copyright (c) 2021 Computer Vision Center (CVC) at the Universitat Autonoma
+# de Barcelona (UAB).
+# Copyright (c) 2021 Intel Corporation
+#
+# ----------------- END LICENSE BLOCK -----------------------------------
+
 import sys
 
 from setuptools import setup
@@ -24,7 +33,7 @@ setup(
     packages=["ad_physics"],
     package_dir={"": sys.argv.pop(-1)},
     package_data={"ad_physics": ["*.so"]},
-    version="2.4.7",
+    version="2.4.8",
     author='CARLA Simulator Team',
     author_email='carla.simulator@gmail.com',
     license="MIT",
