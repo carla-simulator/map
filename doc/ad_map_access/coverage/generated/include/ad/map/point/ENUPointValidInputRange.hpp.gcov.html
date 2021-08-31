@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-19 14:01:25</td>
+            <td class="headerValue">2021-08-31 12:07:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -109,8 +109,8 @@
 <span class="lineNum">      38 </span>                :            : {
 <span class="lineNum">      39 </span>                :            :   // check for generic member input ranges
 <span class="lineNum">      40 </span>                :<span class="lineCov">      46239 :   bool inValidInputRange = true;</span>
-<span class="lineNum">      41 </span>        [<span class="branchCov" title="Branch 2 was taken 46208 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">      92449 :   inValidInputRange = withinValidInputRange(input.x, logErrors) &amp;&amp; withinValidInputRange(input.y, logErrors)</span>
-<span class="lineNum">      42 </span>[<span class="branchCov" title="Branch 0 was taken 46210 times"> + </span><span class="branchCov" title="Branch 1 was taken 29 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 46206 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">      92449 :     &amp;&amp; withinValidInputRange(input.z, logErrors);</span>
+<span class="lineNum">      41 </span>        [<span class="branchCov" title="Branch 2 was taken 46208 times"> + </span><span class="branchCov" title="Branch 3 was taken 11 times"> + </span>]:<span class="lineCov">      92458 :   inValidInputRange = withinValidInputRange(input.x, logErrors) &amp;&amp; withinValidInputRange(input.y, logErrors)</span>
+<span class="lineNum">      42 </span>[<span class="branchCov" title="Branch 0 was taken 46219 times"> + </span><span class="branchCov" title="Branch 1 was taken 20 times"> + </span>][<span class="branchCov" title="Branch 3 was taken 46206 times"> + </span><span class="branchCov" title="Branch 4 was taken 2 times"> + </span>]:<span class="lineCov">      92458 :     &amp;&amp; withinValidInputRange(input.z, logErrors);</span>
 <span class="lineNum">      43 </span>[<span class="branchCov" title="Branch 0 was taken 33 times"> + </span><span class="branchCov" title="Branch 1 was taken 46206 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 22 times"> + </span><span class="branchCov" title="Branch 3 was taken 11 times"> + </span>]:<span class="lineCov">      46239 :   if (!inValidInputRange &amp;&amp; logErrors)</span>
 <span class="lineNum">      44 </span>                :            :   {
 <span class="lineNum">      45 </span>                :<span class="lineCov">         44 :     spdlog::error(&quot;withinValidInputRange(::ad::map::point::ENUPoint)&gt;&gt; {} has invalid member&quot;,</span>
