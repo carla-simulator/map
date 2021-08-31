@@ -1,6 +1,6 @@
 ## Release 2.4.8
 #### :ghost: Maintenance
-* Allow larger ENUCoordinates up to 1e9 (previously 1e6) and ENUCoordinate input up to 1e7 (previously 1.6e4)
+* Allow larger ENUCoordinates up to 1e9 (previously 1e6) and ENUCoordinate input up to 1e8 (previously 1.6e4)
 
 ## Release 2.4.7
 #### :ghost: Maintenance
