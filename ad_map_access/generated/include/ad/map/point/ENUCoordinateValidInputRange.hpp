@@ -34,7 +34,7 @@
  * \note the specified input range is defined by
  *       std::numeric_limits<::ad::map::point::ENUCoordinate>::lowest() <= \c input <=
  * std::numeric_limits<::ad::map::point::ENUCoordinate>::max()
- *       -1e6 <= \c input <= 1e6
+ *       -1e8 <= \c input <= 1e8
  */
 inline bool withinValidInputRange(::ad::map::point::ENUCoordinate const &input, bool const logErrors = true)
 {
@@ -52,13 +52,13 @@ inline bool withinValidInputRange(::ad::map::point::ENUCoordinate const &input, 
   if (inValidInputRange)
   {
     inValidInputRange
-      = (::ad::map::point::ENUCoordinate(-1e6) <= input) && (input <= ::ad::map::point::ENUCoordinate(1e6));
+      = (::ad::map::point::ENUCoordinate(-1e8) <= input) && (input <= ::ad::map::point::ENUCoordinate(1e8));
     if (!inValidInputRange && logErrors)
     {
       spdlog::error("withinValidInputRange(::ad::map::point::ENUCoordinate)>> {} out of valid input range [{}, {}]",
                     input,
-                    ::ad::map::point::ENUCoordinate(-1e6),
-                    ::ad::map::point::ENUCoordinate(1e6)); // LCOV_EXCL_BR_LINE
+                    ::ad::map::point::ENUCoordinate(-1e8),
+                    ::ad::map::point::ENUCoordinate(1e8)); // LCOV_EXCL_BR_LINE
     }
   }
   return inValidInputRange;

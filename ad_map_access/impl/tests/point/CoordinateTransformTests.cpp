@@ -148,7 +148,7 @@ TEST_F(CoordianteTransformTest, Distances)
     ASSERT_TRUE(isValid(ecef3));
 
     ENUPoint enu0 = mCoordinateTransform.ECEF2ENU(ecef1);
-    ASSERT_FALSE(isValid(enu0, false));
+    ASSERT_TRUE(isValid(enu0, false));
 
     mCoordinateTransform.setENUReferencePoint(geo1);
     ENUPoint enu1 = mCoordinateTransform.ECEF2ENU(ecef1);
