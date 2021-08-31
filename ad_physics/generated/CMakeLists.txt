@@ -1,7 +1,7 @@
 ##
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2018-2020 Intel Corporation
+# Copyright (C) 2018-2021 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -14,7 +14,7 @@
 ##
 
 cmake_minimum_required(VERSION 3.5)
-project(ad_physics VERSION 2.4.7)
+project(ad_physics VERSION 2.4.8)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)

@@ -1,7 +1,7 @@
 ##
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2018-2020 Intel Corporation
+# Copyright (C) 2018-2021 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -14,7 +14,7 @@
 ##
 
 cmake_minimum_required(VERSION 3.5)
-project(ad_map_access_test_support VERSION 2.4.7)
+project(ad_map_access_test_support VERSION 2.4.8)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -31,7 +31,7 @@ if ((NOT ad_map_access_test_support_SOURCES) OR (NOT ad_map_access_test_support_
   message(FATAL_ERROR "${PROJECT_NAME}: Variable ad_map_access_test_support_SOURCES or ad_map_access_test_support_INCLUDE_DIRS pointing to the generator managed library not set!")
 endif()
 
-find_package(ad_map_access 2.4.7 REQUIRED CONFIG)
+find_package(ad_map_access 2.4.8 REQUIRED CONFIG)
 
 add_library(${PROJECT_NAME}
   ${ad_map_access_test_support_SOURCES}

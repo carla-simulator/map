@@ -1,3 +1,12 @@
+#!/usr/bin/python
+# ----------------- BEGIN LICENSE BLOCK ---------------------------------
+#
+# Copyright (c) 2021 Computer Vision Center (CVC) at the Universitat Autonoma
+# de Barcelona (UAB).
+# Copyright (c) 2021 Intel Corporation
+#
+# ----------------- END LICENSE BLOCK -----------------------------------
+
 import sys
 
 from setuptools import setup
@@ -24,7 +33,7 @@ setup(
     packages=["ad_map_access"],
     package_dir={"": sys.argv.pop(-1)},
     package_data={"ad_map_access": ["*.so"]},
-    version="2.4.7",
+    version="2.4.8",
     author='CARLA Simulator Team',
     author_email='carla.simulator@gmail.com',
     license="MIT",
@@ -48,7 +57,7 @@ right-of-way within intersections.\
 \
 See [project webpage](https://ad-map-access.readthedocs.io/en/latest/) or [doxygen docu](https://ad-map-access.readthedocs.io/en/latest/ad_map_access/apidoc/html/index.html) for a full interface description.",
     long_description_content_type="text/markdown",
-    install_requires=["ad_physics>=2.4.7"],
+    install_requires=["ad_physics>=2.4.8"],
     distclass=BinaryDistribution,
     cmdclass={'install': Install}
 )

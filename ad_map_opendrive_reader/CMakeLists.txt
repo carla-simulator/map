@@ -19,7 +19,7 @@ include(../cmake/apidoc.cmake)
 #convert list to string
 string (REPLACE ";" " " TARGET_LINK_FLAGS "${TARGET_LINK_OPTIONS}")
 
-project(ad_map_opendrive_reader VERSION 2.4.7)
+project(ad_map_opendrive_reader VERSION 2.4.8)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
