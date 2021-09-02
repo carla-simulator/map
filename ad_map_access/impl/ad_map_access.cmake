@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2018-2019 Intel Corporation
+# Copyright (C) 2018-2021 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -18,6 +18,7 @@ set(ad_map_access_SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/src/access/Store.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/access/StoreSerialization.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/config/MapConfigFileHandler.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/src/intersection/CoreIntersection.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/intersection/Intersection.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/landmark/LandmarkOperation.cpp
   ${CMAKE_CURRENT_LIST_DIR}/src/lane/BorderOperation.cpp
@@ -73,4 +74,3 @@ set(ad_map_access_UNIT_TEST_DIR
 #set(ad_map_access_TOOLS_DIR
 #  ${CMAKE_CURRENT_LIST_DIR}/tools
 #)
-

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2019 Intel Corporation
+// Copyright (C) 2019-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -10,11 +10,11 @@
 
 #include "ad/map/test_support/IntersectionTestBase.hpp"
 
-/* @brief namespace ad */
+/** @brief namespace ad */
 namespace ad {
-/* @brief namespace map */
+/** @brief namespace map */
 namespace map {
-/* @brief namespace test_support */
+/** @brief namespace test_support */
 namespace test_support {
 
 /**

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -15,11 +15,11 @@
 #include "ad/map/route/Routing.hpp"
 #include "ad/map/route/Types.hpp"
 
-/* @brief namespace ad */
+/** @brief namespace ad */
 namespace ad {
-/* @brief namespace map */
+/** @brief namespace map */
 namespace map {
-/* @brief namespace route */
+/** @brief namespace route */
 namespace route {
 /**
  * @namespace planning
@@ -250,6 +250,24 @@ inline route::FullRoute planRoute(const point::ParaPoint &start,
   return planRoute(createRoutingPoint(start, startHeading), dest, routeCreationMode);
 }
 
+/** @brief mode for filtering duplicates in prediction
+ */
+enum class FilterDuplicatesMode
+{
+  /** no filtering at all
+   */
+  Off,
+  /** filter routes that are exactly equal
+   */
+  OnlyEqual,
+  /** filter real sub-routes, prefer shorter ones
+   */
+  SubRoutesPreferShorterOnes,
+  /** filter real sub-routes, prefer longer ones
+   */
+  SubRoutesPreferLongerOnes
+};
+
 /**
  * @brief perform route based prediction restricted by the prediction duration.
  * Note: Route predictions will not stop in the middle of an intersection.
@@ -258,13 +276,17 @@ inline route::FullRoute planRoute(const point::ParaPoint &start,
  * @param[in] start start point.
  * @param[in] predictionDuration duration when the prediction can be stopped.
  * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ * @param[in] filterMode the mode for filtering the routes (default: FilterDuplicatesMode::SubRoutesPreferLongerOnes)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
  *
  * @return vector with all possible predicted routes.
  */
-std::vector<route::FullRoute> predictRoutesOnDuration(const RoutingParaPoint &start,
-                                                      physics::Duration const &predictionDuration,
-                                                      RouteCreationMode const routeCreationMode
-                                                      = RouteCreationMode::SameDrivingDirection);
+std::vector<route::FullRoute>
+predictRoutesOnDuration(const RoutingParaPoint &start,
+                        physics::Duration const &predictionDuration,
+                        RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection,
+                        FilterDuplicatesMode const filterMode = FilterDuplicatesMode::SubRoutesPreferLongerOnes,
+                        ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
 
 /**
  * @brief perform route based prediction restricted by the prediction distance.
@@ -274,13 +296,17 @@ std::vector<route::FullRoute> predictRoutesOnDuration(const RoutingParaPoint &st
  * @param[in] start start point.
  * @param[in] predictionDistance distance when the prediction can be stopped.
  * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ * @param[in] filterMode the mode for filtering the routes (default: FilterDuplicatesMode::SubRoutesPreferLongerOnes)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
  *
  * @return vector with all possible predicted routes.
  */
-std::vector<route::FullRoute> predictRoutesOnDistance(const RoutingParaPoint &start,
-                                                      physics::Distance const &predictionDistance,
-                                                      RouteCreationMode const routeCreationMode
-                                                      = RouteCreationMode::SameDrivingDirection);
+std::vector<route::FullRoute>
+predictRoutesOnDistance(const RoutingParaPoint &start,
+                        physics::Distance const &predictionDistance,
+                        RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection,
+                        FilterDuplicatesMode const filterMode = FilterDuplicatesMode::SubRoutesPreferLongerOnes,
+                        ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
 
 /**
  * @brief perform route based prediction restricted by the prediction distance and duration.
@@ -291,14 +317,18 @@ std::vector<route::FullRoute> predictRoutesOnDistance(const RoutingParaPoint &st
  * @param[in] predictionDistance distance when the prediction can be stopped.
  * @param[in] predictionDuration duration when the prediction can be stopped.
  * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ * @param[in] filterMode the mode for filtering the routes (default: FilterDuplicatesMode::SubRoutesPreferLongerOnes)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
  *
  * @return vector with all possible predicted routes.
  */
-std::vector<route::FullRoute> predictRoutes(const RoutingParaPoint &start,
-                                            physics::Distance const &predictionDistance,
-                                            physics::Duration const &predictionDuration,
-                                            RouteCreationMode const routeCreationMode
-                                            = RouteCreationMode::SameDrivingDirection);
+std::vector<route::FullRoute>
+predictRoutes(const RoutingParaPoint &start,
+              physics::Distance const &predictionDistance,
+              physics::Duration const &predictionDuration,
+              RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection,
+              FilterDuplicatesMode const filterMode = FilterDuplicatesMode::SubRoutesPreferLongerOnes,
+              ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
 
 /**
  * @brief perform route based prediction restricted by the prediction duration.
@@ -308,13 +338,17 @@ std::vector<route::FullRoute> predictRoutes(const RoutingParaPoint &start,
  * @param[in] start start point as map matched bounding box.
  * @param[in] predictionDuration duration when the prediction can be stopped.
  * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ * @param[in] filterMode the mode for filtering the routes (default: FilterDuplicatesMode::SubRoutesPreferLongerOnes)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
  *
  * @return vector with all possible predicted routes.
  */
-std::vector<route::FullRoute> predictRoutesOnDuration(const match::MapMatchedObjectBoundingBox &start,
-                                                      physics::Duration const &predictionDuration,
-                                                      RouteCreationMode const routeCreationMode
-                                                      = RouteCreationMode::SameDrivingDirection);
+std::vector<route::FullRoute>
+predictRoutesOnDuration(const match::MapMatchedObjectBoundingBox &start,
+                        physics::Duration const &predictionDuration,
+                        RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection,
+                        FilterDuplicatesMode const filterMode = FilterDuplicatesMode::SubRoutesPreferLongerOnes,
+                        ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
 
 /**
  * @brief perform route based prediction restricted by the prediction distance.
@@ -324,13 +358,17 @@ std::vector<route::FullRoute> predictRoutesOnDuration(const match::MapMatchedObj
  * @param[in] start start point as map matched bounding box.
  * @param[in] predictionDistance distance when the prediction can be stopped.
  * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ * @param[in] filterMode the mode for filtering the routes (default: FilterDuplicatesMode::SubRoutesPreferLongerOnes)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
  *
  * @return vector with all possible predicted routes.
  */
-std::vector<route::FullRoute> predictRoutesOnDistance(const match::MapMatchedObjectBoundingBox &start,
-                                                      physics::Distance const &predictionDistance,
-                                                      RouteCreationMode const routeCreationMode
-                                                      = RouteCreationMode::SameDrivingDirection);
+std::vector<route::FullRoute>
+predictRoutesOnDistance(const match::MapMatchedObjectBoundingBox &start,
+                        physics::Distance const &predictionDistance,
+                        RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection,
+                        FilterDuplicatesMode const filterMode = FilterDuplicatesMode::SubRoutesPreferLongerOnes,
+                        ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
 
 /**
  * @brief perform route based prediction restricted by the prediction distance and duration.
@@ -341,14 +379,46 @@ std::vector<route::FullRoute> predictRoutesOnDistance(const match::MapMatchedObj
  * @param[in] predictionDistance distance when the prediction can be stopped.
  * @param[in] predictionDuration duration when the prediction can be stopped.
  * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::SameDrivingDirection)
+ * @param[in] filterMode the mode for filtering the routes (default: FilterDuplicatesMode::SubRoutesPreferLongerOnes)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
  *
  * @return vector with all possible predicted routes.
  */
-std::vector<route::FullRoute> predictRoutes(const match::MapMatchedObjectBoundingBox &start,
-                                            physics::Distance const &predictionDistance,
-                                            physics::Duration const &predictionDuration,
-                                            RouteCreationMode const routeCreationMode
-                                            = RouteCreationMode::SameDrivingDirection);
+std::vector<route::FullRoute>
+predictRoutes(const match::MapMatchedObjectBoundingBox &start,
+              physics::Distance const &predictionDistance,
+              physics::Duration const &predictionDuration,
+              RouteCreationMode const routeCreationMode = RouteCreationMode::SameDrivingDirection,
+              FilterDuplicatesMode const filterMode = FilterDuplicatesMode::SubRoutesPreferLongerOnes,
+              ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
+
+/**
+ * @brief perform route based prediction restricted by the prediction distance and duration.
+ * Note: Route predictions will not stop in the middle of an intersection.
+ *   They continue until the intersection is left again.
+ *
+ * This variant of route prediction allows to travel in either road directions.
+ * Therefore, the start orientation is irrelevant (considered to be RoutingDirection::DONT_CARE).
+ *
+ * @param[in] start start point as parametric point.
+ * @param[in] predictionDistance distance when the prediction can be stopped.
+ * @param[in] predictionDuration duration when the prediction can be stopped.
+ * @param[in] routeCreationMode the mode of creating the route (default: RouteCreationMode::AllRoutableLanes)
+ *  Be aware: selecting a routeCreationMode of RouteCreationMode::SameDrivingDirection will lead to incomplete
+ * FullRoutes
+ *  since the routes starting in wrong direction cannot be presented by this!
+ * @param[in] filterMode the mode for filtering the routes (default: FilterDuplicatesMode::SubRoutesPreferLongerOnes)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
+ *
+ * @return vector with all possible predicted routes.
+ */
+std::vector<route::FullRoute>
+predictRoutesDirectionless(const point::ParaPoint &start,
+                           physics::Distance const &predictionDistance,
+                           physics::Duration const &predictionDuration,
+                           RouteCreationMode const routeCreationMode = RouteCreationMode::AllRoutableLanes,
+                           FilterDuplicatesMode const filterMode = FilterDuplicatesMode::SubRoutesPreferLongerOnes,
+                           ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
 
 /**
  * @brief Filter duplicated routes from a list of routes
@@ -356,10 +426,49 @@ std::vector<route::FullRoute> predictRoutes(const match::MapMatchedObjectBoundin
  * If one of the routes is a real sub-route of the other, the longer version of the route is kept, the shorter dropped
  *
  * @param[in] fullRoutes list of full routes to be filtered
+ * @param[in] filterMode the mode for filtering the routes
  *
- * @returns the filtered list of routes
+ * @returns the filtered list of routes according to the provided \a filterMode
  */
-std::vector<FullRoute> filterDuplicatedRoutes(const std::vector<FullRoute> fullRoutes);
+FullRouteList filterDuplicatedRoutes(const FullRouteList fullRoutes, FilterDuplicatesMode const filterMode);
+
+/** @brief result for comparing two routes with each other
+ */
+enum class CompareRouteResult
+{
+  /**
+   * equal
+   */
+  Equal,
+  /**
+   * shorter
+   */
+  Shorter,
+  /**
+   * longer
+   */
+  Longer,
+  /**
+   * differ
+   */
+  Differ
+};
+
+std::ostream &operator<<(std::ostream &os, CompareRouteResult const &value);
+
+/**
+ * @brief Compare two routes on interval level
+ *
+ * @returns CompareRouteResult of the comparison
+ * @retval CompareRouteResult::Equal left route and right route are considered equal on interval level
+ * @retval CompareRouteResult::Shorter left route is a real sub-route of the right route, therefore left route is
+ * considered shorter
+ * @retval CompareRouteResult::Longer right route is a real sub-route of the left route, therefore left route is
+ * considered longer
+ * @retval CompareRouteResult::Differ left route and right route are considered different on interval level
+ *
+ */
+CompareRouteResult compareRoutesOnIntervalLevel(FullRoute const &left, FullRoute const &right);
 
 /**
  * @brief Calculate the connecting route between the the two objects
@@ -374,15 +483,16 @@ std::vector<FullRoute> filterDuplicatedRoutes(const std::vector<FullRoute> fullR
  * @param[in] maxDuration duration when the search can be stopped.
  * @param[in] startObjectPredictionHints route prediction hints for start object (optional)
  * @param[in] destObjectPredictionHints route prediction hints for dest object (optional)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
  */
-ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
-                                         const match::Object &destObject,
-                                         physics::Distance const &maxDistance,
-                                         physics::Duration const &maxDuration,
-                                         std::vector<route::FullRoute> const &startObjectPredictionHints
-                                         = std::vector<route::FullRoute>(),
-                                         std::vector<route::FullRoute> const &destObjectPredictionHints
-                                         = std::vector<route::FullRoute>());
+ConnectingRoute calculateConnectingRoute(
+  const match::Object &startObject,
+  const match::Object &destObject,
+  physics::Distance const &maxDistance,
+  physics::Duration const &maxDuration,
+  std::vector<route::FullRoute> const &startObjectPredictionHints = std::vector<route::FullRoute>(),
+  std::vector<route::FullRoute> const &destObjectPredictionHints = std::vector<route::FullRoute>(),
+  ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
 
 /**
  * @brief Calculate the connecting route between the the two objects
@@ -396,14 +506,15 @@ ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
  * @param[in] maxDistance distance when the search can be stopped.
  * @param[in] startObjectPredictionHints route prediction hints for start object (optional)
  * @param[in] destObjectPredictionHints route prediction hints for dest object (optional)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
  */
-ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
-                                         const match::Object &destObject,
-                                         physics::Distance const &maxDistance,
-                                         std::vector<route::FullRoute> const &startObjectPredictionHints
-                                         = std::vector<route::FullRoute>(),
-                                         std::vector<route::FullRoute> const &destObjectPredictionHints
-                                         = std::vector<route::FullRoute>());
+ConnectingRoute calculateConnectingRoute(
+  const match::Object &startObject,
+  const match::Object &destObject,
+  physics::Distance const &maxDistance,
+  std::vector<route::FullRoute> const &startObjectPredictionHints = std::vector<route::FullRoute>(),
+  std::vector<route::FullRoute> const &destObjectPredictionHints = std::vector<route::FullRoute>(),
+  ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
 
 /**
  * @brief Calculate the connecting route between the the two objects
@@ -417,14 +528,15 @@ ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
  * @param[in] maxDuration duration when the search can be stopped.
  * @param[in] startObjectPredictionHints route prediction hints for start object (optional)
  * @param[in] destObjectPredictionHints route prediction hints for dest object (optional)
+ * @param[in] relevantLanes if not empty, the function restricts the prediction to the given set of lanes
  */
-ConnectingRoute calculateConnectingRoute(const match::Object &startObject,
-                                         const match::Object &destObject,
-                                         physics::Duration const &maxDuration,
-                                         std::vector<route::FullRoute> const &startObjectPredictionHints
-                                         = std::vector<route::FullRoute>(),
-                                         std::vector<route::FullRoute> const &destObjectPredictionHints
-                                         = std::vector<route::FullRoute>());
+ConnectingRoute calculateConnectingRoute(
+  const match::Object &startObject,
+  const match::Object &destObject,
+  physics::Duration const &maxDuration,
+  std::vector<route::FullRoute> const &startObjectPredictionHints = std::vector<route::FullRoute>(),
+  std::vector<route::FullRoute> const &destObjectPredictionHints = std::vector<route::FullRoute>(),
+  ::ad::map::lane::LaneIdSet const &relevantLanes = ::ad::map::lane::LaneIdSet());
 
 /**
  * @brief update route planning counters of the route
@@ -438,7 +550,9 @@ void updateRoutePlanningCounters(route::FullRoute &route);
  *
  * mainly used internally.
  */
-FullRoute createFullRoute(const Route::RawRoute &rawRoute, RouteCreationMode const routeCreationMode);
+FullRoute createFullRoute(const Route::RawRoute &rawRoute,
+                          RouteCreationMode const routeCreationMode,
+                          lane::LaneIdSet const &relevantLanes);
 
 } // namespace planning
 } // namespace route

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -13,11 +13,11 @@
 #include "ad/map/route/RouteExpander.hpp"
 #include "ad/map/route/Routing.hpp"
 
-/* @brief namespace ad */
+/** @brief namespace ad */
 namespace ad {
-/* @brief namespace map */
+/** @brief namespace map */
 namespace map {
-/* @brief namespace route */
+/** @brief namespace route */
 namespace route {
 /**
  * @namespace planning
@@ -48,10 +48,12 @@ public:
    * @param[in] start Start point.
    * @param[in] predictionDistance maximum prediction distance.
    * @param[in] predictionDuration maximum prediction duration.
+   * @param[in] typ Type of the route to be calculated (default Route::Type::SHORTEST).
    */
   RoutePrediction(const RoutingParaPoint &start,
                   physics::Distance const &predictionDistance,
-                  physics::Duration const &predictionDuration);
+                  physics::Duration const &predictionDuration,
+                  Type typ = Route::Type::SHORTEST);
 
   /**
    * @brief Constructor.
@@ -62,8 +64,11 @@ public:
    *
    * @param[in] start Start point.
    * @param[in] predictionDistance maximum prediction distance.
+   * @param[in] typ Type of the route to be calculated (default Route::Type::SHORTEST).
    */
-  RoutePrediction(const RoutingParaPoint &start, physics::Distance const &predictionDistance);
+  RoutePrediction(const RoutingParaPoint &start,
+                  physics::Distance const &predictionDistance,
+                  Type typ = Route::Type::SHORTEST);
 
   /**
    * @brief Constructor.
@@ -74,8 +79,11 @@ public:
    *
    * @param[in] start Start point.
    * @param[in] predictionDuration maximum prediction duration.
+   * @param[in] typ Type of the route to be calculated (default Route::Type::SHORTEST).
    */
-  RoutePrediction(const RoutingParaPoint &start, physics::Duration const &predictionDuration);
+  RoutePrediction(const RoutingParaPoint &start,
+                  physics::Duration const &predictionDuration,
+                  Type typ = Route::Type::SHORTEST);
 
   /**
    * @brief Calculates the route predictions using breadth search algorithm.
@@ -91,6 +99,12 @@ private:
                    lane::Lane::ConstPtr neighborLane,
                    RoutingPoint const &neighbor,
                    ExpandReason const &expandReason) override;
+
+  /**
+   * @brief actually insert neighbor in data structures
+   */
+  void insertNeighbor(RoutingPoint const &origin, RoutingPoint const &neighbor);
+
   /**
    * @brief Element of the routing tree
    */

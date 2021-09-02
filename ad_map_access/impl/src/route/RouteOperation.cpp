@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -827,12 +827,25 @@ void alignRouteStartingPoints(point::ParaPoint const &startAlignmentParaPoint, r
        laneSegmentIter != route.roadSegments.front().drivableLaneSegments.end();
        ++laneSegmentIter)
   {
-    if (laneSegmentIter->laneInterval.laneId != startAlignmentParaPoint.laneId)
+    // don't touch alignment interval
+    // don't touch degenerated intervals
+    if ((laneSegmentIter->laneInterval.laneId != startAlignmentParaPoint.laneId)
+        && (!route::isDegenerated(laneSegmentIter->laneInterval)))
     {
-      auto lane = lane::getLane(laneSegmentIter->laneInterval.laneId);
-      auto rightT = point::findNearestPointOnEdge(lane.edgeRight, startAlignmentPoint);
-      auto leftT = point::findNearestPointOnEdge(lane.edgeLeft, startAlignmentPoint);
-      laneSegmentIter->laneInterval.start = 0.5 * (rightT + leftT);
+      auto const lane = lane::getLane(laneSegmentIter->laneInterval.laneId);
+      auto const rightT = point::findNearestPointOnEdge(lane.edgeRight, startAlignmentPoint);
+      auto const leftT = point::findNearestPointOnEdge(lane.edgeLeft, startAlignmentPoint);
+      auto const newStart = 0.5 * (rightT + leftT);
+      // Be aware: only update the start if the values actually differ considering the ParametricValue::getPrecision()
+      // to prevent from 0. becoming 1e-10
+      if (newStart != laneSegmentIter->laneInterval.start)
+      {
+        // and ensure not to revert the interval direction by pushing the start after the interval end
+        if (!route::isAfterInterval(laneSegmentIter->laneInterval, newStart))
+        {
+          laneSegmentIter->laneInterval.start = newStart;
+        }
+      }
     }
   }
 }
@@ -854,12 +867,25 @@ void alignRouteEndingPoints(point::ParaPoint const &alignmentParaPoint, route::F
        laneSegmentIter != route.roadSegments.back().drivableLaneSegments.end();
        ++laneSegmentIter)
   {
-    if (laneSegmentIter->laneInterval.laneId != alignmentParaPoint.laneId)
+    // don't touch alignment interval
+    // don't touch degenerated intervals
+    if ((laneSegmentIter->laneInterval.laneId != alignmentParaPoint.laneId)
+        && (!route::isDegenerated(laneSegmentIter->laneInterval)))
     {
-      auto lane = lane::getLane(laneSegmentIter->laneInterval.laneId);
-      auto rightT = point::findNearestPointOnEdge(lane.edgeRight, alignmentPoint);
-      auto leftT = point::findNearestPointOnEdge(lane.edgeLeft, alignmentPoint);
-      laneSegmentIter->laneInterval.end = 0.5 * (rightT + leftT);
+      auto const lane = lane::getLane(laneSegmentIter->laneInterval.laneId);
+      auto const rightT = point::findNearestPointOnEdge(lane.edgeRight, alignmentPoint);
+      auto const leftT = point::findNearestPointOnEdge(lane.edgeLeft, alignmentPoint);
+      auto const newEnd = 0.5 * (rightT + leftT);
+      // Be aware: only update the end if the values actually differ considering the ParametricValue::getPrecision()
+      // to prevent from 1. becoming 0.9999999999
+      if (newEnd != laneSegmentIter->laneInterval.end)
+      {
+        // and ensure not to revert the interval direction by pushing the end before the interval start
+        if (!route::isBeforeInterval(laneSegmentIter->laneInterval, newEnd))
+        {
+          laneSegmentIter->laneInterval.end = newEnd;
+        }
+      }
     }
   }
 }
@@ -1138,7 +1164,8 @@ route::FullRoute mergeRouteExtension(route::FullRoute const &route,
     route::appendRoadSegmentToRoute(roadSegment.drivableLaneSegments.front().laneInterval,
                                     extensionReferenceLaneSegment.routeLaneOffset
                                       + roadSegment.drivableLaneSegments.front().routeLaneOffset,
-                                    newRoute);
+                                    newRoute,
+                                    {});
   }
   planning::updateRoutePlanningCounters(newRoute);
   return newRoute;
@@ -1177,7 +1204,8 @@ bool extendRouteToDestinations(route::FullRoute &route, const std::vector<point:
 
 bool extendRouteToDistance(route::FullRoute &route,
                            const physics::Distance &length,
-                           route::FullRouteList &additionalRoutes)
+                           route::FullRouteList &additionalRoutes,
+                           ::ad::map::lane::LaneIdSet const &relevantLanes)
 {
   if (!additionalRoutes.empty())
   {
@@ -1204,8 +1232,15 @@ bool extendRouteToDistance(route::FullRoute &route,
 
   distance += route::calcLength(extensionReferenceLaneSegment.laneInterval);
 
+  // the shorter version of the route is kept to obey
+  // potential intersections which already might have been entered by one of the prediction paths e.g.
+  // because of a slightly shorter lane entering in that intersection arm
   auto routeExtensions
-    = route::planning::predictRoutesOnDistance(routeExtensionStartPoint, distance, route.routeCreationMode);
+    = route::planning::predictRoutesOnDistance(routeExtensionStartPoint,
+                                               distance,
+                                               route.routeCreationMode,
+                                               planning::FilterDuplicatesMode::SubRoutesPreferShorterOnes,
+                                               relevantLanes);
 
   auto it = routeExtensions.begin();
   if (it != routeExtensions.end())
@@ -1368,7 +1403,8 @@ route::FullRoute getRouteExpandedTo(route::FullRoute const &route, RouteCreation
     {
       appendRoadSegmentToRoute(roadSegment.drivableLaneSegments.front().laneInterval,
                                roadSegment.drivableLaneSegments.front().routeLaneOffset,
-                               expandedRoute);
+                               expandedRoute,
+                               {});
     }
   }
   planning::updateRoutePlanningCounters(expandedRoute);
@@ -1863,7 +1899,8 @@ void appendLaneSegmentToRoute(route::LaneInterval const &laneInterval,
 
 void appendRoadSegmentToRoute(route::LaneInterval const &laneInterval,
                               route::RouteLaneOffset const &routeLaneOffset,
-                              FullRoute &route)
+                              FullRoute &route,
+                              lane::LaneIdSet const &relevantLanes)
 {
   auto lane = lane::getLane(laneInterval.laneId);
 
@@ -1897,6 +1934,13 @@ void appendRoadSegmentToRoute(route::LaneInterval const &laneInterval,
       // in some broken map cases we could end in an infinite loop here, due to broken neighborhood relations
       // to avoid this issue, add an early return upon detecting the start lane again
       lane::LaneId otherLaneId = contactLanes.front().toLane;
+
+      if (!isLaneRelevantForExpansion(otherLaneId, relevantLanes))
+      {
+        // stop expansion
+        contactLanes.clear();
+        break;
+      }
 
       auto laneNotVisited = visitedLaneIds.insert(otherLaneId);
       if (!laneNotVisited.second)

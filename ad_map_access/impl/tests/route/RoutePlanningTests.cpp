@@ -1,11 +1,12 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
 
+#include <ad/map/access/Logging.hpp>
 #include <ad/map/access/Operation.hpp>
 #include <ad/map/lane/Lane.hpp>
 #include <ad/map/lane/LaneOperation.hpp>
@@ -33,6 +34,7 @@ struct RoutePlanningTest : ::testing::Test
   virtual void SetUp()
   {
     access::cleanup();
+    // access::getLogger()->set_level(spdlog::level::trace);
   }
 
   virtual void TearDown()

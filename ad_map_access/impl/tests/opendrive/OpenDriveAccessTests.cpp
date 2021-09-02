@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2020 Intel Corporation
+// Copyright (C) 2020-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -121,52 +121,64 @@ struct OpenDriveAccessTests : ::testing::Test
     }
   }
 
-  void checkMapMatching(lane::Lane const &lane)
+  void checkAreaMapMatching(lane::LaneIdSet const &lanesToTest, lane::LaneIdSet const &lanesTestArea)
   {
     match::AdMapMatching mapMatching;
+    mapMatching.setRelevantLanes(lanesTestArea);
 
-    auto ecefPoint0 = lane::getParametricPoint(lane, physics::ParametricValue(0.), physics::ParametricValue(.5));
-    auto enuPoint0 = point::toENU(ecefPoint0);
-    auto mapMatchedPositions0
-      = mapMatching.getMapMatchedPositions(enuPoint0, physics::Distance(5.), physics::Probability(0.01));
-    auto ecefPoint1 = lane::getParametricPoint(lane, physics::ParametricValue(1.), physics::ParametricValue(.5));
-    auto enuPoint1 = point::toENU(ecefPoint1);
-    auto mapMatchedPositions1
-      = mapMatching.getMapMatchedPositions(enuPoint1, physics::Distance(5.), physics::Probability(0.01));
-    auto contactLanes = lane::getContactLanes(lane,
-                                              {lane::ContactLocation::LEFT,
-                                               lane::ContactLocation::RIGHT,
-                                               lane::ContactLocation::SUCCESSOR,
-                                               lane::ContactLocation::PREDECESSOR});
-    lane::LaneIdSet expectedLanes;
-    expectedLanes.insert(lane.id);
-    for (auto contactLane : contactLanes)
+    for (auto laneId : lanesToTest)
     {
-      expectedLanes.insert(contactLane.toLane);
-    }
-    EXPECT_NE(expectedLanes.size(), 0u);
-    for (auto const matchedPosition : mapMatchedPositions0)
-    {
-      expectedLanes.erase(matchedPosition.lanePoint.paraPoint.laneId);
-    }
-    for (auto const matchedPosition : mapMatchedPositions1)
-    {
-      expectedLanes.erase(matchedPosition.lanePoint.paraPoint.laneId);
-    }
-
-    EXPECT_EQ(expectedLanes.size(), 0u);
-
-    mapMatching.addHeadingHint(point::createENUHeading(0.), access::getENUReferencePoint());
-    for (auto paramLon = physics::ParametricValue(0.); paramLon <= physics::ParametricValue(1.);
-         paramLon += physics::ParametricValue(0.1))
-    {
-      for (auto paramLat = physics::ParametricValue(0.); paramLat <= physics::ParametricValue(1.);
-           paramLat += physics::ParametricValue(0.2))
+      auto lane = lane::getLane(laneId);
+      auto ecefPoint0 = lane::getParametricPoint(lane, physics::ParametricValue(0.), physics::ParametricValue(.5));
+      auto enuPoint0 = point::toENU(ecefPoint0);
+      auto mapMatchedPositions0
+        = mapMatching.getMapMatchedPositions(enuPoint0, physics::Distance(5.), physics::Probability(0.));
+      auto ecefPoint1 = lane::getParametricPoint(lane, physics::ParametricValue(1.), physics::ParametricValue(.5));
+      auto enuPoint1 = point::toENU(ecefPoint1);
+      auto mapMatchedPositions1
+        = mapMatching.getMapMatchedPositions(enuPoint1, physics::Distance(5.), physics::Probability(0.));
+      auto contactLanes = lane::getContactLanes(lane,
+                                                {lane::ContactLocation::LEFT,
+                                                 lane::ContactLocation::RIGHT,
+                                                 lane::ContactLocation::SUCCESSOR,
+                                                 lane::ContactLocation::PREDECESSOR});
+      lane::LaneIdSet expectedLanes;
+      expectedLanes.insert(lane.id);
+      for (auto contactLane : contactLanes)
       {
-        auto ecefPoint = lane::getParametricPoint(lane, paramLon, paramLat);
-        auto enuPoint = point::toENU(ecefPoint);
-        EXPECT_NO_THROW(auto mapMatchedPositions = mapMatching.getMapMatchedPositions(
-                          enuPoint, physics::Distance(5.), physics::Probability(0.01)));
+        if (lanesTestArea.find(contactLane.toLane) != lanesTestArea.end())
+        {
+          expectedLanes.insert(contactLane.toLane);
+        }
+      }
+      EXPECT_NE(expectedLanes.size(), 0u);
+      for (auto const matchedPosition : mapMatchedPositions0)
+      {
+        EXPECT_TRUE(lanesTestArea.find(matchedPosition.lanePoint.paraPoint.laneId) != lanesTestArea.end());
+        expectedLanes.erase(matchedPosition.lanePoint.paraPoint.laneId);
+      }
+      for (auto const matchedPosition : mapMatchedPositions1)
+      {
+        EXPECT_TRUE(lanesTestArea.find(matchedPosition.lanePoint.paraPoint.laneId) != lanesTestArea.end());
+        expectedLanes.erase(matchedPosition.lanePoint.paraPoint.laneId);
+      }
+
+      EXPECT_EQ(expectedLanes.size(), 0u)
+        << "LaneID: " << lane.id << " expectedLanes: " << expectedLanes << " testArea: " << lanesTestArea
+        << " pos0: " << mapMatchedPositions0 << " pos1: " << mapMatchedPositions1 << " contact: " << contactLanes;
+
+      mapMatching.addHeadingHint(point::createENUHeading(0.), access::getENUReferencePoint());
+      for (auto paramLon = physics::ParametricValue(0.); paramLon <= physics::ParametricValue(1.);
+           paramLon += physics::ParametricValue(0.1))
+      {
+        for (auto paramLat = physics::ParametricValue(0.); paramLat <= physics::ParametricValue(1.);
+             paramLat += physics::ParametricValue(0.2))
+        {
+          auto ecefPoint = lane::getParametricPoint(lane, paramLon, paramLat);
+          auto enuPoint = point::toENU(ecefPoint);
+          EXPECT_NO_THROW(auto mapMatchedPositions = mapMatching.getMapMatchedPositions(
+                            enuPoint, physics::Distance(5.), physics::Probability(0.)));
+        }
       }
     }
   }
@@ -287,15 +299,59 @@ TEST_F(OpenDriveAccessTests, lane_contact_points_town04)
   }
 }
 
-TEST_F(OpenDriveAccessTests, map_matching_town01)
+TEST_F(OpenDriveAccessTests, map_matching_town01_relevant_lanes_map_area)
 {
   ASSERT_TRUE(access::init("test_files/Town01.txt"));
 
+  std::vector<point::BoundingSphere> boundingSpheres;
+  auto tileRadius = physics::Distance(10);
+  for (auto xCoordinate = point::ENUCoordinate(-double(tileRadius)); xCoordinate < point::ENUCoordinate(500.);
+       xCoordinate += point::ENUCoordinate(1.5 * double(tileRadius)))
+  {
+    for (auto yCoordinate = point::ENUCoordinate(double(tileRadius)); yCoordinate > -point::ENUCoordinate(500.);
+         yCoordinate -= point::ENUCoordinate(1.5 * double(tileRadius)))
+    {
+      point::BoundingSphere boundingSphere;
+      boundingSphere.center = point::toECEF(point::createENUPoint(xCoordinate, yCoordinate, point::ENUCoordinate(0.)));
+      boundingSphere.radius = tileRadius;
+      boundingSpheres.push_back(boundingSphere);
+    }
+  }
+
+  std::vector<lane::LaneIdSet> boundingSphereLanesToTest;
+  std::vector<lane::LaneIdSet> boundingSphereLanesTestArea;
+  boundingSphereLanesToTest.resize(boundingSpheres.size());
+  boundingSphereLanesTestArea.resize(boundingSpheres.size());
   for (auto laneId : lane::getLanes())
   {
     auto lane = lane::getLane(laneId);
-    checkMapMatching(lane);
+    bool laneConsidered = false;
+    for (auto i = 0u; i < boundingSpheres.size(); i++)
+    {
+      auto const laneDistance = point::distance(lane.boundingSphere, boundingSpheres[i]);
+      if (!laneConsidered && (laneDistance == physics::Distance(0.)))
+      {
+        boundingSphereLanesToTest[i].insert(laneId);
+        laneConsidered = true;
+      }
+      if (laneDistance <= physics::Distance(5.))
+      {
+        boundingSphereLanesTestArea[i].insert(laneId);
+      }
+    }
+    if (!laneConsidered)
+    {
+      EXPECT_TRUE(false) << laneId << " " << point::toENU(lane.boundingSphere.center);
+    }
   }
+
+  size_t testedLanesCount = 0u;
+  for (auto i = 0u; i < boundingSpheres.size(); i++)
+  {
+    testedLanesCount += boundingSphereLanesToTest[i].size();
+    checkAreaMapMatching(boundingSphereLanesToTest[i], boundingSphereLanesTestArea[i]);
+  }
+  ASSERT_EQ(testedLanesCount, lane::getLanes().size());
 }
 
 TEST_F(OpenDriveAccessTests, TrafficSignTest)

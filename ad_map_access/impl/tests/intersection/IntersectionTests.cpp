@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -69,6 +69,36 @@ struct IntersectionTest : ::testing::Test
     }
   }
 };
+
+TEST_F(IntersectionTest, create_core_intersection_all_way_stop_all)
+{
+  ASSERT_NO_THROW(::map_setup::prepareMapAllWayStop());
+  auto coreIntersections = ad::map::intersection::CoreIntersection::getCoreIntersectionsForMap();
+  ASSERT_EQ(1u, coreIntersections.size());
+}
+
+TEST_F(IntersectionTest, create_core_intersection_town01_all)
+{
+  ASSERT_NO_THROW(::map_setup::prepareMapTown01PrioRight());
+  auto coreIntersections = ad::map::intersection::CoreIntersection::getCoreIntersectionsForMap();
+  ASSERT_EQ(12u, coreIntersections.size());
+}
+
+TEST_F(IntersectionTest, create_core_intersection_town01_from_point_inside_intersection)
+{
+  ASSERT_NO_THROW(::map_setup::prepareMapTown01PrioRight());
+  auto coreIntersections = ad::map::intersection::CoreIntersection::getCoreIntersectionsForInLaneMatches(point::toENU(
+    point::createGeoPoint(point::Longitude(0.000815115), point::Latitude(0.0000102114), point::Altitude(0))));
+  ASSERT_EQ(1u, coreIntersections.size());
+}
+
+TEST_F(IntersectionTest, create_core_intersection_town01_from_point_outside_intersection)
+{
+  ASSERT_NO_THROW(::map_setup::prepareMapTown01PrioRight());
+  auto coreIntersections = ad::map::intersection::CoreIntersection::getCoreIntersectionsForInLaneMatches(point::toENU(
+    point::createGeoPoint(point::Longitude(0.0032321), point::Latitude(0.0000165612), point::Altitude(0))));
+  ASSERT_EQ(0u, coreIntersections.size());
+}
 
 TEST_F(IntersectionTest, create_intersections_all_way_stop)
 {
@@ -173,16 +203,16 @@ TEST_F(IntersectionTest, create_intersections_all_way_stop)
   resultParaPoints = intersection->outgoingParaPoints();
   expectedParaPoints.clear();
   paraPoint.laneId = lane::LaneId(272);
-  paraPoint.parametricOffset = physics::ParametricValue(0);
+  paraPoint.parametricOffset = physics::ParametricValue(1);
   expectedParaPoints.push_back(paraPoint);
   paraPoint.laneId = lane::LaneId(256);
-  paraPoint.parametricOffset = physics::ParametricValue(0);
+  paraPoint.parametricOffset = physics::ParametricValue(1);
   expectedParaPoints.push_back(paraPoint);
   paraPoint.laneId = lane::LaneId(260);
-  paraPoint.parametricOffset = physics::ParametricValue(1);
+  paraPoint.parametricOffset = physics::ParametricValue(0);
   expectedParaPoints.push_back(paraPoint);
   paraPoint.laneId = lane::LaneId(244);
-  paraPoint.parametricOffset = physics::ParametricValue(1);
+  paraPoint.parametricOffset = physics::ParametricValue(0);
   expectedParaPoints.push_back(paraPoint);
   compareParaLists(resultParaPoints, expectedParaPoints);
 
@@ -376,19 +406,19 @@ TEST_F(IntersectionTest, traffic_lights_pfz_elf_to_rusch)
   resultParaPoints = intersection->outgoingParaPoints();
   expectedParaPoints.clear();
   paraPoint.laneId = lane::LaneId(508);
-  paraPoint.parametricOffset = physics::ParametricValue(1);
+  paraPoint.parametricOffset = physics::ParametricValue(0);
   expectedParaPoints.push_back(paraPoint);
   paraPoint.laneId = lane::LaneId(627);
-  paraPoint.parametricOffset = physics::ParametricValue(0);
+  paraPoint.parametricOffset = physics::ParametricValue(1);
   expectedParaPoints.push_back(paraPoint);
   paraPoint.laneId = lane::LaneId(548);
-  paraPoint.parametricOffset = physics::ParametricValue(1);
+  paraPoint.parametricOffset = physics::ParametricValue(0);
   expectedParaPoints.push_back(paraPoint);
   paraPoint.laneId = lane::LaneId(471);
-  paraPoint.parametricOffset = physics::ParametricValue(1);
+  paraPoint.parametricOffset = physics::ParametricValue(0);
   expectedParaPoints.push_back(paraPoint);
   paraPoint.laneId = lane::LaneId(630);
-  paraPoint.parametricOffset = physics::ParametricValue(0);
+  paraPoint.parametricOffset = physics::ParametricValue(1);
   expectedParaPoints.push_back(paraPoint);
   compareParaLists(resultParaPoints, expectedParaPoints);
 
@@ -560,19 +590,19 @@ TEST_F(IntersectionTest, traffic_lights_pfz_rusch_to_elf)
   resultParaPoints = intersection->outgoingParaPoints();
   expectedParaPoints.clear();
   paraPoint.laneId = lane::LaneId(627);
-  paraPoint.parametricOffset = physics::ParametricValue(0);
+  paraPoint.parametricOffset = physics::ParametricValue(1);
   expectedParaPoints.push_back(paraPoint);
   paraPoint.laneId = lane::LaneId(548);
-  paraPoint.parametricOffset = physics::ParametricValue(1);
-  expectedParaPoints.push_back(paraPoint);
-  paraPoint.laneId = lane::LaneId(471);
-  paraPoint.parametricOffset = physics::ParametricValue(1);
-  expectedParaPoints.push_back(paraPoint);
-  paraPoint.laneId = lane::LaneId(630);
   paraPoint.parametricOffset = physics::ParametricValue(0);
   expectedParaPoints.push_back(paraPoint);
-  paraPoint.laneId = lane::LaneId(508);
+  paraPoint.laneId = lane::LaneId(471);
+  paraPoint.parametricOffset = physics::ParametricValue(0);
+  expectedParaPoints.push_back(paraPoint);
+  paraPoint.laneId = lane::LaneId(630);
   paraPoint.parametricOffset = physics::ParametricValue(1);
+  expectedParaPoints.push_back(paraPoint);
+  paraPoint.laneId = lane::LaneId(508);
+  paraPoint.parametricOffset = physics::ParametricValue(0);
   expectedParaPoints.push_back(paraPoint);
   compareParaLists(resultParaPoints, expectedParaPoints);
 

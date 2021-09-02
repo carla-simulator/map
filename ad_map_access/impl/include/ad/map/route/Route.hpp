@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -14,11 +14,11 @@
 #include "ad/map/point/ParaPointList.hpp"
 #include "ad/map/route/Routing.hpp"
 
-/* @brief namespace ad */
+/** @brief namespace ad */
 namespace ad {
-/* @brief namespace map */
+/** @brief namespace map */
 namespace map {
-/* @brief namespace route */
+/** @brief namespace route */
 namespace route {
 /**
  * @namespace planning
@@ -165,6 +165,14 @@ protected:
   ///< Calculated routes.
   std::vector<RawRoute> mRawRoutes;
 };
+
+inline std::ostream &operator<<(std::ostream &os, Route::RawRoute const &value)
+{
+  os << "Route::RawRoute("
+     << " routeDistance:" << value.routeDistance << " routeDuration:" << value.routeDuration
+     << " paraPoints:" << value.paraPointList << ")";
+  return os;
+}
 
 } // namespace planning
 } // namespace route

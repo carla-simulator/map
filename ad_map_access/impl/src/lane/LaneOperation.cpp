@@ -804,6 +804,20 @@ LaneAltitudeRange calcLaneAltitudeRange(Lane const &lane)
   return altitude_range;
 }
 
+bool isLaneRelevantForExpansion(lane::LaneId const &laneId, lane::LaneIdSet const &relevantLanes)
+{
+  if (relevantLanes.empty())
+  {
+    return true;
+  }
+  auto const findResult = relevantLanes.find(laneId);
+  if (findResult != relevantLanes.end())
+  {
+    return true;
+  }
+  return false;
+}
+
 } // namespace lane
 } // namespace map
 } // namespace ad
