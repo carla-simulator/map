@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -15,11 +15,11 @@
 #include "ad/map/point/Geometry.hpp"
 #include "ad/physics/ParametricRange.hpp"
 
-/* @brief namespace ad */
+/** @brief namespace ad */
 namespace ad {
-/* @brief namespace map */
+/** @brief namespace map */
 namespace map {
-/* @brief namespace point */
+/** @brief namespace point */
 namespace point {
 
 /**

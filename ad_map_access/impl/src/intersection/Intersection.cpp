@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -21,145 +21,6 @@ namespace ad {
 namespace map {
 namespace intersection {
 
-/*********************************************************************
- * common functions not specific for intersections
- *********************************************************************/
-bool Intersection::isLanePartOfIntersection(lane::LaneId const laneId, SuccessorMode const successorMode) const
-{
-  if (successorMode == SuccessorMode::OwnIntersection)
-  {
-    return mInternalLanes.count(laneId) > 0u;
-  }
-  else
-  {
-    return isLanePartOfAnIntersection(laneId);
-  }
-}
-
-std::pair<lane::LaneIdSet, lane::LaneIdSet>
-Intersection::getDirectSuccessorsInLaneDirection(lane::LaneId const laneId, SuccessorMode const successorMode) const
-{
-  auto lane = lane::getLane(laneId);
-  auto location = lane::ContactLocation::SUCCESSOR;
-  if (lane.direction == lane::LaneDirection::NEGATIVE)
-  {
-    location = lane::ContactLocation::PREDECESSOR;
-  }
-  std::pair<lane::LaneIdSet, lane::LaneIdSet> result;
-  for (auto const &contact : lane::getContactLanes(lane, location))
-  {
-    lane::LaneId const successorLane = contact.toLane;
-    if (isLanePartOfIntersection(successorLane, successorMode))
-    {
-      // restrict first to within intersection
-      result.first.insert(successorLane);
-    }
-    else
-    {
-      // restrict second to outside intersection
-      result.second.insert(successorLane);
-    }
-  }
-  return result;
-}
-
-lane::LaneIdSet
-Intersection::getDirectSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
-                                                                   SuccessorMode const successorMode) const
-{
-  return getDirectSuccessorsInLaneDirection(laneId, successorMode).first;
-}
-
-lane::LaneIdSet Intersection::getAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
-                                                                                SuccessorMode const successorMode) const
-{
-  lane::LaneIdSet result;
-  auto directSuccessors = getDirectSuccessorsInLaneDirectionWithinIntersection(laneId, successorMode);
-  for (auto directSuccessorId : directSuccessors)
-  {
-    auto directSuccessorRecursiveResult
-      = getAllSuccessorsInLaneDirectionWithinIntersection(directSuccessorId, successorMode);
-    result.insert(directSuccessorRecursiveResult.begin(), directSuccessorRecursiveResult.end());
-  }
-  result.insert(directSuccessors.begin(), directSuccessors.end());
-  return result;
-}
-
-lane::LaneIdSet
-Intersection::getLaneAndAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
-                                                                       SuccessorMode const successorMode) const
-{
-  auto result = getAllSuccessorsInLaneDirectionWithinIntersection(laneId, successorMode);
-  if (isLanePartOfIntersection(laneId, successorMode))
-  {
-    result.insert(laneId);
-  }
-  return result;
-}
-
-lane::LaneIdSet Intersection::getAllReachableOutgoingLanes(lane::LaneId const laneId,
-                                                           SuccessorMode const successorMode) const
-{
-  lane::LaneIdSet result;
-  auto directSuccessors = getDirectSuccessorsInLaneDirection(laneId, successorMode);
-  // recursive until end of intersection
-  for (auto directSuccessorId : directSuccessors.first)
-  {
-    auto directSuccessorRecursiveResult = getAllReachableOutgoingLanes(directSuccessorId, successorMode);
-    result.insert(directSuccessorRecursiveResult.begin(), directSuccessorRecursiveResult.end());
-  }
-  result.insert(directSuccessors.second.begin(), directSuccessors.second.end());
-  return result;
-}
-
-std::pair<lane::LaneIdSet, lane::LaneIdSet>
-Intersection::getAllReachableInternalAndOutgoingLanes(lane::LaneId const laneId,
-                                                      SuccessorMode const successorMode) const
-{
-  std::pair<lane::LaneIdSet, lane::LaneIdSet> result;
-  auto directSuccessors = getDirectSuccessorsInLaneDirection(laneId, successorMode);
-  // recursive until end of intersection
-  for (auto directSuccessorId : directSuccessors.first)
-  {
-    auto directSuccessorRecursiveResult = getAllReachableInternalAndOutgoingLanes(directSuccessorId, successorMode);
-    result.first.insert(directSuccessorRecursiveResult.first.begin(), directSuccessorRecursiveResult.first.end());
-    result.second.insert(directSuccessorRecursiveResult.second.begin(), directSuccessorRecursiveResult.second.end());
-  }
-  result.first.insert(directSuccessors.first.begin(), directSuccessors.first.end());
-  result.second.insert(directSuccessors.second.begin(), directSuccessors.second.end());
-  return result;
-}
-
-bool Intersection::isLanePartOfAnIntersection(lane::LaneId const laneId)
-{
-  auto lane = lane::getLane(laneId);
-  return lane::isLanePartOfAnIntersection(lane);
-}
-
-bool Intersection::isRoutePartOfAnIntersection(route::FullRoute const &route)
-{
-  for (auto const &roadSegment : route.roadSegments)
-  {
-    for (auto const &laneSegment : roadSegment.drivableLaneSegments)
-    {
-      if (isLanePartOfAnIntersection(laneSegment.laneInterval.laneId))
-      {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-bool laneEntersIntersection(lane::LaneId const &from, lane::LaneId const &to)
-{
-  return ((from != to) && !Intersection::isLanePartOfAnIntersection(from)
-          && Intersection::isLanePartOfAnIntersection(to));
-}
-
-/*********************************************************************
- * Intersection related functions
- *********************************************************************/
 IntersectionType fromContactTypes(lane::ContactTypeList const &types)
 {
   for (auto contactType : types)
@@ -231,44 +92,6 @@ IntersectionType getRightOfWayForTransition(lane::LaneId fromLaneId, lane::LaneI
   return IntersectionType::Unknown;
 }
 
-point::ParaPoint getIncomingParaPoint(lane::LaneId const laneId)
-{
-  point::ParaPoint p;
-  p.laneId = laneId;
-  p.parametricOffset
-    = (lane::isLaneDirectionNegative(laneId) ? physics::ParametricValue(0.) : physics::ParametricValue(1.));
-  return p;
-}
-
-point::ParaPoint getOutgoingParaPoint(lane::LaneId const laneId)
-{
-  point::ParaPoint p;
-  p.laneId = laneId;
-  p.parametricOffset
-    = (lane::isLaneDirectionNegative(laneId) ? physics::ParametricValue(1.) : physics::ParametricValue(0.));
-  return p;
-}
-
-bool Intersection::isRoadSegmentEnteringIntersection(route::RouteIterator const &routeIterator,
-                                                     route::RoadSegmentList::const_iterator &routePreviousSegmentIter)
-{
-  if ((routeIterator.roadSegmentIterator != routeIterator.route.roadSegments.end())
-      && (routeIterator.roadSegmentIterator != routeIterator.route.roadSegments.begin()))
-  {
-    auto previousSegmentIter = routeIterator.roadSegmentIterator;
-    previousSegmentIter--;
-    // only look at the first parapoint per index
-    auto const fromLane = previousSegmentIter->drivableLaneSegments.front().laneInterval.laneId;
-    auto const toLane = routeIterator.roadSegmentIterator->drivableLaneSegments.front().laneInterval.laneId;
-    if (laneEntersIntersection(fromLane, toLane))
-    {
-      routePreviousSegmentIter = previousSegmentIter;
-      return true;
-    }
-  }
-  return false;
-}
-
 IntersectionPtr Intersection::getIntersectionForRoadSegment(route::RouteIterator const &routeIterator)
 {
   IntersectionPtr result;
@@ -321,21 +144,6 @@ IntersectionPtr Intersection::getNextIntersectionOnRoute(route::FullRoute const 
     }
   }
   return result;
-}
-
-bool Intersection::isIntersectionOnRoute(route::FullRoute const &route)
-{
-  for (auto roadSegmentIter = route.roadSegments.begin(); roadSegmentIter != route.roadSegments.end();
-       roadSegmentIter++)
-  {
-    route::RoadSegmentList::const_iterator routePreviousSegmentIter;
-    // @todo: also consider segments leaving intersection if first segment is already within intersection
-    if (isRoadSegmentEnteringIntersection(route::RouteIterator(route, roadSegmentIter), routePreviousSegmentIter))
-    {
-      return true;
-    }
-  }
-  return false;
 }
 
 bool Intersection::segmentLeavesIntersectionOnRoute(route::FullRoute const &route,
@@ -464,13 +272,15 @@ Intersection::Intersection(route::FullRoute const &route,
     }
   }
 
-  extractLanesOfIntersection(toLaneId);
-  if (!laneIsPartOfIntersection(toLaneId))
+  extractLanesOfCoreIntersection(toLaneId);
+  if (!isLanePartOfCoreIntersection(toLaneId))
   {
     throw std::runtime_error("Lane is not part of intersection!");
   }
-  extractCrossingLanes();
+
+  extractIncomingLanes();
   calculateParaPoints();
+  extractCrossingLanes();
   orderIntersectionArmsAndExtractTurnDirection();
   extractLanesWithHigherPriority();
   extractLanesWithLowerPriority();
@@ -526,12 +336,7 @@ point::ParaPointList const &Intersection::outgoingParaPointsOnRoute() const
 
 point::ParaPointList const &Intersection::outgoingParaPoints() const
 {
-  return mOutgoingParaPoints;
-}
-
-lane::LaneIdSet const &Intersection::internalLanes() const
-{
-  return mInternalLanes;
+  return exitParaPoints();
 }
 
 lane::LaneIdSet const &Intersection::internalLanesWithHigherPriority() const
@@ -561,22 +366,12 @@ lane::LaneIdSet const &Intersection::incomingLanes() const
 
 lane::LaneIdSet const &Intersection::outgoingLanes() const
 {
-  return mOutgoingLanes;
-}
-
-lane::LaneIdSet const &Intersection::entryLanes() const
-{
-  return mEntryLanes;
+  return exitLanes();
 }
 
 point::ParaPointList const &Intersection::incomingParaPoints() const
 {
   return mIncomingParaPoints;
-}
-
-point::ParaPointList const &Intersection::entryParaPoints() const
-{
-  return mEntryParaPoints;
 }
 
 point::ParaPointList const &Intersection::incomingParaPointsWithHigherPriority() const
@@ -620,77 +415,34 @@ route::RouteParaPoint Intersection::getIntersectionStartOnRoute() const
   return result;
 }
 
-bool Intersection::laneIsPartOfIntersection(lane::LaneId const laneId) const
+void Intersection::extractIncomingLanes()
 {
-  return (mInternalLanes.count(laneId) > 0);
-}
-
-void Intersection::extractLanesOfIntersection(lane::LaneId const laneId)
-{
-  if (laneIsPartOfIntersection(laneId))
+  for (auto laneId : entryLanes())
   {
-    return;
-  }
-  auto lane = lane::getLane(laneId);
-  if (!lane::isLanePartOfAnIntersection(lane))
-  {
-    // restrict ourselves to lanes inside the intersection
-    return;
-  }
-  mInternalLanes.insert(laneId);
-  for (auto const &contact : lane.contactLanes)
-  {
-    processContactsForLane(lane, contact);
-    extractLanesOfIntersection(contact.toLane);
-  }
-}
-
-void Intersection::processContactsForLane(lane::Lane const &lane, lane::ContactLane const &contact)
-{
-  auto const &toId = contact.toLane;
-  switch (contact.location)
-  {
-    case lane::ContactLocation::OVERLAP:
-      mOverlapping[lane.id].insert(toId);
-      break;
-    case lane::ContactLocation::SUCCESSOR:
-      if (isLaneDirectionPositive(lane))
-      {
-        mSuccessor[lane.id].insert(toId);
-        insertOutgoingLane(toId);
-      }
-      else
-      {
-        mPredecessor[lane.id].insert(toId);
-        insertIncomingLane(toId);
-      }
-      break;
-    case lane::ContactLocation::PREDECESSOR:
-      if (isLaneDirectionNegative(lane))
-      {
-        mSuccessor[lane.id].insert(toId);
-        insertOutgoingLane(toId);
-      }
-      else
-      {
-        mPredecessor[lane.id].insert(toId);
-        insertIncomingLane(toId);
-      }
-      break;
-    default:
-      break; // ignored for now
-  }
-}
-
-void Intersection::insertIncomingLane(lane::LaneId const laneId)
-{
-  if (!isLanePartOfAnIntersection(laneId))
-  {
-    mEntryLanes.insert(laneId);
     if (mIncomingLanesOnRoute.count(laneId) == 0)
     {
       mIncomingLanes.insert(laneId);
+      mIncomingParaPoints.push_back(getEntryParaPointOfExternalLane(laneId));
     }
+  }
+}
+
+void Intersection::calculateParaPoints()
+{
+  for (auto laneId : mIncomingLanesOnRoute)
+  {
+    mIncomingParaPointsOnRoute.push_back(getEntryParaPointOfExternalLane(laneId));
+  }
+
+  for (auto outGoingLaneId : mOutgoingLanesOnRoute)
+  {
+    mOutgoingParaPointsOnRoute.push_back(getExitParaPointOfExternalLane(outGoingLaneId));
+  }
+
+  for (auto laneId : mLanesOnRoute)
+  {
+    auto paraPoint = getEntryParaPointOfExternalLane(laneId);
+    mParaPointsOnRoute.push_back(paraPoint);
   }
 }
 
@@ -712,21 +464,6 @@ void Intersection::extractCrossingLanes()
   for (auto laneId : internalSuccessorsOfRouteEntry)
   {
     mCrossingLanes.erase(laneId);
-  }
-}
-
-void Intersection::insertOutgoingLane(lane::LaneId const laneId)
-{
-  if (!isLanePartOfAnIntersection(laneId) && (mIncomingLanes.count(laneId) == 0))
-  {
-    if (mOutgoingLanes.insert(laneId).second)
-    {
-      point::ParaPoint p;
-      p.laneId = laneId;
-      p.parametricOffset
-        = (isLaneDirectionNegative(laneId) ? physics::ParametricValue(0.) : physics::ParametricValue(1.));
-      mOutgoingParaPoints.push_back(p);
-    }
   }
 }
 
@@ -814,7 +551,7 @@ void Intersection::orderIntersectionArmsAndExtractTurnDirection()
   directionOfLanes(mEntryParaPoints, referenceAngle, intersectionLanesDirection);
 
   // calculate the angle for all outgoing lanes of the intersection
-  directionOfLanes(mOutgoingParaPoints, (referenceAngle + point::ENUHeading(M_PI)), intersectionLanesDirection);
+  directionOfLanes(mExitParaPoints, (referenceAngle + point::ENUHeading(M_PI)), intersectionLanesDirection);
 
   // Group all incoming/outgoing lanes into arms (ordered counterclockwise).
 
@@ -881,37 +618,6 @@ void Intersection::extractLanesFromSameIntersectionArm()
   }
 }
 
-void Intersection::calculateParaPoints()
-{
-  for (auto laneId : mIncomingLanesOnRoute)
-  {
-    mIncomingParaPointsOnRoute.push_back(getIncomingParaPoint(laneId));
-  }
-
-  for (auto outGoingLaneId : mOutgoingLanesOnRoute)
-  {
-    mOutgoingParaPointsOnRoute.push_back(getOutgoingParaPoint(outGoingLaneId));
-  }
-
-  for (auto laneId : mIncomingLanes)
-  {
-    auto paraPoint = getIncomingParaPoint(laneId);
-    mIncomingParaPoints.push_back(paraPoint);
-  }
-
-  for (auto laneId : mEntryLanes)
-  {
-    auto paraPoint = getIncomingParaPoint(laneId);
-    mEntryParaPoints.push_back(paraPoint);
-  }
-
-  for (auto laneId : mLanesOnRoute)
-  {
-    auto paraPoint = getIncomingParaPoint(laneId);
-    mParaPointsOnRoute.push_back(paraPoint);
-  }
-}
-
 void Intersection::calculateEnteringProrityParaPoints()
 {
   for (auto laneId : mIncomingLanes)
@@ -930,13 +636,13 @@ void Intersection::calculateEnteringProrityParaPoints()
     }
     if (internalPriorityFound)
     {
-      auto paraPoint = getIncomingParaPoint(laneId);
+      auto paraPoint = getEntryParaPointOfExternalLane(laneId);
       mIncomingParaPointsWithHigherPriority.push_back(paraPoint);
       mIncomingLanesWithHigherPriority.insert(laneId);
     }
     else
     {
-      auto paraPoint = getIncomingParaPoint(laneId);
+      auto paraPoint = getEntryParaPointOfExternalLane(laneId);
       mIncomingParaPointsWithLowerPriority.push_back(paraPoint);
       mIncomingLanesWithLowerPriority.insert(laneId);
     }
@@ -1106,18 +812,6 @@ void Intersection::adjustLanesForTrafficLight()
   }
 }
 
-bool Intersection::objectWithinIntersection(match::MapMatchedObjectBoundingBox const &object) const
-{
-  for (auto const &occupiedLane : object.laneOccupiedRegions)
-  {
-    if (mInternalLanes.count(occupiedLane.laneId) > 0)
-    {
-      return true;
-    }
-  }
-  return false;
-}
-
 bool Intersection::objectOnIncomingLane(match::MapMatchedObjectBoundingBox const &object) const
 {
   for (auto const &occupiedLane : object.laneOccupiedRegions)
@@ -1225,19 +919,6 @@ bool Intersection::objectRouteCrossesIntersectionRoute(route::FullRoute const &o
   return false;
 }
 
-bool Intersection::objectRouteCrossesIntersection(route::FullRoute const &objectRoute) const
-{
-  for (auto internalLaneId : mInternalLanes)
-  {
-    auto findResult = route::findWaypoint(internalLaneId, objectRoute);
-    if (findResult.isValid())
-    {
-      return true;
-    }
-  }
-  return false;
-}
-
 bool Intersection::objectRouteFromSameArmAsIntersectionRoute(route::FullRoute const &objectRoute) const
 {
   bool routeLaneFound = false;
@@ -1323,23 +1004,6 @@ bool Intersection::objectRouteOppositeToIntersectionRoute(route::FullRoute const
   return false;
 }
 
-physics::Distance Intersection::objectDistanceToIntersection(match::Object const &object) const
-{
-  physics::Distance minDistance = std::numeric_limits<physics::Distance>::max();
-  if (objectWithinIntersection(object.mapMatchedBoundingBox))
-  {
-    minDistance = physics::Distance(0.);
-  }
-  else
-  {
-    for (auto internalLaneId : mInternalLanes)
-    {
-      minDistance = std::min(minDistance, lane::getDistanceToLane(internalLaneId, object));
-    }
-  }
-  return minDistance;
-}
-
 physics::Distance Intersection::objectInterpenetrationDistanceWithIntersection(match::Object const &object) const
 {
   physics::Distance maxDistance(0.);
@@ -1363,8 +1027,8 @@ physics::Distance Intersection::objectInterpenetrationDistanceWithIntersection(m
           {
             if (!isLanePartOfAnIntersection(predecessorId))
             {
-              // one of the predecessors is outside of the intersection (outgoingParaPonts logic)
-              auto const entryBorderParaPoint = getOutgoingParaPoint(occupiedLane.laneId);
+              // one of the predecessors is outside of the intersection
+              auto const entryBorderParaPoint = getEntryParaPointOfInternalLane(occupiedLane.laneId);
               if ((entryBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.maximum)
                   || (entryBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.minimum))
               {
@@ -1384,10 +1048,10 @@ physics::Distance Intersection::objectInterpenetrationDistanceWithIntersection(m
             {
               if (!isLanePartOfAnIntersection(successorId))
               {
-                // one of the successors is outside of the intersection (incomingParaPonts logic)
-                auto const entryBorderParaPoint = getIncomingParaPoint(occupiedLane.laneId);
-                if ((entryBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.maximum)
-                    || (entryBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.minimum))
+                // one of the successors is outside of the intersection
+                auto const exitBorderParaPoint = getExitParaPointOfInternalLane(occupiedLane.laneId);
+                if ((exitBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.maximum)
+                    || (exitBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.minimum))
                 {
                   isRelevantBorderLane = true;
                   break;
@@ -1556,3 +1220,43 @@ bool Intersection::onlySolidTrafficLightsOnRoute()
 } // namespace intersection
 } // namespace map
 } // namespace ad
+
+namespace std {
+
+std::ostream &operator<<(std::ostream &os, ::ad::map::intersection::Intersection const &intersection)
+{
+  os << static_cast<::ad::map::intersection::CoreIntersection const &>(intersection);
+  os << "Intersection[";
+  os << toString(intersection.intersectionType());
+  os << "]";
+  os << std::endl;
+  os << "->internalLanes: ";
+  os << intersection.internalLanes();
+  os << std::endl;
+  os << "->internalLanesWithHigherPriority: ";
+  os << intersection.internalLanesWithHigherPriority();
+  os << std::endl;
+  os << "->incomingLanes: ";
+  os << intersection.incomingLanes();
+  os << std::endl;
+  os << "->incomingParaPoints: ";
+  os << intersection.incomingParaPoints();
+  os << std::endl;
+  os << "->incomingParaPointsWithHigherPriority: ";
+  os << intersection.incomingParaPointsWithHigherPriority();
+  os << std::endl;
+  os << "->crossingLanes";
+  os << intersection.crossingLanes();
+  os << std::endl;
+  os << "->lanesOnRoute: ";
+  os << intersection.lanesOnRoute();
+  os << std::endl;
+  os << "->incomingLanesOnRoute: ";
+  os << intersection.incomingLanesOnRoute();
+  os << std::endl;
+  os << "->incomingParaPointsOnRoute: ";
+  os << intersection.incomingParaPointsOnRoute();
+  return os;
+}
+
+} // namespace std

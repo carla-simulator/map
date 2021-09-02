@@ -67,11 +67,13 @@ void AdMapMatching::normalizeResults(match::MapMatchedPositionConfidenceList &ma
 }
 
 match::MapMatchedPositionConfidenceList
-AdMapMatching::findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geo_point, physics::Distance const &distance)
+AdMapMatching::findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geo_point,
+                                                    physics::Distance const &distance,
+                                                    ::ad::map::lane::LaneIdSet const &relevantLaneSet)
 {
   match::MapMatchedPositionConfidenceList map_matching_results;
   physics::Probability probability_sum(0.);
-  for (auto lane_id : access::getStore().getLanes())
+  for (auto lane_id : relevantLaneSet)
   {
     auto lane = access::getStore().getLanePtr(lane_id);
     if (lane)
@@ -110,22 +112,38 @@ AdMapMatching::findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geo_p
   return map_matching_results;
 }
 
-std::vector<lane::Lane::ConstPtr> AdMapMatching::getRelevantLanesInputChecked(point::ECEFPoint const &ecefPoint,
-                                                                              physics::Distance const &distance)
+std::vector<lane::Lane::ConstPtr>
+AdMapMatching::getRelevantLanesInputChecked(point::ECEFPoint const &ecefPoint,
+                                            physics::Distance const &distance,
+                                            ::ad::map::lane::LaneIdSet const &relevantLaneSet)
 {
   std::vector<lane::Lane::ConstPtr> relevantLanes;
-  point::BoundingSphere matchingSphere;
-  matchingSphere.center = ecefPoint;
-  matchingSphere.radius = distance;
-  for (auto laneId : access::getStore().getLanes())
+  if (!relevantLaneSet.empty())
   {
-    auto lane = access::getStore().getLanePtr(laneId);
-
-    if (lane)
+    for (auto laneId : relevantLaneSet)
     {
-      if (lane::isNear(*lane, matchingSphere))
+      auto lane = access::getStore().getLanePtr(laneId);
+      if (lane)
       {
         relevantLanes.push_back(lane);
+      }
+    }
+  }
+  else
+  {
+    point::BoundingSphere matchingSphere;
+    matchingSphere.center = ecefPoint;
+    matchingSphere.radius = distance;
+    for (auto laneId : access::getStore().getLanes())
+    {
+      auto lane = access::getStore().getLanePtr(laneId);
+
+      if (lane)
+      {
+        if (lane::isNear(*lane, matchingSphere))
+        {
+          relevantLanes.push_back(lane);
+        }
       }
     }
   }
@@ -133,14 +151,17 @@ std::vector<lane::Lane::ConstPtr> AdMapMatching::getRelevantLanesInputChecked(po
   return relevantLanes;
 }
 
-match::MapMatchedPositionConfidenceList AdMapMatching::findLanesInputChecked(point::ECEFPoint const &ecefPoint,
-                                                                             physics::Distance const &distance)
+match::MapMatchedPositionConfidenceList
+AdMapMatching::findLanesInputChecked(point::ECEFPoint const &ecefPoint,
+                                     physics::Distance const &distance,
+                                     ::ad::map::lane::LaneIdSet const &relevantLaneSet)
 {
-  return findLanesInputChecked(getRelevantLanesInputChecked(ecefPoint, distance), ecefPoint, distance);
+  return findLanesInputChecked(getRelevantLanesInputChecked(ecefPoint, distance, relevantLaneSet), ecefPoint, distance);
 }
 
 match::MapMatchedPositionConfidenceList AdMapMatching::findLanes(point::GeoPoint const &geoPoint,
-                                                                 physics::Distance const &distance)
+                                                                 physics::Distance const &distance,
+                                                                 ::ad::map::lane::LaneIdSet const &relevantLaneSet)
 {
   if (!isValid(geoPoint))
   {
@@ -154,16 +175,17 @@ match::MapMatchedPositionConfidenceList AdMapMatching::findLanes(point::GeoPoint
   }
   if (geoPoint.altitude == point::AltitudeUnknown)
   {
-    return findLanesInputCheckedAltitudeUnknown(geoPoint, distance);
+    return findLanesInputCheckedAltitudeUnknown(geoPoint, distance, relevantLaneSet);
   }
   else
   {
-    return findLanesInputChecked(point::toECEF(geoPoint), distance);
+    return findLanesInputChecked(point::toECEF(geoPoint), distance, relevantLaneSet);
   }
 }
 
 match::MapMatchedPositionConfidenceList AdMapMatching::findLanes(point::ECEFPoint const &ecefPoint,
-                                                                 physics::Distance const &distance)
+                                                                 physics::Distance const &distance,
+                                                                 ::ad::map::lane::LaneIdSet const &relevantLaneSet)
 {
   if (!isValid(ecefPoint))
   {
@@ -175,7 +197,7 @@ match::MapMatchedPositionConfidenceList AdMapMatching::findLanes(point::ECEFPoin
     access::getLogger()->error("Invalid radius passed to AdMapMatching::findLanes(): {}", distance);
     return MapMatchedPositionConfidenceList();
   }
-  return findLanesInputChecked(ecefPoint, distance);
+  return findLanesInputChecked(ecefPoint, distance, relevantLaneSet);
 }
 
 AdMapMatching::AdMapMatching()
@@ -231,7 +253,7 @@ MapMatchedPositionConfidenceList AdMapMatching::getMapMatchedPositions(point::Ge
                                                                        physics::Distance const &distance,
                                                                        physics::Probability const &minProbability) const
 {
-  auto mapMatchingResult = findLanes(geoPoint, distance);
+  auto mapMatchingResult = findLanes(geoPoint, distance, mRelevantLanes);
   mapMatchingResult = considerMapMatchingHints(mapMatchingResult, minProbability);
   access::getLogger()->trace("MapMatching result {}", mapMatchingResult);
   return mapMatchingResult;
@@ -394,8 +416,8 @@ MapMatchedObjectBoundingBox AdMapMatching::getMapMatchedBoundingBox(ENUObjectPos
   }
 
   // filter lanes on large scale first
-  auto const relevantLanes = getRelevantLanesInputChecked(referencePoints[int32_t(ObjectReferencePoints::Center)],
-                                                          mapMatchedObjectBoundingBox.matchRadius);
+  auto const relevantLanes = getRelevantLanesInputChecked(
+    referencePoints[int32_t(ObjectReferencePoints::Center)], mapMatchedObjectBoundingBox.matchRadius, mRelevantLanes);
 
   mapMatchedObjectBoundingBox.referencePointPositions.resize(size_t(ObjectReferencePoints::NumPoints));
 

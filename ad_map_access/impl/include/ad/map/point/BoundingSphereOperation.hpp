@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -23,7 +23,7 @@ namespace point {
 inline physics::Distance distance(BoundingSphere const &left, BoundingSphere const &right)
 {
   physics::Distance const distanceCenter = distance(left.center, right.center);
-  return std::max(physics::Distance(0u), distanceCenter - left.radius - right.radius);
+  return std::max(physics::Distance(0.), distanceCenter - left.radius - right.radius);
 }
 
 /**

@@ -488,6 +488,14 @@ struct LaneAltitudeRange
  * @returns The range of the lanes altitude
  */
 LaneAltitudeRange calcLaneAltitudeRange(Lane const &lane);
+
+/**
+ * @brief Checks if the laneId is relevant for expansion given the set of relevant lanes.
+ *
+ * @returns \c true if the \a relevantLanes set is empty, or if the laneId can be found in the set of \a relevantLanes.
+ */
+bool isLaneRelevantForExpansion(lane::LaneId const &laneId, lane::LaneIdSet const &relevantLanes);
+
 } // namespace lane
 } // namespace map
 } // namespace ad

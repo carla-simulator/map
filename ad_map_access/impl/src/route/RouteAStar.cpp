@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -94,7 +94,23 @@ bool RouteAstar::calculate()
   // Initial values.
   RoutingCost cost;
   cost.costData.estimatedDistanceToTarget = costEstimate(mStartLane, mStart.point);
-  mProcessingMap.insert({mStart, cost});
+  if (mStart.direction == RoutingDirection::DONT_CARE)
+  {
+    // Don't care routing direction means the vehicle can drive forward or backward.
+    // Within the routing we have to replace this by concrete directions,
+    // otherwise the vehicle would be able to switch between forward/backward while driving on the route
+    // which especially is not meant by the don't care flag.
+    auto startPositive = mStart;
+    startPositive.direction = RoutingDirection::POSITIVE;
+    mProcessingMap.insert({startPositive, cost});
+    auto startNegative = mStart;
+    startNegative.direction = RoutingDirection::NEGATIVE;
+    mProcessingMap.insert({startNegative, cost});
+  }
+  else
+  {
+    mProcessingMap.insert({mStart, cost});
+  }
   // Run
   bool pathFound = false;
 #if DEBUG_OUTPUT
