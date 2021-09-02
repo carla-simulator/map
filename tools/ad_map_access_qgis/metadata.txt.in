@@ -1,0 +1,39 @@
+# This file contains metadata for your plugin. Since
+# version 2.0 of QGIS this is the proper way to supply
+# information about a plugin. The old method of
+# embedding metadata in __init__.py will
+# is no longer supported since version 2.0.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=CARLA ad_map_access
+qgisMinimumVersion=3.10
+qgisMaximumVersion=3.99
+description=CARLA ad_map_access
+version= version @CARLA-MAP_VERSION@
+author=CARLA Simulator Team
+email=carla.simulator@gmail.com
+
+about=CARLA ad_map_access
+
+tracker=https://github.com/carla-simulator/map/issues
+repository=https://github.com/carla-simulator/map/
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=
+
+homepage=
+category=Database
+#icon=icon.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
