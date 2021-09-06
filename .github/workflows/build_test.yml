@@ -76,17 +76,17 @@ jobs:
            CXX: /usr/bin/g++-8
            PYTHON_BINDING_VERSION: "3.6"
          - compiler: gcc9
-           EXTRA_PACKAGES: g++-9
+           EXTRA_PACKAGES: g++-9 python-is-python3
            CC: /usr/bin/gcc-9
            CXX: /usr/bin/g++-9
            PYTHON_BINDING_VERSION: "3.6"
          - compiler: clang7
-           EXTRA_PACKAGES: clang-7
+           EXTRA_PACKAGES: clang-7 python-is-python3
            CC: /usr/bin/clang-7
            CXX: /usr/bin/clang++-7
            PYTHON_BINDING_VERSION: "3.6"
          - compiler: clang8
-           EXTRA_PACKAGES: clang-8
+           EXTRA_PACKAGES: clang-8 python-is-python3
            CC: /usr/bin/clang-8
            CXX: /usr/bin/clang++-8
            PYTHON_BINDING_VERSION: "3.6"
