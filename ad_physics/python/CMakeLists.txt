@@ -1,18 +1,15 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (c) 2020 Intel Corporation
+# Copyright (c) 2020-2021 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
 
 
-project(ad_physics_python)
+project(ad_physics_python VERSION ${CARLA-MAP_VERSION})
 
 include(GNUInstallDirs)
-
-set(CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 14)
 
 find_package(spdlog REQUIRED CONFIG)
 get_target_property(SPDLOG_INCLUDES spdlog::spdlog INTERFACE_INCLUDE_DIRECTORIES)
@@ -50,9 +47,11 @@ target_link_libraries(${target} PRIVATE
   ${PYTHON_BINDING_PACKAGE_LIBRARIES}
 )
 
+configure_file(setup.py.in ${CMAKE_CURRENT_BINARY_DIR}/setup.py)
+
 install(CODE "\
   EXECUTE_PROCESS(\
-    COMMAND ${PYTHON_EXECUTABLE} setup.py egg_info --egg-base ${CMAKE_CURRENT_BINARY_DIR} build --build-base ${CMAKE_CURRENT_BINARY_DIR} install --prefix ${CMAKE_INSTALL_PREFIX} --record ${CMAKE_CURRENT_BINARY_DIR}/install.log --single-version-externally-managed bdist_wheel --dist-dir ${CMAKE_INSTALL_PREFIX}/dist ${CMAKE_CURRENT_BINARY_DIR}/${PYTHON_BINDING_NAME}\
+    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/setup.py egg_info --egg-base ${CMAKE_CURRENT_BINARY_DIR} build --build-base ${CMAKE_CURRENT_BINARY_DIR} install --prefix ${CMAKE_INSTALL_PREFIX} --record ${CMAKE_CURRENT_BINARY_DIR}/install.log --single-version-externally-managed bdist_wheel --dist-dir ${CMAKE_INSTALL_PREFIX}/dist ${CMAKE_CURRENT_BINARY_DIR}/${PYTHON_BINDING_NAME}\
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}\
   )"
 )
