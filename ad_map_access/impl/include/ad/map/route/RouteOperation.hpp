@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -16,9 +16,9 @@
 #include "ad/map/route/Types.hpp"
 #include "ad/physics/Types.hpp"
 
-/* @brief namespace ad */
+/** @brief namespace ad */
 namespace ad {
-/* @brief namespace map */
+/** @brief namespace map */
 namespace map {
 
 /** @brief namespace intersection */
@@ -29,7 +29,7 @@ namespace intersection {
 class Intersection;
 } // namespace intersection
 
-/* @brief namespace route */
+/** @brief namespace route */
 namespace route {
 
 /**
@@ -728,6 +728,7 @@ void appendLaneSegmentToRoute(route::LaneInterval const &laneInterval,
  * @param[in/out] route the route to check and to extend
  * @param[in] length the minimum length
  * @param[in/out] additionalRoutes additional routes in case of intersections on the extension
+ * @param[in] relevantLanes if not empty, the function restricts the extension to the given set of lanes
  *
  * @returns pair of bool and vector
  *
@@ -737,7 +738,8 @@ void appendLaneSegmentToRoute(route::LaneInterval const &laneInterval,
  */
 bool extendRouteToDistance(route::FullRoute &route,
                            physics::Distance const &length,
-                           route::FullRouteList &additionalRoutes);
+                           route::FullRouteList &additionalRoutes,
+                           lane::LaneIdSet const &relevantLanes = ad::map::lane::LaneIdSet());
 
 /**
  * @brief extends route with the given list of destinations
@@ -785,11 +787,13 @@ bool extendRouteToDestinations(route::FullRoute &route, const std::vector<point:
  * @param[in] laneInterval the new lane interval to be append
  * @param[in] laneOffset the lane offset of the new lane interval to be append
  * @param[in] route the route the interval has to be appended
+ * @param[in] relevantLanes if not empty, the function restricts the extension to the given set of lanes
  *
  */
 void appendRoadSegmentToRoute(route::LaneInterval const &laneInverval,
                               route::RouteLaneOffset const &laneOffset,
-                              route::FullRoute &route);
+                              route::FullRoute &route,
+                              lane::LaneIdSet const &relevantLanes);
 
 /**
  * @brief add an opposing lane segment to an existing (and not empty) road segment with at most the given length
@@ -840,7 +844,7 @@ route::FullRoute getRouteExpandedToOppositeLanes(route::FullRoute const &route);
  * @returns the input route expanded by all neighbor lanes
  *
  * Internally recreates the route by calling appendRoadSegmentToRoute()  with a new route
- * having RouteCreationMode::AllAllNeighbors
+ * having RouteCreationMode::AllNeighbors
  */
 route::FullRoute getRouteExpandedToAllNeighborLanes(route::FullRoute const &route);
 
@@ -856,7 +860,7 @@ route::FullRoute getRouteExpandedToAllNeighborLanes(route::FullRoute const &rout
  *
  * @return false if no valid bypassing route was found
  */
-bool calculateBypassingRoute(::ad::map::route::FullRoute const &route, ::ad::map::route::FullRoute &bypassingRoute);
+bool calculateBypassingRoute(route::FullRoute const &route, route::FullRoute &bypassingRoute);
 
 /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
  *

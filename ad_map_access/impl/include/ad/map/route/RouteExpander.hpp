@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2019-2020 Intel Corporation
+// Copyright (C) 2019-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -14,11 +14,11 @@
 #include "ad/map/route/Route.hpp"
 #include "ad/physics/Operation.hpp"
 
-/* @brief namespace ad */
+/** @brief namespace ad */
 namespace ad {
-/* @brief namespace map */
+/** @brief namespace map */
 namespace map {
-/* @brief namespace route */
+/** @brief namespace route */
 namespace route {
 /**
  * @namespace planning
@@ -84,6 +84,23 @@ public:
    */
   void expandNeighbors(RoutingPoint const &origin);
 
+  /**
+   * @brief set the lanes that are relevant for routing
+   * All the rest of the lanes in the map are ignored.
+   */
+  void setRelevantLanes(::ad::map::lane::LaneIdSet const &relevantLanes)
+  {
+    mRelevantLanes = relevantLanes;
+  }
+
+  /**
+   * @brief clear the list of relevant lanes.
+   */
+  void clearRelevantLanes()
+  {
+    mRelevantLanes.clear();
+  }
+
 protected:
   /**
    * @brief Definition of the reasons for route expansion
@@ -130,14 +147,20 @@ protected:
   bool isPositiveMovement(lane::Lane::ConstPtr lane, RoutingPoint const &origin)
   {
     return (laneDirectionIsIgnored() || isLaneDirectionPositive(*lane))
-      && (origin.first.direction != RoutingDirection::NEGATIVE);
+      && (origin.first.direction == RoutingDirection::POSITIVE);
   }
 
   //! @returns \c true if the given origin point on the given lane defines a negative movement
   bool isNegativeMovement(lane::Lane::ConstPtr lane, RoutingPoint const &origin)
   {
     return (laneDirectionIsIgnored() || isLaneDirectionNegative(*lane))
-      && (origin.first.direction != RoutingDirection::POSITIVE);
+      && (origin.first.direction == RoutingDirection::NEGATIVE);
+  }
+
+  //! check if lane is relevant for route expander
+  bool isLaneRelevantForExpansion(lane::LaneId const laneId) const
+  {
+    return lane::isLaneRelevantForExpansion(laneId, mRelevantLanes);
   }
 
   //! perform the expansion of the neighbor points on the same lane
@@ -154,12 +177,20 @@ protected:
                               RoutingParaPoint neighborRoutingParaPoint);
   //! create longitudinal neighbor point with minimal actual distance/duration to reach
   RoutingPoint createLongitudinalNeighbor(RoutingPoint const &origin, RoutingParaPoint neighborRoutingParaPoint);
+
+  //! relevant lanes for the routing
+  ::ad::map::lane::LaneIdSet mRelevantLanes;
 };
 
 template <class RoutingCostData>
 void RouteExpander<RoutingCostData>::expandNeighbors(
   typename RouteExpander<RoutingCostData>::RoutingPoint const &origin)
 {
+  if (origin.first.direction == RoutingDirection::DONT_CARE)
+  {
+    throw std::runtime_error("RouteExpander::ExpandNeighbors invalid routing direction!");
+  }
+
   lane::Lane::ConstPtr lane = lane::getLanePtr(origin.first.point.laneId);
   if (lane)
   {
@@ -271,14 +302,18 @@ void RouteExpander<RoutingCostData>::expandLongitudinalNeighbors(
   lane::ContactLaneList contactLanes;
   if (isEnd(origin) && isPositiveMovement(lane, origin))
   {
-    contactLanes = getContactLanes(*lane, lane::ContactLocation::SUCCESSOR);
+    contactLanes = lane::getContactLanes(*lane, lane::ContactLocation::SUCCESSOR);
   }
   else if (isStart(origin) && isNegativeMovement(lane, origin))
   {
-    contactLanes = getContactLanes(*lane, lane::ContactLocation::PREDECESSOR);
+    contactLanes = lane::getContactLanes(*lane, lane::ContactLocation::PREDECESSOR);
   }
   for (auto contactLane : contactLanes)
   {
+    if (!isLaneRelevantForExpansion(contactLane.toLane))
+    {
+      continue;
+    }
     lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.toLane);
     if (otherLane)
     {
@@ -288,11 +323,6 @@ void RouteExpander<RoutingCostData>::expandLongitudinalNeighbors(
         if (otherToLane == lane::ContactLocation::SUCCESSOR)
         {
           auto routingDirection = RoutingDirection::NEGATIVE;
-          if (origin.first.direction == RoutingDirection::DONT_CARE)
-          {
-            routingDirection = RoutingDirection::DONT_CARE;
-          }
-
           auto const neighbor = createLongitudinalNeighbor(
             origin, createRoutingParaPoint(otherLane->id, physics::ParametricValue(1.), routingDirection));
 
@@ -301,10 +331,6 @@ void RouteExpander<RoutingCostData>::expandLongitudinalNeighbors(
         else if (otherToLane == lane::ContactLocation::PREDECESSOR)
         {
           auto routingDirection = RoutingDirection::POSITIVE;
-          if (origin.first.direction == RoutingDirection::DONT_CARE)
-          {
-            routingDirection = RoutingDirection::DONT_CARE;
-          }
           auto const neighbor = createLongitudinalNeighbor(
             origin, createRoutingParaPoint(otherLane->id, physics::ParametricValue(0.), routingDirection));
 
@@ -327,8 +353,13 @@ template <class RoutingCostData>
 void RouteExpander<RoutingCostData>::expandLateralNeighbors(
   lane::Lane::ConstPtr lane, typename RouteExpander<RoutingCostData>::RoutingPoint const &origin)
 {
-  for (auto const &contactLane : getContactLanes(*lane, {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT}))
+  for (auto const &contactLane :
+       lane::getContactLanes(*lane, {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT}))
   {
+    if (!isLaneRelevantForExpansion(contactLane.toLane))
+    {
+      continue;
+    }
     lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.toLane);
     if (otherLane)
     {

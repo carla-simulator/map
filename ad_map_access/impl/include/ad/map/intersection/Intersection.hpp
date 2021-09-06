@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -13,6 +13,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "ad/map/intersection/CoreIntersection.hpp"
 #include "ad/map/intersection/IntersectionType.hpp"
 #include "ad/map/intersection/TurnDirection.hpp"
 #include "ad/map/landmark/Types.hpp"
@@ -58,7 +59,7 @@ typedef std::shared_ptr<Intersection const> IntersectionConstPtr;
  * - all lanes that have higher priority than lanes on route --> @ref lanesWithHigherPriority
  * - get the physics::Distance between an object and the _border_ of the intersection --> @ref physics::DistanceToEntry
  */
-class Intersection
+class Intersection : public CoreIntersection
 {
 public:
   /**
@@ -71,18 +72,6 @@ public:
    * through the intersection is created and returned.
    */
   static IntersectionPtr getIntersectionForRoadSegment(route::RouteIterator const &routeIterator);
-
-  /**
-   * @brief check if the road segment enters an intersection
-   *
-   * @param[in] routeIterator the route iterator of the road segment
-   * @param[out] routePreviousSegmentIter if an intersectin is entered,
-   *   this holds the previous route segment that is part of the transition
-   *
-   * @returns \c true if given routeIterator enters an intersection
-   */
-  static bool isRoadSegmentEnteringIntersection(route::RouteIterator const &routeIterator,
-                                                route::RoadSegmentList::const_iterator &routePreviousSegmentIter);
 
   /**
    * @brief retrieve all intersections for the given route
@@ -102,29 +91,6 @@ public:
    * through the intersection is created and returned.
    */
   static IntersectionPtr getNextIntersectionOnRoute(route::FullRoute const &route);
-
-  /**
-   * @brief check if there is an intersection for the given route
-   *
-   * @param[in] route planned route
-   *
-   * @return If there is an intersection within the route, \c true is returned.
-   */
-  static bool isIntersectionOnRoute(route::FullRoute const &route);
-
-  /**
-   * @brief check if a lane is part of any intersection
-   */
-  static bool isLanePartOfAnIntersection(lane::LaneId const laneId);
-
-  /**
-   * @brief check if any lane in the route is part of any intersection
-   *
-   * @param[in] route planned route
-   *
-   * @return If there is an intersection within the route, \c true is returned.
-   */
-  static bool isRoutePartOfAnIntersection(route::FullRoute const &route);
 
   /** @return the type of this intersection */
   IntersectionType intersectionType() const;
@@ -156,9 +122,6 @@ public:
   /** @return the border points of all lanes that exit the intersection */
   point::ParaPointList const &outgoingParaPoints() const;
 
-  /** @return all lanes that are inside the intersection (independent of route) */
-  lane::LaneIdSet const &internalLanes() const;
-
   /** @return all lanes that are inside the intersection and have higher priority (subset of internalLanes) */
   lane::LaneIdSet const &internalLanesWithHigherPriority() const;
 
@@ -171,9 +134,6 @@ public:
   /** @return all lanes that lead out from the intersection */
   lane::LaneIdSet const &outgoingLanes() const;
 
-  /** @return all lanes that lead into the intersection */
-  lane::LaneIdSet const &entryLanes() const;
-
   /** @return all lanes that lead into the intersection with lower priority (except the lanes on the route leading into
    * the intersection) */
   lane::LaneIdSet const &incomingLanesWithLowerPriority() const;
@@ -185,9 +145,6 @@ public:
 
   /** @return the border points of all lanes that lead into the intersection (incomingLanes() as ParaPoint's) */
   point::ParaPointList const &incomingParaPoints() const;
-
-  /** @return the border points of all lanes that lead into the intersection as ParaPoint's */
-  point::ParaPointList const &entryParaPoints() const;
 
   /** @return the border points of all lanes that lead into the intersection and have higher priority */
   point::ParaPointList const &incomingParaPointsWithHigherPriority() const;
@@ -215,9 +172,6 @@ public:
    */
   route::RouteParaPoint getIntersectionStartOnRoute() const;
 
-  /** @returns \c true if the object is within the intersection (touches one of the internalLanes) */
-  bool objectWithinIntersection(match::MapMatchedObjectBoundingBox const &object) const;
-
   /** @brief calculate and return the physics::Distance the object interpenetrates with the intersection
    *
    * If the object is not within the intersection: result == 0.
@@ -227,9 +181,6 @@ public:
    * length
    */
   physics::Distance objectInterpenetrationDistanceWithIntersection(match::Object const &object) const;
-
-  /** @brief calculate and return the physics::Distance of the object to the intersection */
-  physics::Distance objectDistanceToIntersection(match::Object const &object) const;
 
   /**
    * @returns \c true if the object touches one of the incoming lanes
@@ -306,14 +257,6 @@ public:
    * is part of the objectRoute.
    */
   bool objectRouteCrossesLanesWithHigherPriority(route::FullRoute const &objectRoute) const;
-
-  /**
-   * @returns \c true if the provided \c objectRoute contains an internal lane
-   *
-   * This is the case if one of the internalLanes()
-   * is part of the objectRoute.
-   */
-  bool objectRouteCrossesIntersection(route::FullRoute const &objectRoute) const;
 
   /**
    * @brief return the speed limit of this intersection
@@ -395,9 +338,6 @@ private:
   //! all border points of lanes that enter intersection on the route
   point::ParaPointList mIncomingParaPointsOnRoute;
 
-  //! all lanes inside the intersection
-  lane::LaneIdSet mInternalLanes;
-
   //! all lanes that have priority over the lanes of the route
   lane::LaneIdSet mInternalLanesWithHigherPriority;
 
@@ -411,17 +351,8 @@ private:
   //! lanes going into the intersection (excluding lanes on path)
   lane::LaneIdSet mIncomingLanes;
 
-  //! lanes going into the intersection
-  lane::LaneIdSet mEntryLanes;
-
   //! incoming lanes (not on the route) represented as ParaPoint
   point::ParaPointList mIncomingParaPoints;
-
-  //! lanes going into the intersection represented as ParaPoint
-  point::ParaPointList mEntryParaPoints;
-
-  //! lanes going out of the intersection
-  lane::LaneIdSet mOutgoingLanes{};
 
   //! all lanes that exit the intersection on the route
   lane::LaneIdSet mOutgoingLanesOnRoute{};
@@ -444,9 +375,6 @@ private:
   //! all lanes that cross any lane of the route inside the intersection
   lane::LaneIdSet mCrossingLanes;
 
-  //! outgoing lanes represented as ParaPoint
-  point::ParaPointList mOutgoingParaPoints;
-
   //! intersection arms order and lanes for each arm
   std::map<TurnDirection, lane::LaneIdSet> mIntersectionArms;
 
@@ -457,21 +385,11 @@ private:
   //! the speed limit of this intersection
   physics::Speed mSpeedLimit;
 
-  /**
-   * Managing relations between lanes through separate maps with sets. Reading:
-   * key: id of lane
-   * value: set of lanes that relate with this one (e.g. overlap)
-   */
-  std::map<lane::LaneId, lane::LaneIdSet> mOverlapping;
-  std::map<lane::LaneId, lane::LaneIdSet> mSuccessor;
-  std::map<lane::LaneId, lane::LaneIdSet> mPredecessor;
-
   void extractRightOfWayAndCollectTrafficLights(route::LaneInterval const &laneInterval,
                                                 lane::LaneIdSet const &successors,
                                                 lane::LaneId &toLaneId);
 
-  void extractLanesOfIntersection(lane::LaneId const laneId);
-
+  void extractIncomingLanes();
   void extractCrossingLanes();
   void extractLanesWithHigherPriority();
   void extractLanesWithLowerPriority();
@@ -485,8 +403,6 @@ private:
    * taking in account ego route through the intersection.
    */
   void calculateEnteringProrityParaPoints();
-  void insertIncomingLane(lane::LaneId const laneId);
-  void insertOutgoingLane(lane::LaneId const laneId);
 
   /**
    * @brief Group lanes outside of the intersection by arm.
@@ -516,10 +432,6 @@ private:
    * derive the lanes with higher priority.
    */
   void orderIntersectionArmsAndExtractTurnDirection();
-
-  //! check if given lane is inside the intersection
-  bool laneIsPartOfIntersection(lane::LaneId const laneId) const;
-  void processContactsForLane(lane::Lane const &lane, lane::ContactLane const &contact);
 
   /**
    * @brief Derive lanes with higher priority in case the host vehicle has right of way.
@@ -630,70 +542,6 @@ private:
 
   void calculateSpeedLimit();
 
-  enum SuccessorMode
-  {
-    OwnIntersection,
-    AnyIntersection
-  };
-
-  bool isLanePartOfIntersection(lane::LaneId const laneId, SuccessorMode const successorMode) const;
-
-  /**
-   * @brief Provide the direct successor lane segments in lane direction within and outside of the intersection.
-   *
-   * @param laneId LaneId
-   * @return a pair with <the laneID segments within the intersection, the laneID segments outside the intersection>
-   */
-  std::pair<lane::LaneIdSet, lane::LaneIdSet>
-  getDirectSuccessorsInLaneDirection(lane::LaneId const laneId, SuccessorMode const successorMode) const;
-
-  /**
-   * @brief Provide the direct successor lane segments in lane direction within the intersection.
-   *
-   * @param laneId LaneId
-   * @return the laneID segments within the intersection.
-   */
-  lane::LaneIdSet getDirectSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
-                                                                       SuccessorMode const successorMode) const;
-
-  /**
-   * @brief Provide the successor lane segments in lane direction within the intersection recursively until the
-   * intersection is left
-   *
-   * @param laneId LaneId
-   * @return the laneID segments within the intersection.
-   */
-  lane::LaneIdSet getAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
-                                                                    SuccessorMode const successorMode) const;
-
-  /**
-   * @brief Provide the successor lane segments in lane direction within the intersection recursively until the
-   * intersection is left including the input laneId if part of the inner lanes.
-   *
-   * @param laneId LaneId
-   * @return the laneID segments within the intersection.
-   */
-  lane::LaneIdSet getLaneAndAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
-                                                                           SuccessorMode const successorMode) const;
-
-  /**
-   * @brief Provide the outgoing lane segments that are reachable in lane direction
-   *
-   * @param laneId LaneId
-   * @return the outgoing laneID segments outside the intersection.
-   */
-  lane::LaneIdSet getAllReachableOutgoingLanes(lane::LaneId const laneId, SuccessorMode const successorMode) const;
-
-  /**
-   * @brief Provide the outgoing lane segments that are reachable in lane direction as well as the intersection internal
-   * lanes
-   *
-   * @param laneId LaneId
-   * @return a pair with <the laneID segments within the intersection, the laneID segments outside the intersection>
-   */
-  std::pair<lane::LaneIdSet, lane::LaneIdSet>
-  getAllReachableInternalAndOutgoingLanes(lane::LaneId const laneId, SuccessorMode const successorMode) const;
-
   /**
    * @brief Add the lane and all successor of it within the intersection to the
    * list of lanes with higher priority.
@@ -766,39 +614,7 @@ namespace std {
  * \returns The stream object.
  *
  */
-static inline std::ostream &operator<<(std::ostream &os, ::ad::map::intersection::Intersection const &intersection)
-{
-  os << "Intersection[";
-  os << toString(intersection.intersectionType());
-  os << "]" << std::endl;
-  os << "->internalLanes: ";
-  os << intersection.internalLanes();
-  os << std::endl;
-  os << "->internalLanesWithHigherPriority: ";
-  os << intersection.internalLanesWithHigherPriority();
-  os << std::endl;
-  os << "->incomingLanes: ";
-  os << intersection.incomingLanes();
-  os << std::endl;
-  os << "->incomingParaPoints: ";
-  os << intersection.incomingParaPoints();
-  os << std::endl;
-  os << "->incomingParaPointsWithHigherPriority: ";
-  os << intersection.incomingParaPointsWithHigherPriority();
-  os << std::endl;
-  os << "->crossingLanes";
-  os << intersection.crossingLanes();
-  os << std::endl;
-  os << "->lanesOnRoute: ";
-  os << intersection.lanesOnRoute();
-  os << std::endl;
-  os << "->incomingLanesOnRoute: ";
-  os << intersection.incomingLanesOnRoute();
-  os << std::endl;
-  os << "->incomingParaPointsOnRoute: ";
-  os << intersection.incomingParaPointsOnRoute();
-  return os;
-}
+std::ostream &operator<<(std::ostream &os, ::ad::map::intersection::Intersection const &intersection);
 
 /**
  * \brief overload of the std::to_string for ad::map::intersection::Intersection

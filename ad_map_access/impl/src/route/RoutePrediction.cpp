@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2020 Intel Corporation
+// Copyright (C) 2018-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -41,18 +41,19 @@ namespace planning {
 
 RoutePrediction::RoutePrediction(const RoutingParaPoint &start,
                                  physics::Distance const &predictionDistance,
-                                 physics::Duration const &predictionDuration)
-  : RouteExpander(start, start, predictionDistance, predictionDuration, Route::Type::SHORTEST)
+                                 physics::Duration const &predictionDuration,
+                                 Type typ)
+  : RouteExpander(start, start, predictionDistance, predictionDuration, typ)
 {
 }
 
-RoutePrediction::RoutePrediction(const RoutingParaPoint &start, physics::Distance const &predictionDistance)
-  : RouteExpander(start, start, predictionDistance, physics::Duration::getMax(), Route::Type::SHORTEST)
+RoutePrediction::RoutePrediction(const RoutingParaPoint &start, physics::Distance const &predictionDistance, Type typ)
+  : RouteExpander(start, start, predictionDistance, physics::Duration::getMax(), typ)
 {
 }
 
-RoutePrediction::RoutePrediction(const RoutingParaPoint &start, physics::Duration const &predictionDuration)
-  : RouteExpander(start, start, physics::Distance::getMax(), predictionDuration, Route::Type::SHORTEST)
+RoutePrediction::RoutePrediction(const RoutingParaPoint &start, physics::Duration const &predictionDuration, Type typ)
+  : RouteExpander(start, start, physics::Distance::getMax(), predictionDuration, typ)
 {
 }
 
@@ -65,9 +66,25 @@ bool RoutePrediction::calculate()
   RoutingPoint start;
   start.first = getRoutingStart();
   start.second = RoutingCost();
-  mRouteTreeRoot = std::make_shared<RouteTreeElement>(nullptr, start);
 
+  if (getRoutingStart().direction == RoutingDirection::DONT_CARE)
+  {
+    // Don't care routing direction means the vehicle can drive forward or backward.
+    // Within the routing we have to replace this by concrete directions,
+    // otherwise the vehicle would be able to switch between forward/backward while driving on the route
+    // which especially is not meant by the don't care flag.
+    start.first.direction = RoutingDirection::POSITIVE;
+  }
+  mRouteTreeRoot = std::make_shared<RouteTreeElement>(nullptr, start);
   mElementsToProcess.push_back(mRouteTreeRoot);
+
+  if (getRoutingStart().direction == RoutingDirection::DONT_CARE)
+  {
+    // add the negative concrete start of prediction option by changing direction without cost
+    auto startOtherDirection = start;
+    startOtherDirection.first.direction = RoutingDirection::NEGATIVE;
+    insertNeighbor(start, startOtherDirection);
+  }
 
   while (!mElementsToProcess.empty())
   {
@@ -94,6 +111,11 @@ void RoutePrediction::addNeighbor(lane::Lane::ConstPtr originLane,
     return;
   }
 
+  insertNeighbor(origin, neighbor);
+}
+
+void RoutePrediction::insertNeighbor(RoutingPoint const &origin, RoutingPoint const &neighbor)
+{
   auto currentTreeElement = mElementsToProcess.front();
 
   auto newChildElement = std::make_shared<RouteTreeElement>(currentTreeElement.get(), neighbor);

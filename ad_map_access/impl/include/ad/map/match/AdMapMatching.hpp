@@ -14,11 +14,11 @@
 #include "ad/map/point/Operation.hpp"
 #include "ad/map/route/Types.hpp"
 
-/* @brief namespace admap */
+/** @brief namespace admap */
 namespace ad {
-/* @brief namespace map */
+/** @brief namespace map */
 namespace map {
-/* @brief namespace match */
+/** @brief namespace match */
 namespace match {
 
 /**
@@ -145,6 +145,23 @@ public:
   }
 
   /**
+   * @brief set the lanes that are relevant for map matching
+   * All the rest of the lanes in the map are ignored.
+   */
+  void setRelevantLanes(::ad::map::lane::LaneIdSet const &relevantLanes)
+  {
+    mRelevantLanes = relevantLanes;
+  }
+
+  /**
+   * @brief clear the list of relevant lanes.
+   */
+  void clearRelevantLanes()
+  {
+    mRelevantLanes.clear();
+  }
+
+  /**
    * @brief get the map matched positions
    *
    * Calculate the map matched positions and return these.
@@ -257,13 +274,16 @@ public:
    *        from given point.
    * @param[in] ecefPoint Point that is used as base for the search.
    * @param[in] distance Search radius.
+   * @param[in] relevantLanes if not empty, the function restricts the search to the given set of lanes
    *
    * This static function doesn't make use of any matching hints.
    *
    * @returns Map matching results that satisfy search criteria.
    */
   static MapMatchedPositionConfidenceList findLanes(point::ECEFPoint const &ecefPoint,
-                                                    physics::Distance const &distance);
+                                                    physics::Distance const &distance,
+                                                    ::ad::map::lane::LaneIdSet const &relevantLanes
+                                                    = ::ad::map::lane::LaneIdSet());
 
   /**
    * @brief Spatial Lane Search.
@@ -271,12 +291,16 @@ public:
    *        from given point.
    * @param[in] geoPoint Point that is used as base for the search.
    * @param[in] distance Search radius.
+   * @param[in] relevantLanes if not empty, the function restricts the search to the given set of lanes
    *
    * This static function doesn't make use of any matching hints.
    *
    * @returns Map matching results that satisfy search criteria. The individual matching result probabilities are equal.
    */
-  static MapMatchedPositionConfidenceList findLanes(point::GeoPoint const &geoPoint, physics::Distance const &distance);
+  static MapMatchedPositionConfidenceList findLanes(point::GeoPoint const &geoPoint,
+                                                    physics::Distance const &distance,
+                                                    ::ad::map::lane::LaneIdSet const &relevantLanes
+                                                    = ::ad::map::lane::LaneIdSet());
 
   /**
    * @brief Spatial Lane Search.
@@ -300,7 +324,8 @@ private:
   AdMapMatching &operator=(AdMapMatching const &) = delete;
 
   static match::MapMatchedPositionConfidenceList findLanesInputChecked(point::ECEFPoint const &ecefPoint,
-                                                                       physics::Distance const &distance);
+                                                                       physics::Distance const &distance,
+                                                                       ::ad::map::lane::LaneIdSet const &relevantLanes);
 
   static match::MapMatchedPositionConfidenceList
   findLanesInputChecked(std::vector<lane::Lane::ConstPtr> const &relevantLanes,
@@ -313,7 +338,14 @@ private:
                                physics::Probability const &probabilitySum);
 
   static match::MapMatchedPositionConfidenceList
-  findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geoPoint, physics::Distance const &distance);
+  findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geoPoint,
+                                       physics::Distance const &distance,
+                                       ::ad::map::lane::LaneIdSet const &relevantLanes);
+
+  static std::vector<lane::Lane::ConstPtr>
+  getRelevantLanesInputChecked(point::ECEFPoint const &ecefPoint,
+                               physics::Distance const &distance,
+                               ::ad::map::lane::LaneIdSet const &relevantLanes);
 
   /**
    * @brief extract the mapMatchedPositions and write them into a map of occuppied regions
@@ -336,6 +368,8 @@ private:
   double mHeadingHintFactor{2.};
   std::list<route::FullRoute> mRouteHints;
   double mRouteHintFactor{10.};
+
+  ::ad::map::lane::LaneIdSet mRelevantLanes;
 };
 
 } // namespace match
