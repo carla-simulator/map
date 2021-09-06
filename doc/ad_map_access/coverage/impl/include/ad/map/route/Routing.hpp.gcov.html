@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -110,7 +110,7 @@
 <span class="lineNum">      39 </span>                :            :  * It is essential to know in which direction a vehicle is oriented in respect to the lane when trying to route.
 <a name="40"><span class="lineNum">      40 </span>                :            :  * Therefore, the routing para point extends the para point by a RoutingDirection.</a>
 <span class="lineNum">      41 </span>                :            :  */
-<span class="lineNum">      42 </span>                :<span class="lineCov">     286022 : struct RoutingParaPoint</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">     291390 : struct RoutingParaPoint</span>
 <span class="lineNum">      43 </span>                :            : {
 <span class="lineNum">      44 </span>                :            :   /**
 <span class="lineNum">      45 </span>                :            :    * @brief Standard comparison operator.
@@ -134,13 +134,13 @@
 <span class="lineNum">      63 </span>                :            :    * @brief Standard comparison operator.
 <a name="64"><span class="lineNum">      64 </span>                :            :    * @returns True if this objects can be taken as smaller than the other.</a>
 <span class="lineNum">      65 </span>                :            :    */
-<span class="lineNum">      66 </span>                :<span class="lineCov">     775113 :   bool operator&lt;(const RoutingParaPoint &amp;other) const</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">     841208 :   bool operator&lt;(const RoutingParaPoint &amp;other) const</span>
 <span class="lineNum">      67 </span>                :            :   {
-<span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 0 was taken 773009 times"> + </span><span class="branchCov" title="Branch 1 was taken 2104 times"> + </span>]:<span class="lineCov">     775113 :     if (direction == other.direction)</span>
+<span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 0 was taken 604731 times"> + </span><span class="branchCov" title="Branch 1 was taken 236477 times"> + </span>]:<span class="lineCov">     841208 :     if (direction == other.direction)</span>
 <span class="lineNum">      69 </span>                :            :     {
-<span class="lineNum">      70 </span>                :<span class="lineCov">     773009 :       return point &lt; other.point;</span>
+<span class="lineNum">      70 </span>                :<span class="lineCov">     604731 :       return point &lt; other.point;</span>
 <span class="lineNum">      71 </span>                :            :     }
-<span class="lineNum">      72 </span>                :<span class="lineCov">       2104 :     return direction &lt; other.direction;</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">     236477 :     return direction &lt; other.direction;</span>
 <span class="lineNum">      73 </span>                :            :   }
 <span class="lineNum">      74 </span>                :            : 
 <span class="lineNum">      75 </span>                :            :   point::ParaPoint point;
@@ -155,15 +155,15 @@
 <span class="lineNum">      84 </span>                :            :  * @param[in] routingDirection the routing direction in respect to the lane orientation
 <a name="85"><span class="lineNum">      85 </span>                :            :  *   Be aware: this might be different from the nominal driving direction!</a>
 <span class="lineNum">      86 </span>                :            :  */
-<span class="lineNum">      87 </span>                :<span class="lineCov">      50383 : inline RoutingParaPoint createRoutingParaPoint(lane::LaneId const &amp;laneId,</span>
+<span class="lineNum">      87 </span>                :<span class="lineCov">      51403 : inline RoutingParaPoint createRoutingParaPoint(lane::LaneId const &amp;laneId,</span>
 <span class="lineNum">      88 </span>                :            :                                                physics::ParametricValue const &amp;parametricOffset,
 <span class="lineNum">      89 </span>                :            :                                                RoutingDirection const &amp;routingDirection = RoutingDirection::DONT_CARE)
 <span class="lineNum">      90 </span>                :            : {
-<span class="lineNum">      91 </span>                :<span class="lineCov">      50383 :   RoutingParaPoint routingPoint;</span>
-<span class="lineNum">      92 </span>                :<span class="lineCov">      50383 :   routingPoint.point.laneId = laneId;</span>
-<span class="lineNum">      93 </span>                :<span class="lineCov">      50383 :   routingPoint.point.parametricOffset = parametricOffset;</span>
-<span class="lineNum">      94 </span>                :<span class="lineCov">      50383 :   routingPoint.direction = routingDirection;</span>
-<span class="lineNum">      95 </span>                :<span class="lineCov">      50383 :   return routingPoint;</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">      51403 :   RoutingParaPoint routingPoint;</span>
+<span class="lineNum">      92 </span>                :<span class="lineCov">      51403 :   routingPoint.point.laneId = laneId;</span>
+<span class="lineNum">      93 </span>                :<span class="lineCov">      51403 :   routingPoint.point.parametricOffset = parametricOffset;</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">      51403 :   routingPoint.direction = routingDirection;</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">      51403 :   return routingPoint;</span>
 <span class="lineNum">      96 </span>                :            : }
 <span class="lineNum">      97 </span>                :            : 
 <span class="lineNum">      98 </span>                :            : } // namespace planning

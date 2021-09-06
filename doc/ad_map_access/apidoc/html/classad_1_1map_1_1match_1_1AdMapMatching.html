@@ -148,6 +148,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#aafad8f5e8f688c9b0b1c44d9f3d8278d">clearHints</a> ()</td></tr>
 <tr class="memdesc:aafad8f5e8f688c9b0b1c44d9f3d8278d"><td class="mdescLeft">&#160;</td><td class="mdescRight">clears route and heading hints at once <br /></td></tr>
 <tr class="separator:aafad8f5e8f688c9b0b1c44d9f3d8278d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a694daf9d1dd7e868c64a251ed7d3315d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a694daf9d1dd7e868c64a251ed7d3315d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#a694daf9d1dd7e868c64a251ed7d3315d">setRelevantLanes</a> (::ad::map::lane::LaneIdSet const &amp;relevantLanes)</td></tr>
+<tr class="memdesc:a694daf9d1dd7e868c64a251ed7d3315d"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the lanes that are relevant for map matching All the rest of the lanes in the map are ignored. <br /></td></tr>
+<tr class="separator:a694daf9d1dd7e868c64a251ed7d3315d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6191882a53a6832e9a3b699550fceff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6191882a53a6832e9a3b699550fceff"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#ab6191882a53a6832e9a3b699550fceff">clearRelevantLanes</a> ()</td></tr>
+<tr class="memdesc:ab6191882a53a6832e9a3b699550fceff"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear the list of relevant lanes. <br /></td></tr>
+<tr class="separator:ab6191882a53a6832e9a3b699550fceff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e0df2490465f037ef2f2d6cf36c232d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#a8e0df2490465f037ef2f2d6cf36c232d">getMapMatchedPositions</a> (<a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;geoPoint, physics::Distance const &amp;distance, physics::Probability const &amp;minProbability) const </td></tr>
 <tr class="memdesc:a8e0df2490465f037ef2f2d6cf36c232d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the map matched positions  <a href="#a8e0df2490465f037ef2f2d6cf36c232d">More...</a><br /></td></tr>
 <tr class="separator:a8e0df2490465f037ef2f2d6cf36c232d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,12 +181,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac2b647868bd52b866be7873d412d67d6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#ac2b647868bd52b866be7873d412d67d6">findLanes</a> (<a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;ecefPoint, physics::Distance const &amp;distance)</td></tr>
-<tr class="memdesc:ac2b647868bd52b866be7873d412d67d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spatial Lane Search. Returns all Lanes where any part of surface is less than specified physics::Distance from given point.  <a href="#ac2b647868bd52b866be7873d412d67d6">More...</a><br /></td></tr>
-<tr class="separator:ac2b647868bd52b866be7873d412d67d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a659fef7bd8e1717f40259cae5001ce3f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#a659fef7bd8e1717f40259cae5001ce3f">findLanes</a> (<a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;geoPoint, physics::Distance const &amp;distance)</td></tr>
-<tr class="memdesc:a659fef7bd8e1717f40259cae5001ce3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spatial Lane Search. Returns all Lanes where any part of surface is less than specified physics::Distance from given point.  <a href="#a659fef7bd8e1717f40259cae5001ce3f">More...</a><br /></td></tr>
-<tr class="separator:a659fef7bd8e1717f40259cae5001ce3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8147718e65a0662a1afef250c02a2ecc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#a8147718e65a0662a1afef250c02a2ecc">findLanes</a> (<a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;ecefPoint, physics::Distance const &amp;distance,::ad::map::lane::LaneIdSet const &amp;relevantLanes=::ad::map::lane::LaneIdSet())</td></tr>
+<tr class="memdesc:a8147718e65a0662a1afef250c02a2ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spatial Lane Search. Returns all Lanes where any part of surface is less than specified physics::Distance from given point.  <a href="#a8147718e65a0662a1afef250c02a2ecc">More...</a><br /></td></tr>
+<tr class="separator:a8147718e65a0662a1afef250c02a2ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65c4cdfbba65d73b4655a57d44245f51"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#a65c4cdfbba65d73b4655a57d44245f51">findLanes</a> (<a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;geoPoint, physics::Distance const &amp;distance,::ad::map::lane::LaneIdSet const &amp;relevantLanes=::ad::map::lane::LaneIdSet())</td></tr>
+<tr class="memdesc:a65c4cdfbba65d73b4655a57d44245f51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spatial Lane Search. Returns all Lanes where any part of surface is less than specified physics::Distance from given point.  <a href="#a65c4cdfbba65d73b4655a57d44245f51">More...</a><br /></td></tr>
+<tr class="separator:a65c4cdfbba65d73b4655a57d44245f51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36ec15da3f24940ab0ae6b56814ca023"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html#a36ec15da3f24940ab0ae6b56814ca023">findRouteLanes</a> (<a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;ecefPoint, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> const &amp;route)</td></tr>
 <tr class="memdesc:a36ec15da3f24940ab0ae6b56814ca023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spatial Lane Search. Returns the map matched position in respect to all Lanes of the given route.  <a href="#a36ec15da3f24940ab0ae6b56814ca023">More...</a><br /></td></tr>
 <tr class="separator:a36ec15da3f24940ab0ae6b56814ca023"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -300,7 +308,7 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac2b647868bd52b866be7873d412d67d6"></a>
+<a class="anchor" id="a8147718e65a0662a1afef250c02a2ecc"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -317,7 +325,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">physics::Distance const &amp;&#160;</td>
-          <td class="paramname"><em>distance</em>&#160;</td>
+          <td class="paramname"><em>distance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">::ad::map::lane::LaneIdSet const &amp;&#160;</td>
+          <td class="paramname"><em>relevantLanes</em> = <code>::ad::map::lane::LaneIdSet()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -336,7 +350,8 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ecefPoint</td><td>Point that is used as base for the search. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">distance</td><td>Search radius.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">distance</td><td>Search radius. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">relevantLanes</td><td>if not empty, the function restricts the search to the given set of lanes</td></tr>
   </table>
   </dd>
 </dl>
@@ -345,7 +360,7 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a659fef7bd8e1717f40259cae5001ce3f"></a>
+<a class="anchor" id="a65c4cdfbba65d73b4655a57d44245f51"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -362,7 +377,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">physics::Distance const &amp;&#160;</td>
-          <td class="paramname"><em>distance</em>&#160;</td>
+          <td class="paramname"><em>distance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">::ad::map::lane::LaneIdSet const &amp;&#160;</td>
+          <td class="paramname"><em>relevantLanes</em> = <code>::ad::map::lane::LaneIdSet()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -381,7 +402,8 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">geoPoint</td><td>Point that is used as base for the search. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">distance</td><td>Search radius.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">distance</td><td>Search radius. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">relevantLanes</td><td>if not empty, the function restricts the search to the given set of lanes</td></tr>
   </table>
   </dd>
 </dl>

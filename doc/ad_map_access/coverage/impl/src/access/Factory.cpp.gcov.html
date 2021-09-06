@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">30</td>
@@ -93,19 +93,19 @@
 <span class="lineNum">      22 </span>                :            : namespace map {
 <a name="23"><span class="lineNum">      23 </span>                :            : namespace access {</a>
 <span class="lineNum">      24 </span>                :            : 
-<span class="lineNum">      25 </span>                :<span class="lineCov">      20779 : bool Factory::add(PartitionId part_id, const lane::LaneId &amp;id, lane::LaneType type, lane::LaneDirection dir)</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">      23503 : bool Factory::add(PartitionId part_id, const lane::LaneId &amp;id, lane::LaneType type, lane::LaneDirection dir)</span>
 <span class="lineNum">      26 </span>                :            : {
-<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 3 was taken 20779 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      20779 :   auto insertResult = mStore.lane_map_.insert({id, lane::Lane::Ptr()});</span>
-<span class="lineNum">      28 </span>                :<span class="lineCov">      20779 :   auto &amp;lanePtr = insertResult.first-&gt;second;</span>
-<span class="lineNum">      29 </span>        [<span class="branchCov" title="Branch 0 was taken 20779 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      20779 :   if (insertResult.second)</span>
+<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 3 was taken 23503 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      23503 :   auto insertResult = mStore.lane_map_.insert({id, lane::Lane::Ptr()});</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">      23503 :   auto &amp;lanePtr = insertResult.first-&gt;second;</span>
+<span class="lineNum">      29 </span>        [<span class="branchCov" title="Branch 0 was taken 23503 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      23503 :   if (insertResult.second)</span>
 <span class="lineNum">      30 </span>                :            :   {
-<span class="lineNum">      31 </span>        [<span class="branchCov" title="Branch 1 was taken 20779 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20779 :     lanePtr = std::make_shared&lt;lane::Lane&gt;();</span>
-<span class="lineNum">      32 </span>                :<span class="lineCov">      20779 :     lanePtr-&gt;id = id;</span>
-<span class="lineNum">      33 </span>[<span class="branchCov" title="Branch 1 was taken 20779 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 20779 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      20779 :     mStore.part_lane_map_[part_id].push_back(id);</span>
+<span class="lineNum">      31 </span>        [<span class="branchCov" title="Branch 1 was taken 23503 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      23503 :     lanePtr = std::make_shared&lt;lane::Lane&gt;();</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">      23503 :     lanePtr-&gt;id = id;</span>
+<span class="lineNum">      33 </span>[<span class="branchCov" title="Branch 1 was taken 23503 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 23503 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      23503 :     mStore.part_lane_map_[part_id].push_back(id);</span>
 <span class="lineNum">      34 </span>                :            :   }
-<span class="lineNum">      35 </span>                :<span class="lineCov">      20779 :   lanePtr-&gt;type = type;</span>
-<span class="lineNum">      36 </span>                :<span class="lineCov">      20779 :   lanePtr-&gt;direction = dir;</span>
-<span class="lineNum">      37 </span>                :<span class="lineCov">      20779 :   return insertResult.second;</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">      23503 :   lanePtr-&gt;type = type;</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">      23503 :   lanePtr-&gt;direction = dir;</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">      23503 :   return insertResult.second;</span>
 <a name="38"><span class="lineNum">      38 </span>                :            : }</a>
 <span class="lineNum">      39 </span>                :            : 
 <span class="lineNum">      40 </span>                :<span class="lineCov">          5 : lane::LaneId Factory::add(PartitionId pid, const point::GeoEdge &amp;left_geo, const point::GeoEdge &amp;right_geo)</span>
@@ -175,14 +175,14 @@
 <span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 1 was taken 22 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         44 :              &quot;none&quot;);</span>
 <a name="102"><span class="lineNum">     102 </span>                :            : }</a>
 <span class="lineNum">     103 </span>                :            : 
-<span class="lineNum">     104 </span>                :<span class="lineCov">       5752 : bool Factory::addTrafficLight(PartitionId part_id,</span>
+<span class="lineNum">     104 </span>                :<span class="lineCov">       6911 : bool Factory::addTrafficLight(PartitionId part_id,</span>
 <span class="lineNum">     105 </span>                :            :                               const landmark::LandmarkId &amp;id,
 <span class="lineNum">     106 </span>                :            :                               const landmark::TrafficLightType type,
 <span class="lineNum">     107 </span>                :            :                               const point::ECEFPoint &amp;position,
 <span class="lineNum">     108 </span>                :            :                               const point::ECEFPoint &amp;orientation,
 <span class="lineNum">     109 </span>                :            :                               const point::Geometry &amp;bounding_box)
 <span class="lineNum">     110 </span>                :            : {
-<span class="lineNum">     111 </span>        [<span class="branchCov" title="Branch 2 was taken 5752 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      11504 :   return add(part_id,</span>
+<span class="lineNum">     111 </span>        [<span class="branchCov" title="Branch 2 was taken 6911 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      13822 :   return add(part_id,</span>
 <span class="lineNum">     112 </span>                :            :              id,
 <span class="lineNum">     113 </span>                :            :              landmark::LandmarkType::TRAFFIC_LIGHT,
 <span class="lineNum">     114 </span>                :            :              position,
@@ -190,7 +190,7 @@
 <span class="lineNum">     116 </span>                :            :              bounding_box,
 <span class="lineNum">     117 </span>                :            :              type,
 <span class="lineNum">     118 </span>                :            :              landmark::TrafficSignType::INVALID,
-<span class="lineNum">     119 </span>        [<span class="branchCov" title="Branch 1 was taken 5752 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      11504 :              &quot;none&quot;);</span>
+<span class="lineNum">     119 </span>        [<span class="branchCov" title="Branch 1 was taken 6911 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      13822 :              &quot;none&quot;);</span>
 <a name="120"><span class="lineNum">     120 </span>                :            : }</a>
 <span class="lineNum">     121 </span>                :            : 
 <span class="lineNum">     122 </span>                :<span class="lineCov">         84 : bool Factory::addTrafficSign(PartitionId part_id,</span>
@@ -212,7 +212,7 @@
 <span class="lineNum">     138 </span>                :<span class="lineCov">         84 :              text);</span>
 <a name="139"><span class="lineNum">     139 </span>                :            : }</a>
 <span class="lineNum">     140 </span>                :            : 
-<span class="lineNum">     141 </span>                :<span class="lineCov">       5858 : bool Factory::add(PartitionId part_id,</span>
+<span class="lineNum">     141 </span>                :<span class="lineCov">       7017 : bool Factory::add(PartitionId part_id,</span>
 <span class="lineNum">     142 </span>                :            :                   const landmark::LandmarkId &amp;id,
 <span class="lineNum">     143 </span>                :            :                   const landmark::LandmarkType type,
 <span class="lineNum">     144 </span>                :            :                   const point::ECEFPoint &amp;position,
@@ -222,49 +222,49 @@
 <span class="lineNum">     148 </span>                :            :                   const landmark::TrafficSignType traffic_sign_type,
 <span class="lineNum">     149 </span>                :            :                   const std::string &amp;text)
 <span class="lineNum">     150 </span>                :            : {
-<span class="lineNum">     151 </span>        [<span class="branchCov" title="Branch 3 was taken 5858 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       5858 :   auto insertResult = mStore.landmark_map_.insert({id, landmark::Landmark::Ptr()});</span>
-<span class="lineNum">     152 </span>                :<span class="lineCov">       5858 :   auto &amp;landmarkPtr = insertResult.first-&gt;second;</span>
-<span class="lineNum">     153 </span>        [<span class="branchCov" title="Branch 0 was taken 1063 times"> + </span><span class="branchCov" title="Branch 1 was taken 4795 times"> + </span>]:<span class="lineCov">       5858 :   if (insertResult.second)</span>
+<span class="lineNum">     151 </span>        [<span class="branchCov" title="Branch 3 was taken 7017 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       7017 :   auto insertResult = mStore.landmark_map_.insert({id, landmark::Landmark::Ptr()});</span>
+<span class="lineNum">     152 </span>                :<span class="lineCov">       7017 :   auto &amp;landmarkPtr = insertResult.first-&gt;second;</span>
+<span class="lineNum">     153 </span>        [<span class="branchCov" title="Branch 0 was taken 1325 times"> + </span><span class="branchCov" title="Branch 1 was taken 5692 times"> + </span>]:<span class="lineCov">       7017 :   if (insertResult.second)</span>
 <span class="lineNum">     154 </span>                :            :   {
-<span class="lineNum">     155 </span>        [<span class="branchCov" title="Branch 1 was taken 1063 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       1063 :     landmarkPtr = std::make_shared&lt;landmark::Landmark&gt;();</span>
-<span class="lineNum">     156 </span>                :<span class="lineCov">       1063 :     landmarkPtr-&gt;id = id;</span>
-<span class="lineNum">     157 </span>[<span class="branchCov" title="Branch 1 was taken 1063 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1063 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       1063 :     mStore.part_landmark_map_[part_id].push_back(id);</span>
+<span class="lineNum">     155 </span>        [<span class="branchCov" title="Branch 1 was taken 1325 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       1325 :     landmarkPtr = std::make_shared&lt;landmark::Landmark&gt;();</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">       1325 :     landmarkPtr-&gt;id = id;</span>
+<span class="lineNum">     157 </span>[<span class="branchCov" title="Branch 1 was taken 1325 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1325 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       1325 :     mStore.part_landmark_map_[part_id].push_back(id);</span>
 <span class="lineNum">     158 </span>                :            :   }
-<span class="lineNum">     159 </span>                :<span class="lineCov">       5858 :   landmarkPtr-&gt;type = type;</span>
-<span class="lineNum">     160 </span>                :<span class="lineCov">       5858 :   landmarkPtr-&gt;position = position;</span>
-<span class="lineNum">     161 </span>                :<span class="lineCov">       5858 :   landmarkPtr-&gt;orientation = orientation;</span>
-<span class="lineNum">     162 </span>        [<span class="branchCov" title="Branch 2 was taken 5858 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       5858 :   landmarkPtr-&gt;boundingBox = bounding_box;</span>
-<span class="lineNum">     163 </span>                :<span class="lineCov">       5858 :   landmarkPtr-&gt;trafficLightType = traffic_light_type;</span>
-<span class="lineNum">     164 </span>                :<span class="lineCov">       5858 :   landmarkPtr-&gt;trafficSignType = traffic_sign_type;</span>
-<span class="lineNum">     165 </span>        [<span class="branchCov" title="Branch 2 was taken 5858 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       5858 :   landmarkPtr-&gt;supplementaryText = text;</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">       7017 :   landmarkPtr-&gt;type = type;</span>
+<span class="lineNum">     160 </span>                :<span class="lineCov">       7017 :   landmarkPtr-&gt;position = position;</span>
+<span class="lineNum">     161 </span>                :<span class="lineCov">       7017 :   landmarkPtr-&gt;orientation = orientation;</span>
+<span class="lineNum">     162 </span>        [<span class="branchCov" title="Branch 2 was taken 7017 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       7017 :   landmarkPtr-&gt;boundingBox = bounding_box;</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">       7017 :   landmarkPtr-&gt;trafficLightType = traffic_light_type;</span>
+<span class="lineNum">     164 </span>                :<span class="lineCov">       7017 :   landmarkPtr-&gt;trafficSignType = traffic_sign_type;</span>
+<span class="lineNum">     165 </span>        [<span class="branchCov" title="Branch 2 was taken 7017 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       7017 :   landmarkPtr-&gt;supplementaryText = text;</span>
 <span class="lineNum">     166 </span>                :            :   // @todo: Do we need to ensure that we handle only valid objects?
-<span class="lineNum">     167 </span>                :<span class="lineCov">       5858 :   return insertResult.second;</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">       7017 :   return insertResult.second;</span>
 <span class="lineNum">     168 </span>                :            : }
 <span class="lineNum">     169 </span>                :            : 
 <span class="lineNum">     170 </span>                :            : //////////////////////////////////////////
 <a name="171"><span class="lineNum">     171 </span>                :            : // Atomic Operations -- Add Lane Attribute</a>
 <span class="lineNum">     172 </span>                :            : 
-<span class="lineNum">     173 </span>                :<span class="lineCov">     103187 : bool Factory::add(const lane::LaneId &amp;id, const lane::ContactLane &amp;contact_lane)</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">     118457 : bool Factory::add(const lane::LaneId &amp;id, const lane::ContactLane &amp;contact_lane)</span>
 <span class="lineNum">     174 </span>                :            : {
-<span class="lineNum">     175 </span>        [<span class="branchCov" title="Branch 1 was taken 103187 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     103187 :   auto it = mStore.lane_map_.find(id);</span>
-<span class="lineNum">     176 </span>        [<span class="branchCov" title="Branch 2 was taken 103186 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">     103187 :   if (it != mStore.lane_map_.end())</span>
+<span class="lineNum">     175 </span>        [<span class="branchCov" title="Branch 1 was taken 118457 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     118457 :   auto it = mStore.lane_map_.find(id);</span>
+<span class="lineNum">     176 </span>        [<span class="branchCov" title="Branch 2 was taken 118456 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">     118457 :   if (it != mStore.lane_map_.end())</span>
 <span class="lineNum">     177 </span>                :            :   {
-<span class="lineNum">     178 </span>                :<span class="lineCov">     206372 :     lane::Lane::Ptr lane = it-&gt;second;</span>
-<span class="lineNum">     179 </span>        [<span class="branchCov" title="Branch 1 was taken 103186 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     103186 :     if (lane)</span>
+<span class="lineNum">     178 </span>                :<span class="lineCov">     236912 :     lane::Lane::Ptr lane = it-&gt;second;</span>
+<span class="lineNum">     179 </span>        [<span class="branchCov" title="Branch 1 was taken 118456 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     118456 :     if (lane)</span>
 <span class="lineNum">     180 </span>                :            :     {
-<span class="lineNum">     181 </span>        [<span class="branchCov" title="Branch 4 was taken 271750 times"> + </span><span class="branchCov" title="Branch 5 was taken 103185 times"> + </span>]:<span class="lineCov">     374935 :       for (auto const &amp;existing_contact_lane : lane-&gt;contactLanes)</span>
+<span class="lineNum">     181 </span>        [<span class="branchCov" title="Branch 4 was taken 316832 times"> + </span><span class="branchCov" title="Branch 5 was taken 118455 times"> + </span>]:<span class="lineCov">     435287 :       for (auto const &amp;existing_contact_lane : lane-&gt;contactLanes)</span>
 <span class="lineNum">     182 </span>                :            :       {
-<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 1 was taken 271750 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchCov" title="Branch 4 was taken 271749 times"> + </span>]:<span class="lineCov">     271750 :         if (contact_lane == existing_contact_lane)</span>
+<span class="lineNum">     183 </span>[<span class="branchCov" title="Branch 1 was taken 316832 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchCov" title="Branch 4 was taken 316831 times"> + </span>]:<span class="lineCov">     316832 :         if (contact_lane == existing_contact_lane)</span>
 <span class="lineNum">     184 </span>                :            :         {
 <span class="lineNum">     185 </span>                :<span class="lineCov">          1 :           return true;</span>
 <span class="lineNum">     186 </span>                :            :         }
 <span class="lineNum">     187 </span>                :            :       }
-<span class="lineNum">     188 </span>        [<span class="branchCov" title="Branch 2 was taken 103185 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     103185 :       lane-&gt;contactLanes.push_back(contact_lane);</span>
-<span class="lineNum">     189 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 103186 times"> + </span>]:<span class="lineCov">     103186 :       return true;</span>
+<span class="lineNum">     188 </span>        [<span class="branchCov" title="Branch 2 was taken 118455 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     118455 :       lane-&gt;contactLanes.push_back(contact_lane);</span>
+<span class="lineNum">     189 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 118456 times"> + </span>]:<span class="lineCov">     118456 :       return true;</span>
 <span class="lineNum">     190 </span>                :            :     }
 <span class="lineNum">     191 </span>                :            :   }
 <span class="lineNum">     192 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot add contact lane of lane. {}&quot;, id);</span>
-<span class="lineNum">     193 </span>                :<span class="lineCov">     103187 :   return false;</span>
+<span class="lineNum">     193 </span>                :<span class="lineCov">     118457 :   return false;</span>
 <a name="194"><span class="lineNum">     194 </span>                :            : }</a>
 <span class="lineNum">     195 </span>                :            : 
 <span class="lineNum">     196 </span>                :<span class="lineCov">          2 : bool Factory::add(const lane::LaneId &amp;id, const lane::ContactLaneList &amp;contact_lanes)</span>
@@ -280,24 +280,24 @@
 <span class="lineNum">     206 </span>                :<span class="lineCov">          2 :   return true;</span>
 <a name="207"><span class="lineNum">     207 </span>                :            : }</a>
 <span class="lineNum">     208 </span>                :            : 
-<span class="lineNum">     209 </span>                :<span class="lineCov">      31178 : bool Factory::add(const lane::LaneId &amp;id, const restriction::SpeedLimit &amp;speedLimit)</span>
+<span class="lineNum">     209 </span>                :<span class="lineCov">      35259 : bool Factory::add(const lane::LaneId &amp;id, const restriction::SpeedLimit &amp;speedLimit)</span>
 <span class="lineNum">     210 </span>                :            : {
-<span class="lineNum">     211 </span>        [<span class="branchCov" title="Branch 1 was taken 31178 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      31178 :   auto it = mStore.lane_map_.find(id);</span>
-<span class="lineNum">     212 </span>        [<span class="branchCov" title="Branch 2 was taken 31177 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">      31178 :   if (it != mStore.lane_map_.end())</span>
+<span class="lineNum">     211 </span>        [<span class="branchCov" title="Branch 1 was taken 35259 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      35259 :   auto it = mStore.lane_map_.find(id);</span>
+<span class="lineNum">     212 </span>        [<span class="branchCov" title="Branch 2 was taken 35258 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">      35259 :   if (it != mStore.lane_map_.end())</span>
 <span class="lineNum">     213 </span>                :            :   {
-<span class="lineNum">     214 </span>                :<span class="lineCov">      62354 :     lane::Lane::Ptr lane = it-&gt;second;</span>
-<span class="lineNum">     215 </span>        [<span class="branchCov" title="Branch 1 was taken 31177 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      31177 :     if (lane)</span>
+<span class="lineNum">     214 </span>                :<span class="lineCov">      70516 :     lane::Lane::Ptr lane = it-&gt;second;</span>
+<span class="lineNum">     215 </span>        [<span class="branchCov" title="Branch 1 was taken 35258 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      35258 :     if (lane)</span>
 <span class="lineNum">     216 </span>                :            :     {
-<span class="lineNum">     217 </span>[<span class="branchCov" title="Branch 2 was taken 31177 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 5 was taken 31176 times"> + </span>]:<span class="lineCov">      31177 :       if (restriction::doesRangeAttributeOverlap(lane-&gt;speedLimits, speedLimit))</span>
+<span class="lineNum">     217 </span>[<span class="branchCov" title="Branch 2 was taken 35258 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 5 was taken 35257 times"> + </span>]:<span class="lineCov">      35258 :       if (restriction::doesRangeAttributeOverlap(lane-&gt;speedLimits, speedLimit))</span>
 <span class="lineNum">     218 </span>                :            :       {
 <span class="lineNum">     219 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :         access::getLogger()-&gt;warn(&quot;Lane para-speed overlaps existing value!? {}, {}&quot;, id, speedLimit);</span>
 <span class="lineNum">     220 </span>                :            :       }
-<span class="lineNum">     221 </span>        [<span class="branchCov" title="Branch 2 was taken 31177 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      31177 :       restriction::insertRangeAttribute(lane-&gt;speedLimits, speedLimit);</span>
-<span class="lineNum">     222 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 31177 times"> + </span>]:<span class="lineCov">      31177 :       return true;</span>
+<span class="lineNum">     221 </span>        [<span class="branchCov" title="Branch 2 was taken 35258 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      35258 :       restriction::insertRangeAttribute(lane-&gt;speedLimits, speedLimit);</span>
+<span class="lineNum">     222 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 35258 times"> + </span>]:<span class="lineCov">      35258 :       return true;</span>
 <span class="lineNum">     223 </span>                :            :     }
 <span class="lineNum">     224 </span>                :            :   }
 <span class="lineNum">     225 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot add restrictions of lane. {}&quot;, id);</span>
-<span class="lineNum">     226 </span>                :<span class="lineCov">      31178 :   return false;</span>
+<span class="lineNum">     226 </span>                :<span class="lineCov">      35259 :   return false;</span>
 <a name="227"><span class="lineNum">     227 </span>                :            : }</a>
 <span class="lineNum">     228 </span>                :            : 
 <span class="lineNum">     229 </span>                :<span class="lineCov">         85 : bool Factory::add(const lane::LaneId &amp;id, const landmark::LandmarkId &amp;landmarkId)</span>
@@ -351,53 +351,53 @@
 <span class="lineNum">     277 </span>                :<span class="lineCov">          3 :   return false;</span>
 <a name="278"><span class="lineNum">     278 </span>                :            : }</a>
 <span class="lineNum">     279 </span>                :            : 
-<span class="lineNum">     280 </span>                :<span class="lineCov">      98653 : bool Factory::add(const lane::LaneId &amp;id_from,</span>
+<span class="lineNum">     280 </span>                :<span class="lineCov">     112938 : bool Factory::add(const lane::LaneId &amp;id_from,</span>
 <span class="lineNum">     281 </span>                :            :                   const lane::LaneId &amp;id_to,
 <span class="lineNum">     282 </span>                :            :                   const lane::ContactLocation location,
 <span class="lineNum">     283 </span>                :            :                   const lane::ContactTypeList &amp;types,
 <span class="lineNum">     284 </span>                :            :                   const restriction::Restrictions &amp;restrs)
 <span class="lineNum">     285 </span>                :            : {
-<span class="lineNum">     286 </span>[<span class="branchCov" title="Branch 4 was taken 98653 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 98652 times"> + </span>]:<span class="lineCov">      98653 :   if (std::find(types.begin(), types.end(), lane::ContactType::TRAFFIC_LIGHT) != types.end())</span>
+<span class="lineNum">     286 </span>[<span class="branchCov" title="Branch 4 was taken 112938 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 112937 times"> + </span>]:<span class="lineCov">     112938 :   if (std::find(types.begin(), types.end(), lane::ContactType::TRAFFIC_LIGHT) != types.end())</span>
 <span class="lineNum">     287 </span>                :            :   {
 <span class="lineNum">     288 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Trying to add traffic light contact without traffic light id. {}&quot;, id_to);</span>
 <span class="lineNum">     289 </span>                :<span class="lineCov">          1 :     return false;</span>
 <span class="lineNum">     290 </span>                :            :   }
 <span class="lineNum">     291 </span>                :            : 
-<span class="lineNum">     292 </span>        [<span class="branchCov" title="Branch 1 was taken 98652 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     197305 :   lane::ContactLane contactLane;</span>
-<span class="lineNum">     293 </span>                :<span class="lineCov">      98652 :   contactLane.toLane = id_to;</span>
-<span class="lineNum">     294 </span>                :<span class="lineCov">      98652 :   contactLane.location = location;</span>
-<span class="lineNum">     295 </span>        [<span class="branchCov" title="Branch 1 was taken 98652 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      98652 :   contactLane.types = types;</span>
-<span class="lineNum">     296 </span>        [<span class="branchCov" title="Branch 1 was taken 98652 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      98652 :   contactLane.restrictions = restrs;</span>
-<span class="lineNum">     297 </span>                :<span class="lineCov">      98652 :   contactLane.trafficLightId = landmark::LandmarkId();</span>
-<span class="lineNum">     298 </span>        [<span class="branchCov" title="Branch 1 was taken 98652 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      98652 :   return add(id_from, contactLane);</span>
+<span class="lineNum">     292 </span>        [<span class="branchCov" title="Branch 1 was taken 112937 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     225875 :   lane::ContactLane contactLane;</span>
+<span class="lineNum">     293 </span>                :<span class="lineCov">     112937 :   contactLane.toLane = id_to;</span>
+<span class="lineNum">     294 </span>                :<span class="lineCov">     112937 :   contactLane.location = location;</span>
+<span class="lineNum">     295 </span>        [<span class="branchCov" title="Branch 1 was taken 112937 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     112937 :   contactLane.types = types;</span>
+<span class="lineNum">     296 </span>        [<span class="branchCov" title="Branch 1 was taken 112937 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     112937 :   contactLane.restrictions = restrs;</span>
+<span class="lineNum">     297 </span>                :<span class="lineCov">     112937 :   contactLane.trafficLightId = landmark::LandmarkId();</span>
+<span class="lineNum">     298 </span>        [<span class="branchCov" title="Branch 1 was taken 112937 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     112937 :   return add(id_from, contactLane);</span>
 <a name="299"><span class="lineNum">     299 </span>                :            : }</a>
 <span class="lineNum">     300 </span>                :            : 
-<span class="lineNum">     301 </span>                :<span class="lineCov">       4534 : bool Factory::add(const lane::LaneId &amp;id_from,</span>
+<span class="lineNum">     301 </span>                :<span class="lineCov">       5519 : bool Factory::add(const lane::LaneId &amp;id_from,</span>
 <span class="lineNum">     302 </span>                :            :                   const lane::LaneId &amp;id_to,
 <span class="lineNum">     303 </span>                :            :                   const lane::ContactLocation location,
 <span class="lineNum">     304 </span>                :            :                   const lane::ContactTypeList &amp;types,
 <span class="lineNum">     305 </span>                :            :                   const restriction::Restrictions &amp;restrs,
 <span class="lineNum">     306 </span>                :            :                   const landmark::LandmarkId &amp;traffic_light)
 <span class="lineNum">     307 </span>                :            : {
-<span class="lineNum">     308 </span>[<span class="branchCov" title="Branch 1 was taken 4534 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 4534 times"> + </span>]:<span class="lineCov">       4534 :   if (!isValid(traffic_light))</span>
+<span class="lineNum">     308 </span>[<span class="branchCov" title="Branch 1 was taken 5519 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 5519 times"> + </span>]:<span class="lineCov">       5519 :   if (!isValid(traffic_light))</span>
 <span class="lineNum">     309 </span>                :            :   {
 <span class="lineNum">     310 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]:<span class="lineNoCov">          0 :     access::getLogger()-&gt;error(&quot;Cannot add contact with invalid traffic light id. {}&quot;, traffic_light);</span>
 <span class="lineNum">     311 </span>                :<span class="lineNoCov">          0 :     return false;</span>
 <span class="lineNum">     312 </span>                :            :   }
 <span class="lineNum">     313 </span>                :            : 
-<span class="lineNum">     314 </span>[<span class="branchCov" title="Branch 4 was taken 4534 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 4533 times"> + </span>]:<span class="lineCov">       4534 :   if (std::find(types.begin(), types.end(), lane::ContactType::TRAFFIC_LIGHT) == types.end())</span>
+<span class="lineNum">     314 </span>[<span class="branchCov" title="Branch 4 was taken 5519 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 5518 times"> + </span>]:<span class="lineCov">       5519 :   if (std::find(types.begin(), types.end(), lane::ContactType::TRAFFIC_LIGHT) == types.end())</span>
 <span class="lineNum">     315 </span>                :            :   {
 <span class="lineNum">     316 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Cannot add traffic light contact due to wrong type. {}&quot;, traffic_light);</span>
 <span class="lineNum">     317 </span>                :<span class="lineCov">          1 :     return false;</span>
 <span class="lineNum">     318 </span>                :            :   }
 <span class="lineNum">     319 </span>                :            : 
-<span class="lineNum">     320 </span>        [<span class="branchCov" title="Branch 1 was taken 4533 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       9067 :   lane::ContactLane contactLane;</span>
-<span class="lineNum">     321 </span>                :<span class="lineCov">       4533 :   contactLane.toLane = id_to;</span>
-<span class="lineNum">     322 </span>                :<span class="lineCov">       4533 :   contactLane.location = location;</span>
-<span class="lineNum">     323 </span>        [<span class="branchCov" title="Branch 1 was taken 4533 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       4533 :   contactLane.types = types;</span>
-<span class="lineNum">     324 </span>        [<span class="branchCov" title="Branch 1 was taken 4533 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       4533 :   contactLane.restrictions = restrs;</span>
-<span class="lineNum">     325 </span>                :<span class="lineCov">       4533 :   contactLane.trafficLightId = traffic_light;</span>
-<span class="lineNum">     326 </span>        [<span class="branchCov" title="Branch 1 was taken 4533 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       4533 :   return add(id_from, contactLane);</span>
+<span class="lineNum">     320 </span>        [<span class="branchCov" title="Branch 1 was taken 5518 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      11037 :   lane::ContactLane contactLane;</span>
+<span class="lineNum">     321 </span>                :<span class="lineCov">       5518 :   contactLane.toLane = id_to;</span>
+<span class="lineNum">     322 </span>                :<span class="lineCov">       5518 :   contactLane.location = location;</span>
+<span class="lineNum">     323 </span>        [<span class="branchCov" title="Branch 1 was taken 5518 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       5518 :   contactLane.types = types;</span>
+<span class="lineNum">     324 </span>        [<span class="branchCov" title="Branch 1 was taken 5518 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       5518 :   contactLane.restrictions = restrs;</span>
+<span class="lineNum">     325 </span>                :<span class="lineCov">       5518 :   contactLane.trafficLightId = traffic_light;</span>
+<span class="lineNum">     326 </span>        [<span class="branchCov" title="Branch 1 was taken 5518 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       5518 :   return add(id_from, contactLane);</span>
 <span class="lineNum">     327 </span>                :            : }
 <span class="lineNum">     328 </span>                :            : 
 <span class="lineNum">     329 </span>                :            : //////////////////////////////////////////
@@ -451,23 +451,23 @@
 <span class="lineNum">     377 </span>                :<span class="lineCov">          2 :   return false;</span>
 <a name="378"><span class="lineNum">     378 </span>                :            : }</a>
 <span class="lineNum">     379 </span>                :            : 
-<span class="lineNum">     380 </span>                :<span class="lineCov">      20781 : bool Factory::set(const lane::LaneId &amp;id, const point::Geometry &amp;edge_left, const point::Geometry &amp;edge_right)</span>
+<span class="lineNum">     380 </span>                :<span class="lineCov">      23505 : bool Factory::set(const lane::LaneId &amp;id, const point::Geometry &amp;edge_left, const point::Geometry &amp;edge_right)</span>
 <span class="lineNum">     381 </span>                :            : {
-<span class="lineNum">     382 </span>        [<span class="branchCov" title="Branch 1 was taken 20781 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20781 :   auto it = mStore.lane_map_.find(id);</span>
-<span class="lineNum">     383 </span>        [<span class="branchCov" title="Branch 2 was taken 20780 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">      20781 :   if (it != mStore.lane_map_.end())</span>
+<span class="lineNum">     382 </span>        [<span class="branchCov" title="Branch 1 was taken 23505 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      23505 :   auto it = mStore.lane_map_.find(id);</span>
+<span class="lineNum">     383 </span>        [<span class="branchCov" title="Branch 2 was taken 23504 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">      23505 :   if (it != mStore.lane_map_.end())</span>
 <span class="lineNum">     384 </span>                :            :   {
-<span class="lineNum">     385 </span>                :<span class="lineCov">      41560 :     lane::Lane::Ptr lane = it-&gt;second;</span>
-<span class="lineNum">     386 </span>        [<span class="branchCov" title="Branch 1 was taken 20780 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      20780 :     if (lane)</span>
+<span class="lineNum">     385 </span>                :<span class="lineCov">      47008 :     lane::Lane::Ptr lane = it-&gt;second;</span>
+<span class="lineNum">     386 </span>        [<span class="branchCov" title="Branch 1 was taken 23504 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      23504 :     if (lane)</span>
 <span class="lineNum">     387 </span>                :            :     {
-<span class="lineNum">     388 </span>        [<span class="branchCov" title="Branch 2 was taken 20780 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      20780 :       lane-&gt;edgeLeft = edge_left;</span>
-<span class="lineNum">     389 </span>        [<span class="branchCov" title="Branch 2 was taken 20780 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      20780 :       lane-&gt;edgeRight = edge_right;</span>
-<span class="lineNum">     390 </span>        [<span class="branchCov" title="Branch 2 was taken 20780 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      20780 :       lane-&gt;boundingSphere = point::calcBoundingSphere(edge_left, edge_right);</span>
-<span class="lineNum">     391 </span>        [<span class="branchCov" title="Branch 2 was taken 20780 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      20780 :       lane::updateLaneLengths(*lane);</span>
-<span class="lineNum">     392 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 20780 times"> + </span>]:<span class="lineCov">      20780 :       return true;</span>
+<span class="lineNum">     388 </span>        [<span class="branchCov" title="Branch 2 was taken 23504 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      23504 :       lane-&gt;edgeLeft = edge_left;</span>
+<span class="lineNum">     389 </span>        [<span class="branchCov" title="Branch 2 was taken 23504 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      23504 :       lane-&gt;edgeRight = edge_right;</span>
+<span class="lineNum">     390 </span>        [<span class="branchCov" title="Branch 2 was taken 23504 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      23504 :       lane-&gt;boundingSphere = point::calcBoundingSphere(edge_left, edge_right);</span>
+<span class="lineNum">     391 </span>        [<span class="branchCov" title="Branch 2 was taken 23504 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      23504 :       lane::updateLaneLengths(*lane);</span>
+<span class="lineNum">     392 </span>        [<span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 23504 times"> + </span>]:<span class="lineCov">      23504 :       return true;</span>
 <span class="lineNum">     393 </span>                :            :     }
 <span class="lineNum">     394 </span>                :            :   }
 <span class="lineNum">     395 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot set edges of lane. {}&quot;, id);</span>
-<span class="lineNum">     396 </span>                :<span class="lineCov">      20781 :   return false;</span>
+<span class="lineNum">     396 </span>                :<span class="lineCov">      23505 :   return false;</span>
 <a name="397"><span class="lineNum">     397 </span>                :            : }</a>
 <span class="lineNum">     398 </span>                :            : 
 <span class="lineNum">     399 </span>                :<span class="lineCov">          3 : bool Factory::set(const lane::LaneId &amp;id, const physics::Speed &amp;maxSpeed)</span>
@@ -526,12 +526,12 @@
 <span class="lineNum">     452 </span>                :            : //////////////////////////////////////////
 <a name="453"><span class="lineNum">     453 </span>                :            : // Atomic Operations -- Set Map Meta Data</a>
 <span class="lineNum">     454 </span>                :            : 
-<span class="lineNum">     455 </span>                :<span class="lineCov">         60 : bool Factory::set(const TrafficType &amp;traffic_type)</span>
+<span class="lineNum">     455 </span>                :<span class="lineCov">         67 : bool Factory::set(const TrafficType &amp;traffic_type)</span>
 <span class="lineNum">     456 </span>                :            : {
-<span class="lineNum">     457 </span>        [<span class="branchCov" title="Branch 0 was taken 60 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         60 :   if (traffic_type != TrafficType::INVALID)</span>
+<span class="lineNum">     457 </span>        [<span class="branchCov" title="Branch 0 was taken 67 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         67 :   if (traffic_type != TrafficType::INVALID)</span>
 <span class="lineNum">     458 </span>                :            :   {
-<span class="lineNum">     459 </span>                :<span class="lineCov">         60 :     mStore.meta_data_.trafficType = traffic_type;</span>
-<span class="lineNum">     460 </span>                :<span class="lineCov">         60 :     return true;</span>
+<span class="lineNum">     459 </span>                :<span class="lineCov">         67 :     mStore.meta_data_.trafficType = traffic_type;</span>
+<span class="lineNum">     460 </span>                :<span class="lineCov">         67 :     return true;</span>
 <span class="lineNum">     461 </span>                :            :   }
 <span class="lineNum">     462 </span>                :            : 
 <span class="lineNum">     463 </span>                :<span class="lineNoCov">          0 :   return false;</span>

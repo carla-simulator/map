@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -131,7 +131,7 @@
 <span class="lineNum">      60 </span>                :            :   /*!
 <a name="61"><span class="lineNum">      61 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      62 </span>                :            :    */
-<span class="lineNum">      63 </span>                :<span class="lineCov">    1464362 :   ParaPoint() = default;</span>
+<span class="lineNum">      63 </span>                :<span class="lineCov">    2188830 :   ParaPoint() = default;</span>
 <span class="lineNum">      64 </span>                :            : 
 <span class="lineNum">      65 </span>                :            :   /*!
 <span class="lineNum">      66 </span>                :            :    * \brief standard destructor
@@ -173,9 +173,9 @@
 <span class="lineNum">     102 </span>                :            :    *
 <a name="103"><span class="lineNum">     103 </span>                :            :    * \returns \c true if both ParaPoint are equal</a>
 <span class="lineNum">     104 </span>                :            :    */
-<span class="lineNum">     105 </span>                :<span class="lineCov">      38306 :   bool operator==(const ParaPoint &amp;other) const</span>
+<span class="lineNum">     105 </span>                :<span class="lineCov">      41468 :   bool operator==(const ParaPoint &amp;other) const</span>
 <span class="lineNum">     106 </span>                :            :   {
-<span class="lineNum">     107 </span>[<span class="branchCov" title="Branch 1 was taken 8742 times"> + </span><span class="branchCov" title="Branch 2 was taken 29564 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 6022 times"> + </span><span class="branchCov" title="Branch 5 was taken 2720 times"> + </span>]:<span class="lineCov">      38306 :     return (laneId == other.laneId) &amp;&amp; (parametricOffset == other.parametricOffset);</span>
+<span class="lineNum">     107 </span>[<span class="branchCov" title="Branch 1 was taken 8747 times"> + </span><span class="branchCov" title="Branch 2 was taken 32721 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 6022 times"> + </span><span class="branchCov" title="Branch 5 was taken 2725 times"> + </span>]:<span class="lineCov">      41468 :     return (laneId == other.laneId) &amp;&amp; (parametricOffset == other.parametricOffset);</span>
 <span class="lineNum">     108 </span>                :            :   }
 <span class="lineNum">     109 </span>                :            : 
 <span class="lineNum">     110 </span>                :            :   /**

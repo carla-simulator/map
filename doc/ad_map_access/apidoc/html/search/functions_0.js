@@ -13,7 +13,7 @@ var searchData=
   ['admapmatching',['AdMapMatching',['../classad_1_1map_1_1match_1_1AdMapMatching.html#a50fe47582b7fda847d979f3bbe7d60a0',1,'ad::map::match::AdMapMatching']]],
   ['altitude',['Altitude',['../classad_1_1map_1_1point_1_1Altitude.html#a6e3727ec7f2dd34effac51df716dad07',1,'ad::map::point::Altitude::Altitude()'],['../classad_1_1map_1_1point_1_1Altitude.html#a5c5ce4049dbbfbb28866334498a82afc',1,'ad::map::point::Altitude::Altitude(double const iAltitude)'],['../classad_1_1map_1_1point_1_1Altitude.html#a49bc76e8a2defb406222847d02664bb6',1,'ad::map::point::Altitude::Altitude(const Altitude &amp;other)=default'],['../classad_1_1map_1_1point_1_1Altitude.html#a73338bd3dfc8f9324dd466a39ca1c539',1,'ad::map::point::Altitude::Altitude(Altitude &amp;&amp;other)=default']]],
   ['appendlanesegmenttoroute',['appendLaneSegmentToRoute',['../namespacead_1_1map_1_1route.html#a07efded828e2021148ba627e06d51b4c',1,'ad::map::route']]],
-  ['appendroadsegmenttoroute',['appendRoadSegmentToRoute',['../namespacead_1_1map_1_1route.html#ad8341749daa83ed3ccf36785fe0232a2',1,'ad::map::route']]],
+  ['appendroadsegmenttoroute',['appendRoadSegmentToRoute',['../namespacead_1_1map_1_1route.html#a3ae2ad49e85cb12962652274ba892257',1,'ad::map::route']]],
   ['applicabletrafficlights',['applicableTrafficLights',['../classad_1_1map_1_1intersection_1_1Intersection.html#a80f919ce3c98362f03d6758bb62a7537',1,'ad::map::intersection::Intersection']]],
   ['approxaltitude',['approxAltitude',['../namespacead_1_1map_1_1point.html#a9dc736e297e1a1c13b031f7a6bcb7016',1,'ad::map::point']]],
   ['areattributesequal',['areAttributesEqual',['../namespacead_1_1map_1_1restriction.html#a3867bae50a4954bbc1a1996a9a3d9052',1,'ad::map::restriction']]],

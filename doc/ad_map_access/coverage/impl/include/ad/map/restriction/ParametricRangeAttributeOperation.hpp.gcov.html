@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -92,9 +92,9 @@
 <span class="lineNum">      21 </span>                :            :  * @param[in] right SpeedLimit object.
 <a name="22"><span class="lineNum">      22 </span>                :            :  * @returns true if the attributes of the left SpeedLimit and right SpeedLimit can be considered to be equal.</a>
 <span class="lineNum">      23 </span>                :            :  */
-<span class="lineNum">      24 </span>                :<span class="lineCov">      10463 : inline bool areAttributesEqual(SpeedLimit const &amp;left, SpeedLimit const &amp;right)</span>
+<span class="lineNum">      24 </span>                :<span class="lineCov">      11820 : inline bool areAttributesEqual(SpeedLimit const &amp;left, SpeedLimit const &amp;right)</span>
 <span class="lineNum">      25 </span>                :            : {
-<span class="lineNum">      26 </span>                :<span class="lineCov">      10463 :   return left.speedLimit == right.speedLimit;</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">      11820 :   return left.speedLimit == right.speedLimit;</span>
 <span class="lineNum">      27 </span>                :            : }
 <span class="lineNum">      28 </span>                :            : 
 <span class="lineNum">      29 </span>                :            : /**
@@ -103,11 +103,11 @@
 <span class="lineNum">      32 </span>                :            :  * @param[in] right RangeAttributes object.
 <a name="33"><span class="lineNum">      33 </span>                :            :  * @returns true if left RangeAttributes is extended with right one.</a>
 <span class="lineNum">      34 </span>                :            :  */
-<span class="lineNum">      35 </span>                :<span class="lineCov">      10463 : template &lt;typename RangeAttribute&gt; bool combineRangeAttributes(RangeAttribute &amp;left, RangeAttribute const &amp;right)</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">      11820 : template &lt;typename RangeAttribute&gt; bool combineRangeAttributes(RangeAttribute &amp;left, RangeAttribute const &amp;right)</span>
 <span class="lineNum">      36 </span>                :            : {
-<span class="lineNum">      37 </span>        [<span class="branchCov" title="Branch 1 was taken 10462 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      10463 :   if (areAttributesEqual(left, right))</span>
+<span class="lineNum">      37 </span>        [<span class="branchCov" title="Branch 1 was taken 11819 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      11820 :   if (areAttributesEqual(left, right))</span>
 <span class="lineNum">      38 </span>                :            :   {
-<span class="lineNum">      39 </span>                :<span class="lineCov">      10462 :     return extendRangeWith(left.lanePiece, right.lanePiece);</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">      11819 :     return extendRangeWith(left.lanePiece, right.lanePiece);</span>
 <span class="lineNum">      40 </span>                :            :   }
 <span class="lineNum">      41 </span>                :<span class="lineCov">          1 :   return false;</span>
 <span class="lineNum">      42 </span>                :            : }
@@ -119,20 +119,20 @@
 <span class="lineNum">      48 </span>                :            :  * @returns true if another element overlaps any existing element in the attributeList
 <a name="49"><span class="lineNum">      49 </span>                :            :  */</a>
 <span class="lineNum">      50 </span>                :            : template &lt;typename RangeAttribute&gt;
-<span class="lineNum">      51 </span>                :<span class="lineCov">      31177 : bool doesRangeAttributeOverlap(std::vector&lt;RangeAttribute&gt; const &amp;attributeList, RangeAttribute const &amp;attribute)</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">      35258 : bool doesRangeAttributeOverlap(std::vector&lt;RangeAttribute&gt; const &amp;attributeList, RangeAttribute const &amp;attribute)</span>
 <span class="lineNum">      52 </span>                :            : {
-<span class="lineNum">      53 </span>        [<span class="branchCov" title="Branch 3 was taken 10463 times"> + </span><span class="branchCov" title="Branch 4 was taken 31176 times"> + </span>]:<span class="lineCov">      41639 :   for (auto const &amp;listEntry : attributeList)</span>
+<span class="lineNum">      53 </span>        [<span class="branchCov" title="Branch 3 was taken 11820 times"> + </span><span class="branchCov" title="Branch 4 was taken 35257 times"> + </span>]:<span class="lineCov">      47077 :   for (auto const &amp;listEntry : attributeList)</span>
 <span class="lineNum">      54 </span>                :            :   {
-<span class="lineNum">      55 </span>[<span class="branchCov" title="Branch 1 was taken 10463 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 10463 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      31389 :     if (doRangesOverlap(attribute.lanePiece, listEntry.lanePiece)</span>
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 10463 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 10462 times"> + </span>]
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 1 time"> + </span><span class="branchCov" title="Branch 10 was taken 10462 times"> + </span>]
-<span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 1 was taken 10463 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      10463 :         &amp;&amp; !doesRangePredate(attribute.lanePiece, listEntry.lanePiece)</span>
-<span class="lineNum">      57 </span>        [<span class="branchCov" title="Branch 1 was taken 10463 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      10463 :         &amp;&amp; !doesRangeSucceed(attribute.lanePiece, listEntry.lanePiece))</span>
+<span class="lineNum">      55 </span>[<span class="branchCov" title="Branch 1 was taken 11820 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 11820 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      35460 :     if (doRangesOverlap(attribute.lanePiece, listEntry.lanePiece)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 5 was taken 11820 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchCov" title="Branch 8 was taken 11819 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 1 time"> + </span><span class="branchCov" title="Branch 10 was taken 11819 times"> + </span>]
+<span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 1 was taken 11820 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      11820 :         &amp;&amp; !doesRangePredate(attribute.lanePiece, listEntry.lanePiece)</span>
+<span class="lineNum">      57 </span>        [<span class="branchCov" title="Branch 1 was taken 11820 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      11820 :         &amp;&amp; !doesRangeSucceed(attribute.lanePiece, listEntry.lanePiece))</span>
 <span class="lineNum">      58 </span>                :            :     {
 <span class="lineNum">      59 </span>                :<span class="lineCov">          1 :       return true;</span>
 <span class="lineNum">      60 </span>                :            :     }
 <span class="lineNum">      61 </span>                :            :   }
-<span class="lineNum">      62 </span>                :<span class="lineCov">      31177 :   return false;</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">      35258 :   return false;</span>
 <span class="lineNum">      63 </span>                :            : }
 <span class="lineNum">      64 </span>                :            : 
 <span class="lineNum">      65 </span>                :            : /**
@@ -141,34 +141,34 @@
 <span class="lineNum">      68 </span>                :            :  * @param[in] attribute attribute to insert
 <a name="69"><span class="lineNum">      69 </span>                :            :  */</a>
 <span class="lineNum">      70 </span>                :            : template &lt;typename RangeAttribute&gt;
-<span class="lineNum">      71 </span>                :<span class="lineCov">      31177 : void insertRangeAttribute(std::vector&lt;RangeAttribute&gt; &amp;attributeList, RangeAttribute const &amp;attribute)</span>
+<span class="lineNum">      71 </span>                :<span class="lineCov">      35258 : void insertRangeAttribute(std::vector&lt;RangeAttribute&gt; &amp;attributeList, RangeAttribute const &amp;attribute)</span>
 <span class="lineNum">      72 </span>                :            : {
-<span class="lineNum">      73 </span>        [<span class="branchCov" title="Branch 3 was taken 10463 times"> + </span><span class="branchCov" title="Branch 4 was taken 31177 times"> + </span>]:<span class="lineCov">      41640 :   for (auto it = attributeList.begin(); it != attributeList.end(); it++)</span>
+<span class="lineNum">      73 </span>        [<span class="branchCov" title="Branch 3 was taken 11820 times"> + </span><span class="branchCov" title="Branch 4 was taken 35258 times"> + </span>]:<span class="lineCov">      47078 :   for (auto it = attributeList.begin(); it != attributeList.end(); it++)</span>
 <span class="lineNum">      74 </span>                :            :   {
-<span class="lineNum">      75 </span>[<span class="branchCov" title="Branch 2 was taken 10463 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 10463 times"> + </span>]:<span class="lineCov">      10463 :     if (attribute.lanePiece &lt;= it-&gt;lanePiece)</span>
+<span class="lineNum">      75 </span>[<span class="branchCov" title="Branch 2 was taken 11820 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 11820 times"> + </span>]:<span class="lineCov">      11820 :     if (attribute.lanePiece &lt;= it-&gt;lanePiece)</span>
 <span class="lineNum">      76 </span>                :            :     {
 <span class="lineNum">      77 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       attributeList.insert(it, attribute);</span>
 <span class="lineNum">      78 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineNoCov">          0 :       optimizeRangeAttributeList(attributeList);</span>
 <span class="lineNum">      79 </span>                :<span class="lineNoCov">          0 :       return;</span>
 <span class="lineNum">      80 </span>                :            :     }
 <span class="lineNum">      81 </span>                :            :   }
-<span class="lineNum">      82 </span>                :<span class="lineCov">      31177 :   attributeList.push_back(attribute);</span>
-<span class="lineNum">      83 </span>                :<span class="lineCov">      31177 :   optimizeRangeAttributeList(attributeList);</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">      35258 :   attributeList.push_back(attribute);</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">      35258 :   optimizeRangeAttributeList(attributeList);</span>
 <span class="lineNum">      84 </span>                :            : }
 <a name="85"><span class="lineNum">      85 </span>                :            : </a>
 <span class="lineNum">      86 </span>                :            : /** @brief Combines multiple elements into one - if possible. */
-<span class="lineNum">      87 </span>                :<span class="lineCov">      31177 : template &lt;typename RangeAttribute&gt; void optimizeRangeAttributeList(std::vector&lt;RangeAttribute&gt; &amp;attributeList)</span>
+<span class="lineNum">      87 </span>                :<span class="lineCov">      35258 : template &lt;typename RangeAttribute&gt; void optimizeRangeAttributeList(std::vector&lt;RangeAttribute&gt; &amp;attributeList)</span>
 <span class="lineNum">      88 </span>                :            : {
-<span class="lineNum">      89 </span>        [<span class="branchCov" title="Branch 3 was taken 41640 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      72817 :   for (auto it = attributeList.begin(); it != attributeList.end();)</span>
+<span class="lineNum">      89 </span>        [<span class="branchCov" title="Branch 3 was taken 47078 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      82336 :   for (auto it = attributeList.begin(); it != attributeList.end();)</span>
 <span class="lineNum">      90 </span>                :            :   {
-<span class="lineNum">      91 </span>                :<span class="lineCov">      41640 :     auto it1 = it + 1;</span>
-<span class="lineNum">      92 </span>        [<span class="branchCov" title="Branch 2 was taken 31177 times"> + </span><span class="branchCov" title="Branch 3 was taken 10463 times"> + </span>]:<span class="lineCov">      41640 :     if (it1 == attributeList.end())</span>
+<span class="lineNum">      91 </span>                :<span class="lineCov">      47078 :     auto it1 = it + 1;</span>
+<span class="lineNum">      92 </span>        [<span class="branchCov" title="Branch 2 was taken 35258 times"> + </span><span class="branchCov" title="Branch 3 was taken 11820 times"> + </span>]:<span class="lineCov">      47078 :     if (it1 == attributeList.end())</span>
 <span class="lineNum">      93 </span>                :            :     {
-<span class="lineNum">      94 </span>                :<span class="lineCov">      31177 :       return;</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">      35258 :       return;</span>
 <span class="lineNum">      95 </span>                :            :     }
-<span class="lineNum">      96 </span>[<span class="branchCov" title="Branch 3 was taken 10463 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 10462 times"> + </span><span class="branchCov" title="Branch 6 was taken 1 time"> + </span>]:<span class="lineCov">      10463 :     if (combineRangeAttributes(*it, *it1))</span>
+<span class="lineNum">      96 </span>[<span class="branchCov" title="Branch 3 was taken 11820 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 11819 times"> + </span><span class="branchCov" title="Branch 6 was taken 1 time"> + </span>]:<span class="lineCov">      11820 :     if (combineRangeAttributes(*it, *it1))</span>
 <span class="lineNum">      97 </span>                :            :     {
-<span class="lineNum">      98 </span>        [<span class="branchCov" title="Branch 2 was taken 10462 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      10462 :       attributeList.erase(it1);</span>
+<span class="lineNum">      98 </span>        [<span class="branchCov" title="Branch 2 was taken 11819 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      11819 :       attributeList.erase(it1);</span>
 <span class="lineNum">      99 </span>                :            :     }
 <span class="lineNum">     100 </span>                :            :     else
 <span class="lineNum">     101 </span>                :            :     {

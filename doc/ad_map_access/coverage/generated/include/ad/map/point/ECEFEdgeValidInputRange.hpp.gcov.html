@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -107,17 +107,17 @@
 <span class="lineNum">      36 </span>                :            :  *       0 &lt;= \c input.size() &lt;= 0
 <a name="37"><span class="lineNum">      37 </span>                :            :  *       and the ranges of all vector elements</a>
 <span class="lineNum">      38 </span>                :            :  */
-<span class="lineNum">      39 </span>                :<span class="lineCov">      42381 : inline bool withinValidInputRange(::ad::map::point::ECEFEdge const &amp;input, bool const logErrors = true)</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">      47829 : inline bool withinValidInputRange(::ad::map::point::ECEFEdge const &amp;input, bool const logErrors = true)</span>
 <span class="lineNum">      40 </span>                :            : {
-<span class="lineNum">      41 </span>                :<span class="lineCov">      42381 :   bool inValidInputRange = true;</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">      47829 :   bool inValidInputRange = true;</span>
 <span class="lineNum">      42 </span>                :            : 
-<span class="lineNum">      43 </span>        [<span class="branchCov" title="Branch 0 was taken 42381 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      42381 :   if (inValidInputRange)</span>
+<span class="lineNum">      43 </span>        [<span class="branchCov" title="Branch 0 was taken 47829 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      47829 :   if (inValidInputRange)</span>
 <span class="lineNum">      44 </span>                :            :   {
-<span class="lineNum">      45 </span>        [<span class="branchCov" title="Branch 3 was taken 380023 times"> + </span><span class="branchCov" title="Branch 4 was taken 42381 times"> + </span>]:<span class="lineCov">     422404 :     for (auto const &amp;member : input)</span>
+<span class="lineNum">      45 </span>        [<span class="branchCov" title="Branch 3 was taken 433543 times"> + </span><span class="branchCov" title="Branch 4 was taken 47829 times"> + </span>]:<span class="lineCov">     481372 :     for (auto const &amp;member : input)</span>
 <span class="lineNum">      46 </span>                :            :     {
-<span class="lineNum">      47 </span>        [<span class="branchCov" title="Branch 1 was taken 380023 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     380023 :       bool memberInValidInputRange = withinValidInputRange(member, logErrors);</span>
-<span class="lineNum">      48 </span>[<span class="branchCov" title="Branch 0 was taken 380023 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 2 was taken 380022 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">     380023 :       inValidInputRange = inValidInputRange &amp;&amp; memberInValidInputRange;</span>
-<span class="lineNum">      49 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 380022 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     380023 :       if (!memberInValidInputRange &amp;&amp; logErrors)</span>
+<span class="lineNum">      47 </span>        [<span class="branchCov" title="Branch 1 was taken 433543 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     433543 :       bool memberInValidInputRange = withinValidInputRange(member, logErrors);</span>
+<span class="lineNum">      48 </span>[<span class="branchCov" title="Branch 0 was taken 433543 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 2 was taken 433542 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">     433543 :       inValidInputRange = inValidInputRange &amp;&amp; memberInValidInputRange;</span>
+<span class="lineNum">      49 </span>[<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 433542 times"> + </span>][<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     433543 :       if (!memberInValidInputRange &amp;&amp; logErrors)</span>
 <span class="lineNum">      50 </span>                :            :       {
 <span class="lineNum">      51 </span>                :<span class="lineCov">          2 :         spdlog::error(&quot;withinValidInputRange(::ad::map::point::ECEFEdge)&gt;&gt; {}, invalid member {}&quot;,</span>
 <span class="lineNum">      52 </span>                :            :                       input,
@@ -125,7 +125,7 @@
 <span class="lineNum">      54 </span>                :            :       }
 <span class="lineNum">      55 </span>                :            :     }
 <span class="lineNum">      56 </span>                :            :   }
-<span class="lineNum">      57 </span>                :<span class="lineCov">      42381 :   return inValidInputRange;</span>
+<span class="lineNum">      57 </span>                :<span class="lineCov">      47829 :   return inValidInputRange;</span>
 <span class="lineNum">      58 </span>                :            : }
 </pre>
       </td>

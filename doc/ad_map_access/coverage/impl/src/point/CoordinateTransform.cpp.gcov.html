@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">16</td>
@@ -91,102 +91,102 @@
 <span class="lineNum">      20 </span>                :            : //////////////////////////
 <a name="21"><span class="lineNum">      21 </span>                :            : // Constructor/Destructor</a>
 <span class="lineNum">      22 </span>                :            : 
-<span class="lineNum">      23 </span>                :<span class="lineCov">       6150 : CoordinateTransform::CoordinateTransform()</span>
+<span class="lineNum">      23 </span>                :<span class="lineCov">       6222 : CoordinateTransform::CoordinateTransform()</span>
 <span class="lineNum">      24 </span>                :            : {
-<span class="lineNum">      25 </span>                :<span class="lineCov">       3075 :   enu_ref_ = instance_counter_;</span>
-<span class="lineNum">      26 </span>                :<span class="lineCov">       3075 :   instance_counter_ += 0x00100000;</span>
-<span class="lineNum">      27 </span>                :<span class="lineCov">       3075 :   enu_h_ = 0;</span>
-<span class="lineNum">      28 </span>                :<span class="lineCov">       3075 :   enu_tmp1_ = 0;</span>
-<span class="lineNum">      29 </span>                :<span class="lineCov">       3075 :   enu_tmp1_3_ = 0;</span>
-<span class="lineNum">      30 </span>                :<span class="lineCov">       3075 :   enu_cp_ = 0;</span>
-<span class="lineNum">      31 </span>                :<span class="lineCov">       3075 :   enu_sp_ = 0;</span>
-<span class="lineNum">      32 </span>                :<span class="lineCov">       3075 :   enu_cp_2_ = 0;</span>
-<span class="lineNum">      33 </span>                :<span class="lineCov">       3075 :   enu_sp_2_ = 0;</span>
-<span class="lineNum">      34 </span>                :<span class="lineCov">       3075 :   enu_phi_ = 0;</span>
-<span class="lineNum">      35 </span>                :<span class="lineCov">       3075 :   enu_lam_ = 0;</span>
-<span class="lineNum">      36 </span>                :<span class="lineCov">       3075 :   std::memset(ecef_enu_, 0, sizeof(ecef_enu_));</span>
-<a name="37"><span class="lineNum">      37 </span>                :<span class="lineCov">       3075 : }</span></a>
+<span class="lineNum">      25 </span>                :<span class="lineCov">       3111 :   enu_ref_ = instance_counter_;</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">       3111 :   instance_counter_ += 0x00100000;</span>
+<span class="lineNum">      27 </span>                :<span class="lineCov">       3111 :   enu_h_ = 0;</span>
+<span class="lineNum">      28 </span>                :<span class="lineCov">       3111 :   enu_tmp1_ = 0;</span>
+<span class="lineNum">      29 </span>                :<span class="lineCov">       3111 :   enu_tmp1_3_ = 0;</span>
+<span class="lineNum">      30 </span>                :<span class="lineCov">       3111 :   enu_cp_ = 0;</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">       3111 :   enu_sp_ = 0;</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">       3111 :   enu_cp_2_ = 0;</span>
+<span class="lineNum">      33 </span>                :<span class="lineCov">       3111 :   enu_sp_2_ = 0;</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">       3111 :   enu_phi_ = 0;</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">       3111 :   enu_lam_ = 0;</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">       3111 :   std::memset(ecef_enu_, 0, sizeof(ecef_enu_));</span>
+<a name="37"><span class="lineNum">      37 </span>                :<span class="lineCov">       3111 : }</span></a>
 <span class="lineNum">      38 </span>                :            : 
-<span class="lineNum">      39 </span>                :<span class="lineCov">       3075 : CoordinateTransform::~CoordinateTransform()</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">       3111 : CoordinateTransform::~CoordinateTransform()</span>
 <span class="lineNum">      40 </span>                :            : {
-<a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">       3075 : }</span></a>
+<a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">       3111 : }</span></a>
 <span class="lineNum">      42 </span>                :            : 
-<span class="lineNum">      43 </span>                :<span class="lineCov">       2870 : void CoordinateTransform::setENUReferencePoint(const GeoPoint &amp;enu_ref_point)</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">       2894 : void CoordinateTransform::setENUReferencePoint(const GeoPoint &amp;enu_ref_point)</span>
 <span class="lineNum">      44 </span>                :            : {
-<span class="lineNum">      45 </span>        [<span class="branchCov" title="Branch 1 was taken 2869 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">       2870 :   if (isValid(enu_ref_point))</span>
+<span class="lineNum">      45 </span>        [<span class="branchCov" title="Branch 1 was taken 2893 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">       2894 :   if (isValid(enu_ref_point))</span>
 <span class="lineNum">      46 </span>                :            :   {
-<span class="lineNum">      47 </span>                :<span class="lineCov">       2869 :     enu_ref_++;</span>
-<span class="lineNum">      48 </span>                :<span class="lineCov">       2869 :     enu_ref_point_ = enu_ref_point;</span>
-<span class="lineNum">      49 </span>                :<span class="lineCov">       2869 :     ecef_ref_point_ = Geo2ECEF(enu_ref_point);</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">       2893 :     enu_ref_++;</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">       2893 :     enu_ref_point_ = enu_ref_point;</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">       2893 :     ecef_ref_point_ = Geo2ECEF(enu_ref_point);</span>
 <span class="lineNum">      50 </span>                :            : 
-<span class="lineNum">      51 </span>                :<span class="lineCov">       2869 :     enu_phi_ = toRadians(enu_ref_point_.latitude);</span>
-<span class="lineNum">      52 </span>                :<span class="lineCov">       2869 :     enu_lam_ = toRadians(enu_ref_point_.longitude);</span>
-<span class="lineNum">      53 </span>                :<span class="lineCov">       2869 :     double sin_lam = std::sin(enu_lam_);</span>
-<span class="lineNum">      54 </span>                :<span class="lineCov">       2869 :     double cos_lam = std::cos(enu_lam_);</span>
-<span class="lineNum">      55 </span>                :<span class="lineCov">       2869 :     double sin_phi = std::sin(enu_phi_);</span>
-<span class="lineNum">      56 </span>                :<span class="lineCov">       2869 :     double cos_phi = std::cos(enu_phi_);</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">       2893 :     enu_phi_ = toRadians(enu_ref_point_.latitude);</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">       2893 :     enu_lam_ = toRadians(enu_ref_point_.longitude);</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">       2893 :     double sin_lam = std::sin(enu_lam_);</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">       2893 :     double cos_lam = std::cos(enu_lam_);</span>
+<span class="lineNum">      55 </span>                :<span class="lineCov">       2893 :     double sin_phi = std::sin(enu_phi_);</span>
+<span class="lineNum">      56 </span>                :<span class="lineCov">       2893 :     double cos_phi = std::cos(enu_phi_);</span>
 <span class="lineNum">      57 </span>                :            : 
-<span class="lineNum">      58 </span>                :<span class="lineCov">       2869 :     enu_h_ = static_cast&lt;double&gt;(enu_ref_point_.altitude);</span>
-<span class="lineNum">      59 </span>                :<span class="lineCov">       2869 :     enu_tmp1_ = std::sqrt(1 - E2 * sin_phi * sin_phi);</span>
-<span class="lineNum">      60 </span>                :<span class="lineCov">       2869 :     enu_tmp1_3_ = enu_tmp1_ * enu_tmp1_ * enu_tmp1_;</span>
-<span class="lineNum">      61 </span>                :<span class="lineCov">       2869 :     enu_cp_ = cos_phi;</span>
-<span class="lineNum">      62 </span>                :<span class="lineCov">       2869 :     enu_sp_ = sin_phi;</span>
-<span class="lineNum">      63 </span>                :<span class="lineCov">       2869 :     enu_cp_2_ = enu_cp_ * enu_cp_;</span>
-<span class="lineNum">      64 </span>                :<span class="lineCov">       2869 :     enu_sp_2_ = enu_sp_ * enu_sp_;</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">       2893 :     enu_h_ = static_cast&lt;double&gt;(enu_ref_point_.altitude);</span>
+<span class="lineNum">      59 </span>                :<span class="lineCov">       2893 :     enu_tmp1_ = std::sqrt(1 - E2 * sin_phi * sin_phi);</span>
+<span class="lineNum">      60 </span>                :<span class="lineCov">       2893 :     enu_tmp1_3_ = enu_tmp1_ * enu_tmp1_ * enu_tmp1_;</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">       2893 :     enu_cp_ = cos_phi;</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">       2893 :     enu_sp_ = sin_phi;</span>
+<span class="lineNum">      63 </span>                :<span class="lineCov">       2893 :     enu_cp_2_ = enu_cp_ * enu_cp_;</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">       2893 :     enu_sp_2_ = enu_sp_ * enu_sp_;</span>
 <span class="lineNum">      65 </span>                :            : 
-<span class="lineNum">      66 </span>                :<span class="lineCov">       2869 :     ecef_enu_[0] = -sin_lam;</span>
-<span class="lineNum">      67 </span>                :<span class="lineCov">       2869 :     ecef_enu_[1] = cos_lam;</span>
-<span class="lineNum">      68 </span>                :<span class="lineCov">       2869 :     ecef_enu_[2] = 0;</span>
-<span class="lineNum">      69 </span>                :<span class="lineCov">       2869 :     ecef_enu_[3] = -cos_lam * sin_phi;</span>
-<span class="lineNum">      70 </span>                :<span class="lineCov">       2869 :     ecef_enu_[4] = -sin_lam * sin_phi;</span>
-<span class="lineNum">      71 </span>                :<span class="lineCov">       2869 :     ecef_enu_[5] = cos_phi;</span>
-<span class="lineNum">      72 </span>                :<span class="lineCov">       2869 :     ecef_enu_[6] = cos_lam * cos_phi;</span>
-<span class="lineNum">      73 </span>                :<span class="lineCov">       2869 :     ecef_enu_[7] = sin_lam * cos_phi;</span>
-<span class="lineNum">      74 </span>                :<span class="lineCov">       2869 :     ecef_enu_[8] = sin_phi;</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">       2893 :     ecef_enu_[0] = -sin_lam;</span>
+<span class="lineNum">      67 </span>                :<span class="lineCov">       2893 :     ecef_enu_[1] = cos_lam;</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">       2893 :     ecef_enu_[2] = 0;</span>
+<span class="lineNum">      69 </span>                :<span class="lineCov">       2893 :     ecef_enu_[3] = -cos_lam * sin_phi;</span>
+<span class="lineNum">      70 </span>                :<span class="lineCov">       2893 :     ecef_enu_[4] = -sin_lam * sin_phi;</span>
+<span class="lineNum">      71 </span>                :<span class="lineCov">       2893 :     ecef_enu_[5] = cos_phi;</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">       2893 :     ecef_enu_[6] = cos_lam * cos_phi;</span>
+<span class="lineNum">      73 </span>                :<span class="lineCov">       2893 :     ecef_enu_[7] = sin_lam * cos_phi;</span>
+<span class="lineNum">      74 </span>                :<span class="lineCov">       2893 :     ecef_enu_[8] = sin_phi;</span>
 <span class="lineNum">      75 </span>                :            :   }
 <span class="lineNum">      76 </span>                :            :   else
 <span class="lineNum">      77 </span>                :            :   {
 <span class="lineNum">      78 </span>        [<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Invalid ENU Reference Point provided!&quot;);</span>
 <span class="lineNum">      79 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     throw std::invalid_argument(&quot;Invalid ENU Reference Point provided!&quot;);</span>
 <span class="lineNum">      80 </span>                :            :   }
-<a name="81"><span class="lineNum">      81 </span>                :<span class="lineCov">       2869 : }</span></a>
+<a name="81"><span class="lineNum">      81 </span>                :<span class="lineCov">       2893 : }</span></a>
 <span class="lineNum">      82 </span>                :            : 
-<span class="lineNum">      83 </span>                :<span class="lineCov">        443 : const GeoPoint &amp;CoordinateTransform::getENUReferencePoint() const</span>
+<span class="lineNum">      83 </span>                :<span class="lineCov">        458 : const GeoPoint &amp;CoordinateTransform::getENUReferencePoint() const</span>
 <span class="lineNum">      84 </span>                :            : {
-<span class="lineNum">      85 </span>                :<span class="lineCov">        443 :   return enu_ref_point_;</span>
+<span class="lineNum">      85 </span>                :<span class="lineCov">        458 :   return enu_ref_point_;</span>
 <a name="86"><span class="lineNum">      86 </span>                :            : }</a>
 <span class="lineNum">      87 </span>                :            : 
-<span class="lineNum">      88 </span>                :<span class="lineCov">         81 : size_t CoordinateTransform::getENURef() const</span>
+<span class="lineNum">      88 </span>                :<span class="lineCov">         49 : size_t CoordinateTransform::getENURef() const</span>
 <span class="lineNum">      89 </span>                :            : {
-<span class="lineNum">      90 </span>                :<span class="lineCov">         81 :   return enu_ref_;</span>
+<span class="lineNum">      90 </span>                :<span class="lineCov">         49 :   return enu_ref_;</span>
 <a name="91"><span class="lineNum">      91 </span>                :            : }</a>
 <span class="lineNum">      92 </span>                :            : 
-<span class="lineNum">      93 </span>                :<span class="lineCov">      67149 : bool CoordinateTransform::isENUValid() const</span>
+<span class="lineNum">      93 </span>                :<span class="lineCov">      68205 : bool CoordinateTransform::isENUValid() const</span>
 <span class="lineNum">      94 </span>                :            : {
-<span class="lineNum">      95 </span>                :<span class="lineCov">      67149 :   return isValid(enu_ref_point_, false);</span>
+<span class="lineNum">      95 </span>                :<span class="lineCov">      68205 :   return isValid(enu_ref_point_, false);</span>
 <span class="lineNum">      96 </span>                :            : }
 <span class="lineNum">      97 </span>                :            : 
 <span class="lineNum">      98 </span>                :            : ////////////////////////////////
 <a name="99"><span class="lineNum">      99 </span>                :            : // ENU Reference Point Management</a>
 <span class="lineNum">     100 </span>                :            : 
-<span class="lineNum">     101 </span>                :<span class="lineCov">         20 : ENUPoint CoordinateTransform::Geo2ENU(const GeoPoint &amp;pt) const</span>
+<span class="lineNum">     101 </span>                :<span class="lineCov">         22 : ENUPoint CoordinateTransform::Geo2ENU(const GeoPoint &amp;pt) const</span>
 <span class="lineNum">     102 </span>                :            : {
-<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 19 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">         20 :   if (isENUValid())</span>
+<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 21 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">         22 :   if (isENUValid())</span>
 <span class="lineNum">     104 </span>                :            :   {
-<span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 1 was taken 18 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">         19 :     if (isValid(pt))</span>
+<span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 1 was taken 20 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">         21 :     if (isValid(pt))</span>
 <span class="lineNum">     106 </span>                :            :     {
-<span class="lineNum">     107 </span>                :<span class="lineCov">         18 :       double dphi = toRadians(pt.latitude) - enu_phi_;</span>
-<span class="lineNum">     108 </span>                :<span class="lineCov">         18 :       double dlam = toRadians(pt.longitude) - enu_lam_;</span>
-<span class="lineNum">     109 </span>                :<span class="lineCov">         18 :       double dh = static_cast&lt;double&gt;(pt.altitude) - enu_h_;</span>
-<span class="lineNum">     110 </span>                :<span class="lineCov">         18 :       double dlam_2 = dlam * dlam;</span>
-<span class="lineNum">     111 </span>                :<span class="lineCov">         18 :       double dphi_2 = dphi * dphi;</span>
-<span class="lineNum">     112 </span>                :<span class="lineCov">         18 :       double de = (A / enu_tmp1_ + enu_h_) * enu_cp_ * dlam</span>
-<span class="lineNum">     113 </span>                :<span class="lineCov">         18 :         - (A * (1 - E2) / enu_tmp1_3_ + enu_h_) * enu_sp_ * dphi * dlam + enu_cp_ * dlam * dh;</span>
-<span class="lineNum">     114 </span>                :<span class="lineCov">         18 :       double dn = (A * (1 - E2) / enu_tmp1_3_ + enu_h_) * dphi + 1.5 * enu_cp_ * enu_sp_ * A * E2 * dphi_2</span>
-<span class="lineNum">     115 </span>                :<span class="lineCov">         18 :         + enu_sp_2_ * dh * dphi + 0.5 * enu_sp_ * enu_cp_ * (A / enu_tmp1_ + enu_h_) * dlam_2;</span>
-<span class="lineNum">     116 </span>                :<span class="lineCov">         18 :       double du = dh - 0.5 * (A - 1.5 * A * E2 * enu_cp_2_ + 0.5 * A * E2 + enu_h_) * dphi_2</span>
-<span class="lineNum">     117 </span>                :<span class="lineCov">         18 :         - 0.5 * enu_cp_2_ * (A / enu_tmp1_ - enu_h_) * dlam_2;</span>
-<span class="lineNum">     118 </span>                :<span class="lineCov">         18 :       return createENUPoint(de, dn, du);</span>
+<span class="lineNum">     107 </span>                :<span class="lineCov">         20 :       double dphi = toRadians(pt.latitude) - enu_phi_;</span>
+<span class="lineNum">     108 </span>                :<span class="lineCov">         20 :       double dlam = toRadians(pt.longitude) - enu_lam_;</span>
+<span class="lineNum">     109 </span>                :<span class="lineCov">         20 :       double dh = static_cast&lt;double&gt;(pt.altitude) - enu_h_;</span>
+<span class="lineNum">     110 </span>                :<span class="lineCov">         20 :       double dlam_2 = dlam * dlam;</span>
+<span class="lineNum">     111 </span>                :<span class="lineCov">         20 :       double dphi_2 = dphi * dphi;</span>
+<span class="lineNum">     112 </span>                :<span class="lineCov">         20 :       double de = (A / enu_tmp1_ + enu_h_) * enu_cp_ * dlam</span>
+<span class="lineNum">     113 </span>                :<span class="lineCov">         20 :         - (A * (1 - E2) / enu_tmp1_3_ + enu_h_) * enu_sp_ * dphi * dlam + enu_cp_ * dlam * dh;</span>
+<span class="lineNum">     114 </span>                :<span class="lineCov">         20 :       double dn = (A * (1 - E2) / enu_tmp1_3_ + enu_h_) * dphi + 1.5 * enu_cp_ * enu_sp_ * A * E2 * dphi_2</span>
+<span class="lineNum">     115 </span>                :<span class="lineCov">         20 :         + enu_sp_2_ * dh * dphi + 0.5 * enu_sp_ * enu_cp_ * (A / enu_tmp1_ + enu_h_) * dlam_2;</span>
+<span class="lineNum">     116 </span>                :<span class="lineCov">         20 :       double du = dh - 0.5 * (A - 1.5 * A * E2 * enu_cp_2_ + 0.5 * A * E2 + enu_h_) * dphi_2</span>
+<span class="lineNum">     117 </span>                :<span class="lineCov">         20 :         - 0.5 * enu_cp_2_ * (A / enu_tmp1_ - enu_h_) * dlam_2;</span>
+<span class="lineNum">     118 </span>                :<span class="lineCov">         20 :       return createENUPoint(de, dn, du);</span>
 <span class="lineNum">     119 </span>                :            :     }
 <span class="lineNum">     120 </span>                :            :     else
 <span class="lineNum">     121 </span>                :            :     {
@@ -227,20 +227,20 @@
 <span class="lineNum">     156 </span>                :            : ///////////////////////
 <a name="157"><span class="lineNum">     157 </span>                :            : // ECEF/Geo Conversions</a>
 <span class="lineNum">     158 </span>                :            : 
-<span class="lineNum">     159 </span>                :<span class="lineCov">     405903 : ECEFPoint CoordinateTransform::Geo2ECEF(const GeoPoint &amp;pt) const</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">     459976 : ECEFPoint CoordinateTransform::Geo2ECEF(const GeoPoint &amp;pt) const</span>
 <span class="lineNum">     160 </span>                :            : {
-<span class="lineNum">     161 </span>        [<span class="branchCov" title="Branch 1 was taken 405902 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">     405903 :   if (isValid(pt))</span>
+<span class="lineNum">     161 </span>        [<span class="branchCov" title="Branch 1 was taken 459975 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">     459976 :   if (isValid(pt))</span>
 <span class="lineNum">     162 </span>                :            :   {
-<span class="lineNum">     163 </span>                :<span class="lineCov">     405902 :     double lat = toRadians(pt.latitude);</span>
-<span class="lineNum">     164 </span>                :<span class="lineCov">     405902 :     double lon = toRadians(pt.longitude);</span>
-<span class="lineNum">     165 </span>                :<span class="lineCov">     405902 :     double alt = static_cast&lt;double&gt;(pt.altitude);</span>
-<span class="lineNum">     166 </span>                :<span class="lineCov">     405902 :     double sinlat = std::sin(lat);</span>
-<span class="lineNum">     167 </span>                :<span class="lineCov">     405902 :     double coslat = std::cos(lat);</span>
-<span class="lineNum">     168 </span>                :<span class="lineCov">     405902 :     double n = A / std::sqrt(1 - E2 * sinlat * sinlat);</span>
-<span class="lineNum">     169 </span>                :<span class="lineCov">     405902 :     double x = (n + alt) * coslat * std::cos(lon);</span>
-<span class="lineNum">     170 </span>                :<span class="lineCov">     405902 :     double y = (n + alt) * coslat * std::sin(lon);</span>
-<span class="lineNum">     171 </span>                :<span class="lineCov">     405902 :     double z = (n * (1 - E2) + alt) * sinlat;</span>
-<span class="lineNum">     172 </span>                :<span class="lineCov">     405902 :     return createECEFPoint(x, y, z);</span>
+<span class="lineNum">     163 </span>                :<span class="lineCov">     459975 :     double lat = toRadians(pt.latitude);</span>
+<span class="lineNum">     164 </span>                :<span class="lineCov">     459975 :     double lon = toRadians(pt.longitude);</span>
+<span class="lineNum">     165 </span>                :<span class="lineCov">     459975 :     double alt = static_cast&lt;double&gt;(pt.altitude);</span>
+<span class="lineNum">     166 </span>                :<span class="lineCov">     459975 :     double sinlat = std::sin(lat);</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">     459975 :     double coslat = std::cos(lat);</span>
+<span class="lineNum">     168 </span>                :<span class="lineCov">     459975 :     double n = A / std::sqrt(1 - E2 * sinlat * sinlat);</span>
+<span class="lineNum">     169 </span>                :<span class="lineCov">     459975 :     double x = (n + alt) * coslat * std::cos(lon);</span>
+<span class="lineNum">     170 </span>                :<span class="lineCov">     459975 :     double y = (n + alt) * coslat * std::sin(lon);</span>
+<span class="lineNum">     171 </span>                :<span class="lineCov">     459975 :     double z = (n * (1 - E2) + alt) * sinlat;</span>
+<span class="lineNum">     172 </span>                :<span class="lineCov">     459975 :     return createECEFPoint(x, y, z);</span>
 <span class="lineNum">     173 </span>                :            :   }
 <span class="lineNum">     174 </span>                :            :   else
 <span class="lineNum">     175 </span>                :            :   {
@@ -310,21 +310,21 @@
 <span class="lineNum">     239 </span>                :            : ///////////////////////
 <a name="240"><span class="lineNum">     240 </span>                :            : // ECEF/ENU Conversions</a>
 <span class="lineNum">     241 </span>                :            : 
-<span class="lineNum">     242 </span>                :<span class="lineCov">      23041 : ECEFPoint CoordinateTransform::ENU2ECEF(const ENUPoint &amp;pt) const</span>
+<span class="lineNum">     242 </span>                :<span class="lineCov">      24215 : ECEFPoint CoordinateTransform::ENU2ECEF(const ENUPoint &amp;pt) const</span>
 <span class="lineNum">     243 </span>                :            : {
-<span class="lineNum">     244 </span>        [<span class="branchCov" title="Branch 1 was taken 23040 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      23041 :   if (isENUValid())</span>
+<span class="lineNum">     244 </span>        [<span class="branchCov" title="Branch 1 was taken 24214 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      24215 :   if (isENUValid())</span>
 <span class="lineNum">     245 </span>                :            :   {
-<span class="lineNum">     246 </span>        [<span class="branchCov" title="Branch 1 was taken 23039 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      23040 :     if (isValid(pt))</span>
+<span class="lineNum">     246 </span>        [<span class="branchCov" title="Branch 1 was taken 24213 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      24214 :     if (isValid(pt))</span>
 <span class="lineNum">     247 </span>                :            :     {
-<span class="lineNum">     248 </span>                :<span class="lineCov">      23039 :       double x = static_cast&lt;double&gt;(pt.x);</span>
-<span class="lineNum">     249 </span>                :<span class="lineCov">      23039 :       double y = static_cast&lt;double&gt;(pt.y);</span>
-<span class="lineNum">     250 </span>                :<span class="lineCov">      23039 :       double z = static_cast&lt;double&gt;(pt.z);</span>
-<span class="lineNum">     251 </span>                :<span class="lineCov">      23039 :       double ecef_x = ecef_enu_[0] * x + ecef_enu_[3] * y + ecef_enu_[6] * z;</span>
-<span class="lineNum">     252 </span>                :<span class="lineCov">      23039 :       double ecef_y = ecef_enu_[1] * x + ecef_enu_[4] * y + ecef_enu_[7] * z;</span>
-<span class="lineNum">     253 </span>                :<span class="lineCov">      23039 :       double ecef_z = ecef_enu_[5] * y + ecef_enu_[8] * z;</span>
-<span class="lineNum">     254 </span>        [<span class="branchCov" title="Branch 1 was taken 23039 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      23039 :       auto const ecef_base = createECEFPoint(ecef_x, ecef_y, ecef_z);</span>
-<span class="lineNum">     255 </span>        [<span class="branchCov" title="Branch 1 was taken 23039 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      23039 :       auto const ecef_result = ecef_base + ecef_ref_point_;</span>
-<span class="lineNum">     256 </span>                :<span class="lineCov">      23039 :       return ecef_result;</span>
+<span class="lineNum">     248 </span>                :<span class="lineCov">      24213 :       double x = static_cast&lt;double&gt;(pt.x);</span>
+<span class="lineNum">     249 </span>                :<span class="lineCov">      24213 :       double y = static_cast&lt;double&gt;(pt.y);</span>
+<span class="lineNum">     250 </span>                :<span class="lineCov">      24213 :       double z = static_cast&lt;double&gt;(pt.z);</span>
+<span class="lineNum">     251 </span>                :<span class="lineCov">      24213 :       double ecef_x = ecef_enu_[0] * x + ecef_enu_[3] * y + ecef_enu_[6] * z;</span>
+<span class="lineNum">     252 </span>                :<span class="lineCov">      24213 :       double ecef_y = ecef_enu_[1] * x + ecef_enu_[4] * y + ecef_enu_[7] * z;</span>
+<span class="lineNum">     253 </span>                :<span class="lineCov">      24213 :       double ecef_z = ecef_enu_[5] * y + ecef_enu_[8] * z;</span>
+<span class="lineNum">     254 </span>        [<span class="branchCov" title="Branch 1 was taken 24213 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      24213 :       auto const ecef_base = createECEFPoint(ecef_x, ecef_y, ecef_z);</span>
+<span class="lineNum">     255 </span>        [<span class="branchCov" title="Branch 1 was taken 24213 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      24213 :       auto const ecef_result = ecef_base + ecef_ref_point_;</span>
+<span class="lineNum">     256 </span>                :<span class="lineCov">      24213 :       return ecef_result;</span>
 <span class="lineNum">     257 </span>                :            :     }
 <span class="lineNum">     258 </span>                :            :     else
 <span class="lineNum">     259 </span>                :            :     {
@@ -339,20 +339,20 @@
 <span class="lineNum">     268 </span>                :            :   }
 <a name="269"><span class="lineNum">     269 </span>                :            : }</a>
 <span class="lineNum">     270 </span>                :            : 
-<span class="lineNum">     271 </span>                :<span class="lineCov">      23406 : ENUPoint CoordinateTransform::ECEF2ENU(const ECEFPoint &amp;pt) const</span>
+<span class="lineNum">     271 </span>                :<span class="lineCov">      23294 : ENUPoint CoordinateTransform::ECEF2ENU(const ECEFPoint &amp;pt) const</span>
 <span class="lineNum">     272 </span>                :            : {
-<span class="lineNum">     273 </span>        [<span class="branchCov" title="Branch 1 was taken 23403 times"> + </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">      23406 :   if (isENUValid())</span>
+<span class="lineNum">     273 </span>        [<span class="branchCov" title="Branch 1 was taken 23291 times"> + </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">      23294 :   if (isENUValid())</span>
 <span class="lineNum">     274 </span>                :            :   {
-<span class="lineNum">     275 </span>        [<span class="branchCov" title="Branch 1 was taken 23402 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      23403 :     if (isValid(pt))</span>
+<span class="lineNum">     275 </span>        [<span class="branchCov" title="Branch 1 was taken 23290 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>]:<span class="lineCov">      23291 :     if (isValid(pt))</span>
 <span class="lineNum">     276 </span>                :            :     {
-<span class="lineNum">     277 </span>        [<span class="branchCov" title="Branch 1 was taken 23402 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      23402 :       auto const ecef_d = pt - ecef_ref_point_;</span>
-<span class="lineNum">     278 </span>                :<span class="lineCov">      23402 :       double x = static_cast&lt;double&gt;(ecef_d.x);</span>
-<span class="lineNum">     279 </span>                :<span class="lineCov">      23402 :       double y = static_cast&lt;double&gt;(ecef_d.y);</span>
-<span class="lineNum">     280 </span>                :<span class="lineCov">      23402 :       double z = static_cast&lt;double&gt;(ecef_d.z);</span>
-<span class="lineNum">     281 </span>                :<span class="lineCov">      23402 :       double enu_x = ecef_enu_[0] * x + ecef_enu_[1] * y;</span>
-<span class="lineNum">     282 </span>                :<span class="lineCov">      23402 :       double enu_y = ecef_enu_[3] * x + ecef_enu_[4] * y + ecef_enu_[5] * z;</span>
-<span class="lineNum">     283 </span>                :<span class="lineCov">      23402 :       double enu_z = ecef_enu_[6] * x + ecef_enu_[7] * y + ecef_enu_[8] * z;</span>
-<span class="lineNum">     284 </span>        [<span class="branchCov" title="Branch 1 was taken 23402 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      23402 :       return createENUPoint(enu_x, enu_y, enu_z);</span>
+<span class="lineNum">     277 </span>        [<span class="branchCov" title="Branch 1 was taken 23290 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      23290 :       auto const ecef_d = pt - ecef_ref_point_;</span>
+<span class="lineNum">     278 </span>                :<span class="lineCov">      23290 :       double x = static_cast&lt;double&gt;(ecef_d.x);</span>
+<span class="lineNum">     279 </span>                :<span class="lineCov">      23290 :       double y = static_cast&lt;double&gt;(ecef_d.y);</span>
+<span class="lineNum">     280 </span>                :<span class="lineCov">      23290 :       double z = static_cast&lt;double&gt;(ecef_d.z);</span>
+<span class="lineNum">     281 </span>                :<span class="lineCov">      23290 :       double enu_x = ecef_enu_[0] * x + ecef_enu_[1] * y;</span>
+<span class="lineNum">     282 </span>                :<span class="lineCov">      23290 :       double enu_y = ecef_enu_[3] * x + ecef_enu_[4] * y + ecef_enu_[5] * z;</span>
+<span class="lineNum">     283 </span>                :<span class="lineCov">      23290 :       double enu_z = ecef_enu_[6] * x + ecef_enu_[7] * y + ecef_enu_[8] * z;</span>
+<span class="lineNum">     284 </span>        [<span class="branchCov" title="Branch 1 was taken 23290 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      23290 :       return createENUPoint(enu_x, enu_y, enu_z);</span>
 <span class="lineNum">     285 </span>                :            :     }
 <span class="lineNum">     286 </span>                :            :     else
 <span class="lineNum">     287 </span>                :            :     {

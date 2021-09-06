@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -109,10 +109,10 @@
 <span class="lineNum">      38 </span>                :            :  * @param[in] a coordinate a
 <a name="39"><span class="lineNum">      39 </span>                :            :  * @param[in] b scalar b</a>
 <span class="lineNum">      40 </span>                :            :  */
-<span class="lineNum">      41 </span>                :<span class="lineCov">     425112 : inline ::ad::map::point::ECEFCoordinate operator/(::ad::map::point::ECEFCoordinate const &amp;a,</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">     382773 : inline ::ad::map::point::ECEFCoordinate operator/(::ad::map::point::ECEFCoordinate const &amp;a,</span>
 <span class="lineNum">      42 </span>                :            :                                                   ::ad::physics::Distance const &amp;b)
 <span class="lineNum">      43 </span>                :            : {
-<span class="lineNum">      44 </span>        [<span class="branchCov" title="Branch 2 was taken 425112 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     425112 :   return a / static_cast&lt;double&gt;(b);</span>
+<span class="lineNum">      44 </span>        [<span class="branchCov" title="Branch 2 was taken 382773 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     382773 :   return a / static_cast&lt;double&gt;(b);</span>
 <span class="lineNum">      45 </span>                :            : }
 <span class="lineNum">      46 </span>                :            : 
 <span class="lineNum">      47 </span>                :            : /**
@@ -120,10 +120,10 @@
 <span class="lineNum">      49 </span>                :            :  * @param[in] a coordinate a
 <a name="50"><span class="lineNum">      50 </span>                :            :  * @param[in] b coordinate b</a>
 <span class="lineNum">      51 </span>                :            :  */
-<span class="lineNum">      52 </span>                :<span class="lineCov">       6732 : inline ::ad::map::point::ECEFCoordinate operator*(::ad::map::point::ECEFCoordinate const &amp;a,</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">       6780 : inline ::ad::map::point::ECEFCoordinate operator*(::ad::map::point::ECEFCoordinate const &amp;a,</span>
 <span class="lineNum">      53 </span>                :            :                                                   ::ad::map::point::ECEFCoordinate const &amp;b)
 <span class="lineNum">      54 </span>                :            : {
-<span class="lineNum">      55 </span>                :<span class="lineCov">       6732 :   return ::ad::map::point::ECEFCoordinate(static_cast&lt;double&gt;(a) * static_cast&lt;double&gt;(b));</span>
+<span class="lineNum">      55 </span>                :<span class="lineCov">       6780 :   return ::ad::map::point::ECEFCoordinate(static_cast&lt;double&gt;(a) * static_cast&lt;double&gt;(b));</span>
 <span class="lineNum">      56 </span>                :            : }
 </pre>
       </td>

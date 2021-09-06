@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">18</td>
@@ -90,16 +90,16 @@
 <span class="lineNum">      19 </span>                :            : namespace map {
 <a name="20"><span class="lineNum">      20 </span>                :            : namespace access {</a>
 <span class="lineNum">      21 </span>                :            : 
-<span class="lineNum">      22 </span>                :<span class="lineCov">        926 : Store::Store()</span>
+<span class="lineNum">      22 </span>                :<span class="lineCov">        966 : Store::Store()</span>
 <span class="lineNum">      23 </span>                :            : {
-<span class="lineNum">      24 </span>                :<span class="lineCov">        463 :   use_magic_ = false;</span>
-<span class="lineNum">      25 </span>                :<span class="lineCov">        463 :   use_embedded_geometry_ = true;</span>
-<span class="lineNum">      26 </span>                :<span class="lineCov">        463 :   use_geometry_store_ = false;</span>
-<a name="27"><span class="lineNum">      27 </span>                :<span class="lineCov">        463 : }</span></a>
+<span class="lineNum">      24 </span>                :<span class="lineCov">        483 :   use_magic_ = false;</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">        483 :   use_embedded_geometry_ = true;</span>
+<span class="lineNum">      26 </span>                :<span class="lineCov">        483 :   use_geometry_store_ = false;</span>
+<a name="27"><span class="lineNum">      27 </span>                :<span class="lineCov">        483 : }</span></a>
 <span class="lineNum">      28 </span>                :            : 
-<span class="lineNum">      29 </span>                :<span class="lineCov">        959 : Store::~Store()</span>
+<span class="lineNum">      29 </span>                :<span class="lineCov">        999 : Store::~Store()</span>
 <span class="lineNum">      30 </span>                :            : {
-<a name="31"><span class="lineNum">      31 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 463 times"> + </span>]:<span class="lineCov">        496 : }</span></a>
+<a name="31"><span class="lineNum">      31 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 483 times"> + </span>]:<span class="lineCov">        516 : }</span></a>
 <span class="lineNum">      32 </span>                :            : 
 <span class="lineNum">      33 </span>                :<span class="lineCov">          2 : bool Store::empty() const</span>
 <span class="lineNum">      34 </span>                :            : {
@@ -130,30 +130,30 @@
 <span class="lineNum">      59 </span>                :<span class="lineCov">          2 :   return part_ids;</span>
 <a name="60"><span class="lineNum">      60 </span>                :            : }</a>
 <span class="lineNum">      61 </span>                :            : 
-<span class="lineNum">      62 </span>                :<span class="lineCov">    6600021 : lane::Lane::ConstPtr Store::getLanePtr(lane::LaneId const &amp;id) const</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">     947491 : lane::Lane::ConstPtr Store::getLanePtr(lane::LaneId const &amp;id) const</span>
 <span class="lineNum">      63 </span>                :            : {
-<span class="lineNum">      64 </span>                :<span class="lineCov">    6600021 :   lane::Lane::ConstPtr lane_ptr;</span>
-<span class="lineNum">      65 </span>        [<span class="branchCov" title="Branch 1 was taken 6600021 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">    6600021 :   auto id_and_lane = lane_map_.find(id);</span>
-<span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 2 was taken 6600016 times"> + </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span>]:<span class="lineCov">    6600021 :   if (id_and_lane != lane_map_.end())</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">     947491 :   lane::Lane::ConstPtr lane_ptr;</span>
+<span class="lineNum">      65 </span>        [<span class="branchCov" title="Branch 1 was taken 947491 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">     947491 :   auto id_and_lane = lane_map_.find(id);</span>
+<span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 2 was taken 947486 times"> + </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span>]:<span class="lineCov">     947491 :   if (id_and_lane != lane_map_.end())</span>
 <span class="lineNum">      67 </span>                :            :   {
-<span class="lineNum">      68 </span>                :<span class="lineCov">    6600016 :     lane_ptr = id_and_lane-&gt;second;</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">     947486 :     lane_ptr = id_and_lane-&gt;second;</span>
 <span class="lineNum">      69 </span>                :            :   }
 <span class="lineNum">      70 </span>                :            :   else
 <span class="lineNum">      71 </span>                :            :   {
 <span class="lineNum">      72 </span>[<span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          5 :     access::getLogger()-&gt;warn(&quot;Lane not in the Store. ID: {}&quot;, id);</span>
 <span class="lineNum">      73 </span>                :            :   }
-<span class="lineNum">      74 </span>                :<span class="lineCov">    6600021 :   return lane_ptr;</span>
+<span class="lineNum">      74 </span>                :<span class="lineCov">     947491 :   return lane_ptr;</span>
 <a name="75"><span class="lineNum">      75 </span>                :            : }</a>
 <span class="lineNum">      76 </span>                :            : 
-<span class="lineNum">      77 </span>                :<span class="lineCov">      21290 : lane::LaneIdList Store::getLanes() const</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">        898 : lane::LaneIdList Store::getLanes() const</span>
 <span class="lineNum">      78 </span>                :            : {
-<span class="lineNum">      79 </span>                :<span class="lineCov">      21290 :   lane::LaneIdList ids;</span>
-<span class="lineNum">      80 </span>[<span class="branchCov" title="Branch 3 was taken 21290 times"> + </span><span class="branchCov" title="Branch 4 was taken 21290 times"> + </span>][<span class="branchCov" title="Branch 7 was taken 21290 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]:<span class="lineCov">      42580 :   for (auto partition_id_and_ids : part_lane_map_)</span>
+<span class="lineNum">      79 </span>                :<span class="lineCov">        898 :   lane::LaneIdList ids;</span>
+<span class="lineNum">      80 </span>[<span class="branchCov" title="Branch 3 was taken 898 times"> + </span><span class="branchCov" title="Branch 4 was taken 898 times"> + </span>][<span class="branchCov" title="Branch 7 was taken 898 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]:<span class="lineCov">       1796 :   for (auto partition_id_and_ids : part_lane_map_)</span>
 <span class="lineNum">      81 </span>                :            :   {
-<span class="lineNum">      82 </span>                :<span class="lineCov">      21290 :     const lane::LaneIdList &amp;tids = partition_id_and_ids.second;</span>
-<span class="lineNum">      83 </span>        [<span class="branchCov" title="Branch 5 was taken 21290 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">      21290 :     ids.insert(ids.end(), tids.begin(), tids.end());</span>
+<span class="lineNum">      82 </span>                :<span class="lineCov">        898 :     const lane::LaneIdList &amp;tids = partition_id_and_ids.second;</span>
+<span class="lineNum">      83 </span>        [<span class="branchCov" title="Branch 5 was taken 898 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        898 :     ids.insert(ids.end(), tids.begin(), tids.end());</span>
 <span class="lineNum">      84 </span>                :            :   }
-<span class="lineNum">      85 </span>                :<span class="lineCov">      21290 :   return ids;</span>
+<span class="lineNum">      85 </span>                :<span class="lineCov">        898 :   return ids;</span>
 <a name="86"><span class="lineNum">      86 </span>                :            : }</a>
 <span class="lineNum">      87 </span>                :            : 
 <span class="lineNum">      88 </span>                :<span class="lineCov">          1 : lane::LaneIdList Store::getLanes(PartitionId const &amp;partition_id) const</span>

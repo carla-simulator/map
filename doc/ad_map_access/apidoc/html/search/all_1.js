@@ -46,7 +46,7 @@ var searchData=
   ['altitudeunknown',['AltitudeUnknown',['../namespacead_1_1map_1_1point.html#a3f9a7868361ce3ae8ed5ff34c7264396',1,'ad::map::point']]],
   ['altitudevalidinputrange_2ehpp',['AltitudeValidInputRange.hpp',['../AltitudeValidInputRange_8hpp.html',1,'']]],
   ['appendlanesegmenttoroute',['appendLaneSegmentToRoute',['../namespacead_1_1map_1_1route.html#a07efded828e2021148ba627e06d51b4c',1,'ad::map::route']]],
-  ['appendroadsegmenttoroute',['appendRoadSegmentToRoute',['../namespacead_1_1map_1_1route.html#ad8341749daa83ed3ccf36785fe0232a2',1,'ad::map::route']]],
+  ['appendroadsegmenttoroute',['appendRoadSegmentToRoute',['../namespacead_1_1map_1_1route.html#a3ae2ad49e85cb12962652274ba892257',1,'ad::map::route']]],
   ['applicabletrafficlights',['applicableTrafficLights',['../classad_1_1map_1_1intersection_1_1Intersection.html#a80f919ce3c98362f03d6758bb62a7537',1,'ad::map::intersection::Intersection']]],
   ['approxaltitude',['approxAltitude',['../namespacead_1_1map_1_1point.html#a9dc736e297e1a1c13b031f7a6bcb7016',1,'ad::map::point']]],
   ['areattributesequal',['areAttributesEqual',['../namespacead_1_1map_1_1restriction.html#a3867bae50a4954bbc1a1996a9a3d9052',1,'ad::map::restriction']]],

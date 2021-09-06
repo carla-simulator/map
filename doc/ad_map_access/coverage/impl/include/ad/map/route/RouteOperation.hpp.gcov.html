@@ -31,27 +31,27 @@
             <td class="headerValue">ad_map_access</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">23</td>
+            <td class="headerCovTableEntry">21</td>
             <td class="headerCovTableEntry">27</td>
-            <td class="headerCovTableEntryMed">85.2 %</td>
+            <td class="headerCovTableEntryMed">77.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">7</td>
             <td class="headerCovTableEntry">10</td>
-            <td class="headerCovTableEntryMed">80.0 %</td>
+            <td class="headerCovTableEntryLo">70.0 %</td>
           </tr>
           <tr>
             <td></td>
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">19</td>
             <td class="headerCovTableEntry">32</td>
-            <td class="headerCovTableEntryLo">62.5 %</td>
+            <td class="headerCovTableEntryLo">59.4 %</td>
           </tr>
           <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -71,7 +71,7 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <span class="lineNum">       2 </span>                :            : //
-<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2021 Intel Corporation
 <span class="lineNum">       4 </span>                :            : //
 <span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
 <span class="lineNum">       6 </span>                :            : //
@@ -87,9 +87,9 @@
 <span class="lineNum">      16 </span>                :            : #include &quot;ad/map/route/Types.hpp&quot;
 <span class="lineNum">      17 </span>                :            : #include &quot;ad/physics/Types.hpp&quot;
 <span class="lineNum">      18 </span>                :            : 
-<span class="lineNum">      19 </span>                :            : /* @brief namespace ad */
+<span class="lineNum">      19 </span>                :            : /** @brief namespace ad */
 <span class="lineNum">      20 </span>                :            : namespace ad {
-<span class="lineNum">      21 </span>                :            : /* @brief namespace map */
+<span class="lineNum">      21 </span>                :            : /** @brief namespace map */
 <span class="lineNum">      22 </span>                :            : namespace map {
 <span class="lineNum">      23 </span>                :            : 
 <span class="lineNum">      24 </span>                :            : /** @brief namespace intersection */
@@ -100,7 +100,7 @@
 <span class="lineNum">      29 </span>                :            : class Intersection;
 <span class="lineNum">      30 </span>                :            : } // namespace intersection
 <span class="lineNum">      31 </span>                :            : 
-<span class="lineNum">      32 </span>                :            : /* @brief namespace route */
+<span class="lineNum">      32 </span>                :            : /** @brief namespace route */
 <span class="lineNum">      33 </span>                :            : namespace route {
 <span class="lineNum">      34 </span>                :            : 
 <span class="lineNum">      35 </span>                :            : /**
@@ -197,9 +197,9 @@
 <span class="lineNum">     126 </span>                :            : 
 <a name="127"><span class="lineNum">     127 </span>                :            : /** @brief calculate the length of the provided lane segment</a>
 <span class="lineNum">     128 </span>                :            :  */
-<span class="lineNum">     129 </span>                :<span class="lineCov">        202 : inline physics::Distance calcLength(LaneSegment const &amp;laneSegment)</span>
+<span class="lineNum">     129 </span>                :<span class="lineCov">        196 : inline physics::Distance calcLength(LaneSegment const &amp;laneSegment)</span>
 <span class="lineNum">     130 </span>                :            : {
-<span class="lineNum">     131 </span>                :<span class="lineCov">        202 :   return calcLength(laneSegment.laneInterval);</span>
+<span class="lineNum">     131 </span>                :<span class="lineCov">        196 :   return calcLength(laneSegment.laneInterval);</span>
 <span class="lineNum">     132 </span>                :            : }
 <span class="lineNum">     133 </span>                :            : 
 <span class="lineNum">     134 </span>                :            : /** @brief calculate the length of the provided connecting route
@@ -289,16 +289,16 @@
 <span class="lineNum">     218 </span>                :            :    *
 <a name="219"><span class="lineNum">     219 </span>                :            :    * constructs a result with the provided data</a>
 <span class="lineNum">     220 </span>                :            :    */
-<span class="lineNum">     221 </span>                :<span class="lineCov">         87 :   FindWaypointResult(FullRoute const &amp;route,</span>
+<span class="lineNum">     221 </span>                :<span class="lineCov">         73 :   FindWaypointResult(FullRoute const &amp;route,</span>
 <span class="lineNum">     222 </span>                :            :                      point::ParaPoint const &amp;iQueryPosition,
 <span class="lineNum">     223 </span>                :            :                      RoadSegmentList::const_iterator roadSegmentIter,
 <span class="lineNum">     224 </span>                :            :                      LaneSegmentList::const_iterator laneIntervalIter)
 <span class="lineNum">     225 </span>                :            :     : queryRoute(route)
 <span class="lineNum">     226 </span>                :            :     , roadSegmentIterator(roadSegmentIter)
 <span class="lineNum">     227 </span>                :            :     , laneSegmentIterator(laneIntervalIter)
-<span class="lineNum">     228 </span>                :<span class="lineCov">         87 :     , queryPosition(iQueryPosition)</span>
+<span class="lineNum">     228 </span>                :<span class="lineCov">         73 :     , queryPosition(iQueryPosition)</span>
 <span class="lineNum">     229 </span>                :            :   {
-<span class="lineNum">     230 </span>                :<span class="lineCov">         87 :   }</span>
+<span class="lineNum">     230 </span>                :<span class="lineCov">         73 :   }</span>
 <span class="lineNum">     231 </span>                :            : 
 <span class="lineNum">     232 </span>                :            :   /**
 <span class="lineNum">     233 </span>                :            :    * @brief copy constructor
@@ -318,11 +318,11 @@
 <span class="lineNum">     247 </span>                :            :   /**
 <a name="248"><span class="lineNum">     248 </span>                :            :    * @brief checks whether the FindWaypointResult contains valid data</a>
 <span class="lineNum">     249 </span>                :            :    */
-<span class="lineNum">     250 </span>                :<span class="lineCov">        431 :   bool isValid() const</span>
+<span class="lineNum">     250 </span>                :<span class="lineCov">        329 :   bool isValid() const</span>
 <span class="lineNum">     251 </span>                :            :   {
-<span class="lineNum">     252 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 431 times"> + </span>]:<span class="lineCov">       1293 :     return roadSegmentIterator != queryRoute.roadSegments.end()</span>
-<span class="lineNum">     253 </span>[<span class="branchCov" title="Branch 0 was taken 319 times"> + </span><span class="branchCov" title="Branch 1 was taken 112 times"> + </span>][<span class="branchCov" title="Branch 5 was taken 319 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        862 :       &amp;&amp; laneSegmentIterator != roadSegmentIterator-&gt;drivableLaneSegments.end();</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 319 times"> + </span><span class="branchCov" title="Branch 8 was taken 112 times"> + </span>]
+<span class="lineNum">     252 </span>        [<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 329 times"> + </span>]:<span class="lineCov">        987 :     return roadSegmentIterator != queryRoute.roadSegments.end()</span>
+<span class="lineNum">     253 </span>[<span class="branchCov" title="Branch 0 was taken 251 times"> + </span><span class="branchCov" title="Branch 1 was taken 78 times"> + </span>][<span class="branchCov" title="Branch 5 was taken 251 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">        658 :       &amp;&amp; laneSegmentIterator != roadSegmentIterator-&gt;drivableLaneSegments.end();</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 251 times"> + </span><span class="branchCov" title="Branch 8 was taken 78 times"> + </span>]
 <span class="lineNum">     254 </span>                :            :   }
 <span class="lineNum">     255 </span>                :            :   /**
 <span class="lineNum">     256 </span>                :            :    * @brief assignment operator
@@ -800,266 +800,270 @@
 <span class="lineNum">     728 </span>                :            :  * @param[in/out] route the route to check and to extend
 <span class="lineNum">     729 </span>                :            :  * @param[in] length the minimum length
 <span class="lineNum">     730 </span>                :            :  * @param[in/out] additionalRoutes additional routes in case of intersections on the extension
-<span class="lineNum">     731 </span>                :            :  *
-<span class="lineNum">     732 </span>                :            :  * @returns pair of bool and vector
-<span class="lineNum">     733 </span>                :            :  *
-<span class="lineNum">     734 </span>                :            :  *  @c true if the route has sufficient length or was extended.
-<span class="lineNum">     735 </span>                :            :  *          If @c false is returned the route is/was empty/degenerated or the additional routes were not empty.
-<span class="lineNum">     736 </span>                :            : 
-<span class="lineNum">     737 </span>                :            :  */
-<span class="lineNum">     738 </span>                :            : bool extendRouteToDistance(route::FullRoute &amp;route,
-<span class="lineNum">     739 </span>                :            :                            physics::Distance const &amp;length,
-<span class="lineNum">     740 </span>                :            :                            route::FullRouteList &amp;additionalRoutes);
-<span class="lineNum">     741 </span>                :            : 
-<span class="lineNum">     742 </span>                :            : /**
-<span class="lineNum">     743 </span>                :            :  * @brief extends route with the given list of destinations
-<span class="lineNum">     744 </span>                :            :  *
-<span class="lineNum">     745 </span>                :            :  * @param[in/out] route the route to check and to extend
-<span class="lineNum">     746 </span>                :            :  * @param[in] dest Vector with supporting points as routing parametric points to be visited on the route. Last point in
-<span class="lineNum">     747 </span>                :            :  * the list is the
-<span class="lineNum">     748 </span>                :            :  * actual destination point.
-<span class="lineNum">     749 </span>                :            :  *
-<span class="lineNum">     750 </span>                :            :  * @returns @c false is returned if the route is/was empty/degenerated
-<span class="lineNum">     751 </span>                :            :  */
-<span class="lineNum">     752 </span>                :            : bool extendRouteToDestinations(route::FullRoute &amp;route, const std::vector&lt;route::planning::RoutingParaPoint&gt; &amp;dest);
-<span class="lineNum">     753 </span>                :            : 
-<span class="lineNum">     754 </span>                :            : /**
-<span class="lineNum">     755 </span>                :            :  * @brief extends route with the given list of destinations
-<span class="lineNum">     756 </span>                :            :  *
-<span class="lineNum">     757 </span>                :            :  * @param[in/out] route the route to check and to extend
-<span class="lineNum">     758 </span>                :            :  * @param[in] dest Vector with supporting points as geo points to be visited on the route. Last point in the list is the
-<span class="lineNum">     759 </span>                :            :  * actual destination point.
-<span class="lineNum">     760 </span>                :            :  *
-<span class="lineNum">     761 </span>                :            :  * @returns @c false is returned if the route is/was empty/degenerated
-<span class="lineNum">     762 </span>                :            :  */
-<span class="lineNum">     763 </span>                :            : bool extendRouteToDestinations(route::FullRoute &amp;route, const std::vector&lt;point::GeoPoint&gt; &amp;dest);
-<span class="lineNum">     764 </span>                :            : 
-<span class="lineNum">     765 </span>                :            : /**
-<span class="lineNum">     766 </span>                :            :  * @brief extends route with the given list of destinations
-<span class="lineNum">     767 </span>                :            :  *
-<span class="lineNum">     768 </span>                :            :  * @param[in/out] route the route to check and to extend
-<span class="lineNum">     769 </span>                :            :  * @param[in] dest Vector with supporting points as ENU points to be visited on the route. Last point in the list is the
-<span class="lineNum">     770 </span>                :            :  * actual destination point.
-<span class="lineNum">     771 </span>                :            :  *
-<span class="lineNum">     772 </span>                :            :  * @returns @c false is returned if the route is/was empty/degenerated
-<span class="lineNum">     773 </span>                :            :  */
-<span class="lineNum">     774 </span>                :            : bool extendRouteToDestinations(route::FullRoute &amp;route, const std::vector&lt;point::ENUPoint&gt; &amp;dest);
-<span class="lineNum">     775 </span>                :            : 
-<span class="lineNum">     776 </span>                :            : /** @brief function to append a new lane interval to a road segment list
-<span class="lineNum">     777 </span>                :            :  *
-<span class="lineNum">     778 </span>                :            :  * This function is mainly used while creation of a FullRoute object.
-<span class="lineNum">     779 </span>                :            :  * The lane interval is expanded by it's left and right neighbor lanes (with same driving direction) to a complete
-<span class="lineNum">     780 </span>                :            :  * road segment; which is then appended to the provided road segment list.
-<span class="lineNum">     781 </span>                :            :  *
-<span class="lineNum">     782 </span>                :            :  * After the route is finished, planning::updateRoutePlanningCounters() should be called to update the planning
-<span class="lineNum">     783 </span>                :            :  * counters.
-<span class="lineNum">     784 </span>                :            :  *
-<span class="lineNum">     785 </span>                :            :  * @param[in] laneInterval the new lane interval to be append
-<span class="lineNum">     786 </span>                :            :  * @param[in] laneOffset the lane offset of the new lane interval to be append
-<span class="lineNum">     787 </span>                :            :  * @param[in] route the route the interval has to be appended
-<span class="lineNum">     788 </span>                :            :  *
-<span class="lineNum">     789 </span>                :            :  */
-<span class="lineNum">     790 </span>                :            : void appendRoadSegmentToRoute(route::LaneInterval const &amp;laneInverval,
-<span class="lineNum">     791 </span>                :            :                               route::RouteLaneOffset const &amp;laneOffset,
-<span class="lineNum">     792 </span>                :            :                               route::FullRoute &amp;route);
-<span class="lineNum">     793 </span>                :            : 
-<span class="lineNum">     794 </span>                :            : /**
-<span class="lineNum">     795 </span>                :            :  * @brief add an opposing lane segment to an existing (and not empty) road segment with at most the given length
-<span class="lineNum">     796 </span>                :            :  *
-<span class="lineNum">     797 </span>                :            :  * This function must only be used, if an existing route should be extended with an opposing lane.
-<span class="lineNum">     798 </span>                :            :  * Note, the length of the lane segment can be less than the provided distance, in case the neighboring lane segment
-<span class="lineNum">     799 </span>                :            :  * is shorter as well.
+<span class="lineNum">     731 </span>                :            :  * @param[in] relevantLanes if not empty, the function restricts the extension to the given set of lanes
+<span class="lineNum">     732 </span>                :            :  *
+<span class="lineNum">     733 </span>                :            :  * @returns pair of bool and vector
+<span class="lineNum">     734 </span>                :            :  *
+<span class="lineNum">     735 </span>                :            :  *  @c true if the route has sufficient length or was extended.
+<span class="lineNum">     736 </span>                :            :  *          If @c false is returned the route is/was empty/degenerated or the additional routes were not empty.
+<span class="lineNum">     737 </span>                :            : 
+<span class="lineNum">     738 </span>                :            :  */
+<span class="lineNum">     739 </span>                :            : bool extendRouteToDistance(route::FullRoute &amp;route,
+<span class="lineNum">     740 </span>                :            :                            physics::Distance const &amp;length,
+<span class="lineNum">     741 </span>                :            :                            route::FullRouteList &amp;additionalRoutes,
+<span class="lineNum">     742 </span>                :            :                            lane::LaneIdSet const &amp;relevantLanes = ad::map::lane::LaneIdSet());
+<span class="lineNum">     743 </span>                :            : 
+<span class="lineNum">     744 </span>                :            : /**
+<span class="lineNum">     745 </span>                :            :  * @brief extends route with the given list of destinations
+<span class="lineNum">     746 </span>                :            :  *
+<span class="lineNum">     747 </span>                :            :  * @param[in/out] route the route to check and to extend
+<span class="lineNum">     748 </span>                :            :  * @param[in] dest Vector with supporting points as routing parametric points to be visited on the route. Last point in
+<span class="lineNum">     749 </span>                :            :  * the list is the
+<span class="lineNum">     750 </span>                :            :  * actual destination point.
+<span class="lineNum">     751 </span>                :            :  *
+<span class="lineNum">     752 </span>                :            :  * @returns @c false is returned if the route is/was empty/degenerated
+<span class="lineNum">     753 </span>                :            :  */
+<span class="lineNum">     754 </span>                :            : bool extendRouteToDestinations(route::FullRoute &amp;route, const std::vector&lt;route::planning::RoutingParaPoint&gt; &amp;dest);
+<span class="lineNum">     755 </span>                :            : 
+<span class="lineNum">     756 </span>                :            : /**
+<span class="lineNum">     757 </span>                :            :  * @brief extends route with the given list of destinations
+<span class="lineNum">     758 </span>                :            :  *
+<span class="lineNum">     759 </span>                :            :  * @param[in/out] route the route to check and to extend
+<span class="lineNum">     760 </span>                :            :  * @param[in] dest Vector with supporting points as geo points to be visited on the route. Last point in the list is the
+<span class="lineNum">     761 </span>                :            :  * actual destination point.
+<span class="lineNum">     762 </span>                :            :  *
+<span class="lineNum">     763 </span>                :            :  * @returns @c false is returned if the route is/was empty/degenerated
+<span class="lineNum">     764 </span>                :            :  */
+<span class="lineNum">     765 </span>                :            : bool extendRouteToDestinations(route::FullRoute &amp;route, const std::vector&lt;point::GeoPoint&gt; &amp;dest);
+<span class="lineNum">     766 </span>                :            : 
+<span class="lineNum">     767 </span>                :            : /**
+<span class="lineNum">     768 </span>                :            :  * @brief extends route with the given list of destinations
+<span class="lineNum">     769 </span>                :            :  *
+<span class="lineNum">     770 </span>                :            :  * @param[in/out] route the route to check and to extend
+<span class="lineNum">     771 </span>                :            :  * @param[in] dest Vector with supporting points as ENU points to be visited on the route. Last point in the list is the
+<span class="lineNum">     772 </span>                :            :  * actual destination point.
+<span class="lineNum">     773 </span>                :            :  *
+<span class="lineNum">     774 </span>                :            :  * @returns @c false is returned if the route is/was empty/degenerated
+<span class="lineNum">     775 </span>                :            :  */
+<span class="lineNum">     776 </span>                :            : bool extendRouteToDestinations(route::FullRoute &amp;route, const std::vector&lt;point::ENUPoint&gt; &amp;dest);
+<span class="lineNum">     777 </span>                :            : 
+<span class="lineNum">     778 </span>                :            : /** @brief function to append a new lane interval to a road segment list
+<span class="lineNum">     779 </span>                :            :  *
+<span class="lineNum">     780 </span>                :            :  * This function is mainly used while creation of a FullRoute object.
+<span class="lineNum">     781 </span>                :            :  * The lane interval is expanded by it's left and right neighbor lanes (with same driving direction) to a complete
+<span class="lineNum">     782 </span>                :            :  * road segment; which is then appended to the provided road segment list.
+<span class="lineNum">     783 </span>                :            :  *
+<span class="lineNum">     784 </span>                :            :  * After the route is finished, planning::updateRoutePlanningCounters() should be called to update the planning
+<span class="lineNum">     785 </span>                :            :  * counters.
+<span class="lineNum">     786 </span>                :            :  *
+<span class="lineNum">     787 </span>                :            :  * @param[in] laneInterval the new lane interval to be append
+<span class="lineNum">     788 </span>                :            :  * @param[in] laneOffset the lane offset of the new lane interval to be append
+<span class="lineNum">     789 </span>                :            :  * @param[in] route the route the interval has to be appended
+<span class="lineNum">     790 </span>                :            :  * @param[in] relevantLanes if not empty, the function restricts the extension to the given set of lanes
+<span class="lineNum">     791 </span>                :            :  *
+<span class="lineNum">     792 </span>                :            :  */
+<span class="lineNum">     793 </span>                :            : void appendRoadSegmentToRoute(route::LaneInterval const &amp;laneInverval,
+<span class="lineNum">     794 </span>                :            :                               route::RouteLaneOffset const &amp;laneOffset,
+<span class="lineNum">     795 </span>                :            :                               route::FullRoute &amp;route,
+<span class="lineNum">     796 </span>                :            :                               lane::LaneIdSet const &amp;relevantLanes);
+<span class="lineNum">     797 </span>                :            : 
+<span class="lineNum">     798 </span>                :            : /**
+<span class="lineNum">     799 </span>                :            :  * @brief add an opposing lane segment to an existing (and not empty) road segment with at most the given length
 <span class="lineNum">     800 </span>                :            :  *
-<span class="lineNum">     801 </span>                :            :  * The function is used by addOpposingLaneToRoute
-<span class="lineNum">     802 </span>                :            :  *
-<span class="lineNum">     803 </span>                :            :  * @param[in] startPoint is the start point where the opposing lane segment will start
-<span class="lineNum">     804 </span>                :            :  * @param[in] distance is the maximum distance of the newly added lane segment
-<span class="lineNum">     805 </span>                :            :  * @param[in/out] roadSegment is the road segment which is updated with the opposing lane segment
-<span class="lineNum">     806 </span>                :            :  * @param[in/out] route is the route the road segment belons to
-<span class="lineNum">     807 </span>                :            :  *
-<span class="lineNum">     808 </span>                :            :  * @return -1 on failure, otherwise the length of the new lane segment is added
-<span class="lineNum">     809 </span>                :            :  */
-<span class="lineNum">     810 </span>                :            : physics::Distance addOpposingLaneSegmentToRoadSegment(point::ParaPoint const &amp;startpoint,
-<span class="lineNum">     811 </span>                :            :                                                       physics::Distance const &amp;distance,
-<span class="lineNum">     812 </span>                :            :                                                       route::RoadSegment &amp;roadSegment,
-<span class="lineNum">     813 </span>                :            :                                                       route::FullRoute &amp;route);
-<span class="lineNum">     814 </span>                :            : 
-<span class="lineNum">     815 </span>                :            : /**
-<span class="lineNum">     816 </span>                :            :  * @brief add a part of the opposing lane to an existing route. The part is at most distanceOnWrongLane long,
-<span class="lineNum">     817 </span>                :            :  *        but may be shorter (e.g. intersections stop adding more segments of the opposing lane)
-<span class="lineNum">     818 </span>                :            :  *
-<span class="lineNum">     819 </span>                :            :  * Note the starting point of adding the opposing lane must be in the first segment of the route
-<span class="lineNum">     820 </span>                :            :  *
-<span class="lineNum">     821 </span>                :            :  * @param[in] pointOnOppositeLane is the starting point at which the opposite lane should be added
-<span class="lineNum">     822 </span>                :            :  * @param[in] distanceOnWrongLane maximum distance on the opposite lane
-<span class="lineNum">     823 </span>                :            :  * @param[in/out] route to be updated
-<span class="lineNum">     824 </span>                :            :  * @param[out] coveredDistance is the actually covered distance of the opposing lane segment(s)
-<span class="lineNum">     825 </span>                :            :  */
-<span class="lineNum">     826 </span>                :            : bool addOpposingLaneToRoute(point::ParaPoint const &amp;pointOnOppositeLane,
-<span class="lineNum">     827 </span>                :            :                             physics::Distance const &amp;distanceOnWrongLane,
-<span class="lineNum">     828 </span>                :            :                             route::FullRoute &amp;route,
-<span class="lineNum">     829 </span>                :            :                             physics::Distance &amp;coveredDistance);
-<span class="lineNum">     830 </span>                :            : 
-<span class="lineNum">     831 </span>                :            : /**
-<span class="lineNum">     832 </span>                :            :  * @returns the input route expanded by all lanes in opposite driving direction
-<span class="lineNum">     833 </span>                :            :  *
-<span class="lineNum">     834 </span>                :            :  * Internally recreates the route by calling appendRoadSegmentToRoute() with a new route
-<span class="lineNum">     835 </span>                :            :  * having RouteCreationMode::AllRoutableLanes
-<span class="lineNum">     836 </span>                :            :  */
-<span class="lineNum">     837 </span>                :            : route::FullRoute getRouteExpandedToOppositeLanes(route::FullRoute const &amp;route);
-<span class="lineNum">     838 </span>                :            : 
-<span class="lineNum">     839 </span>                :            : /**
-<span class="lineNum">     840 </span>                :            :  * @returns the input route expanded by all neighbor lanes
-<span class="lineNum">     841 </span>                :            :  *
-<span class="lineNum">     842 </span>                :            :  * Internally recreates the route by calling appendRoadSegmentToRoute()  with a new route
-<span class="lineNum">     843 </span>                :            :  * having RouteCreationMode::AllAllNeighbors
-<span class="lineNum">     844 </span>                :            :  */
-<span class="lineNum">     845 </span>                :            : route::FullRoute getRouteExpandedToAllNeighborLanes(route::FullRoute const &amp;route);
-<span class="lineNum">     846 </span>                :            : 
-<span class="lineNum">     847 </span>                :            : /**
-<span class="lineNum">     848 </span>                :            :  * @brief calculate a bypassing route for a given (blocked) route
-<span class="lineNum">     849 </span>                :            :  *
-<span class="lineNum">     850 </span>                :            :  * This function is designed to by used to get a route around parking vehicles or for overtaking
-<span class="lineNum">     851 </span>                :            :  * The output route makes use of neighboring lanes and respects left-hand/right-hand traffic flow
-<span class="lineNum">     852 </span>                :            :  * The calculation fails when reaching an intersection
+<span class="lineNum">     801 </span>                :            :  * This function must only be used, if an existing route should be extended with an opposing lane.
+<span class="lineNum">     802 </span>                :            :  * Note, the length of the lane segment can be less than the provided distance, in case the neighboring lane segment
+<span class="lineNum">     803 </span>                :            :  * is shorter as well.
+<span class="lineNum">     804 </span>                :            :  *
+<span class="lineNum">     805 </span>                :            :  * The function is used by addOpposingLaneToRoute
+<span class="lineNum">     806 </span>                :            :  *
+<span class="lineNum">     807 </span>                :            :  * @param[in] startPoint is the start point where the opposing lane segment will start
+<span class="lineNum">     808 </span>                :            :  * @param[in] distance is the maximum distance of the newly added lane segment
+<span class="lineNum">     809 </span>                :            :  * @param[in/out] roadSegment is the road segment which is updated with the opposing lane segment
+<span class="lineNum">     810 </span>                :            :  * @param[in/out] route is the route the road segment belons to
+<span class="lineNum">     811 </span>                :            :  *
+<span class="lineNum">     812 </span>                :            :  * @return -1 on failure, otherwise the length of the new lane segment is added
+<span class="lineNum">     813 </span>                :            :  */
+<span class="lineNum">     814 </span>                :            : physics::Distance addOpposingLaneSegmentToRoadSegment(point::ParaPoint const &amp;startpoint,
+<span class="lineNum">     815 </span>                :            :                                                       physics::Distance const &amp;distance,
+<span class="lineNum">     816 </span>                :            :                                                       route::RoadSegment &amp;roadSegment,
+<span class="lineNum">     817 </span>                :            :                                                       route::FullRoute &amp;route);
+<span class="lineNum">     818 </span>                :            : 
+<span class="lineNum">     819 </span>                :            : /**
+<span class="lineNum">     820 </span>                :            :  * @brief add a part of the opposing lane to an existing route. The part is at most distanceOnWrongLane long,
+<span class="lineNum">     821 </span>                :            :  *        but may be shorter (e.g. intersections stop adding more segments of the opposing lane)
+<span class="lineNum">     822 </span>                :            :  *
+<span class="lineNum">     823 </span>                :            :  * Note the starting point of adding the opposing lane must be in the first segment of the route
+<span class="lineNum">     824 </span>                :            :  *
+<span class="lineNum">     825 </span>                :            :  * @param[in] pointOnOppositeLane is the starting point at which the opposite lane should be added
+<span class="lineNum">     826 </span>                :            :  * @param[in] distanceOnWrongLane maximum distance on the opposite lane
+<span class="lineNum">     827 </span>                :            :  * @param[in/out] route to be updated
+<span class="lineNum">     828 </span>                :            :  * @param[out] coveredDistance is the actually covered distance of the opposing lane segment(s)
+<span class="lineNum">     829 </span>                :            :  */
+<span class="lineNum">     830 </span>                :            : bool addOpposingLaneToRoute(point::ParaPoint const &amp;pointOnOppositeLane,
+<span class="lineNum">     831 </span>                :            :                             physics::Distance const &amp;distanceOnWrongLane,
+<span class="lineNum">     832 </span>                :            :                             route::FullRoute &amp;route,
+<span class="lineNum">     833 </span>                :            :                             physics::Distance &amp;coveredDistance);
+<span class="lineNum">     834 </span>                :            : 
+<span class="lineNum">     835 </span>                :            : /**
+<span class="lineNum">     836 </span>                :            :  * @returns the input route expanded by all lanes in opposite driving direction
+<span class="lineNum">     837 </span>                :            :  *
+<span class="lineNum">     838 </span>                :            :  * Internally recreates the route by calling appendRoadSegmentToRoute() with a new route
+<span class="lineNum">     839 </span>                :            :  * having RouteCreationMode::AllRoutableLanes
+<span class="lineNum">     840 </span>                :            :  */
+<span class="lineNum">     841 </span>                :            : route::FullRoute getRouteExpandedToOppositeLanes(route::FullRoute const &amp;route);
+<span class="lineNum">     842 </span>                :            : 
+<span class="lineNum">     843 </span>                :            : /**
+<span class="lineNum">     844 </span>                :            :  * @returns the input route expanded by all neighbor lanes
+<span class="lineNum">     845 </span>                :            :  *
+<span class="lineNum">     846 </span>                :            :  * Internally recreates the route by calling appendRoadSegmentToRoute()  with a new route
+<span class="lineNum">     847 </span>                :            :  * having RouteCreationMode::AllNeighbors
+<span class="lineNum">     848 </span>                :            :  */
+<span class="lineNum">     849 </span>                :            : route::FullRoute getRouteExpandedToAllNeighborLanes(route::FullRoute const &amp;route);
+<span class="lineNum">     850 </span>                :            : 
+<span class="lineNum">     851 </span>                :            : /**
+<span class="lineNum">     852 </span>                :            :  * @brief calculate a bypassing route for a given (blocked) route
 <span class="lineNum">     853 </span>                :            :  *
-<span class="lineNum">     854 </span>                :            :  * @param[in] route is the input route, which should not be used
-<span class="lineNum">     855 </span>                :            :  * @param[out] bypassingRoute is the new route, making use of neighboring lanes
-<span class="lineNum">     856 </span>                :            :  *
-<span class="lineNum">     857 </span>                :            :  * @return false if no valid bypassing route was found
-<span class="lineNum">     858 </span>                :            :  */
-<span class="lineNum">     859 </span>                :            : bool calculateBypassingRoute(::ad::map::route::FullRoute const &amp;route, ::ad::map::route::FullRoute &amp;bypassingRoute);
-<span class="lineNum">     860 </span>                :            : 
-<span class="lineNum">     861 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
-<span class="lineNum">     862 </span>                :            :  *
-<span class="lineNum">     863 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
-<span class="lineNum">     864 </span>                :            :  *
-<span class="lineNum">     865 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
-<span class="lineNum">     866 </span>                :            :  * @param[in] parametricOffset parametric offset the borders are cut
-<span class="lineNum">     867 </span>                :            :  */
-<span class="lineNum">     868 </span>                :            : lane::ECEFBorder getECEFBorderOfRoadSegment(RoadSegment const &amp;roadSegment,
-<span class="lineNum">     869 </span>                :            :                                             physics::ParametricValue const parametricOffset);
-<span class="lineNum">     870 </span>                :            : 
-<span class="lineNum">     871 </span>                :            : /** @brief get borders of a road segment
-<span class="lineNum">     872 </span>                :            :  *
-<span class="lineNum">     873 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
-<span class="lineNum">     874 </span>                :            :  *
-<a name="875"><span class="lineNum">     875 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from</a>
-<span class="lineNum">     876 </span>                :            :  */
-<span class="lineNum">     877 </span>                :<span class="lineNoCov">          0 : inline lane::ECEFBorder getECEFBorderOfRoadSegment(RoadSegment const &amp;roadSegment)</span>
-<span class="lineNum">     878 </span>                :            : {
-<span class="lineNum">     879 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   return getECEFBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));</span>
-<span class="lineNum">     880 </span>                :            : }
-<span class="lineNum">     881 </span>                :            : 
-<span class="lineNum">     882 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
-<span class="lineNum">     883 </span>                :            :  *
-<span class="lineNum">     884 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
-<span class="lineNum">     885 </span>                :            :  *
-<span class="lineNum">     886 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
-<span class="lineNum">     887 </span>                :            :  * @param[in] parametricOffset parametric offset the borders are cut
-<span class="lineNum">     888 </span>                :            :  */
-<span class="lineNum">     889 </span>                :            : lane::ENUBorder getENUBorderOfRoadSegment(RoadSegment const &amp;roadSegment,
-<span class="lineNum">     890 </span>                :            :                                           physics::ParametricValue const parametricOffset);
-<span class="lineNum">     891 </span>                :            : 
-<span class="lineNum">     892 </span>                :            : /** @brief get borders of a road segment
-<span class="lineNum">     893 </span>                :            :  *
-<span class="lineNum">     894 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
-<span class="lineNum">     895 </span>                :            :  *
-<a name="896"><span class="lineNum">     896 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from</a>
-<span class="lineNum">     897 </span>                :            :  */
-<span class="lineNum">     898 </span>                :<span class="lineCov">          8 : inline lane::ENUBorder getENUBorderOfRoadSegment(RoadSegment const &amp;roadSegment)</span>
-<span class="lineNum">     899 </span>                :            : {
-<span class="lineNum">     900 </span>        [<span class="branchCov" title="Branch 2 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :   return getENUBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));</span>
-<span class="lineNum">     901 </span>                :            : }
-<span class="lineNum">     902 </span>                :            : 
-<span class="lineNum">     903 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
-<span class="lineNum">     904 </span>                :            :  *
-<span class="lineNum">     905 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
-<span class="lineNum">     906 </span>                :            :  *
-<span class="lineNum">     907 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
-<span class="lineNum">     908 </span>                :            :  * @param[in] parametricOffset parametric offset the borders are cut
-<span class="lineNum">     909 </span>                :            :  */
-<span class="lineNum">     910 </span>                :            : lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &amp;roadSegment,
-<span class="lineNum">     911 </span>                :            :                                           physics::ParametricValue const parametricOffset);
-<span class="lineNum">     912 </span>                :            : 
-<span class="lineNum">     913 </span>                :            : /** @brief get borders of a road segment
-<span class="lineNum">     914 </span>                :            :  *
-<span class="lineNum">     915 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
-<span class="lineNum">     916 </span>                :            :  *
-<a name="917"><span class="lineNum">     917 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from</a>
-<span class="lineNum">     918 </span>                :            :  */
-<span class="lineNum">     919 </span>                :<span class="lineNoCov">          0 : inline lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &amp;roadSegment)</span>
-<span class="lineNum">     920 </span>                :            : {
-<span class="lineNum">     921 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   return getGeoBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));</span>
-<span class="lineNum">     922 </span>                :            : }
-<span class="lineNum">     923 </span>                :            : 
-<span class="lineNum">     924 </span>                :            : /** @brief get borders of a full route
-<span class="lineNum">     925 </span>                :            :  *
-<span class="lineNum">     926 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
-<span class="lineNum">     927 </span>                :            :  * The borders of successive road segments are collected in the result vector.
-<span class="lineNum">     928 </span>                :            :  *
-<span class="lineNum">     929 </span>                :            :  * @param[in] route the route to extract the borders from
-<span class="lineNum">     930 </span>                :            :  */
-<span class="lineNum">     931 </span>                :            : lane::ENUBorderList getENUBorderOfRoute(FullRoute const &amp;route);
-<span class="lineNum">     932 </span>                :            : 
-<span class="lineNum">     933 </span>                :            : /** @brief get borders of a full route
-<span class="lineNum">     934 </span>                :            :  *
-<span class="lineNum">     935 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
-<span class="lineNum">     936 </span>                :            :  * The borders of successive road segments are collected in the result vector.
-<span class="lineNum">     937 </span>                :            :  *
-<span class="lineNum">     938 </span>                :            :  * @param[in] route the route to extract the borders from
-<span class="lineNum">     939 </span>                :            :  */
-<span class="lineNum">     940 </span>                :            : lane::ECEFBorderList getECEFBorderOfRoute(FullRoute const &amp;route);
-<span class="lineNum">     941 </span>                :            : 
-<span class="lineNum">     942 </span>                :            : /** @brief get borders of a full route
-<span class="lineNum">     943 </span>                :            :  *
-<span class="lineNum">     944 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
-<span class="lineNum">     945 </span>                :            :  * The borders of successive road segments are collected in the result vector.
-<span class="lineNum">     946 </span>                :            :  *
-<span class="lineNum">     947 </span>                :            :  * @param[in] route the route to extract the borders from
-<span class="lineNum">     948 </span>                :            :  */
-<span class="lineNum">     949 </span>                :            : lane::GeoBorderList getGeoBorderOfRoute(FullRoute const &amp;route);
-<span class="lineNum">     950 </span>                :            : 
-<span class="lineNum">     951 </span>                :            : /**
-<span class="lineNum">     952 </span>                :            :  * @brief get the ENU heading of a route at the location of the object
-<span class="lineNum">     953 </span>                :            :  *
-<span class="lineNum">     954 </span>                :            :  * @param object the object on the route
-<span class="lineNum">     955 </span>                :            :  * @param route the route
-<span class="lineNum">     956 </span>                :            :  *
-<span class="lineNum">     957 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
-<span class="lineNum">     958 </span>                :            :  */
-<span class="lineNum">     959 </span>                :            : point::ENUHeading getENUHeadingOfRoute(match::Object const &amp;object, FullRoute const &amp;route);
-<span class="lineNum">     960 </span>                :            : 
-<span class="lineNum">     961 </span>                :            : /**
-<span class="lineNum">     962 </span>                :            :  * @brief compare the ENU heading of the route at the location of the object with the ENU heading of the object
-<span class="lineNum">     963 </span>                :            :  *
-<span class="lineNum">     964 </span>                :            :  * @returns \c true if the difference between object heading and route heading at the object position
-<span class="lineNum">     965 </span>                :            :  * is not larger than 90°
-<span class="lineNum">     966 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
-<span class="lineNum">     967 </span>                :            :  */
-<span class="lineNum">     968 </span>                :            : bool isObjectHeadingInRouteDirection(match::Object const &amp;object, FullRoute const &amp;route);
-<span class="lineNum">     969 </span>                :            : 
-<span class="lineNum">     970 </span>                :            : /**
-<span class="lineNum">     971 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the begin
-<span class="lineNum">     972 </span>                :            :  *
-<span class="lineNum">     973 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromBegin()
-<span class="lineNum">     974 </span>                :            :  *
-<span class="lineNum">     975 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
-<span class="lineNum">     976 </span>                :            :  */
-<span class="lineNum">     977 </span>                :            : void shortenSegmentFromBegin(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
-<span class="lineNum">     978 </span>                :            : 
-<span class="lineNum">     979 </span>                :            : /**
-<span class="lineNum">     980 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the end
-<span class="lineNum">     981 </span>                :            :  *
-<span class="lineNum">     982 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromEnd()
-<span class="lineNum">     983 </span>                :            :  *
-<span class="lineNum">     984 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
-<span class="lineNum">     985 </span>                :            :  */
-<span class="lineNum">     986 </span>                :            : void shortenSegmentFromEnd(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
-<span class="lineNum">     987 </span>                :            : 
-<span class="lineNum">     988 </span>                :            : } // namespace route
-<span class="lineNum">     989 </span>                :            : } // namespace map
-<span class="lineNum">     990 </span>                :            : } // namespace ad
+<span class="lineNum">     854 </span>                :            :  * This function is designed to by used to get a route around parking vehicles or for overtaking
+<span class="lineNum">     855 </span>                :            :  * The output route makes use of neighboring lanes and respects left-hand/right-hand traffic flow
+<span class="lineNum">     856 </span>                :            :  * The calculation fails when reaching an intersection
+<span class="lineNum">     857 </span>                :            :  *
+<span class="lineNum">     858 </span>                :            :  * @param[in] route is the input route, which should not be used
+<span class="lineNum">     859 </span>                :            :  * @param[out] bypassingRoute is the new route, making use of neighboring lanes
+<span class="lineNum">     860 </span>                :            :  *
+<span class="lineNum">     861 </span>                :            :  * @return false if no valid bypassing route was found
+<span class="lineNum">     862 </span>                :            :  */
+<span class="lineNum">     863 </span>                :            : bool calculateBypassingRoute(route::FullRoute const &amp;route, route::FullRoute &amp;bypassingRoute);
+<span class="lineNum">     864 </span>                :            : 
+<span class="lineNum">     865 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
+<span class="lineNum">     866 </span>                :            :  *
+<span class="lineNum">     867 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     868 </span>                :            :  *
+<span class="lineNum">     869 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<span class="lineNum">     870 </span>                :            :  * @param[in] parametricOffset parametric offset the borders are cut
+<span class="lineNum">     871 </span>                :            :  */
+<span class="lineNum">     872 </span>                :            : lane::ECEFBorder getECEFBorderOfRoadSegment(RoadSegment const &amp;roadSegment,
+<span class="lineNum">     873 </span>                :            :                                             physics::ParametricValue const parametricOffset);
+<span class="lineNum">     874 </span>                :            : 
+<span class="lineNum">     875 </span>                :            : /** @brief get borders of a road segment
+<span class="lineNum">     876 </span>                :            :  *
+<span class="lineNum">     877 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     878 </span>                :            :  *
+<a name="879"><span class="lineNum">     879 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from</a>
+<span class="lineNum">     880 </span>                :            :  */
+<span class="lineNum">     881 </span>                :<span class="lineNoCov">          0 : inline lane::ECEFBorder getECEFBorderOfRoadSegment(RoadSegment const &amp;roadSegment)</span>
+<span class="lineNum">     882 </span>                :            : {
+<span class="lineNum">     883 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   return getECEFBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));</span>
+<span class="lineNum">     884 </span>                :            : }
+<span class="lineNum">     885 </span>                :            : 
+<span class="lineNum">     886 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
+<span class="lineNum">     887 </span>                :            :  *
+<span class="lineNum">     888 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     889 </span>                :            :  *
+<span class="lineNum">     890 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<span class="lineNum">     891 </span>                :            :  * @param[in] parametricOffset parametric offset the borders are cut
+<span class="lineNum">     892 </span>                :            :  */
+<span class="lineNum">     893 </span>                :            : lane::ENUBorder getENUBorderOfRoadSegment(RoadSegment const &amp;roadSegment,
+<span class="lineNum">     894 </span>                :            :                                           physics::ParametricValue const parametricOffset);
+<span class="lineNum">     895 </span>                :            : 
+<span class="lineNum">     896 </span>                :            : /** @brief get borders of a road segment
+<span class="lineNum">     897 </span>                :            :  *
+<span class="lineNum">     898 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     899 </span>                :            :  *
+<a name="900"><span class="lineNum">     900 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from</a>
+<span class="lineNum">     901 </span>                :            :  */
+<span class="lineNum">     902 </span>                :<span class="lineNoCov">          0 : inline lane::ENUBorder getENUBorderOfRoadSegment(RoadSegment const &amp;roadSegment)</span>
+<span class="lineNum">     903 </span>                :            : {
+<span class="lineNum">     904 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   return getENUBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));</span>
+<span class="lineNum">     905 </span>                :            : }
+<span class="lineNum">     906 </span>                :            : 
+<span class="lineNum">     907 </span>                :            : /** @brief get borders of a road segment. The road segment is cut at a given parametric offset.
+<span class="lineNum">     908 </span>                :            :  *
+<span class="lineNum">     909 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     910 </span>                :            :  *
+<span class="lineNum">     911 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from
+<span class="lineNum">     912 </span>                :            :  * @param[in] parametricOffset parametric offset the borders are cut
+<span class="lineNum">     913 </span>                :            :  */
+<span class="lineNum">     914 </span>                :            : lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &amp;roadSegment,
+<span class="lineNum">     915 </span>                :            :                                           physics::ParametricValue const parametricOffset);
+<span class="lineNum">     916 </span>                :            : 
+<span class="lineNum">     917 </span>                :            : /** @brief get borders of a road segment
+<span class="lineNum">     918 </span>                :            :  *
+<span class="lineNum">     919 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     920 </span>                :            :  *
+<a name="921"><span class="lineNum">     921 </span>                :            :  * @param[in] roadSegment the road segment to extract the borders from</a>
+<span class="lineNum">     922 </span>                :            :  */
+<span class="lineNum">     923 </span>                :<span class="lineNoCov">          0 : inline lane::GeoBorder getGeoBorderOfRoadSegment(RoadSegment const &amp;roadSegment)</span>
+<span class="lineNum">     924 </span>                :            : {
+<span class="lineNum">     925 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :   return getGeoBorderOfRoadSegment(roadSegment, physics::ParametricValue(1.));</span>
+<span class="lineNum">     926 </span>                :            : }
+<span class="lineNum">     927 </span>                :            : 
+<span class="lineNum">     928 </span>                :            : /** @brief get borders of a full route
+<span class="lineNum">     929 </span>                :            :  *
+<span class="lineNum">     930 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     931 </span>                :            :  * The borders of successive road segments are collected in the result vector.
+<span class="lineNum">     932 </span>                :            :  *
+<span class="lineNum">     933 </span>                :            :  * @param[in] route the route to extract the borders from
+<span class="lineNum">     934 </span>                :            :  */
+<span class="lineNum">     935 </span>                :            : lane::ENUBorderList getENUBorderOfRoute(FullRoute const &amp;route);
+<span class="lineNum">     936 </span>                :            : 
+<span class="lineNum">     937 </span>                :            : /** @brief get borders of a full route
+<span class="lineNum">     938 </span>                :            :  *
+<span class="lineNum">     939 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     940 </span>                :            :  * The borders of successive road segments are collected in the result vector.
+<span class="lineNum">     941 </span>                :            :  *
+<span class="lineNum">     942 </span>                :            :  * @param[in] route the route to extract the borders from
+<span class="lineNum">     943 </span>                :            :  */
+<span class="lineNum">     944 </span>                :            : lane::ECEFBorderList getECEFBorderOfRoute(FullRoute const &amp;route);
+<span class="lineNum">     945 </span>                :            : 
+<span class="lineNum">     946 </span>                :            : /** @brief get borders of a full route
+<span class="lineNum">     947 </span>                :            :  *
+<span class="lineNum">     948 </span>                :            :  * The order of the points within the LaneGeometries are ordered according to the route direction.
+<span class="lineNum">     949 </span>                :            :  * The borders of successive road segments are collected in the result vector.
+<span class="lineNum">     950 </span>                :            :  *
+<span class="lineNum">     951 </span>                :            :  * @param[in] route the route to extract the borders from
+<span class="lineNum">     952 </span>                :            :  */
+<span class="lineNum">     953 </span>                :            : lane::GeoBorderList getGeoBorderOfRoute(FullRoute const &amp;route);
+<span class="lineNum">     954 </span>                :            : 
+<span class="lineNum">     955 </span>                :            : /**
+<span class="lineNum">     956 </span>                :            :  * @brief get the ENU heading of a route at the location of the object
+<span class="lineNum">     957 </span>                :            :  *
+<span class="lineNum">     958 </span>                :            :  * @param object the object on the route
+<span class="lineNum">     959 </span>                :            :  * @param route the route
+<span class="lineNum">     960 </span>                :            :  *
+<span class="lineNum">     961 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
+<span class="lineNum">     962 </span>                :            :  */
+<span class="lineNum">     963 </span>                :            : point::ENUHeading getENUHeadingOfRoute(match::Object const &amp;object, FullRoute const &amp;route);
+<span class="lineNum">     964 </span>                :            : 
+<span class="lineNum">     965 </span>                :            : /**
+<span class="lineNum">     966 </span>                :            :  * @brief compare the ENU heading of the route at the location of the object with the ENU heading of the object
+<span class="lineNum">     967 </span>                :            :  *
+<span class="lineNum">     968 </span>                :            :  * @returns \c true if the difference between object heading and route heading at the object position
+<span class="lineNum">     969 </span>                :            :  * is not larger than 90°
+<span class="lineNum">     970 </span>                :            :  * @throws std::runtime_error if the objects map matched bounding box is not on the route
+<span class="lineNum">     971 </span>                :            :  */
+<span class="lineNum">     972 </span>                :            : bool isObjectHeadingInRouteDirection(match::Object const &amp;object, FullRoute const &amp;route);
+<span class="lineNum">     973 </span>                :            : 
+<span class="lineNum">     974 </span>                :            : /**
+<span class="lineNum">     975 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the begin
+<span class="lineNum">     976 </span>                :            :  *
+<span class="lineNum">     977 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromBegin()
+<span class="lineNum">     978 </span>                :            :  *
+<span class="lineNum">     979 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
+<span class="lineNum">     980 </span>                :            :  */
+<span class="lineNum">     981 </span>                :            : void shortenSegmentFromBegin(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
+<span class="lineNum">     982 </span>                :            : 
+<span class="lineNum">     983 </span>                :            : /**
+<span class="lineNum">     984 </span>                :            :  * @brief Shorten the provided road segment by a certain distance from the end
+<span class="lineNum">     985 </span>                :            :  *
+<span class="lineNum">     986 </span>                :            :  * The intervals of the segment are shortened as described in shortenIntervalFromEnd()
+<span class="lineNum">     987 </span>                :            :  *
+<span class="lineNum">     988 </span>                :            :  * @throws std::runtime_error if the roadSegment is invalid
+<span class="lineNum">     989 </span>                :            :  */
+<span class="lineNum">     990 </span>                :            : void shortenSegmentFromEnd(RoadSegment &amp;roadSegment, physics::Distance const &amp;distance);
+<span class="lineNum">     991 </span>                :            : 
+<span class="lineNum">     992 </span>                :            : } // namespace route
+<span class="lineNum">     993 </span>                :            : } // namespace map
+<span class="lineNum">     994 </span>                :            : } // namespace ad
 </pre>
       </td>
     </tr>

@@ -464,6 +464,9 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <tr class="memitem:aedf866dd50b62a1bdbb0f2f32aaa57d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1lane_1_1LaneAltitudeRange.html">LaneAltitudeRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#aedf866dd50b62a1bdbb0f2f32aaa57d6">calcLaneAltitudeRange</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
 <tr class="memdesc:aedf866dd50b62a1bdbb0f2f32aaa57d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the altitude range of a lane.  <a href="#aedf866dd50b62a1bdbb0f2f32aaa57d6">More...</a><br /></td></tr>
 <tr class="separator:aedf866dd50b62a1bdbb0f2f32aaa57d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57190adb198292c1d9d293ce0e7683c7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a57190adb198292c1d9d293ce0e7683c7">isLaneRelevantForExpansion</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">lane::LaneId</a> const &amp;laneId, lane::LaneIdSet const &amp;relevantLanes)</td></tr>
+<tr class="memdesc:a57190adb198292c1d9d293ce0e7683c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the laneId is relevant for expansion given the set of relevant lanes.  <a href="#a57190adb198292c1d9d293ce0e7683c7">More...</a><br /></td></tr>
+<tr class="separator:a57190adb198292c1d9d293ce0e7683c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>namespace lane </p>
@@ -2018,6 +2021,35 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
+<a class="anchor" id="a57190adb198292c1d9d293ce0e7683c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isLaneRelevantForExpansion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">lane::LaneId</a> const &amp;&#160;</td>
+          <td class="paramname"><em>laneId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lane::LaneIdSet const &amp;&#160;</td>
+          <td class="paramname"><em>relevantLanes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the laneId is relevant for expansion given the set of relevant lanes. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <em>relevantLanes</em> set is empty, or if the laneId can be found in the set of <em>relevantLanes</em>. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ad8cd4f0cebcf2c05208671343336e6b0"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2686,6 +2718,50 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
+<a class="anchor" id="a00f93569eb8658a553463d0fa6b12021"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; ad::map::lane::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html">ECEFBorder</a> const &amp;&#160;</td>
+          <td class="paramname"><em>_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>standard ostream operator </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html" title="DataType ECEFBorder. ">ECEFBorder</a> value</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aa32f014bcf5d2ab863c119e7a5327907"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2767,50 +2843,6 @@ physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="e
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html" title="DataType GeoBorder. ">GeoBorder</a> value</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a00f93569eb8658a553463d0fa6b12021"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; ad::map::lane::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html">ECEFBorder</a> const &amp;&#160;</td>
-          <td class="paramname"><em>_value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>standard ostream operator </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">os</td><td>The output stream to write to </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">_value</td><td><a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html" title="DataType ECEFBorder. ">ECEFBorder</a> value</td></tr>
   </table>
   </dd>
 </dl>

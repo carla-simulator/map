@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -71,7 +71,7 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <span class="lineNum">       2 </span>                :            : //
-<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2020 Intel Corporation
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2021 Intel Corporation
 <span class="lineNum">       4 </span>                :            : //
 <span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
 <span class="lineNum">       6 </span>                :            : //
@@ -83,11 +83,11 @@
 <span class="lineNum">      12 </span>                :            : #include &quot;ad/map/lane/Types.hpp&quot;
 <span class="lineNum">      13 </span>                :            : #include &quot;ad/map/route/Types.hpp&quot;
 <span class="lineNum">      14 </span>                :            : 
-<span class="lineNum">      15 </span>                :            : /* @brief namespace ad */
+<span class="lineNum">      15 </span>                :            : /** @brief namespace ad */
 <span class="lineNum">      16 </span>                :            : namespace ad {
-<span class="lineNum">      17 </span>                :            : /* @brief namespace map */
+<span class="lineNum">      17 </span>                :            : /** @brief namespace map */
 <span class="lineNum">      18 </span>                :            : namespace map {
-<span class="lineNum">      19 </span>                :            : /* @brief namespace route */
+<span class="lineNum">      19 </span>                :            : /** @brief namespace route */
 <span class="lineNum">      20 </span>                :            : namespace route {
 <span class="lineNum">      21 </span>                :            : 
 <span class="lineNum">      22 </span>                :            : /**
@@ -105,12 +105,12 @@
 <span class="lineNum">      34 </span>                :            : /**
 <a name="35"><span class="lineNum">      35 </span>                :            :  * @brief get interval start as ParaPoint</a>
 <span class="lineNum">      36 </span>                :            :  */
-<span class="lineNum">      37 </span>                :<span class="lineCov">       1227 : inline point::ParaPoint getIntervalStart(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">       1223 : inline point::ParaPoint getIntervalStart(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">      38 </span>                :            : {
-<span class="lineNum">      39 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineCov">       1227 :   point::ParaPoint result;</span>
-<span class="lineNum">      40 </span>                :<span class="lineCov">       1227 :   result.laneId = laneInterval.laneId;</span>
-<span class="lineNum">      41 </span>                :<span class="lineCov">       1227 :   result.parametricOffset = laneInterval.start;</span>
-<span class="lineNum">      42 </span>                :<span class="lineCov">       1227 :   return result;</span>
+<span class="lineNum">      39 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineCov">       1223 :   point::ParaPoint result;</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">       1223 :   result.laneId = laneInterval.laneId;</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">       1223 :   result.parametricOffset = laneInterval.start;</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">       1223 :   return result;</span>
 <span class="lineNum">      43 </span>                :            : }
 <span class="lineNum">      44 </span>                :            : 
 <span class="lineNum">      45 </span>                :            : /**
@@ -123,31 +123,31 @@
 <span class="lineNum">      52 </span>                :            : /**
 <a name="53"><span class="lineNum">      53 </span>                :            :  * @brief get interval end as ParaPoint</a>
 <span class="lineNum">      54 </span>                :            :  */
-<span class="lineNum">      55 </span>                :<span class="lineCov">       1309 : inline point::ParaPoint getIntervalEnd(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">      55 </span>                :<span class="lineCov">       1304 : inline point::ParaPoint getIntervalEnd(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">      56 </span>                :            : {
-<span class="lineNum">      57 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineCov">       1309 :   point::ParaPoint result;</span>
-<span class="lineNum">      58 </span>                :<span class="lineCov">       1309 :   result.laneId = laneInterval.laneId;</span>
-<span class="lineNum">      59 </span>                :<span class="lineCov">       1309 :   result.parametricOffset = laneInterval.end;</span>
-<span class="lineNum">      60 </span>                :<span class="lineCov">       1309 :   return result;</span>
+<span class="lineNum">      57 </span>        [<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>]:<span class="lineCov">       1304 :   point::ParaPoint result;</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">       1304 :   result.laneId = laneInterval.laneId;</span>
+<span class="lineNum">      59 </span>                :<span class="lineCov">       1304 :   result.parametricOffset = laneInterval.end;</span>
+<span class="lineNum">      60 </span>                :<span class="lineCov">       1304 :   return result;</span>
 <span class="lineNum">      61 </span>                :            : }
 <span class="lineNum">      62 </span>                :            : 
 <span class="lineNum">      63 </span>                :            : /**
 <a name="64"><span class="lineNum">      64 </span>                :            :  * @brief convert lane interval to ParametricRange</a>
 <span class="lineNum">      65 </span>                :            :  */
-<span class="lineNum">      66 </span>                :<span class="lineCov">       1452 : inline physics::ParametricRange toParametricRange(route::LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">       1436 : inline physics::ParametricRange toParametricRange(route::LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">      67 </span>                :            : {
-<span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 1 was taken 1452 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       1452 :   physics::ParametricRange range;</span>
-<span class="lineNum">      69 </span>[<span class="branchCov" title="Branch 1 was taken 1452 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1423 times"> + </span><span class="branchCov" title="Branch 4 was taken 29 times"> + </span>]:<span class="lineCov">       1452 :   if (laneInterval.start &lt;= laneInterval.end)</span>
+<span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 1 was taken 1436 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       1436 :   physics::ParametricRange range;</span>
+<span class="lineNum">      69 </span>[<span class="branchCov" title="Branch 1 was taken 1436 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1415 times"> + </span><span class="branchCov" title="Branch 4 was taken 21 times"> + </span>]:<span class="lineCov">       1436 :   if (laneInterval.start &lt;= laneInterval.end)</span>
 <span class="lineNum">      70 </span>                :            :   {
-<span class="lineNum">      71 </span>                :<span class="lineCov">       1423 :     range.minimum = laneInterval.start;</span>
-<span class="lineNum">      72 </span>                :<span class="lineCov">       1423 :     range.maximum = laneInterval.end;</span>
+<span class="lineNum">      71 </span>                :<span class="lineCov">       1415 :     range.minimum = laneInterval.start;</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">       1415 :     range.maximum = laneInterval.end;</span>
 <span class="lineNum">      73 </span>                :            :   }
 <span class="lineNum">      74 </span>                :            :   else
 <span class="lineNum">      75 </span>                :            :   {
-<span class="lineNum">      76 </span>                :<span class="lineCov">         29 :     range.minimum = laneInterval.end;</span>
-<span class="lineNum">      77 </span>                :<span class="lineCov">         29 :     range.maximum = laneInterval.start;</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">         21 :     range.minimum = laneInterval.end;</span>
+<span class="lineNum">      77 </span>                :<span class="lineCov">         21 :     range.maximum = laneInterval.start;</span>
 <span class="lineNum">      78 </span>                :            :   }
-<span class="lineNum">      79 </span>                :<span class="lineCov">       1452 :   return range;</span>
+<span class="lineNum">      79 </span>                :<span class="lineCov">       1436 :   return range;</span>
 <span class="lineNum">      80 </span>                :            : }
 <span class="lineNum">      81 </span>                :            : 
 <span class="lineNum">      82 </span>                :            : /**
@@ -211,9 +211,9 @@
 <span class="lineNum">     140 </span>                :            :  *
 <a name="141"><span class="lineNum">     141 </span>                :            :  * @returns !isRouteDirectionPositive()</a>
 <span class="lineNum">     142 </span>                :            :  */
-<span class="lineNum">     143 </span>                :<span class="lineCov">         28 : inline bool isRouteDirectionNegative(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">     143 </span>                :<span class="lineCov">         12 : inline bool isRouteDirectionNegative(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">     144 </span>                :            : {
-<span class="lineNum">     145 </span>                :<span class="lineCov">         28 :   return !isRouteDirectionPositive(laneInterval);</span>
+<span class="lineNum">     145 </span>                :<span class="lineCov">         12 :   return !isRouteDirectionPositive(laneInterval);</span>
 <span class="lineNum">     146 </span>                :            : }
 <span class="lineNum">     147 </span>                :            : 
 <span class="lineNum">     148 </span>                :            : /**
@@ -228,15 +228,15 @@
 <span class="lineNum">     157 </span>                :            :  *
 <a name="158"><span class="lineNum">     158 </span>                :            :  * @returns @c true if parametric offset  is within the interval</a>
 <span class="lineNum">     159 </span>                :            :  */
-<span class="lineNum">     160 </span>                :<span class="lineCov">        176 : inline bool isWithinInterval(LaneInterval const &amp;laneInterval, physics::ParametricValue const &amp;parametricOffset)</span>
+<span class="lineNum">     160 </span>                :<span class="lineCov">        132 : inline bool isWithinInterval(LaneInterval const &amp;laneInterval, physics::ParametricValue const &amp;parametricOffset)</span>
 <span class="lineNum">     161 </span>                :            : {
-<span class="lineNum">     162 </span>        [<span class="branchCov" title="Branch 1 was taken 102 times"> + </span><span class="branchCov" title="Branch 2 was taken 74 times"> + </span>]:<span class="lineCov">        176 :   if (isRouteDirectionPositive(laneInterval))</span>
+<span class="lineNum">     162 </span>        [<span class="branchCov" title="Branch 1 was taken 84 times"> + </span><span class="branchCov" title="Branch 2 was taken 48 times"> + </span>]:<span class="lineCov">        132 :   if (isRouteDirectionPositive(laneInterval))</span>
 <span class="lineNum">     163 </span>                :            :   {
-<span class="lineNum">     164 </span>[<span class="branchCov" title="Branch 1 was taken 84 times"> + </span><span class="branchCov" title="Branch 2 was taken 18 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 72 times"> + </span><span class="branchCov" title="Branch 5 was taken 12 times"> + </span>]:<span class="lineCov">        102 :     return (laneInterval.start &lt;= parametricOffset) &amp;&amp; (parametricOffset &lt;= laneInterval.end);</span>
+<span class="lineNum">     164 </span>[<span class="branchCov" title="Branch 1 was taken 72 times"> + </span><span class="branchCov" title="Branch 2 was taken 12 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 68 times"> + </span><span class="branchCov" title="Branch 5 was taken 4 times"> + </span>]:<span class="lineCov">         84 :     return (laneInterval.start &lt;= parametricOffset) &amp;&amp; (parametricOffset &lt;= laneInterval.end);</span>
 <span class="lineNum">     165 </span>                :            :   }
 <span class="lineNum">     166 </span>                :            :   else
 <span class="lineNum">     167 </span>                :            :   {
-<span class="lineNum">     168 </span>[<span class="branchCov" title="Branch 1 was taken 66 times"> + </span><span class="branchCov" title="Branch 2 was taken 8 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 47 times"> + </span><span class="branchCov" title="Branch 5 was taken 19 times"> + </span>]:<span class="lineCov">         74 :     return (laneInterval.end &lt;= parametricOffset) &amp;&amp; (parametricOffset &lt;= laneInterval.start);</span>
+<span class="lineNum">     168 </span>[<span class="branchCov" title="Branch 1 was taken 47 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 4 was taken 42 times"> + </span><span class="branchCov" title="Branch 5 was taken 5 times"> + </span>]:<span class="lineCov">         48 :     return (laneInterval.end &lt;= parametricOffset) &amp;&amp; (parametricOffset &lt;= laneInterval.start);</span>
 <span class="lineNum">     169 </span>                :            :   }
 <span class="lineNum">     170 </span>                :            : }
 <span class="lineNum">     171 </span>                :            : 
@@ -247,9 +247,9 @@
 <span class="lineNum">     176 </span>                :            :  *
 <a name="177"><span class="lineNum">     177 </span>                :            :  * @returns @c true if LaneId matches and TParam of the given @c point is within the interval</a>
 <span class="lineNum">     178 </span>                :            :  */
-<span class="lineNum">     179 </span>                :<span class="lineCov">        108 : inline bool isWithinInterval(LaneInterval const &amp;laneInterval, point::ParaPoint const &amp;point)</span>
+<span class="lineNum">     179 </span>                :<span class="lineCov">         72 : inline bool isWithinInterval(LaneInterval const &amp;laneInterval, point::ParaPoint const &amp;point)</span>
 <span class="lineNum">     180 </span>                :            : {
-<span class="lineNum">     181 </span>[<span class="branchCov" title="Branch 1 was taken 108 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 81 times"> + </span><span class="branchCov" title="Branch 5 was taken 27 times"> + </span>]:<span class="lineCov">        108 :   return (point.laneId == laneInterval.laneId) &amp;&amp; isWithinInterval(laneInterval, point.parametricOffset);</span>
+<span class="lineNum">     181 </span>[<span class="branchCov" title="Branch 1 was taken 72 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 67 times"> + </span><span class="branchCov" title="Branch 5 was taken 5 times"> + </span>]:<span class="lineCov">         72 :   return (point.laneId == laneInterval.laneId) &amp;&amp; isWithinInterval(laneInterval, point.parametricOffset);</span>
 <span class="lineNum">     182 </span>                :            : }
 <span class="lineNum">     183 </span>                :            : 
 <span class="lineNum">     184 </span>                :            : /**
@@ -260,9 +260,9 @@
 <span class="lineNum">     189 </span>                :            :  *
 <a name="190"><span class="lineNum">     190 </span>                :            :  * @returns @c true if the interval is degenerated: start == end</a>
 <span class="lineNum">     191 </span>                :            :  */
-<span class="lineNum">     192 </span>                :<span class="lineCov">        268 : inline bool isDegenerated(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">     192 </span>                :<span class="lineCov">       1577 : inline bool isDegenerated(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">     193 </span>                :            : {
-<span class="lineNum">     194 </span>                :<span class="lineCov">        268 :   return (laneInterval.start == laneInterval.end);</span>
+<span class="lineNum">     194 </span>                :<span class="lineCov">       1577 :   return (laneInterval.start == laneInterval.end);</span>
 <span class="lineNum">     195 </span>                :            : }
 <span class="lineNum">     196 </span>                :            : 
 <span class="lineNum">     197 </span>                :            : /**
@@ -273,15 +273,15 @@
 <span class="lineNum">     202 </span>                :            :  * @returns @c true if given parametric offset is after the interval
 <a name="203"><span class="lineNum">     203 </span>                :            :  * Be aware: if the route interval is degenerated isAfterInterval() and isBeforeInterval() return the same value</a>
 <span class="lineNum">     204 </span>                :            :  */
-<span class="lineNum">     205 </span>                :<span class="lineCov">         36 : inline bool isAfterInterval(LaneInterval const &amp;laneInterval, physics::ParametricValue const parametricOffset)</span>
+<span class="lineNum">     205 </span>                :<span class="lineCov">        868 : inline bool isAfterInterval(LaneInterval const &amp;laneInterval, physics::ParametricValue const parametricOffset)</span>
 <span class="lineNum">     206 </span>                :            : {
-<span class="lineNum">     207 </span>        [<span class="branchCov" title="Branch 1 was taken 33 times"> + </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span>]:<span class="lineCov">         36 :   if (isRouteDirectionPositive(laneInterval))</span>
+<span class="lineNum">     207 </span>        [<span class="branchCov" title="Branch 1 was taken 419 times"> + </span><span class="branchCov" title="Branch 2 was taken 449 times"> + </span>]:<span class="lineCov">        868 :   if (isRouteDirectionPositive(laneInterval))</span>
 <span class="lineNum">     208 </span>                :            :   {
-<span class="lineNum">     209 </span>                :<span class="lineCov">         33 :     return (parametricOffset &gt; laneInterval.end);</span>
+<span class="lineNum">     209 </span>                :<span class="lineCov">        419 :     return (parametricOffset &gt; laneInterval.end);</span>
 <span class="lineNum">     210 </span>                :            :   }
 <span class="lineNum">     211 </span>                :            :   else
 <span class="lineNum">     212 </span>                :            :   {
-<span class="lineNum">     213 </span>                :<span class="lineCov">          3 :     return (parametricOffset &lt; laneInterval.end);</span>
+<span class="lineNum">     213 </span>                :<span class="lineCov">        449 :     return (parametricOffset &lt; laneInterval.end);</span>
 <span class="lineNum">     214 </span>                :            :   }
 <span class="lineNum">     215 </span>                :            : }
 <span class="lineNum">     216 </span>                :            : 
@@ -311,15 +311,15 @@
 <span class="lineNum">     240 </span>                :            :  * @returns @c true if parametric offset is before the interval
 <a name="241"><span class="lineNum">     241 </span>                :            :  * Be aware: if the route interval is degenerated isAfterInterval() and isBeforeInterval() return the same value</a>
 <span class="lineNum">     242 </span>                :            :  */
-<span class="lineNum">     243 </span>                :<span class="lineCov">          5 : inline bool isBeforeInterval(LaneInterval const &amp;laneInterval, physics::ParametricValue const parametricOffset)</span>
+<span class="lineNum">     243 </span>                :<span class="lineCov">        460 : inline bool isBeforeInterval(LaneInterval const &amp;laneInterval, physics::ParametricValue const parametricOffset)</span>
 <span class="lineNum">     244 </span>                :            : {
-<span class="lineNum">     245 </span>        [<span class="branchCov" title="Branch 1 was taken 3 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span>]:<span class="lineCov">          5 :   if (isRouteDirectionPositive(laneInterval))</span>
+<span class="lineNum">     245 </span>        [<span class="branchCov" title="Branch 1 was taken 254 times"> + </span><span class="branchCov" title="Branch 2 was taken 206 times"> + </span>]:<span class="lineCov">        460 :   if (isRouteDirectionPositive(laneInterval))</span>
 <span class="lineNum">     246 </span>                :            :   {
-<span class="lineNum">     247 </span>                :<span class="lineCov">          3 :     return (parametricOffset &lt; laneInterval.start);</span>
+<span class="lineNum">     247 </span>                :<span class="lineCov">        254 :     return (parametricOffset &lt; laneInterval.start);</span>
 <span class="lineNum">     248 </span>                :            :   }
 <span class="lineNum">     249 </span>                :            :   else
 <span class="lineNum">     250 </span>                :            :   {
-<span class="lineNum">     251 </span>                :<span class="lineCov">          2 :     return (parametricOffset &gt; laneInterval.start);</span>
+<span class="lineNum">     251 </span>                :<span class="lineCov">        206 :     return (parametricOffset &gt; laneInterval.start);</span>
 <span class="lineNum">     252 </span>                :            :   }
 <span class="lineNum">     253 </span>                :            : }
 <span class="lineNum">     254 </span>                :            : 
@@ -374,9 +374,9 @@
 <span class="lineNum">     303 </span>                :            : /**
 <a name="304"><span class="lineNum">     304 </span>                :            :  * @brief calculate the length of the provided lane interval as parametric value</a>
 <span class="lineNum">     305 </span>                :            :  */
-<span class="lineNum">     306 </span>                :<span class="lineCov">        258 : inline physics::ParametricValue calcParametricLength(LaneInterval const &amp;laneInterval)</span>
+<span class="lineNum">     306 </span>                :<span class="lineCov">        236 : inline physics::ParametricValue calcParametricLength(LaneInterval const &amp;laneInterval)</span>
 <span class="lineNum">     307 </span>                :            : {
-<span class="lineNum">     308 </span>                :<span class="lineCov">        258 :   return std::fabs(laneInterval.start - laneInterval.end);</span>
+<span class="lineNum">     308 </span>                :<span class="lineCov">        236 :   return std::fabs(laneInterval.start - laneInterval.end);</span>
 <span class="lineNum">     309 </span>                :            : }
 <span class="lineNum">     310 </span>                :            : 
 <span class="lineNum">     311 </span>                :            : /** @brief calculate the length of the provided lane interval as physics::Distance value

@@ -517,9 +517,9 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <tr class="memitem:a07efded828e2021148ba627e06d51b4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a07efded828e2021148ba627e06d51b4c">appendLaneSegmentToRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1LaneInterval.html">route::LaneInterval</a> const &amp;laneInterval, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, <a class="el" href="namespacead_1_1map_1_1route.html#a71b421d8921da377162d82c18c438f88">route::SegmentCounter</a> const segmentCountFromDestination=0u)</td></tr>
 <tr class="memdesc:a07efded828e2021148ba627e06d51b4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to append a new lane interval to a road segment list  <a href="#a07efded828e2021148ba627e06d51b4c">More...</a><br /></td></tr>
 <tr class="separator:a07efded828e2021148ba627e06d51b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8218338c605ddac8b2b8ad994437b23b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a8218338c605ddac8b2b8ad994437b23b">extendRouteToDistance</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, physics::Distance const &amp;length, <a class="el" href="namespacead_1_1map_1_1route.html#a8cb86eafe66b8bfadd78ba5516e19ffe">route::FullRouteList</a> &amp;additionalRoutes)</td></tr>
-<tr class="memdesc:a8218338c605ddac8b2b8ad994437b23b"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route to have at least the given length  <a href="#a8218338c605ddac8b2b8ad994437b23b">More...</a><br /></td></tr>
-<tr class="separator:a8218338c605ddac8b2b8ad994437b23b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9ce95966f511278900f9d9838510f17"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#aa9ce95966f511278900f9d9838510f17">extendRouteToDistance</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, physics::Distance const &amp;length, <a class="el" href="namespacead_1_1map_1_1route.html#a8cb86eafe66b8bfadd78ba5516e19ffe">route::FullRouteList</a> &amp;additionalRoutes, lane::LaneIdSet const &amp;relevantLanes=ad::map::lane::LaneIdSet())</td></tr>
+<tr class="memdesc:aa9ce95966f511278900f9d9838510f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route to have at least the given length  <a href="#aa9ce95966f511278900f9d9838510f17">More...</a><br /></td></tr>
+<tr class="separator:aa9ce95966f511278900f9d9838510f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a336e7510d56fddfbb3458f0fa9bcdaa1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a336e7510d56fddfbb3458f0fa9bcdaa1">extendRouteToDestinations</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, const std::vector&lt; <a class="el" href="structad_1_1map_1_1route_1_1planning_1_1RoutingParaPoint.html">route::planning::RoutingParaPoint</a> &gt; &amp;dest)</td></tr>
 <tr class="memdesc:a336e7510d56fddfbb3458f0fa9bcdaa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route with the given list of destinations  <a href="#a336e7510d56fddfbb3458f0fa9bcdaa1">More...</a><br /></td></tr>
 <tr class="separator:a336e7510d56fddfbb3458f0fa9bcdaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -529,9 +529,9 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <tr class="memitem:abcabfdaedb1d7ded6fb19c9284a93dbc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#abcabfdaedb1d7ded6fb19c9284a93dbc">extendRouteToDestinations</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, const std::vector&lt; <a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> &gt; &amp;dest)</td></tr>
 <tr class="memdesc:abcabfdaedb1d7ded6fb19c9284a93dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">extends route with the given list of destinations  <a href="#abcabfdaedb1d7ded6fb19c9284a93dbc">More...</a><br /></td></tr>
 <tr class="separator:abcabfdaedb1d7ded6fb19c9284a93dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8341749daa83ed3ccf36785fe0232a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#ad8341749daa83ed3ccf36785fe0232a2">appendRoadSegmentToRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1LaneInterval.html">route::LaneInterval</a> const &amp;laneInverval, <a class="el" href="namespacead_1_1map_1_1route.html#adf33d33b9c6c78ec77b2544c09021b6e">route::RouteLaneOffset</a> const &amp;laneOffset, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route)</td></tr>
-<tr class="memdesc:ad8341749daa83ed3ccf36785fe0232a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to append a new lane interval to a road segment list  <a href="#ad8341749daa83ed3ccf36785fe0232a2">More...</a><br /></td></tr>
-<tr class="separator:ad8341749daa83ed3ccf36785fe0232a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ae2ad49e85cb12962652274ba892257"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a3ae2ad49e85cb12962652274ba892257">appendRoadSegmentToRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1LaneInterval.html">route::LaneInterval</a> const &amp;laneInverval, <a class="el" href="namespacead_1_1map_1_1route.html#adf33d33b9c6c78ec77b2544c09021b6e">route::RouteLaneOffset</a> const &amp;laneOffset, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route, lane::LaneIdSet const &amp;relevantLanes)</td></tr>
+<tr class="memdesc:a3ae2ad49e85cb12962652274ba892257"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to append a new lane interval to a road segment list  <a href="#a3ae2ad49e85cb12962652274ba892257">More...</a><br /></td></tr>
+<tr class="separator:a3ae2ad49e85cb12962652274ba892257"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60d0edd7515c4426fabaeb21ca845e06"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a60d0edd7515c4426fabaeb21ca845e06">addOpposingLaneSegmentToRoadSegment</a> (<a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;startpoint, physics::Distance const &amp;distance, <a class="el" href="structad_1_1map_1_1route_1_1RoadSegment.html">route::RoadSegment</a> &amp;roadSegment, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;route)</td></tr>
 <tr class="memdesc:a60d0edd7515c4426fabaeb21ca845e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">add an opposing lane segment to an existing (and not empty) road segment with at most the given length  <a href="#a60d0edd7515c4426fabaeb21ca845e06">More...</a><br /></td></tr>
 <tr class="separator:a60d0edd7515c4426fabaeb21ca845e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -542,9 +542,9 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <tr class="separator:a9d0e75a67039133b0ba8aa02e9c63bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fff411498b17437ba2432ca76856cfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a5fff411498b17437ba2432ca76856cfe">getRouteExpandedToAllNeighborLanes</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> const &amp;route)</td></tr>
 <tr class="separator:a5fff411498b17437ba2432ca76856cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41e7099ba80205587ac132e5e7ae6983"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#a41e7099ba80205587ac132e5e7ae6983">calculateBypassingRoute</a> (::<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">ad::map::route::FullRoute</a> const &amp;route,::<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">ad::map::route::FullRoute</a> &amp;bypassingRoute)</td></tr>
-<tr class="memdesc:a41e7099ba80205587ac132e5e7ae6983"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate a bypassing route for a given (blocked) route  <a href="#a41e7099ba80205587ac132e5e7ae6983">More...</a><br /></td></tr>
-<tr class="separator:a41e7099ba80205587ac132e5e7ae6983"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affcdb605bcc920937e66fec956593439"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#affcdb605bcc920937e66fec956593439">calculateBypassingRoute</a> (<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> const &amp;route, <a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;bypassingRoute)</td></tr>
+<tr class="memdesc:affcdb605bcc920937e66fec956593439"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate a bypassing route for a given (blocked) route  <a href="#affcdb605bcc920937e66fec956593439">More...</a><br /></td></tr>
+<tr class="separator:affcdb605bcc920937e66fec956593439"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd04a459456b06fd630da3facb72b01b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html">lane::ECEFBorder</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1route.html#afd04a459456b06fd630da3facb72b01b">getECEFBorderOfRoadSegment</a> (<a class="el" href="structad_1_1map_1_1route_1_1RoadSegment.html">RoadSegment</a> const &amp;roadSegment, physics::ParametricValue const parametricOffset)</td></tr>
 <tr class="memdesc:afd04a459456b06fd630da3facb72b01b"><td class="mdescLeft">&#160;</td><td class="mdescRight">get borders of a road segment. The road segment is cut at a given parametric offset.  <a href="#afd04a459456b06fd630da3facb72b01b">More...</a><br /></td></tr>
 <tr class="separator:afd04a459456b06fd630da3facb72b01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1007,7 +1007,7 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 </div><div class="memdoc">
 
 <p>function to append a new lane interval to a road segment list </p>
-<p>In contrast to <a class="el" href="namespacead_1_1map_1_1route.html#ad8341749daa83ed3ccf36785fe0232a2" title="function to append a new lane interval to a road segment list ">appendRoadSegmentToRoute()</a> here only the lane interval without any neighbors is added</p>
+<p>In contrast to <a class="el" href="namespacead_1_1map_1_1route.html#a3ae2ad49e85cb12962652274ba892257" title="function to append a new lane interval to a road segment list ">appendRoadSegmentToRoute()</a> here only the lane interval without any neighbors is added</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">laneInterval</td><td>the new lane interval to be append </td></tr>
@@ -1019,7 +1019,7 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="ad8341749daa83ed3ccf36785fe0232a2"></a>
+<a class="anchor" id="a3ae2ad49e85cb12962652274ba892257"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1039,7 +1039,13 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;&#160;</td>
-          <td class="paramname"><em>route</em>&#160;</td>
+          <td class="paramname"><em>route</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lane::LaneIdSet const &amp;&#160;</td>
+          <td class="paramname"><em>relevantLanes</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1057,6 +1063,7 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
     <tr><td class="paramdir">[in]</td><td class="paramname">laneInterval</td><td>the new lane interval to be append </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">laneOffset</td><td>the lane offset of the new lane interval to be append </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">route</td><td>the route the interval has to be appended </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">relevantLanes</td><td>if not empty, the function restricts the extension to the given set of lanes </td></tr>
   </table>
   </dd>
 </dl>
@@ -1196,20 +1203,20 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="a41e7099ba80205587ac132e5e7ae6983"></a>
+<a class="anchor" id="affcdb605bcc920937e66fec956593439"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool ad::map::route::calculateBypassingRoute </td>
           <td>(</td>
-          <td class="paramtype">::<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">ad::map::route::FullRoute</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> const &amp;&#160;</td>
           <td class="paramname"><em>route</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">::<a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">ad::map::route::FullRoute</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1FullRoute.html">route::FullRoute</a> &amp;&#160;</td>
           <td class="paramname"><em>bypassingRoute</em>&#160;</td>
         </tr>
         <tr>
@@ -1585,7 +1592,7 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 
 </div>
 </div>
-<a class="anchor" id="a8218338c605ddac8b2b8ad994437b23b"></a>
+<a class="anchor" id="aa9ce95966f511278900f9d9838510f17"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1605,7 +1612,13 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1route.html#a8cb86eafe66b8bfadd78ba5516e19ffe">route::FullRouteList</a> &amp;&#160;</td>
-          <td class="paramname"><em>additionalRoutes</em>&#160;</td>
+          <td class="paramname"><em>additionalRoutes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lane::LaneIdSet const &amp;&#160;</td>
+          <td class="paramname"><em>relevantLanes</em> = <code>ad::map::lane::LaneIdSet()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2732,7 +2745,7 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>the input route expanded by all neighbor lanes</dd></dl>
-<p>Internally recreates the route by calling <a class="el" href="namespacead_1_1map_1_1route.html#ad8341749daa83ed3ccf36785fe0232a2" title="function to append a new lane interval to a road segment list ">appendRoadSegmentToRoute()</a> with a new route having RouteCreationMode::AllAllNeighbors </p>
+<p>Internally recreates the route by calling <a class="el" href="namespacead_1_1map_1_1route.html#a3ae2ad49e85cb12962652274ba892257" title="function to append a new lane interval to a road segment list ">appendRoadSegmentToRoute()</a> with a new route having RouteCreationMode::AllNeighbors </p>
 
 </div>
 </div>
@@ -2750,7 +2763,7 @@ physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="e
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>the input route expanded by all lanes in opposite driving direction</dd></dl>
-<p>Internally recreates the route by calling <a class="el" href="namespacead_1_1map_1_1route.html#ad8341749daa83ed3ccf36785fe0232a2" title="function to append a new lane interval to a road segment list ">appendRoadSegmentToRoute()</a> with a new route having <a class="el" href="namespacead_1_1map_1_1route.html#aaae9bcaf2936b1abe025aebd0fcbd77ba3078ff695395cfdd7f026a80ab57f514">RouteCreationMode::AllRoutableLanes</a> </p>
+<p>Internally recreates the route by calling <a class="el" href="namespacead_1_1map_1_1route.html#a3ae2ad49e85cb12962652274ba892257" title="function to append a new lane interval to a road segment list ">appendRoadSegmentToRoute()</a> with a new route having <a class="el" href="namespacead_1_1map_1_1route.html#aaae9bcaf2936b1abe025aebd0fcbd77ba3078ff695395cfdd7f026a80ab57f514">RouteCreationMode::AllRoutableLanes</a> </p>
 
 </div>
 </div>

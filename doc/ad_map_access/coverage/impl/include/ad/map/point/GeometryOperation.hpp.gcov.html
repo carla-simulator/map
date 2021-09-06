@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -71,7 +71,7 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <span class="lineNum">       2 </span>                :            : //
-<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2019 Intel Corporation
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2021 Intel Corporation
 <span class="lineNum">       4 </span>                :            : //
 <span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
 <span class="lineNum">       6 </span>                :            : //
@@ -86,11 +86,11 @@
 <span class="lineNum">      15 </span>                :            : #include &quot;ad/map/point/Geometry.hpp&quot;
 <span class="lineNum">      16 </span>                :            : #include &quot;ad/physics/ParametricRange.hpp&quot;
 <span class="lineNum">      17 </span>                :            : 
-<span class="lineNum">      18 </span>                :            : /* @brief namespace ad */
+<span class="lineNum">      18 </span>                :            : /** @brief namespace ad */
 <span class="lineNum">      19 </span>                :            : namespace ad {
-<span class="lineNum">      20 </span>                :            : /* @brief namespace map */
+<span class="lineNum">      20 </span>                :            : /** @brief namespace map */
 <span class="lineNum">      21 </span>                :            : namespace map {
-<span class="lineNum">      22 </span>                :            : /* @brief namespace point */
+<span class="lineNum">      22 </span>                :            : /** @brief namespace point */
 <span class="lineNum">      23 </span>                :            : namespace point {
 <span class="lineNum">      24 </span>                :            : 
 <span class="lineNum">      25 </span>                :            : /**
@@ -98,9 +98,9 @@
 <span class="lineNum">      27 </span>                :            :  *
 <a name="28"><span class="lineNum">      28 </span>                :            :  * @param[in] geometry the geometry to check</a>
 <span class="lineNum">      29 </span>                :            :  */
-<span class="lineNum">      30 </span>                :<span class="lineCov">      41562 : inline bool isValid(Geometry const &amp;geometry)</span>
+<span class="lineNum">      30 </span>                :<span class="lineCov">      47010 : inline bool isValid(Geometry const &amp;geometry)</span>
 <span class="lineNum">      31 </span>                :            : {
-<span class="lineNum">      32 </span>                :<span class="lineCov">      41562 :   return geometry.isValid;</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">      47010 :   return geometry.isValid;</span>
 <span class="lineNum">      33 </span>                :            : }
 <span class="lineNum">      34 </span>                :            : 
 <span class="lineNum">      35 </span>                :            : /**

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-08-31 16:11:43</td>
+            <td class="headerValue">2021-09-06 10:21:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -128,7 +128,7 @@
 <span class="lineNum">      57 </span>                :            :   /*!
 <a name="58"><span class="lineNum">      58 </span>                :            :    * \brief standard constructor</a>
 <span class="lineNum">      59 </span>                :            :    */
-<span class="lineNum">      60 </span>                :<span class="lineCov">  285975334 :   ECEFPoint() = default;</span>
+<span class="lineNum">      60 </span>                :<span class="lineCov">  329267152 :   ECEFPoint() = default;</span>
 <span class="lineNum">      61 </span>                :            : 
 <span class="lineNum">      62 </span>                :            :   /*!
 <span class="lineNum">      63 </span>                :            :    * \brief standard destructor
@@ -170,10 +170,10 @@
 <span class="lineNum">      99 </span>                :            :    *
 <a name="100"><span class="lineNum">     100 </span>                :            :    * \returns \c true if both ECEFPoint are equal</a>
 <span class="lineNum">     101 </span>                :            :    */
-<span class="lineNum">     102 </span>                :<span class="lineCov">      43429 :   bool operator==(const ECEFPoint &amp;other) const</span>
+<span class="lineNum">     102 </span>                :<span class="lineCov">      43449 :   bool operator==(const ECEFPoint &amp;other) const</span>
 <span class="lineNum">     103 </span>                :            :   {
-<span class="lineNum">     104 </span>[<span class="branchCov" title="Branch 1 was taken 41532 times"> + </span><span class="branchCov" title="Branch 2 was taken 1897 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 41490 times"> + </span><span class="branchCov" title="Branch 5 was taken 42 times"> + </span>]:<span class="lineCov">      43429 :     return (x == other.x) &amp;&amp; (y == other.y) &amp;&amp; (z == other.z);</span>
-<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 41468 times"> + </span><span class="branchCov" title="Branch 8 was taken 22 times"> + </span>]
+<span class="lineNum">     104 </span>[<span class="branchCov" title="Branch 1 was taken 41552 times"> + </span><span class="branchCov" title="Branch 2 was taken 1897 times"> + </span>][<span class="branchCov" title="Branch 4 was taken 41510 times"> + </span><span class="branchCov" title="Branch 5 was taken 42 times"> + </span>]:<span class="lineCov">      43449 :     return (x == other.x) &amp;&amp; (y == other.y) &amp;&amp; (z == other.z);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 41488 times"> + </span><span class="branchCov" title="Branch 8 was taken 22 times"> + </span>]
 <span class="lineNum">     105 </span>                :            :   }
 <span class="lineNum">     106 </span>                :            : 
 <span class="lineNum">     107 </span>                :            :   /**
