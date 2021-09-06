@@ -1,11 +1,5 @@
 <map id="generated/include/ad/physics/RatioValue.hpp" name="generated/include/ad/physics/RatioValue.hpp">
-<area shape="rect" id="node2" href="$RatioValueList_8hpp.html" title="generated/include/ad\l/physics/RatioValueList.hpp" alt="" coords="6,102,201,143"/>
-<area shape="rect" id="node4" href="$RatioValueValidInputRange_8hpp.html" title="generated/include/ad\l/physics/RatioValueValidInput\lRange.hpp" alt="" coords="225,95,432,151"/>
-<area shape="rect" id="node5" href="$Types_8hpp.html" title="impl/include/ad/physics\l/Types.hpp" alt="" coords="467,102,636,143"/>
-<area shape="rect" id="node3" href="$RatioValueListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/RatioValueListValid\lInputRange.hpp" alt="" coords="5,199,201,255"/>
-<area shape="rect" id="node6" href="$AngleOperation_8hpp.html" title="impl/include/ad/physics\l/AngleOperation.hpp" alt="" coords="225,206,395,247"/>
-<area shape="rect" id="node7" href="$Operation_8hpp.html" title="impl/include/ad/physics\l/Operation.hpp" alt="" coords="479,303,648,344"/>
-<area shape="rect" id="node8" href="$ParametricOperation_8hpp.html" title="impl/include/ad/physics\l/ParametricOperation.hpp" alt="" coords="470,206,657,247"/>
-<area shape="rect" id="node9" href="$PhysicsOperation_8hpp.html" title="impl/include/ad/physics\l/PhysicsOperation.hpp" alt="" coords="681,206,851,247"/>
-<area shape="rect" id="node10" href="$RatioOperation_8hpp.html" title="impl/include/ad/physics\l/RatioOperation.hpp" alt="" coords="875,206,1044,247"/>
+<area shape="rect" id="node2" href="$RatioValueList_8hpp.html" title="generated/include/ad\l/physics/RatioValueList.hpp" alt="" coords="5,102,200,143"/>
+<area shape="rect" id="node4" href="$RatioValueValidInputRange_8hpp.html" title="generated/include/ad\l/physics/RatioValueValidInput\lRange.hpp" alt="" coords="225,95,431,151"/>
+<area shape="rect" id="node3" href="$RatioValueListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/RatioValueListValid\lInputRange.hpp" alt="" coords="117,199,313,255"/>
 </map>

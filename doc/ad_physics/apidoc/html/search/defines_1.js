@@ -13,9 +13,5 @@ var searchData=
   ['ad_5fphysics_5fratiovalue_5fthrows_5fexception',['AD_PHYSICS_RATIOVALUE_THROWS_EXCEPTION',['../RatioValue_8hpp.html#a72c77690772acb0613afd9670bc0361f',1,'RatioValue.hpp']]],
   ['ad_5fphysics_5fspeed_5fthrows_5fexception',['AD_PHYSICS_SPEED_THROWS_EXCEPTION',['../Speed_8hpp.html#aa2a504150cd9cc0d26b803fd33cb6cfe',1,'Speed.hpp']]],
   ['ad_5fphysics_5fspeedsquared_5fthrows_5fexception',['AD_PHYSICS_SPEEDSQUARED_THROWS_EXCEPTION',['../SpeedSquared_8hpp.html#a63085a9f35a551943135fa7636555137',1,'SpeedSquared.hpp']]],
-  ['ad_5fphysics_5fversion_5fmajor',['AD_PHYSICS_VERSION_MAJOR',['../Version_8hpp.html#af5ff3a5f259ecae3e6f2d021f8f3923d',1,'Version.hpp']]],
-  ['ad_5fphysics_5fversion_5fminor',['AD_PHYSICS_VERSION_MINOR',['../Version_8hpp.html#a6d9f823740e7af004d7a588c1ebfd678',1,'Version.hpp']]],
-  ['ad_5fphysics_5fversion_5frevision',['AD_PHYSICS_VERSION_REVISION',['../Version_8hpp.html#af3dc3575768228be7ab9f395b7c20cfd',1,'Version.hpp']]],
-  ['ad_5fphysics_5fversion_5fstring',['AD_PHYSICS_VERSION_STRING',['../Version_8hpp.html#a7fb195296d4cf05f0dcc00fa4c28fb78',1,'Version.hpp']]],
   ['ad_5fphysics_5fweight_5fthrows_5fexception',['AD_PHYSICS_WEIGHT_THROWS_EXCEPTION',['../Weight_8hpp.html#a67c0d8dd4a52963bb6080715473b3741',1,'Weight.hpp']]]
 ];

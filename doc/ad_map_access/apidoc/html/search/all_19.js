@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['_7eadmapmatching',['~AdMapMatching',['../classad_1_1map_1_1match_1_1AdMapMatching.html#a8acf741693d25e1aee3e9afbccaee844',1,'ad::map::match::AdMapMatching']]],
   ['_7eboundingsphere',['~BoundingSphere',['../structad_1_1map_1_1point_1_1BoundingSphere.html#aa4e770379dc342b9632a4cb987cf6e4e',1,'ad::map::point::BoundingSphere']]],
   ['_7econnectingroute',['~ConnectingRoute',['../structad_1_1map_1_1route_1_1ConnectingRoute.html#ae5b0854883ad6633bf80907f18033f22',1,'ad::map::route::ConnectingRoute']]],
   ['_7econtactlane',['~ContactLane',['../structad_1_1map_1_1lane_1_1ContactLane.html#a3331492e9b96106eb3fca3940cfc0943',1,'ad::map::lane::ContactLane']]],
-  ['_7ecoordinatetransform',['~CoordinateTransform',['../classad_1_1map_1_1point_1_1CoordinateTransform.html#acb25ffe0b2f7ee73ade67a46db826f7e',1,'ad::map::point::CoordinateTransform']]],
   ['_7eecefborder',['~ECEFBorder',['../structad_1_1map_1_1lane_1_1ECEFBorder.html#a5b3c7345a0bbd4d9c626859b0f5c7154',1,'ad::map::lane::ECEFBorder']]],
   ['_7eecefheading',['~ECEFHeading',['../structad_1_1map_1_1point_1_1ECEFHeading.html#a57b6664cbb520135bc55f5ce13ef919a',1,'ad::map::point::ECEFHeading']]],
   ['_7eecefpoint',['~ECEFPoint',['../structad_1_1map_1_1point_1_1ECEFPoint.html#afd12211b383b5ace8d16ec9ad8ab1e95',1,'ad::map::point::ECEFPoint']]],
@@ -13,7 +11,6 @@ var searchData=
   ['_7eenulandmark',['~ENULandmark',['../structad_1_1map_1_1landmark_1_1ENULandmark.html#a61960844fcddb5fc1c7a54247dacb6a7',1,'ad::map::landmark::ENULandmark']]],
   ['_7eenuobjectposition',['~ENUObjectPosition',['../structad_1_1map_1_1match_1_1ENUObjectPosition.html#a3d7210b3dd027619732fc002366aa6b5',1,'ad::map::match::ENUObjectPosition']]],
   ['_7eenupoint',['~ENUPoint',['../structad_1_1map_1_1point_1_1ENUPoint.html#a18b7d1ce85b0b5b9e92df34fffcc0aa1',1,'ad::map::point::ENUPoint']]],
-  ['_7efactory',['~Factory',['../classad_1_1map_1_1access_1_1Factory.html#a7ad6a7255837df15aff0a116255a24d6',1,'ad::map::access::Factory']]],
   ['_7efullroute',['~FullRoute',['../structad_1_1map_1_1route_1_1FullRoute.html#ab0116a5e6d8c60bd6d88d62ec12f5cf8',1,'ad::map::route::FullRoute']]],
   ['_7egeoborder',['~GeoBorder',['../structad_1_1map_1_1lane_1_1GeoBorder.html#a1404b2c4b2601263741d2767da97ff35',1,'ad::map::lane::GeoBorder']]],
   ['_7egeometry',['~Geometry',['../structad_1_1map_1_1point_1_1Geometry.html#a33bbfa4f574a431a1e1e2deefc3f0a71',1,'ad::map::point::Geometry']]],
@@ -35,10 +32,7 @@ var searchData=
   ['_7erestriction',['~Restriction',['../structad_1_1map_1_1restriction_1_1Restriction.html#aa412797c8ce895b21142369f7ccc52cc',1,'ad::map::restriction::Restriction']]],
   ['_7erestrictions',['~Restrictions',['../structad_1_1map_1_1restriction_1_1Restrictions.html#ad6e9eece99f4a2e55acfd1e3fd8f7b11',1,'ad::map::restriction::Restrictions']]],
   ['_7eroadsegment',['~RoadSegment',['../structad_1_1map_1_1route_1_1RoadSegment.html#a92fcd8f8b7b3614d442abf195cf05696',1,'ad::map::route::RoadSegment']]],
-  ['_7eroute',['~Route',['../classad_1_1map_1_1route_1_1planning_1_1Route.html#a92b00a0c36f7a84b773c8ce9ae3b15c1',1,'ad::map::route::planning::Route']]],
-  ['_7erouteexpander',['~RouteExpander',['../classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html#a79c031a18e2961414aed325dfcd44f95',1,'ad::map::route::planning::RouteExpander']]],
   ['_7erouteparapoint',['~RouteParaPoint',['../structad_1_1map_1_1route_1_1RouteParaPoint.html#a8380a6d5eaef53fe667eec7130c61492',1,'ad::map::route::RouteParaPoint']]],
   ['_7espeedlimit',['~SpeedLimit',['../structad_1_1map_1_1restriction_1_1SpeedLimit.html#aacea1ec6eddb513b4e360bd54c495428',1,'ad::map::restriction::SpeedLimit']]],
-  ['_7estore',['~Store',['../classad_1_1map_1_1access_1_1Store.html#adeece088337e85d8be3637b0a912081f',1,'ad::map::access::Store']]],
   ['_7evehicledescriptor',['~VehicleDescriptor',['../structad_1_1map_1_1restriction_1_1VehicleDescriptor.html#aaaa572cf10019b3e89195b004a2d2f2e',1,'ad::map::restriction::VehicleDescriptor']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['base',['Base',['../namespacead_1_1map_1_1serialize.html#a313221e51865a4e74c4210a148f45d53a095a1b43effec73955e31e790438de49',1,'ad::map::serialize']]],
   ['bicycle',['BICYCLE',['../namespacead_1_1map_1_1restriction.html#a82db9230b6d16e53aa1cf75a45bb14c6a4bdeeb2e61c16dbc81956e1bd9148809',1,'ad::map::restriction']]],
   ['bidirectional',['BIDIRECTIONAL',['../namespacead_1_1map_1_1lane.html#a3e4501f0b74dab6d029a7f41f031dfbea01ca2e75004bdf2618045f428595ef08',1,'ad::map::lane']]],
   ['bike',['BIKE',['../namespacead_1_1map_1_1lane.html#a2063fce08470b3c416ef695aa694b419ab2c3fb330de448a29666e73dfad4785e',1,'ad::map::lane']]],

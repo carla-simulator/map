@@ -1,0 +1,497 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - include/ad/map/route/RouteExpander.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../index.html">top level</a> - <a href="index.html">include/ad/map/route</a> - RouteExpander.hpp<span style="font-size: 80%;"> (source / <a href="RouteExpander.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">117</td>
+            <td class="headerCovTableEntry">121</td>
+            <td class="headerCovTableEntryHi">96.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-09-06 15:05:16</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">30</td>
+            <td class="headerCovTableEntry">30</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">162</td>
+            <td class="headerCovTableEntry">258</td>
+            <td class="headerCovTableEntryLo">62.8 %</td>
+          </tr>
+          <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
+<span class="lineNum">       2 </span>                :            : //
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2019-2021 Intel Corporation
+<span class="lineNum">       4 </span>                :            : //
+<span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
+<span class="lineNum">       6 </span>                :            : //
+<span class="lineNum">       7 </span>                :            : // ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : #pragma once
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : #include &lt;utility&gt;
+<span class="lineNum">      12 </span>                :            : 
+<span class="lineNum">      13 </span>                :            : #include &quot;ad/map/lane/LaneOperation.hpp&quot;
+<span class="lineNum">      14 </span>                :            : #include &quot;ad/map/route/Route.hpp&quot;
+<span class="lineNum">      15 </span>                :            : #include &quot;ad/physics/Operation.hpp&quot;
+<span class="lineNum">      16 </span>                :            : 
+<span class="lineNum">      17 </span>                :            : /** @brief namespace ad */
+<span class="lineNum">      18 </span>                :            : namespace ad {
+<span class="lineNum">      19 </span>                :            : /** @brief namespace map */
+<span class="lineNum">      20 </span>                :            : namespace map {
+<span class="lineNum">      21 </span>                :            : /** @brief namespace route */
+<span class="lineNum">      22 </span>                :            : namespace route {
+<span class="lineNum">      23 </span>                :            : /**
+<span class="lineNum">      24 </span>                :            :  * @namespace planning
+<span class="lineNum">      25 </span>                :            :  * @brief provides route planning capabilities on the road network of the map
+<span class="lineNum">      26 </span>                :            :  */
+<span class="lineNum">      27 </span>                :            : namespace planning {
+<span class="lineNum">      28 </span>                :            : 
+<span class="lineNum">      29 </span>                :<span class="lineCov">          7 : static const physics::Distance cMinimumNeighborDistance{0.1};</span>
+<span class="lineNum">      30 </span>                :            : 
+<span class="lineNum">      31 </span>                :<span class="lineCov">          7 : static const physics::Duration cMinimumNeighborDuration{0.05};</span>
+<span class="lineNum">      32 </span>                :            : 
+<span class="lineNum">      33 </span>                :<span class="lineCov">          7 : static const physics::Speed cMinimumSpeed{10.};</span>
+<span class="lineNum">      34 </span>                :            : 
+<span class="lineNum">      35 </span>                :            : /**
+<span class="lineNum">      36 </span>                :            :  * @brief Implements routing support functionality on the lane network.
+<span class="lineNum">      37 </span>                :            :  *
+<span class="lineNum">      38 </span>                :            :  * This class is used to expand a route by its reachable neighbors.
+<span class="lineNum">      39 </span>                :            :  * The routing cost data is defined by a template type to be defined by the actual routing class.
+<span class="lineNum">      40 </span>                :            :  */
+<span class="lineNum">      41 </span>                :            : template &lt;class RoutingCostData&gt; class RouteExpander : public Route
+<span class="lineNum">      42 </span>                :            : {
+<a name="43"><span class="lineNum">      43 </span>                :            : public:</a>
+<span class="lineNum">      44 </span>                :            :   //! definition of the routing cost data
+<span class="lineNum">      45 </span>                :<span class="lineCov">     113920 :   struct RoutingCost</span>
+<span class="lineNum">      46 </span>                :            :   {
+<span class="lineNum">      47 </span>                :            :     physics::Distance routeDistance{0.};
+<span class="lineNum">      48 </span>                :            :     physics::Duration routeDuration{0.};
+<span class="lineNum">      49 </span>                :            :     RoutingCostData costData{};
+<span class="lineNum">      50 </span>                :            :   };
+<span class="lineNum">      51 </span>                :            :   //! definition of the routing point
+<span class="lineNum">      52 </span>                :            :   typedef std::pair&lt;RoutingParaPoint, RoutingCost&gt; RoutingPoint;
+<span class="lineNum">      53 </span>                :            : 
+<span class="lineNum">      54 </span>                :            :   /**
+<span class="lineNum">      55 </span>                :            :    * @brief Constructor
+<span class="lineNum">      56 </span>                :            :    *
+<span class="lineNum">      57 </span>                :            :    * @param[in] start Start point.
+<span class="lineNum">      58 </span>                :            :    * @param[in] dest  Destination point.
+<span class="lineNum">      59 </span>                :            :    * @param[in] maxDistance maximum route search distance.
+<span class="lineNum">      60 </span>                :            :    * @param[in] maxDuration maximum route search duration.
+<a name="61"><span class="lineNum">      61 </span>                :            :    * @param[in] typ   Type of the route to be calculated.</a>
+<span class="lineNum">      62 </span>                :            :    */
+<span class="lineNum">      63 </span>                :<span class="lineCov">       2763 :   RouteExpander(const RoutingParaPoint &amp;start,</span>
+<span class="lineNum">      64 </span>                :            :                 const RoutingParaPoint &amp;dest,
+<span class="lineNum">      65 </span>                :            :                 physics::Distance const &amp;maxDistance,
+<span class="lineNum">      66 </span>                :            :                 physics::Duration const &amp;maxDuration,
+<span class="lineNum">      67 </span>                :            :                 Type const &amp;routingType)
+<span class="lineNum">      68 </span>                :<span class="lineCov">       2763 :     : Route(start, dest, maxDistance, maxDuration, routingType)</span>
+<span class="lineNum">      69 </span>                :            :   {
+<span class="lineNum">      70 </span>                :<span class="lineCov">       2763 :   }</span>
+<span class="lineNum">      71 </span>                :            : 
+<span class="lineNum">      72 </span>                :            :   RouteExpander(RouteExpander const &amp;) = delete;
+<span class="lineNum">      73 </span>                :            :   RouteExpander(RouteExpander const &amp;&amp;) = delete;
+<span class="lineNum">      74 </span>                :            :   RouteExpander &amp;operator=(RouteExpander const &amp;) = delete;
+<span class="lineNum">      75 </span>                :            :   RouteExpander &amp;operator=(RouteExpander &amp;&amp;) = delete;
+<span class="lineNum">      76 </span>                :            : 
+<span class="lineNum">      77 </span>                :            :   /**
+<a name="78"><span class="lineNum">      78 </span>                :            :    * @brief destructor.</a>
+<span class="lineNum">      79 </span>                :            :    */
+<span class="lineNum">      80 </span>[<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 40 times"> + </span>][<span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 2723 times"> + </span>]:<span class="lineCov">       5526 :   virtual ~RouteExpander() = default;</span>
+<span class="lineNum">      81 </span>                :            : 
+<span class="lineNum">      82 </span>                :            :   /**
+<span class="lineNum">      83 </span>                :            :    * @brief Triggers the expansion of the given routing point \a origin to its valid neighborhood
+<span class="lineNum">      84 </span>                :            :    */
+<span class="lineNum">      85 </span>                :            :   void expandNeighbors(RoutingPoint const &amp;origin);
+<span class="lineNum">      86 </span>                :            : 
+<span class="lineNum">      87 </span>                :            :   /**
+<span class="lineNum">      88 </span>                :            :    * @brief set the lanes that are relevant for routing
+<a name="89"><span class="lineNum">      89 </span>                :            :    * All the rest of the lanes in the map are ignored.</a>
+<span class="lineNum">      90 </span>                :            :    */
+<span class="lineNum">      91 </span>                :<span class="lineCov">         51 :   void setRelevantLanes(::ad::map::lane::LaneIdSet const &amp;relevantLanes)</span>
+<span class="lineNum">      92 </span>                :            :   {
+<span class="lineNum">      93 </span>                :<span class="lineCov">         51 :     mRelevantLanes = relevantLanes;</span>
+<span class="lineNum">      94 </span>                :<span class="lineCov">         51 :   }</span>
+<span class="lineNum">      95 </span>                :            : 
+<span class="lineNum">      96 </span>                :            :   /**
+<span class="lineNum">      97 </span>                :            :    * @brief clear the list of relevant lanes.
+<span class="lineNum">      98 </span>                :            :    */
+<span class="lineNum">      99 </span>                :            :   void clearRelevantLanes()
+<span class="lineNum">     100 </span>                :            :   {
+<span class="lineNum">     101 </span>                :            :     mRelevantLanes.clear();
+<span class="lineNum">     102 </span>                :            :   }
+<span class="lineNum">     103 </span>                :            : 
+<span class="lineNum">     104 </span>                :            : protected:
+<span class="lineNum">     105 </span>                :            :   /**
+<span class="lineNum">     106 </span>                :            :    * @brief Definition of the reasons for route expansion
+<span class="lineNum">     107 </span>                :            :    */
+<span class="lineNum">     108 </span>                :            :   enum class ExpandReason
+<span class="lineNum">     109 </span>                :            :   {
+<span class="lineNum">     110 </span>                :            :     SameLaneNeighbor,     //!&lt; expand the route by a neighbor point within the same lane
+<span class="lineNum">     111 </span>                :            :     LongitudinalNeighbor, //!&lt; expand the route by a longitudinal neighbor lane point
+<span class="lineNum">     112 </span>                :            :     LateralNeighbor,      //!&lt; expand the route by a lateral neighbor lane point
+<span class="lineNum">     113 </span>                :            :     Destination,          //!&lt; expand the destination
+<span class="lineNum">     114 </span>                :            :   };
+<span class="lineNum">     115 </span>                :            : 
+<span class="lineNum">     116 </span>                :            :   /**
+<span class="lineNum">     117 </span>                :            :    * @brief a neighbor is added
+<span class="lineNum">     118 </span>                :            :    *
+<span class="lineNum">     119 </span>                :            :    * Override this function in the derived class to get notified on expanded neighbors.
+<span class="lineNum">     120 </span>                :            :    *
+<span class="lineNum">     121 </span>                :            :    * @param[in] originLane the lane object of the \a origin point
+<span class="lineNum">     122 </span>                :            :    * @param[in] origin the origin RoutingPoint provided to the ExpandNeighbors() function
+<span class="lineNum">     123 </span>                :            :    * @param[in] neighborLane the lane object of the \a neighbor point
+<span class="lineNum">     124 </span>                :            :    * @param[in] neighbor the neighbor RoutingPoint which is added (RoutingCostData not filled!)
+<span class="lineNum">     125 </span>                :            :    * @param[in] expandReason the reason why the origin was expanded to this neighbor
+<span class="lineNum">     126 </span>                :            :    */
+<span class="lineNum">     127 </span>                :            :   virtual void addNeighbor(lane::Lane::ConstPtr originLane,
+<span class="lineNum">     128 </span>                :            :                            RoutingPoint const &amp;origin,
+<span class="lineNum">     129 </span>                :            :                            lane::Lane::ConstPtr neighborLane,
+<span class="lineNum">     130 </span>                :            :                            RoutingPoint const &amp;neighbor,
+<span class="lineNum">     131 </span>                :            :                            ExpandReason const &amp;expandReason)
+<span class="lineNum">     132 </span>                :            :     = 0;
+<a name="133"><span class="lineNum">     133 </span>                :            : </a>
+<span class="lineNum">     134 </span>                :            :   //! @returns \c true if the given origin point is the parametric start
+<span class="lineNum">     135 </span>                :<span class="lineCov">      35121 :   bool isStart(RoutingPoint const &amp;origin)</span>
+<span class="lineNum">     136 </span>                :            :   {
+<span class="lineNum">     137 </span>        [<span class="branchCov" title="Branch 2 was taken 35121 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      35121 :     return origin.first.point.parametricOffset == physics::ParametricValue(0.);</span>
+<span class="lineNum">     138 </span>                :            :   }
+<a name="139"><span class="lineNum">     139 </span>                :            : </a>
+<span class="lineNum">     140 </span>                :            :   //! @returns \c true if the given origin point is the parametric end
+<span class="lineNum">     141 </span>                :<span class="lineCov">      44374 :   bool isEnd(RoutingPoint const &amp;origin)</span>
+<span class="lineNum">     142 </span>                :            :   {
+<span class="lineNum">     143 </span>        [<span class="branchCov" title="Branch 2 was taken 44374 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      44374 :     return origin.first.point.parametricOffset == physics::ParametricValue(1.);</span>
+<span class="lineNum">     144 </span>                :            :   }
+<a name="145"><span class="lineNum">     145 </span>                :            : </a>
+<span class="lineNum">     146 </span>                :            :   //! @returns \c true if the given origin point on the given lane defines a positive movement
+<span class="lineNum">     147 </span>                :<span class="lineCov">      42797 :   bool isPositiveMovement(lane::Lane::ConstPtr lane, RoutingPoint const &amp;origin)</span>
+<span class="lineNum">     148 </span>                :            :   {
+<span class="lineNum">     149 </span>                :<span class="lineCov">      85257 :     return (laneDirectionIsIgnored() || isLaneDirectionPositive(*lane))</span>
+<span class="lineNum">     150 </span>  [<span class="branchCov" title="Branch 0 was taken 42460 times"> + </span><span class="branchCov" title="Branch 1 was taken 337 times"> + </span><span class="branchCov" title="Branch 2 was taken 23304 times"> + </span><span class="branchCov" title="Branch 3 was taken 19156 times"> + </span>]:<span class="lineCov">      85257 :       &amp;&amp; (origin.first.direction == RoutingDirection::POSITIVE);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 4 was taken 21861 times"> + </span><span class="branchCov" title="Branch 5 was taken 1780 times"> + </span>]
+<span class="lineNum">     151 </span>                :            :   }
+<a name="152"><span class="lineNum">     152 </span>                :            : </a>
+<span class="lineNum">     153 </span>                :            :   //! @returns \c true if the given origin point on the given lane defines a negative movement
+<span class="lineNum">     154 </span>                :<span class="lineCov">      42605 :   bool isNegativeMovement(lane::Lane::ConstPtr lane, RoutingPoint const &amp;origin)</span>
+<span class="lineNum">     155 </span>                :            :   {
+<span class="lineNum">     156 </span>                :<span class="lineCov">      84884 :     return (laneDirectionIsIgnored() || isLaneDirectionNegative(*lane))</span>
+<span class="lineNum">     157 </span>  [<span class="branchCov" title="Branch 0 was taken 42279 times"> + </span><span class="branchCov" title="Branch 1 was taken 326 times"> + </span><span class="branchCov" title="Branch 2 was taken 17429 times"> + </span><span class="branchCov" title="Branch 3 was taken 24850 times"> + </span>]:<span class="lineCov">      84884 :       &amp;&amp; (origin.first.direction == RoutingDirection::NEGATIVE);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 4 was taken 15953 times"> + </span><span class="branchCov" title="Branch 5 was taken 1802 times"> + </span>]
+<span class="lineNum">     158 </span>                :            :   }
+<a name="159"><span class="lineNum">     159 </span>                :            : </a>
+<span class="lineNum">     160 </span>                :            :   //! check if lane is relevant for route expander
+<span class="lineNum">     161 </span>                :<span class="lineCov">      55738 :   bool isLaneRelevantForExpansion(lane::LaneId const laneId) const</span>
+<span class="lineNum">     162 </span>                :            :   {
+<span class="lineNum">     163 </span>                :<span class="lineCov">      55738 :     return lane::isLaneRelevantForExpansion(laneId, mRelevantLanes);</span>
+<span class="lineNum">     164 </span>                :            :   }
+<span class="lineNum">     165 </span>                :            : 
+<span class="lineNum">     166 </span>                :            :   //! perform the expansion of the neighbor points on the same lane
+<span class="lineNum">     167 </span>                :            :   void expandSameLaneNeighbors(lane::Lane::ConstPtr lane, RoutingPoint const &amp;origin);
+<span class="lineNum">     168 </span>                :            :   //! perform the expansion of the neighbor points in longitudinal (contacts: successor/predecessor) lane direction
+<span class="lineNum">     169 </span>                :            :   void expandLongitudinalNeighbors(lane::Lane::ConstPtr lane, RoutingPoint const &amp;origin);
+<span class="lineNum">     170 </span>                :            :   //! perform the expansion of the neighbor points in lateral (contacts: left/right) lane direction
+<span class="lineNum">     171 </span>                :            :   void expandLateralNeighbors(lane::Lane::ConstPtr lane, RoutingPoint const &amp;origin);
+<span class="lineNum">     172 </span>                :            : 
+<span class="lineNum">     173 </span>                :            :   //! create neighbor point and calculate the actual distance/duration to reach it
+<span class="lineNum">     174 </span>                :            :   RoutingPoint createNeighbor(lane::Lane::ConstPtr originLane,
+<span class="lineNum">     175 </span>                :            :                               RoutingPoint const &amp;origin,
+<span class="lineNum">     176 </span>                :            :                               lane::Lane::ConstPtr neighborLane,
+<span class="lineNum">     177 </span>                :            :                               RoutingParaPoint neighborRoutingParaPoint);
+<span class="lineNum">     178 </span>                :            :   //! create longitudinal neighbor point with minimal actual distance/duration to reach
+<span class="lineNum">     179 </span>                :            :   RoutingPoint createLongitudinalNeighbor(RoutingPoint const &amp;origin, RoutingParaPoint neighborRoutingParaPoint);
+<span class="lineNum">     180 </span>                :            : 
+<span class="lineNum">     181 </span>                :            :   //! relevant lanes for the routing
+<span class="lineNum">     182 </span>                :            :   ::ad::map::lane::LaneIdSet mRelevantLanes;
+<span class="lineNum">     183 </span>                :            : };
+<a name="184"><span class="lineNum">     184 </span>                :            : </a>
+<span class="lineNum">     185 </span>                :            : template &lt;class RoutingCostData&gt;
+<span class="lineNum">     186 </span>                :<span class="lineCov">      29505 : void RouteExpander&lt;RoutingCostData&gt;::expandNeighbors(</span>
+<span class="lineNum">     187 </span>                :            :   typename RouteExpander&lt;RoutingCostData&gt;::RoutingPoint const &amp;origin)
+<span class="lineNum">     188 </span>                :            : {
+<span class="lineNum">     189 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 29505 times"> + </span>]:<span class="lineCov">      29505 :   if (origin.first.direction == RoutingDirection::DONT_CARE)</span>
+<span class="lineNum">     190 </span>                :            :   {
+<span class="lineNum">     191 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::runtime_error(&quot;RouteExpander::ExpandNeighbors invalid routing direction!&quot;);</span>
+<span class="lineNum">     192 </span>                :            :   }
+<span class="lineNum">     193 </span>                :            : 
+<span class="lineNum">     194 </span>        [<span class="branchCov" title="Branch 1 was taken 29505 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      59010 :   lane::Lane::ConstPtr lane = lane::getLanePtr(origin.first.point.laneId);</span>
+<span class="lineNum">     195 </span>        [<span class="branchCov" title="Branch 1 was taken 29505 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      29505 :   if (lane)</span>
+<span class="lineNum">     196 </span>                :            :   {
+<span class="lineNum">     197 </span>[<span class="branchCov" title="Branch 0 was taken 29505 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>][<span class="branchCov" title="Branch 2 was taken 29155 times"> + </span><span class="branchCov" title="Branch 3 was taken 350 times"> + </span>]:<span class="lineCov">      88519 :     if ( // lane has to be routable to expand</span>
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 4 was taken 4 times"> + </span><span class="branchCov" title="Branch 5 was taken 29151 times"> + </span><span class="branchCov" title="Branch 6 was taken 150 times"> + </span><span class="branchCov" title="Branch 7 was taken 204 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 8 was taken 29301 times"> + </span><span class="branchCov" title="Branch 9 was taken 204 times"> + </span>]
+<span class="lineNum">     198 </span>                :<span class="lineCov">      29505 :       isRouteable(*lane)</span>
+<span class="lineNum">     199 </span>                :            :       &amp;&amp; ( // max distance and max duration are not yet reached
+<span class="lineNum">     200 </span>[<span class="branchCov" title="Branch 1 was taken 29505 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 29155 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">      58660 :         ((origin.second.routeDistance &lt; mMaxDistance) &amp;&amp; (origin.second.routeDuration &lt; mMaxDuration))</span>
+<span class="lineNum">     201 </span>                :            :         // or we are within an intersection
+<span class="lineNum">     202 </span>                :<span class="lineCov">        354 :         || lane::isLanePartOfAnIntersection(*lane)))</span>
+<span class="lineNum">     203 </span>                :            :     {
+<span class="lineNum">     204 </span>        [<span class="branchCov" title="Branch 2 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      29301 :       expandSameLaneNeighbors(lane, origin);</span>
+<span class="lineNum">     205 </span>        [<span class="branchCov" title="Branch 2 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      29301 :       expandLongitudinalNeighbors(lane, origin);</span>
+<span class="lineNum">     206 </span>        [<span class="branchCov" title="Branch 2 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      29301 :       expandLateralNeighbors(lane, origin);</span>
+<span class="lineNum">     207 </span>                :            :     }
+<span class="lineNum">     208 </span>                :            :   }
+<span class="lineNum">     209 </span>                :            :   else
+<span class="lineNum">     210 </span>                :            :   {
+<span class="lineNum">     211 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::runtime_error(&quot;RouteExpander::ExpandNeighbors No lane!&quot;);</span>
+<span class="lineNum">     212 </span>                :            :   }
+<span class="lineNum">     213 </span>                :<span class="lineCov">      29505 : }</span>
+<span class="lineNum">     214 </span>                :            : 
+<a name="215"><span class="lineNum">     215 </span>                :            : template &lt;class RoutingCostData&gt;</a>
+<span class="lineNum">     216 </span>                :            : typename RouteExpander&lt;RoutingCostData&gt;::RoutingPoint
+<span class="lineNum">     217 </span>                :<span class="lineCov">      29789 : RouteExpander&lt;RoutingCostData&gt;::createNeighbor(lane::Lane::ConstPtr originLane,</span>
+<span class="lineNum">     218 </span>                :            :                                                RoutingPoint const &amp;origin,
+<span class="lineNum">     219 </span>                :            :                                                lane::Lane::ConstPtr neighborLane,
+<span class="lineNum">     220 </span>                :            :                                                RoutingParaPoint neighborRoutingParaPoint)
+<span class="lineNum">     221 </span>                :            : {
+<span class="lineNum">     222 </span>        [<span class="branchCov" title="Branch 1 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      29789 :   RoutingPoint neighbor;</span>
+<span class="lineNum">     223 </span>                :<span class="lineCov">      29789 :   neighbor.first = neighborRoutingParaPoint;</span>
+<span class="lineNum">     224 </span>                :            : 
+<span class="lineNum">     225 </span>                :<span class="lineCov">      29789 :   physics::Distance neighborDistance{0.};</span>
+<span class="lineNum">     226 </span>                :<span class="lineCov">      29789 :   physics::Duration neighborDuration{0.};</span>
+<span class="lineNum">     227 </span>                :            :   point::ECEFPoint pt_origin
+<span class="lineNum">     228 </span>        [<span class="branchCov" title="Branch 3 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      29789 :     = getParametricPoint(*originLane, origin.first.point.parametricOffset, physics::ParametricValue(0.5));</span>
+<span class="lineNum">     229 </span>                :            :   point::ECEFPoint pt_neighbor
+<span class="lineNum">     230 </span>        [<span class="branchCov" title="Branch 3 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      29789 :     = getParametricPoint(*neighborLane, neighbor.first.point.parametricOffset, physics::ParametricValue(0.5));</span>
+<span class="lineNum">     231 </span>        [<span class="branchCov" title="Branch 1 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      29789 :   neighborDistance = point::distance(pt_neighbor, pt_origin);</span>
+<span class="lineNum">     232 </span>        [<span class="branchCov" title="Branch 1 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      29789 :   physics::ParametricRange drivingRange;</span>
+<span class="lineNum">     233 </span>[<span class="branchCov" title="Branch 1 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 11455 times"> + </span><span class="branchCov" title="Branch 4 was taken 18334 times"> + </span>]:<span class="lineCov">      29789 :   if (origin.first.point.parametricOffset &lt; neighbor.first.point.parametricOffset)</span>
+<span class="lineNum">     234 </span>                :            :   {
+<span class="lineNum">     235 </span>                :<span class="lineCov">      11455 :     drivingRange.minimum = origin.first.point.parametricOffset;</span>
+<span class="lineNum">     236 </span>                :<span class="lineCov">      11455 :     drivingRange.maximum = neighbor.first.point.parametricOffset;</span>
+<span class="lineNum">     237 </span>                :            :   }
+<span class="lineNum">     238 </span>                :            :   else
+<span class="lineNum">     239 </span>                :            :   {
+<span class="lineNum">     240 </span>                :<span class="lineCov">      18334 :     drivingRange.minimum = neighbor.first.point.parametricOffset;</span>
+<span class="lineNum">     241 </span>                :<span class="lineCov">      18334 :     drivingRange.maximum = origin.first.point.parametricOffset;</span>
+<span class="lineNum">     242 </span>                :            :   }
+<span class="lineNum">     243 </span>                :            : 
+<span class="lineNum">     244 </span>        [<span class="branchCov" title="Branch 1 was taken 19873 times"> + </span><span class="branchCov" title="Branch 2 was taken 9916 times"> + </span>]:<span class="lineCov">      29789 :   if (originLane == neighborLane)</span>
+<span class="lineNum">     245 </span>                :            :   {
+<span class="lineNum">     246 </span>        [<span class="branchCov" title="Branch 2 was taken 19873 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      19873 :     neighborDuration = getDuration(*originLane, drivingRange);</span>
+<span class="lineNum">     247 </span>                :            :   }
+<span class="lineNum">     248 </span>                :            :   else
+<span class="lineNum">     249 </span>                :            :   {
+<span class="lineNum">     250 </span>[<span class="branchCov" title="Branch 2 was taken 9916 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 9916 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">       9916 :     auto const maxSpeed = std::max(getMaxSpeed(*originLane, drivingRange), cMinimumSpeed);</span>
+<span class="lineNum">     251 </span>        [<span class="branchCov" title="Branch 1 was taken 9916 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">       9916 :     neighborDuration = neighborDistance / maxSpeed;</span>
+<span class="lineNum">     252 </span>                :            :   }
+<span class="lineNum">     253 </span>        [<span class="branchCov" title="Branch 1 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      29789 :   neighborDistance = std::max(neighborDistance, cMinimumNeighborDistance);</span>
+<span class="lineNum">     254 </span>        [<span class="branchCov" title="Branch 1 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      29789 :   neighborDuration = std::max(neighborDuration, cMinimumNeighborDuration);</span>
+<span class="lineNum">     255 </span>        [<span class="branchCov" title="Branch 1 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      29789 :   neighbor.second.routeDistance = origin.second.routeDistance + neighborDistance;</span>
+<span class="lineNum">     256 </span>        [<span class="branchCov" title="Branch 1 was taken 29789 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      29789 :   neighbor.second.routeDuration = origin.second.routeDuration + neighborDuration;</span>
+<span class="lineNum">     257 </span>                :<span class="lineCov">      29789 :   return neighbor;</span>
+<span class="lineNum">     258 </span>                :            : }
+<span class="lineNum">     259 </span>                :            : 
+<a name="260"><span class="lineNum">     260 </span>                :            : template &lt;class RoutingCostData&gt;</a>
+<span class="lineNum">     261 </span>                :            : typename RouteExpander&lt;RoutingCostData&gt;::RoutingPoint
+<span class="lineNum">     262 </span>                :<span class="lineCov">      24368 : RouteExpander&lt;RoutingCostData&gt;::createLongitudinalNeighbor(RoutingPoint const &amp;origin,</span>
+<span class="lineNum">     263 </span>                :            :                                                            RoutingParaPoint neighborRoutingParaPoint)
+<span class="lineNum">     264 </span>                :            : {
+<span class="lineNum">     265 </span>                :<span class="lineCov">      24368 :   RoutingPoint neighbor;</span>
+<span class="lineNum">     266 </span>                :<span class="lineCov">      24368 :   neighbor.first = neighborRoutingParaPoint;</span>
+<span class="lineNum">     267 </span>                :<span class="lineCov">      24368 :   neighbor.second.routeDistance = origin.second.routeDistance + cMinimumNeighborDistance;</span>
+<span class="lineNum">     268 </span>                :<span class="lineCov">      24368 :   neighbor.second.routeDuration = origin.second.routeDuration + cMinimumNeighborDuration;</span>
+<span class="lineNum">     269 </span>                :<span class="lineCov">      24368 :   return neighbor;</span>
+<span class="lineNum">     270 </span>                :            : }
+<a name="271"><span class="lineNum">     271 </span>                :            : </a>
+<span class="lineNum">     272 </span>                :            : template &lt;class RoutingCostData&gt;
+<span class="lineNum">     273 </span>                :<span class="lineCov">      29301 : void RouteExpander&lt;RoutingCostData&gt;::expandSameLaneNeighbors(</span>
+<span class="lineNum">     274 </span>                :            :   lane::Lane::ConstPtr lane, typename RouteExpander&lt;RoutingCostData&gt;::RoutingPoint const &amp;origin)
+<span class="lineNum">     275 </span>                :            : {
+<span class="lineNum">     276 </span>[<span class="branchCov" title="Branch 3 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 2805 times"> + </span><span class="branchCov" title="Branch 6 was taken 26496 times"> + </span>]:<span class="lineCov">      68213 :   if ((lane-&gt;id == getDest().laneId)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 1608 times"> + </span><span class="branchCov" title="Branch 8 was taken 1197 times"> + </span>][<span class="branchCov" title="Branch 9 was taken 19 times"> + </span><span class="branchCov" title="Branch 10 was taken 1589 times"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 1177 times"> + </span><span class="branchCov" title="Branch 12 was taken 39 times"> + </span>][<span class="branchCov" title="Branch 13 was taken 1167 times"> + </span><span class="branchCov" title="Branch 14 was taken 10 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 2756 times"> + </span><span class="branchCov" title="Branch 16 was taken 26545 times"> + </span>]
+<span class="lineNum">     277 </span>[<span class="branchCov" title="Branch 2 was taken 2805 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1608 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">      36519 :       &amp;&amp; ((isPositiveMovement(lane, origin) &amp;&amp; (origin.first.point.parametricOffset &lt;= getDest().parametricOffset))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 26496 times"> + </span><span class="branchCov" title="Branch 9 was taken 2805 times"> + </span>][<span class="branchNoExec" title="Branch 11 was not executed"> # </span><span class="branchNoExec" title="Branch 12 was not executed"> # </span>]
+<span class="lineNum">     278 </span>[<span class="branchCov" title="Branch 2 was taken 1216 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1177 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">      31694 :           || (isNegativeMovement(lane, origin) &amp;&amp; (origin.first.point.parametricOffset &gt;= getDest().parametricOffset))))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 1216 times"> + </span><span class="branchCov" title="Branch 9 was taken 28085 times"> + </span>][<span class="branchNoExec" title="Branch 11 was not executed"> # </span><span class="branchNoExec" title="Branch 12 was not executed"> # </span>]
+<span class="lineNum">     279 </span>                :            :   {
+<span class="lineNum">     280 </span>                :            :     // approaching the destination from valid side
+<span class="lineNum">     281 </span>        [<span class="branchCov" title="Branch 4 was taken 2756 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">       2756 :     auto const neighbor = createNeighbor(lane, origin, lane, getRoutingDest());</span>
+<span class="lineNum">     282 </span>        [<span class="branchCov" title="Branch 3 was taken 2756 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       2756 :     addNeighbor(lane, origin, lane, neighbor, ExpandReason::Destination);</span>
+<span class="lineNum">     283 </span>                :            :   }
+<span class="lineNum">     284 </span>[<span class="branchCov" title="Branch 2 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 15073 times"> + </span><span class="branchCov" title="Branch 5 was taken 14228 times"> + </span>]:<span class="lineCov">      29301 :   if (isPositiveMovement(lane, origin) &amp;&amp; !isEnd(origin))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 15073 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 9893 times"> + </span><span class="branchCov" title="Branch 10 was taken 5180 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 11 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 14 was taken 9893 times"> + </span><span class="branchCov" title="Branch 15 was taken 19408 times"> + </span><span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<span class="lineNum">     285 </span>                :            :   {
+<span class="lineNum">     286 </span>        [<span class="branchCov" title="Branch 2 was taken 9893 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      29679 :     auto const neighbor = createNeighbor(</span>
+<span class="lineNum">     287 </span>        [<span class="branchCov" title="Branch 2 was taken 9893 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      19786 :       lane, origin, lane, createRoutingParaPoint(lane-&gt;id, physics::ParametricValue(1.), origin.first.direction));</span>
+<span class="lineNum">     288 </span>        [<span class="branchCov" title="Branch 3 was taken 9893 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       9893 :     addNeighbor(lane, origin, lane, neighbor, ExpandReason::SameLaneNeighbor);</span>
+<span class="lineNum">     289 </span>                :            :   }
+<span class="lineNum">     290 </span>[<span class="branchCov" title="Branch 2 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 11000 times"> + </span><span class="branchCov" title="Branch 5 was taken 18301 times"> + </span>]:<span class="lineCov">      29301 :   if (isNegativeMovement(lane, origin) &amp;&amp; !isStart(origin))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 11000 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 7224 times"> + </span><span class="branchCov" title="Branch 10 was taken 3776 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 11 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 14 was taken 7224 times"> + </span><span class="branchCov" title="Branch 15 was taken 22077 times"> + </span><span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<span class="lineNum">     291 </span>                :            :   {
+<span class="lineNum">     292 </span>        [<span class="branchCov" title="Branch 2 was taken 7224 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      21672 :     auto const neighbor = createNeighbor(</span>
+<span class="lineNum">     293 </span>        [<span class="branchCov" title="Branch 2 was taken 7224 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      14448 :       lane, origin, lane, createRoutingParaPoint(lane-&gt;id, physics::ParametricValue(0.), origin.first.direction));</span>
+<span class="lineNum">     294 </span>        [<span class="branchCov" title="Branch 3 was taken 7224 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       7224 :     addNeighbor(lane, origin, lane, neighbor, ExpandReason::SameLaneNeighbor);</span>
+<span class="lineNum">     295 </span>                :            :   }
+<span class="lineNum">     296 </span>                :<span class="lineCov">      29301 : }</span>
+<a name="297"><span class="lineNum">     297 </span>                :            : </a>
+<span class="lineNum">     298 </span>                :            : template &lt;class RoutingCostData&gt;
+<span class="lineNum">     299 </span>                :<span class="lineCov">      29301 : void RouteExpander&lt;RoutingCostData&gt;::expandLongitudinalNeighbors(</span>
+<span class="lineNum">     300 </span>                :            :   lane::Lane::ConstPtr lane, typename RouteExpander&lt;RoutingCostData&gt;::RoutingPoint const &amp;origin)
+<span class="lineNum">     301 </span>                :            : {
+<span class="lineNum">     302 </span>                :<span class="lineCov">      58602 :   lane::ContactLaneList contactLanes;</span>
+<span class="lineNum">     303 </span>[<span class="branchCov" title="Branch 1 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 10691 times"> + </span><span class="branchCov" title="Branch 4 was taken 18610 times"> + </span>]:<span class="lineCov">      29301 :   if (isEnd(origin) &amp;&amp; isPositiveMovement(lane, origin))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 10691 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 5180 times"> + </span><span class="branchCov" title="Branch 10 was taken 5511 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 11 was taken 10691 times"> + </span><span class="branchCov" title="Branch 12 was taken 18610 times"> + </span>]
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 14 was taken 5180 times"> + </span><span class="branchCov" title="Branch 15 was taken 24121 times"> + </span><span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<span class="lineNum">     304 </span>                :            :   {
+<span class="lineNum">     305 </span>        [<span class="branchCov" title="Branch 2 was taken 5180 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       5180 :     contactLanes = lane::getContactLanes(*lane, lane::ContactLocation::SUCCESSOR);</span>
+<span class="lineNum">     306 </span>                :            :   }
+<span class="lineNum">     307 </span>[<span class="branchCov" title="Branch 1 was taken 24121 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 12088 times"> + </span><span class="branchCov" title="Branch 4 was taken 12033 times"> + </span>]:<span class="lineCov">      24121 :   else if (isStart(origin) &amp;&amp; isNegativeMovement(lane, origin))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 12088 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 9 was taken 3776 times"> + </span><span class="branchCov" title="Branch 10 was taken 8312 times"> + </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 11 was taken 12088 times"> + </span><span class="branchCov" title="Branch 12 was taken 12033 times"> + </span>]
+<span class="lineNum">         </span>  [<span class="branchCov" title="Branch 14 was taken 3776 times"> + </span><span class="branchCov" title="Branch 15 was taken 20345 times"> + </span><span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<span class="lineNum">     308 </span>                :            :   {
+<span class="lineNum">     309 </span>        [<span class="branchCov" title="Branch 2 was taken 3776 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       3776 :     contactLanes = lane::getContactLanes(*lane, lane::ContactLocation::PREDECESSOR);</span>
+<span class="lineNum">     310 </span>                :            :   }
+<span class="lineNum">     311 </span>[<span class="branchCov" title="Branch 3 was taken 24373 times"> + </span><span class="branchCov" title="Branch 4 was taken 29301 times"> + </span>][<span class="branchCov" title="Branch 7 was taken 24373 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]:<span class="lineCov">      53674 :   for (auto contactLane : contactLanes)</span>
+<span class="lineNum">     312 </span>                :            :   {
+<span class="lineNum">     313 </span>[<span class="branchCov" title="Branch 1 was taken 24373 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 5 times"> + </span><span class="branchCov" title="Branch 4 was taken 24368 times"> + </span>]:<span class="lineCov">      24373 :     if (!isLaneRelevantForExpansion(contactLane.toLane))</span>
+<span class="lineNum">     314 </span>                :            :     {
+<span class="lineNum">     315 </span>                :<span class="lineCov">          5 :       continue;</span>
+<span class="lineNum">     316 </span>                :            :     }
+<span class="lineNum">     317 </span>[<span class="branchCov" title="Branch 1 was taken 24368 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 24368 times"> + </span><span class="branchCov" title="Branch 6 was taken 5 times"> + </span>]:<span class="lineCov">      48741 :     lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.toLane);</span>
+<span class="lineNum">     318 </span>        [<span class="branchCov" title="Branch 1 was taken 24368 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      24368 :     if (otherLane)</span>
+<span class="lineNum">     319 </span>                :            :     {
+<span class="lineNum">     320 </span>        [<span class="branchCov" title="Branch 2 was taken 24368 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      24368 :       if (isRouteable(*otherLane))</span>
+<span class="lineNum">     321 </span>                :            :       {
+<span class="lineNum">     322 </span>        [<span class="branchCov" title="Branch 3 was taken 24368 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      24368 :         lane::ContactLocation otherToLane = getContactLocation(*otherLane, lane-&gt;id);</span>
+<span class="lineNum">     323 </span>        [<span class="branchCov" title="Branch 0 was taken 9981 times"> + </span><span class="branchCov" title="Branch 1 was taken 14387 times"> + </span>]:<span class="lineCov">      24368 :         if (otherToLane == lane::ContactLocation::SUCCESSOR)</span>
+<span class="lineNum">     324 </span>                :            :         {
+<span class="lineNum">     325 </span>                :<span class="lineCov">       9981 :           auto routingDirection = RoutingDirection::NEGATIVE;</span>
+<span class="lineNum">     326 </span>        [<span class="branchCov" title="Branch 2 was taken 9981 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      19962 :           auto const neighbor = createLongitudinalNeighbor(</span>
+<span class="lineNum">     327 </span>        [<span class="branchCov" title="Branch 2 was taken 9981 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      19962 :             origin, createRoutingParaPoint(otherLane-&gt;id, physics::ParametricValue(1.), routingDirection));</span>
+<span class="lineNum">     328 </span>                :            : 
+<span class="lineNum">     329 </span>        [<span class="branchCov" title="Branch 3 was taken 9981 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">       9981 :           addNeighbor(lane, origin, otherLane, neighbor, ExpandReason::LongitudinalNeighbor);</span>
+<span class="lineNum">     330 </span>                :            :         }
+<span class="lineNum">     331 </span>        [<span class="branchCov" title="Branch 0 was taken 14387 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      14387 :         else if (otherToLane == lane::ContactLocation::PREDECESSOR)</span>
+<span class="lineNum">     332 </span>                :            :         {
+<span class="lineNum">     333 </span>                :<span class="lineCov">      14387 :           auto routingDirection = RoutingDirection::POSITIVE;</span>
+<span class="lineNum">     334 </span>        [<span class="branchCov" title="Branch 2 was taken 14387 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      28774 :           auto const neighbor = createLongitudinalNeighbor(</span>
+<span class="lineNum">     335 </span>        [<span class="branchCov" title="Branch 2 was taken 14387 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      28774 :             origin, createRoutingParaPoint(otherLane-&gt;id, physics::ParametricValue(0.), routingDirection));</span>
+<span class="lineNum">     336 </span>                :            : 
+<span class="lineNum">     337 </span>        [<span class="branchCov" title="Branch 3 was taken 14387 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      14387 :           addNeighbor(lane, origin, otherLane, neighbor, ExpandReason::LongitudinalNeighbor);</span>
+<span class="lineNum">     338 </span>                :            :         }
+<span class="lineNum">     339 </span>                :            :         else
+<span class="lineNum">     340 </span>                :            :         {
+<span class="lineNum">     341 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineCov">      24368 :           throw std::runtime_error(&quot;Other lane neither SUCCESSOR not PREDECESSOR!&quot;);</span>
+<span class="lineNum">     342 </span>                :            :         }
+<span class="lineNum">     343 </span>                :            :       }
+<span class="lineNum">     344 </span>                :            :     }
+<span class="lineNum">     345 </span>                :            :     else
+<span class="lineNum">     346 </span>                :            :     {
+<span class="lineNum">     347 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       throw std::runtime_error(&quot;No other lane!&quot;);</span>
+<span class="lineNum">     348 </span>                :            :     }
+<span class="lineNum">     349 </span>                :            :   }
+<span class="lineNum">     350 </span>                :<span class="lineCov">      29301 : }</span>
+<a name="351"><span class="lineNum">     351 </span>                :            : </a>
+<span class="lineNum">     352 </span>                :            : template &lt;class RoutingCostData&gt;
+<span class="lineNum">     353 </span>                :<span class="lineCov">      29301 : void RouteExpander&lt;RoutingCostData&gt;::expandLateralNeighbors(</span>
+<span class="lineNum">     354 </span>                :            :   lane::Lane::ConstPtr lane, typename RouteExpander&lt;RoutingCostData&gt;::RoutingPoint const &amp;origin)
+<span class="lineNum">     355 </span>                :            : {
+<span class="lineNum">     356 </span>  [<span class="branchCov" title="Branch 2 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 29301 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">      89967 :   for (auto const &amp;contactLane :</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 12 was taken 31365 times"> + </span><span class="branchCov" title="Branch 13 was taken 29301 times"> + </span>]
+<span class="lineNum">     357 </span>                :<span class="lineCov">      29301 :        lane::getContactLanes(*lane, {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT}))</span>
+<span class="lineNum">     358 </span>                :            :   {
+<span class="lineNum">     359 </span>[<span class="branchCov" title="Branch 1 was taken 31365 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 8 times"> + </span><span class="branchCov" title="Branch 4 was taken 31357 times"> + </span>]:<span class="lineCov">      31365 :     if (!isLaneRelevantForExpansion(contactLane.toLane))</span>
+<span class="lineNum">     360 </span>                :            :     {
+<span class="lineNum">     361 </span>                :<span class="lineCov">          8 :       continue;</span>
+<span class="lineNum">     362 </span>                :            :     }
+<span class="lineNum">     363 </span>        [<span class="branchCov" title="Branch 1 was taken 31357 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      62714 :     lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.toLane);</span>
+<span class="lineNum">     364 </span>        [<span class="branchCov" title="Branch 1 was taken 31357 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      31357 :     if (otherLane)</span>
+<span class="lineNum">     365 </span>                :            :     {
+<span class="lineNum">     366 </span>        [<span class="branchCov" title="Branch 2 was taken 30104 times"> + </span><span class="branchCov" title="Branch 3 was taken 1253 times"> + </span>]:<span class="lineCov">      31357 :       if (isRouteable(*otherLane))</span>
+<span class="lineNum">     367 </span>                :            :       {
+<span class="lineNum">     368 </span>[<span class="branchCov" title="Branch 1 was taken 30104 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 29855 times"> + </span><span class="branchCov" title="Branch 4 was taken 249 times"> + </span>]:<span class="lineCov">      30104 :         if (laneDirectionIsIgnored() || (lane-&gt;direction == otherLane-&gt;direction))</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 7 was taken 9667 times"> + </span><span class="branchCov" title="Branch 8 was taken 20188 times"> + </span>][<span class="branchCov" title="Branch 9 was taken 9916 times"> + </span><span class="branchCov" title="Branch 10 was taken 20188 times"> + </span>]
+<span class="lineNum">     369 </span>                :            :         {
+<span class="lineNum">     370 </span>        [<span class="branchCov" title="Branch 1 was taken 9916 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">      19832 :           auto const neighbor = createNeighbor(</span>
+<span class="lineNum">     371 </span>                :            :             lane,
+<span class="lineNum">     372 </span>                :            :             origin,
+<span class="lineNum">     373 </span>                :            :             otherLane,
+<span class="lineNum">     374 </span>        [<span class="branchCov" title="Branch 2 was taken 9916 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      19832 :             createRoutingParaPoint(otherLane-&gt;id, origin.first.point.parametricOffset, origin.first.direction));</span>
+<span class="lineNum">     375 </span>        [<span class="branchCov" title="Branch 3 was taken 9916 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">      31357 :           addNeighbor(lane, origin, otherLane, neighbor, ExpandReason::LateralNeighbor);</span>
+<span class="lineNum">     376 </span>                :            :         }
+<span class="lineNum">     377 </span>                :            :       }
+<span class="lineNum">     378 </span>                :            :     }
+<span class="lineNum">     379 </span>                :            :     else
+<span class="lineNum">     380 </span>                :            :     {
+<span class="lineNum">     381 </span>        [<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       throw std::runtime_error(&quot;No other lane!&quot;);</span>
+<span class="lineNum">     382 </span>                :            :     }
+<span class="lineNum">     383 </span>                :            :   }
+<span class="lineNum">     384 </span>                :<span class="lineCov">      29301 : }</span>
+<span class="lineNum">     385 </span>                :            : 
+<span class="lineNum">     386 </span>                :            : } // namespace planning
+<span class="lineNum">     387 </span>                :            : } // namespace route
+<span class="lineNum">     388 </span>                :            : } // namespace map
+<span class="lineNum">     389 </span>                :            : } // namespace ad
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

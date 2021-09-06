@@ -1,12 +1,11 @@
 <map id="generated/include/ad/physics/Distance.hpp" name="generated/include/ad/physics/Distance.hpp">
 <area shape="rect" id="node2" href="$Dimension2D_8hpp.html" title="generated/include/ad\l/physics/Dimension2D.hpp" alt="" coords="261,102,451,143"/>
 <area shape="rect" id="node6" href="$Dimension3D_8hpp.html" title="generated/include/ad\l/physics/Dimension3D.hpp" alt="" coords="749,102,939,143"/>
-<area shape="rect" id="node10" href="$Distance2D_8hpp.html" title="generated/include/ad\l/physics/Distance2D.hpp" alt="" coords="1057,102,1236,143"/>
+<area shape="rect" id="node10" href="$Distance2D_8hpp.html" title="generated/include/ad\l/physics/Distance2D.hpp" alt="" coords="1040,102,1219,143"/>
 <area shape="rect" id="node14" href="$Distance3D_8hpp.html" title="generated/include/ad\l/physics/Distance3D.hpp" alt="" coords="1704,102,1883,143"/>
-<area shape="rect" id="node18" href="$DistanceList_8hpp.html" title="generated/include/ad\l/physics/DistanceList.hpp" alt="" coords="1479,102,1662,143"/>
-<area shape="rect" id="node20" href="$DistanceValidInputRange_8hpp.html" title="generated/include/ad\l/physics/DistanceValidInput\lRange.hpp" alt="" coords="1260,95,1455,151"/>
-<area shape="rect" id="node25" href="$MetricRange_8hpp.html" title="generated/include/ad\l/physics/MetricRange.hpp" alt="" coords="2168,102,2352,143"/>
-<area shape="rect" id="node27" href="$Types_8hpp.html" title="impl/include/ad/physics\l/Types.hpp" alt="" coords="2741,206,2910,247"/>
+<area shape="rect" id="node18" href="$DistanceList_8hpp.html" title="generated/include/ad\l/physics/DistanceList.hpp" alt="" coords="1462,102,1645,143"/>
+<area shape="rect" id="node20" href="$DistanceValidInputRange_8hpp.html" title="generated/include/ad\l/physics/DistanceValidInput\lRange.hpp" alt="" coords="1243,95,1437,151"/>
+<area shape="rect" id="node23" href="$MetricRange_8hpp.html" title="generated/include/ad\l/physics/MetricRange.hpp" alt="" coords="2168,102,2352,143"/>
 <area shape="rect" id="node3" href="$Dimension2DList_8hpp.html" title="generated/include/ad\l/physics/Dimension2DList.hpp" alt="" coords="5,206,219,247"/>
 <area shape="rect" id="node5" href="$Dimension2DValidInputRange_8hpp.html" title="generated/include/ad\l/physics/Dimension2DValidInput\lRange.hpp" alt="" coords="243,199,469,255"/>
 <area shape="rect" id="node4" href="$Dimension2DListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/Dimension2DListValid\lInputRange.hpp" alt="" coords="127,303,342,359"/>
@@ -18,15 +17,9 @@
 <area shape="rect" id="node12" href="$Distance2DListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/Distance2DListValid\lInputRange.hpp" alt="" coords="1096,303,1299,359"/>
 <area shape="rect" id="node15" href="$Distance3DList_8hpp.html" title="generated/include/ad\l/physics/Distance3DList.hpp" alt="" coords="1925,206,2126,247"/>
 <area shape="rect" id="node17" href="$Distance3DValidInputRange_8hpp.html" title="generated/include/ad\l/physics/Distance3DValidInput\lRange.hpp" alt="" coords="1687,199,1900,255"/>
-<area shape="rect" id="node16" href="$Distance3DListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/Distance3DListValid\lInputRange.hpp" alt="" coords="1767,303,1969,359"/>
+<area shape="rect" id="node16" href="$Distance3DListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/Distance3DListValid\lInputRange.hpp" alt="" coords="1808,303,2011,359"/>
 <area shape="rect" id="node19" href="$DistanceListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/DistanceListValidInput\lRange.hpp" alt="" coords="1445,199,1662,255"/>
 <area shape="rect" id="node21" href="$MetricRangeValidInputRange_8hpp.html" title="generated/include/ad\l/physics/MetricRangeValidInput\lRange.hpp" alt="" coords="2151,199,2369,255"/>
-<area shape="rect" id="node22" href="$MetricRangeListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/MetricRangeListValid\lInputRange.hpp" alt="" coords="2263,303,2471,359"/>
-<area shape="rect" id="node23" href="$RangeOperation_8hpp.html" title="impl/include/ad/physics\l/RangeOperation.hpp" alt="" coords="2069,310,2238,351"/>
-<area shape="rect" id="node24" href="$Operation_8hpp.html" title="impl/include/ad/physics\l/Operation.hpp" alt="" coords="2647,407,2817,448"/>
-<area shape="rect" id="node26" href="$MetricRangeList_8hpp.html" title="generated/include/ad\l/physics/MetricRangeList.hpp" alt="" coords="2394,206,2601,247"/>
-<area shape="rect" id="node28" href="$AngleOperation_8hpp.html" title="impl/include/ad/physics\l/AngleOperation.hpp" alt="" coords="2546,310,2715,351"/>
-<area shape="rect" id="node29" href="$ParametricOperation_8hpp.html" title="impl/include/ad/physics\l/ParametricOperation.hpp" alt="" coords="2740,310,2927,351"/>
-<area shape="rect" id="node30" href="$PhysicsOperation_8hpp.html" title="impl/include/ad/physics\l/PhysicsOperation.hpp" alt="" coords="2951,310,3121,351"/>
-<area shape="rect" id="node31" href="$RatioOperation_8hpp.html" title="impl/include/ad/physics\l/RatioOperation.hpp" alt="" coords="3145,310,3314,351"/>
+<area shape="rect" id="node22" href="$MetricRangeListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/MetricRangeListValid\lInputRange.hpp" alt="" coords="2275,303,2483,359"/>
+<area shape="rect" id="node24" href="$MetricRangeList_8hpp.html" title="generated/include/ad\l/physics/MetricRangeList.hpp" alt="" coords="2394,206,2601,247"/>
 </map>

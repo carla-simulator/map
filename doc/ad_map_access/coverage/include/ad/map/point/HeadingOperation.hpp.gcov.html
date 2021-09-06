@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - include/ad/map/point/HeadingOperation.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../index.html">top level</a> - <a href="index.html">include/ad/map/point</a> - HeadingOperation.hpp<span style="font-size: 80%;"> (source / <a href="HeadingOperation.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">16</td>
+            <td class="headerCovTableEntry">16</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-09-06 15:05:16</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
+<span class="lineNum">       2 </span>                :            : //
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2021 Intel Corporation
+<span class="lineNum">       4 </span>                :            : //
+<span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
+<span class="lineNum">       6 </span>                :            : //
+<span class="lineNum">       7 </span>                :            : // ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : #pragma once
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : #include &quot;ad/map/point/ECEFHeading.hpp&quot;
+<span class="lineNum">      12 </span>                :            : #include &quot;ad/map/point/ECEFPoint.hpp&quot;
+<span class="lineNum">      13 </span>                :            : #include &quot;ad/map/point/ENUHeading.hpp&quot;
+<span class="lineNum">      14 </span>                :            : #include &quot;ad/map/point/ENUPoint.hpp&quot;
+<span class="lineNum">      15 </span>                :            : #include &quot;ad/map/point/GeoPoint.hpp&quot;
+<span class="lineNum">      16 </span>                :            : #include &quot;ad/map/point/PointOperation.hpp&quot;
+<span class="lineNum">      17 </span>                :            : #include &quot;ad/physics/Angle.hpp&quot;
+<span class="lineNum">      18 </span>                :            : #include &quot;ad/physics/Distance.hpp&quot;
+<span class="lineNum">      19 </span>                :            : 
+<span class="lineNum">      20 </span>                :            : namespace ad {
+<span class="lineNum">      21 </span>                :            : namespace map {
+<span class="lineNum">      22 </span>                :            : namespace point {
+<span class="lineNum">      23 </span>                :            : 
+<span class="lineNum">      24 </span>                :            : /**
+<span class="lineNum">      25 </span>                :            :  * @brief create a heading in ECEF as a directional vector
+<span class="lineNum">      26 </span>                :            :  *
+<span class="lineNum">      27 </span>                :            :  * @param[in] start  ECEFPoint defining the start of the directional vector
+<span class="lineNum">      28 </span>                :            :  * @param[in] end ECEFPoint defining the end of the directional vector
+<span class="lineNum">      29 </span>                :            :  *
+<span class="lineNum">      30 </span>                :            :  * @returns heading = norm(end - start)
+<span class="lineNum">      31 </span>                :            :  */
+<span class="lineNum">      32 </span>                :            : ECEFHeading createECEFHeading(ECEFPoint const &amp;start, ECEFPoint const &amp;end);
+<span class="lineNum">      33 </span>                :            : 
+<span class="lineNum">      34 </span>                :            : /**
+<span class="lineNum">      35 </span>                :            :  * @brief create a heading in ECEF as a directional vector
+<span class="lineNum">      36 </span>                :            :  *
+<span class="lineNum">      37 </span>                :            :  * @param[in] yaw ENUHeading the heading in ENU coordinate frame
+<span class="lineNum">      38 </span>                :            :  * @param[in] enuReferencePoint the GeoPoint defining the ENU reference point
+<span class="lineNum">      39 </span>                :            :  *
+<span class="lineNum">      40 </span>                :            :  * @returns heading in ECEF as directional vector
+<span class="lineNum">      41 </span>                :            :  */
+<span class="lineNum">      42 </span>                :            : ECEFHeading createECEFHeading(ENUHeading const &amp;yaw, GeoPoint const &amp;enuReferencePoint);
+<span class="lineNum">      43 </span>                :            : 
+<span class="lineNum">      44 </span>                :            : /**
+<span class="lineNum">      45 </span>                :            :  * @brief create a ENUHeading from yaw angle in radians
+<span class="lineNum">      46 </span>                :            :  *
+<span class="lineNum">      47 </span>                :            :  * Heading in ENU coordinate system as angle measured from East to North axis (yaw) in radians
+<span class="lineNum">      48 </span>                :            :  *
+<span class="lineNum">      49 </span>                :            :  * @param[in] yawAngleRadian heading provided as yaw angle in radians
+<span class="lineNum">      50 </span>                :            :  *
+<span class="lineNum">      51 </span>                :            :  * @returns heading with given yaw angle is normalized in the range -M_PI &lt; heading &lt;= M_PI
+<span class="lineNum">      52 </span>                :            :  */
+<span class="lineNum">      53 </span>                :            : ENUHeading createENUHeading(double yawAngleRadian);
+<span class="lineNum">      54 </span>                :            : 
+<span class="lineNum">      55 </span>                :            : /**
+<span class="lineNum">      56 </span>                :            :  * @brief create a ENUHeading from angle
+<span class="lineNum">      57 </span>                :            :  *
+<span class="lineNum">      58 </span>                :            :  * Heading in ENU coordinate system as angle measured from East to North axis (yaw) in radians
+<span class="lineNum">      59 </span>                :            :  *
+<span class="lineNum">      60 </span>                :            :  * @param[in] angle heading provided as yaw angle in radians
+<span class="lineNum">      61 </span>                :            :  *
+<span class="lineNum">      62 </span>                :            :  * @returns heading with given yaw angle is normalized in the range -M_PI &lt; heading &lt;= M_PI
+<span class="lineNum">      63 </span>                :            :  */
+<span class="lineNum">      64 </span>                :            : ENUHeading createENUHeading(physics::Angle const &amp;angle);
+<span class="lineNum">      65 </span>                :            : 
+<span class="lineNum">      66 </span>                :            : /**
+<span class="lineNum">      67 </span>                :            :  * @brief create a ENUHeading from ECEFHeading value
+<span class="lineNum">      68 </span>                :            :  *
+<span class="lineNum">      69 </span>                :            :  * Heading in ENU coordinate system as angle measured from East to North axis (yaw) in radians
+<span class="lineNum">      70 </span>                :            :  *
+<span class="lineNum">      71 </span>                :            :  * @param[in] ecefHeading ECEFHeading value
+<span class="lineNum">      72 </span>                :            :  *
+<span class="lineNum">      73 </span>                :            :  * @returns heading with given yaw angle is normalized in the range -M_PI &lt; heading &lt;= M_PI
+<span class="lineNum">      74 </span>                :            :  *
+<span class="lineNum">      75 </span>                :            :  */
+<span class="lineNum">      76 </span>                :            : ENUHeading createENUHeading(ECEFHeading const &amp;ecefHeading);
+<span class="lineNum">      77 </span>                :            : 
+<span class="lineNum">      78 </span>                :            : /**
+<span class="lineNum">      79 </span>                :            :  * @brief create a ENUHeading from ECEFHeading value
+<span class="lineNum">      80 </span>                :            :  *
+<span class="lineNum">      81 </span>                :            :  * Heading in ENU coordinate system as angle measured from East to North axis (yaw) in radians
+<span class="lineNum">      82 </span>                :            :  *
+<span class="lineNum">      83 </span>                :            :  * @param[in] ecefHeading ECEFHeading value
+<span class="lineNum">      84 </span>                :            :  * @param[in] enuReferencePoint the reference point of the ENU coordinate system as GeoPoint
+<span class="lineNum">      85 </span>                :            :  *
+<span class="lineNum">      86 </span>                :            :  * @returns heading with given yaw angle is normalized in the range -M_PI &lt; heading &lt;= M_PI
+<span class="lineNum">      87 </span>                :            :  *
+<span class="lineNum">      88 </span>                :            :  */
+<span class="lineNum">      89 </span>                :            : ENUHeading createENUHeading(ECEFHeading const &amp;ecefHeading, GeoPoint const &amp;enuReferencePoint);
+<span class="lineNum">      90 </span>                :            : 
+<span class="lineNum">      91 </span>                :            : /**
+<span class="lineNum">      92 </span>                :            :  * @brief create a ENUHeading from ECEFHeading value
+<span class="lineNum">      93 </span>                :            :  *
+<span class="lineNum">      94 </span>                :            :  * Heading in ENU coordinate system as angle measured from East to North axis (yaw) in radians
+<span class="lineNum">      95 </span>                :            :  *
+<span class="lineNum">      96 </span>                :            :  * @param[in] ecefHeading ECEFHeading value
+<span class="lineNum">      97 </span>                :            :  * @param[in] enuReferencePoint the reference point of the ENU coordinate system as ECEFPoint
+<span class="lineNum">      98 </span>                :            :  *
+<span class="lineNum">      99 </span>                :            :  * @returns heading with given yaw angle is normalized in the range -M_PI &lt; heading &lt;= M_PI
+<span class="lineNum">     100 </span>                :            :  *
+<span class="lineNum">     101 </span>                :            :  */
+<span class="lineNum">     102 </span>                :            : ENUHeading createENUHeading(ECEFHeading const &amp;ecefHeading, ECEFPoint const &amp;enuReferencePoint);
+<span class="lineNum">     103 </span>                :            : 
+<span class="lineNum">     104 </span>                :            : /**
+<span class="lineNum">     105 </span>                :            :  * @brief create a ENUHeading from a directional vector
+<span class="lineNum">     106 </span>                :            :  *
+<span class="lineNum">     107 </span>                :            :  * @param[in] start point defining the start of the directional vector
+<span class="lineNum">     108 </span>                :            :  * @param[in] end point defining the end of the directional vector
+<span class="lineNum">     109 </span>                :            :  *
+<span class="lineNum">     110 </span>                :            :  * @returns ENU heading of the resulting directional vector
+<span class="lineNum">     111 </span>                :            :  */
+<span class="lineNum">     112 </span>                :            : ENUHeading createENUHeading(ENUPoint const &amp;start, ENUPoint const &amp;end);
+<span class="lineNum">     113 </span>                :            : 
+<span class="lineNum">     114 </span>                :            : /**
+<span class="lineNum">     115 </span>                :            :  * @returns normalized ENU heading
+<span class="lineNum">     116 </span>                :            :  *          heading with given yaw angle is normalized in the range -M_PI &lt; heading &lt;= M_PI
+<span class="lineNum">     117 </span>                :            :  */
+<span class="lineNum">     118 </span>                :            : ENUHeading normalizeENUHeading(ENUHeading const &amp;heading);
+<span class="lineNum">     119 </span>                :            : 
+<span class="lineNum">     120 </span>                :            : /**
+<span class="lineNum">     121 </span>                :            :  * @brief get a directional vector of the heading
+<span class="lineNum">     122 </span>                :            :  *
+<span class="lineNum">     123 </span>                :            :  * angle of zero vector will be along positive x - axis
+<span class="lineNum">     124 </span>                :            :  *
+<a name="125"><span class="lineNum">     125 </span>                :            :  * @param[in] heading the heading input</a>
+<span class="lineNum">     126 </span>                :            :  */
+<span class="lineNum">     127 </span>                :<span class="lineCov">        329 : inline ENUPoint getDirectionalVectorZPlane(ENUHeading const &amp;heading)</span>
+<span class="lineNum">     128 </span>                :            : {
+<span class="lineNum">     129 </span>                :<span class="lineCov">        329 :   ENUPoint directionalVector;</span>
+<span class="lineNum">     130 </span>                :<span class="lineCov">        329 :   directionalVector.x = ENUCoordinate(std::cos(static_cast&lt;double&gt;(heading)));</span>
+<span class="lineNum">     131 </span>                :<span class="lineCov">        329 :   directionalVector.y = ENUCoordinate(std::sin(static_cast&lt;double&gt;(heading)));</span>
+<span class="lineNum">     132 </span>                :<span class="lineCov">        329 :   directionalVector.z = ENUCoordinate(0.);</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">        329 :   return directionalVector;</span>
+<span class="lineNum">     134 </span>                :            : }
+<span class="lineNum">     135 </span>                :            : 
+<span class="lineNum">     136 </span>                :            : /**
+<span class="lineNum">     137 </span>                :            :  * @brief get a vector that is orthogonal to the vectors heading
+<span class="lineNum">     138 </span>                :            :  *
+<span class="lineNum">     139 </span>                :            :  * angle of zero vector will be along positive y - axis
+<span class="lineNum">     140 </span>                :            :  *
+<span class="lineNum">     141 </span>                :            :  * @param[in] heading the heading input
+<span class="lineNum">     142 </span>                :            :  */
+<span class="lineNum">     143 </span>                :            : inline ENUPoint getOrthogonalVectorZPlane(ENUHeading const &amp;heading)
+<span class="lineNum">     144 </span>                :            : {
+<span class="lineNum">     145 </span>                :            :   ENUPoint orthogonalVector;
+<span class="lineNum">     146 </span>                :            :   orthogonalVector.x = ENUCoordinate(-std::sin(static_cast&lt;double&gt;(heading)));
+<span class="lineNum">     147 </span>                :            :   orthogonalVector.y = ENUCoordinate(std::cos(static_cast&lt;double&gt;(heading)));
+<span class="lineNum">     148 </span>                :            :   orthogonalVector.z = ENUCoordinate(0.);
+<span class="lineNum">     149 </span>                :            :   return orthogonalVector;
+<span class="lineNum">     150 </span>                :            : }
+<span class="lineNum">     151 </span>                :            : 
+<span class="lineNum">     152 </span>                :            : /**
+<span class="lineNum">     153 </span>                :            :  * @brief get a directional vector of the vectors heading and the orthogonal vector at once
+<span class="lineNum">     154 </span>                :            :  *
+<span class="lineNum">     155 </span>                :            :  * Combines getDirectionalVectorZPlane() and getOrthogonalVectorZPlane() in one call.
+<span class="lineNum">     156 </span>                :            :  *
+<span class="lineNum">     157 </span>                :            :  * @param[in] heading the heading input
+<span class="lineNum">     158 </span>                :            :  * @param[out] directionalVector directional vector of the heading,
+<span class="lineNum">     159 </span>                :            :  *    angle of zero vector will be along positive x - axis
+<span class="lineNum">     160 </span>                :            :  * @param[out] orthogonalVector vector that is orthogonal to the vectors heading
+<span class="lineNum">     161 </span>                :            :  *   angle of zero vector will be along positive y - axis
+<a name="162"><span class="lineNum">     162 </span>                :            :  */</a>
+<span class="lineNum">     163 </span>                :            : inline void
+<span class="lineNum">     164 </span>                :<span class="lineCov">         17 : getDirectionVectorsZPlane(ENUHeading const &amp;heading, ENUPoint &amp;directionalVector, ENUPoint &amp;orthogonalVector)</span>
+<span class="lineNum">     165 </span>                :            : {
+<span class="lineNum">     166 </span>                :<span class="lineCov">         17 :   directionalVector = getDirectionalVectorZPlane(heading);</span>
+<span class="lineNum">     167 </span>                :<span class="lineCov">         17 :   orthogonalVector.x = -directionalVector.y;</span>
+<span class="lineNum">     168 </span>                :<span class="lineCov">         17 :   orthogonalVector.y = directionalVector.x;</span>
+<span class="lineNum">     169 </span>                :<span class="lineCov">         17 :   orthogonalVector.z = ENUCoordinate(0.);</span>
+<span class="lineNum">     170 </span>                :<span class="lineCov">         17 : }</span>
+<span class="lineNum">     171 </span>                :            : 
+<span class="lineNum">     172 </span>                :            : } // namespace point
+<span class="lineNum">     173 </span>                :            : } // namespace map
+<span class="lineNum">     174 </span>                :            : } // namespace ad
+<span class="lineNum">     175 </span>                :            : 
+<span class="lineNum">     176 </span>                :            : /**
+<span class="lineNum">     177 </span>                :            :  * @brief add two ECEFHeading vectors
+<span class="lineNum">     178 </span>                :            :  *
+<span class="lineNum">     179 </span>                :            :  * @param[in] a vector a
+<span class="lineNum">     180 </span>                :            :  * @param[in] b vector b
+<span class="lineNum">     181 </span>                :            :  *
+<span class="lineNum">     182 </span>                :            :  * @returns vector c = a + b
+<span class="lineNum">     183 </span>                :            :  */
+<span class="lineNum">     184 </span>                :            : inline ::ad::map::point::ECEFHeading operator+(::ad::map::point::ECEFHeading const &amp;a,
+<span class="lineNum">     185 </span>                :            :                                                ::ad::map::point::ECEFHeading const &amp;b)
+<span class="lineNum">     186 </span>                :            : {
+<span class="lineNum">     187 </span>                :            :   return ::ad::map::point::vectorAdd(a, b);
+<span class="lineNum">     188 </span>                :            : }
+<span class="lineNum">     189 </span>                :            : 
+<span class="lineNum">     190 </span>                :            : /**
+<span class="lineNum">     191 </span>                :            :  * @brief subtract two ECEFHeading vectors from each right
+<span class="lineNum">     192 </span>                :            :  *
+<span class="lineNum">     193 </span>                :            :  * @param[in] a vector a
+<span class="lineNum">     194 </span>                :            :  * @param[in] b vector b
+<span class="lineNum">     195 </span>                :            :  *
+<span class="lineNum">     196 </span>                :            :  * @returns c = a - b
+<span class="lineNum">     197 </span>                :            :  */
+<span class="lineNum">     198 </span>                :            : inline ::ad::map::point::ECEFHeading operator-(::ad::map::point::ECEFHeading const &amp;a,
+<span class="lineNum">     199 </span>                :            :                                                ::ad::map::point::ECEFHeading const &amp;b)
+<span class="lineNum">     200 </span>                :            : {
+<span class="lineNum">     201 </span>                :            :   return ::ad::map::point::vectorSub(a, b);
+<span class="lineNum">     202 </span>                :            : }
+<span class="lineNum">     203 </span>                :            : 
+<span class="lineNum">     204 </span>                :            : /**
+<span class="lineNum">     205 </span>                :            :  * @brief calculate the dot product of two ECEFHeading vectors
+<span class="lineNum">     206 </span>                :            :  *
+<span class="lineNum">     207 </span>                :            :  * @param[in] a vector a
+<span class="lineNum">     208 </span>                :            :  * @param[in] b vector b
+<span class="lineNum">     209 </span>                :            :  *
+<a name="210"><span class="lineNum">     210 </span>                :            :  * @returns value d = a * b</a>
+<span class="lineNum">     211 </span>                :            :  */
+<span class="lineNum">     212 </span>                :<span class="lineCov">     387369 : inline double operator*(::ad::map::point::ECEFHeading const &amp;a, ::ad::map::point::ECEFHeading const &amp;b)</span>
+<span class="lineNum">     213 </span>                :            : {
+<span class="lineNum">     214 </span>                :<span class="lineCov">     387369 :   return ::ad::map::point::vectorDotProduct(a, b);</span>
+<span class="lineNum">     215 </span>                :            : }
+<span class="lineNum">     216 </span>                :            : 
+<span class="lineNum">     217 </span>                :            : /**
+<span class="lineNum">     218 </span>                :            :  * @brief multiplies a ECEFHeading vector with a scalar
+<span class="lineNum">     219 </span>                :            :  * @param[in] a vector a
+<span class="lineNum">     220 </span>                :            :  * @param[in] b scalar b
+<span class="lineNum">     221 </span>                :            :  */
+<span class="lineNum">     222 </span>                :            : inline ::ad::map::point::ECEFHeading operator*(::ad::map::point::ECEFHeading const &amp;a, ::ad::physics::Distance const &amp;b)
+<span class="lineNum">     223 </span>                :            : {
+<span class="lineNum">     224 </span>                :            :   return ::ad::map::point::vectorMultiplyScalar(a, b);
+<span class="lineNum">     225 </span>                :            : }
+<span class="lineNum">     226 </span>                :            : 
+<span class="lineNum">     227 </span>                :            : /**
+<span class="lineNum">     228 </span>                :            :  * @brief multiplies a ECEFHeading vector with a scalar
+<span class="lineNum">     229 </span>                :            :  * @param[in] b scalar b
+<span class="lineNum">     230 </span>                :            :  * @param[in] a vector a
+<span class="lineNum">     231 </span>                :            :  */
+<span class="lineNum">     232 </span>                :            : inline ::ad::map::point::ECEFHeading operator*(::ad::physics::Distance const &amp;b, ::ad::map::point::ECEFHeading const &amp;a)
+<span class="lineNum">     233 </span>                :            : {
+<span class="lineNum">     234 </span>                :            :   return ::ad::map::point::vectorMultiplyScalar(a, b);
+<span class="lineNum">     235 </span>                :            : }
+<span class="lineNum">     236 </span>                :            : 
+<span class="lineNum">     237 </span>                :            : /**
+<span class="lineNum">     238 </span>                :            :  * @brief multiplies a ECEFHeading vector with a scalar
+<span class="lineNum">     239 </span>                :            :  * @param[in] a vector a
+<span class="lineNum">     240 </span>                :            :  * @param[in] b scalar b
+<span class="lineNum">     241 </span>                :            :  */
+<span class="lineNum">     242 </span>                :            : inline ::ad::map::point::ECEFHeading operator*(::ad::map::point::ECEFHeading const &amp;a, double const &amp;b)
+<span class="lineNum">     243 </span>                :            : {
+<span class="lineNum">     244 </span>                :            :   return ::ad::map::point::vectorMultiplyScalar(a, b);
+<span class="lineNum">     245 </span>                :            : }
+<span class="lineNum">     246 </span>                :            : 
+<span class="lineNum">     247 </span>                :            : /**
+<span class="lineNum">     248 </span>                :            :  * @brief multiplies a ECEFHeading vector with a scalar
+<span class="lineNum">     249 </span>                :            :  * @param[in] b scalar b
+<a name="250"><span class="lineNum">     250 </span>                :            :  * @param[in] a vector a</a>
+<span class="lineNum">     251 </span>                :            :  */
+<span class="lineNum">     252 </span>                :<span class="lineCov">      90600 : inline ::ad::map::point::ECEFHeading operator*(double const &amp;b, ::ad::map::point::ECEFHeading const &amp;a)</span>
+<span class="lineNum">     253 </span>                :            : {
+<span class="lineNum">     254 </span>                :<span class="lineCov">      90600 :   return ::ad::map::point::vectorMultiplyScalar(a, b);</span>
+<span class="lineNum">     255 </span>                :            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

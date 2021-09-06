@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - tests/generated/ad/map/match/MapMatchedPositionConfidenceListValidInputRangeTests.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">tests/generated/ad/map/match</a> - MapMatchedPositionConfidenceListValidInputRangeTests.cpp<span style="font-size: 80%;"> (source / <a href="MapMatchedPositionConfidenceListValidInputRangeTests.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">56</td>
+            <td class="headerCovTableEntry">56</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-09-06 15:05:16</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntry">68</td>
+            <td class="headerCovTableEntryLo">32.4 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
+<span class="lineNum">       3 </span>                :            :  *
+<span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2021 Intel Corporation
+<span class="lineNum">       5 </span>                :            :  *
+<span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT
+<span class="lineNum">       7 </span>                :            :  *
+<span class="lineNum">       8 </span>                :            :  * ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       9 </span>                :            :  */
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : /*
+<span class="lineNum">      12 </span>                :            :  * Generated file
+<span class="lineNum">      13 </span>                :            :  */
+<span class="lineNum">      14 </span>                :            : 
+<span class="lineNum">      15 </span>                :            : #include &lt;gtest/gtest.h&gt;
+<span class="lineNum">      16 </span>                :            : 
+<span class="lineNum">      17 </span>                :            : #include &lt;limits&gt;
+<span class="lineNum">      18 </span>                :            : 
+<a name="19"><span class="lineNum">      19 </span>                :            : #include &quot;ad/map/match/MapMatchedPositionConfidenceListValidInputRange.hpp&quot;</a>
+<span class="lineNum">      20 </span>                :            : 
+<span class="lineNum">      21 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST(MapMatchedPositionConfidenceListValidInputRangeTests, testValidInputRangeValidInputRangeMin)</span>
+<span class="lineNum">      22 </span>                :            : {
+<span class="lineNum">      23 </span>                :<span class="lineCov">          2 :   ::ad::map::match::MapMatchedPositionConfidenceList value;</span>
+<span class="lineNum">      24 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   ASSERT_TRUE(withinValidInputRange(value));</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>][<span class="branchCov" title="Branch 26 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 27 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 29 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 30 was not taken"> - </span>]
+<a name="25"><span class="lineNum">      25 </span>                :            : }</a>
+<span class="lineNum">      26 </span>                :            : 
+<span class="lineNum">      27 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST(MapMatchedPositionConfidenceListValidInputRangeTests, testValidInputRangeElementValid)</span>
+<span class="lineNum">      28 </span>                :            : {
+<span class="lineNum">      29 </span>                :<span class="lineCov">          2 :   ::ad::map::match::MapMatchedPositionConfidenceList value;</span>
+<span class="lineNum">      30 </span>                :<span class="lineCov">          1 :   ::ad::map::match::MapMatchedPosition element;</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">          1 :   ::ad::map::match::LanePoint elementLanePoint;</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ParaPoint elementLanePointParaPoint;</span>
+<span class="lineNum">      33 </span>                :<span class="lineCov">          1 :   ::ad::map::lane::LaneId elementLanePointParaPointLaneId(1);</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">          1 :   elementLanePointParaPoint.laneId = elementLanePointParaPointLaneId;</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">          1 :   ::ad::physics::ParametricValue elementLanePointParaPointParametricOffset(0.);</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">          1 :   elementLanePointParaPoint.parametricOffset = elementLanePointParaPointParametricOffset;</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">          1 :   elementLanePoint.paraPoint = elementLanePointParaPoint;</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">          1 :   ::ad::physics::RatioValue elementLanePointLateralT(std::numeric_limits&lt;::ad::physics::RatioValue&gt;::lowest());</span>
+<span class="lineNum">      39 </span>                :<span class="lineCov">          1 :   elementLanePoint.lateralT = elementLanePointLateralT;</span>
+<span class="lineNum">      40 </span>                :<span class="lineCov">          1 :   ::ad::physics::Distance elementLanePointLaneLength(-1e9);</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">          1 :   elementLanePoint.laneLength = elementLanePointLaneLength;</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">          1 :   ::ad::physics::Distance elementLanePointLaneWidth(-1e9);</span>
+<span class="lineNum">      43 </span>                :<span class="lineCov">          1 :   elementLanePoint.laneWidth = elementLanePointLaneWidth;</span>
+<span class="lineNum">      44 </span>                :<span class="lineCov">          1 :   element.lanePoint = elementLanePoint;</span>
+<span class="lineNum">      45 </span>                :<span class="lineCov">          1 :   ::ad::map::match::MapMatchedPositionType elementType(::ad::map::match::MapMatchedPositionType::INVALID);</span>
+<span class="lineNum">      46 </span>                :<span class="lineCov">          1 :   element.type = elementType;</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFPoint elementMatchedPoint;</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFCoordinate elementMatchedPointX(-6400000);</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">          1 :   elementMatchedPoint.x = elementMatchedPointX;</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFCoordinate elementMatchedPointY(-6400000);</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">          1 :   elementMatchedPoint.y = elementMatchedPointY;</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFCoordinate elementMatchedPointZ(-6400000);</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">          1 :   elementMatchedPoint.z = elementMatchedPointZ;</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">          1 :   element.matchedPoint = elementMatchedPoint;</span>
+<span class="lineNum">      55 </span>                :<span class="lineCov">          1 :   ::ad::physics::Probability elementProbability(0.);</span>
+<span class="lineNum">      56 </span>                :<span class="lineCov">          1 :   element.probability = elementProbability;</span>
+<span class="lineNum">      57 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFPoint elementQueryPoint;</span>
+<span class="lineNum">      58 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFCoordinate elementQueryPointX(-6400000);</span>
+<span class="lineNum">      59 </span>                :<span class="lineCov">          1 :   elementQueryPoint.x = elementQueryPointX;</span>
+<span class="lineNum">      60 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFCoordinate elementQueryPointY(-6400000);</span>
+<span class="lineNum">      61 </span>                :<span class="lineCov">          1 :   elementQueryPoint.y = elementQueryPointY;</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFCoordinate elementQueryPointZ(-6400000);</span>
+<span class="lineNum">      63 </span>                :<span class="lineCov">          1 :   elementQueryPoint.z = elementQueryPointZ;</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">          1 :   element.queryPoint = elementQueryPoint;</span>
+<span class="lineNum">      65 </span>                :<span class="lineCov">          1 :   ::ad::physics::Distance elementMatchedPointDistance(-1e9);</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">          1 :   element.matchedPointDistance = elementMatchedPointDistance;</span>
+<span class="lineNum">      67 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   value.push_back(element);</span>
+<span class="lineNum">      68 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   ASSERT_TRUE(withinValidInputRange(value));</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>][<span class="branchCov" title="Branch 26 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 27 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 29 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 30 was not taken"> - </span>]
+<a name="69"><span class="lineNum">      69 </span>                :            : }</a>
+<span class="lineNum">      70 </span>                :            : 
+<span class="lineNum">      71 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST(MapMatchedPositionConfidenceListValidInputRangeTests, testValidInputRangeElementInvalid)</span>
+<span class="lineNum">      72 </span>                :            : {
+<span class="lineNum">      73 </span>                :<span class="lineCov">          2 :   ::ad::map::match::MapMatchedPositionConfidenceList value;</span>
+<span class="lineNum">      74 </span>                :<span class="lineCov">          1 :   ::ad::map::match::MapMatchedPosition element;</span>
+<span class="lineNum">      75 </span>                :<span class="lineCov">          1 :   ::ad::map::match::LanePoint elementLanePoint;</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ParaPoint elementLanePointParaPoint;</span>
+<span class="lineNum">      77 </span>                :            :   ::ad::physics::ParametricValue elementLanePointParaPointParametricOffset(
+<span class="lineNum">      78 </span>                :<span class="lineCov">          1 :     0. - ::ad::physics::ParametricValue::cPrecisionValue);</span>
+<span class="lineNum">      79 </span>                :<span class="lineCov">          1 :   elementLanePointParaPoint.parametricOffset = elementLanePointParaPointParametricOffset;</span>
+<span class="lineNum">      80 </span>                :<span class="lineCov">          1 :   elementLanePoint.paraPoint = elementLanePointParaPoint;</span>
+<span class="lineNum">      81 </span>                :<span class="lineCov">          1 :   element.lanePoint = elementLanePoint;</span>
+<a name="82"><span class="lineNum">      82 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   value.push_back(element);</span></a>
+<span class="lineNum">      83 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   ASSERT_FALSE(withinValidInputRange(value));</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>][<span class="branchCov" title="Branch 26 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 27 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 29 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 30 was not taken"> - </span>]
+<span class="lineNum">      84 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          4 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

@@ -1,20 +1,13 @@
 <map id="generated/include/ad/physics/Acceleration.hpp" name="generated/include/ad/physics/Acceleration.hpp">
-<area shape="rect" id="node2" href="$Acceleration3D_8hpp.html" title="generated/include/ad\l/physics/Acceleration3D.hpp" alt="" coords="255,102,457,143"/>
-<area shape="rect" id="node6" href="$AccelerationList_8hpp.html" title="generated/include/ad\l/physics/AccelerationList.hpp" alt="" coords="482,102,689,143"/>
-<area shape="rect" id="node8" href="$AccelerationRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationRange.hpp" alt="" coords="956,102,1180,143"/>
-<area shape="rect" id="node14" href="$AccelerationValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationValidInput\lRange.hpp" alt="" coords="713,95,932,151"/>
-<area shape="rect" id="node15" href="$Types_8hpp.html" title="impl/include/ad/physics\l/Types.hpp" alt="" coords="1417,206,1586,247"/>
+<area shape="rect" id="node2" href="$Acceleration3D_8hpp.html" title="generated/include/ad\l/physics/Acceleration3D.hpp" alt="" coords="135,102,337,143"/>
+<area shape="rect" id="node6" href="$AccelerationList_8hpp.html" title="generated/include/ad\l/physics/AccelerationList.hpp" alt="" coords="605,102,811,143"/>
+<area shape="rect" id="node8" href="$AccelerationRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationRange.hpp" alt="" coords="836,102,1060,143"/>
+<area shape="rect" id="node12" href="$AccelerationValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationValidInput\lRange.hpp" alt="" coords="361,95,580,151"/>
 <area shape="rect" id="node3" href="$Acceleration3DList_8hpp.html" title="generated/include/ad\l/physics/Acceleration3DList.hpp" alt="" coords="5,206,229,247"/>
 <area shape="rect" id="node5" href="$Acceleration3DValidInputRange_8hpp.html" title="generated/include/ad\l/physics/Acceleration3DValid\lInputRange.hpp" alt="" coords="254,199,458,255"/>
 <area shape="rect" id="node4" href="$Acceleration3DListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/Acceleration3DList\lValidInputRange.hpp" alt="" coords="139,303,335,359"/>
 <area shape="rect" id="node7" href="$AccelerationListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationListValid\lInputRange.hpp" alt="" coords="483,199,691,255"/>
 <area shape="rect" id="node9" href="$AccelerationRangeList_8hpp.html" title="generated/include/ad\l/physics/AccelerationRangeList.hpp" alt="" coords="966,206,1213,247"/>
 <area shape="rect" id="node11" href="$AccelerationRangeValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationRangeValid\lInputRange.hpp" alt="" coords="715,199,941,255"/>
-<area shape="rect" id="node10" href="$AccelerationRangeListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationRangeList\lValidInputRange.hpp" alt="" coords="828,303,1047,359"/>
-<area shape="rect" id="node12" href="$RangeOperation_8hpp.html" title="impl/include/ad/physics\l/RangeOperation.hpp" alt="" coords="634,310,803,351"/>
-<area shape="rect" id="node13" href="$Operation_8hpp.html" title="impl/include/ad/physics\l/Operation.hpp" alt="" coords="1378,407,1547,448"/>
-<area shape="rect" id="node16" href="$AngleOperation_8hpp.html" title="impl/include/ad/physics\l/AngleOperation.hpp" alt="" coords="1721,310,1890,351"/>
-<area shape="rect" id="node17" href="$ParametricOperation_8hpp.html" title="impl/include/ad/physics\l/ParametricOperation.hpp" alt="" coords="1071,310,1257,351"/>
-<area shape="rect" id="node18" href="$PhysicsOperation_8hpp.html" title="impl/include/ad/physics\l/PhysicsOperation.hpp" alt="" coords="1282,310,1451,351"/>
-<area shape="rect" id="node19" href="$RatioOperation_8hpp.html" title="impl/include/ad/physics\l/RatioOperation.hpp" alt="" coords="1475,310,1645,351"/>
+<area shape="rect" id="node10" href="$AccelerationRangeListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/AccelerationRangeList\lValidInputRange.hpp" alt="" coords="849,303,1068,359"/>
 </map>

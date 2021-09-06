@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['sin',['sin',['../AngleOperation_8hpp.html#ac0940a7e6fb38d0be138d9544efbfbdd',1,'std']]],
   ['speed',['Speed',['../classad_1_1physics_1_1Speed.html',1,'ad::physics']]],
   ['speed',['Speed',['../classad_1_1physics_1_1Speed.html#a094ebdeb8c75e2433c23f35f19f60f49',1,'ad::physics::Speed::Speed()'],['../classad_1_1physics_1_1Speed.html#ae199bd5f11cd1847369f67e74c33a801',1,'ad::physics::Speed::Speed(double const iSpeed)'],['../classad_1_1physics_1_1Speed.html#a5a1a5fd687a028a6cd9f3d0d3cc3e967',1,'ad::physics::Speed::Speed(const Speed &amp;other)=default'],['../classad_1_1physics_1_1Speed.html#a4c9093b129be8acdf38af642049b2a9f',1,'ad::physics::Speed::Speed(Speed &amp;&amp;other)=default']]],
   ['speed_2ehpp',['Speed.hpp',['../Speed_8hpp.html',1,'']]],

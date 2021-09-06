@@ -1,8 +1,0 @@
-<map id="ad::map::route::planning::RoutePrediction" name="ad::map::route::planning::RoutePrediction">
-<area shape="rect" id="node2" href="$classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html" title="ad::map::route::planning\l::RouteExpander\&lt; RoutePrediction\lScore \&gt;" alt="" coords="1873,85,2113,141"/>
-<area shape="rect" id="node3" href="$classad_1_1map_1_1route_1_1planning_1_1Route.html" title="Implements routing on the lane network. " alt="" coords="1537,57,1716,98"/>
-<area shape="rect" id="node5" href="$structad_1_1map_1_1route_1_1planning_1_1Route_1_1RawRoute.html" title="Basic route description. " alt="" coords="941,17,1120,58"/>
-<area shape="rect" id="node7" href="$structad_1_1map_1_1point_1_1ParaPoint.html" title="DataType ParaPoint. " alt="" coords="256,59,439,85"/>
-<area shape="rect" id="node9" href="$structad_1_1map_1_1route_1_1planning_1_1RoutingParaPoint.html" title="routing para point " alt="" coords="739,77,917,118"/>
-<area shape="rect" id="node8" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId. " alt="" coords="5,59,165,85"/>
-</map>

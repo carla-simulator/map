@@ -1,15 +1,9 @@
 var searchData=
 [
-  ['lanechangedirection',['laneChangeDirection',['../structad_1_1map_1_1route_1_1FindLaneChangeResult.html#a1800b4ce780b7021243b8659e7baaac9',1,'ad::map::route::FindLaneChangeResult']]],
-  ['lanechangeendlanesegmentiterator',['laneChangeEndLaneSegmentIterator',['../structad_1_1map_1_1route_1_1FindLaneChangeResult.html#a01cdae1222920b6cd2191855b9db5e3e',1,'ad::map::route::FindLaneChangeResult']]],
-  ['lanechangeendrouteiterator',['laneChangeEndRouteIterator',['../structad_1_1map_1_1route_1_1FindLaneChangeResult.html#a0933d5d6faf7aa13864bbe1e7a0252ec',1,'ad::map::route::FindLaneChangeResult']]],
-  ['lanechangestartlanesegmentiterator',['laneChangeStartLaneSegmentIterator',['../structad_1_1map_1_1route_1_1FindLaneChangeResult.html#a6d5a5c45322b2322b57cdf9f409f0086',1,'ad::map::route::FindLaneChangeResult']]],
-  ['lanechangestartrouteiterator',['laneChangeStartRouteIterator',['../structad_1_1map_1_1route_1_1FindLaneChangeResult.html#a86e4b16da0dd7ae2d86dbb8aa9393798',1,'ad::map::route::FindLaneChangeResult']]],
   ['laneid',['laneId',['../structad_1_1map_1_1point_1_1ParaPoint.html#a00b891d69c10e7f3254caf8c0ccfc0bb',1,'ad::map::point::ParaPoint']]],
   ['laneinterval',['laneInterval',['../structad_1_1map_1_1route_1_1LaneSegment.html#a896afaed71522c93074a1e3cb79ad187',1,'ad::map::route::LaneSegment']]],
   ['lanelength',['laneLength',['../structad_1_1map_1_1match_1_1LanePoint.html#aba1054064b4a127616c4a6f8fa73e38f',1,'ad::map::match::LanePoint']]],
   ['lanepoint',['lanePoint',['../structad_1_1map_1_1match_1_1MapMatchedPosition.html#a27725c917d4a412b3f70c95509a4e484',1,'ad::map::match::MapMatchedPosition']]],
-  ['lanesegmentiterator',['laneSegmentIterator',['../structad_1_1map_1_1route_1_1FindWaypointResult.html#ac354110efd7c768b0d797703c3a84d89',1,'ad::map::route::FindWaypointResult']]],
   ['lanewidth',['laneWidth',['../structad_1_1map_1_1match_1_1LanePoint.html#a2988d147748ff30f698035804c507915',1,'ad::map::match::LanePoint']]],
   ['latitude',['latitude',['../structad_1_1map_1_1point_1_1GeoPoint.html#a474c0277b67df86118e004ac98b28abf',1,'ad::map::point::GeoPoint']]],
   ['left',['left',['../structad_1_1map_1_1lane_1_1ECEFBorder.html#a428126617173ab9b44a65c43bc151206',1,'ad::map::lane::ECEFBorder::left()'],['../structad_1_1map_1_1lane_1_1ENUBorder.html#ae830cff343bc432e179607224c5d9c1c',1,'ad::map::lane::ENUBorder::left()'],['../structad_1_1map_1_1lane_1_1GeoBorder.html#a73b56de0f72683a353bd10dd41415384',1,'ad::map::lane::GeoBorder::left()']]],

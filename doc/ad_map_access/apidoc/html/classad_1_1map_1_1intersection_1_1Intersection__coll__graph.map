@@ -1,9 +1,0 @@
-<map id="ad::map::intersection::Intersection" name="ad::map::intersection::Intersection">
-<area shape="rect" id="node2" href="$classad_1_1map_1_1intersection_1_1CoreIntersection.html" title="ad::map::intersection\l::CoreIntersection" alt="" coords="1061,117,1220,158"/>
-<area shape="rect" id="node4" href="$structad_1_1map_1_1point_1_1ParaPoint.html" title="DataType ParaPoint. " alt="" coords="323,9,506,36"/>
-<area shape="rect" id="node5" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId. " alt="" coords="38,57,198,84"/>
-<area shape="rect" id="node6" href="$structad_1_1map_1_1point_1_1BoundingSphere.html" title="DataType BoundingSphere. " alt="" coords="621,157,804,198"/>
-<area shape="rect" id="node7" href="$structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint. " alt="" coords="321,185,508,212"/>
-<area shape="rect" id="node8" href="$classad_1_1map_1_1point_1_1ECEFCoordinate.html" title="DataType ECEFCoordinate. " alt="" coords="5,188,231,215"/>
-<area shape="rect" id="node10" title="STL class. " alt="" coords="361,123,469,149"/>
-</map>

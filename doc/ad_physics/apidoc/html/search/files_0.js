@@ -15,7 +15,6 @@ var searchData=
   ['angle_2ehpp',['Angle.hpp',['../Angle_8hpp.html',1,'']]],
   ['anglelist_2ehpp',['AngleList.hpp',['../AngleList_8hpp.html',1,'']]],
   ['anglelistvalidinputrange_2ehpp',['AngleListValidInputRange.hpp',['../AngleListValidInputRange_8hpp.html',1,'']]],
-  ['angleoperation_2ehpp',['AngleOperation.hpp',['../AngleOperation_8hpp.html',1,'']]],
   ['anglerange_2ehpp',['AngleRange.hpp',['../AngleRange_8hpp.html',1,'']]],
   ['anglerangelist_2ehpp',['AngleRangeList.hpp',['../AngleRangeList_8hpp.html',1,'']]],
   ['anglerangelistvalidinputrange_2ehpp',['AngleRangeListValidInputRange.hpp',['../AngleRangeListValidInputRange_8hpp.html',1,'']]],

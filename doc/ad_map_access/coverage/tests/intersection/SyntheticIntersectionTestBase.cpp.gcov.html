@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - tests/intersection/SyntheticIntersectionTestBase.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">tests/intersection</a> - SyntheticIntersectionTestBase.cpp<span style="font-size: 80%;"> (source / <a href="SyntheticIntersectionTestBase.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">78</td>
+            <td class="headerCovTableEntry">79</td>
+            <td class="headerCovTableEntryHi">98.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-09-06 15:05:16</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">16</td>
+            <td class="headerCovTableEntry">16</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">104</td>
+            <td class="headerCovTableEntry">258</td>
+            <td class="headerCovTableEntryLo">40.3 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
+<span class="lineNum">       2 </span>                :            : //
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2021 Intel Corporation
+<span class="lineNum">       4 </span>                :            : //
+<span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
+<span class="lineNum">       6 </span>                :            : //
+<span class="lineNum">       7 </span>                :            : // ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : #include &quot;SyntheticIntersectionTestBase.hpp&quot;
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : #include &lt;ad/map/access/Operation.hpp&gt;
+<span class="lineNum">      12 </span>                :            : #include &lt;algorithm&gt;
+<a name="13"><span class="lineNum">      13 </span>                :            : </a>
+<span class="lineNum">      14 </span>                :            : // comparison operator for sorting
+<span class="lineNum">      15 </span>                :<span class="lineCov">       1310 : bool smaller(const ad::map::point::ParaPoint &amp;left, const ad::map::point::ParaPoint &amp;right)</span>
+<span class="lineNum">      16 </span>                :            : {
+<span class="lineNum">      17 </span>                :<span class="lineCov">       1310 :   return (left.laneId &lt; right.laneId)</span>
+<span class="lineNum">      18 </span>[<span class="branchCov" title="Branch 0 was taken 1022 times"> + </span><span class="branchCov" title="Branch 1 was taken 288 times"> + </span>][<span class="branchNoCov" title="Branch 3 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 1022 times"> + </span>]:<span class="lineCov">       1310 :     || ((left.laneId == right.laneId) &amp;&amp; (left.parametricOffset &lt; right.parametricOffset));</span>
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span>]
+<span class="lineNum">      19 </span>                :            : }
+<span class="lineNum">      20 </span>                :            : 
+<span class="lineNum">      21 </span>                :            : namespace ad {
+<a name="22"><span class="lineNum">      22 </span>                :            : namespace map {</a>
+<span class="lineNum">      23 </span>                :            : 
+<span class="lineNum">      24 </span>                :<span class="lineCov">        196 : lane::LaneIdSet SyntheticIntersectionTestBase::getIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">      25 </span>                :            : {
+<span class="lineNum">      26 </span>                :<span class="lineCov">        196 :   auto resultSet = getIncomingLanes();</span>
+<span class="lineNum">      27 </span>[<span class="branchCov" title="Branch 1 was taken 196 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 396 times"> + </span><span class="branchCov" title="Branch 7 was taken 196 times"> + </span>]:<span class="lineCov">        592 :   for (auto const &amp;lowerPrioLane : expectedIncomingLanesWithLowerPriority())</span>
+<span class="lineNum">      28 </span>                :            :   {
+<span class="lineNum">      29 </span>        [<span class="branchCov" title="Branch 1 was taken 396 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        396 :     resultSet.erase(lowerPrioLane);</span>
+<span class="lineNum">      30 </span>                :            :   }
+<span class="lineNum">      31 </span>                :<span class="lineCov">        196 :   return resultSet;</span>
+<a name="32"><span class="lineNum">      32 </span>                :            : }</a>
+<span class="lineNum">      33 </span>                :            : 
+<span class="lineNum">      34 </span>                :<span class="lineCov">         98 : point::ParaPointList SyntheticIntersectionTestBase::getIncomingParaPointsWithHigherPriority() const</span>
+<span class="lineNum">      35 </span>                :            : {
+<span class="lineNum">      36 </span>        [<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         98 :   auto resultVector = getIncomingParaPoints();</span>
+<span class="lineNum">      37 </span>        [<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        196 :   auto const incomingLanesWithLowerPriority = getIncomingLanesWithLowerPriority();</span>
+<a name="38"><span class="lineNum">      38 </span>        [<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         98 :   resultVector.erase(std::remove_if(resultVector.begin(),</span></a>
+<span class="lineNum">      39 </span>                :            :                                     resultVector.end(),
+<span class="lineNum">      40 </span>                :<span class="lineCov">        295 :                                     [&amp;incomingLanesWithLowerPriority](point::ParaPoint const &amp;paraPoint) {</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">        295 :                                       return incomingLanesWithLowerPriority.count(paraPoint.laneId) &gt; 0;</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">        393 :                                     }),</span>
+<span class="lineNum">      43 </span>        [<span class="branchCov" title="Branch 4 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        196 :                      resultVector.end());</span>
+<span class="lineNum">      44 </span>                :<span class="lineCov">        196 :   return resultVector;</span>
+<a name="45"><span class="lineNum">      45 </span>                :            : }</a>
+<span class="lineNum">      46 </span>                :            : 
+<span class="lineNum">      47 </span>                :<span class="lineCov">        196 : lane::LaneIdSet SyntheticIntersectionTestBase::getIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">      48 </span>                :            : {
+<span class="lineNum">      49 </span>                :<span class="lineCov">        196 :   auto resultSet = getIncomingLanes();</span>
+<span class="lineNum">      50 </span>[<span class="branchCov" title="Branch 1 was taken 196 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 194 times"> + </span><span class="branchCov" title="Branch 7 was taken 196 times"> + </span>]:<span class="lineCov">        390 :   for (auto const &amp;higherPrioLane : expectedIncomingLanesWithHigherPriority())</span>
+<span class="lineNum">      51 </span>                :            :   {
+<span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 1 was taken 194 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        194 :     resultSet.erase(higherPrioLane);</span>
+<span class="lineNum">      53 </span>                :            :   }
+<span class="lineNum">      54 </span>                :<span class="lineCov">        196 :   return resultSet;</span>
+<a name="55"><span class="lineNum">      55 </span>                :            : }</a>
+<span class="lineNum">      56 </span>                :            : 
+<span class="lineNum">      57 </span>                :<span class="lineCov">         98 : point::ParaPointList SyntheticIntersectionTestBase::getIncomingParaPointsWithLowerPriority() const</span>
+<span class="lineNum">      58 </span>                :            : {
+<span class="lineNum">      59 </span>        [<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         98 :   auto resultVector = getIncomingParaPoints();</span>
+<span class="lineNum">      60 </span>        [<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        196 :   auto const incomingLanesWithHigherPriority = getIncomingLanesWithHigherPriority();</span>
+<a name="61"><span class="lineNum">      61 </span>        [<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">         98 :   resultVector.erase(std::remove_if(resultVector.begin(),</span></a>
+<span class="lineNum">      62 </span>                :            :                                     resultVector.end(),
+<span class="lineNum">      63 </span>                :<span class="lineCov">        295 :                                     [&amp;incomingLanesWithHigherPriority](point::ParaPoint const &amp;paraPoint) {</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">        295 :                                       return incomingLanesWithHigherPriority.count(paraPoint.laneId) &gt; 0;</span>
+<span class="lineNum">      65 </span>                :<span class="lineCov">        393 :                                     }),</span>
+<span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 4 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        196 :                      resultVector.end());</span>
+<span class="lineNum">      67 </span>                :<span class="lineCov">        196 :   return resultVector;</span>
+<a name="68"><span class="lineNum">      68 </span>                :            : }</a>
+<span class="lineNum">      69 </span>                :            : 
+<span class="lineNum">      70 </span>                :<span class="lineCov">         76 : lane::LaneIdSet SyntheticIntersectionTestBase::getCrossingLanes() const</span>
+<span class="lineNum">      71 </span>                :            : {
+<span class="lineNum">      72 </span>                :<span class="lineCov">         76 :   return expectedCrossingLanes();</span>
+<a name="73"><span class="lineNum">      73 </span>                :            : }</a>
+<span class="lineNum">      74 </span>                :            : 
+<span class="lineNum">      75 </span>                :<span class="lineCov">        294 : void SyntheticIntersectionTestBase::compareVectors(point::ParaPointList left, point::ParaPointList right) const</span>
+<span class="lineNum">      76 </span>                :            : {
+<span class="lineNum">      77 </span>                :<span class="lineCov">        294 :   std::sort(left.begin(), left.end(), &amp;smaller);</span>
+<span class="lineNum">      78 </span>                :<span class="lineCov">        294 :   std::sort(right.begin(), right.end(), &amp;smaller);</span>
+<span class="lineNum">      79 </span>[<span class="branchCov" title="Branch 1 was taken 294 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 294 times"> + </span>]:<span class="lineCov">        294 :   ASSERT_EQ(left, right);</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 21 was taken 294 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>]
+<a name="80"><span class="lineNum">      80 </span>                :            : }</a>
+<span class="lineNum">      81 </span>                :            : 
+<span class="lineNum">      82 </span>                :<span class="lineCov">        544 : void SyntheticIntersectionTestBase::compareLists(lane::LaneIdSet ids, lane::LaneIdSet otherIds) const</span>
+<span class="lineNum">      83 </span>                :            : {
+<span class="lineNum">      84 </span>[<span class="branchCov" title="Branch 1 was taken 544 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 544 times"> + </span>]:<span class="lineCov">        544 :   ASSERT_EQ(ids, otherIds);</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 21 was taken 544 times"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>]
+<a name="85"><span class="lineNum">      85 </span>                :            : }</a>
+<span class="lineNum">      86 </span>                :            : 
+<span class="lineNum">      87 </span>                :<span class="lineCov">         98 : void SyntheticIntersectionTestBase::performBasicChecks()</span>
+<span class="lineNum">      88 </span>                :            : {
+<span class="lineNum">      89 </span>[<span class="branchCov" title="Branch 2 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         98 :   ASSERT_EQ(expectedIntersectionType(), mIntersection-&gt;intersectionType());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 98 times"> + </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 14 was not executed"> # </span><span class="branchNoExec" title="Branch 15 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>][<span class="branchNoExec" title="Branch 23 was not executed"> # </span><span class="branchNoExec" title="Branch 24 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 28 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 29 was not taken"> - </span>]
+<span class="lineNum">      90 </span>                :            : 
+<span class="lineNum">      91 </span>[<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        196 :   SCOPED_TRACE(&quot;internal lanes&quot;);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">      92 </span>[<span class="branchCov" title="Branch 2 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         98 :   compareLists(getInternalLanes(), mIntersection-&gt;internalLanes());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">      93 </span>[<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        196 :   SCOPED_TRACE(&quot;incoming lanes&quot;);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">      94 </span>[<span class="branchCov" title="Branch 2 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         98 :   compareLists(getIncomingLanes(), mIntersection-&gt;incomingLanes());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">      95 </span>[<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        196 :   SCOPED_TRACE(&quot;incoming lanes with higher prio&quot;);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">      96 </span>[<span class="branchCov" title="Branch 2 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         98 :   compareLists(getIncomingLanesWithHigherPriority(), mIntersection-&gt;incomingLanesWithHigherPriority());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">      97 </span>[<span class="branchCov" title="Branch 1 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        196 :   SCOPED_TRACE(&quot;incoming lanes with lower prio&quot;);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">      98 </span>[<span class="branchCov" title="Branch 2 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         98 :   compareLists(getIncomingLanesWithLowerPriority(), mIntersection-&gt;incomingLanesWithLowerPriority());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">      99 </span>                :            : 
+<span class="lineNum">     100 </span>[<span class="branchCov" title="Branch 2 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         98 :   compareVectors(getIncomingParaPoints(), mIntersection-&gt;incomingParaPoints());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">     101 </span>[<span class="branchCov" title="Branch 2 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         98 :   compareVectors(getIncomingParaPointsWithHigherPriority(), mIntersection-&gt;incomingParaPointsWithHigherPriority());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">     102 </span>[<span class="branchCov" title="Branch 2 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         98 :   compareVectors(getIncomingParaPointsWithLowerPriority(), mIntersection-&gt;incomingParaPointsWithLowerPriority());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">     103 </span>                :            :   //@todo verify the geometric problems with the crossing lanes
+<span class="lineNum">     104 </span>[<span class="branchCov" title="Branch 2 was taken 98 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 76 times"> + </span><span class="branchCov" title="Branch 5 was taken 22 times"> + </span>]:<span class="lineCov">         98 :   if (mIntersection-&gt;intersectionType() != intersection::IntersectionType::TrafficLight)</span>
+<span class="lineNum">     105 </span>                :            :   {
+<span class="lineNum">     106 </span>[<span class="branchCov" title="Branch 1 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        152 :     SCOPED_TRACE(&quot;internal lanes with higher prio&quot;);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">     107 </span>[<span class="branchCov" title="Branch 2 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         76 :     compareLists(expectedInternalLanesWithHigherPriority(), mIntersection-&gt;internalLanesWithHigherPriority());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">     108 </span>[<span class="branchCov" title="Branch 1 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">        152 :     SCOPED_TRACE(&quot;crossing lanes&quot;);</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">     109 </span>[<span class="branchCov" title="Branch 2 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">         76 :     compareLists(getCrossingLanes(), mIntersection-&gt;crossingLanes());</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 76 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">     110 </span>                :            :   }
+<a name="111"><span class="lineNum">     111 </span>                :            : }</a>
+<span class="lineNum">     112 </span>                :            : 
+<span class="lineNum">     113 </span>                :<span class="lineCov">          4 : TrafficLightForTest SyntheticIntersectionTestBase::expectedTrafficLight(uint64_t landmarkId,</span>
+<span class="lineNum">     114 </span>                :            :                                                                         landmark::TrafficLightType type) const
+<span class="lineNum">     115 </span>                :            : {
+<span class="lineNum">     116 </span>                :<span class="lineCov">          4 :   TrafficLightForTest expected;</span>
+<span class="lineNum">     117 </span>                :<span class="lineCov">          4 :   expected.id = landmark::LandmarkId(landmarkId);</span>
+<span class="lineNum">     118 </span>                :<span class="lineCov">          4 :   expected.type = type;</span>
+<span class="lineNum">     119 </span>                :<span class="lineCov">          4 :   return expected;</span>
+<a name="120"><span class="lineNum">     120 </span>                :            : }</a>
+<span class="lineNum">     121 </span>                :            : 
+<span class="lineNum">     122 </span>                :<span class="lineCov">         33 : TrafficLightForTest SyntheticIntersectionTestBase::expectedTrafficLight(uint64_t landmarkId) const</span>
+<span class="lineNum">     123 </span>                :            : {
+<span class="lineNum">     124 </span>                :<span class="lineCov">         33 :   TrafficLightForTest expected;</span>
+<span class="lineNum">     125 </span>                :<span class="lineCov">         33 :   expected.id = landmark::LandmarkId(landmarkId);</span>
+<span class="lineNum">     126 </span>                :<span class="lineCov">         33 :   expected.type = landmark::TrafficLightType::UNKNOWN;</span>
+<span class="lineNum">     127 </span>                :<span class="lineCov">         33 :   return expected;</span>
+<a name="128"><span class="lineNum">     128 </span>                :            : }</a>
+<span class="lineNum">     129 </span>                :            : 
+<span class="lineNum">     130 </span>                :<span class="lineCov">         21 : void SyntheticIntersectionTestBase::performBasicTrafficLightsChecks(</span>
+<span class="lineNum">     131 </span>                :            :   std::vector&lt;TrafficLightForTest&gt; expectedTrafficLights /* = {}*/)
+<span class="lineNum">     132 </span>                :            : {
+<span class="lineNum">     133 </span>                :<span class="lineCov">         21 :   auto const &amp;trafficLights = mIntersection-&gt;applicableTrafficLights();</span>
+<span class="lineNum">     134 </span>[<span class="branchCov" title="Branch 3 was taken 21 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 21 times"> + </span>]:<span class="lineCov">         21 :   ASSERT_EQ(expectedTrafficLights.size(), trafficLights.size()) &lt;&lt; &quot;Number of traffic lights don't match&quot;;</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 9 was not executed"> # </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span>][<span class="branchNoExec" title="Branch 12 was not executed"> # </span><span class="branchNoExec" title="Branch 13 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 15 was not executed"> # </span><span class="branchNoExec" title="Branch 16 was not executed"> # </span>][<span class="branchNoExec" title="Branch 18 was not executed"> # </span><span class="branchNoExec" title="Branch 19 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 21 was not executed"> # </span><span class="branchNoExec" title="Branch 22 was not executed"> # </span>][<span class="branchCov" title="Branch 26 was taken 21 times"> + </span><span class="branchNoCov" title="Branch 27 was not taken"> - </span>]
+<span class="lineNum">     135 </span>                :            : 
+<span class="lineNum">     136 </span>        [<span class="branchCov" title="Branch 3 was taken 37 times"> + </span><span class="branchCov" title="Branch 4 was taken 21 times"> + </span>]:<span class="lineCov">         58 :   for (auto expectedTrafficLight : expectedTrafficLights)</span>
+<span class="lineNum">     137 </span>                :            :   {
+<span class="lineNum">     138 </span>[<span class="branchCov" title="Branch 1 was taken 37 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 37 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">         74 :     ASSERT_EQ(1u, trafficLights.count(expectedTrafficLight.id))</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 37 times"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>]
+<span class="lineNum">     139 </span>[<span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>][<span class="branchNoExec" title="Branch 5 was not executed"> # </span><span class="branchNoExec" title="Branch 6 was not executed"> # </span>]:<span class="lineCov">         37 :       &lt;&lt; &quot;Traffic Light ID=&quot; &lt;&lt; static_cast&lt;uint64_t&gt;(expectedTrafficLight.id) &lt;&lt; &quot;  NOT FOUND&quot;;</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 8 was not executed"> # </span><span class="branchNoExec" title="Branch 9 was not executed"> # </span>][<span class="branchNoExec" title="Branch 11 was not executed"> # </span><span class="branchNoExec" title="Branch 12 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 14 was not executed"> # </span><span class="branchNoExec" title="Branch 15 was not executed"> # </span>][<span class="branchCov" title="Branch 18 was taken 37 times"> + </span><span class="branchNoCov" title="Branch 19 was not taken"> - </span>]
+<span class="lineNum">     140 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 33 times"> + </span>]:<span class="lineCov">         37 :     if (expectedTrafficLight.type != landmark::TrafficLightType::UNKNOWN)</span>
+<span class="lineNum">     141 </span>                :            :     {
+<span class="lineNum">     142 </span>[<span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 5 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]:<span class="lineCov">          8 :       ASSERT_EQ(mIntersection-&gt;extractTrafficLightType(expectedTrafficLight.id), expectedTrafficLight.type)</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 4 times"> + </span>][<span class="branchNoExec" title="Branch 11 was not executed"> # </span><span class="branchNoExec" title="Branch 12 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 14 was not executed"> # </span><span class="branchNoExec" title="Branch 15 was not executed"> # </span>]
+<span class="lineNum">     143 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]:<span class="lineNoCov">          0 :         &lt;&lt; &quot;Traffic Light type don't match for&quot;</span>
+<span class="lineNum">     144 </span>[<span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span>][<span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]:<span class="lineCov">          4 :         &lt;&lt; &quot;  Traffic Light ID=&quot;;</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 7 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]
+<span class="lineNum">     145 </span>                :            :     }
+<span class="lineNum">     146 </span>                :            :   }
+<span class="lineNum">     147 </span>                :            : 
+<span class="lineNum">     148 </span>                :<span class="lineCov">         21 :   performBasicChecks();</span>
+<span class="lineNum">     149 </span>                :            : }
+<a name="150"><span class="lineNum">     150 </span>                :            : </a>
+<span class="lineNum">     151 </span>                :            : } // namespace map
+<span class="lineNum">     152 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          4 : } // namespace ad</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

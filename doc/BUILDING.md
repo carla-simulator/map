@@ -81,6 +81,11 @@ __colcon_python.meta__ enables python build (-DBUILD_PYTHON_BINDING=ON). To spec
  map$> colcon build --metas colcon_python.meta --cmake-args -DPYTHON_BINDING_VERSION=3.8
 ```
 
+If cmake isn't able to find the requested python version you can try to specify the python executable explicitly (e.g. under Ubuntu18.04):
+```bash
+ map$> colcon build --metas colcon_python.meta --cmake-args -DPYTHON_BINDING_VERSION=3.6 -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3.6
+```
+
 The QGIS Plugin also requires the python build to be enabled
 (you have to adapt to your python version used):
 ```bash

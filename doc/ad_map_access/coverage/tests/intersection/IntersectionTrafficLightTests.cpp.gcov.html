@@ -1,0 +1,687 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - tests/intersection/IntersectionTrafficLightTests.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">tests/intersection</a> - IntersectionTrafficLightTests.cpp<span style="font-size: 80%;"> (source / <a href="IntersectionTrafficLightTests.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">224</td>
+            <td class="headerCovTableEntry">272</td>
+            <td class="headerCovTableEntryMed">82.4 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-09-06 15:05:16</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">71</td>
+            <td class="headerCovTableEntry">95</td>
+            <td class="headerCovTableEntryLo">74.7 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">185</td>
+            <td class="headerCovTableEntry">370</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : // ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
+<span class="lineNum">       2 </span>                :            : //
+<span class="lineNum">       3 </span>                :            : // Copyright (C) 2018-2021 Intel Corporation
+<span class="lineNum">       4 </span>                :            : //
+<span class="lineNum">       5 </span>                :            : // SPDX-License-Identifier: MIT
+<span class="lineNum">       6 </span>                :            : //
+<span class="lineNum">       7 </span>                :            : // ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       8 </span>                :            : 
+<span class="lineNum">       9 </span>                :            : #include &quot;IntersectionTrafficLightTests.hpp&quot;
+<span class="lineNum">      10 </span>                :            : #include &lt;ad/map/landmark/LandmarkOperation.hpp&gt;
+<span class="lineNum">      11 </span>                :            : #include &lt;ad/map/point/Operation.hpp&gt;
+<span class="lineNum">      12 </span>                :            : #include &quot;IntersectionTown01Test.hpp&quot;
+<span class="lineNum">      13 </span>                :            : #include &quot;MapSetup.hpp&quot;
+<span class="lineNum">      14 </span>                :            : 
+<span class="lineNum">      15 </span>                :            : namespace ad {
+<span class="lineNum">      16 </span>                :            : namespace map {
+<span class="lineNum">      17 </span>                :            : 
+<span class="lineNum">      18 </span>                :            : // @todo rework required
+<span class="lineNum">      19 </span>                :            : // Always assumes that lanes with higher priority are always empty. This is not true if there
+<span class="lineNum">      20 </span>                :            : // is a solid traffic light and the host vehicle is turning left.
+<a name="21"><span class="lineNum">      21 </span>                :            : // Need to check expectedIncomingLanesWithHigherPriority and expectedIncomingLanesWithLowerPriority</a>
+<span class="lineNum">      22 </span>                :            : 
+<span class="lineNum">      23 </span>                :<span class="lineCov">         12 : void IntersectionTrafficLightTest::prepareMap() const</span>
+<span class="lineNum">      24 </span>                :            : {
+<span class="lineNum">      25 </span>                :<span class="lineCov">         12 :   ::map_setup::prepareMapTrafficLightsPfz();</span>
+<a name="26"><span class="lineNum">      26 </span>                :<span class="lineCov">         12 : }</span></a>
+<span class="lineNum">      27 </span>                :            : 
+<span class="lineNum">      28 </span>                :<span class="lineCov">          7 : lane::LaneId IntersectionTrafficLightFromWestTest::getRouteStart() const</span>
+<span class="lineNum">      29 </span>                :            : {
+<span class="lineNum">      30 </span>                :<span class="lineCov">          7 :   return mFromWest;</span>
+<a name="31"><span class="lineNum">      31 </span>                :            : }</a>
+<span class="lineNum">      32 </span>                :            : 
+<span class="lineNum">      33 </span>                :<span class="lineCov">          7 : intersection::IntersectionType IntersectionTrafficLightFromWestTest::expectedIntersectionType() const</span>
+<span class="lineNum">      34 </span>                :            : {
+<span class="lineNum">      35 </span>                :<span class="lineCov">          7 :   return intersection::IntersectionType::TrafficLight;</span>
+<a name="36"><span class="lineNum">      36 </span>                :            : }</a>
+<span class="lineNum">      37 </span>                :            : 
+<span class="lineNum">      38 </span>                :<span class="lineCov">          2 : lane::LaneId IntersectionTrafficLightWestToNorthTest::getRouteEnd() const</span>
+<span class="lineNum">      39 </span>                :            : {
+<span class="lineNum">      40 </span>                :<span class="lineCov">          2 :   return mToNorth;</span>
+<a name="41"><span class="lineNum">      41 </span>                :            : }</a>
+<span class="lineNum">      42 </span>                :            : 
+<span class="lineNum">      43 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightWestToNorthTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">      44 </span>                :            : {
+<span class="lineNum">      45 </span>                :<span class="lineCov">          2 :   return lane::LaneIdSet();</span>
+<a name="46"><span class="lineNum">      46 </span>                :            : }</a>
+<span class="lineNum">      47 </span>                :            : 
+<span class="lineNum">      48 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightWestToNorthTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">      49 </span>                :            : {
+<span class="lineNum">      50 </span>[<span class="branchCov" title="Branch 5 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">          8 :   return createUnorderedLaneIdSet({getIncomingLanesSouth(), getIncomingLanesEast(), getIncomingLanesNorth()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 6 times"> + </span><span class="branchCov" title="Branch 13 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="51"><span class="lineNum">      51 </span>                :            : }</a>
+<span class="lineNum">      52 </span>                :            : 
+<span class="lineNum">      53 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightWestToNorthTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">      54 </span>                :            : {
+<span class="lineNum">      55 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="56"><span class="lineNum">      56 </span>                :            : }</a>
+<span class="lineNum">      57 </span>                :            : 
+<span class="lineNum">      58 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightWestToNorthTest::expectedCrossingLanes() const</span>
+<span class="lineNum">      59 </span>                :            : {
+<span class="lineNum">      60 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="61"><span class="lineNum">      61 </span>                :            : }</a>
+<span class="lineNum">      62 </span>                :            : 
+<span class="lineNum">      63 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightWestToNorthTest, basic_checks)</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 13 was not taken"> - </span><span class="branchCov" title="Branch 14 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 18 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 19 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 21 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>]
+<span class="lineNum">      64 </span>                :            : {
+<span class="lineNum">      65 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1, id2;</span>
+<span class="lineNum">      67 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457537128), point::Latitude(49.02076074), point::Altitude(3.));</span>
+<span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">      69 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457463354), point::Latitude(49.02067458), point::Altitude(3.));</span>
+<span class="lineNum">      70 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id2 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">      71 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id1), expectedTrafficLight((uint64_t)id2)});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      73 </span>                :            : 
+<span class="lineNum">      74 </span>                :<span class="lineCov">          1 : lane::LaneId IntersectionTrafficLightWestToEastTest::getRouteEnd() const</span>
+<span class="lineNum">      75 </span>                :            : {
+<span class="lineNum">      76 </span>                :<span class="lineCov">          1 :   return mToEast;</span>
+<a name="77"><span class="lineNum">      77 </span>                :            : }</a>
+<span class="lineNum">      78 </span>                :            : 
+<span class="lineNum">      79 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightWestToEastTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">      80 </span>                :            : {
+<span class="lineNum">      81 </span>                :<span class="lineCov">          2 :   return lane::LaneIdSet();</span>
+<a name="82"><span class="lineNum">      82 </span>                :            : }</a>
+<span class="lineNum">      83 </span>                :            : 
+<span class="lineNum">      84 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightWestToEastTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">      85 </span>                :            : {
+<span class="lineNum">      86 </span>[<span class="branchCov" title="Branch 5 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">          8 :   return createUnorderedLaneIdSet({getIncomingLanesEast(), getIncomingLanesNorth(), getIncomingLanesSouth()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 6 times"> + </span><span class="branchCov" title="Branch 13 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="87"><span class="lineNum">      87 </span>                :            : }</a>
+<span class="lineNum">      88 </span>                :            : 
+<span class="lineNum">      89 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightWestToEastTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">      90 </span>                :            : {
+<span class="lineNum">      91 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="92"><span class="lineNum">      92 </span>                :            : }</a>
+<span class="lineNum">      93 </span>                :            : 
+<span class="lineNum">      94 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightWestToEastTest::expectedCrossingLanes() const</span>
+<span class="lineNum">      95 </span>                :            : {
+<span class="lineNum">      96 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="97"><span class="lineNum">      97 </span>                :            : }</a>
+<span class="lineNum">      98 </span>                :            : 
+<span class="lineNum">      99 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightWestToEastTest, basic_checks)</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 13 was not taken"> - </span><span class="branchCov" title="Branch 14 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 18 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 19 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 21 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>]
+<span class="lineNum">     100 </span>                :            : {
+<span class="lineNum">     101 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     102 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1, id2;</span>
+<span class="lineNum">     103 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457537128), point::Latitude(49.02076074), point::Altitude(3.));</span>
+<span class="lineNum">     104 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     105 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457463354), point::Latitude(49.02067458), point::Altitude(3.));</span>
+<span class="lineNum">     106 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id2 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     107 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id2), expectedTrafficLight((uint64_t)id1)});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     109 </span>                :            : 
+<span class="lineNum">     110 </span>                :<span class="lineCov">          4 : lane::LaneId IntersectionTrafficLightWestToSouthTest::getRouteEnd() const</span>
+<span class="lineNum">     111 </span>                :            : {
+<span class="lineNum">     112 </span>                :<span class="lineCov">          4 :   return mToSouth;</span>
+<a name="113"><span class="lineNum">     113 </span>                :            : }</a>
+<span class="lineNum">     114 </span>                :            : 
+<span class="lineNum">     115 </span>                :<span class="lineCov">          8 : lane::LaneIdSet IntersectionTrafficLightWestToSouthTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     116 </span>                :            : {
+<span class="lineNum">     117 </span>                :<span class="lineCov">          8 :   return lane::LaneIdSet();</span>
+<a name="118"><span class="lineNum">     118 </span>                :            : }</a>
+<span class="lineNum">     119 </span>                :            : 
+<span class="lineNum">     120 </span>                :<span class="lineCov">          8 : lane::LaneIdSet IntersectionTrafficLightWestToSouthTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     121 </span>                :            : {
+<span class="lineNum">     122 </span>[<span class="branchCov" title="Branch 5 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">         32 :   return createUnorderedLaneIdSet({getIncomingLanesSouth(), getIncomingLanesEast(), getIncomingLanesNorth()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 24 times"> + </span><span class="branchCov" title="Branch 13 was taken 8 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="123"><span class="lineNum">     123 </span>                :            : }</a>
+<span class="lineNum">     124 </span>                :            : 
+<span class="lineNum">     125 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightWestToSouthTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     126 </span>                :            : {
+<span class="lineNum">     127 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="128"><span class="lineNum">     128 </span>                :            : }</a>
+<span class="lineNum">     129 </span>                :            : 
+<span class="lineNum">     130 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightWestToSouthTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     131 </span>                :            : {
+<a name="132"><span class="lineNum">     132 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span></a>
+<span class="lineNum">     133 </span>                :            : }
+<span class="lineNum">     134 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightWestToSouthTest, basic_checks)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>][<span class="branchNoCov" title="Branch 16 was not taken"> - </span><span class="branchCov" title="Branch 17 was taken 1 time"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 21 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>][<span class="branchCov" title="Branch 24 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 25 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 27 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 28 was not taken"> - </span>]
+<span class="lineNum">     135 </span>                :            : {
+<span class="lineNum">     136 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     137 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1;</span>
+<span class="lineNum">     138 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457462013), point::Latitude(49.02067301), point::Altitude(3.));</span>
+<span class="lineNum">     139 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     140 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id1)});</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<a name="141"><span class="lineNum">     141 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     142 </span>                :            : 
+<span class="lineNum">     143 </span>                :<span class="lineCov">          3 : lane::LaneId IntersectionTrafficLightFromEastTest::getRouteStart() const</span>
+<span class="lineNum">     144 </span>                :            : {
+<span class="lineNum">     145 </span>                :<span class="lineCov">          3 :   return mFromEast;</span>
+<a name="146"><span class="lineNum">     146 </span>                :            : }</a>
+<span class="lineNum">     147 </span>                :            : 
+<span class="lineNum">     148 </span>                :<span class="lineCov">          3 : intersection::IntersectionType IntersectionTrafficLightFromEastTest::expectedIntersectionType() const</span>
+<span class="lineNum">     149 </span>                :            : {
+<span class="lineNum">     150 </span>                :<span class="lineCov">          3 :   return intersection::IntersectionType::TrafficLight;</span>
+<a name="151"><span class="lineNum">     151 </span>                :            : }</a>
+<span class="lineNum">     152 </span>                :            : 
+<span class="lineNum">     153 </span>                :<span class="lineCov">          1 : lane::LaneId IntersectionTrafficLightEastToNorthTest::getRouteEnd() const</span>
+<span class="lineNum">     154 </span>                :            : {
+<span class="lineNum">     155 </span>                :<span class="lineCov">          1 :   return mToNorth;</span>
+<a name="156"><span class="lineNum">     156 </span>                :            : }</a>
+<span class="lineNum">     157 </span>                :            : 
+<span class="lineNum">     158 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightEastToNorthTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     159 </span>                :            : {
+<span class="lineNum">     160 </span>                :<span class="lineCov">          2 :   return lane::LaneIdSet();</span>
+<a name="161"><span class="lineNum">     161 </span>                :            : }</a>
+<span class="lineNum">     162 </span>                :            : 
+<span class="lineNum">     163 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightEastToNorthTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     164 </span>                :            : {
+<span class="lineNum">     165 </span>[<span class="branchCov" title="Branch 5 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">          8 :   return createUnorderedLaneIdSet({getIncomingLanesSouth(), getIncomingLanesWest(), getIncomingLanesNorth()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 6 times"> + </span><span class="branchCov" title="Branch 13 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="166"><span class="lineNum">     166 </span>                :            : }</a>
+<span class="lineNum">     167 </span>                :            : 
+<span class="lineNum">     168 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightEastToNorthTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     169 </span>                :            : {
+<span class="lineNum">     170 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="171"><span class="lineNum">     171 </span>                :            : }</a>
+<span class="lineNum">     172 </span>                :            : 
+<span class="lineNum">     173 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightEastToNorthTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     174 </span>                :            : {
+<span class="lineNum">     175 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="176"><span class="lineNum">     176 </span>                :            : }</a>
+<span class="lineNum">     177 </span>                :            : 
+<span class="lineNum">     178 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightEastToNorthTest, basic_checks)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">     179 </span>                :            : {
+<span class="lineNum">     180 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     181 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1, id2, id3;</span>
+<span class="lineNum">     182 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457971538), point::Latitude(49.0205365), point::Altitude(3.));</span>
+<span class="lineNum">     183 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     184 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.458004075), point::Latitude(49.02058106), point::Altitude(5.));</span>
+<span class="lineNum">     185 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id2 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     186 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.458036612), point::Latitude(49.02062562), point::Altitude(3.));</span>
+<span class="lineNum">     187 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id3 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     188 </span>  [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span> :<span class="lineCov">          4 :   performBasicTrafficLightsChecks(</span>
+<span class="lineNum">         </span> <span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">     189 </span>        [<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          4 :     {expectedTrafficLight((uint64_t)id1), expectedTrafficLight((uint64_t)id2), expectedTrafficLight((uint64_t)id3)});</span>
+<a name="190"><span class="lineNum">     190 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     191 </span>                :            : 
+<span class="lineNum">     192 </span>                :<span class="lineCov">          1 : lane::LaneId IntersectionTrafficLightEastToWestTest::getRouteEnd() const</span>
+<span class="lineNum">     193 </span>                :            : {
+<span class="lineNum">     194 </span>                :<span class="lineCov">          1 :   return mToWest;</span>
+<a name="195"><span class="lineNum">     195 </span>                :            : }</a>
+<span class="lineNum">     196 </span>                :            : 
+<span class="lineNum">     197 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightEastToWestTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     198 </span>                :            : {
+<span class="lineNum">     199 </span>                :<span class="lineCov">          2 :   return lane::LaneIdSet();</span>
+<a name="200"><span class="lineNum">     200 </span>                :            : }</a>
+<span class="lineNum">     201 </span>                :            : 
+<span class="lineNum">     202 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightEastToWestTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     203 </span>                :            : {
+<span class="lineNum">     204 </span>[<span class="branchCov" title="Branch 5 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">          8 :   return createUnorderedLaneIdSet({getIncomingLanesSouth(), getIncomingLanesWest(), getIncomingLanesNorth()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 6 times"> + </span><span class="branchCov" title="Branch 13 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="205"><span class="lineNum">     205 </span>                :            : }</a>
+<span class="lineNum">     206 </span>                :            : 
+<span class="lineNum">     207 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightEastToWestTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     208 </span>                :            : {
+<span class="lineNum">     209 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="210"><span class="lineNum">     210 </span>                :            : }</a>
+<span class="lineNum">     211 </span>                :            : 
+<span class="lineNum">     212 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightEastToWestTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     213 </span>                :            : {
+<span class="lineNum">     214 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="215"><span class="lineNum">     215 </span>                :            : }</a>
+<span class="lineNum">     216 </span>                :            : 
+<span class="lineNum">     217 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightEastToWestTest, basic_checks)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">     218 </span>                :            : {
+<span class="lineNum">     219 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     220 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1, id2, id3;</span>
+<span class="lineNum">     221 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457971538), point::Latitude(49.0205365), point::Altitude(3.));</span>
+<span class="lineNum">     222 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     223 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.458004075), point::Latitude(49.02058106), point::Altitude(5.));</span>
+<span class="lineNum">     224 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id2 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     225 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.458036612), point::Latitude(49.02062562), point::Altitude(3.));</span>
+<span class="lineNum">     226 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id3 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     227 </span>  [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span> :<span class="lineCov">          4 :   performBasicTrafficLightsChecks(</span>
+<span class="lineNum">         </span> <span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">     228 </span>        [<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          4 :     {expectedTrafficLight((uint64_t)id1), expectedTrafficLight((uint64_t)id2), expectedTrafficLight((uint64_t)id3)});</span>
+<a name="229"><span class="lineNum">     229 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     230 </span>                :            : 
+<span class="lineNum">     231 </span>                :<span class="lineCov">          1 : lane::LaneId IntersectionTrafficLightEastToSouthTest::getRouteEnd() const</span>
+<span class="lineNum">     232 </span>                :            : {
+<span class="lineNum">     233 </span>                :<span class="lineCov">          1 :   return mToSouth;</span>
+<a name="234"><span class="lineNum">     234 </span>                :            : }</a>
+<span class="lineNum">     235 </span>                :            : 
+<span class="lineNum">     236 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightEastToSouthTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     237 </span>                :            : {
+<span class="lineNum">     238 </span>[<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          4 :   return createUnorderedLaneIdSet({getIncomingLanesWest()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 10 was taken 2 times"> + </span><span class="branchCov" title="Branch 11 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 15 was not executed"> # </span><span class="branchNoExec" title="Branch 16 was not executed"> # </span>]
+<a name="239"><span class="lineNum">     239 </span>                :            : }</a>
+<span class="lineNum">     240 </span>                :            : 
+<span class="lineNum">     241 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightEastToSouthTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     242 </span>                :            : {
+<span class="lineNum">     243 </span>[<span class="branchCov" title="Branch 4 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]:<span class="lineCov">          6 :   return createUnorderedLaneIdSet({getIncomingLanesSouth(), getIncomingLanesNorth()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 4 times"> + </span><span class="branchCov" title="Branch 12 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<a name="244"><span class="lineNum">     244 </span>                :            : }</a>
+<span class="lineNum">     245 </span>                :            : 
+<span class="lineNum">     246 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightEastToSouthTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     247 </span>                :            : {
+<span class="lineNum">     248 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="249"><span class="lineNum">     249 </span>                :            : }</a>
+<span class="lineNum">     250 </span>                :            : 
+<span class="lineNum">     251 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightEastToSouthTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     252 </span>                :            : {
+<span class="lineNum">     253 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="254"><span class="lineNum">     254 </span>                :            : }</a>
+<span class="lineNum">     255 </span>                :            : 
+<span class="lineNum">     256 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightEastToSouthTest, basic_checks)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">     257 </span>                :            : {
+<span class="lineNum">     258 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     259 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1, id2, id3;</span>
+<span class="lineNum">     260 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457971538), point::Latitude(49.0205365), point::Altitude(3.));</span>
+<span class="lineNum">     261 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     262 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.458004075), point::Latitude(49.02058106), point::Altitude(5.));</span>
+<span class="lineNum">     263 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id2 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     264 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.458036612), point::Latitude(49.02062562), point::Altitude(3.));</span>
+<span class="lineNum">     265 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id3 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     266 </span>  [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span> :<span class="lineCov">          4 :   performBasicTrafficLightsChecks(</span>
+<span class="lineNum">         </span> <span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
+<span class="lineNum">     267 </span>        [<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          4 :     {expectedTrafficLight((uint64_t)id1), expectedTrafficLight((uint64_t)id2), expectedTrafficLight((uint64_t)id3)});</span>
+<a name="268"><span class="lineNum">     268 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     269 </span>                :            : 
+<span class="lineNum">     270 </span>                :<span class="lineCov">          6 : lane::LaneId IntersectionTrafficLightFromNorthTest::getRouteStart() const</span>
+<span class="lineNum">     271 </span>                :            : {
+<span class="lineNum">     272 </span>                :<span class="lineCov">          6 :   return mFromNorth;</span>
+<a name="273"><span class="lineNum">     273 </span>                :            : }</a>
+<span class="lineNum">     274 </span>                :            : 
+<span class="lineNum">     275 </span>                :<span class="lineCov">          6 : intersection::IntersectionType IntersectionTrafficLightFromNorthTest::expectedIntersectionType() const</span>
+<span class="lineNum">     276 </span>                :            : {
+<span class="lineNum">     277 </span>                :<span class="lineCov">          6 :   return intersection::IntersectionType::TrafficLight;</span>
+<a name="278"><span class="lineNum">     278 </span>                :            : }</a>
+<span class="lineNum">     279 </span>                :            : 
+<span class="lineNum">     280 </span>                :<span class="lineCov">          2 : lane::LaneId IntersectionTrafficLightNorthToEastTest::getRouteEnd() const</span>
+<span class="lineNum">     281 </span>                :            : {
+<span class="lineNum">     282 </span>                :<span class="lineCov">          2 :   return mToEast;</span>
+<a name="283"><span class="lineNum">     283 </span>                :            : }</a>
+<span class="lineNum">     284 </span>                :            : 
+<span class="lineNum">     285 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightNorthToEastTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     286 </span>                :            : {
+<span class="lineNum">     287 </span>[<span class="branchCov" title="Branch 3 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          4 :   return createUnorderedLaneIdSet({getIncomingLanesSouth()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 10 was taken 2 times"> + </span><span class="branchCov" title="Branch 11 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 15 was not executed"> # </span><span class="branchNoExec" title="Branch 16 was not executed"> # </span>]
+<a name="288"><span class="lineNum">     288 </span>                :            : }</a>
+<span class="lineNum">     289 </span>                :            : 
+<span class="lineNum">     290 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightNorthToEastTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     291 </span>                :            : {
+<span class="lineNum">     292 </span>[<span class="branchCov" title="Branch 4 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>][<span class="branchCov" title="Branch 7 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>]:<span class="lineCov">          6 :   return createUnorderedLaneIdSet({getIncomingLanesWest(), getIncomingLanesEast()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 11 was taken 4 times"> + </span><span class="branchCov" title="Branch 12 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<a name="293"><span class="lineNum">     293 </span>                :            : }</a>
+<span class="lineNum">     294 </span>                :            : 
+<span class="lineNum">     295 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightNorthToEastTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     296 </span>                :            : {
+<span class="lineNum">     297 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="298"><span class="lineNum">     298 </span>                :            : }</a>
+<span class="lineNum">     299 </span>                :            : 
+<span class="lineNum">     300 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightNorthToEastTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     301 </span>                :            : {
+<span class="lineNum">     302 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="303"><span class="lineNum">     303 </span>                :            : }</a>
+<span class="lineNum">     304 </span>                :            : 
+<span class="lineNum">     305 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightNorthToEastTest, basic_checks)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">     306 </span>                :            : {
+<span class="lineNum">     307 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     308 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1;</span>
+<span class="lineNum">     309 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457771924), point::Latitude(49.02077962), point::Altitude(3.));</span>
+<span class="lineNum">     310 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     311 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id1)});</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<a name="312"><span class="lineNum">     312 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     313 </span>                :            : 
+<span class="lineNum">     314 </span>                :<span class="lineCov">          1 : lane::LaneId IntersectionTrafficLightNorthToWestTest::getRouteEnd() const</span>
+<span class="lineNum">     315 </span>                :            : {
+<span class="lineNum">     316 </span>                :<span class="lineCov">          1 :   return mToWest;</span>
+<a name="317"><span class="lineNum">     317 </span>                :            : }</a>
+<span class="lineNum">     318 </span>                :            : 
+<span class="lineNum">     319 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightNorthToWestTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     320 </span>                :            : {
+<span class="lineNum">     321 </span>                :<span class="lineCov">          2 :   return lane::LaneIdSet();</span>
+<a name="322"><span class="lineNum">     322 </span>                :            : }</a>
+<span class="lineNum">     323 </span>                :            : 
+<span class="lineNum">     324 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightNorthToWestTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     325 </span>                :            : {
+<span class="lineNum">     326 </span>[<span class="branchCov" title="Branch 5 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">          8 :   return createUnorderedLaneIdSet({getIncomingLanesSouth(), getIncomingLanesWest(), getIncomingLanesEast()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 6 times"> + </span><span class="branchCov" title="Branch 13 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="327"><span class="lineNum">     327 </span>                :            : }</a>
+<span class="lineNum">     328 </span>                :            : 
+<span class="lineNum">     329 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightNorthToWestTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     330 </span>                :            : {
+<span class="lineNum">     331 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="332"><span class="lineNum">     332 </span>                :            : }</a>
+<span class="lineNum">     333 </span>                :            : 
+<span class="lineNum">     334 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightNorthToWestTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     335 </span>                :            : {
+<span class="lineNum">     336 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="337"><span class="lineNum">     337 </span>                :            : }</a>
+<span class="lineNum">     338 </span>                :            : 
+<span class="lineNum">     339 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightNorthToWestTest, basic_checks)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">     340 </span>                :            : {
+<span class="lineNum">     341 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     342 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1;</span>
+<span class="lineNum">     343 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457771924), point::Latitude(49.02077962), point::Altitude(3.));</span>
+<span class="lineNum">     344 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     345 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id1)});</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<a name="346"><span class="lineNum">     346 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     347 </span>                :            : 
+<span class="lineNum">     348 </span>                :<span class="lineCov">          3 : lane::LaneId IntersectionTrafficLightNorthToSouthTest::getRouteEnd() const</span>
+<span class="lineNum">     349 </span>                :            : {
+<span class="lineNum">     350 </span>                :<span class="lineCov">          3 :   return mToSouth;</span>
+<a name="351"><span class="lineNum">     351 </span>                :            : }</a>
+<span class="lineNum">     352 </span>                :            : 
+<span class="lineNum">     353 </span>                :<span class="lineCov">          6 : lane::LaneIdSet IntersectionTrafficLightNorthToSouthTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     354 </span>                :            : {
+<span class="lineNum">     355 </span>                :<span class="lineCov">          6 :   return lane::LaneIdSet();</span>
+<a name="356"><span class="lineNum">     356 </span>                :            : }</a>
+<span class="lineNum">     357 </span>                :            : 
+<span class="lineNum">     358 </span>                :<span class="lineCov">          6 : lane::LaneIdSet IntersectionTrafficLightNorthToSouthTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     359 </span>                :            : {
+<span class="lineNum">     360 </span>[<span class="branchCov" title="Branch 5 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">         24 :   return createUnorderedLaneIdSet({getIncomingLanesSouth(), getIncomingLanesWest(), getIncomingLanesEast()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 18 times"> + </span><span class="branchCov" title="Branch 13 was taken 6 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="361"><span class="lineNum">     361 </span>                :            : }</a>
+<span class="lineNum">     362 </span>                :            : 
+<span class="lineNum">     363 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightNorthToSouthTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     364 </span>                :            : {
+<span class="lineNum">     365 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="366"><span class="lineNum">     366 </span>                :            : }</a>
+<span class="lineNum">     367 </span>                :            : 
+<span class="lineNum">     368 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightNorthToSouthTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     369 </span>                :            : {
+<span class="lineNum">     370 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="371"><span class="lineNum">     371 </span>                :            : }</a>
+<span class="lineNum">     372 </span>                :            : 
+<span class="lineNum">     373 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightNorthToSouthTest, basic_checks)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">     374 </span>                :            : {
+<span class="lineNum">     375 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     376 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1;</span>
+<span class="lineNum">     377 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457771924), point::Latitude(49.02077962), point::Altitude(3.));</span>
+<span class="lineNum">     378 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     379 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id1)});</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 9 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span>]
+<a name="380"><span class="lineNum">     380 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     381 </span>                :            : 
+<span class="lineNum">     382 </span>                :<span class="lineCov">          6 : lane::LaneId IntersectionTrafficLightFromSouthTest::getRouteStart() const</span>
+<span class="lineNum">     383 </span>                :            : {
+<span class="lineNum">     384 </span>                :<span class="lineCov">          6 :   return mFromSouth;</span>
+<a name="385"><span class="lineNum">     385 </span>                :            : }</a>
+<span class="lineNum">     386 </span>                :            : 
+<span class="lineNum">     387 </span>                :<span class="lineCov">          6 : intersection::IntersectionType IntersectionTrafficLightFromSouthTest::expectedIntersectionType() const</span>
+<span class="lineNum">     388 </span>                :            : {
+<span class="lineNum">     389 </span>                :<span class="lineCov">          6 :   return intersection::IntersectionType::TrafficLight;</span>
+<a name="390"><span class="lineNum">     390 </span>                :            : }</a>
+<span class="lineNum">     391 </span>                :            : 
+<span class="lineNum">     392 </span>                :<span class="lineCov">          1 : lane::LaneId IntersectionTrafficLightSouthToEastTest::getRouteEnd() const</span>
+<span class="lineNum">     393 </span>                :            : {
+<span class="lineNum">     394 </span>                :<span class="lineCov">          1 :   return mToEast;</span>
+<a name="395"><span class="lineNum">     395 </span>                :            : }</a>
+<span class="lineNum">     396 </span>                :            : 
+<span class="lineNum">     397 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightSouthToEastTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     398 </span>                :            : {
+<span class="lineNum">     399 </span>                :<span class="lineCov">          2 :   return lane::LaneIdSet();</span>
+<a name="400"><span class="lineNum">     400 </span>                :            : }</a>
+<span class="lineNum">     401 </span>                :            : 
+<span class="lineNum">     402 </span>                :<span class="lineCov">          2 : lane::LaneIdSet IntersectionTrafficLightSouthToEastTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     403 </span>                :            : {
+<span class="lineNum">     404 </span>[<span class="branchCov" title="Branch 5 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">          8 :   return createUnorderedLaneIdSet({getIncomingLanesNorth(), getIncomingLanesWest(), getIncomingLanesEast()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 6 times"> + </span><span class="branchCov" title="Branch 13 was taken 2 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="405"><span class="lineNum">     405 </span>                :            : }</a>
+<span class="lineNum">     406 </span>                :            : 
+<span class="lineNum">     407 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightSouthToEastTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     408 </span>                :            : {
+<span class="lineNum">     409 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="410"><span class="lineNum">     410 </span>                :            : }</a>
+<span class="lineNum">     411 </span>                :            : 
+<span class="lineNum">     412 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightSouthToEastTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     413 </span>                :            : {
+<span class="lineNum">     414 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="415"><span class="lineNum">     415 </span>                :            : }</a>
+<span class="lineNum">     416 </span>                :            : 
+<span class="lineNum">     417 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightSouthToEastTest, basic_checks)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">     418 </span>                :            : {
+<span class="lineNum">     419 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     420 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1, id2;</span>
+<span class="lineNum">     421 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457704425), point::Latitude(49.02050956), point::Altitude(5.));</span>
+<span class="lineNum">     422 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     423 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457737438), point::Latitude(49.02050359), point::Altitude(3.));</span>
+<span class="lineNum">     424 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id2 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     425 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id1), expectedTrafficLight((uint64_t)id2)});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<a name="426"><span class="lineNum">     426 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     427 </span>                :            : 
+<span class="lineNum">     428 </span>                :<span class="lineCov">          3 : lane::LaneId IntersectionTrafficLightSouthToWestTest::getRouteEnd() const</span>
+<span class="lineNum">     429 </span>                :            : {
+<span class="lineNum">     430 </span>                :<span class="lineCov">          3 :   return mToWest;</span>
+<a name="431"><span class="lineNum">     431 </span>                :            : }</a>
+<span class="lineNum">     432 </span>                :            : 
+<span class="lineNum">     433 </span>                :<span class="lineCov">          4 : lane::LaneIdSet IntersectionTrafficLightSouthToWestTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     434 </span>                :            : {
+<span class="lineNum">     435 </span>                :<span class="lineCov">          4 :   return lane::LaneIdSet();</span>
+<a name="436"><span class="lineNum">     436 </span>                :            : }</a>
+<span class="lineNum">     437 </span>                :            : 
+<span class="lineNum">     438 </span>                :<span class="lineCov">          4 : lane::LaneIdSet IntersectionTrafficLightSouthToWestTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     439 </span>                :            : {
+<span class="lineNum">     440 </span>[<span class="branchCov" title="Branch 5 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">         16 :   return createUnorderedLaneIdSet({getIncomingLanesNorth(), getIncomingLanesWest(), getIncomingLanesEast()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 12 times"> + </span><span class="branchCov" title="Branch 13 was taken 4 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="441"><span class="lineNum">     441 </span>                :            : }</a>
+<span class="lineNum">     442 </span>                :            : 
+<span class="lineNum">     443 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightSouthToWestTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     444 </span>                :            : {
+<span class="lineNum">     445 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="446"><span class="lineNum">     446 </span>                :            : }</a>
+<span class="lineNum">     447 </span>                :            : 
+<span class="lineNum">     448 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightSouthToWestTest, basic_checks)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">     449 </span>                :            : {
+<span class="lineNum">     450 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     451 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1, id2;</span>
+<span class="lineNum">     452 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457552564), point::Latitude(49.02053703), point::Altitude(3.));</span>
+<span class="lineNum">     453 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     454 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457664809), point::Latitude(49.02051672), point::Altitude(5.));</span>
+<span class="lineNum">     455 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id2 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     456 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id1), expectedTrafficLight((uint64_t)id2)});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<a name="457"><span class="lineNum">     457 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     458 </span>                :            : 
+<span class="lineNum">     459 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightSouthToWestTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     460 </span>                :            : {
+<span class="lineNum">     461 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="462"><span class="lineNum">     462 </span>                :            : }</a>
+<span class="lineNum">     463 </span>                :            : 
+<span class="lineNum">     464 </span>                :<span class="lineCov">          2 : lane::LaneId IntersectionTrafficLightSouthToNorthTest::getRouteEnd() const</span>
+<span class="lineNum">     465 </span>                :            : {
+<span class="lineNum">     466 </span>                :<span class="lineCov">          2 :   return mToNorth;</span>
+<a name="467"><span class="lineNum">     467 </span>                :            : }</a>
+<span class="lineNum">     468 </span>                :            : 
+<span class="lineNum">     469 </span>                :<span class="lineCov">          4 : lane::LaneIdSet IntersectionTrafficLightSouthToNorthTest::expectedIncomingLanesWithHigherPriority() const</span>
+<span class="lineNum">     470 </span>                :            : {
+<span class="lineNum">     471 </span>                :<span class="lineCov">          4 :   return lane::LaneIdSet();</span>
+<a name="472"><span class="lineNum">     472 </span>                :            : }</a>
+<span class="lineNum">     473 </span>                :            : 
+<span class="lineNum">     474 </span>                :<span class="lineCov">          4 : lane::LaneIdSet IntersectionTrafficLightSouthToNorthTest::expectedIncomingLanesWithLowerPriority() const</span>
+<span class="lineNum">     475 </span>                :            : {
+<span class="lineNum">     476 </span>[<span class="branchCov" title="Branch 5 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>][<span class="branchCov" title="Branch 8 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>]:<span class="lineCov">         16 :   return createUnorderedLaneIdSet({getIncomingLanesNorth(), getIncomingLanesWest(), getIncomingLanesEast()});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 12 was taken 12 times"> + </span><span class="branchCov" title="Branch 13 was taken 4 times"> + </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<a name="477"><span class="lineNum">     477 </span>                :            : }</a>
+<span class="lineNum">     478 </span>                :            : 
+<span class="lineNum">     479 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightSouthToNorthTest::expectedInternalLanesWithHigherPriority() const</span>
+<span class="lineNum">     480 </span>                :            : {
+<span class="lineNum">     481 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="482"><span class="lineNum">     482 </span>                :            : }</a>
+<span class="lineNum">     483 </span>                :            : 
+<span class="lineNum">     484 </span>                :<span class="lineNoCov">          0 : lane::LaneIdSet IntersectionTrafficLightSouthToNorthTest::expectedCrossingLanes() const</span>
+<span class="lineNum">     485 </span>                :            : {
+<span class="lineNum">     486 </span>                :<span class="lineNoCov">          0 :   return lane::LaneIdSet();</span>
+<a name="487"><span class="lineNum">     487 </span>                :            : }</a>
+<span class="lineNum">     488 </span>                :            : 
+<span class="lineNum">     489 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchCov" title="Branch 11 was taken 1 time"> + </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightSouthToNorthTest, basic_checks)</span>
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>]
+<span class="lineNum">     490 </span>                :            : {
+<span class="lineNum">     491 </span>                :<span class="lineCov">          1 :   point::GeoPoint geoPoint;</span>
+<span class="lineNum">     492 </span>                :<span class="lineCov">          1 :   landmark::LandmarkId id1, id2;</span>
+<span class="lineNum">     493 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457552564), point::Latitude(49.02053703), point::Altitude(3.));</span>
+<span class="lineNum">     494 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id1 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     495 </span>                :<span class="lineCov">          1 :   geoPoint = point::createGeoPoint(point::Longitude(8.457664809), point::Latitude(49.02051672), point::Altitude(5.));</span>
+<span class="lineNum">     496 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   id2 = landmark::uniqueLandmarkId(geoPoint);</span>
+<span class="lineNum">     497 </span>[<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]:<span class="lineCov">          1 :   performBasicTrafficLightsChecks({expectedTrafficLight((uint64_t)id1), expectedTrafficLight((uint64_t)id2)});</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>][<span class="branchCov" title="Branch 13 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>]
+<a name="498"><span class="lineNum">     498 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     499 </span>                :            : 
+<span class="lineNum">     500 </span>[<span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>][<span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 1 time"> + </span>]:<span class="lineCov">          3 : struct IntersectionTrafficLightTown01WestToSouthTest : IntersectionTown01WestToSouthTest,</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 8 was not taken"> - </span><span class="branchCov" title="Branch 9 was taken 1 time"> + </span>][<span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 15 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span>][<span class="branchCov" title="Branch 18 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 19 was not taken"> - </span>]
+<a name="501"><span class="lineNum">     501 </span>                :            :                                                        IntersectionTrafficLightWestToSouthTest</a>
+<span class="lineNum">     502 </span>                :            : {
+<span class="lineNum">     503 </span>                :<span class="lineCov">          1 :   point::GeoPoint getGeoFromSouth() const override</span>
+<span class="lineNum">     504 </span>                :            :   {
+<span class="lineNum">     505 </span>                :<span class="lineCov">          1 :     return IntersectionTown01WestToSouthTest::getGeoFromSouth();</span>
+<a name="506"><span class="lineNum">     506 </span>                :            :   }</a>
+<span class="lineNum">     507 </span>                :            : 
+<span class="lineNum">     508 </span>                :<span class="lineCov">          1 :   point::GeoPoint getGeoToSouth() const override</span>
+<span class="lineNum">     509 </span>                :            :   {
+<span class="lineNum">     510 </span>                :<span class="lineCov">          1 :     return IntersectionTown01WestToSouthTest::getGeoToSouth();</span>
+<a name="511"><span class="lineNum">     511 </span>                :            :   }</a>
+<span class="lineNum">     512 </span>                :            : 
+<span class="lineNum">     513 </span>                :<span class="lineCov">          1 :   point::GeoPoint getGeoFromWest() const override</span>
+<span class="lineNum">     514 </span>                :            :   {
+<span class="lineNum">     515 </span>                :<span class="lineCov">          1 :     return IntersectionTown01WestToSouthTest::getGeoFromWest();</span>
+<a name="516"><span class="lineNum">     516 </span>                :            :   }</a>
+<span class="lineNum">     517 </span>                :            : 
+<span class="lineNum">     518 </span>                :<span class="lineCov">          1 :   point::GeoPoint getGeoToWest() const override</span>
+<span class="lineNum">     519 </span>                :            :   {
+<span class="lineNum">     520 </span>                :<span class="lineCov">          1 :     return IntersectionTown01WestToSouthTest::getGeoToWest();</span>
+<a name="521"><span class="lineNum">     521 </span>                :            :   }</a>
+<span class="lineNum">     522 </span>                :            : 
+<span class="lineNum">     523 </span>                :<span class="lineCov">          1 :   virtual point::GeoPoint getGeoFromNorth() const override</span>
+<span class="lineNum">     524 </span>                :            :   {
+<span class="lineNum">     525 </span>                :<span class="lineCov">          1 :     return IntersectionTown01WestToSouthTest::getGeoFromNorth();</span>
+<a name="526"><span class="lineNum">     526 </span>                :            :   }</a>
+<span class="lineNum">     527 </span>                :            : 
+<span class="lineNum">     528 </span>                :<span class="lineCov">          1 :   virtual point::GeoPoint getGeoToNorth() const override</span>
+<span class="lineNum">     529 </span>                :            :   {
+<span class="lineNum">     530 </span>                :<span class="lineCov">          1 :     return IntersectionTown01WestToSouthTest::getGeoToNorth();</span>
+<a name="531"><span class="lineNum">     531 </span>                :            :   }</a>
+<span class="lineNum">     532 </span>                :            : 
+<span class="lineNum">     533 </span>                :<span class="lineCov">          1 :   virtual point::GeoPoint getGeoFromEast() const override</span>
+<span class="lineNum">     534 </span>                :            :   {
+<span class="lineNum">     535 </span>                :<span class="lineCov">          1 :     return IntersectionTown01WestToSouthTest::getGeoFromEast();</span>
+<a name="536"><span class="lineNum">     536 </span>                :            :   }</a>
+<span class="lineNum">     537 </span>                :            : 
+<span class="lineNum">     538 </span>                :<span class="lineCov">          1 :   virtual point::GeoPoint getGeoToEast() const override</span>
+<span class="lineNum">     539 </span>                :            :   {
+<span class="lineNum">     540 </span>                :<span class="lineCov">          1 :     return IntersectionTown01WestToSouthTest::getGeoToEast();</span>
+<a name="541"><span class="lineNum">     541 </span>                :            :   }</a>
+<span class="lineNum">     542 </span>                :            : 
+<span class="lineNum">     543 </span>                :<span class="lineCov">          1 :   virtual void prepareMap() const override</span>
+<span class="lineNum">     544 </span>                :            :   {
+<span class="lineNum">     545 </span>                :<span class="lineCov">          1 :     ::map_setup::prepareMapTown01TrafficLight();</span>
+<span class="lineNum">     546 </span>                :<span class="lineCov">          1 :   }</span>
+<a name="547"><span class="lineNum">     547 </span>                :            : };</a>
+<span class="lineNum">     548 </span>                :            : 
+<span class="lineNum">     549 </span>[<span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span>][<span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]:<span class="lineCov">          7 : TEST_F(IntersectionTrafficLightTown01WestToSouthTest, basic_checks)</span>
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 14 was not taken"> - </span>][<span class="branchNoCov" title="Branch 16 was not taken"> - </span><span class="branchCov" title="Branch 17 was taken 1 time"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 21 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>][<span class="branchCov" title="Branch 24 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 25 was not taken"> - </span>]
+<span class="lineNum">         </span>        [<span class="branchCov" title="Branch 27 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 28 was not taken"> - </span>]
+<span class="lineNum">     550 </span>                :            : {
+<span class="lineNum">     551 </span>                :<span class="lineCov">          1 :   IntersectionTown01WestToSouthTest::performBasicChecks();</span>
+<span class="lineNum">     552 </span>                :<span class="lineCov">          1 : }</span>
+<a name="553"><span class="lineNum">     553 </span>                :            : </a>
+<span class="lineNum">     554 </span>                :            : } // namespace map
+<span class="lineNum">     555 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          4 : } // namespace ad</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

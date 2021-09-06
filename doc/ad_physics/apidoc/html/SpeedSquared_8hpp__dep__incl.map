@@ -1,11 +1,5 @@
 <map id="generated/include/ad/physics/SpeedSquared.hpp" name="generated/include/ad/physics/SpeedSquared.hpp">
 <area shape="rect" id="node2" href="$SpeedSquaredList_8hpp.html" title="generated/include/ad\l/physics/SpeedSquaredList.hpp" alt="" coords="5,102,228,143"/>
 <area shape="rect" id="node4" href="$SpeedSquaredValidInputRange_8hpp.html" title="generated/include/ad\l/physics/SpeedSquaredValidInput\lRange.hpp" alt="" coords="251,95,486,151"/>
-<area shape="rect" id="node5" href="$Types_8hpp.html" title="impl/include/ad/physics\l/Types.hpp" alt="" coords="511,102,680,143"/>
-<area shape="rect" id="node3" href="$SpeedSquaredListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/SpeedSquaredListValid\lInputRange.hpp" alt="" coords="6,199,230,255"/>
-<area shape="rect" id="node6" href="$AngleOperation_8hpp.html" title="impl/include/ad/physics\l/AngleOperation.hpp" alt="" coords="257,206,427,247"/>
-<area shape="rect" id="node7" href="$Operation_8hpp.html" title="impl/include/ad/physics\l/Operation.hpp" alt="" coords="511,303,680,344"/>
-<area shape="rect" id="node8" href="$ParametricOperation_8hpp.html" title="impl/include/ad/physics\l/ParametricOperation.hpp" alt="" coords="502,206,689,247"/>
-<area shape="rect" id="node9" href="$PhysicsOperation_8hpp.html" title="impl/include/ad/physics\l/PhysicsOperation.hpp" alt="" coords="713,206,883,247"/>
-<area shape="rect" id="node10" href="$RatioOperation_8hpp.html" title="impl/include/ad/physics\l/RatioOperation.hpp" alt="" coords="907,206,1076,247"/>
+<area shape="rect" id="node3" href="$SpeedSquaredListValidInputRange_8hpp.html" title="generated/include/ad\l/physics/SpeedSquaredListValid\lInputRange.hpp" alt="" coords="130,199,354,255"/>
 </map>

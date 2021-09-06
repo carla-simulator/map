@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ad_map_access - tests/generated/ad/map/route/RoadSegmentTests.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">tests/generated/ad/map/route</a> - RoadSegmentTests.cpp<span style="font-size: 80%;"> (source / <a href="RoadSegmentTests.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ad_map_access</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">139</td>
+            <td class="headerCovTableEntry">139</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-09-06 15:05:16</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntry">79</td>
+            <td class="headerCovTableEntry">262</td>
+            <td class="headerCovTableEntryLo">30.2 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">           Branch data     Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
+<span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
+<span class="lineNum">       3 </span>                :            :  *
+<span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2021 Intel Corporation
+<span class="lineNum">       5 </span>                :            :  *
+<span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT
+<span class="lineNum">       7 </span>                :            :  *
+<span class="lineNum">       8 </span>                :            :  * ----------------- END LICENSE BLOCK -----------------------------------
+<span class="lineNum">       9 </span>                :            :  */
+<span class="lineNum">      10 </span>                :            : 
+<span class="lineNum">      11 </span>                :            : /*
+<span class="lineNum">      12 </span>                :            :  * Generated file
+<span class="lineNum">      13 </span>                :            :  */
+<span class="lineNum">      14 </span>                :            : 
+<span class="lineNum">      15 </span>                :            : #if defined(__clang__) &amp;&amp; (__clang_major__ &gt;= 7)
+<span class="lineNum">      16 </span>                :            : #pragma GCC diagnostic push
+<span class="lineNum">      17 </span>                :            : #pragma GCC diagnostic ignored &quot;-Wself-assign-overloaded&quot;
+<span class="lineNum">      18 </span>                :            : #endif
+<span class="lineNum">      19 </span>                :            : 
+<span class="lineNum">      20 </span>                :            : #include &lt;gtest/gtest.h&gt;
+<span class="lineNum">      21 </span>                :            : #include &lt;limits&gt;
+<a name="22"><span class="lineNum">      22 </span>                :            : #include &quot;ad/map/route/RoadSegment.hpp&quot;</a>
+<span class="lineNum">      23 </span>                :            : 
+<span class="lineNum">      24 </span>        [<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 9 times"> + </span>]:<span class="lineCov">         36 : class RoadSegmentTests : public testing::Test</span>
+<a name="25"><span class="lineNum">      25 </span>                :            : {</a>
+<span class="lineNum">      26 </span>                :            : protected:
+<span class="lineNum">      27 </span>                :<span class="lineCov">          9 :   virtual void SetUp() override</span>
+<span class="lineNum">      28 </span>                :            :   {
+<span class="lineNum">      29 </span>                :            :     // valid initialization
+<span class="lineNum">      30 </span>                :<span class="lineCov">         18 :     ::ad::map::route::RoadSegment value;</span>
+<span class="lineNum">      31 </span>                :<span class="lineCov">         18 :     ::ad::map::route::LaneSegmentList valueDrivableLaneSegments;</span>
+<span class="lineNum">      32 </span>                :<span class="lineCov">         18 :     ::ad::map::route::LaneSegment valueDrivableLaneSegmentsElement;</span>
+<span class="lineNum">      33 </span>                :<span class="lineCov">          9 :     ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementLeftNeighbor(1);</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">          9 :     valueDrivableLaneSegmentsElement.leftNeighbor = valueDrivableLaneSegmentsElementLeftNeighbor;</span>
+<span class="lineNum">      35 </span>                :<span class="lineCov">          9 :     ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementRightNeighbor(1);</span>
+<span class="lineNum">      36 </span>                :<span class="lineCov">          9 :     valueDrivableLaneSegmentsElement.rightNeighbor = valueDrivableLaneSegmentsElementRightNeighbor;</span>
+<span class="lineNum">      37 </span>                :<span class="lineCov">         18 :     ::ad::map::lane::LaneIdList valueDrivableLaneSegmentsElementPredecessors;</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">          9 :     ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementPredecessorsElement(1);</span>
+<span class="lineNum">      39 </span>        [<span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          9 :     valueDrivableLaneSegmentsElementPredecessors.resize(1, valueDrivableLaneSegmentsElementPredecessorsElement);</span>
+<span class="lineNum">      40 </span>        [<span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          9 :     valueDrivableLaneSegmentsElement.predecessors = valueDrivableLaneSegmentsElementPredecessors;</span>
+<span class="lineNum">      41 </span>                :<span class="lineCov">         18 :     ::ad::map::lane::LaneIdList valueDrivableLaneSegmentsElementSuccessors;</span>
+<span class="lineNum">      42 </span>                :<span class="lineCov">          9 :     ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementSuccessorsElement(1);</span>
+<span class="lineNum">      43 </span>        [<span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          9 :     valueDrivableLaneSegmentsElementSuccessors.resize(1, valueDrivableLaneSegmentsElementSuccessorsElement);</span>
+<span class="lineNum">      44 </span>        [<span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          9 :     valueDrivableLaneSegmentsElement.successors = valueDrivableLaneSegmentsElementSuccessors;</span>
+<span class="lineNum">      45 </span>                :<span class="lineCov">          9 :     ::ad::map::route::LaneInterval valueDrivableLaneSegmentsElementLaneInterval;</span>
+<span class="lineNum">      46 </span>                :<span class="lineCov">          9 :     ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementLaneIntervalLaneId(1);</span>
+<span class="lineNum">      47 </span>                :<span class="lineCov">          9 :     valueDrivableLaneSegmentsElementLaneInterval.laneId = valueDrivableLaneSegmentsElementLaneIntervalLaneId;</span>
+<span class="lineNum">      48 </span>                :<span class="lineCov">          9 :     ::ad::physics::ParametricValue valueDrivableLaneSegmentsElementLaneIntervalStart(0.);</span>
+<span class="lineNum">      49 </span>                :<span class="lineCov">          9 :     valueDrivableLaneSegmentsElementLaneInterval.start = valueDrivableLaneSegmentsElementLaneIntervalStart;</span>
+<span class="lineNum">      50 </span>                :<span class="lineCov">          9 :     ::ad::physics::ParametricValue valueDrivableLaneSegmentsElementLaneIntervalEnd(0.);</span>
+<span class="lineNum">      51 </span>                :<span class="lineCov">          9 :     valueDrivableLaneSegmentsElementLaneInterval.end = valueDrivableLaneSegmentsElementLaneIntervalEnd;</span>
+<span class="lineNum">      52 </span>                :<span class="lineCov">          9 :     bool valueDrivableLaneSegmentsElementLaneIntervalWrongWay{true};</span>
+<span class="lineNum">      53 </span>                :<span class="lineCov">          9 :     valueDrivableLaneSegmentsElementLaneInterval.wrongWay = valueDrivableLaneSegmentsElementLaneIntervalWrongWay;</span>
+<span class="lineNum">      54 </span>                :<span class="lineCov">          9 :     valueDrivableLaneSegmentsElement.laneInterval = valueDrivableLaneSegmentsElementLaneInterval;</span>
+<span class="lineNum">      55 </span>                :            :     ::ad::map::route::RouteLaneOffset valueDrivableLaneSegmentsElementRouteLaneOffset(
+<span class="lineNum">      56 </span>                :<span class="lineCov">          9 :       std::numeric_limits&lt;::ad::map::route::RouteLaneOffset&gt;::lowest());</span>
+<span class="lineNum">      57 </span>                :<span class="lineCov">          9 :     valueDrivableLaneSegmentsElement.routeLaneOffset = valueDrivableLaneSegmentsElementRouteLaneOffset;</span>
+<span class="lineNum">      58 </span>        [<span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          9 :     valueDrivableLaneSegments.resize(1, valueDrivableLaneSegmentsElement);</span>
+<span class="lineNum">      59 </span>        [<span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          9 :     value.drivableLaneSegments = valueDrivableLaneSegments;</span>
+<span class="lineNum">      60 </span>                :            :     ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
+<span class="lineNum">      61 </span>                :<span class="lineCov">          9 :       std::numeric_limits&lt;::ad::map::route::SegmentCounter&gt;::lowest());</span>
+<span class="lineNum">      62 </span>                :<span class="lineCov">          9 :     value.segmentCountFromDestination = valueSegmentCountFromDestination;</span>
+<span class="lineNum">      63 </span>                :<span class="lineCov">          9 :     ::ad::map::point::BoundingSphere valueBoundingSphere;</span>
+<span class="lineNum">      64 </span>                :<span class="lineCov">          9 :     ::ad::map::point::ECEFPoint valueBoundingSphereCenter;</span>
+<span class="lineNum">      65 </span>                :<span class="lineCov">          9 :     ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterX(-6400000);</span>
+<span class="lineNum">      66 </span>                :<span class="lineCov">          9 :     valueBoundingSphereCenter.x = valueBoundingSphereCenterX;</span>
+<span class="lineNum">      67 </span>                :<span class="lineCov">          9 :     ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterY(-6400000);</span>
+<span class="lineNum">      68 </span>                :<span class="lineCov">          9 :     valueBoundingSphereCenter.y = valueBoundingSphereCenterY;</span>
+<span class="lineNum">      69 </span>                :<span class="lineCov">          9 :     ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);</span>
+<span class="lineNum">      70 </span>                :<span class="lineCov">          9 :     valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;</span>
+<span class="lineNum">      71 </span>                :<span class="lineCov">          9 :     valueBoundingSphere.center = valueBoundingSphereCenter;</span>
+<span class="lineNum">      72 </span>                :<span class="lineCov">          9 :     ::ad::physics::Distance valueBoundingSphereRadius(-1e9);</span>
+<span class="lineNum">      73 </span>                :<span class="lineCov">          9 :     valueBoundingSphere.radius = valueBoundingSphereRadius;</span>
+<span class="lineNum">      74 </span>                :<span class="lineCov">          9 :     value.boundingSphere = valueBoundingSphere;</span>
+<span class="lineNum">      75 </span>        [<span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          9 :     mValue = value;</span>
+<span class="lineNum">      76 </span>                :<span class="lineCov">          9 :   }</span>
+<span class="lineNum">      77 </span>                :            : 
+<span class="lineNum">      78 </span>                :            :   ::ad::map::route::RoadSegment mValue;
+<a name="79"><span class="lineNum">      79 </span>                :            : };</a>
+<span class="lineNum">      80 </span>                :            : 
+<span class="lineNum">      81 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST_F(RoadSegmentTests, copyConstruction)</span>
+<span class="lineNum">      82 </span>                :            : {
+<span class="lineNum">      83 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment value(mValue);</span>
+<span class="lineNum">      84 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]:<span class="lineCov">          1 :   EXPECT_EQ(mValue, value);</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<a name="85"><span class="lineNum">      85 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      86 </span>                :            : 
+<span class="lineNum">      87 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST_F(RoadSegmentTests, moveConstruction)</span>
+<span class="lineNum">      88 </span>                :            : {
+<span class="lineNum">      89 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment tmpValue(mValue);</span>
+<span class="lineNum">      90 </span>                :<span class="lineCov">          2 :   ::ad::map::route::RoadSegment value(std::move(tmpValue));</span>
+<span class="lineNum">      91 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]:<span class="lineCov">          1 :   EXPECT_EQ(mValue, value);</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<a name="92"><span class="lineNum">      92 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      93 </span>                :            : 
+<span class="lineNum">      94 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST_F(RoadSegmentTests, copyAssignment)</span>
+<span class="lineNum">      95 </span>                :            : {
+<span class="lineNum">      96 </span>                :<span class="lineCov">          2 :   ::ad::map::route::RoadSegment value;</span>
+<span class="lineNum">      97 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   value = mValue;</span>
+<span class="lineNum">      98 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]:<span class="lineCov">          1 :   EXPECT_EQ(mValue, value);</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<a name="99"><span class="lineNum">      99 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     100 </span>                :            : 
+<span class="lineNum">     101 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST_F(RoadSegmentTests, moveAssignment)</span>
+<span class="lineNum">     102 </span>                :            : {
+<span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment tmpValue(mValue);</span>
+<span class="lineNum">     104 </span>                :<span class="lineCov">          2 :   ::ad::map::route::RoadSegment value;</span>
+<span class="lineNum">     105 </span>                :<span class="lineCov">          1 :   value = std::move(tmpValue);</span>
+<span class="lineNum">     106 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]:<span class="lineCov">          1 :   EXPECT_EQ(mValue, value);</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<a name="107"><span class="lineNum">     107 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     108 </span>                :            : 
+<span class="lineNum">     109 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST_F(RoadSegmentTests, comparisonOperatorEqual)</span>
+<span class="lineNum">     110 </span>                :            : {
+<span class="lineNum">     111 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment valueA = mValue;</span>
+<span class="lineNum">     112 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment valueB = mValue;</span>
+<span class="lineNum">     113 </span>                :            : 
+<span class="lineNum">     114 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   EXPECT_TRUE(valueA == valueB);</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>]
+<span class="lineNum">     115 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   EXPECT_FALSE(valueA != valueB);</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>]
+<a name="116"><span class="lineNum">     116 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     117 </span>                :            : 
+<span class="lineNum">     118 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST_F(RoadSegmentTests, stringConversionTest)</span>
+<span class="lineNum">     119 </span>                :            : {
+<span class="lineNum">     120 </span>        [<span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   std::stringstream stream;</span>
+<span class="lineNum">     121 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   stream &lt;&lt; mValue;</span>
+<span class="lineNum">     122 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          2 :   std::string ostreamStr = stream.str();</span>
+<span class="lineNum">     123 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          2 :   std::string toStr = std::to_string(mValue);</span>
+<span class="lineNum">     124 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]:<span class="lineCov">          1 :   ASSERT_EQ(ostreamStr, toStr);</span>
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 16 was not executed"> # </span><span class="branchNoExec" title="Branch 17 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 21 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 22 was not taken"> - </span>][<span class="branchCov" title="Branch 24 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 25 was not taken"> - </span>]
+<a name="125"><span class="lineNum">     125 </span>                :            : }</a>
+<span class="lineNum">     126 </span>                :            : 
+<span class="lineNum">     127 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST_F(RoadSegmentTests, comparisonOperatorDrivableLaneSegmentsDiffers)</span>
+<span class="lineNum">     128 </span>                :            : {
+<span class="lineNum">     129 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment valueA = mValue;</span>
+<span class="lineNum">     130 </span>                :<span class="lineCov">          2 :   ::ad::map::route::LaneSegmentList drivableLaneSegments;</span>
+<span class="lineNum">     131 </span>                :<span class="lineCov">          2 :   ::ad::map::route::LaneSegment drivableLaneSegmentsElement;</span>
+<span class="lineNum">     132 </span>                :<span class="lineCov">          1 :   ::ad::map::lane::LaneId drivableLaneSegmentsElementLeftNeighbor(std::numeric_limits&lt;::ad::map::lane::LaneId&gt;::max());</span>
+<span class="lineNum">     133 </span>                :<span class="lineCov">          1 :   drivableLaneSegmentsElement.leftNeighbor = drivableLaneSegmentsElementLeftNeighbor;</span>
+<span class="lineNum">     134 </span>                :<span class="lineCov">          1 :   ::ad::map::lane::LaneId drivableLaneSegmentsElementRightNeighbor(std::numeric_limits&lt;::ad::map::lane::LaneId&gt;::max());</span>
+<span class="lineNum">     135 </span>                :<span class="lineCov">          1 :   drivableLaneSegmentsElement.rightNeighbor = drivableLaneSegmentsElementRightNeighbor;</span>
+<span class="lineNum">     136 </span>                :<span class="lineCov">          2 :   ::ad::map::lane::LaneIdList drivableLaneSegmentsElementPredecessors;</span>
+<span class="lineNum">     137 </span>                :            :   ::ad::map::lane::LaneId drivableLaneSegmentsElementPredecessorsElement(
+<span class="lineNum">     138 </span>                :<span class="lineCov">          1 :     std::numeric_limits&lt;::ad::map::lane::LaneId&gt;::max());</span>
+<span class="lineNum">     139 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   drivableLaneSegmentsElementPredecessors.resize(2, drivableLaneSegmentsElementPredecessorsElement);</span>
+<span class="lineNum">     140 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   drivableLaneSegmentsElement.predecessors = drivableLaneSegmentsElementPredecessors;</span>
+<span class="lineNum">     141 </span>                :<span class="lineCov">          2 :   ::ad::map::lane::LaneIdList drivableLaneSegmentsElementSuccessors;</span>
+<span class="lineNum">     142 </span>                :            :   ::ad::map::lane::LaneId drivableLaneSegmentsElementSuccessorsElement(
+<span class="lineNum">     143 </span>                :<span class="lineCov">          1 :     std::numeric_limits&lt;::ad::map::lane::LaneId&gt;::max());</span>
+<span class="lineNum">     144 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   drivableLaneSegmentsElementSuccessors.resize(2, drivableLaneSegmentsElementSuccessorsElement);</span>
+<span class="lineNum">     145 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   drivableLaneSegmentsElement.successors = drivableLaneSegmentsElementSuccessors;</span>
+<span class="lineNum">     146 </span>                :<span class="lineCov">          1 :   ::ad::map::route::LaneInterval drivableLaneSegmentsElementLaneInterval;</span>
+<span class="lineNum">     147 </span>                :            :   ::ad::map::lane::LaneId drivableLaneSegmentsElementLaneIntervalLaneId(
+<span class="lineNum">     148 </span>                :<span class="lineCov">          1 :     std::numeric_limits&lt;::ad::map::lane::LaneId&gt;::max());</span>
+<span class="lineNum">     149 </span>                :<span class="lineCov">          1 :   drivableLaneSegmentsElementLaneInterval.laneId = drivableLaneSegmentsElementLaneIntervalLaneId;</span>
+<span class="lineNum">     150 </span>                :<span class="lineCov">          1 :   ::ad::physics::ParametricValue drivableLaneSegmentsElementLaneIntervalStart(1.);</span>
+<span class="lineNum">     151 </span>                :<span class="lineCov">          1 :   drivableLaneSegmentsElementLaneInterval.start = drivableLaneSegmentsElementLaneIntervalStart;</span>
+<span class="lineNum">     152 </span>                :<span class="lineCov">          1 :   ::ad::physics::ParametricValue drivableLaneSegmentsElementLaneIntervalEnd(1.);</span>
+<span class="lineNum">     153 </span>                :<span class="lineCov">          1 :   drivableLaneSegmentsElementLaneInterval.end = drivableLaneSegmentsElementLaneIntervalEnd;</span>
+<span class="lineNum">     154 </span>                :<span class="lineCov">          1 :   bool drivableLaneSegmentsElementLaneIntervalWrongWay{false};</span>
+<span class="lineNum">     155 </span>                :<span class="lineCov">          1 :   drivableLaneSegmentsElementLaneInterval.wrongWay = drivableLaneSegmentsElementLaneIntervalWrongWay;</span>
+<span class="lineNum">     156 </span>                :<span class="lineCov">          1 :   drivableLaneSegmentsElement.laneInterval = drivableLaneSegmentsElementLaneInterval;</span>
+<span class="lineNum">     157 </span>                :            :   ::ad::map::route::RouteLaneOffset drivableLaneSegmentsElementRouteLaneOffset(
+<span class="lineNum">     158 </span>                :<span class="lineCov">          1 :     std::numeric_limits&lt;::ad::map::route::RouteLaneOffset&gt;::max());</span>
+<span class="lineNum">     159 </span>                :<span class="lineCov">          1 :   drivableLaneSegmentsElement.routeLaneOffset = drivableLaneSegmentsElementRouteLaneOffset;</span>
+<span class="lineNum">     160 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   drivableLaneSegments.resize(2, drivableLaneSegmentsElement);</span>
+<span class="lineNum">     161 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          1 :   valueA.drivableLaneSegments = drivableLaneSegments;</span>
+<span class="lineNum">     162 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment valueB = mValue;</span>
+<span class="lineNum">     163 </span>                :            : 
+<span class="lineNum">     164 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   EXPECT_FALSE(valueA == valueB);</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>]
+<span class="lineNum">     165 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   EXPECT_TRUE(valueA != valueB);</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>]
+<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     167 </span>                :            : 
+<span class="lineNum">     168 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST_F(RoadSegmentTests, comparisonOperatorSegmentCountFromDestinationDiffers)</span>
+<span class="lineNum">     169 </span>                :            : {
+<span class="lineNum">     170 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment valueA = mValue;</span>
+<span class="lineNum">     171 </span>                :            :   ::ad::map::route::SegmentCounter segmentCountFromDestination(
+<span class="lineNum">     172 </span>                :<span class="lineCov">          1 :     std::numeric_limits&lt;::ad::map::route::SegmentCounter&gt;::max());</span>
+<span class="lineNum">     173 </span>                :<span class="lineCov">          1 :   valueA.segmentCountFromDestination = segmentCountFromDestination;</span>
+<span class="lineNum">     174 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment valueB = mValue;</span>
+<span class="lineNum">     175 </span>                :            : 
+<span class="lineNum">     176 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   EXPECT_FALSE(valueA == valueB);</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>]
+<span class="lineNum">     177 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   EXPECT_TRUE(valueA != valueB);</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>]
+<a name="178"><span class="lineNum">     178 </span>                :<span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     179 </span>                :            : 
+<span class="lineNum">     180 </span>        [<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>]:<span class="lineCov">          8 : TEST_F(RoadSegmentTests, comparisonOperatorBoundingSphereDiffers)</span>
+<span class="lineNum">     181 </span>                :            : {
+<span class="lineNum">     182 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment valueA = mValue;</span>
+<span class="lineNum">     183 </span>                :<span class="lineCov">          1 :   ::ad::map::point::BoundingSphere boundingSphere;</span>
+<span class="lineNum">     184 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFPoint boundingSphereCenter;</span>
+<span class="lineNum">     185 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFCoordinate boundingSphereCenterX(6400000);</span>
+<span class="lineNum">     186 </span>                :<span class="lineCov">          1 :   boundingSphereCenter.x = boundingSphereCenterX;</span>
+<span class="lineNum">     187 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFCoordinate boundingSphereCenterY(6400000);</span>
+<span class="lineNum">     188 </span>                :<span class="lineCov">          1 :   boundingSphereCenter.y = boundingSphereCenterY;</span>
+<span class="lineNum">     189 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ECEFCoordinate boundingSphereCenterZ(6400000);</span>
+<span class="lineNum">     190 </span>                :<span class="lineCov">          1 :   boundingSphereCenter.z = boundingSphereCenterZ;</span>
+<span class="lineNum">     191 </span>                :<span class="lineCov">          1 :   boundingSphere.center = boundingSphereCenter;</span>
+<span class="lineNum">     192 </span>                :<span class="lineCov">          1 :   ::ad::physics::Distance boundingSphereRadius(1e9);</span>
+<span class="lineNum">     193 </span>                :<span class="lineCov">          1 :   boundingSphere.radius = boundingSphereRadius;</span>
+<span class="lineNum">     194 </span>                :<span class="lineCov">          1 :   valueA.boundingSphere = boundingSphere;</span>
+<span class="lineNum">     195 </span>        [<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">          2 :   ::ad::map::route::RoadSegment valueB = mValue;</span>
+<span class="lineNum">     196 </span>                :            : 
+<a name="197"><span class="lineNum">     197 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   EXPECT_FALSE(valueA == valueB);</span></a>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>]
+<span class="lineNum">     198 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]:<span class="lineCov">          1 :   EXPECT_TRUE(valueA != valueB);</span>
+<span class="lineNum">         </span>[<span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span>][<span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span>]
+<span class="lineNum">         </span>[<span class="branchNoExec" title="Branch 13 was not executed"> # </span><span class="branchNoExec" title="Branch 14 was not executed"> # </span>][<span class="branchNoExec" title="Branch 17 was not executed"> # </span><span class="branchNoExec" title="Branch 18 was not executed"> # </span>]
+<span class="lineNum">         </span>        [<span class="branchNoExec" title="Branch 20 was not executed"> # </span><span class="branchNoExec" title="Branch 21 was not executed"> # </span>]
+<span class="lineNum">     199 </span>[<span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>][<span class="branchCov" title="Branch 3 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span>]:<span class="lineCov">          5 : }</span>
+<span class="lineNum">     200 </span>                :            : 
+<span class="lineNum">     201 </span>                :            : #if defined(__clang__) &amp;&amp; (__clang_major__ &gt;= 7)
+<span class="lineNum">     202 </span>                :            : #pragma GCC diagnostic pop
+<span class="lineNum">     203 </span>                :            : #endif
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
