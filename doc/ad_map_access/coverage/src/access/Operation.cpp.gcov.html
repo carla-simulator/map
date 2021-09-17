@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-09-06 15:05:16</td>
+            <td class="headerValue">2021-09-17 13:06:11</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">16</td>
@@ -93,22 +93,22 @@
 <span class="lineNum">      22 </span>                :            : namespace map {
 <a name="23"><span class="lineNum">      23 </span>                :            : namespace access {</a>
 <span class="lineNum">      24 </span>                :            : 
-<span class="lineNum">      25 </span>                :<span class="lineCov">        234 : void setENUReferencePoint(point::GeoPoint const &amp;point)</span>
+<span class="lineNum">      25 </span>                :<span class="lineCov">        201 : void setENUReferencePoint(point::GeoPoint const &amp;point)</span>
 <span class="lineNum">      26 </span>                :            : {
-<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 1 was taken 234 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        468 :   auto coordinateTransform = getCoordinateTransform();</span>
-<span class="lineNum">      28 </span>[<span class="branchCov" title="Branch 2 was taken 234 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 18 times"> + </span><span class="branchCov" title="Branch 5 was taken 216 times"> + </span>]:<span class="lineCov">        234 :   if (!coordinateTransform-&gt;isENUValid() || (coordinateTransform-&gt;getENUReferencePoint() != point))</span>
+<span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 1 was taken 201 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        402 :   auto coordinateTransform = getCoordinateTransform();</span>
+<span class="lineNum">      28 </span>[<span class="branchCov" title="Branch 2 was taken 201 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>][<span class="branchCov" title="Branch 4 was taken 18 times"> + </span><span class="branchCov" title="Branch 5 was taken 183 times"> + </span>]:<span class="lineCov">        201 :   if (!coordinateTransform-&gt;isENUValid() || (coordinateTransform-&gt;getENUReferencePoint() != point))</span>
 <span class="lineNum">         </span>[<span class="branchCov" title="Branch 8 was taken 18 times"> + </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span>][<span class="branchCov" title="Branch 11 was taken 18 times"> + </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
-<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 17 times"> + </span><span class="branchCov" title="Branch 14 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 15 was taken 233 times"> + </span><span class="branchCov" title="Branch 16 was taken 1 time"> + </span>]
+<span class="lineNum">         </span>[<span class="branchCov" title="Branch 13 was taken 17 times"> + </span><span class="branchCov" title="Branch 14 was taken 1 time"> + </span>][<span class="branchCov" title="Branch 15 was taken 200 times"> + </span><span class="branchCov" title="Branch 16 was taken 1 time"> + </span>]
 <span class="lineNum">      29 </span>                :            :   {
-<span class="lineNum">      30 </span>        [<span class="branchCov" title="Branch 2 was taken 233 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        233 :     coordinateTransform-&gt;setENUReferencePoint(point);</span>
+<span class="lineNum">      30 </span>        [<span class="branchCov" title="Branch 2 was taken 200 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        200 :     coordinateTransform-&gt;setENUReferencePoint(point);</span>
 <span class="lineNum">      31 </span>                :            :   }
-<a name="32"><span class="lineNum">      32 </span>                :<span class="lineCov">        234 : }</span></a>
+<a name="32"><span class="lineNum">      32 </span>                :<span class="lineCov">        201 : }</span></a>
 <span class="lineNum">      33 </span>                :            : 
-<span class="lineNum">      34 </span>                :<span class="lineCov">     509356 : std::shared_ptr&lt;point::CoordinateTransform&gt; getCoordinateTransform()</span>
+<span class="lineNum">      34 </span>                :<span class="lineCov">     509367 : std::shared_ptr&lt;point::CoordinateTransform&gt; getCoordinateTransform()</span>
 <span class="lineNum">      35 </span>                :            : {
 <span class="lineNum">      36 </span>                :            :   // coordinate transform (at least without ENURefPoint) can actually used before initialization
 <span class="lineNum">      37 </span>                :            :   // therefore, return the transform without initialization check
-<span class="lineNum">      38 </span>                :<span class="lineCov">     509356 :   return AdMapAccess::getAdMapAccessInstance().mCoordinateTransform;</span>
+<span class="lineNum">      38 </span>                :<span class="lineCov">     509367 :   return AdMapAccess::getAdMapAccessInstance().mCoordinateTransform;</span>
 <a name="39"><span class="lineNum">      39 </span>                :            : }</a>
 <span class="lineNum">      40 </span>                :            : 
 <span class="lineNum">      41 </span>                :<span class="lineCov">        440 : point::GeoPoint getENUReferencePoint()</span>

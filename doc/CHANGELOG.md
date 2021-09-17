@@ -1,5 +1,9 @@
 ## Latest changes
 
+## Release 2.5.1
+#### :ghost: Maintenance
+* Fix ENU conversion of OpenDrive imports
+
 ## Release 2.5.0
 #### :ghost: Maintenance
 * Ease version number handling and folder layout
