@@ -70,13 +70,17 @@ bool AdMapFactory::createAdMap(::opendrive::OpenDriveData &openDriveData,
     access::getLogger()->warn("LaneMap geometry generated with errors");
   }
 
-  access::getLogger()->info("Opened opendrive map ");
-
-  if (std::isnan(openDriveData.geoReference.latitude) || std::isnan(openDriveData.geoReference.longitude))
+  auto coordinateTransform = access::getCoordinateTransform();
+  if ( coordinateTransform->setGeoProjection(openDriveData.geoReference.projection) )
+  {
+    access::getLogger()->info("Opened opendrive map: using proj geo reference {}", access::getENUReferencePoint());
+  }
+  else if (std::isnan(openDriveData.geoReference.latitude) || std::isnan(openDriveData.geoReference.longitude))
   {
     auto geoRefPoint = access::getENUReferencePoint();
     openDriveData.geoReference.latitude = static_cast<double>(geoRefPoint.latitude);
     openDriveData.geoReference.longitude = static_cast<double>(geoRefPoint.longitude);
+    access::getLogger()->info("Opened opendrive map: using external geo reference {}", access::getENUReferencePoint());
   }
   else
   {
@@ -85,9 +89,8 @@ bool AdMapFactory::createAdMap(::opendrive::OpenDriveData &openDriveData,
     geoRefPoint.latitude = ::ad::map::point::Latitude(openDriveData.geoReference.latitude);
     geoRefPoint.altitude = ::ad::map::point::Altitude(openDriveData.geoReference.altitude);
     access::setENUReferencePoint(geoRefPoint);
+    access::getLogger()->info("Opened opendrive map: using geo reference {}", access::getENUReferencePoint());
   }
-
-  access::getLogger()->info("Using reference point {}", access::getENUReferencePoint());
 
   return convertToAdMap(openDriveData, defaultIntersectionType, defaultTrafficLightType);
 }
