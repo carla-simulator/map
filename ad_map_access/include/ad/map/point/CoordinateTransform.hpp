@@ -9,11 +9,10 @@
 #pragma once
 
 #define ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
-#include <proj_api.h>
 #include <memory>
+#include <proj_api.h>
 #include <vector>
 #include "ad/map/point/Types.hpp"
-
 
 /** @brief namespace ad */
 namespace ad {
@@ -44,7 +43,6 @@ public: // Constructor/Destructor
 
 public: // Basic Conversions
 public: // ENU Reference Point Managment
-
   /**
    * @brief Set the method for ENU coordinate system conversion via projection string (e.g. from OpenDrive file).
    *        Increases ENU reference point counter.
@@ -258,7 +256,8 @@ private:                     // ENU Conversion parameters
   double enu_sp_2_;          ///< ENU computation temp value.
   double ecef_enu_[9];       ///< ENU/ECEF conversion matrix.
 
-  projPJ projPtr_;  ///< proj object to be used for ENU conversion. In case of OpenDrive import ENU conversions have to use the exact projection string provided with the map.
+  projPJ projPtr_; ///< proj object to be used for ENU conversion. In case of OpenDrive import ENU conversions have to
+                   ///< use the exact projection string provided with the map.
 
   ///< is ENU conversion configured via projection string
   bool isGeoProjectionValid() const;

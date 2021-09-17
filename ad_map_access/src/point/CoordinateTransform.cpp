@@ -40,26 +40,25 @@ CoordinateTransform::CoordinateTransform()
 
 CoordinateTransform::~CoordinateTransform()
 {
-  if ( projPtr_ != nullptr )
+  if (projPtr_ != nullptr)
   {
     pj_dalloc(projPtr_);
     projPtr_ = nullptr;
   }
 }
 
-
 bool CoordinateTransform::setGeoProjection(std::string const &geo_projection)
 {
-  if ( projPtr_ != nullptr )
+  if (projPtr_ != nullptr)
   {
     pj_dalloc(projPtr_);
     projPtr_ = nullptr;
   }
   projPtr_ = pj_init_plus(geo_projection.c_str());
-  if ( projPtr_ != nullptr )
+  if (projPtr_ != nullptr)
   {
     enu_ref_++;
-    auto enu_zero = createENUPoint(0,0,0);
+    auto enu_zero = createENUPoint(0, 0, 0);
     // create dummy reference point to allow calculation of actual one
     enu_ref_point_ = createGeoPoint(Longitude(0), Latitude(0), Altitude(0));
     enu_ref_point_ = ENU2Geo(enu_zero);
@@ -69,7 +68,6 @@ bool CoordinateTransform::setGeoProjection(std::string const &geo_projection)
   return false;
 }
 
-
 bool CoordinateTransform::isGeoProjectionValid() const
 {
   return projPtr_ != nullptr;
@@ -77,7 +75,7 @@ bool CoordinateTransform::isGeoProjectionValid() const
 
 void CoordinateTransform::setENUReferencePoint(const GeoPoint &enu_ref_point)
 {
-  if ( isGeoProjectionValid() )
+  if (isGeoProjectionValid())
   {
     access::getLogger()->warn("Set ENU Reference Point ignored in geo projection mode!");
   }
@@ -143,7 +141,7 @@ ENUPoint CoordinateTransform::Geo2ENU(const GeoPoint &pt) const
   {
     if (isValid(pt))
     {
-      if ( isGeoProjectionValid() )
+      if (isGeoProjectionValid())
       {
         projXY pjGeoPoint;
         pjGeoPoint.u = static_cast<double>(pt.longitude);
@@ -187,14 +185,16 @@ GeoPoint CoordinateTransform::ENU2Geo(const ENUPoint &pt) const
   {
     if (isValid(pt))
     {
-      if ( isGeoProjectionValid() )
+      if (isGeoProjectionValid())
       {
         projXY pjEnuPoint;
         pjEnuPoint.u = static_cast<double>(pt.x);
         pjEnuPoint.v = static_cast<double>(pt.y);
 
         auto pjGeoPoint = pj_inv(pjEnuPoint, projPtr_);
-        return createGeoPoint(Longitude(radians2degree(pjGeoPoint.u)), Latitude(radians2degree(pjGeoPoint.v)), Altitude(static_cast<double>(pt.z)));
+        return createGeoPoint(Longitude(radians2degree(pjGeoPoint.u)),
+                              Latitude(radians2degree(pjGeoPoint.v)),
+                              Altitude(static_cast<double>(pt.z)));
       }
       else
       {
@@ -308,7 +308,7 @@ ECEFPoint CoordinateTransform::ENU2ECEF(const ENUPoint &pt) const
   {
     if (isValid(pt))
     {
-      if ( isGeoProjectionValid() )
+      if (isGeoProjectionValid())
       {
         GeoPoint geo = ENU2Geo(pt);
         return Geo2ECEF(geo);
@@ -345,7 +345,7 @@ ENUPoint CoordinateTransform::ECEF2ENU(const ECEFPoint &pt) const
   {
     if (isValid(pt))
     {
-      if ( isGeoProjectionValid() )
+      if (isGeoProjectionValid())
       {
         GeoPoint geo = ECEF2Geo(pt);
         return Geo2ENU(geo);

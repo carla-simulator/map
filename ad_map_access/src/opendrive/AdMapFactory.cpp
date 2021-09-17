@@ -71,7 +71,7 @@ bool AdMapFactory::createAdMap(::opendrive::OpenDriveData &openDriveData,
   }
 
   auto coordinateTransform = access::getCoordinateTransform();
-  if ( coordinateTransform->setGeoProjection(openDriveData.geoReference.projection) )
+  if (coordinateTransform->setGeoProjection(openDriveData.geoReference.projection))
   {
     access::getLogger()->info("Opened opendrive map: using proj geo reference {}", access::getENUReferencePoint());
   }
