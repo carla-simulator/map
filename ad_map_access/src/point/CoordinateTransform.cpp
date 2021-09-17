@@ -144,8 +144,8 @@ ENUPoint CoordinateTransform::Geo2ENU(const GeoPoint &pt) const
       if (isGeoProjectionValid())
       {
         projXY pjGeoPoint;
-        pjGeoPoint.u = static_cast<double>(pt.longitude);
-        pjGeoPoint.v = static_cast<double>(pt.latitude);
+        pjGeoPoint.u = toRadians(pt.longitude);
+        pjGeoPoint.v = toRadians(pt.latitude);
 
         auto pjEnuPoint = pj_fwd(pjGeoPoint, projPtr_);
         return createENUPoint(pjEnuPoint.u, pjEnuPoint.v, static_cast<double>(pt.altitude));
