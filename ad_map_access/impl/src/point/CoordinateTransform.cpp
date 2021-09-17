@@ -34,15 +34,52 @@ CoordinateTransform::CoordinateTransform()
   enu_phi_ = 0;
   enu_lam_ = 0;
   std::memset(ecef_enu_, 0, sizeof(ecef_enu_));
+
+  projPtr_ = nullptr;
 }
 
 CoordinateTransform::~CoordinateTransform()
 {
+  if (projPtr_ != nullptr)
+  {
+    pj_dalloc(projPtr_);
+    projPtr_ = nullptr;
+  }
+}
+
+bool CoordinateTransform::setGeoProjection(std::string const &geo_projection)
+{
+  if (projPtr_ != nullptr)
+  {
+    pj_dalloc(projPtr_);
+    projPtr_ = nullptr;
+  }
+  projPtr_ = pj_init_plus(geo_projection.c_str());
+  if (projPtr_ != nullptr)
+  {
+    enu_ref_++;
+    auto enu_zero = createENUPoint(0, 0, 0);
+    // create dummy reference point to allow calculation of actual one
+    enu_ref_point_ = createGeoPoint(Longitude(0), Latitude(0), Altitude(0));
+    enu_ref_point_ = ENU2Geo(enu_zero);
+    ecef_ref_point_ = Geo2ECEF(enu_ref_point_);
+    return true;
+  }
+  return false;
+}
+
+bool CoordinateTransform::isGeoProjectionValid() const
+{
+  return projPtr_ != nullptr;
 }
 
 void CoordinateTransform::setENUReferencePoint(const GeoPoint &enu_ref_point)
 {
-  if (isValid(enu_ref_point))
+  if (isGeoProjectionValid())
+  {
+    access::getLogger()->warn("Set ENU Reference Point ignored in geo projection mode!");
+  }
+  else if (isValid(enu_ref_point))
   {
     enu_ref_++;
     enu_ref_point_ = enu_ref_point;
@@ -104,18 +141,30 @@ ENUPoint CoordinateTransform::Geo2ENU(const GeoPoint &pt) const
   {
     if (isValid(pt))
     {
-      double dphi = toRadians(pt.latitude) - enu_phi_;
-      double dlam = toRadians(pt.longitude) - enu_lam_;
-      double dh = static_cast<double>(pt.altitude) - enu_h_;
-      double dlam_2 = dlam * dlam;
-      double dphi_2 = dphi * dphi;
-      double de = (A / enu_tmp1_ + enu_h_) * enu_cp_ * dlam
-        - (A * (1 - E2) / enu_tmp1_3_ + enu_h_) * enu_sp_ * dphi * dlam + enu_cp_ * dlam * dh;
-      double dn = (A * (1 - E2) / enu_tmp1_3_ + enu_h_) * dphi + 1.5 * enu_cp_ * enu_sp_ * A * E2 * dphi_2
-        + enu_sp_2_ * dh * dphi + 0.5 * enu_sp_ * enu_cp_ * (A / enu_tmp1_ + enu_h_) * dlam_2;
-      double du = dh - 0.5 * (A - 1.5 * A * E2 * enu_cp_2_ + 0.5 * A * E2 + enu_h_) * dphi_2
-        - 0.5 * enu_cp_2_ * (A / enu_tmp1_ - enu_h_) * dlam_2;
-      return createENUPoint(de, dn, du);
+      if (isGeoProjectionValid())
+      {
+        projXY pjGeoPoint;
+        pjGeoPoint.u = toRadians(pt.longitude);
+        pjGeoPoint.v = toRadians(pt.latitude);
+
+        auto pjEnuPoint = pj_fwd(pjGeoPoint, projPtr_);
+        return createENUPoint(pjEnuPoint.u, pjEnuPoint.v, static_cast<double>(pt.altitude));
+      }
+      else
+      {
+        double dphi = toRadians(pt.latitude) - enu_phi_;
+        double dlam = toRadians(pt.longitude) - enu_lam_;
+        double dh = static_cast<double>(pt.altitude) - enu_h_;
+        double dlam_2 = dlam * dlam;
+        double dphi_2 = dphi * dphi;
+        double de = (A / enu_tmp1_ + enu_h_) * enu_cp_ * dlam
+          - (A * (1 - E2) / enu_tmp1_3_ + enu_h_) * enu_sp_ * dphi * dlam + enu_cp_ * dlam * dh;
+        double dn = (A * (1 - E2) / enu_tmp1_3_ + enu_h_) * dphi + 1.5 * enu_cp_ * enu_sp_ * A * E2 * dphi_2
+          + enu_sp_2_ * dh * dphi + 0.5 * enu_sp_ * enu_cp_ * (A / enu_tmp1_ + enu_h_) * dlam_2;
+        double du = dh - 0.5 * (A - 1.5 * A * E2 * enu_cp_2_ + 0.5 * A * E2 + enu_h_) * dphi_2
+          - 0.5 * enu_cp_2_ * (A / enu_tmp1_ - enu_h_) * dlam_2;
+        return createENUPoint(de, dn, du);
+      }
     }
     else
     {
@@ -136,9 +185,23 @@ GeoPoint CoordinateTransform::ENU2Geo(const ENUPoint &pt) const
   {
     if (isValid(pt))
     {
-      //* \todo Direct conversion ENU2Geo!
-      ECEFPoint ecef = ENU2ECEF(pt);
-      return ECEF2Geo(ecef);
+      if (isGeoProjectionValid())
+      {
+        projXY pjEnuPoint;
+        pjEnuPoint.u = static_cast<double>(pt.x);
+        pjEnuPoint.v = static_cast<double>(pt.y);
+
+        auto pjGeoPoint = pj_inv(pjEnuPoint, projPtr_);
+        return createGeoPoint(Longitude(radians2degree(pjGeoPoint.u)),
+                              Latitude(radians2degree(pjGeoPoint.v)),
+                              Altitude(static_cast<double>(pt.z)));
+      }
+      else
+      {
+        //* \todo Direct conversion ENU2Geo!
+        ECEFPoint ecef = ENU2ECEF(pt);
+        return ECEF2Geo(ecef);
+      }
     }
     else
     {
@@ -245,15 +308,23 @@ ECEFPoint CoordinateTransform::ENU2ECEF(const ENUPoint &pt) const
   {
     if (isValid(pt))
     {
-      double x = static_cast<double>(pt.x);
-      double y = static_cast<double>(pt.y);
-      double z = static_cast<double>(pt.z);
-      double ecef_x = ecef_enu_[0] * x + ecef_enu_[3] * y + ecef_enu_[6] * z;
-      double ecef_y = ecef_enu_[1] * x + ecef_enu_[4] * y + ecef_enu_[7] * z;
-      double ecef_z = ecef_enu_[5] * y + ecef_enu_[8] * z;
-      auto const ecef_base = createECEFPoint(ecef_x, ecef_y, ecef_z);
-      auto const ecef_result = ecef_base + ecef_ref_point_;
-      return ecef_result;
+      if (isGeoProjectionValid())
+      {
+        GeoPoint geo = ENU2Geo(pt);
+        return Geo2ECEF(geo);
+      }
+      else
+      {
+        double x = static_cast<double>(pt.x);
+        double y = static_cast<double>(pt.y);
+        double z = static_cast<double>(pt.z);
+        double ecef_x = ecef_enu_[0] * x + ecef_enu_[3] * y + ecef_enu_[6] * z;
+        double ecef_y = ecef_enu_[1] * x + ecef_enu_[4] * y + ecef_enu_[7] * z;
+        double ecef_z = ecef_enu_[5] * y + ecef_enu_[8] * z;
+        auto const ecef_base = createECEFPoint(ecef_x, ecef_y, ecef_z);
+        auto const ecef_result = ecef_base + ecef_ref_point_;
+        return ecef_result;
+      }
     }
     else
     {
@@ -274,14 +345,22 @@ ENUPoint CoordinateTransform::ECEF2ENU(const ECEFPoint &pt) const
   {
     if (isValid(pt))
     {
-      auto const ecef_d = pt - ecef_ref_point_;
-      double x = static_cast<double>(ecef_d.x);
-      double y = static_cast<double>(ecef_d.y);
-      double z = static_cast<double>(ecef_d.z);
-      double enu_x = ecef_enu_[0] * x + ecef_enu_[1] * y;
-      double enu_y = ecef_enu_[3] * x + ecef_enu_[4] * y + ecef_enu_[5] * z;
-      double enu_z = ecef_enu_[6] * x + ecef_enu_[7] * y + ecef_enu_[8] * z;
-      return createENUPoint(enu_x, enu_y, enu_z);
+      if (isGeoProjectionValid())
+      {
+        GeoPoint geo = ECEF2Geo(pt);
+        return Geo2ENU(geo);
+      }
+      else
+      {
+        auto const ecef_d = pt - ecef_ref_point_;
+        double x = static_cast<double>(ecef_d.x);
+        double y = static_cast<double>(ecef_d.y);
+        double z = static_cast<double>(ecef_d.z);
+        double enu_x = ecef_enu_[0] * x + ecef_enu_[1] * y;
+        double enu_y = ecef_enu_[3] * x + ecef_enu_[4] * y + ecef_enu_[5] * z;
+        double enu_z = ecef_enu_[6] * x + ecef_enu_[7] * y + ecef_enu_[8] * z;
+        return createENUPoint(enu_x, enu_y, enu_z);
+      }
     }
     else
     {

@@ -1,4 +1,34 @@
 ## Latest changes
+
+* Fix ENU conversion of OpenDrive imports
+* Route planning fixes and extensions
+  - Split CoreIntersection parts from Intersection wich are independant from
+    the route and right-of-way handling. And fixed outgoingParaPoints()
+  - Extend map matching, route prediction and connecting route handling by
+    relevantLane parameter to restrict the functionality to a fixed subset
+    of the map.
+  - Added route::planning::predictRoutesDirectionless().
+  - Made operation mode of route::planning::filterDuplicateRoutes() and all
+    of the route::planning::predictRoute*() functions configurable
+  - Fixed the search for start interval in
+    route::planning::compareRoutesOnIntervalLevel() and made function
+    public.
+  - route::extendRouteToDistance() considers the shorter version of the
+    expanded routes instead of larger to prevent consecutive route
+    expansions to overlook possible routes through the intersection;
+  - route::calculateConnectingRoute() considers not only the shortest
+    connecting route, but judges also the feasibility of the connecting
+    route based on the actual heading differences in respect to the route.
+    This prevents from selecting e.g. wrong 90° crossing lanes with very
+    small connecting route because vehicles would drive there side by side.
+  - route::alignRoute{Ending|Starting}Points() prevent from invalid or
+    unnecesary alignments.
+  - route: :planning::RouteAStar/RoutePrediction: handle
+    RoutingDirection: :DONT_CARE as input correctly
+* Allow larger ENUCoordinates up to 1e9 (previously 1e6) and ENUCoordinate input up to 1e8 (previously 1.6e4)
+
+## Release 2.4.5
+#### :rocket: New Features
 * Complete geometry import of OpenDRIVE reader
 
 ## Release 2.4.4
