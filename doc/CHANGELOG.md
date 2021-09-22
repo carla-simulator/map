@@ -1,5 +1,9 @@
 ## Latest changes
 
+## Release 2.5.2
+#### :ghost: Maintenance
+* Fix map matching with AltitudeUnknown
+
 ## Release 2.5.1
 #### :ghost: Maintenance
 * Fix ENU conversion of OpenDrive imports
