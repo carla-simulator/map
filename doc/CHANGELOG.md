@@ -1,5 +1,10 @@
 ## Latest changes
 
+## Release 2.6.0
+#### :ghost: Maintenance
+* Fix map matching with AltitudeUnknown
+* Remove Ubuntu 16.04 support
+
 ## Release 2.5.1
 #### :ghost: Maintenance
 * Fix ENU conversion of OpenDrive imports

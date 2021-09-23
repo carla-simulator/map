@@ -1,4 +1,11 @@
 <map id="generated/include/ad/map/route/RouteParaPoint.hpp" name="generated/include/ad/map/route/RouteParaPoint.hpp">
-<area shape="rect" id="node6" href="$RoutePlanningCounter_8hpp.html" title="ad/map/route/RoutePlanning\lCounter.hpp" alt="" coords="389,95,591,136"/>
-<area shape="rect" id="node8" href="$SegmentCounter_8hpp.html" title="ad/map/route/SegmentCounter.hpp" alt="" coords="615,102,866,129"/>
+<area shape="rect" id="node1" title=" " alt="" coords="219,5,443,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,102,85,129"/>
+<area shape="rect" id="node3" title=" " alt="" coords="109,102,168,129"/>
+<area shape="rect" id="node4" title=" " alt="" coords="192,102,269,129"/>
+<area shape="rect" id="node5" title=" " alt="" coords="293,102,368,129"/>
+<area shape="rect" id="node6" href="$RoutePlanningCounter_8hpp.html" title=" " alt="" coords="393,95,599,136"/>
+<area shape="rect" id="node8" href="$SegmentCounter_8hpp.html" title=" " alt="" coords="623,102,873,129"/>
+<area shape="rect" id="node9" title=" " alt="" coords="897,102,1127,129"/>
+<area shape="rect" id="node7" title=" " alt="" coords="588,184,655,211"/>
 </map>

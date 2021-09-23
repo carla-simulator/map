@@ -1,4 +1,13 @@
 <map id="generated/include/ad/map/restriction/VehicleDescriptor.hpp" name="generated/include/ad/map/restriction/VehicleDescriptor.hpp">
-<area shape="rect" id="node6" href="$PassengerCount_8hpp.html" title="ad/map/restriction\l/PassengerCount.hpp" alt="" coords="472,95,631,136"/>
-<area shape="rect" id="node8" href="$RoadUserType_8hpp.html" title="ad/map/restriction\l/RoadUserType.hpp" alt="" coords="75,95,217,136"/>
+<area shape="rect" id="node1" title=" " alt="" coords="234,5,505,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,184,85,211"/>
+<area shape="rect" id="node3" title=" " alt="" coords="295,102,353,129"/>
+<area shape="rect" id="node4" title=" " alt="" coords="209,184,287,211"/>
+<area shape="rect" id="node5" title=" " alt="" coords="377,102,452,129"/>
+<area shape="rect" id="node6" href="$PassengerCount_8hpp.html" title=" " alt="" coords="477,95,635,136"/>
+<area shape="rect" id="node8" href="$RoadUserType_8hpp.html" title=" " alt="" coords="73,95,220,136"/>
+<area shape="rect" id="node10" title=" " alt="" coords="659,102,839,129"/>
+<area shape="rect" id="node11" title=" " alt="" coords="864,102,1032,129"/>
+<area shape="rect" id="node7" title=" " alt="" coords="523,184,589,211"/>
+<area shape="rect" id="node9" title=" " alt="" coords="117,184,176,211"/>
 </map>

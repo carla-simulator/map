@@ -1,4 +1,11 @@
 <map id="generated/include/ad/map/config/MapEntry.hpp" name="generated/include/ad/map/config/MapEntry.hpp">
-<area shape="rect" id="node7" href="$IntersectionType_8hpp.html" title="ad/map/intersection\l/IntersectionType.hpp" alt="" coords="25,95,183,136"/>
-<area shape="rect" id="node8" href="$TrafficLightType_8hpp.html" title="ad/map/landmark/TrafficLight\lType.hpp" alt="" coords="207,95,414,136"/>
+<area shape="rect" id="node1" title=" " alt="" coords="390,5,581,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="225,184,305,211"/>
+<area shape="rect" id="node3" title=" " alt="" coords="548,102,607,129"/>
+<area shape="rect" id="node4" title=" " alt="" coords="329,184,407,211"/>
+<area shape="rect" id="node5" title=" " alt="" coords="631,102,705,129"/>
+<area shape="rect" id="node6" title=" " alt="" coords="77,184,136,211"/>
+<area shape="rect" id="node7" href="$IntersectionType_8hpp.html" title=" " alt="" coords="26,95,187,136"/>
+<area shape="rect" id="node8" href="$TrafficLightType_8hpp.html" title=" " alt="" coords="211,95,423,136"/>
+<area shape="rect" id="node9" title=" " alt="" coords="730,102,910,129"/>
 </map>

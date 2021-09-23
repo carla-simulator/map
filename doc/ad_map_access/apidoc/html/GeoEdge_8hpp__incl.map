@@ -1,6 +1,16 @@
 <map id="generated/include/ad/map/point/GeoEdge.hpp" name="generated/include/ad/map/point/GeoEdge.hpp">
-<area shape="rect" id="node5" href="$GeoPoint_8hpp.html" title="ad/map/point/GeoPoint.hpp" alt="" coords="467,95,665,121"/>
-<area shape="rect" id="node8" href="$Altitude_8hpp.html" title="ad/map/point/Altitude.hpp" alt="" coords="365,169,553,196"/>
-<area shape="rect" id="node13" href="$Latitude_8hpp.html" title="ad/map/point/Latitude.hpp" alt="" coords="577,169,768,196"/>
-<area shape="rect" id="node14" href="$Longitude_8hpp.html" title="ad/map/point/Longitude.hpp" alt="" coords="138,169,341,196"/>
+<area shape="rect" id="node1" title=" " alt="" coords="704,5,887,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="789,244,869,271"/>
+<area shape="rect" id="node3" title=" " alt="" coords="105,244,180,271"/>
+<area shape="rect" id="node4" title=" " alt="" coords="952,95,1015,121"/>
+<area shape="rect" id="node5" href="$GeoPoint_8hpp.html" title=" " alt="" coords="471,95,670,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="706,244,765,271"/>
+<area shape="rect" id="node7" title=" " alt="" coords="37,169,114,196"/>
+<area shape="rect" id="node8" href="$Altitude_8hpp.html" title=" " alt="" coords="367,169,558,196"/>
+<area shape="rect" id="node13" href="$Latitude_8hpp.html" title=" " alt="" coords="582,169,775,196"/>
+<area shape="rect" id="node14" href="$Longitude_8hpp.html" title=" " alt="" coords="139,169,343,196"/>
+<area shape="rect" id="node9" title=" " alt="" coords="204,244,267,271"/>
+<area shape="rect" id="node10" title=" " alt="" coords="291,244,378,271"/>
+<area shape="rect" id="node11" title=" " alt="" coords="402,244,534,271"/>
+<area shape="rect" id="node12" title=" " alt="" coords="558,244,682,271"/>
 </map>

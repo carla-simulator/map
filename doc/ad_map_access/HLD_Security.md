@@ -80,11 +80,12 @@ Unit testing code coverage of can be retrieved via github deployment:
 
 ### Compiler and compiler security flags
 
-The development platform is Ubuntu Linux 16.04 Xenial. A standard cmake toolchain has been
-used to compile the library. The compiler is g++ 5.4.0, other compilers are also supported
-(see README for details).
+The development platforms are Ubuntu Linux 18.04 Bionic and 20.04 Focal Fossa.
 
-The following, strict, compilation flags are used: C++11, -Werror, -Wall, -Wextra,
+A standard cmake toolchain has been used to compile the library.
+The compiler is g++ 9.3.0, other compilers are also supported (see README for details).
+
+The following, strict, compilation flags are used: C++14, -Werror, -Wall, -Wextra,
 -pedantic, -Wconversion, -Wsign-conversion, -Wfloat-equal -Wshadow -Wswitch-default
 -Wenum-compare -Wformat -Wformat-security.
 
