@@ -25,6 +25,10 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
+      - name: Prepare PROJ
+        run: |
+          git clone --depth=1 -b 4.9.3 https://github.com/OSGeo/PROJ.git dependencies/PROJ
+          colcon build --packages-select PROJ
       - name: Build wheels
         run: |
           colcon build --packages-up-to ad_map_access --meta colcon_python.meta --event-handlers console_direct+ --cmake-args -DPYTHON_BINDING_VERSION=${PYTHON_BINDING_VERSION}
