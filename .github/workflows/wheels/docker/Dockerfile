@@ -16,7 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   autoconf \
   automake \
   castxml \
-  libpugixml-dev && \
+  libpugixml-dev \
+  libproj-dev && \
   rm -rf /var/lib/apt/lists/*
 
 RUN \

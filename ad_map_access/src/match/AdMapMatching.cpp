@@ -73,35 +73,54 @@ AdMapMatching::findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geo_p
 {
   match::MapMatchedPositionConfidenceList map_matching_results;
   physics::Probability probability_sum(0.);
-  for (auto lane_id : relevantLaneSet)
+  std::vector<lane::Lane::ConstPtr> relevantLanes;
+  if (!relevantLaneSet.empty())
   {
-    auto lane = access::getStore().getLanePtr(lane_id);
-    if (lane)
+    for (auto laneId : relevantLaneSet)
     {
-      auto const altitude_range = calcLaneAltitudeRange(*lane);
-      auto geo_point_check = geo_point;
-      auto const altitude_delta_2 = (altitude_range.maximum - altitude_range.minimum) / 2.;
-      geo_point_check.altitude = altitude_range.minimum + altitude_delta_2;
-      point::BoundingSphere matchingSphere;
-      matchingSphere.center = point::toECEF(geo_point_check);
-      matchingSphere.radius = distance + physics::Distance(static_cast<double>(altitude_delta_2));
-      if (lane::isNear(*lane, matchingSphere))
+      auto lane = access::getStore().getLanePtr(laneId);
+      if (lane)
       {
-        MapMatchedPosition mmpt;
-        if (lane::findNearestPointOnLane(*lane, matchingSphere.center, mmpt))
+        relevantLanes.push_back(lane);
+      }
+    }
+  }
+  else
+  {
+    for (auto laneId : access::getStore().getLanes())
+    {
+      auto lane = access::getStore().getLanePtr(laneId);
+      if (lane)
+      {
+        relevantLanes.push_back(lane);
+      }
+    }
+  }
+  for (auto lane : relevantLanes)
+  {
+    auto const altitude_range = calcLaneAltitudeRange(*lane);
+    auto geo_point_check = geo_point;
+    auto const altitude_delta_2 = (altitude_range.maximum - altitude_range.minimum) / 2.;
+    geo_point_check.altitude = altitude_range.minimum + altitude_delta_2;
+    point::BoundingSphere matchingSphere;
+    matchingSphere.center = point::toECEF(geo_point_check);
+    matchingSphere.radius = distance + physics::Distance(static_cast<double>(altitude_delta_2));
+    if (lane::isNear(*lane, matchingSphere))
+    {
+      MapMatchedPosition mmpt;
+      if (lane::findNearestPointOnLane(*lane, matchingSphere.center, mmpt))
+      {
+        if (mmpt.matchedPointDistance <= matchingSphere.radius)
         {
-          if (mmpt.matchedPointDistance <= matchingSphere.radius)
+          // now correct query point and assume the matched point's altitude to perform final local decision
+          geo_point_check.altitude = point::toGeo(mmpt.matchedPoint).altitude;
+          matchingSphere.center = point::toECEF(geo_point_check);
+          if (lane::findNearestPointOnLane(*lane, matchingSphere.center, mmpt))
           {
-            // now correct query point and assume the matched point's altitude to perform final local decision
-            geo_point_check.altitude = point::toGeo(mmpt.matchedPoint).altitude;
-            matchingSphere.center = point::toECEF(geo_point_check);
-            if (lane::findNearestPointOnLane(*lane, matchingSphere.center, mmpt))
+            if (mmpt.matchedPointDistance <= distance)
             {
-              if (mmpt.matchedPointDistance <= distance)
-              {
-                map_matching_results.push_back(mmpt);
-                probability_sum += mmpt.probability;
-              }
+              map_matching_results.push_back(mmpt);
+              probability_sum += mmpt.probability;
             }
           }
         }
@@ -163,11 +182,6 @@ match::MapMatchedPositionConfidenceList AdMapMatching::findLanes(point::GeoPoint
                                                                  physics::Distance const &distance,
                                                                  ::ad::map::lane::LaneIdSet const &relevantLaneSet)
 {
-  if (!isValid(geoPoint))
-  {
-    access::getLogger()->error("Invalid Geo Point passed to AdMapMatching::findLanes(): {}", geoPoint);
-    return MapMatchedPositionConfidenceList();
-  }
   if (!distance.isValid())
   {
     access::getLogger()->error("Invalid radius passed to AdMapMatching::findLanes(): {}", distance);
@@ -175,10 +189,22 @@ match::MapMatchedPositionConfidenceList AdMapMatching::findLanes(point::GeoPoint
   }
   if (geoPoint.altitude == point::AltitudeUnknown)
   {
+    if (!withinValidInputRange(geoPoint.latitude) || !withinValidInputRange(geoPoint.longitude))
+    {
+      access::getLogger()->error(
+        "Invalid Latitude/Longitude of Geo Point passed to AdMapMatching::findLanes() with AltitudeUnknown: {}",
+        geoPoint);
+      return MapMatchedPositionConfidenceList();
+    }
     return findLanesInputCheckedAltitudeUnknown(geoPoint, distance, relevantLaneSet);
   }
   else
   {
+    if (!isValid(geoPoint))
+    {
+      access::getLogger()->error("Invalid Geo Point passed to AdMapMatching::findLanes(): {}", geoPoint);
+      return MapMatchedPositionConfidenceList();
+    }
     return findLanesInputChecked(point::toECEF(geoPoint), distance, relevantLaneSet);
   }
 }
