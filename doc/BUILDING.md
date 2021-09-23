@@ -31,10 +31,11 @@ The components within this repository have some dependencies:
    - gtest aka. googletests < 1.10 : <https://github.com/google/googletest>
    - xmlrunner
 
-Dependencies provided by Ubunutu (>= 16.04):
+Dependencies provided by Ubunutu (>= 18.04):
 
  - Boost
  - pugixml
+ - libproj-dev
  - gtest
  - libpython-dev
  - libosmium2-dev
@@ -42,7 +43,7 @@ Dependencies provided by Ubunutu (>= 16.04):
 
 Those can be installed by calling:
 ```bash
-$>  sudo apt-get install libboost-all-dev libpugixml-dev libgtest-dev libpython-dev libosmium2-dev liblapacke-dev
+$>  sudo apt-get install libboost-all-dev libpugixml-dev libgtest-dev libpython-dev libosmium2-dev liblapacke-dev libproj-dev
 ```
 
 Additional dependencies for the python bindings:
