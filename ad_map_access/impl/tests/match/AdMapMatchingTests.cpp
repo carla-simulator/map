@@ -82,6 +82,8 @@ struct AdMapMatchingTest : ::testing::Test
                    0u),
     std::make_pair(point::createGeoPoint(point::Longitude(8.4401882), point::Latitude(49.0191939), point::Altitude(0.)),
                    1u),
+    std::make_pair(
+      point::createGeoPoint(point::Longitude(8.4401882), point::Latitude(49.0191939), point::AltitudeUnknown), 1u),
     std::make_pair(point::createGeoPoint(point::Longitude(8.4401510), point::Latitude(49.0191792), point::Altitude(0.)),
                    2u),
     std::make_pair(point::createGeoPoint(point::Longitude(8.4401742), point::Latitude(49.0192009), point::Altitude(0.)),
@@ -113,7 +115,7 @@ void AdMapMatchingTest::compareMapMatching(int line,
   mMapMatching->addRouteHint(mRouteHint);
   for (auto headingHint : mHeadingHints)
   {
-    mMapMatching->addHeadingHint(headingHint, geoPoint);
+    mMapMatching->addHeadingHint(headingHint, ad::map::access::getENUReferencePoint());
   }
 
   auto mapMatchingResults = mMapMatching->getMapMatchedPositions(geoPoint, searchDist, mMinProbabilty);
