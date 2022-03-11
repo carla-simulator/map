@@ -5,6 +5,9 @@
 // SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
+/**
+ * @file
+ */
 
 #pragma once
 
@@ -17,8 +20,11 @@
 #include "ad/map/point/Types.hpp"
 #include "ad/map/restriction/Types.hpp"
 
+/** @brief namespace ad */
 namespace ad {
+/** @brief namespace map */
 namespace map {
+/** @brief namespace access */
 namespace access {
 
 class Store;

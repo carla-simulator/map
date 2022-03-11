@@ -5,14 +5,20 @@
 // SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
+/**
+ * @file
+ */
 
 #pragma once
 
 #include "ad/map/restriction/SpeedLimit.hpp"
 #include "ad/physics/RangeOperation.hpp"
 
+/** @brief namespace ad */
 namespace ad {
+/** @brief namespace map */
 namespace map {
+/** @brief namespace restriction */
 namespace restriction {
 
 /**
