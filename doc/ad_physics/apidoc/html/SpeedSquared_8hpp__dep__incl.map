@@ -1,6 +1,12 @@
 <map id="generated/include/ad/physics/SpeedSquared.hpp" name="generated/include/ad/physics/SpeedSquared.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="143,5,343,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="270,5,470,47"/>
 <area shape="rect" id="node2" href="$SpeedSquaredList_8hpp.html" title=" " alt="" coords="5,102,228,143"/>
 <area shape="rect" id="node4" href="$SpeedSquaredValidInputRange_8hpp.html" title=" " alt="" coords="251,95,489,151"/>
-<area shape="rect" id="node3" href="$SpeedSquaredListValidInputRange_8hpp.html" title=" " alt="" coords="130,199,357,255"/>
+<area shape="rect" id="node5" href="$Types_8hpp.html" title=" " alt="" coords="512,102,655,143"/>
+<area shape="rect" id="node3" href="$SpeedSquaredListValidInputRange_8hpp.html" title=" " alt="" coords="6,199,233,255"/>
+<area shape="rect" id="node6" href="$AngleOperation_8hpp.html" title=" " alt="" coords="259,206,414,247"/>
+<area shape="rect" id="node7" href="$Operation_8hpp.html" title=" " alt="" coords="512,303,655,344"/>
+<area shape="rect" id="node8" href="$ParametricOperation_8hpp.html" title=" " alt="" coords="489,206,677,247"/>
+<area shape="rect" id="node9" href="$PhysicsOperation_8hpp.html" title=" " alt="" coords="701,206,868,247"/>
+<area shape="rect" id="node10" href="$RatioOperation_8hpp.html" title=" " alt="" coords="893,206,1045,247"/>
 </map>

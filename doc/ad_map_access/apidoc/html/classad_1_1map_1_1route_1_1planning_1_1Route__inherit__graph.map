@@ -1,0 +1,8 @@
+<map id="ad::map::route::planning::Route" name="ad::map::route::planning::Route">
+<area shape="rect" id="node1" title="Implements routing on the lane network." alt="" coords="5,71,187,112"/>
+<area shape="rect" id="node2" href="$classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html" title="Implements routing support functionality on the lane network." alt="" coords="235,5,504,47"/>
+<area shape="rect" id="node3" href="$classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html" title=" " alt="" coords="236,71,503,112"/>
+<area shape="rect" id="node5" href="$classad_1_1map_1_1route_1_1planning_1_1RouteExpander.html" title=" " alt="" coords="246,137,493,193"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1route_1_1planning_1_1RouteAstar.html" title="Implements routing on the lane network." alt="" coords="552,71,733,112"/>
+<area shape="rect" id="node6" href="$classad_1_1map_1_1route_1_1planning_1_1RoutePrediction.html" title="Implements route prediction on the lane network." alt="" coords="552,144,733,185"/>
+</map>

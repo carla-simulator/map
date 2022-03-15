@@ -1,0 +1,4 @@
+<map id="ad::map::intersection::Intersection" name="ad::map::intersection::Intersection">
+<area shape="rect" id="node1" title="Logical representation of an intersection along the route." alt="" coords="5,95,165,136"/>
+<area shape="rect" id="node2" href="$classad_1_1map_1_1intersection_1_1CoreIntersection.html" title=" " alt="" coords="5,5,165,47"/>
+</map>

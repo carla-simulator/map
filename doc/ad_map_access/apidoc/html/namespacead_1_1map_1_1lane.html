@@ -95,6 +95,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a>.  <a href="structad_1_1map_1_1lane_1_1Lane.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structad_1_1map_1_1lane_1_1LaneAltitudeRange.html">LaneAltitudeRange</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct to hold the altitude range of a lane.  <a href="structad_1_1map_1_1lane_1_1LaneAltitudeRange.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId.">LaneId</a>.  <a href="classad_1_1map_1_1lane_1_1LaneId.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,6 +129,9 @@ typedef std::vector&lt;::<a class="el" href="structad_1_1map_1_1lane_1_1ContactL
 <tr class="memitem:ad82d114de86b8cb22e4071d87531576e"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt;::<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">ad::map::lane::LaneId</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ad82d114de86b8cb22e4071d87531576e">LaneIdList</a></td></tr>
 <tr class="memdesc:ad82d114de86b8cb22e4071d87531576e"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType LaneIdList.  <a href="namespacead_1_1map_1_1lane.html#ad82d114de86b8cb22e4071d87531576e">More...</a><br /></td></tr>
 <tr class="separator:ad82d114de86b8cb22e4071d87531576e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf0a6c6d4a0c4277002588aa9f0cfe75"><td class="memItemLeft" align="right" valign="top"><a id="acf0a6c6d4a0c4277002588aa9f0cfe75"></a>
+typedef std::set&lt; <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>LaneIdSet</b></td></tr>
+<tr class="separator:acf0a6c6d4a0c4277002588aa9f0cfe75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -238,6 +244,208 @@ Functions</h2></td></tr>
 <tr class="memitem:a68e3628bed919a0db99cf57a08bf62f7"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a68e3628bed919a0db99cf57a08bf62f7">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="namespacead_1_1map_1_1lane.html#a2063fce08470b3c416ef695aa694b419">LaneType</a> const &amp;value)</td></tr>
 <tr class="memdesc:a68e3628bed919a0db99cf57a08bf62f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">standard ostream operator  <a href="namespacead_1_1map_1_1lane.html#a68e3628bed919a0db99cf57a08bf62f7">More...</a><br /></td></tr>
 <tr class="separator:a68e3628bed919a0db99cf57a08bf62f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f8b55ffd39cb8953315c1bdade4d1a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a3f8b55ffd39cb8953315c1bdade4d1a7">getLateralAlignmentEdge</a> (<a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const &amp;border, physics::ParametricValue const lateralAlignment)</td></tr>
+<tr class="memdesc:a3f8b55ffd39cb8953315c1bdade4d1a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the ENUEdge between the given border with corresponding lateralAlignment.  <a href="namespacead_1_1map_1_1lane.html#a3f8b55ffd39cb8953315c1bdade4d1a7">More...</a><br /></td></tr>
+<tr class="separator:a3f8b55ffd39cb8953315c1bdade4d1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d94b3e8e6b7a20210eb4e6c5ab82466"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a0d94b3e8e6b7a20210eb4e6c5ab82466">getDistanceEnuPointToLateralAlignmentEdge</a> (<a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> const &amp;enuPoint, <a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> const &amp;lateralAlignmentEdge)</td></tr>
+<tr class="memdesc:a0d94b3e8e6b7a20210eb4e6c5ab82466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the distance between an ENU point and the lateral alignment edge.  <a href="namespacead_1_1map_1_1lane.html#a0d94b3e8e6b7a20210eb4e6c5ab82466">More...</a><br /></td></tr>
+<tr class="separator:a0d94b3e8e6b7a20210eb4e6c5ab82466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9947f482e65e25d9813bc2bb005af14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#af9947f482e65e25d9813bc2bb005af14">normalizeBorder</a> (<a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> &amp;border, <a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const *previousBorder=nullptr)</td></tr>
+<tr class="memdesc:af9947f482e65e25d9813bc2bb005af14"><td class="mdescLeft">&#160;</td><td class="mdescRight">normalizes the border  <a href="namespacead_1_1map_1_1lane.html#af9947f482e65e25d9813bc2bb005af14">More...</a><br /></td></tr>
+<tr class="separator:af9947f482e65e25d9813bc2bb005af14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4568e2246eb2aeecb47f0f526837161"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ad4568e2246eb2aeecb47f0f526837161">makeTransitionToSecondEdgeContinuous</a> (<a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> const &amp;first, <a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> &amp;second)</td></tr>
+<tr class="memdesc:ad4568e2246eb2aeecb47f0f526837161"><td class="mdescLeft">&#160;</td><td class="mdescRight">operation to make the transition between two edges continuous  <a href="namespacead_1_1map_1_1lane.html#ad4568e2246eb2aeecb47f0f526837161">More...</a><br /></td></tr>
+<tr class="separator:ad4568e2246eb2aeecb47f0f526837161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69b96ff18ed19f590fae3ebfcc897fa4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a69b96ff18ed19f590fae3ebfcc897fa4">makeTransitionToSecondBorderContinuous</a> (<a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const &amp;first, <a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> &amp;second)</td></tr>
+<tr class="memdesc:a69b96ff18ed19f590fae3ebfcc897fa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">operation to make the transition between two borders continuous  <a href="namespacead_1_1map_1_1lane.html#a69b96ff18ed19f590fae3ebfcc897fa4">More...</a><br /></td></tr>
+<tr class="separator:a69b96ff18ed19f590fae3ebfcc897fa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad34efbea62e9cefd3a615209b9a4d182"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ad34efbea62e9cefd3a615209b9a4d182">makeTransitionFromFirstEdgeContinuous</a> (<a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> &amp;first, <a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> const &amp;second)</td></tr>
+<tr class="memdesc:ad34efbea62e9cefd3a615209b9a4d182"><td class="mdescLeft">&#160;</td><td class="mdescRight">operation to make the transition between two edges continuous  <a href="namespacead_1_1map_1_1lane.html#ad34efbea62e9cefd3a615209b9a4d182">More...</a><br /></td></tr>
+<tr class="separator:ad34efbea62e9cefd3a615209b9a4d182"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab123c64b57f973a7b0ce732711ba294f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ab123c64b57f973a7b0ce732711ba294f">makeTransitionFromFirstBorderContinuous</a> (<a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> &amp;first, <a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const &amp;second)</td></tr>
+<tr class="memdesc:ab123c64b57f973a7b0ce732711ba294f"><td class="mdescLeft">&#160;</td><td class="mdescRight">operation to make the transition between two borders continuous  <a href="namespacead_1_1map_1_1lane.html#ab123c64b57f973a7b0ce732711ba294f">More...</a><br /></td></tr>
+<tr class="separator:ab123c64b57f973a7b0ce732711ba294f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b41254ac0807d5cab9999858eceaaa6"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a8b41254ac0807d5cab9999858eceaaa6">calcLength</a> (<a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const &amp;border)</td></tr>
+<tr class="memdesc:a8b41254ac0807d5cab9999858eceaaa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the length of the provided border as distance value  <a href="namespacead_1_1map_1_1lane.html#a8b41254ac0807d5cab9999858eceaaa6">More...</a><br /></td></tr>
+<tr class="separator:a8b41254ac0807d5cab9999858eceaaa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fdc99ff35077ee58b34cfc5ab0789b5"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a9fdc99ff35077ee58b34cfc5ab0789b5">calcLength</a> (<a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html">ECEFBorder</a> const &amp;border)</td></tr>
+<tr class="memdesc:a9fdc99ff35077ee58b34cfc5ab0789b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the length of the provided border as distance value  <a href="namespacead_1_1map_1_1lane.html#a9fdc99ff35077ee58b34cfc5ab0789b5">More...</a><br /></td></tr>
+<tr class="separator:a9fdc99ff35077ee58b34cfc5ab0789b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac655789776ac1fe8599627dff35be496"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ac655789776ac1fe8599627dff35be496">calcLength</a> (<a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html">GeoBorder</a> const &amp;border)</td></tr>
+<tr class="memdesc:ac655789776ac1fe8599627dff35be496"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the length of the provided border as distance value  <a href="namespacead_1_1map_1_1lane.html#ac655789776ac1fe8599627dff35be496">More...</a><br /></td></tr>
+<tr class="separator:ac655789776ac1fe8599627dff35be496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af62688aa064b38a7d74a28542c47defd"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#af62688aa064b38a7d74a28542c47defd">calcLength</a> (<a class="el" href="namespacead_1_1map_1_1lane.html#a00ad8891bdb4c04eaebad6511ee47829">ENUBorderList</a> const &amp;borderList)</td></tr>
+<tr class="memdesc:af62688aa064b38a7d74a28542c47defd"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the length out of the provided ENU border List as distance value  <a href="namespacead_1_1map_1_1lane.html#af62688aa064b38a7d74a28542c47defd">More...</a><br /></td></tr>
+<tr class="separator:af62688aa064b38a7d74a28542c47defd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10cdb2f38c116ccd5414f82bc759c42e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a10cdb2f38c116ccd5414f82bc759c42e">getENUHeading</a> (<a class="el" href="namespacead_1_1map_1_1lane.html#a00ad8891bdb4c04eaebad6511ee47829">ENUBorderList</a> const &amp;borderList, <a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> const &amp;enuPoint)</td></tr>
+<tr class="memdesc:a10cdb2f38c116ccd5414f82bc759c42e"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the ENUHeading of the vector&lt;ENUBorder&gt; at the given ENUPoint  <a href="namespacead_1_1map_1_1lane.html#a10cdb2f38c116ccd5414f82bc759c42e">More...</a><br /></td></tr>
+<tr class="separator:a10cdb2f38c116ccd5414f82bc759c42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a609b7ae504bc14634c42248d84276c56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a609b7ae504bc14634c42248d84276c56">oppositeLocation</a> (<a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a> const &amp;e)</td></tr>
+<tr class="memdesc:a609b7ae504bc14634c42248d84276c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides opposite Location.  <a href="namespacead_1_1map_1_1lane.html#a609b7ae504bc14634c42248d84276c56">More...</a><br /></td></tr>
+<tr class="separator:a609b7ae504bc14634c42248d84276c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d08ba6949c25b439c89d44433de5e4b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a5d08ba6949c25b439c89d44433de5e4b">isAccessOk</a> (<a class="el" href="structad_1_1map_1_1lane_1_1ContactLane.html">ContactLane</a> const &amp;contactLane, <a class="el" href="structad_1_1map_1_1restriction_1_1VehicleDescriptor.html">restriction::VehicleDescriptor</a> const &amp;vehicle)</td></tr>
+<tr class="memdesc:a5d08ba6949c25b439c89d44433de5e4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if vehicle fits the restriction criteria of the contact lane.  <a href="namespacead_1_1map_1_1lane.html#a5d08ba6949c25b439c89d44433de5e4b">More...</a><br /></td></tr>
+<tr class="separator:a5d08ba6949c25b439c89d44433de5e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbb4e0e56a9f1f288b657fde5d8c8112"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#afbb4e0e56a9f1f288b657fde5d8c8112">isValid</a> (<a class="el" href="structad_1_1map_1_1lane_1_1ContactLane.html">ContactLane</a> const &amp;contactLane, bool const logErrors=true)</td></tr>
+<tr class="memdesc:afbb4e0e56a9f1f288b657fde5d8c8112"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the given <a class="el" href="structad_1_1map_1_1lane_1_1ContactLane.html" title="DataType ContactLane.">ContactLane</a> is valid  <a href="namespacead_1_1map_1_1lane.html#afbb4e0e56a9f1f288b657fde5d8c8112">More...</a><br /></td></tr>
+<tr class="separator:afbb4e0e56a9f1f288b657fde5d8c8112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99d7c409d0e38c0b8d10e981b19f84e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a99d7c409d0e38c0b8d10e981b19f84e4">isValid</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;laneId, bool const logErrors=true)</td></tr>
+<tr class="memdesc:a99d7c409d0e38c0b8d10e981b19f84e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the given <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId.">LaneId</a> is valid  <a href="namespacead_1_1map_1_1lane.html#a99d7c409d0e38c0b8d10e981b19f84e4">More...</a><br /></td></tr>
+<tr class="separator:a99d7c409d0e38c0b8d10e981b19f84e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab321d1802cac89779a0628fc7d6a98c0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ab321d1802cac89779a0628fc7d6a98c0">isValid</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, bool const logErrors=true)</td></tr>
+<tr class="memdesc:ab321d1802cac89779a0628fc7d6a98c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the given <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> is valid  <a href="namespacead_1_1map_1_1lane.html#ab321d1802cac89779a0628fc7d6a98c0">More...</a><br /></td></tr>
+<tr class="separator:ab321d1802cac89779a0628fc7d6a98c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc783747420f73d0b860e893758bb41c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html#a67547bf5b3051ea72771b37910a0c9a4">Lane::ConstPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#acc783747420f73d0b860e893758bb41c">getLanePtr</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;id)</td></tr>
+<tr class="memdesc:acc783747420f73d0b860e893758bb41c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to be called to retrieve <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> from the Store.  <a href="namespacead_1_1map_1_1lane.html#acc783747420f73d0b860e893758bb41c">More...</a><br /></td></tr>
+<tr class="separator:acc783747420f73d0b860e893758bb41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a577e6ff84b9972bc85955b51fece6877"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a577e6ff84b9972bc85955b51fece6877">getLane</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">lane::LaneId</a> const &amp;id)</td></tr>
+<tr class="memdesc:a577e6ff84b9972bc85955b51fece6877"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to be called to retrieve <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> from the Store.  <a href="namespacead_1_1map_1_1lane.html#a577e6ff84b9972bc85955b51fece6877">More...</a><br /></td></tr>
+<tr class="separator:a577e6ff84b9972bc85955b51fece6877"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac77c4814fcedd0ec729db78e3169baf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#ad82d114de86b8cb22e4071d87531576e">LaneIdList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ac77c4814fcedd0ec729db78e3169baf6">getLanes</a> ()</td></tr>
+<tr class="memdesc:ac77c4814fcedd0ec729db78e3169baf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to be called to retrieve identifiers of all Lanes in the Store.  <a href="namespacead_1_1map_1_1lane.html#ac77c4814fcedd0ec729db78e3169baf6">More...</a><br /></td></tr>
+<tr class="separator:ac77c4814fcedd0ec729db78e3169baf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd163cbff17acf8789808e26f8931835"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1point_1_1ECEFHeading.html">point::ECEFHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#acd163cbff17acf8789808e26f8931835">getLaneECEFHeading</a> (<a class="el" href="structad_1_1map_1_1match_1_1MapMatchedPosition.html">match::MapMatchedPosition</a> const &amp;mapMatchedPosition)</td></tr>
+<tr class="separator:acd163cbff17acf8789808e26f8931835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a784223f62a733409b108b33bc45d46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1point_1_1ECEFHeading.html">point::ECEFHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a6a784223f62a733409b108b33bc45d46">getLaneECEFHeading</a> (<a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;paraPoint)</td></tr>
+<tr class="separator:a6a784223f62a733409b108b33bc45d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a535bc12a81e4538f89201f059d82e077"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a535bc12a81e4538f89201f059d82e077">getLaneENUHeading</a> (<a class="el" href="structad_1_1map_1_1match_1_1MapMatchedPosition.html">match::MapMatchedPosition</a> const &amp;mapMatchedPosition)</td></tr>
+<tr class="separator:a535bc12a81e4538f89201f059d82e077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8bf95eb48a2730682a0dc9839c1fcc0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ae8bf95eb48a2730682a0dc9839c1fcc0">getLaneENUHeading</a> (<a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;paraPoint, <a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;gnssReference)</td></tr>
+<tr class="separator:ae8bf95eb48a2730682a0dc9839c1fcc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accd1c19e9d03dbb3897902bd62dce994"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#accd1c19e9d03dbb3897902bd62dce994">uniqueLaneId</a> (<a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;point)</td></tr>
+<tr class="separator:accd1c19e9d03dbb3897902bd62dce994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f6e6c33bc6b5fc803f6b055c22c7b3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a6f6e6c33bc6b5fc803f6b055c22c7b3f">uniqueParaPoint</a> (<a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;point)</td></tr>
+<tr class="separator:a6f6e6c33bc6b5fc803f6b055c22c7b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32712aea0487a50b27c94aa8c8845447"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a32712aea0487a50b27c94aa8c8845447">isAccessOk</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, <a class="el" href="structad_1_1map_1_1restriction_1_1VehicleDescriptor.html">restriction::VehicleDescriptor</a> const &amp;vehicle)</td></tr>
+<tr class="memdesc:a32712aea0487a50b27c94aa8c8845447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if vehicle fits the lanes restriction criteria.  <a href="namespacead_1_1map_1_1lane.html#a32712aea0487a50b27c94aa8c8845447">More...</a><br /></td></tr>
+<tr class="separator:a32712aea0487a50b27c94aa8c8845447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c643706907d8dda0e7e24ce6ed704af"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a9c643706907d8dda0e7e24ce6ed704af">isNear</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, <a class="el" href="structad_1_1map_1_1point_1_1BoundingSphere.html">point::BoundingSphere</a> const &amp;boundingSphere)</td></tr>
+<tr class="memdesc:a9c643706907d8dda0e7e24ce6ed704af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if given sphere intersects with lane bounding ball.  <a href="namespacead_1_1map_1_1lane.html#a9c643706907d8dda0e7e24ce6ed704af">More...</a><br /></td></tr>
+<tr class="separator:a9c643706907d8dda0e7e24ce6ed704af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfc348860ca542204e9fa3cfc9e9272c"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#abfc348860ca542204e9fa3cfc9e9272c">getWidth</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, physics::ParametricValue const &amp;longitudinalOffset)</td></tr>
+<tr class="separator:abfc348860ca542204e9fa3cfc9e9272c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12a5ca8b67b65872bc7186a1c64915b4"><td class="memItemLeft" align="right" valign="top">physics::Speed&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a12a5ca8b67b65872bc7186a1c64915b4">getMaxSpeed</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, physics::ParametricRange const &amp;range)</td></tr>
+<tr class="separator:a12a5ca8b67b65872bc7186a1c64915b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a98e2091c5a8c041bae1fa8a091c96e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1restriction.html#a2e3c5cd0313717504de387a0e0ea272b">restriction::SpeedLimitList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a1a98e2091c5a8c041bae1fa8a091c96e">getSpeedLimits</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, physics::ParametricRange const &amp;range)</td></tr>
+<tr class="separator:a1a98e2091c5a8c041bae1fa8a091c96e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41129ae20f3079b67f3c86a0eaf2dd66"><td class="memItemLeft" align="right" valign="top">physics::Duration&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a41129ae20f3079b67f3c86a0eaf2dd66">getDuration</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, physics::ParametricRange const &amp;range)</td></tr>
+<tr class="separator:a41129ae20f3079b67f3c86a0eaf2dd66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac710513a05b9975c0c18350b10866e15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1restriction.html#acf8d0df13bfc27ef9a6d8fc640f76fcc">restriction::PassengerCount</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ac710513a05b9975c0c18350b10866e15">getHOV</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:ac710513a05b9975c0c18350b10866e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fc866dcd4a97bc086751e121e276d59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#ae6f425e882b7cf56f1403591cc76b886">ContactLaneList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a5fc866dcd4a97bc086751e121e276d59">getContactLanes</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, <a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a> const &amp;location)</td></tr>
+<tr class="memdesc:a5fc866dcd4a97bc086751e121e276d59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find contact lanes at specific relative location.  <a href="namespacead_1_1map_1_1lane.html#a5fc866dcd4a97bc086751e121e276d59">More...</a><br /></td></tr>
+<tr class="separator:a5fc866dcd4a97bc086751e121e276d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2d23c329d60bcb0373cf2ce41313a08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#ae6f425e882b7cf56f1403591cc76b886">ContactLaneList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ae2d23c329d60bcb0373cf2ce41313a08">getContactLanes</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, <a class="el" href="namespacead_1_1map_1_1lane.html#ad1411b48f17807d401dd33945100a7fc">ContactLocationList</a> const &amp;locations)</td></tr>
+<tr class="memdesc:ae2d23c329d60bcb0373cf2ce41313a08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find contact lanes at specific relative locations.  <a href="namespacead_1_1map_1_1lane.html#ae2d23c329d60bcb0373cf2ce41313a08">More...</a><br /></td></tr>
+<tr class="separator:ae2d23c329d60bcb0373cf2ce41313a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c24fe143daf5b978327665bfdfc7657"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a3c24fe143daf5b978327665bfdfc7657">getContactLocation</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;to_lane_id)</td></tr>
+<tr class="memdesc:a3c24fe143daf5b978327665bfdfc7657"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check nature of contact between this lane and another lane.  <a href="namespacead_1_1map_1_1lane.html#a3c24fe143daf5b978327665bfdfc7657">More...</a><br /></td></tr>
+<tr class="separator:a3c24fe143daf5b978327665bfdfc7657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52aab121d462c7ae7577d6899a58ea97"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a52aab121d462c7ae7577d6899a58ea97">isLaneDirectionPositive</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:a52aab121d462c7ae7577d6899a58ea97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7327f89cde7f60d4bcfe8a2e4d6fd6e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ae7327f89cde7f60d4bcfe8a2e4d6fd6e">isLaneDirectionNegative</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:ae7327f89cde7f60d4bcfe8a2e4d6fd6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca28dc22f1191fe94d49224debb9a68"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#abca28dc22f1191fe94d49224debb9a68">isRouteable</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:abca28dc22f1191fe94d49224debb9a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98cfa6fbd94fe704b97eddd07d3e611f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a98cfa6fbd94fe704b97eddd07d3e611f">isLanePartOfAnIntersection</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:a98cfa6fbd94fe704b97eddd07d3e611f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8cd4f0cebcf2c05208671343336e6b0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ad8cd4f0cebcf2c05208671343336e6b0">isLeftMost</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:ad8cd4f0cebcf2c05208671343336e6b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd379a59f0599fc2b672042f29163db8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#acd379a59f0599fc2b672042f29163db8">isRightMost</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:acd379a59f0599fc2b672042f29163db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aafa2786a592105a4b9831f073ee230"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a4aafa2786a592105a4b9831f073ee230">getParametricPoint</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, physics::ParametricValue const &amp;longitudinalOffset, physics::ParametricValue const &amp;lateralOffset)</td></tr>
+<tr class="memdesc:a4aafa2786a592105a4b9831f073ee230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates parametric point on the lane. Point is calculated by first calculating t_long parametric point on the left and on the right boundary, and then parametric point t_lat between those two points.  <a href="namespacead_1_1map_1_1lane.html#a4aafa2786a592105a4b9831f073ee230">More...</a><br /></td></tr>
+<tr class="separator:a4aafa2786a592105a4b9831f073ee230"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21e3d7306d1d2c906815aef6195e0adf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a21e3d7306d1d2c906815aef6195e0adf">projectParametricPointToEdges</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;referencePoint, <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;point_on_left_edge, <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;point_on_right_edge)</td></tr>
+<tr class="memdesc:a21e3d7306d1d2c906815aef6195e0adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the projection on left and right boundary of the given referencePoint.  <a href="namespacead_1_1map_1_1lane.html#a21e3d7306d1d2c906815aef6195e0adf">More...</a><br /></td></tr>
+<tr class="separator:a21e3d7306d1d2c906815aef6195e0adf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdd720de89d40bae5266c834e4059b40"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#afdd720de89d40bae5266c834e4059b40">projectParametricPointToEdges</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, physics::ParametricValue const &amp;longitudinalOffset, <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;point_on_left_edge, <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;point_on_right_edge)</td></tr>
+<tr class="memdesc:afdd720de89d40bae5266c834e4059b40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the projection on left and right boundary of the parametric point on the center of the lane.  <a href="namespacead_1_1map_1_1lane.html#afdd720de89d40bae5266c834e4059b40">More...</a><br /></td></tr>
+<tr class="separator:afdd720de89d40bae5266c834e4059b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11433e216de3f5829b7866692fe72a16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a11433e216de3f5829b7866692fe72a16">getProjectedParametricPoint</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, physics::ParametricValue const &amp;longitudinalOffset, physics::ParametricValue const &amp;lateralOffset)</td></tr>
+<tr class="memdesc:a11433e216de3f5829b7866692fe72a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates projected parametric point on the lane. Point is calculated by first calculating the projected points on left and right boundary using ProjectParametricPointToEdges(), and then parametric point t_lat between those two points.  <a href="namespacead_1_1map_1_1lane.html#a11433e216de3f5829b7866692fe72a16">More...</a><br /></td></tr>
+<tr class="separator:a11433e216de3f5829b7866692fe72a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebefca8f0f2a0dbb2db91984c3666aae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#aebefca8f0f2a0dbb2db91984c3666aae">getStartPoint</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:aebefca8f0f2a0dbb2db91984c3666aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b46350903a876a789bdf88e343b480"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a55b46350903a876a789bdf88e343b480">getEndPoint</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:a55b46350903a876a789bdf88e343b480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a105382ec53e5c3f542724c79d3147f62"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a105382ec53e5c3f542724c79d3147f62">isPyhsicalSuccessor</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;other)</td></tr>
+<tr class="memdesc:a105382ec53e5c3f542724c79d3147f62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> is longitudinally connected with another <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> at the end.  <a href="namespacead_1_1map_1_1lane.html#a105382ec53e5c3f542724c79d3147f62">More...</a><br /></td></tr>
+<tr class="separator:a105382ec53e5c3f542724c79d3147f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a129c98339be89b0439783b1ac8d3fc3d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a129c98339be89b0439783b1ac8d3fc3d">isPhysicalPredecessor</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;other)</td></tr>
+<tr class="memdesc:a129c98339be89b0439783b1ac8d3fc3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> is longitudinally connected with another <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> at the start.  <a href="namespacead_1_1map_1_1lane.html#a129c98339be89b0439783b1ac8d3fc3d">More...</a><br /></td></tr>
+<tr class="separator:a129c98339be89b0439783b1ac8d3fc3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5543ee0b14a05de79b4a10820a2e6679"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a5543ee0b14a05de79b4a10820a2e6679">isVanishingLaneStart</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:a5543ee0b14a05de79b4a10820a2e6679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86c9d52ecad121d053ac9d74b20c196b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a86c9d52ecad121d053ac9d74b20c196b">isVanishingLaneEnd</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="separator:a86c9d52ecad121d053ac9d74b20c196b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f3cc7eab23d8ce5c50d0334cf1b61f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#af7f3cc7eab23d8ce5c50d0334cf1b61f">satisfiesFilter</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, std::string const &amp;typeFilter, bool isHov)</td></tr>
+<tr class="memdesc:af7f3cc7eab23d8ce5c50d0334cf1b61f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> satisfies filter condition.  <a href="namespacead_1_1map_1_1lane.html#af7f3cc7eab23d8ce5c50d0334cf1b61f">More...</a><br /></td></tr>
+<tr class="separator:af7f3cc7eab23d8ce5c50d0334cf1b61f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb77a96e0ce4b228a2df71125cb63c2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#afb77a96e0ce4b228a2df71125cb63c2b">getDirectNeighborhoodRelation</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const laneId, <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const checkLaneId)</td></tr>
+<tr class="memdesc:afb77a96e0ce4b228a2df71125cb63c2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the neighborhood relation to the other lane  <a href="namespacead_1_1map_1_1lane.html#afb77a96e0ce4b228a2df71125cb63c2b">More...</a><br /></td></tr>
+<tr class="separator:afb77a96e0ce4b228a2df71125cb63c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adab0a8b92933cb42e84b30d0d2bbc8d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#adab0a8b92933cb42e84b30d0d2bbc8d9">isSuccessorOrPredecessor</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const laneId, <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const checkLaneId)</td></tr>
+<tr class="memdesc:adab0a8b92933cb42e84b30d0d2bbc8d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a lane is successor or predecessor of a lane.  <a href="namespacead_1_1map_1_1lane.html#adab0a8b92933cb42e84b30d0d2bbc8d9">More...</a><br /></td></tr>
+<tr class="separator:adab0a8b92933cb42e84b30d0d2bbc8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c99c6ca7f02b5f5d3ecba9646a01b7e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a8c99c6ca7f02b5f5d3ecba9646a01b7e">isSameOrDirectNeighbor</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const id, <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const neighbor)</td></tr>
+<tr class="memdesc:a8c99c6ca7f02b5f5d3ecba9646a01b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if two lanes are direct neighbors of even the same.  <a href="namespacead_1_1map_1_1lane.html#a8c99c6ca7f02b5f5d3ecba9646a01b7e">More...</a><br /></td></tr>
+<tr class="separator:a8c99c6ca7f02b5f5d3ecba9646a01b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1f4f4a093568705251f5c090a515067"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ac1f4f4a093568705251f5c090a515067">isLaneDirectionPositive</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;laneId)</td></tr>
+<tr class="memdesc:ac1f4f4a093568705251f5c090a515067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the lane direction is positive.  <a href="namespacead_1_1map_1_1lane.html#ac1f4f4a093568705251f5c090a515067">More...</a><br /></td></tr>
+<tr class="separator:ac1f4f4a093568705251f5c090a515067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fbebab040f0d87a86c06d069cae0167"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a1fbebab040f0d87a86c06d069cae0167">isLaneDirectionNegative</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;laneId)</td></tr>
+<tr class="memdesc:a1fbebab040f0d87a86c06d069cae0167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the lane direction is negative.  <a href="namespacead_1_1map_1_1lane.html#a1fbebab040f0d87a86c06d069cae0167">More...</a><br /></td></tr>
+<tr class="separator:a1fbebab040f0d87a86c06d069cae0167"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea0fb9a45e8d10c0ec7a06890c373a6a"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#aea0fb9a45e8d10c0ec7a06890c373a6a">getDistanceToLane</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> laneId, <a class="el" href="structad_1_1map_1_1match_1_1Object.html">match::Object</a> const &amp;object)</td></tr>
+<tr class="memdesc:aea0fb9a45e8d10c0ec7a06890c373a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the distance of an object to the lane boundaries.  <a href="namespacead_1_1map_1_1lane.html#aea0fb9a45e8d10c0ec7a06890c373a6a">More...</a><br /></td></tr>
+<tr class="separator:aea0fb9a45e8d10c0ec7a06890c373a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2f9ee42ee4dfca46ebaa3b942a5138b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#aa2f9ee42ee4dfca46ebaa3b942a5138b">getLaneENUHeading</a> (<a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;position)</td></tr>
+<tr class="separator:aa2f9ee42ee4dfca46ebaa3b942a5138b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05d1816718ba4ba517b64b38ef82d515"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a05d1816718ba4ba517b64b38ef82d515">isHeadingInLaneDirection</a> (<a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;position, <a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a> const &amp;heading)</td></tr>
+<tr class="memdesc:a05d1816718ba4ba517b64b38ef82d515"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the provided heading is along the lane direction.  <a href="namespacead_1_1map_1_1lane.html#a05d1816718ba4ba517b64b38ef82d515">More...</a><br /></td></tr>
+<tr class="separator:a05d1816718ba4ba517b64b38ef82d515"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadaebb73dd7e16188fc3c8909b5de682"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#aadaebb73dd7e16188fc3c8909b5de682">projectPositionToLaneInHeadingDirection</a> (<a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;position, <a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a> const &amp;heading, <a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> &amp;projectedPosition)</td></tr>
+<tr class="memdesc:aadaebb73dd7e16188fc3c8909b5de682"><td class="mdescLeft">&#160;</td><td class="mdescRight">project a position to a neighboring lane (incl. the lane itself), which has the provided heading  <a href="namespacead_1_1map_1_1lane.html#aadaebb73dd7e16188fc3c8909b5de682">More...</a><br /></td></tr>
+<tr class="separator:aadaebb73dd7e16188fc3c8909b5de682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac405d4f67c07fb6bc1cbed13a46973f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ac405d4f67c07fb6bc1cbed13a46973f4">findNearestPointOnLane</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane, <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;pt, <a class="el" href="structad_1_1map_1_1match_1_1MapMatchedPosition.html">match::MapMatchedPosition</a> &amp;mmpos)</td></tr>
+<tr class="memdesc:ac405d4f67c07fb6bc1cbed13a46973f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds point on the lane nearest to the given point.  <a href="namespacead_1_1map_1_1lane.html#ac405d4f67c07fb6bc1cbed13a46973f4">More...</a><br /></td></tr>
+<tr class="separator:ac405d4f67c07fb6bc1cbed13a46973f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfe3166d838e94102de6ab3f9f89599c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#adfe3166d838e94102de6ab3f9f89599c">findNearestPointOnLaneInterval</a> (<a class="el" href="structad_1_1map_1_1route_1_1LaneInterval.html">route::LaneInterval</a> const &amp;laneInterval, <a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;pt, <a class="el" href="structad_1_1map_1_1match_1_1MapMatchedPosition.html">match::MapMatchedPosition</a> &amp;mmpos)</td></tr>
+<tr class="memdesc:adfe3166d838e94102de6ab3f9f89599c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds point on the lane interval nearest to the given point.  <a href="namespacead_1_1map_1_1lane.html#adfe3166d838e94102de6ab3f9f89599c">More...</a><br /></td></tr>
+<tr class="separator:adfe3166d838e94102de6ab3f9f89599c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17152ee2612121e5f4723daf9fd870d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a17152ee2612121e5f4723daf9fd870d4">getENULanePoint</a> (<a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const parametricPoint, physics::ParametricValue const &amp;lateralOffset=physics::ParametricValue(0.5))</td></tr>
+<tr class="memdesc:a17152ee2612121e5f4723daf9fd870d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the ENU point of a lane  <a href="namespacead_1_1map_1_1lane.html#a17152ee2612121e5f4723daf9fd870d4">More...</a><br /></td></tr>
+<tr class="separator:a17152ee2612121e5f4723daf9fd870d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b24c67ecb941538de37c90d118fe051"><td class="memItemLeft" align="right" valign="top"><a id="a4b24c67ecb941538de37c90d118fe051"></a>
+physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a4b24c67ecb941538de37c90d118fe051">calcLength</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;laneId)</td></tr>
+<tr class="memdesc:a4b24c67ecb941538de37c90d118fe051"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate length of a lane with a given id <br /></td></tr>
+<tr class="separator:a4b24c67ecb941538de37c90d118fe051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfd644d9debbdf6b224df2b051dba650"><td class="memItemLeft" align="right" valign="top"><a id="acfd644d9debbdf6b224df2b051dba650"></a>
+physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#acfd644d9debbdf6b224df2b051dba650">calcLength</a> (<a class="el" href="structad_1_1map_1_1match_1_1LaneOccupiedRegion.html">match::LaneOccupiedRegion</a> const &amp;laneOccupiedRegion)</td></tr>
+<tr class="memdesc:acfd644d9debbdf6b224df2b051dba650"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate length of a lane occupied region <br /></td></tr>
+<tr class="separator:acfd644d9debbdf6b224df2b051dba650"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac790a02a0c072ade80be7c947309d915"><td class="memItemLeft" align="right" valign="top"><a id="ac790a02a0c072ade80be7c947309d915"></a>
+physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ac790a02a0c072ade80be7c947309d915">calcWidth</a> (<a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;paraPoint)</td></tr>
+<tr class="memdesc:ac790a02a0c072ade80be7c947309d915"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the width of the lane at the provided lanePoint <br /></td></tr>
+<tr class="separator:ac790a02a0c072ade80be7c947309d915"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a108274472f605bf2673d781484bef2b4"><td class="memItemLeft" align="right" valign="top"><a id="a108274472f605bf2673d781484bef2b4"></a>
+physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a108274472f605bf2673d781484bef2b4">calcWidth</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;laneId, physics::ParametricValue const &amp;longOffset)</td></tr>
+<tr class="memdesc:a108274472f605bf2673d781484bef2b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the width of the provided lane at the provided longitudinal position <br /></td></tr>
+<tr class="separator:a108274472f605bf2673d781484bef2b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a243036d22fb63060e528669205325578"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a243036d22fb63060e528669205325578">calcWidth</a> (<a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> const &amp;enuPoint)</td></tr>
+<tr class="memdesc:a243036d22fb63060e528669205325578"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the width of a lane at the provided ENU position  <a href="namespacead_1_1map_1_1lane.html#a243036d22fb63060e528669205325578">More...</a><br /></td></tr>
+<tr class="separator:a243036d22fb63060e528669205325578"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9516999ba35dd617026ba4907c0dfc2"><td class="memItemLeft" align="right" valign="top"><a id="ae9516999ba35dd617026ba4907c0dfc2"></a>
+physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#ae9516999ba35dd617026ba4907c0dfc2">calcWidth</a> (<a class="el" href="structad_1_1map_1_1match_1_1LaneOccupiedRegion.html">match::LaneOccupiedRegion</a> const &amp;laneOccupiedRegion)</td></tr>
+<tr class="memdesc:ae9516999ba35dd617026ba4907c0dfc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate width of a lane occupied region scales the with at the center of the occupied region by the lateral extend of the region <br /></td></tr>
+<tr class="separator:ae9516999ba35dd617026ba4907c0dfc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedf866dd50b62a1bdbb0f2f32aaa57d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1lane_1_1LaneAltitudeRange.html">LaneAltitudeRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#aedf866dd50b62a1bdbb0f2f32aaa57d6">calcLaneAltitudeRange</a> (<a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;lane)</td></tr>
+<tr class="memdesc:aedf866dd50b62a1bdbb0f2f32aaa57d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the altitude range of a lane.  <a href="namespacead_1_1map_1_1lane.html#aedf866dd50b62a1bdbb0f2f32aaa57d6">More...</a><br /></td></tr>
+<tr class="separator:aedf866dd50b62a1bdbb0f2f32aaa57d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57190adb198292c1d9d293ce0e7683c7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1lane.html#a57190adb198292c1d9d293ce0e7683c7">isLaneRelevantForExpansion</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">lane::LaneId</a> const &amp;laneId, lane::LaneIdSet const &amp;relevantLanes)</td></tr>
+<tr class="memdesc:a57190adb198292c1d9d293ce0e7683c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the laneId is relevant for expansion given the set of relevant lanes.  <a href="namespacead_1_1map_1_1lane.html#a57190adb198292c1d9d293ce0e7683c7">More...</a><br /></td></tr>
+<tr class="separator:a57190adb198292c1d9d293ce0e7683c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>namespace lane </p>
@@ -566,6 +774,1966 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="aedf866dd50b62a1bdbb0f2f32aaa57d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedf866dd50b62a1bdbb0f2f32aaa57d6">&#9670;&nbsp;</a></span>calcLaneAltitudeRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1lane_1_1LaneAltitudeRange.html">LaneAltitudeRange</a> ad::map::lane::calcLaneAltitudeRange </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the altitude range of a lane. </p>
+<dl class="section return"><dt>Returns</dt><dd>The range of the lanes altitude </dd></dl>
+
+</div>
+</div>
+<a id="a9fdc99ff35077ee58b34cfc5ab0789b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fdc99ff35077ee58b34cfc5ab0789b5">&#9670;&nbsp;</a></span>calcLength() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::lane::calcLength </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ECEFBorder.html">ECEFBorder</a> const &amp;&#160;</td>
+          <td class="paramname"><em>border</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>calculate the length of the provided border as distance value </p>
+<p>For length calculation the average between left and right edge of the border is returned. Length calculation is performed within Cartesian ECEF coordinate frame. </p>
+
+</div>
+</div>
+<a id="a8b41254ac0807d5cab9999858eceaaa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b41254ac0807d5cab9999858eceaaa6">&#9670;&nbsp;</a></span>calcLength() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::lane::calcLength </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const &amp;&#160;</td>
+          <td class="paramname"><em>border</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>calculate the length of the provided border as distance value </p>
+<p>For length calculation the average between left and right edge of the border is returned. Length calculation is performed within Cartesian ENU coordinate frame. </p>
+
+</div>
+</div>
+<a id="af62688aa064b38a7d74a28542c47defd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af62688aa064b38a7d74a28542c47defd">&#9670;&nbsp;</a></span>calcLength() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::lane::calcLength </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1lane.html#a00ad8891bdb4c04eaebad6511ee47829">ENUBorderList</a> const &amp;&#160;</td>
+          <td class="paramname"><em>borderList</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>calculate the length out of the provided ENU border List as distance value </p>
+<p>calculate the length out of the provided GEO border List as distance value</p>
+<p>calculate the length out of the provided ECEF border List as distance value</p>
+<p>For length calculation the average between left and right edge of the border is returned. Length calculation is performed within Cartesian ENU coordinate frame.</p>
+<p>For length calculation the average between left and right edge of the border is returned. Length calculation is performed within Cartesian ECEF coordinate frame.</p>
+<p>For length calculation the average between left and right edge of the border is returned. Length calculation is performed within GEO coordinate frame. </p>
+
+</div>
+</div>
+<a id="ac655789776ac1fe8599627dff35be496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac655789776ac1fe8599627dff35be496">&#9670;&nbsp;</a></span>calcLength() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::lane::calcLength </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1GeoBorder.html">GeoBorder</a> const &amp;&#160;</td>
+          <td class="paramname"><em>border</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>calculate the length of the provided border as distance value </p>
+<p>For length calculation the average between left and right edge of the border is returned. Length calculation is performed within Cartesian ECEF coordinate frame. </p>
+
+</div>
+</div>
+<a id="a243036d22fb63060e528669205325578"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a243036d22fb63060e528669205325578">&#9670;&nbsp;</a></span>calcWidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::lane::calcWidth </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>enuPoint</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>calculate the width of a lane at the provided ENU position </p>
+<dl class="section return"><dt>Returns</dt><dd>-1 in case the enuPoint could not be found on a lane </dd></dl>
+
+</div>
+</div>
+<a id="ac405d4f67c07fb6bc1cbed13a46973f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac405d4f67c07fb6bc1cbed13a46973f4">&#9670;&nbsp;</a></span>findNearestPointOnLane()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::findNearestPointOnLane </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>pt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedPosition.html">match::MapMatchedPosition</a> &amp;&#160;</td>
+          <td class="paramname"><em>mmpos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finds point on the lane nearest to the given point. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lane</td><td>the lane. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pt</td><td>Given point. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">mmpos</td><td>Resulting map-matched position. The resulting probability of the map matched position is derived from lateralT value: spans between [0.5; 1.0] for LANE_IN matches spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successful. </dd></dl>
+
+</div>
+</div>
+<a id="adfe3166d838e94102de6ab3f9f89599c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfe3166d838e94102de6ab3f9f89599c">&#9670;&nbsp;</a></span>findNearestPointOnLaneInterval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::findNearestPointOnLaneInterval </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1route_1_1LaneInterval.html">route::LaneInterval</a> const &amp;&#160;</td>
+          <td class="paramname"><em>laneInterval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>pt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedPosition.html">match::MapMatchedPosition</a> &amp;&#160;</td>
+          <td class="paramname"><em>mmpos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finds point on the lane interval nearest to the given point. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">laneInterval</td><td>the interval of the lane to be considered. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pt</td><td>Given point. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">mmpos</td><td>Resulting map-matched position. The resulting probability of the map matched position is derived from lateralT value: spans between [0.5; 1.0] for LANE_IN matches spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successful. </dd></dl>
+
+</div>
+</div>
+<a id="a5fc866dcd4a97bc086751e121e276d59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fc866dcd4a97bc086751e121e276d59">&#9670;&nbsp;</a></span>getContactLanes() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae6f425e882b7cf56f1403591cc76b886">ContactLaneList</a> ad::map::lane::getContactLanes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a> const &amp;&#160;</td>
+          <td class="paramname"><em>location</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find contact lanes at specific relative location. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lane</td><td>the lane. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">location</td><td>Location of interest. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Contacts to lane at specified location. </dd></dl>
+
+</div>
+</div>
+<a id="ae2d23c329d60bcb0373cf2ce41313a08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2d23c329d60bcb0373cf2ce41313a08">&#9670;&nbsp;</a></span>getContactLanes() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae6f425e882b7cf56f1403591cc76b886">ContactLaneList</a> ad::map::lane::getContactLanes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1lane.html#ad1411b48f17807d401dd33945100a7fc">ContactLocationList</a> const &amp;&#160;</td>
+          <td class="paramname"><em>locations</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find contact lanes at specific relative locations. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">locations</td><td>Locations of interest. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Contacts to lanes at specified locations. </dd></dl>
+
+</div>
+</div>
+<a id="a3c24fe143daf5b978327665bfdfc7657"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c24fe143daf5b978327665bfdfc7657">&#9670;&nbsp;</a></span>getContactLocation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a> ad::map::lane::getContactLocation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;&#160;</td>
+          <td class="paramname"><em>to_lane_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check nature of contact between this lane and another lane. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">to_lane_id</td><td>Another lane identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Type of the contact. Can be INVALID if there is no contact between lanes. </dd></dl>
+
+</div>
+</div>
+<a id="afb77a96e0ce4b228a2df71125cb63c2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb77a96e0ce4b228a2df71125cb63c2b">&#9670;&nbsp;</a></span>getDirectNeighborhoodRelation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a> ad::map::lane::getDirectNeighborhoodRelation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const&#160;</td>
+          <td class="paramname"><em>laneId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const&#160;</td>
+          <td class="paramname"><em>checkLaneId</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the neighborhood relation to the other lane </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">laneId</td><td>the main lane </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">checkLaneId</td><td>the lane to be checked on the</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50aa8c009c8dd4d4f9dde7515c00d5cd4661">lane::ContactLocation::OVERLAP</a></td><td>if it's the same lane </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50aa684d325a7303f52e64011467ff5c5758">lane::ContactLocation::LEFT</a></td><td>if it's a left neighbor </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50aa21507b40c80068eda19865706fdc2403">lane::ContactLocation::RIGHT</a></td><td>if it's a right neighbor </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50aa798ab6549b98563c818dfd8f103fd888">lane::ContactLocation::SUCCESSOR</a></td><td>if it a successor lane </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50aa175a2583d6f1d9d512ed20152e2f6927">lane::ContactLocation::PREDECESSOR</a></td><td>if it's a predecessor lane </td></tr>
+    <tr><td class="paramname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50aaccc0377a8afbf50e7094f5c23a8af223">lane::ContactLocation::INVALID</a></td><td>if it's nothing of the above </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0d94b3e8e6b7a20210eb4e6c5ab82466"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d94b3e8e6b7a20210eb4e6c5ab82466">&#9670;&nbsp;</a></span>getDistanceEnuPointToLateralAlignmentEdge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::lane::getDistanceEnuPointToLateralAlignmentEdge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>enuPoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lateralAlignmentEdge</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the distance between an ENU point and the lateral alignment edge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">enuPoint</td><td>is the point for which the distance should be calculated </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lateralAlignmentEdge</td><td>the lateral alignment in ENU form</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>calculated Distance </dd></dl>
+
+</div>
+</div>
+<a id="aea0fb9a45e8d10c0ec7a06890c373a6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea0fb9a45e8d10c0ec7a06890c373a6a">&#9670;&nbsp;</a></span>getDistanceToLane()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::lane::getDistanceToLane </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a>&#160;</td>
+          <td class="paramname"><em>laneId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1match_1_1Object.html">match::Object</a> const &amp;&#160;</td>
+          <td class="paramname"><em>object</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the distance of an object to the lane boundaries. </p>
+<p>If the object provides a map matched bounding box, this information is used first (speed-up and more accurate). If the object's map matched bounding box is not touching the <code>laneId</code> at all, the object's center distance to the lane is calculated and reduced by max(width, length)/2 to obtain a good estimate for the shortest distance to the lane. </p>
+
+</div>
+</div>
+<a id="a41129ae20f3079b67f3c86a0eaf2dd66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41129ae20f3079b67f3c86a0eaf2dd66">&#9670;&nbsp;</a></span>getDuration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Duration ad::map::lane::getDuration </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricRange const &amp;&#160;</td>
+          <td class="paramname"><em>range</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>minimum duration to drive the provided parametric <em>range</em> along the <em>lane</em> based on the speed limits of the lane. </dd></dl>
+
+</div>
+</div>
+<a id="a55b46350903a876a789bdf88e343b480"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55b46350903a876a789bdf88e343b480">&#9670;&nbsp;</a></span>getEndPoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> ad::map::lane::getEndPoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Middle of the lane at the end. </dd></dl>
+
+</div>
+</div>
+<a id="a10cdb2f38c116ccd5414f82bc759c42e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10cdb2f38c116ccd5414f82bc759c42e">&#9670;&nbsp;</a></span>getENUHeading()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a> ad::map::lane::getENUHeading </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1lane.html#a00ad8891bdb4c04eaebad6511ee47829">ENUBorderList</a> const &amp;&#160;</td>
+          <td class="paramname"><em>borderList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>enuPoint</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>calculate the ENUHeading of the vector&lt;ENUBorder&gt; at the given ENUPoint </p>
+<p>If the given ENUPoint is not within the given borders, an ENUHeading(2*M_PI) is returned. </p>
+
+</div>
+</div>
+<a id="a17152ee2612121e5f4723daf9fd870d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17152ee2612121e5f4723daf9fd870d4">&#9670;&nbsp;</a></span>getENULanePoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ENUPoint.html">point::ENUPoint</a> ad::map::lane::getENULanePoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const&#160;</td>
+          <td class="paramname"><em>parametricPoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricValue const &amp;&#160;</td>
+          <td class="paramname"><em>lateralOffset</em> = <code>physics::ParametricValue(0.5)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the ENU point of a lane </p>
+
+</div>
+</div>
+<a id="ac710513a05b9975c0c18350b10866e15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac710513a05b9975c0c18350b10866e15">&#9670;&nbsp;</a></span>getHOV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1restriction.html#acf8d0df13bfc27ef9a6d8fc640f76fcc">restriction::PassengerCount</a> ad::map::lane::getHOV </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Maximum of HOV restriction for the <em>lane</em> </dd></dl>
+
+</div>
+</div>
+<a id="a577e6ff84b9972bc85955b51fece6877"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a577e6ff84b9972bc85955b51fece6877">&#9670;&nbsp;</a></span>getLane()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a>&amp; ad::map::lane::getLane </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">lane::LaneId</a> const &amp;&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Method to be called to retrieve <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> from the Store. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> with given identifier. Throws std::invalid_argument if id is not valid or if lane does not exist in the store. </dd></dl>
+
+</div>
+</div>
+<a id="acd163cbff17acf8789808e26f8931835"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd163cbff17acf8789808e26f8931835">&#9670;&nbsp;</a></span>getLaneECEFHeading() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ECEFHeading.html">point::ECEFHeading</a> ad::map::lane::getLaneECEFHeading </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedPosition.html">match::MapMatchedPosition</a> const &amp;&#160;</td>
+          <td class="paramname"><em>mapMatchedPosition</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>lane heading at a mapMatchedPosition </dd></dl>
+
+</div>
+</div>
+<a id="a6a784223f62a733409b108b33bc45d46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a784223f62a733409b108b33bc45d46">&#9670;&nbsp;</a></span>getLaneECEFHeading() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ECEFHeading.html">point::ECEFHeading</a> ad::map::lane::getLaneECEFHeading </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>paraPoint</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>lane heading at a paraPoint </dd></dl>
+
+</div>
+</div>
+<a id="a535bc12a81e4538f89201f059d82e077"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a535bc12a81e4538f89201f059d82e077">&#9670;&nbsp;</a></span>getLaneENUHeading() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a> ad::map::lane::getLaneENUHeading </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1match_1_1MapMatchedPosition.html">match::MapMatchedPosition</a> const &amp;&#160;</td>
+          <td class="paramname"><em>mapMatchedPosition</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>lane heading at a mapMatchedPosition </dd></dl>
+
+</div>
+</div>
+<a id="ae8bf95eb48a2730682a0dc9839c1fcc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8bf95eb48a2730682a0dc9839c1fcc0">&#9670;&nbsp;</a></span>getLaneENUHeading() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a> ad::map::lane::getLaneENUHeading </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>paraPoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>gnssReference</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>lane heading at a paraPoint with given gnssReference </dd></dl>
+
+</div>
+</div>
+<a id="aa2f9ee42ee4dfca46ebaa3b942a5138b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2f9ee42ee4dfca46ebaa3b942a5138b">&#9670;&nbsp;</a></span>getLaneENUHeading() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a> ad::map::lane::getLaneENUHeading </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>position</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the ENU heading of the lane at the given position </dd></dl>
+
+</div>
+</div>
+<a id="acc783747420f73d0b860e893758bb41c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc783747420f73d0b860e893758bb41c">&#9670;&nbsp;</a></span>getLanePtr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html#a67547bf5b3051ea72771b37910a0c9a4">Lane::ConstPtr</a> ad::map::lane::getLanePtr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Method to be called to retrieve <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> from the Store. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> with given identifier. Throws std::invalid_argument if id is not valid or if lane does not exist in the store. </dd></dl>
+
+</div>
+</div>
+<a id="ac77c4814fcedd0ec729db78e3169baf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac77c4814fcedd0ec729db78e3169baf6">&#9670;&nbsp;</a></span>getLanes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1lane.html#ad82d114de86b8cb22e4071d87531576e">LaneIdList</a> ad::map::lane::getLanes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Method to be called to retrieve identifiers of all Lanes in the Store. </p>
+<dl class="section return"><dt>Returns</dt><dd>Identifiers of all lanes in the store. </dd></dl>
+
+</div>
+</div>
+<a id="a3f8b55ffd39cb8953315c1bdade4d1a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f8b55ffd39cb8953315c1bdade4d1a7">&#9670;&nbsp;</a></span>getLateralAlignmentEdge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> ad::map::lane::getLateralAlignmentEdge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const &amp;&#160;</td>
+          <td class="paramname"><em>border</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricValue const&#160;</td>
+          <td class="paramname"><em>lateralAlignment</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the ENUEdge between the given border with corresponding lateralAlignment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">border</td><td>the ENU border, the edge is calculated from </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lateralAlignment</td><td>the lateral alignment as TParam [0.;1.] used to calculate the resulting edge. The lateral alignment is relative to the left edge. If lateralAlignment is 1., the left edge is returned, if lateralAlignment is 0., the right edge is returned</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if the lateralAlignment parameter is smaller than 0. or larger than 1. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a12a5ca8b67b65872bc7186a1c64915b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12a5ca8b67b65872bc7186a1c64915b4">&#9670;&nbsp;</a></span>getMaxSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Speed ad::map::lane::getMaxSpeed </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricRange const &amp;&#160;</td>
+          <td class="paramname"><em>range</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Speed limits on the provided parametric <em>range</em> along the <em>lane</em>. </dd></dl>
+
+</div>
+</div>
+<a id="a4aafa2786a592105a4b9831f073ee230"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4aafa2786a592105a4b9831f073ee230">&#9670;&nbsp;</a></span>getParametricPoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> ad::map::lane::getParametricPoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricValue const &amp;&#160;</td>
+          <td class="paramname"><em>longitudinalOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricValue const &amp;&#160;</td>
+          <td class="paramname"><em>lateralOffset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates parametric point on the lane. Point is calculated by first calculating t_long parametric point on the left and on the right boundary, and then parametric point t_lat between those two points. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">t_long</td><td>Longitudinal parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">t_lat</td><td>Lateral parameter relative to the left edge. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Parametric point on the lane. Can be invalid. </dd></dl>
+
+</div>
+</div>
+<a id="a11433e216de3f5829b7866692fe72a16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11433e216de3f5829b7866692fe72a16">&#9670;&nbsp;</a></span>getProjectedParametricPoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> ad::map::lane::getProjectedParametricPoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricValue const &amp;&#160;</td>
+          <td class="paramname"><em>longitudinalOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricValue const &amp;&#160;</td>
+          <td class="paramname"><em>lateralOffset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates projected parametric point on the lane. Point is calculated by first calculating the projected points on left and right boundary using ProjectParametricPointToEdges(), and then parametric point t_lat between those two points. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">longitudinalOffset</td><td>Longitudinal parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lateralOffset</td><td>Lateral parameter relative to the left edge. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Parametric point on the lane. Can be invalid. </dd></dl>
+
+</div>
+</div>
+<a id="a1a98e2091c5a8c041bae1fa8a091c96e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a98e2091c5a8c041bae1fa8a091c96e">&#9670;&nbsp;</a></span>getSpeedLimits()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1restriction.html#a2e3c5cd0313717504de387a0e0ea272b">restriction::SpeedLimitList</a> ad::map::lane::getSpeedLimits </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricRange const &amp;&#160;</td>
+          <td class="paramname"><em>range</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Speed limits on the provided parametric <em>range</em> along the <em>lane</em>. </dd></dl>
+
+</div>
+</div>
+<a id="aebefca8f0f2a0dbb2db91984c3666aae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebefca8f0f2a0dbb2db91984c3666aae">&#9670;&nbsp;</a></span>getStartPoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> ad::map::lane::getStartPoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Middle of the lane at the start. </dd></dl>
+
+</div>
+</div>
+<a id="abfc348860ca542204e9fa3cfc9e9272c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfc348860ca542204e9fa3cfc9e9272c">&#9670;&nbsp;</a></span>getWidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::lane::getWidth </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricValue const &amp;&#160;</td>
+          <td class="paramname"><em>longitudinalOffset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lane</td><td>the lane. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">longitudinalOffset</td><td>the longitudinal parametric offset </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Width of the lane at the given longitudinal parametric offset <em>longitudinalOffset</em> </dd></dl>
+
+</div>
+</div>
+<a id="a5d08ba6949c25b439c89d44433de5e4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d08ba6949c25b439c89d44433de5e4b">&#9670;&nbsp;</a></span>isAccessOk() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isAccessOk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ContactLane.html">ContactLane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>contactLane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1restriction_1_1VehicleDescriptor.html">restriction::VehicleDescriptor</a> const &amp;&#160;</td>
+          <td class="paramname"><em>vehicle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if vehicle fits the restriction criteria of the contact lane. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">contactLane</td><td>contact lane. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">vehicle</td><td>Description of the vehicle. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true of vehicle fits the restrictions criteria. </dd></dl>
+
+</div>
+</div>
+<a id="a32712aea0487a50b27c94aa8c8845447"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32712aea0487a50b27c94aa8c8845447">&#9670;&nbsp;</a></span>isAccessOk() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isAccessOk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1restriction_1_1VehicleDescriptor.html">restriction::VehicleDescriptor</a> const &amp;&#160;</td>
+          <td class="paramname"><em>vehicle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if vehicle fits the lanes restriction criteria. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lane</td><td>the lane. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">vehicle</td><td>Description of the vehicle. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true of vehicle fits the restrictions criteria. </dd></dl>
+
+</div>
+</div>
+<a id="a05d1816718ba4ba517b64b38ef82d515"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05d1816718ba4ba517b64b38ef82d515">&#9670;&nbsp;</a></span>isHeadingInLaneDirection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isHeadingInLaneDirection </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a> const &amp;&#160;</td>
+          <td class="paramname"><em>heading</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the provided heading is along the lane direction. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">position</td><td>is the position at which the lane heading is obtained </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">heading</td><td>is the heading to be checked</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the heading is within 90° of the lane direction, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ae7327f89cde7f60d4bcfe8a2e4d6fd6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7327f89cde7f60d4bcfe8a2e4d6fd6e">&#9670;&nbsp;</a></span>isLaneDirectionNegative() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isLaneDirectionNegative </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if direction is NEGATIVE or BIDIRECTIONAL. </dd></dl>
+
+</div>
+</div>
+<a id="a1fbebab040f0d87a86c06d069cae0167"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fbebab040f0d87a86c06d069cae0167">&#9670;&nbsp;</a></span>isLaneDirectionNegative() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isLaneDirectionNegative </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;&#160;</td>
+          <td class="paramname"><em>laneId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the lane direction is negative. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">laneId</td><td>the id of the lane to be checked</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the lane direction is negative (negative || bidirectional) </dd></dl>
+
+</div>
+</div>
+<a id="a52aab121d462c7ae7577d6899a58ea97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52aab121d462c7ae7577d6899a58ea97">&#9670;&nbsp;</a></span>isLaneDirectionPositive() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isLaneDirectionPositive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if direction is POSITIVE or BIDIRECTIONAL. </dd></dl>
+
+</div>
+</div>
+<a id="ac1f4f4a093568705251f5c090a515067"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1f4f4a093568705251f5c090a515067">&#9670;&nbsp;</a></span>isLaneDirectionPositive() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isLaneDirectionPositive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;&#160;</td>
+          <td class="paramname"><em>laneId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the lane direction is positive. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">laneId</td><td>the id of the lane to be checked</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the lane direction is positive (positive || bidirectional) </dd></dl>
+
+</div>
+</div>
+<a id="a98cfa6fbd94fe704b97eddd07d3e611f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98cfa6fbd94fe704b97eddd07d3e611f">&#9670;&nbsp;</a></span>isLanePartOfAnIntersection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isLanePartOfAnIntersection </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if lane is part of an intersection. </dd></dl>
+
+</div>
+</div>
+<a id="a57190adb198292c1d9d293ce0e7683c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57190adb198292c1d9d293ce0e7683c7">&#9670;&nbsp;</a></span>isLaneRelevantForExpansion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isLaneRelevantForExpansion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">lane::LaneId</a> const &amp;&#160;</td>
+          <td class="paramname"><em>laneId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lane::LaneIdSet const &amp;&#160;</td>
+          <td class="paramname"><em>relevantLanes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the laneId is relevant for expansion given the set of relevant lanes. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <em>relevantLanes</em> set is empty, or if the laneId can be found in the set of <em>relevantLanes</em>. </dd></dl>
+
+</div>
+</div>
+<a id="ad8cd4f0cebcf2c05208671343336e6b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8cd4f0cebcf2c05208671343336e6b0">&#9670;&nbsp;</a></span>isLeftMost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isLeftMost </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if there are no lanes left of this one. </dd></dl>
+
+</div>
+</div>
+<a id="a9c643706907d8dda0e7e24ce6ed704af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c643706907d8dda0e7e24ce6ed704af">&#9670;&nbsp;</a></span>isNear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isNear </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1BoundingSphere.html">point::BoundingSphere</a> const &amp;&#160;</td>
+          <td class="paramname"><em>boundingSphere</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if given sphere intersects with lane bounding ball. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lane</td><td>the lane. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">boundingSphere</td><td>input sphere </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true given sphere intersects with lane bounding ball. </dd></dl>
+
+</div>
+</div>
+<a id="a129c98339be89b0439783b1ac8d3fc3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a129c98339be89b0439783b1ac8d3fc3d">&#9670;&nbsp;</a></span>isPhysicalPredecessor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isPhysicalPredecessor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>other</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> is longitudinally connected with another <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> at the start. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>Other object. Must be IsValid()! </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if this <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> longitudinally connected with another <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> at the start. </dd></dl>
+
+</div>
+</div>
+<a id="a105382ec53e5c3f542724c79d3147f62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a105382ec53e5c3f542724c79d3147f62">&#9670;&nbsp;</a></span>isPyhsicalSuccessor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isPyhsicalSuccessor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>other</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> is longitudinally connected with another <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> at the end. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>Other object. Must be IsValid()! </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if this <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> longitudinally connected with another <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> at the end. </dd></dl>
+
+</div>
+</div>
+<a id="acd379a59f0599fc2b672042f29163db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd379a59f0599fc2b672042f29163db8">&#9670;&nbsp;</a></span>isRightMost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isRightMost </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if there are no lanes right of this one. </dd></dl>
+
+</div>
+</div>
+<a id="abca28dc22f1191fe94d49224debb9a68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abca28dc22f1191fe94d49224debb9a68">&#9670;&nbsp;</a></span>isRouteable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isRouteable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if lane can be used in Routing. </dd></dl>
+
+</div>
+</div>
+<a id="a8c99c6ca7f02b5f5d3ecba9646a01b7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c99c6ca7f02b5f5d3ecba9646a01b7e">&#9670;&nbsp;</a></span>isSameOrDirectNeighbor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isSameOrDirectNeighbor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const&#160;</td>
+          <td class="paramname"><em>neighbor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if two lanes are direct neighbors of even the same. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the ids belong to the same or neighboring lanes, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="adab0a8b92933cb42e84b30d0d2bbc8d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adab0a8b92933cb42e84b30d0d2bbc8d9">&#9670;&nbsp;</a></span>isSuccessorOrPredecessor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isSuccessorOrPredecessor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const&#160;</td>
+          <td class="paramname"><em>laneId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const&#160;</td>
+          <td class="paramname"><em>checkLaneId</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if a lane is successor or predecessor of a lane. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">laneId</td><td>the main lane </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">checkLaneId</td><td>the lane to be checked if it's a successor or predecessor of the main lane</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <em>checkLaneId</em> is a successor or predecessor of <em>laneId</em> </dd></dl>
+
+</div>
+</div>
+<a id="afbb4e0e56a9f1f288b657fde5d8c8112"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbb4e0e56a9f1f288b657fde5d8c8112">&#9670;&nbsp;</a></span>isValid() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isValid </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ContactLane.html">ContactLane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>contactLane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool const&#160;</td>
+          <td class="paramname"><em>logErrors</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>checks if the given <a class="el" href="structad_1_1map_1_1lane_1_1ContactLane.html" title="DataType ContactLane.">ContactLane</a> is valid </p>
+<p>The contactLane is valid if it's within valid input range. </p>
+
+</div>
+</div>
+<a id="ab321d1802cac89779a0628fc7d6a98c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab321d1802cac89779a0628fc7d6a98c0">&#9670;&nbsp;</a></span>isValid() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isValid </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool const&#160;</td>
+          <td class="paramname"><em>logErrors</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>checks if the given <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> is valid </p>
+<p>The lane is valid if it's within valid input range. </p>
+
+</div>
+</div>
+<a id="a99d7c409d0e38c0b8d10e981b19f84e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99d7c409d0e38c0b8d10e981b19f84e4">&#9670;&nbsp;</a></span>isValid() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isValid </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> const &amp;&#160;</td>
+          <td class="paramname"><em>laneId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool const&#160;</td>
+          <td class="paramname"><em>logErrors</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>checks if the given <a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId.">LaneId</a> is valid </p>
+<p>The laneId is valid if it's within valid input range. </p>
+
+</div>
+</div>
+<a id="a86c9d52ecad121d053ac9d74b20c196b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86c9d52ecad121d053ac9d74b20c196b">&#9670;&nbsp;</a></span>isVanishingLaneEnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isVanishingLaneEnd </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if this lane is vanishing at the end. </dd></dl>
+
+</div>
+</div>
+<a id="a5543ee0b14a05de79b4a10820a2e6679"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5543ee0b14a05de79b4a10820a2e6679">&#9670;&nbsp;</a></span>isVanishingLaneStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::isVanishingLaneStart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if this lane is vanishing at the start. </dd></dl>
+
+</div>
+</div>
+<a id="ab123c64b57f973a7b0ce732711ba294f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab123c64b57f973a7b0ce732711ba294f">&#9670;&nbsp;</a></span>makeTransitionFromFirstBorderContinuous()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ad::map::lane::makeTransitionFromFirstBorderContinuous </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> &amp;&#160;</td>
+          <td class="paramname"><em>first</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const &amp;&#160;</td>
+          <td class="paramname"><em>second</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>operation to make the transition between two borders continuous </p>
+<p>This executes the <a class="el" href="namespacead_1_1map_1_1lane.html#ad4568e2246eb2aeecb47f0f526837161" title="operation to make the transition between two edges continuous">makeTransitionToSecondEdgeContinuous()</a> for left and right edges. In addition, adds interpolation points to the respective other edge if required.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>the first border to be adapted if required to make the transition continuous </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">second</td><td>the second border (is untouched by the algorithm) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad34efbea62e9cefd3a615209b9a4d182"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad34efbea62e9cefd3a615209b9a4d182">&#9670;&nbsp;</a></span>makeTransitionFromFirstEdgeContinuous()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ad::map::lane::makeTransitionFromFirstEdgeContinuous </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> &amp;&#160;</td>
+          <td class="paramname"><em>first</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> const &amp;&#160;</td>
+          <td class="paramname"><em>second</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>operation to make the transition between two edges continuous </p>
+<p>If the end point of <code>first</code> is near (&lt;=0.1m) to the end point of <code>second</code> or one of the edges has less than two points, nothing is done. Otherwise the first point of the second edge will exchanged by the last point of the first edge. The second point of the second edge is placed at some distance along the edge which is calculated using:</p><ul>
+<li>the distance of the displacement of the two edges</li>
+<li>the direction of the displacement of the two edges compared to the the corresponding direction of the edges</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>the first edge to be adapted if required to make the transition continuous </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">second</td><td>the second edge (is untouched by the algorithm) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a69b96ff18ed19f590fae3ebfcc897fa4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69b96ff18ed19f590fae3ebfcc897fa4">&#9670;&nbsp;</a></span>makeTransitionToSecondBorderContinuous()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ad::map::lane::makeTransitionToSecondBorderContinuous </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const &amp;&#160;</td>
+          <td class="paramname"><em>first</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> &amp;&#160;</td>
+          <td class="paramname"><em>second</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>operation to make the transition between two borders continuous </p>
+<p>This executes the <a class="el" href="namespacead_1_1map_1_1lane.html#ad4568e2246eb2aeecb47f0f526837161" title="operation to make the transition between two edges continuous">makeTransitionToSecondEdgeContinuous()</a> for left and right edges. In addition, adds interpolation points to the respective other edge if required.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>the first border (is untouched by the algorithm) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">second</td><td>the second border to be adapted if required to make the transition continuous </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad4568e2246eb2aeecb47f0f526837161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4568e2246eb2aeecb47f0f526837161">&#9670;&nbsp;</a></span>makeTransitionToSecondEdgeContinuous()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ad::map::lane::makeTransitionToSecondEdgeContinuous </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> const &amp;&#160;</td>
+          <td class="paramname"><em>first</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1point.html#afecf4f601ead8325bd73cef3867c1377">point::ENUEdge</a> &amp;&#160;</td>
+          <td class="paramname"><em>second</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>operation to make the transition between two edges continuous </p>
+<p>If the end point of <code>first</code> is near (&lt;=0.1m) to the end point of <code>second</code> or one of the edges has less than two points, nothing is done. Otherwise the first point of the second edge will exchanged by the last point of the first edge. The second point of the second edge is placed at some distance along the edge which is calculated using:</p><ul>
+<li>the distance of the displacement of the two edges</li>
+<li>the direction of the displacement of the two edges compared to the the corresponding direction of the edges</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>the first edge (is untouched by the algorithm) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">second</td><td>the second edge to be adapted if required to make the transition continuous </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af9947f482e65e25d9813bc2bb005af14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9947f482e65e25d9813bc2bb005af14">&#9670;&nbsp;</a></span>normalizeBorder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ad::map::lane::normalizeBorder </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> &amp;&#160;</td>
+          <td class="paramname"><em>border</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1ENUBorder.html">ENUBorder</a> const *&#160;</td>
+          <td class="paramname"><em>previousBorder</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>normalizes the border </p>
+<p>At first the left and right edges of the border are checked for irregular directional vectors (scalarproduct of the vectors of three consecutive edge points has to be positive) Irregular points are dropped.</p>
+<p>Then, the number of points of the left and right edge of the border are made equal by extending the smaller edge. If an edge has less than 2 points, nothing is done.</p>
+<p>The previousBorder (optional parameter) is used to extend the irregular directional vector check to the beginning of the border edges; here leading to an potential overwrite of the first edge point by the end of the previousBorder. </p>
+
+</div>
+</div>
 <a id="a29662191aa5ca1d82a0a2b94bbd356ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a29662191aa5ca1d82a0a2b94bbd356ab">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/10]</span></h2>
 
@@ -1023,6 +3191,272 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
+
+</div>
+</div>
+<a id="a609b7ae504bc14634c42248d84276c56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a609b7ae504bc14634c42248d84276c56">&#9670;&nbsp;</a></span>oppositeLocation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a> ad::map::lane::oppositeLocation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1lane.html#ae44e27be53be1f711c436fa86bf5b50a">ContactLocation</a> const &amp;&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Provides opposite Location. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">e</td><td>Base location. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Opposite location. INVALID if there is no opposite. </dd></dl>
+
+</div>
+</div>
+<a id="afdd720de89d40bae5266c834e4059b40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdd720de89d40bae5266c834e4059b40">&#9670;&nbsp;</a></span>projectParametricPointToEdges() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::projectParametricPointToEdges </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::ParametricValue const &amp;&#160;</td>
+          <td class="paramname"><em>longitudinalOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>point_on_left_edge</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>point_on_right_edge</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the projection on left and right boundary of the parametric point on the center of the lane. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">longitudinalOffset</td><td>Longitudinal parameter on the lane. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">point_on_left_edge</td><td>projected point on the left boundary </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">point_on_right_edge</td><td>projected point on the right boundary </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the operation succeeded. </dd></dl>
+
+</div>
+</div>
+<a id="a21e3d7306d1d2c906815aef6195e0adf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21e3d7306d1d2c906815aef6195e0adf">&#9670;&nbsp;</a></span>projectParametricPointToEdges() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::projectParametricPointToEdges </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>referencePoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>point_on_left_edge</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ECEFPoint.html">point::ECEFPoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>point_on_right_edge</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the projection on left and right boundary of the given referencePoint. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">referencePoint</td><td>reference point. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">point_on_left_edge</td><td>projected point on the left boundary </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">point_on_right_edge</td><td>projected point on the right boundary </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the operation succeeded. </dd></dl>
+
+</div>
+</div>
+<a id="aadaebb73dd7e16188fc3c8909b5de682"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadaebb73dd7e16188fc3c8909b5de682">&#9670;&nbsp;</a></span>projectPositionToLaneInHeadingDirection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::projectPositionToLaneInHeadingDirection </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a> const &amp;&#160;</td>
+          <td class="paramname"><em>heading</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>projectedPosition</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>project a position to a neighboring lane (incl. the lane itself), which has the provided heading </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">position</td><td>to be projected </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">heading</td><td>to be checked </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">projectedPosition</td><td>is the projected position (can be position, if the lane is already in heading direction)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if a valid projection was found, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="af7f3cc7eab23d8ce5c50d0334cf1b61f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7f3cc7eab23d8ce5c50d0334cf1b61f">&#9670;&nbsp;</a></span>satisfiesFilter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::lane::satisfiesFilter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1lane_1_1Lane.html">Lane</a> const &amp;&#160;</td>
+          <td class="paramname"><em>lane</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>typeFilter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isHov</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> satisfies filter condition. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">typeFilter</td><td>Type of the lane as string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">isHov</td><td>True if only lanes with HOV restriction shall be returned. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if <a class="el" href="structad_1_1map_1_1lane_1_1Lane.html" title="DataType Lane.">Lane</a> satisfies filter condition. </dd></dl>
+
+</div>
+</div>
+<a id="accd1c19e9d03dbb3897902bd62dce994"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accd1c19e9d03dbb3897902bd62dce994">&#9670;&nbsp;</a></span>uniqueLaneId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">LaneId</a> ad::map::lane::uniqueLaneId </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>point</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>lane id at given location</dd></dl>
+<p>Throws if there is more than one lane at the given position </p>
+
+</div>
+</div>
+<a id="a6f6e6c33bc6b5fc803f6b055c22c7b3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f6e6c33bc6b5fc803f6b055c22c7b3f">&#9670;&nbsp;</a></span>uniqueParaPoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a> ad::map::lane::uniqueParaPoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>point</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>parametric point at given location</dd></dl>
+<p>Throws if there is more than one lane at the given position </p>
 
 </div>
 </div>

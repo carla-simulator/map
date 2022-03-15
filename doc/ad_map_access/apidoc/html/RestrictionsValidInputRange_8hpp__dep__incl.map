@@ -1,6 +1,13 @@
 <map id="generated/include/ad/map/restriction/RestrictionsValidInputRange.hpp" name="generated/include/ad/map/restriction/RestrictionsValidInputRange.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="98,5,305,61"/>
-<area shape="rect" id="node2" href="$ContactLaneValidInputRange_8hpp.html" title=" " alt="" coords="5,109,243,165"/>
-<area shape="rect" id="node4" href="$LaneValidInputRange_8hpp.html" title=" " alt="" coords="73,317,329,359"/>
-<area shape="rect" id="node3" href="$ContactLaneListValidInputRange_8hpp.html" title=" " alt="" coords="13,213,240,269"/>
+<area shape="rect" id="node1" title=" " alt="" coords="60,5,266,61"/>
+<area shape="rect" id="node2" href="$ContactLaneValidInputRange_8hpp.html" title=" " alt="" coords="44,109,282,165"/>
+<area shape="rect" id="node4" href="$LaneValidInputRange_8hpp.html" title=" " alt="" coords="30,317,286,359"/>
+<area shape="rect" id="node11" href="$RestrictionOperation_8hpp.html" title=" " alt="" coords="306,117,498,158"/>
+<area shape="rect" id="node3" href="$ContactLaneListValidInputRange_8hpp.html" title=" " alt="" coords="44,213,271,269"/>
+<area shape="rect" id="node10" href="$ContactOperation_8hpp.html" title=" " alt="" coords="295,221,463,262"/>
+<area shape="rect" id="node5" href="$LaneOperation_8hpp.html" title=" " alt="" coords="154,407,308,448"/>
+<area shape="rect" id="node6" href="$lane_2Operation_8hpp.html" title=" " alt="" coords="302,496,456,537"/>
+<area shape="rect" id="node7" href="$RouteExpander_8hpp.html" title=" " alt="" coords="118,496,278,537"/>
+<area shape="rect" id="node8" href="$RouteAStar_8hpp.html" title=" " alt="" coords="26,585,186,627"/>
+<area shape="rect" id="node9" href="$RoutePrediction_8hpp.html" title=" " alt="" coords="210,585,370,627"/>
 </map>

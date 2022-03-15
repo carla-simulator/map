@@ -1,4 +1,17 @@
 <map id="generated/include/ad/map/restriction/VehicleDescriptor.hpp" name="generated/include/ad/map/restriction/VehicleDescriptor.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,276,47"/>
-<area shape="rect" id="node2" href="$VehicleDescriptorValidInputRange_8hpp.html" title=" " alt="" coords="19,95,262,151"/>
+<area shape="rect" id="node1" title=" " alt="" coords="297,5,567,47"/>
+<area shape="rect" id="node2" href="$VehicleDescriptorValidInputRange_8hpp.html" title=" " alt="" coords="191,95,433,151"/>
+<area shape="rect" id="node10" href="$restriction_2Types_8hpp.html" title=" " alt="" coords="479,102,671,143"/>
+<area shape="rect" id="node3" href="$RestrictionOperation_8hpp.html" title=" " alt="" coords="173,206,365,247"/>
+<area shape="rect" id="node4" href="$ContactOperation_8hpp.html" title=" " alt="" coords="5,303,173,344"/>
+<area shape="rect" id="node6" href="$LaneOperation_8hpp.html" title=" " alt="" coords="197,303,352,344"/>
+<area shape="rect" id="node5" href="$lane_2Operation_8hpp.html" title=" " alt="" coords="15,392,169,433"/>
+<area shape="rect" id="node7" href="$RouteExpander_8hpp.html" title=" " alt="" coords="195,392,355,433"/>
+<area shape="rect" id="node8" href="$RouteAStar_8hpp.html" title=" " alt="" coords="103,481,263,523"/>
+<area shape="rect" id="node9" href="$RoutePrediction_8hpp.html" title=" " alt="" coords="287,481,447,523"/>
+<area shape="rect" id="node11" href="$Factory_8hpp.html" title=" " alt="" coords="389,206,560,247"/>
+<area shape="rect" id="node12" href="$AdMapFactory_8hpp.html" title=" " alt="" coords="394,303,585,344"/>
+<area shape="rect" id="node13" href="$SerializeGeneratedRestrictionTypes_8hpp.html" title=" " alt="" coords="635,199,855,255"/>
+<area shape="rect" id="node14" href="$SerializeGeneratedLaneTypes_8hpp.html" title=" " alt="" coords="618,303,865,344"/>
+<area shape="rect" id="node15" href="$SerializeGeneratedTypes_8hpp.html" title=" " alt="" coords="714,392,929,433"/>
 </map>

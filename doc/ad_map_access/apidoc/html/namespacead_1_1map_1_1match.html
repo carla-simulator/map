@@ -80,6 +80,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1match_1_1AdMapMatching.html">AdMapMatching</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">performs map matching of a given point to the map  <a href="classad_1_1map_1_1match_1_1AdMapMatching.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structad_1_1map_1_1match_1_1ENUObjectPosition.html">ENUObjectPosition</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType <a class="el" href="structad_1_1map_1_1match_1_1ENUObjectPosition.html" title="DataType ENUObjectPosition.">ENUObjectPosition</a>.  <a href="structad_1_1map_1_1match_1_1ENUObjectPosition.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,6 +171,24 @@ Functions</h2></td></tr>
 <tr class="memitem:aceca11a7232ad5e576ebd65d3dbded88"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1match.html#aceca11a7232ad5e576ebd65d3dbded88">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="namespacead_1_1map_1_1match.html#ab1acccabf12b7c3e42cf555b0bb4402e">ObjectReferencePoints</a> const &amp;value)</td></tr>
 <tr class="memdesc:aceca11a7232ad5e576ebd65d3dbded88"><td class="mdescLeft">&#160;</td><td class="mdescRight">standard ostream operator  <a href="namespacead_1_1map_1_1match.html#aceca11a7232ad5e576ebd65d3dbded88">More...</a><br /></td></tr>
 <tr class="separator:aceca11a7232ad5e576ebd65d3dbded88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e6885b0edca83a6844ac426cfc94f4d"><td class="memItemLeft" align="right" valign="top"><a id="a1e6885b0edca83a6844ac426cfc94f4d"></a>
+<a class="el" href="namespacead_1_1map_1_1point.html#a61ca5a48026fe858c1f9db0167256fda">point::ParaPointList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1match.html#a1e6885b0edca83a6844ac426cfc94f4d">getParaPoints</a> (<a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a> const &amp;inMapMatchedPositions)</td></tr>
+<tr class="memdesc:a1e6885b0edca83a6844ac426cfc94f4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the list of ParaPoints out of the map matched positions <br /></td></tr>
+<tr class="separator:a1e6885b0edca83a6844ac426cfc94f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae70bf142189fd6d14a4967e1a535a40a"><td class="memItemLeft" align="right" valign="top"><a id="ae70bf142189fd6d14a4967e1a535a40a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isLaneType</b> (<a class="el" href="namespacead_1_1map_1_1match.html#ac0f3a2cbcda3109dac008c0c51a24cbb">MapMatchedPositionType</a> const &amp;mapMatchedPositionType)</td></tr>
+<tr class="separator:ae70bf142189fd6d14a4967e1a535a40a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2335f67ac50132dd871deea6a264c38"><td class="memItemLeft" align="right" valign="top"><a id="af2335f67ac50132dd871deea6a264c38"></a>
+<a class="el" href="classad_1_1map_1_1point_1_1ENUHeading.html">point::ENUHeading</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1match.html#af2335f67ac50132dd871deea6a264c38">getObjectENUHeading</a> (const <a class="el" href="structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html">match::MapMatchedObjectBoundingBox</a> &amp;mapMatchedBoundingBox)</td></tr>
+<tr class="memdesc:af2335f67ac50132dd871deea6a264c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the objects ENU angle based on the map matched position. <br /></td></tr>
+<tr class="separator:af2335f67ac50132dd871deea6a264c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a916720142d436e1d4fe9edcc2528eb83"><td class="memItemLeft" align="right" valign="top">physics::Distance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1match.html#a916720142d436e1d4fe9edcc2528eb83">signedDistanceToLane</a> (<a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">lane::LaneId</a> const checkLaneId, <a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a> const &amp;mapMatchedPositions)</td></tr>
+<tr class="memdesc:a916720142d436e1d4fe9edcc2528eb83"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the signed distance to a lane within the map matched positions  <a href="namespacead_1_1map_1_1match.html#a916720142d436e1d4fe9edcc2528eb83">More...</a><br /></td></tr>
+<tr class="separator:a916720142d436e1d4fe9edcc2528eb83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67258ea02575e82777e9cf1baa1cb166"><td class="memItemLeft" align="right" valign="top"><a id="a67258ea02575e82777e9cf1baa1cb166"></a>
+<a class="el" href="structad_1_1map_1_1point_1_1ParaPoint.html">point::ParaPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1match.html#a67258ea02575e82777e9cf1baa1cb166">getCenterParaPoint</a> (<a class="el" href="structad_1_1map_1_1match_1_1LaneOccupiedRegion.html">match::LaneOccupiedRegion</a> const &amp;occupiedRegion)</td></tr>
+<tr class="memdesc:a67258ea02575e82777e9cf1baa1cb166"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the para point of the occupied Region in the middle of the longitudinal extend of it <br /></td></tr>
+<tr class="separator:a67258ea02575e82777e9cf1baa1cb166"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>namespace match </p>
@@ -650,6 +671,56 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
+
+</div>
+</div>
+<a id="a916720142d436e1d4fe9edcc2528eb83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a916720142d436e1d4fe9edcc2528eb83">&#9670;&nbsp;</a></span>signedDistanceToLane()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">physics::Distance ad::map::match::signedDistanceToLane </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1lane_1_1LaneId.html">lane::LaneId</a> const&#160;</td>
+          <td class="paramname"><em>checkLaneId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1match.html#aaed86807265fc30096de4c1e809f715c">MapMatchedPositionConfidenceList</a> const &amp;&#160;</td>
+          <td class="paramname"><em>mapMatchedPositions</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the signed distance to a lane within the map matched positions </p>
+<p>This check searches the mapMatchedPositions for the given <em>checkLaneId</em> and returns a signed distance value to the lane.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">checkLaneId</td><td>the lane id to find </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mapMatchedPositions</td><td>the map matched positions to check</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>: If not part of the mapMatchedPositions: distance = std::numeric_limits&lt;physics::Distance&gt;::max() If it's found and map matched type is:<ul>
+<li><a class="el" href="namespacead_1_1map_1_1match.html#ac0f3a2cbcda3109dac008c0c51a24cbbab8efa99760b29b551b827c0f321307b7">MapMatchedPositionType::LANE_IN</a>: distance = 0.</li>
+<li><a class="el" href="namespacead_1_1map_1_1match.html#ac0f3a2cbcda3109dac008c0c51a24cbbabc53c83b1686c4a206e8cc2008fca6e0">MapMatchedPositionType::LANE_LEFT</a>: distance &lt; 0</li>
+<li><a class="el" href="namespacead_1_1map_1_1match.html#ac0f3a2cbcda3109dac008c0c51a24cbbafdf79bea8439efee70eff3d50b7edc9d">MapMatchedPositionType::LANE_RIGHT</a>: distance &gt; 0</li>
+</ul>
+</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if mapMatchedPositions are inconsistent </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

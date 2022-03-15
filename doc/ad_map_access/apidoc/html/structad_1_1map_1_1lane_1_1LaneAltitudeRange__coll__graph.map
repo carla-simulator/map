@@ -1,0 +1,4 @@
+<map id="ad::map::lane::LaneAltitudeRange" name="ad::map::lane::LaneAltitudeRange">
+<area shape="rect" id="node1" title="Struct to hold the altitude range of a lane." alt="" coords="5,109,207,151"/>
+<area shape="rect" id="node2" href="$classad_1_1map_1_1point_1_1Altitude.html" title="DataType Altitude." alt="" coords="19,5,193,32"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="ad::map::serialize::ISerializer" name="ad::map::serialize::ISerializer">
+<area shape="rect" id="node1" title="Interface for Serializer." alt="" coords="15,5,153,47"/>
+<area shape="rect" id="node2" href="$classad_1_1map_1_1serialize_1_1Serializer.html" title="Serializer implementation." alt="" coords="15,95,153,136"/>
+<area shape="rect" id="node3" href="$classad_1_1map_1_1serialize_1_1SerializerFileCRC32.html" title="Serializer for files with CRC32." alt="" coords="5,184,163,225"/>
+</map>

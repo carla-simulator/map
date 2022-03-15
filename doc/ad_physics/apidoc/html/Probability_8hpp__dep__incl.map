@@ -1,6 +1,12 @@
 <map id="generated/include/ad/physics/Probability.hpp" name="generated/include/ad/physics/Probability.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="134,5,309,47"/>
-<area shape="rect" id="node2" href="$ProbabilityList_8hpp.html" title=" " alt="" coords="5,102,205,143"/>
-<area shape="rect" id="node4" href="$ProbabilityValidInputRange_8hpp.html" title=" " alt="" coords="230,95,445,151"/>
-<area shape="rect" id="node3" href="$ProbabilityListValidInputRange_8hpp.html" title=" " alt="" coords="119,199,323,255"/>
+<area shape="rect" id="node1" title=" " alt="" coords="252,5,427,47"/>
+<area shape="rect" id="node2" href="$ProbabilityList_8hpp.html" title=" " alt="" coords="7,102,207,143"/>
+<area shape="rect" id="node4" href="$ProbabilityValidInputRange_8hpp.html" title=" " alt="" coords="232,95,447,151"/>
+<area shape="rect" id="node5" href="$Types_8hpp.html" title=" " alt="" coords="479,102,621,143"/>
+<area shape="rect" id="node3" href="$ProbabilityListValidInputRange_8hpp.html" title=" " alt="" coords="5,199,209,255"/>
+<area shape="rect" id="node6" href="$AngleOperation_8hpp.html" title=" " alt="" coords="234,206,389,247"/>
+<area shape="rect" id="node7" href="$Operation_8hpp.html" title=" " alt="" coords="487,303,629,344"/>
+<area shape="rect" id="node8" href="$ParametricOperation_8hpp.html" title=" " alt="" coords="464,206,652,247"/>
+<area shape="rect" id="node9" href="$PhysicsOperation_8hpp.html" title=" " alt="" coords="676,206,843,247"/>
+<area shape="rect" id="node10" href="$RatioOperation_8hpp.html" title=" " alt="" coords="867,206,1019,247"/>
 </map>

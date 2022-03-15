@@ -80,6 +80,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1access_1_1Factory.html">Factory</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Autonomus Driving Map <a class="el" href="classad_1_1map_1_1access_1_1Factory.html" title="Autonomus Driving Map Factory. Contains method to be used to initialize and modify content in the Sto...">Factory</a>. Contains method to be used to initialize and modify content in the <a class="el" href="classad_1_1map_1_1access_1_1Store.html" title="Autonomus Driving Map Store.">Store</a>.  <a href="classad_1_1map_1_1access_1_1Factory.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structad_1_1map_1_1access_1_1GeometryStoreItem.html">GeometryStoreItem</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType <a class="el" href="structad_1_1map_1_1access_1_1GeometryStoreItem.html" title="DataType GeometryStoreItem.">GeometryStoreItem</a>.  <a href="structad_1_1map_1_1access_1_1GeometryStoreItem.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -88,6 +91,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1access_1_1PartitionId.html">PartitionId</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataType <a class="el" href="classad_1_1map_1_1access_1_1PartitionId.html" title="DataType PartitionId.">PartitionId</a>.  <a href="classad_1_1map_1_1access_1_1PartitionId.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classad_1_1map_1_1access_1_1Store.html">Store</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Autonomus Driving Map <a class="el" href="classad_1_1map_1_1access_1_1Store.html" title="Autonomus Driving Map Store.">Store</a>.  <a href="classad_1_1map_1_1access_1_1Store.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -120,6 +126,55 @@ Functions</h2></td></tr>
 <tr class="memitem:abd13418b9e7108d6f5ec59b1b9002f46"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#abd13418b9e7108d6f5ec59b1b9002f46">operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="namespacead_1_1map_1_1access.html#a60341eae8af76263c7c3900a678fae28">TrafficType</a> const &amp;value)</td></tr>
 <tr class="memdesc:abd13418b9e7108d6f5ec59b1b9002f46"><td class="mdescLeft">&#160;</td><td class="mdescRight">standard ostream operator  <a href="namespacead_1_1map_1_1access.html#abd13418b9e7108d6f5ec59b1b9002f46">More...</a><br /></td></tr>
 <tr class="separator:abd13418b9e7108d6f5ec59b1b9002f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0de315763826fe6e16bfbaeade588d2"><td class="memItemLeft" align="right" valign="top"><a id="ac0de315763826fe6e16bfbaeade588d2"></a>
+std::shared_ptr&lt; spdlog::logger &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#ac0de315763826fe6e16bfbaeade588d2">getLogger</a> ()</td></tr>
+<tr class="memdesc:ac0de315763826fe6e16bfbaeade588d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the admap logger <br /></td></tr>
+<tr class="separator:ac0de315763826fe6e16bfbaeade588d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab598a7ebf2a9ee8eef1f49ec5f09590d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#ab598a7ebf2a9ee8eef1f49ec5f09590d">isValid</a> (<a class="el" href="structad_1_1map_1_1access_1_1MapMetaData.html">MapMetaData</a> const &amp;metaData, bool const logErrors=true)</td></tr>
+<tr class="memdesc:ab598a7ebf2a9ee8eef1f49ec5f09590d"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the given <a class="el" href="structad_1_1map_1_1access_1_1MapMetaData.html" title="DataType MapMetaData.">MapMetaData</a> is valid  <a href="namespacead_1_1map_1_1access.html#ab598a7ebf2a9ee8eef1f49ec5f09590d">More...</a><br /></td></tr>
+<tr class="separator:ab598a7ebf2a9ee8eef1f49ec5f09590d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d86228c9a597e11eadce3f2b0634292"><td class="memItemLeft" align="right" valign="top"><a id="a3d86228c9a597e11eadce3f2b0634292"></a>
+std::shared_ptr&lt; <a class="el" href="classad_1_1map_1_1point_1_1CoordinateTransform.html">point::CoordinateTransform</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a3d86228c9a597e11eadce3f2b0634292">getCoordinateTransform</a> ()</td></tr>
+<tr class="memdesc:a3d86228c9a597e11eadce3f2b0634292"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the coordinate transformation object <br /></td></tr>
+<tr class="separator:a3d86228c9a597e11eadce3f2b0634292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48a569198400b2a4a9dde95084efe6b6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a48a569198400b2a4a9dde95084efe6b6">init</a> (std::string const &amp;configFileName)</td></tr>
+<tr class="memdesc:a48a569198400b2a4a9dde95084efe6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize singleton with given configuration file  <a href="namespacead_1_1map_1_1access.html#a48a569198400b2a4a9dde95084efe6b6">More...</a><br /></td></tr>
+<tr class="separator:a48a569198400b2a4a9dde95084efe6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d794cbca5f92fbef786b7abde2f9764"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a7d794cbca5f92fbef786b7abde2f9764">initFromOpenDriveContent</a> (std::string const &amp;openDriveContent, double const overlapMargin, <a class="el" href="namespacead_1_1map_1_1intersection.html#a2642065ae69f206651d2b1be9b2f3e15">intersection::IntersectionType</a> const defaultIntersectionType, <a class="el" href="namespacead_1_1map_1_1landmark.html#a718de8045627d34fa218de95fdaf35e8">landmark::TrafficLightType</a> const defaultTrafficLightType=<a class="el" href="namespacead_1_1map_1_1landmark.html#a718de8045627d34fa218de95fdaf35e8a0a0d76d785a18ba3eb817747e5f56527">landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN</a>)</td></tr>
+<tr class="memdesc:a7d794cbca5f92fbef786b7abde2f9764"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize singleton with OpenDRIVE content  <a href="namespacead_1_1map_1_1access.html#a7d794cbca5f92fbef786b7abde2f9764">More...</a><br /></td></tr>
+<tr class="separator:a7d794cbca5f92fbef786b7abde2f9764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cdf3f8f69107a31dab263c584c1ba42"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a9cdf3f8f69107a31dab263c584c1ba42">init</a> (<a class="el" href="classad_1_1map_1_1access_1_1Store.html#a04e3d8ef431a1b98d56203337987dd20">Store::Ptr</a> store)</td></tr>
+<tr class="memdesc:a9cdf3f8f69107a31dab263c584c1ba42"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize singleton with given store  <a href="namespacead_1_1map_1_1access.html#a9cdf3f8f69107a31dab263c584c1ba42">More...</a><br /></td></tr>
+<tr class="separator:a9cdf3f8f69107a31dab263c584c1ba42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a640a38762f504003b24fb9c5ce71b593"><td class="memItemLeft" align="right" valign="top"><a id="a640a38762f504003b24fb9c5ce71b593"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a640a38762f504003b24fb9c5ce71b593">cleanup</a> ()</td></tr>
+<tr class="memdesc:a640a38762f504003b24fb9c5ce71b593"><td class="mdescLeft">&#160;</td><td class="mdescRight">remove all loaded maps and configuration <br /></td></tr>
+<tr class="separator:a640a38762f504003b24fb9c5ce71b593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fc1c598a2ee565fb922efb1d0562e3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a8fc1c598a2ee565fb922efb1d0562e3a">setENUReferencePoint</a> (<a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;point)</td></tr>
+<tr class="memdesc:a8fc1c598a2ee565fb922efb1d0562e3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the current ENU reference point  <a href="namespacead_1_1map_1_1access.html#a8fc1c598a2ee565fb922efb1d0562e3a">More...</a><br /></td></tr>
+<tr class="separator:a8fc1c598a2ee565fb922efb1d0562e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab96e8b729a512c863dba58ee9be23832"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#ab96e8b729a512c863dba58ee9be23832">getENUReferencePoint</a> ()</td></tr>
+<tr class="memdesc:ab96e8b729a512c863dba58ee9be23832"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current ENU reference point set in the map  <a href="namespacead_1_1map_1_1access.html#ab96e8b729a512c863dba58ee9be23832">More...</a><br /></td></tr>
+<tr class="separator:ab96e8b729a512c863dba58ee9be23832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa215b0ca52e276617105b00ca4630966"><td class="memItemLeft" align="right" valign="top"><a id="aa215b0ca52e276617105b00ca4630966"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#aa215b0ca52e276617105b00ca4630966">isENUReferencePointSet</a> ()</td></tr>
+<tr class="memdesc:aa215b0ca52e276617105b00ca4630966"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if ENU Reference Point is set <br /></td></tr>
+<tr class="separator:aa215b0ca52e276617105b00ca4630966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abadca68d360894e5df170afd0b064f0e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structad_1_1map_1_1config_1_1PointOfInterest.html">config::PointOfInterest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#abadca68d360894e5df170afd0b064f0e">getPointsOfInterest</a> (<a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;geoPoint, physics::Distance const &amp;radius)</td></tr>
+<tr class="memdesc:abadca68d360894e5df170afd0b064f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">get points of interest in the surrounding of a given geoPoint  <a href="namespacead_1_1map_1_1access.html#abadca68d360894e5df170afd0b064f0e">More...</a><br /></td></tr>
+<tr class="separator:abadca68d360894e5df170afd0b064f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60846141065e5267b54f78b938f128b6"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structad_1_1map_1_1config_1_1PointOfInterest.html">config::PointOfInterest</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a60846141065e5267b54f78b938f128b6">getPointsOfInterest</a> ()</td></tr>
+<tr class="memdesc:a60846141065e5267b54f78b938f128b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">get all points of interest  <a href="namespacead_1_1map_1_1access.html#a60846141065e5267b54f78b938f128b6">More...</a><br /></td></tr>
+<tr class="separator:a60846141065e5267b54f78b938f128b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdd0da030aaf72d86fa0ce19bf15605d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#afdd0da030aaf72d86fa0ce19bf15605d">getPointOfInterest</a> (std::string const &amp;name, <a class="el" href="structad_1_1map_1_1config_1_1PointOfInterest.html">config::PointOfInterest</a> &amp;poi)</td></tr>
+<tr class="memdesc:afdd0da030aaf72d86fa0ce19bf15605d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get a certain point of interest if exists  <a href="namespacead_1_1map_1_1access.html#afdd0da030aaf72d86fa0ce19bf15605d">More...</a><br /></td></tr>
+<tr class="separator:afdd0da030aaf72d86fa0ce19bf15605d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e6f981fc8847dac2de3096d3b8d3608"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a1e6f981fc8847dac2de3096d3b8d3608">isLeftHandedTraffic</a> ()</td></tr>
+<tr class="separator:a1e6f981fc8847dac2de3096d3b8d3608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b3fd2ecbe2ad4153bf532e627f20165"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a1b3fd2ecbe2ad4153bf532e627f20165">isRightHandedTraffic</a> ()</td></tr>
+<tr class="separator:a1b3fd2ecbe2ad4153bf532e627f20165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f71db45a23b36865978d6589e05f38c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classad_1_1map_1_1access_1_1Store.html">Store</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacead_1_1map_1_1access.html#a4f71db45a23b36865978d6589e05f38c">getStore</a> ()</td></tr>
+<tr class="separator:a4f71db45a23b36865978d6589e05f38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>namespace access </p>
@@ -159,6 +214,305 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ab96e8b729a512c863dba58ee9be23832"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab96e8b729a512c863dba58ee9be23832">&#9670;&nbsp;</a></span>getENUReferencePoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> ad::map::access::getENUReferencePoint </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the current ENU reference point set in the map </p>
+<dl class="section return"><dt>Returns</dt><dd>Set ENU reference point in Geo coordinates </dd></dl>
+
+</div>
+</div>
+<a id="afdd0da030aaf72d86fa0ce19bf15605d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdd0da030aaf72d86fa0ce19bf15605d">&#9670;&nbsp;</a></span>getPointOfInterest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::access::getPointOfInterest </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1config_1_1PointOfInterest.html">config::PointOfInterest</a> &amp;&#160;</td>
+          <td class="paramname"><em>poi</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get a certain point of interest if exists </p>
+<p>Calls <a class="el" href="namespacead_1_1map_1_1access.html#abadca68d360894e5df170afd0b064f0e" title="get points of interest in the surrounding of a given geoPoint">getPointsOfInterest()</a> and searches for the point with the given name.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>the name of the POI to query </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">poi</td><td>the found PointOfInterest</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the PointOfInterest with the given <em>name</em> if exits </dd></dl>
+
+</div>
+</div>
+<a id="a60846141065e5267b54f78b938f128b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60846141065e5267b54f78b938f128b6">&#9670;&nbsp;</a></span>getPointsOfInterest() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="structad_1_1map_1_1config_1_1PointOfInterest.html">config::PointOfInterest</a>&gt;&amp; ad::map::access::getPointsOfInterest </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get all points of interest </p>
+<dl class="section return"><dt>Returns</dt><dd>the complete list of PointOfInterest currently available </dd></dl>
+
+</div>
+</div>
+<a id="abadca68d360894e5df170afd0b064f0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abadca68d360894e5df170afd0b064f0e">&#9670;&nbsp;</a></span>getPointsOfInterest() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="structad_1_1map_1_1config_1_1PointOfInterest.html">config::PointOfInterest</a>&gt; ad::map::access::getPointsOfInterest </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>geoPoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">physics::Distance const &amp;&#160;</td>
+          <td class="paramname"><em>radius</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get points of interest in the surrounding of a given geoPoint </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">geoPoint</td><td>GeoPoint to be used to query the POIs </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">radius</td><td>radius to be use for the query</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the list with the PointOfInterest within the queried region. </dd></dl>
+
+</div>
+</div>
+<a id="a4f71db45a23b36865978d6589e05f38c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f71db45a23b36865978d6589e05f38c">&#9670;&nbsp;</a></span>getStore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classad_1_1map_1_1access_1_1Store.html">Store</a>&amp; ad::map::access::getStore </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>reference to the map store object </dd></dl>
+
+</div>
+</div>
+<a id="a48a569198400b2a4a9dde95084efe6b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48a569198400b2a4a9dde95084efe6b6">&#9670;&nbsp;</a></span>init() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::access::init </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>configFileName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>initialize singleton with given configuration file </p>
+<p>The configuration file specifies all available maps, see ConfigFileHandler for details of the semantics </p><dl class="section return"><dt>Returns</dt><dd>true if initialization was successful (i.e. config file exists or singleton was already initialized) </dd>
+<dd>
+false if config file doesn't exist or the singleton was already initialized with a different config file </dd></dl>
+
+</div>
+</div>
+<a id="a9cdf3f8f69107a31dab263c584c1ba42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cdf3f8f69107a31dab263c584c1ba42">&#9670;&nbsp;</a></span>init() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::access::init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classad_1_1map_1_1access_1_1Store.html#a04e3d8ef431a1b98d56203337987dd20">Store::Ptr</a>&#160;</td>
+          <td class="paramname"><em>store</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>initialize singleton with given store </p>
+<p>No map files will be read. The store has to be filled by other means. </p>
+
+</div>
+</div>
+<a id="a7d794cbca5f92fbef786b7abde2f9764"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d794cbca5f92fbef786b7abde2f9764">&#9670;&nbsp;</a></span>initFromOpenDriveContent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::access::initFromOpenDriveContent </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>openDriveContent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>overlapMargin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1intersection.html#a2642065ae69f206651d2b1be9b2f3e15">intersection::IntersectionType</a> const&#160;</td>
+          <td class="paramname"><em>defaultIntersectionType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacead_1_1map_1_1landmark.html#a718de8045627d34fa218de95fdaf35e8">landmark::TrafficLightType</a> const&#160;</td>
+          <td class="paramname"><em>defaultTrafficLightType</em> = <code><a class="el" href="namespacead_1_1map_1_1landmark.html#a718de8045627d34fa218de95fdaf35e8a0a0d76d785a18ba3eb817747e5f56527">landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>initialize singleton with OpenDRIVE content </p>
+<dl class="section return"><dt>Returns</dt><dd>true if initialization was successful (i.e. map content was valid or singleton was already initialized) </dd>
+<dd>
+false if map content was invalid or the singleton was already initialized with a different config file </dd></dl>
+
+</div>
+</div>
+<a id="a1e6f981fc8847dac2de3096d3b8d3608"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e6f981fc8847dac2de3096d3b8d3608">&#9670;&nbsp;</a></span>isLeftHandedTraffic()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::access::isLeftHandedTraffic </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the map is a left hand traffic map </dd></dl>
+
+</div>
+</div>
+<a id="a1b3fd2ecbe2ad4153bf532e627f20165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b3fd2ecbe2ad4153bf532e627f20165">&#9670;&nbsp;</a></span>isRightHandedTraffic()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::access::isRightHandedTraffic </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the map is a left hand traffic map </dd></dl>
+
+</div>
+</div>
+<a id="ab598a7ebf2a9ee8eef1f49ec5f09590d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab598a7ebf2a9ee8eef1f49ec5f09590d">&#9670;&nbsp;</a></span>isValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ad::map::access::isValid </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1access_1_1MapMetaData.html">MapMetaData</a> const &amp;&#160;</td>
+          <td class="paramname"><em>metaData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool const&#160;</td>
+          <td class="paramname"><em>logErrors</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>checks if the given <a class="el" href="structad_1_1map_1_1access_1_1MapMetaData.html" title="DataType MapMetaData.">MapMetaData</a> is valid </p>
+<p>The metaData is valid if it's within valid input range. </p>
+
+</div>
+</div>
 <a id="ab84f99e21e7a562b69c20f2ad3c736a2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab84f99e21e7a562b69c20f2ad3c736a2">&#9670;&nbsp;</a></span>operator&lt;&lt;() <span class="overload">[1/4]</span></h2>
 
@@ -340,6 +694,32 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The stream object. </dd></dl>
+
+</div>
+</div>
+<a id="a8fc1c598a2ee565fb922efb1d0562e3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fc1c598a2ee565fb922efb1d0562e3a">&#9670;&nbsp;</a></span>setENUReferencePoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ad::map::access::setENUReferencePoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structad_1_1map_1_1point_1_1GeoPoint.html">point::GeoPoint</a> const &amp;&#160;</td>
+          <td class="paramname"><em>point</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>set the current ENU reference point </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">point</td><td>the geo point defining the reference point </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

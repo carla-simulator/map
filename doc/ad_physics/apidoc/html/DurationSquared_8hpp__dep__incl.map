@@ -1,6 +1,12 @@
 <map id="generated/include/ad/physics/DurationSquared.hpp" name="generated/include/ad/physics/DurationSquared.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="143,5,359,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="270,5,486,47"/>
 <area shape="rect" id="node2" href="$DurationSquaredList_8hpp.html" title=" " alt="" coords="5,102,244,143"/>
 <area shape="rect" id="node4" href="$DurationSquaredValidInputRange_8hpp.html" title=" " alt="" coords="268,95,488,151"/>
-<area shape="rect" id="node3" href="$DurationSquaredListValidInputRange_8hpp.html" title=" " alt="" coords="146,199,357,255"/>
+<area shape="rect" id="node5" href="$Types_8hpp.html" title=" " alt="" coords="512,102,655,143"/>
+<area shape="rect" id="node3" href="$DurationSquaredListValidInputRange_8hpp.html" title=" " alt="" coords="22,199,233,255"/>
+<area shape="rect" id="node6" href="$AngleOperation_8hpp.html" title=" " alt="" coords="259,206,414,247"/>
+<area shape="rect" id="node7" href="$Operation_8hpp.html" title=" " alt="" coords="512,303,655,344"/>
+<area shape="rect" id="node8" href="$ParametricOperation_8hpp.html" title=" " alt="" coords="489,206,677,247"/>
+<area shape="rect" id="node9" href="$PhysicsOperation_8hpp.html" title=" " alt="" coords="701,206,868,247"/>
+<area shape="rect" id="node10" href="$RatioOperation_8hpp.html" title=" " alt="" coords="893,206,1045,247"/>
 </map>

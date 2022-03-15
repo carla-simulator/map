@@ -1,0 +1,9 @@
+<map id="ad::map::route::planning::Route" name="ad::map::route::planning::Route">
+<area shape="rect" id="node1" title="Implements routing on the lane network." alt="" coords="1560,57,1741,98"/>
+<area shape="rect" id="node2" title=" " alt="" coords="1247,5,1421,61"/>
+<area shape="rect" id="node3" href="$structad_1_1map_1_1route_1_1planning_1_1Route_1_1RawRoute.html" title="Basic route description." alt="" coords="952,17,1133,58"/>
+<area shape="rect" id="node4" title=" " alt="" coords="560,18,723,59"/>
+<area shape="rect" id="node5" href="$structad_1_1map_1_1point_1_1ParaPoint.html" title="DataType ParaPoint." alt="" coords="261,63,447,89"/>
+<area shape="rect" id="node7" href="$structad_1_1map_1_1route_1_1planning_1_1RoutingParaPoint.html" title="routing para point" alt="" coords="747,78,928,119"/>
+<area shape="rect" id="node6" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId." alt="" coords="5,63,168,89"/>
+</map>
