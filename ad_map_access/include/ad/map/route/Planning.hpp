@@ -5,6 +5,9 @@
 // SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
+/**
+ * @file
+ */
 
 #pragma once
 
@@ -22,7 +25,6 @@ namespace map {
 /** @brief namespace route */
 namespace route {
 /**
- * @namespace planning
  * @brief provides route planning capabilities on the road network of the map
  */
 namespace planning {

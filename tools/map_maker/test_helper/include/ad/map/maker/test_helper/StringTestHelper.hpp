@@ -5,6 +5,9 @@
 // SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
+/**
+ * @file
+ */
 
 #ifndef STRING_TEST_HELPER_HPP
 #define STRING_TEST_HELPER_HPP

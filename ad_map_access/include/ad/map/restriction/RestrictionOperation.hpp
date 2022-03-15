@@ -5,6 +5,9 @@
 // SPDX-License-Identifier: MIT
 //
 // ----------------- END LICENSE BLOCK -----------------------------------
+/**
+ * @file
+ */
 
 #pragma once
 
@@ -12,8 +15,11 @@
 #include "ad/map/restriction/RestrictionsValidInputRange.hpp"
 #include "ad/map/restriction/VehicleDescriptorValidInputRange.hpp"
 
+/** @brief namespace ad */
 namespace ad {
+/** @brief namespace map */
 namespace map {
+/** @brief namespace restriction */
 namespace restriction {
 
 /**
