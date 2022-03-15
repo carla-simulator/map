@@ -1,5 +1,10 @@
 ## Latest changes
 
+## Release 2.6.1
+#### :ghost: Maintenance
+* Make OpenDrive import more robust
+* Fix Doxygen generation
+
 ## Release 2.6.0
 #### :ghost: Maintenance
 * Fix map matching with AltitudeUnknown

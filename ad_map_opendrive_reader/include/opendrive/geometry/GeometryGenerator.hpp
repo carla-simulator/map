@@ -20,8 +20,8 @@
 namespace opendrive {
 namespace geometry {
 
-// we have AD driving maps, so less than 1 mm segments is actually ridicoulous
-const double MinimumSegmentLength = 1e-3;
+// we have AD driving maps, so less than 1e-9 m segments is actually ridicoulous
+const double cMinimumSegmentLength = 1e-9;
 
 /**
  * @brief Searches a road by id. Returns a const iterator to the road.

@@ -137,6 +137,17 @@ bool OpenDriveParser::Parse(const char *xml,
   out_open_drive_data.geoReference
     = odp::GeoReferenceParser::Parse(xmlDoc.child("OpenDRIVE").child("header").child_value("geoReference"));
 
+  auto userData = xmlDoc.child("OpenDRIVE").child("header").child("userData");
+  if (!userData.empty())
+  {
+    std::string const geoReferenceSetAfterLoadString(userData.child_value("geoReferenceSetAfterLoad"));
+    if (!geoReferenceSetAfterLoadString.empty())
+    {
+      auto geoLocationSetAfterLoad = odp::GeoReferenceParser::Parse(geoReferenceSetAfterLoadString);
+      out_open_drive_data.geoReference.projectionSetAfterLoad = geoLocationSetAfterLoad.projection;
+    }
+  }
+
   return true;
 }
 } // namespace parser

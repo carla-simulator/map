@@ -117,12 +117,19 @@ void normalizeEdge(Id const id, std::string const &what, Edge &edge)
 
 void LaneSectionSampling::generateSamples()
 {
-  auto samplingPoints = centerLine.samplingPoints();
-
-  for (uint64_t i = 0u; i < roadInfo.lanes.lane_sections.size(); i++)
+  try
   {
-    uint64_t laneSectionIndex = i + 1u;
-    addSamples(roadInfo.lanes.lane_sections[i], laneSectionIndex, samplingPoints);
+    auto samplingPoints = centerLine.samplingPoints();
+
+    for (uint64_t i = 0u; i < roadInfo.lanes.lane_sections.size(); i++)
+    {
+      uint64_t laneSectionIndex = i + 1u;
+      addSamples(roadInfo.lanes.lane_sections[i], laneSectionIndex, samplingPoints);
+    }
+  }
+  catch (...)
+  {
+    spdlog::error("LaneSectionSampling::generateSamples exception in road {}", roadInfo.attributes.id);
   }
 }
 
@@ -153,19 +160,32 @@ bool LaneSectionSampling::addSamples(LaneSection const &laneSection,
   std::copy_if(laneSamplingPoints.begin(), laneSamplingPoints.end(), std::back_inserter(localSamplingPoints), inRange);
   localSamplingPoints.push_back(s1);
 
+  std::list<LaneSectionProfile> newProfiles;
   for (auto localSamplingPoint : localSamplingPoints)
   {
     auto profile = evalProfile(laneSection, laneSectionIndex, localSamplingPoint);
-    profiles.push_back(profile);
+    if (!profile.laneBorderPoints.empty())
+    {
+      newProfiles.push_back(profile);
+    }
+    else
+    {
+      spdlog::warn("LaneSectionSampling::addSamples: Skipping empty profile {},{}: {} [{},{}]",
+                   roadInfo.attributes.id,
+                   laneSectionIndex,
+                   localSamplingPoint,
+                   laneSection.start_position,
+                   laneSection.end_position);
+    }
   }
 
   // now refine sampling points according to actual points influenced by laneWidth changes and lateral_profile
-  auto iter = profiles.begin();
-  while (iter != profiles.end())
+  auto iter = newProfiles.begin();
+  while (iter != newProfiles.end())
   {
     auto nextIter = iter;
     nextIter++;
-    if (nextIter == profiles.end())
+    if (nextIter == newProfiles.end())
     {
       break;
     }
@@ -177,17 +197,33 @@ bool LaneSectionSampling::addSamples(LaneSection const &laneSection,
     }
     auto const centerLinearInterpolated = interpolateProfile(*iter, *nextIter);
     auto centerActual = evalProfile(laneSection, laneSectionIndex, centerLinearInterpolated.sLane);
-    centerActual.dropPointsWithAcceptedError(centerLinearInterpolated);
-    if (!centerActual.laneBorderPoints.empty())
+    if (centerActual.laneBorderPoints.empty())
     {
-      profiles.insert(nextIter, centerActual);
+      spdlog::warn("LaneSectionSampling::addSamples: Skipping empty refinement {},{}: [{}->{}<-{}] [{},{}]",
+                   roadInfo.attributes.id,
+                   laneSectionIndex,
+                   iter->sLane,
+                   centerLinearInterpolated.sLane,
+                   nextIter->sLane,
+                   laneSection.start_position,
+                   laneSection.end_position);
+      iter++;
     }
     else
     {
-      iter++;
+      centerActual.dropPointsWithAcceptedError(centerLinearInterpolated);
+      if (!centerActual.laneBorderPoints.empty())
+      {
+        newProfiles.insert(nextIter, centerActual);
+      }
+      else
+      {
+        iter++;
+      }
     }
   }
 
+  profiles.insert(profiles.end(), newProfiles.begin(), newProfiles.end());
   return ok;
 }
 
@@ -197,6 +233,26 @@ LaneSectionSampling::evalProfile(LaneSection const &laneSection, uint64_t const 
   LaneSectionProfile profile;
   profile.sLane = s;
   auto const sLaneSection = s - laneSection.start_position;
+  if (s < laneSection.start_position)
+  {
+    spdlog::warn("LaneSectionSampling::evalProfile: Lane section start position not yet reached {},{}: {} [{},{}]",
+                 roadInfo.attributes.id,
+                 laneSectionIndex,
+                 s,
+                 laneSection.start_position,
+                 laneSection.end_position);
+    return profile;
+  }
+  if (s > laneSection.end_position)
+  {
+    spdlog::warn("LaneSectionSampling::evalProfile: Lane section end position already passed {},{}: {} [{},{}]",
+                 roadInfo.attributes.id,
+                 laneSectionIndex,
+                 s,
+                 laneSection.start_position,
+                 laneSection.end_position);
+    return profile;
+  }
   auto const centerPoint = centerLine.eval(s);
 
   LaneHeight laneHeightSearch;
@@ -220,42 +276,57 @@ LaneSectionSampling::evalProfile(LaneSection const &laneSection, uint64_t const 
     LaneBorderPoint point;
     auto const rightT = t;
     auto const leftT = t + width;
-
-    // apply lane width
-    point.rightEdgePoint = centerPoint.getLateralOffsetPoint(rightT);
-    point.leftEdgePoint = centerPoint.getLateralOffsetPoint(leftT);
-
-    // apply lane height
-    auto laneHeightIter = laneInfo.lane_height.lower_bound(laneHeightSearch);
-    if (laneHeightIter != laneInfo.lane_height.end())
-    {
-      point.rightEdgePoint.z += laneHeightIter->inner;
-      point.leftEdgePoint.z += laneHeightIter->outer;
-    }
-    if (laneInfo.attributes.level)
-    {
-      // keep on level: no shape, superelevation level of last outer lane
-      point.rightEdgePoint = point.rightEdgePoint + superelevationShiftOuterPoint;
-      point.leftEdgePoint = point.leftEdgePoint + superelevationShiftOuterPoint;
-    }
-    else
-    {
-      if (laneShapeBoundsAvailable)
-      {
-        point.rightEdgePoint.z += laneShapeHeightEval(laneShapeBounds, s, rightT);
-        point.leftEdgePoint.z += laneShapeHeightEval(laneShapeBounds, s, leftT);
-      }
-
-      point.rightEdgePoint
-        = calculateSuperelevatedPoint(point.rightEdgePoint, rightT, centerPoint, cos_angle, sin_angle);
-      auto const outerPoint
-        = calculateSuperelevatedPoint(point.leftEdgePoint, leftT, centerPoint, cos_angle, sin_angle);
-      superelevationShiftOuterPoint = outerPoint - point.leftEdgePoint;
-      point.leftEdgePoint = outerPoint;
-    }
     auto const id = laneId(roadInfo.attributes.id, laneSectionIndex, laneInfo.attributes.id);
-    profile.laneBorderPoints[id] = point;
-    t += width;
+    try
+    {
+      // apply lane width
+      point.rightEdgePoint = centerPoint.getLateralOffsetPoint(rightT);
+      point.leftEdgePoint = centerPoint.getLateralOffsetPoint(leftT);
+
+      // apply lane height
+      auto laneHeightIter = laneInfo.lane_height.lower_bound(laneHeightSearch);
+      if (laneHeightIter != laneInfo.lane_height.end())
+      {
+        point.rightEdgePoint.z += laneHeightIter->inner;
+        point.leftEdgePoint.z += laneHeightIter->outer;
+      }
+      if (laneInfo.attributes.level)
+      {
+        // keep on level: no shape, superelevation level of last outer lane
+        point.rightEdgePoint = point.rightEdgePoint + superelevationShiftOuterPoint;
+        point.leftEdgePoint = point.leftEdgePoint + superelevationShiftOuterPoint;
+      }
+      else
+      {
+        if (laneShapeBoundsAvailable)
+        {
+          point.rightEdgePoint.z += laneShapeHeightEval(laneShapeBounds, s, rightT);
+          point.leftEdgePoint.z += laneShapeHeightEval(laneShapeBounds, s, leftT);
+        }
+
+        point.rightEdgePoint
+          = calculateSuperelevatedPoint(point.rightEdgePoint, rightT, centerPoint, cos_angle, sin_angle);
+        auto const outerPoint
+          = calculateSuperelevatedPoint(point.leftEdgePoint, leftT, centerPoint, cos_angle, sin_angle);
+        superelevationShiftOuterPoint = outerPoint - point.leftEdgePoint;
+        point.leftEdgePoint = outerPoint;
+      }
+      profile.laneBorderPoints[id] = point;
+      t += width;
+
+      point.leftEdgePoint.ensureValid();
+      point.rightEdgePoint.ensureValid();
+    }
+    catch (...)
+    {
+      spdlog::warn("LaneSectionSampling::evalProfile: Invalid lane point {}:{}({}) ({},{},{})",
+                   id,
+                   s,
+                   sLaneSection,
+                   angle,
+                   width,
+                   t);
+    }
   }
 
   // right lanes
@@ -267,43 +338,60 @@ LaneSectionSampling::evalProfile(LaneSection const &laneSection, uint64_t const 
     LaneBorderPoint point;
     const auto leftT = t;
     const auto rightT = t - width;
+    auto const id = laneId(roadInfo.attributes.id, laneSectionIndex, laneInfo.attributes.id);
 
-    // apply lane width
-    point.leftEdgePoint = centerPoint.getLateralOffsetPoint(leftT);
-    point.rightEdgePoint = centerPoint.getLateralOffsetPoint(rightT);
+    try
+    {
+      // apply lane width
+      point.leftEdgePoint = centerPoint.getLateralOffsetPoint(leftT);
+      point.rightEdgePoint = centerPoint.getLateralOffsetPoint(rightT);
 
-    // apply lane height
-    auto laneHeightIter = laneInfo.lane_height.lower_bound(laneHeightSearch);
-    if (laneHeightIter != laneInfo.lane_height.end())
-    {
-      point.leftEdgePoint.z += laneHeightIter->inner;
-      point.rightEdgePoint.z += laneHeightIter->outer;
-    }
-
-    if (laneInfo.attributes.level)
-    {
-      // keep on level: no shape, superelevation level of last outer lane
-      point.leftEdgePoint = point.leftEdgePoint + superelevationShiftOuterPoint;
-      point.rightEdgePoint = point.rightEdgePoint + superelevationShiftOuterPoint;
-    }
-    else
-    {
-      if (laneShapeBoundsAvailable)
+      // apply lane height
+      auto laneHeightIter = laneInfo.lane_height.lower_bound(laneHeightSearch);
+      if (laneHeightIter != laneInfo.lane_height.end())
       {
-        point.leftEdgePoint.z += laneShapeHeightEval(laneShapeBounds, s, leftT);
-        point.rightEdgePoint.z += laneShapeHeightEval(laneShapeBounds, s, rightT);
+        point.leftEdgePoint.z += laneHeightIter->inner;
+        point.rightEdgePoint.z += laneHeightIter->outer;
       }
 
-      point.leftEdgePoint = calculateSuperelevatedPoint(point.leftEdgePoint, leftT, centerPoint, cos_angle, sin_angle);
-      auto const outerPoint
-        = calculateSuperelevatedPoint(point.rightEdgePoint, rightT, centerPoint, cos_angle, sin_angle);
-      superelevationShiftOuterPoint = outerPoint - point.rightEdgePoint;
-      point.rightEdgePoint = outerPoint;
-    }
+      if (laneInfo.attributes.level)
+      {
+        // keep on level: no shape, superelevation level of last outer lane
+        point.leftEdgePoint = point.leftEdgePoint + superelevationShiftOuterPoint;
+        point.rightEdgePoint = point.rightEdgePoint + superelevationShiftOuterPoint;
+      }
+      else
+      {
+        if (laneShapeBoundsAvailable)
+        {
+          point.leftEdgePoint.z += laneShapeHeightEval(laneShapeBounds, s, leftT);
+          point.rightEdgePoint.z += laneShapeHeightEval(laneShapeBounds, s, rightT);
+        }
 
-    auto const id = laneId(roadInfo.attributes.id, laneSectionIndex, laneInfo.attributes.id);
-    profile.laneBorderPoints[id] = point;
-    t -= width;
+        point.leftEdgePoint
+          = calculateSuperelevatedPoint(point.leftEdgePoint, leftT, centerPoint, cos_angle, sin_angle);
+        auto const outerPoint
+          = calculateSuperelevatedPoint(point.rightEdgePoint, rightT, centerPoint, cos_angle, sin_angle);
+        superelevationShiftOuterPoint = outerPoint - point.rightEdgePoint;
+        point.rightEdgePoint = outerPoint;
+      }
+
+      profile.laneBorderPoints[id] = point;
+      t -= width;
+
+      point.leftEdgePoint.ensureValid();
+      point.rightEdgePoint.ensureValid();
+    }
+    catch (...)
+    {
+      spdlog::warn("LaneSectionSampling::evalProfile: Invalid lane point {}:{}({}) ({},{},{})",
+                   id,
+                   s,
+                   sLaneSection,
+                   angle,
+                   width,
+                   t);
+    }
   }
 
   return profile;
@@ -324,18 +412,30 @@ LaneSectionSampling::LaneSectionProfile LaneSectionSampling::interpolateProfile(
 {
   LaneSectionProfile profile;
   profile.sLane = 0.5 * (start.sLane + end.sLane);
-  for (auto const &startLaneBorderPoint : start.laneBorderPoints)
+  try
   {
-    auto const findEnd = end.laneBorderPoints.find(startLaneBorderPoint.first);
-    if (findEnd != end.laneBorderPoints.end())
+    for (auto const &startLaneBorderPoint : start.laneBorderPoints)
     {
-      LaneBorderPoint point;
-      point.rightEdgePoint = 0.5 * (startLaneBorderPoint.second.rightEdgePoint + findEnd->second.rightEdgePoint);
-      point.leftEdgePoint = 0.5 * (startLaneBorderPoint.second.leftEdgePoint + findEnd->second.leftEdgePoint);
-      profile.laneBorderPoints[startLaneBorderPoint.first] = point;
+      auto const findEnd = end.laneBorderPoints.find(startLaneBorderPoint.first);
+      if (findEnd != end.laneBorderPoints.end())
+      {
+        LaneBorderPoint point;
+        point.rightEdgePoint = 0.5 * (startLaneBorderPoint.second.rightEdgePoint + findEnd->second.rightEdgePoint);
+        point.leftEdgePoint = 0.5 * (startLaneBorderPoint.second.leftEdgePoint + findEnd->second.leftEdgePoint);
+        point.rightEdgePoint.ensureValid();
+        point.leftEdgePoint.ensureValid();
+        profile.laneBorderPoints[startLaneBorderPoint.first] = point;
+      }
     }
   }
-
+  catch (...)
+  {
+    spdlog::warn("LaneSectionSampling::interpolateProfile: exception {} ({}->{}<-{})",
+                 roadInfo.attributes.id,
+                 start.sLane,
+                 profile.sLane,
+                 end.sLane);
+  }
   return profile;
 }
 
@@ -343,25 +443,32 @@ void LaneSectionSampling::LaneSectionProfile::dropPointsWithAcceptedError(
   LaneSectionSampling::LaneSectionProfile const &other)
 {
   auto const maxErrorSquared = Geometry::cMaxSamplingError * Geometry::cMaxSamplingError;
-  auto iter = laneBorderPoints.begin();
-  while (iter != laneBorderPoints.end())
+  try
   {
-    auto const findOther = other.laneBorderPoints.find(iter->first);
-    if (findOther != other.laneBorderPoints.end())
+    auto iter = laneBorderPoints.begin();
+    while (iter != laneBorderPoints.end())
     {
-      auto errorSquaredLeft = (iter->second.leftEdgePoint - findOther->second.leftEdgePoint).normSquared();
-      auto errorSquaredRight = (iter->second.rightEdgePoint - findOther->second.rightEdgePoint).normSquared();
-      if ((errorSquaredLeft >= maxErrorSquared) || (errorSquaredRight >= maxErrorSquared))
+      auto const findOther = other.laneBorderPoints.find(iter->first);
+      if (findOther != other.laneBorderPoints.end())
       {
-        // error too big, keep the point
-        ++iter;
-        continue;
+        auto errorSquaredLeft = (iter->second.leftEdgePoint - findOther->second.leftEdgePoint).normSquared();
+        auto errorSquaredRight = (iter->second.rightEdgePoint - findOther->second.rightEdgePoint).normSquared();
+        if ((errorSquaredLeft >= maxErrorSquared) || (errorSquaredRight >= maxErrorSquared))
+        {
+          // error too big, keep the point
+          ++iter;
+          continue;
+        }
       }
+      // either error acceptable or
+      // the lane was already identified as acceptable before and is therefore not present anymore in the interpolated
+      // other
+      iter = laneBorderPoints.erase(iter);
     }
-    // either error acceptable or
-    // the lane was already identified as acceptable before and is therefore not present anymore in the interpolated
-    // other
-    iter = laneBorderPoints.erase(iter);
+  }
+  catch (...)
+  {
+    spdlog::warn("LaneSectionSampling::dropPointsWithAcceptedError: exception ({}<->{})", sLane, other.sLane);
   }
 }
 

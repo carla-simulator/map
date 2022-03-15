@@ -13,6 +13,7 @@
 #include <spdlog/spdlog.h>
 #include <vector>
 #include "opendrive/geometry/Geometry.hpp"
+#include "opendrive/geometry/GeometryGenerator.hpp"
 
 namespace opendrive {
 namespace geometry {
@@ -37,7 +38,7 @@ BoostPolygon fromLane(Lane const &lane, double const margin)
   {
     Boost2dPoint point({it->x, it->y});
     // leave out consecutive identical points
-    if (leftPoints.empty() || (boost::geometry::distance(leftPoints.back(), point) > 0.001))
+    if (leftPoints.empty() || (boost::geometry::distance(leftPoints.back(), point) > cMinimumSegmentLength))
     {
       leftPoints.push_back(point);
     }
@@ -46,7 +47,7 @@ BoostPolygon fromLane(Lane const &lane, double const margin)
   {
     Boost2dPoint point({it->x, it->y});
     // leave out consecutive identical points
-    if (rightPoints.empty() || (boost::geometry::distance(rightPoints.back(), point) > 0.001))
+    if (rightPoints.empty() || (boost::geometry::distance(rightPoints.back(), point) > cMinimumSegmentLength))
     {
       rightPoints.push_back(point);
     }
@@ -297,7 +298,13 @@ bool lanesOverlap(Lane const &leftLane, Lane const &rightLane, double const over
   }
   catch (...)
   {
-    spdlog::error("Error while checking overlap between lanes {} and {} ", leftLane.id, rightLane.id);
+    spdlog::error("Error while checking overlap between lanes {} (left:{}, right:{}) and {} (left:{}, right:{})",
+                  leftLane.id,
+                  leftLane.leftEdge.size(),
+                  leftLane.rightEdge.size(),
+                  rightLane.id,
+                  rightLane.leftEdge.size(),
+                  rightLane.rightEdge.size());
     return false;
   }
 }
