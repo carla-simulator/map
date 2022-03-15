@@ -23,7 +23,6 @@ namespace map {
 /** @brief namespace route */
 namespace route {
 /**
- * @namespace planning
  * @brief provides route planning capabilities on the road network of the map
  */
 namespace planning {
