@@ -2,6 +2,7 @@
 
 ## Release 2.6.1
 #### :ghost: Maintenance
+* Add OpenDrive support for sprial geometry
 * Make OpenDrive import more robust
 * Fix Doxygen generation
 
