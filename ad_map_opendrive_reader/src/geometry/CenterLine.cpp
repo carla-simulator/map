@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019-2021 Intel Corporation
+ * Copyright (C) 2019-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -173,9 +173,9 @@ bool generateCenterLine(RoadInformation &roadInfo, CenterLine &centerLine)
         break;
         case ::opendrive::GeometryType::SPIRAL:
         {
-          // currently not yet supported
-          spdlog::error("generateCenterLine() spirals are currently not supported yet");
-          ok = false;
+          auto spiral = static_cast<GeometryAttributesSpiral *>(geometry_attribute.get());
+          centerLine.geometry.emplace_back(std::make_unique<geometry::GeometrySpiral>(
+            spiral->start_position, spiral->length, spiral->heading, start, spiral->curve_start, spiral->curve_end));
           break;
         }
         break;
