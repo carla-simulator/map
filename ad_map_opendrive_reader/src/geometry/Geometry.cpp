@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019-2021 Intel Corporation
+ * Copyright (C) 2019-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -16,6 +16,10 @@
 #include <cmath>
 #include <opendrive/types.hpp>
 #include <stdexcept>
+
+extern "C" {
+#include <odrSpiral.h>
+}
 
 namespace opendrive {
 namespace geometry {
@@ -224,6 +228,46 @@ const DirectedPoint GeometryParamPoly3::PosFromDist(const double dist) const
 
   DirectedPoint point(x0 + x, y0 + y, z0 + z, _heading + theta);
   return point;
+}
+
+GeometrySpiral::GeometrySpiral(
+  double start_offset, double length, double heading, const Point &start_pos, double curve_start, double curve_end)
+  : Geometry(GeometryType::SPIRAL, start_offset, length, heading, start_pos)
+  , _curve_start(curve_start)
+  , _curve_end(curve_end)
+{
+}
+
+const DirectedPoint GeometrySpiral::PosFromDist(const double dist) const
+{
+  DirectedPoint p(_start_position, _heading);
+
+  const double curve_dot = (_curve_end - _curve_start) / (_length);
+  const double s_o = _curve_start / curve_dot;
+  double s = s_o + dist;
+
+  double x;
+  double y;
+  double t;
+  odrSpiral(s, curve_dot, &x, &y, &t);
+
+  double x_o;
+  double y_o;
+  double t_o;
+  odrSpiral(s_o, curve_dot, &x_o, &y_o, &t_o);
+
+  x = x - x_o;
+  y = y - y_o;
+  t = t - t_o;
+
+  const double angle = _heading - t_o;
+  const double cos_a = std::cos(angle);
+  const double sin_a = std::sin(angle);
+  p.location.x += x * cos_a - y * sin_a;
+  p.location.y += y * cos_a + x * sin_a;
+  p.tangent = _heading + t;
+
+  return p;
 }
 
 } // namespace geometry

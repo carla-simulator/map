@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019-2021 Intel Corporation
+ * Copyright (C) 2019-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -27,7 +27,7 @@ namespace geometry {
 bool isInvalidLaneSection(::opendrive::LaneSection const &laneSection)
 {
   auto length = laneSection.end_position - laneSection.start_position;
-  if (length < MinimumSegmentLength)
+  if (length < cMinimumSegmentLength)
   {
     spdlog::error("Invalid lane section of length {}", length);
     return true;
@@ -345,7 +345,7 @@ std::vector<ParametricSpeed> parametricSpeed(double s0, double s1, std::vector<R
     return {ParametricSpeed(speedAt(s0, speed))};
   }
 
-  if (fabs(length) < MinimumSegmentLength)
+  if (fabs(length) < cMinimumSegmentLength)
   {
     spdlog::error("parametricSpeed() road segment too short length = {}", length);
     return {ParametricSpeed(speedAt(s0, speed))};
@@ -385,7 +385,7 @@ std::vector<ParametricSpeed> parametricSpeed(double s0, double s1, std::vector<R
 
 std::vector<ParametricSpeed> calculateLaneSpeed(LaneInfo const &laneInfo, double laneSectionLength)
 {
-  if (laneSectionLength < MinimumSegmentLength)
+  if (laneSectionLength < cMinimumSegmentLength)
   {
     spdlog::error("calculateLaneSpeed:: lane section = {} length too short", laneSectionLength);
   }
@@ -966,6 +966,10 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
   }
 
   auto convertENUToGeo = [&projPtr](Point &point) {
+    if (!point.isValid())
+    {
+      spdlog::error("ConvertENUToGeo: Input point invalid {}, {}", point.x, point.y);
+    }
     point.ensureValid();
     projXY enuPoint;
     enuPoint.u = point.x;
@@ -974,6 +978,11 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
     auto geoPoint = pj_inv(enuPoint, projPtr);
     point.x = geoPoint.u * RAD_TO_DEG;
     point.y = geoPoint.v * RAD_TO_DEG;
+    if (!point.isValid())
+    {
+      spdlog::error(
+        "ConvertENUToGeo: Output point invalid ({},{}) -> ({},{})", enuPoint.u, enuPoint.v, geoPoint.u, geoPoint.v);
+    }
     point.ensureValid();
   };
 

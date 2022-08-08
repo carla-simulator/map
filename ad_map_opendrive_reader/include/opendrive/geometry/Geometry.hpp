@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019-2021 Intel Corporation
+ * Copyright (C) 2019-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -181,6 +181,19 @@ private:
   double _cV;
   double _dV;
   bool _p_range_is_normalized;
+};
+
+class GeometrySpiral : public Geometry
+{
+public:
+  GeometrySpiral(
+    double start_offset, double length, double heading, const Point &start_pos, double curve_start, double curve_end);
+
+  const DirectedPoint PosFromDist(const double dist) const override;
+
+private:
+  double _curve_start;
+  double _curve_end;
 };
 
 template <class T> double evalPoly3(std::set<T> const &sOffsetPoly3Set, double s)

@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019-2021 Intel Corporation
+ * Copyright (C) 2019-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -29,7 +29,14 @@ void ProfilesParser::ParseElevation(const pugi::xml_node &xmlNode,
     elevationProfile.b = std::stod(laneSection.attribute("b").value());
     elevationProfile.c = std::stod(laneSection.attribute("c").value());
     elevationProfile.d = std::stod(laneSection.attribute("d").value());
-    out_elevation_profile.insert(elevationProfile);
+    auto insertResult = out_elevation_profile.insert(elevationProfile);
+    if (!insertResult.second)
+    {
+      // a second entry with the same sOffset indicates that the fisrt one was
+      // kind of invalid or only valid for a neglectable s-range
+      out_elevation_profile.erase(insertResult.first);
+      out_elevation_profile.insert(elevationProfile);
+    }
   }
 }
 
@@ -52,7 +59,14 @@ void ProfilesParser::ParseShape(const pugi::xml_node &xmlNode,
     // the LateralPolygonShapeSet at the same s_position are collected in a map
     auto const insertResult
       = out_lateral_profile_shape.insert({lateralProfileShape.s_position, opendrive::LateralProfileShapeSet()});
-    insertResult.first->second.insert(lateralProfileShape);
+    auto secondInsertResult = insertResult.first->second.insert(lateralProfileShape);
+    if (!secondInsertResult.second)
+    {
+      // a second entry with the same sOffset indicates that the fisrt one was
+      // kind of invalid or only valid for a neglectable s-range
+      insertResult.first->second.erase(secondInsertResult.first);
+      insertResult.first->second.insert(lateralProfileShape);
+    }
   }
 }
 
@@ -69,7 +83,14 @@ void ProfilesParser::ParseSuperelevation(const pugi::xml_node &xmlNode,
     lateralProfileSuperelevation.b = std::stod(laneSection.attribute("b").value());
     lateralProfileSuperelevation.c = std::stod(laneSection.attribute("c").value());
     lateralProfileSuperelevation.d = std::stod(laneSection.attribute("d").value());
-    out_lateral_profile_superelevation.insert(lateralProfileSuperelevation);
+    auto insertResult = out_lateral_profile_superelevation.insert(lateralProfileSuperelevation);
+    if (!insertResult.second)
+    {
+      // a second entry with the same sOffset indicates that the fisrt one was
+      // kind of invalid or only valid for a neglectable s-range
+      out_lateral_profile_superelevation.erase(insertResult.first);
+      out_lateral_profile_superelevation.insert(lateralProfileSuperelevation);
+    }
   }
 }
 
