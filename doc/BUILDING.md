@@ -12,6 +12,7 @@ The components within this repository have some dependencies:
    - Boost
    - pugixml
    - proj: <https://www.osgeo.org/projects/proj/>
+   - odrSpiral: <https://github.com/DLR-TS/odrSpiral/>
  - **ad_map_access**:
    - spdlog: <https://github.com/gabime/spdlog.git>
    - Boost (including components filesystem and  program_options)
@@ -55,6 +56,7 @@ $>  pip install --user python-wheel pygccxml pyplusplus xmlrunner
 Remaining dependencies are present as GIT submodules; also to fix the version of these:
 
  - spdlog
+ - odrSpiral
 
 ## Building
 For compiling all libraries and the dependencies, colcon is used [colcon](https://colcon.readthedocs.io/).
