@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019-2021 Intel Corporation
+ * Copyright (C) 2019-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -114,6 +114,7 @@ struct Point
   }
 
   static constexpr double cCoordinateTolerance = 1e-3;
+  static constexpr double cMaxCoordinateValue = 1e+20;
 
   bool operator==(const Point &rhs) const
   {
@@ -162,9 +163,11 @@ struct Point
     auto const valueClassX = std::fpclassify(x);
     auto const valueClassY = std::fpclassify(y);
     auto const valueClassZ = std::fpclassify(z);
+    auto const coordinateMagnitudeValid = (std::fabs(x) < cMaxCoordinateValue) && (std::fabs(y) < cMaxCoordinateValue)
+      && (std::fabs(z) < cMaxCoordinateValue);
     return ((valueClassX == FP_NORMAL) || (valueClassX == FP_ZERO))
       && ((valueClassY == FP_NORMAL) || (valueClassY == FP_ZERO))
-      && ((valueClassZ == FP_NORMAL) || (valueClassZ == FP_ZERO));
+      && ((valueClassZ == FP_NORMAL) || (valueClassZ == FP_ZERO)) && coordinateMagnitudeValid;
   }
 };
 
@@ -729,6 +732,7 @@ struct GeoLocation
   double longitude{std::numeric_limits<double>::quiet_NaN()};
   double altitude{0.};
   std::string projection{""};
+  std::string projectionSetAfterLoad{""};
 };
 } // namespace geom
 

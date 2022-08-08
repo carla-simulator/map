@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Computer Vision Center (CVC) at the Universitat Autonoma
  * de Barcelona (UAB).
- * Copyright (C) 2019-2021 Intel Corporation
+ * Copyright (C) 2019-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -168,7 +168,14 @@ void LaneParser::ParseLaneWidth(const pugi::xml_node &xmlNode, opendrive::LaneWi
     laneWidthInfo.c = std::stod(laneWidth.attribute("c").value());
     laneWidthInfo.d = std::stod(laneWidth.attribute("d").value());
 
-    out_lane_width.insert(laneWidthInfo);
+    auto insertResult = out_lane_width.insert(laneWidthInfo);
+    if (!insertResult.second)
+    {
+      // a second entry with the same sOffset indicates that the fisrt one was
+      // kind of invalid or only valid for a neglectable s-range
+      out_lane_width.erase(insertResult.first);
+      out_lane_width.insert(laneWidthInfo);
+    }
   }
 }
 
@@ -197,7 +204,14 @@ void LaneParser::ParseLaneOffset(const pugi::xml_node &xmlNode, opendrive::LaneO
   lanesOffset.c = std::stod(xmlNode.attribute("c").value());
   lanesOffset.d = std::stod(xmlNode.attribute("d").value());
 
-  out_lane_offset.insert(lanesOffset);
+  auto insertResult = out_lane_offset.insert(lanesOffset);
+  if (!insertResult.second)
+  {
+    // a second entry with the same sOffset indicates that the fisrt one was
+    // kind of invalid or only valid for a neglectable s-range
+    out_lane_offset.erase(insertResult.first);
+    out_lane_offset.insert(lanesOffset);
+  }
 }
 
 void LaneParser::ParseLaneRoadMark(const pugi::xml_node &xmlNode, std::vector<opendrive::LaneRoadMark> &out_lane_mark)
@@ -419,7 +433,14 @@ void LaneParser::ParseLaneHeight(const pugi::xml_node &xmlNode, opendrive::LaneH
     laneHeightInfo.inner = std::stod(laneHeight.attribute("inner").value());
     laneHeightInfo.outer = std::stod(laneHeight.attribute("outer").value());
 
-    out_lane_height.insert(laneHeightInfo);
+    auto insertResult = out_lane_height.insert(laneHeightInfo);
+    if (!insertResult.second)
+    {
+      // a second entry with the same sOffset indicates that the fisrt one was
+      // kind of invalid or only valid for a neglectable s-range
+      out_lane_height.erase(insertResult.first);
+      out_lane_height.insert(laneHeightInfo);
+    }
   }
 }
 

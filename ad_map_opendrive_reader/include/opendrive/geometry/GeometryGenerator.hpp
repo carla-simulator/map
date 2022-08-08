@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2019-2021 Intel Corporation
+ * Copyright (C) 2019-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -18,7 +18,7 @@ namespace opendrive {
 namespace geometry {
 
 // we have AD driving maps, so less than 1 mm segments is actually ridicoulous
-const double MinimumSegmentLength = 1e-3;
+const double cMinimumSegmentLength = 1e-3;
 
 /**
  * @brief Searches a road by id. Returns a const iterator to the road.

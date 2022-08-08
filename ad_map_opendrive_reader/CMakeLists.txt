@@ -1,6 +1,6 @@
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (C) 2019-2021 Intel Corporation
+# Copyright (C) 2019-2022 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -84,18 +84,36 @@ if((NOT PROJ_LIBRARIES) OR (NOT PROJ_INCLUDE_DIR))
   message(FATAL "Dependency proj not found!")
 endif()
 
+#odrSpiral
+find_library(ODRSPIRAL_LIBRARIES
+  NAMES odrSpiral
+  HINTS ${CMAKE_CURRENT_BINARY_DIR}/../../dependencies/odrSpiral/lib
+)
+find_path(ODRSPIRAL_INCLUDE_DIR
+  NAMES odrSpiral.h
+  HINTS ${CMAKE_CURRENT_BINARY_DIR}/../../dependencies/odrSpiral/include
+)
+list(APPEND ad_map_opendrive_reader_TARGET_INCLUDE_DIRECTORIES )
+list(APPEND ad_map_opendrive_reader_TARGET_LINK_LIBRARIES )
+
+if((NOT ODRSPIRAL_LIBRARIES) OR (NOT ODRSPIRAL_INCLUDE_DIR))
+  message(FATAL "Dependency odrSpiral not found!")
+endif()
+
 target_include_directories(${PROJECT_NAME}
   PRIVATE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   ${PUGIXML_INCLUDE_DIR}
   ${PROJ_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
+  ${ODRSPIRAL_INCLUDE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
   ${PUGIXML_LIBRARIES}
   ${PROJ_LIBRARIES}
+  ${ODRSPIRAL_LIBRARIES}
 )
 
 target_link_libraries(${PROJECT_NAME}

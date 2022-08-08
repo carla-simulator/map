@@ -1,6 +1,10 @@
 ## Latest changes
 
+* Add OpenDrive support for sprial geometry
+* Make OpenDrive import more robust
+* Fix map matching with AltitudeUnknown
 * Fix ENU conversion of OpenDrive imports
+* Allow larger ENUCoordinates up to 1e9 (previously 1e6) and ENUCoordinate input up to 1e8 (previously 1.6e4)
 * Route planning fixes and extensions
   - Split CoreIntersection parts from Intersection wich are independant from
     the route and right-of-way handling. And fixed outgoingParaPoints()
@@ -25,7 +29,6 @@
     unnecesary alignments.
   - route: :planning::RouteAStar/RoutePrediction: handle
     RoutingDirection: :DONT_CARE as input correctly
-* Allow larger ENUCoordinates up to 1e9 (previously 1e6) and ENUCoordinate input up to 1e8 (previously 1.6e4)
 
 ## Release 2.4.5
 #### :rocket: New Features
