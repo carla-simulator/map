@@ -1,5 +1,9 @@
 ## Latest changes
 
+## Release 2.6.2
+#### :ghost: Maintenance
+* Update spdlog to latest version on v1.x branch
+
 ## Release 2.6.1
 #### :ghost: Maintenance
 * Add OpenDrive support for sprial geometry
