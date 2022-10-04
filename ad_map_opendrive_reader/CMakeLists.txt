@@ -62,11 +62,15 @@ endif()
 #odrSpiral
 find_library(ODRSPIRAL_LIBRARIES
   NAMES odrSpiral
-  HINTS ${CMAKE_CURRENT_BINARY_DIR}/../../dependencies/odrSpiral/lib
+  HINTS 
+    ${CMAKE_CURRENT_BINARY_DIR}/../../dependencies/odrSpiral/lib
+    ${CMAKE_CURRENT_SOURCE_DIR}/../dependencies/odrSpiral/lib
 )
 find_path(ODRSPIRAL_INCLUDE_DIR
   NAMES odrSpiral.h
-  HINTS ${CMAKE_CURRENT_BINARY_DIR}/../../dependencies/odrSpiral/include
+  HINTS
+    ${CMAKE_CURRENT_BINARY_DIR}/../../dependencies/odrSpiral/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../dependencies/odrSpiral/include
 )
 list(APPEND ad_map_opendrive_reader_TARGET_INCLUDE_DIRECTORIES ${ODRSPIRAL_INCLUDE_DIR})
 list(APPEND ad_map_opendrive_reader_TARGET_LINK_LIBRARIES ${ODRSPIRAL_LIBRARIES})
