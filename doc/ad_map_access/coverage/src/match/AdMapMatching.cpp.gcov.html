@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-08-08 12:16:48</td>
+            <td class="headerValue">2022-10-04 08:53:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">29</td>
@@ -289,12 +289,12 @@
 <a name="215"><span class="lineNum">     215 </span>                :            : {</a>
 <a name="216"><span class="lineNum">     216 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          5 :   if (!isValid(ecefPoint))</span></a>
 <a name="217"><span class="lineNum">     217 </span>                :            :   {</a>
-<a name="218"><span class="lineNum">     218 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Invalid ECEF Point passed to AdMapMatching::findLanes(): {}&quot;, ecefPoint);</span></a>
+<a name="218"><span class="lineNum">     218 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;Invalid ECEF Point passed to AdMapMatching::findLanes(): {}&quot;, ecefPoint);</span></a>
 <a name="219"><span class="lineNum">     219 </span>                :<span class="lineCov">          1 :     return MapMatchedPositionConfidenceList();</span></a>
 <a name="220"><span class="lineNum">     220 </span>                :            :   }</a>
 <a name="221"><span class="lineNum">     221 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          4 :   if (!distance.isValid())</span></a>
 <a name="222"><span class="lineNum">     222 </span>                :            :   {</a>
-<a name="223"><span class="lineNum">     223 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Invalid radius passed to AdMapMatching::findLanes(): {}&quot;, distance);</span></a>
+<a name="223"><span class="lineNum">     223 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;Invalid radius passed to AdMapMatching::findLanes(): {}&quot;, distance);</span></a>
 <a name="224"><span class="lineNum">     224 </span>                :<span class="lineCov">          1 :     return MapMatchedPositionConfidenceList();</span></a>
 <a name="225"><span class="lineNum">     225 </span>                :            :   }</a>
 <a name="226"><span class="lineNum">     226 </span>                :<span class="lineCov">          3 :   return findLanesInputChecked(ecefPoint, distance, relevantLaneSet);</span></a>
@@ -344,7 +344,7 @@
 <a name="270"><span class="lineNum">     270 </span>                :<span class="lineCov">     387409 :       headingFactor = std::max(headingFactor, newHeadingFactor);</span></a>
 <a name="271"><span class="lineNum">     271 </span>                :            :     }</a>
 <a name="272"><span class="lineNum">     272 </span>                :            : </a>
-<a name="273"><span class="lineNum">     273 </span>  [<span class="branchCov" title="Branch 0 was taken 123857 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 123857 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     123857 :     access::getLogger()-&gt;trace(&quot;getHeadingFactor {}, {}&quot;, matchedPosition.lanePoint.paraPoint.laneId, headingFactor);</span></a>
+<a name="273"><span class="lineNum">     273 </span>  [<span class="branchCov" title="Branch 0 was taken 123857 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 123857 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     247714 :     access::getLogger()-&gt;trace(&quot;getHeadingFactor {}, {}&quot;, matchedPosition.lanePoint.paraPoint.laneId, headingFactor);</span></a>
 <a name="274"><span class="lineNum">     274 </span>                :            :   }</a>
 <a name="275"><span class="lineNum">     275 </span>                :<span class="lineCov">     125726 :   return headingFactor;</span></a>
 <a name="276"><span class="lineNum">     276 </span>                :            : }</a>
@@ -355,7 +355,7 @@
 <a name="281"><span class="lineNum">     281 </span>                :            : {</a>
 <a name="282"><span class="lineNum">     282 </span>                :<span class="lineCov">      21259 :   auto mapMatchingResult = findLanes(geoPoint, distance, mRelevantLanes);</span></a>
 <a name="283"><span class="lineNum">     283 </span>        [<span class="branchCov" title="Branch 0 was taken 21259 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      21259 :   mapMatchingResult = considerMapMatchingHints(mapMatchingResult, minProbability);</span></a>
-<a name="284"><span class="lineNum">     284 </span>  [<span class="branchCov" title="Branch 0 was taken 21259 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 21259 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      21259 :   access::getLogger()-&gt;trace(&quot;MapMatching result {}&quot;, mapMatchingResult);</span></a>
+<a name="284"><span class="lineNum">     284 </span>  [<span class="branchCov" title="Branch 0 was taken 21259 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 21259 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      42518 :   access::getLogger()-&gt;trace(&quot;MapMatching result {}&quot;, mapMatchingResult);</span></a>
 <a name="285"><span class="lineNum">     285 </span>                :<span class="lineCov">      21259 :   return mapMatchingResult;</span></a>
 <a name="286"><span class="lineNum">     286 </span>                :            : }</a>
 <a name="287"><span class="lineNum">     287 </span>                :            : </a>
@@ -389,7 +389,7 @@
 <a name="315"><span class="lineNum">     315 </span>                :<span class="lineCov">      21259 : AdMapMatching::considerMapMatchingHints(MapMatchedPositionConfidenceList const &amp;mapMatchedPositions,</span></a>
 <a name="316"><span class="lineNum">     316 </span>                :            :                                         physics::Probability const &amp;minProbability) const</a>
 <a name="317"><span class="lineNum">     317 </span>                :            : {</a>
-<a name="318"><span class="lineNum">     318 </span>  [<span class="branchCov" title="Branch 0 was taken 21259 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 21259 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      21259 :   access::getLogger()-&gt;trace(&quot;considerMapMatchingHints {}&quot;, mapMatchedPositions);</span></a>
+<a name="318"><span class="lineNum">     318 </span>  [<span class="branchCov" title="Branch 0 was taken 21259 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 21259 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      42518 :   access::getLogger()-&gt;trace(&quot;considerMapMatchingHints {}&quot;, mapMatchedPositions);</span></a>
 <a name="319"><span class="lineNum">     319 </span>                :            : </a>
 <a name="320"><span class="lineNum">     320 </span>                :            :   // revised probabilities can be &gt; 1. while calculating</a>
 <a name="321"><span class="lineNum">     321 </span>                :<span class="lineCov">      21259 :   physics::Probability revisedProbabilitySum(0.);</span></a>
@@ -567,7 +567,7 @@
 <a name="492"><span class="lineNum">     492 </span>                :            : </a>
 <a name="493"><span class="lineNum">     493 </span>        [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         17 :   addLaneRegions(mapMatchedObjectBoundingBox.laneOccupiedRegions, regionConfidenceList);</span></a>
 <a name="494"><span class="lineNum">     494 </span>                :            : </a>
-<a name="495"><span class="lineNum">     495 </span>  [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         17 :   access::getLogger()-&gt;trace(&quot;getMapMatchedBoundingBox result {}&quot;, mapMatchedObjectBoundingBox);</span></a>
+<a name="495"><span class="lineNum">     495 </span>  [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         34 :   access::getLogger()-&gt;trace(&quot;getMapMatchedBoundingBox result {}&quot;, mapMatchedObjectBoundingBox);</span></a>
 <a name="496"><span class="lineNum">     496 </span>                :            : </a>
 <a name="497"><span class="lineNum">     497 </span>                :<span class="lineCov">         17 :   return mapMatchedObjectBoundingBox;</span></a>
 <a name="498"><span class="lineNum">     498 </span>                :            : }</a>

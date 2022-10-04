@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-08-08 12:16:48</td>
+            <td class="headerValue">2022-10-04 08:53:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">17</td>
@@ -201,10 +201,10 @@
 <a name="123"><span class="lineNum">     123 </span>        [<span class="branchCov" title="Branch 0 was taken 214 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        217 :     std::ifstream settingsFile(configFileName);</span></a>
 <a name="124"><span class="lineNum">     124 </span>  [<span class="branchCov" title="Branch 0 was taken 214 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchCov" title="Branch 3 was taken 210 times"> + </span>]:<span class="lineCov">        214 :     if (!settingsFile.is_open())</span></a>
 <a name="125"><span class="lineNum">     125 </span>                :            :     {</a>
-<a name="126"><span class="lineNum">     126 </span>  [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :       access::getLogger()-&gt;error(&quot;Cannot open config file for reading: {}&quot;, configFileName);</span></a>
+<a name="126"><span class="lineNum">     126 </span>  [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :       access::getLogger()-&gt;error(&quot;Cannot open config file for reading: {}&quot;, configFileName);</span></a>
 <a name="127"><span class="lineNum">     127 </span>                :<span class="lineCov">          4 :       return false;</span></a>
 <a name="128"><span class="lineNum">     128 </span>                :            :     }</a>
-<a name="129"><span class="lineNum">     129 </span>  [<span class="branchCov" title="Branch 0 was taken 210 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 210 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        210 :     access::getLogger()-&gt;trace(&quot;Reading config file {}&quot;, configFileName);</span></a>
+<a name="129"><span class="lineNum">     129 </span>  [<span class="branchCov" title="Branch 0 was taken 210 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 210 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        420 :     access::getLogger()-&gt;trace(&quot;Reading config file {}&quot;, configFileName);</span></a>
 <a name="130"><span class="lineNum">     130 </span>  [<span class="branchCov" title="Branch 0 was taken 210 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 210 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        210 :     po::store(po::parse_config_file(settingsFile, options), vm);</span></a>
 <a name="131"><span class="lineNum">     131 </span>        [<span class="branchCov" title="Branch 0 was taken 210 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        210 :     po::notify(vm);</span></a>
 <a name="132"><span class="lineNum">     132 </span>                :            : </a>
@@ -287,7 +287,7 @@
 <a name="198"><span class="lineNum">     198 </span>                :            :       {</a>
 <a name="199"><span class="lineNum">     199 </span>  [<span class="branchCov" title="Branch 0 was taken 517 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchCov" title="Branch 3 was taken 512 times"> + </span>]:<span class="lineCov">        517 :         if (!parsePointOfIntereset(entry))</span></a>
 <a name="200"><span class="lineNum">     200 </span>                :            :         {</a>
-<a name="201"><span class="lineNum">     201 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          5 :           access::getLogger()-&gt;warn(&quot;Invalid  POI poi entry in config file: {}, Entry: {}&quot;, configFileName, entry);</span></a>
+<a name="201"><span class="lineNum">     201 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         10 :           access::getLogger()-&gt;warn(&quot;Invalid  POI poi entry in config file: {}, Entry: {}&quot;, configFileName, entry);</span></a>
 <a name="202"><span class="lineNum">     202 </span>                :<span class="lineCov">          5 :           return false;</span></a>
 <a name="203"><span class="lineNum">     203 </span>                :            :         }</a>
 <a name="204"><span class="lineNum">     204 </span>                :            :       }</a>
@@ -300,7 +300,7 @@
 <span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 153 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
 <a name="210"><span class="lineNum">     210 </span>  [<span class="branchCov" title="Branch 0 was taken 153 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchCov" title="Branch 3 was taken 149 times"> + </span>]:<span class="lineCov">        153 :       if (!parseENUReference(entry))</span></a>
 <a name="211"><span class="lineNum">     211 </span>                :            :       {</a>
-<a name="212"><span class="lineNum">     212 </span>  [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :         access::getLogger()-&gt;warn(</span></a>
+<a name="212"><span class="lineNum">     212 </span>  [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :         access::getLogger()-&gt;warn(</span></a>
 <a name="213"><span class="lineNum">     213 </span>                :            :           &quot;Invalid default ENU reference entry in config file: {}, Entry: {}&quot;, configFileName, entry);</a>
 <a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">          4 :         return false;</span></a>
 <a name="215"><span class="lineNum">     215 </span>                :            :       }</a>
@@ -308,7 +308,7 @@
 <a name="217"><span class="lineNum">     217 </span>                :            :   }</a>
 <a name="218"><span class="lineNum">     218 </span>                :<span class="lineCov">          3 :   catch (std::exception const &amp;e)</span></a>
 <a name="219"><span class="lineNum">     219 </span>                :            :   {</a>
-<a name="220"><span class="lineNum">     220 </span>  [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          3 :     access::getLogger()-&gt;error(&quot;Error while parsing {}, Reason: {}&quot;, configFileName, e.what());</span></a>
+<a name="220"><span class="lineNum">     220 </span>  [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          6 :     access::getLogger()-&gt;error(&quot;Error while parsing {}, Reason: {}&quot;, configFileName, e.what());</span></a>
 <a name="221"><span class="lineNum">     221 </span>                :<span class="lineCov">          3 :     return false;</span></a>
 <a name="222"><span class="lineNum">     222 </span>                :            :   }</a>
 <a name="223"><span class="lineNum">     223 </span>                :<span class="lineCov">        196 :   return true;</span></a>
@@ -346,7 +346,7 @@
 <a name="251"><span class="lineNum">     251 </span>                :            :   {</a>
 <a name="252"><span class="lineNum">     252 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1342 times"> + </span>]:<span class="lineCov">       1343 :     if (existingEntry.name == poi.name)</span></a>
 <a name="253"><span class="lineNum">     253 </span>                :            :     {</a>
-<a name="254"><span class="lineNum">     254 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :       access::getLogger()-&gt;warn(&quot;POI defined twice: {}&quot;, existingEntry.name);</span></a>
+<a name="254"><span class="lineNum">     254 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :       access::getLogger()-&gt;warn(&quot;POI defined twice: {}&quot;, existingEntry.name);</span></a>
 <a name="255"><span class="lineNum">     255 </span>                :<span class="lineCov">          1 :       return false;</span></a>
 <a name="256"><span class="lineNum">     256 </span>                :            :     }</a>
 <a name="257"><span class="lineNum">     257 </span>                :            :   }</a>

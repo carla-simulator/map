@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-08-08 12:16:48</td>
+            <td class="headerValue">2022-10-04 08:53:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">28</td>
@@ -263,7 +263,7 @@
 <a name="189"><span class="lineNum">     189 </span>                :<span class="lineCov">     118455 :       return true;</span></a>
 <a name="190"><span class="lineNum">     190 </span>                :            :     }</a>
 <a name="191"><span class="lineNum">     191 </span>                :            :   }</a>
-<a name="192"><span class="lineNum">     192 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot add contact lane of lane. {}&quot;, id);</span></a>
+<a name="192"><span class="lineNum">     192 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot add contact lane of lane. {}&quot;, id);</span></a>
 <a name="193"><span class="lineNum">     193 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="194"><span class="lineNum">     194 </span>                :            : }</a>
 <a name="195"><span class="lineNum">     195 </span>                :            : </a>
@@ -273,7 +273,7 @@
 <a name="199"><span class="lineNum">     199 </span>                :            :   {</a>
 <a name="200"><span class="lineNum">     200 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">          2 :     if (!add(id, contact_lane))</span></a>
 <a name="201"><span class="lineNum">     201 </span>                :            :     {</a>
-<a name="202"><span class="lineNum">     202 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :       access::getLogger()-&gt;error(&quot;Cannot add contact lanes of lane. {}&quot;, id);</span></a>
+<a name="202"><span class="lineNum">     202 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :       access::getLogger()-&gt;error(&quot;Cannot add contact lanes of lane. {}&quot;, id);</span></a>
 <a name="203"><span class="lineNum">     203 </span>                :<span class="lineCov">          1 :       return false;</span></a>
 <a name="204"><span class="lineNum">     204 </span>                :            :     }</a>
 <a name="205"><span class="lineNum">     205 </span>                :            :   }</a>
@@ -290,13 +290,13 @@
 <a name="216"><span class="lineNum">     216 </span>                :            :     {</a>
 <a name="217"><span class="lineNum">     217 </span>  [<span class="branchCov" title="Branch 0 was taken 35258 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 35257 times"> + </span>]:<span class="lineCov">      35258 :       if (restriction::doesRangeAttributeOverlap(lane-&gt;speedLimits, speedLimit))</span></a>
 <a name="218"><span class="lineNum">     218 </span>                :            :       {</a>
-<a name="219"><span class="lineNum">     219 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :         access::getLogger()-&gt;warn(&quot;Lane para-speed overlaps existing value!? {}, {}&quot;, id, speedLimit);</span></a>
+<a name="219"><span class="lineNum">     219 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :         access::getLogger()-&gt;warn(&quot;Lane para-speed overlaps existing value!? {}, {}&quot;, id, speedLimit);</span></a>
 <a name="220"><span class="lineNum">     220 </span>                :            :       }</a>
 <a name="221"><span class="lineNum">     221 </span>        [<span class="branchCov" title="Branch 0 was taken 35258 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      35258 :       restriction::insertRangeAttribute(lane-&gt;speedLimits, speedLimit);</span></a>
 <a name="222"><span class="lineNum">     222 </span>                :<span class="lineCov">      35258 :       return true;</span></a>
 <a name="223"><span class="lineNum">     223 </span>                :            :     }</a>
 <a name="224"><span class="lineNum">     224 </span>                :            :   }</a>
-<a name="225"><span class="lineNum">     225 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot add restrictions of lane. {}&quot;, id);</span></a>
+<a name="225"><span class="lineNum">     225 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot add restrictions of lane. {}&quot;, id);</span></a>
 <a name="226"><span class="lineNum">     226 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="227"><span class="lineNum">     227 </span>                :            : }</a>
 <a name="228"><span class="lineNum">     228 </span>                :            : </a>
@@ -324,7 +324,7 @@
 <a name="250"><span class="lineNum">     250 </span>                :<span class="lineCov">         84 :       return true;</span></a>
 <a name="251"><span class="lineNum">     251 </span>                :            :     }</a>
 <a name="252"><span class="lineNum">     252 </span>                :            :   }</a>
-<a name="253"><span class="lineNum">     253 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot add landmark of lane. {}&quot;, id);</span></a>
+<a name="253"><span class="lineNum">     253 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot add landmark of lane. {}&quot;, id);</span></a>
 <a name="254"><span class="lineNum">     254 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="255"><span class="lineNum">     255 </span>                :            : }</a>
 <a name="256"><span class="lineNum">     256 </span>                :            : </a>
@@ -347,7 +347,7 @@
 <a name="273"><span class="lineNum">     273 </span>                :<span class="lineCov">          2 :       return true;</span></a>
 <a name="274"><span class="lineNum">     274 </span>                :            :     }</a>
 <a name="275"><span class="lineNum">     275 </span>                :            :   }</a>
-<a name="276"><span class="lineNum">     276 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot add restrictions of lane. {}&quot;, id);</span></a>
+<a name="276"><span class="lineNum">     276 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot add restrictions of lane. {}&quot;, id);</span></a>
 <a name="277"><span class="lineNum">     277 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="278"><span class="lineNum">     278 </span>                :            : }</a>
 <a name="279"><span class="lineNum">     279 </span>                :            : </a>
@@ -359,7 +359,7 @@
 <a name="285"><span class="lineNum">     285 </span>                :            : {</a>
 <a name="286"><span class="lineNum">     286 </span>  [<span class="branchCov" title="Branch 0 was taken 112938 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 112937 times"> + </span>]:<span class="lineCov">     112938 :   if (std::find(types.begin(), types.end(), lane::ContactType::TRAFFIC_LIGHT) != types.end())</span></a>
 <a name="287"><span class="lineNum">     287 </span>                :            :   {</a>
-<a name="288"><span class="lineNum">     288 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Trying to add traffic light contact without traffic light id. {}&quot;, id_to);</span></a>
+<a name="288"><span class="lineNum">     288 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;Trying to add traffic light contact without traffic light id. {}&quot;, id_to);</span></a>
 <a name="289"><span class="lineNum">     289 </span>                :<span class="lineCov">          1 :     return false;</span></a>
 <a name="290"><span class="lineNum">     290 </span>                :            :   }</a>
 <a name="291"><span class="lineNum">     291 </span>                :            : </a>
@@ -387,7 +387,7 @@
 <a name="313"><span class="lineNum">     313 </span>                :            : </a>
 <a name="314"><span class="lineNum">     314 </span>  [<span class="branchCov" title="Branch 0 was taken 5519 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 5518 times"> + </span>]:<span class="lineCov">       5519 :   if (std::find(types.begin(), types.end(), lane::ContactType::TRAFFIC_LIGHT) == types.end())</span></a>
 <a name="315"><span class="lineNum">     315 </span>                :            :   {</a>
-<a name="316"><span class="lineNum">     316 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Cannot add traffic light contact due to wrong type. {}&quot;, traffic_light);</span></a>
+<a name="316"><span class="lineNum">     316 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :     access::getLogger()-&gt;error(&quot;Cannot add traffic light contact due to wrong type. {}&quot;, traffic_light);</span></a>
 <a name="317"><span class="lineNum">     317 </span>                :<span class="lineCov">          1 :     return false;</span></a>
 <a name="318"><span class="lineNum">     318 </span>                :            :   }</a>
 <a name="319"><span class="lineNum">     319 </span>                :            : </a>
@@ -415,7 +415,7 @@
 <a name="341"><span class="lineNum">     341 </span>                :<span class="lineCov">          1 :       return true;</span></a>
 <a name="342"><span class="lineNum">     342 </span>                :            :     }</a>
 <a name="343"><span class="lineNum">     343 </span>                :            :   }</a>
-<a name="344"><span class="lineNum">     344 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot set direction of lane. {}&quot;, id);</span></a>
+<a name="344"><span class="lineNum">     344 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot set direction of lane. {}&quot;, id);</span></a>
 <a name="345"><span class="lineNum">     345 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="346"><span class="lineNum">     346 </span>                :            : }</a>
 <a name="347"><span class="lineNum">     347 </span>                :            : </a>
@@ -431,7 +431,7 @@
 <a name="357"><span class="lineNum">     357 </span>                :<span class="lineCov">          1 :       return true;</span></a>
 <a name="358"><span class="lineNum">     358 </span>                :            :     }</a>
 <a name="359"><span class="lineNum">     359 </span>                :            :   }</a>
-<a name="360"><span class="lineNum">     360 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot set type of lane. {}&quot;, id);</span></a>
+<a name="360"><span class="lineNum">     360 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot set type of lane. {}&quot;, id);</span></a>
 <a name="361"><span class="lineNum">     361 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="362"><span class="lineNum">     362 </span>                :            : }</a>
 <a name="363"><span class="lineNum">     363 </span>                :            : </a>
@@ -447,7 +447,7 @@
 <a name="373"><span class="lineNum">     373 </span>                :<span class="lineCov">          1 :       return true;</span></a>
 <a name="374"><span class="lineNum">     374 </span>                :            :     }</a>
 <a name="375"><span class="lineNum">     375 </span>                :            :   }</a>
-<a name="376"><span class="lineNum">     376 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot set compliance of lane. {}&quot;, id);</span></a>
+<a name="376"><span class="lineNum">     376 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot set compliance of lane. {}&quot;, id);</span></a>
 <a name="377"><span class="lineNum">     377 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="378"><span class="lineNum">     378 </span>                :            : }</a>
 <a name="379"><span class="lineNum">     379 </span>                :            : </a>
@@ -466,7 +466,7 @@
 <a name="392"><span class="lineNum">     392 </span>                :<span class="lineCov">      23504 :       return true;</span></a>
 <a name="393"><span class="lineNum">     393 </span>                :            :     }</a>
 <a name="394"><span class="lineNum">     394 </span>                :            :   }</a>
-<a name="395"><span class="lineNum">     395 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot set edges of lane. {}&quot;, id);</span></a>
+<a name="395"><span class="lineNum">     395 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot set edges of lane. {}&quot;, id);</span></a>
 <a name="396"><span class="lineNum">     396 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="397"><span class="lineNum">     397 </span>                :            : }</a>
 <a name="398"><span class="lineNum">     398 </span>                :            : </a>
@@ -487,7 +487,7 @@
 <a name="413"><span class="lineNum">     413 </span>                :<span class="lineCov">          1 :       return true;</span></a>
 <a name="414"><span class="lineNum">     414 </span>                :            :     }</a>
 <a name="415"><span class="lineNum">     415 </span>                :            :   }</a>
-<a name="416"><span class="lineNum">     416 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot set speed limit for the. {}&quot;, id);</span></a>
+<a name="416"><span class="lineNum">     416 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :   access::getLogger()-&gt;error(&quot;Cannot set speed limit for the. {}&quot;, id);</span></a>
 <a name="417"><span class="lineNum">     417 </span>                :<span class="lineCov">          2 :   return false;</span></a>
 <a name="418"><span class="lineNum">     418 </span>                :            : }</a>
 <a name="419"><span class="lineNum">     419 </span>                :            : </a>
@@ -503,7 +503,7 @@
 <a name="429"><span class="lineNum">     429 </span>                :<span class="lineCov">         21 :       return true;</span></a>
 <a name="430"><span class="lineNum">     430 </span>                :            :     }</a>
 <a name="431"><span class="lineNum">     431 </span>                :            :   }</a>
-<a name="432"><span class="lineNum">     432 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot set restrictions of lane. {}&quot;, id);</span></a>
+<a name="432"><span class="lineNum">     432 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot set restrictions of lane. {}&quot;, id);</span></a>
 <a name="433"><span class="lineNum">     433 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="434"><span class="lineNum">     434 </span>                :            : }</a>
 <a name="435"><span class="lineNum">     435 </span>                :            : </a>
@@ -519,7 +519,7 @@
 <a name="445"><span class="lineNum">     445 </span>                :<span class="lineCov">          1 :       return true;</span></a>
 <a name="446"><span class="lineNum">     446 </span>                :            :     }</a>
 <a name="447"><span class="lineNum">     447 </span>                :            :   }</a>
-<a name="448"><span class="lineNum">     448 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;error(&quot;Cannot set bounding sphere of lane. {}&quot;, id);</span></a>
+<a name="448"><span class="lineNum">     448 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :   access::getLogger()-&gt;error(&quot;Cannot set bounding sphere of lane. {}&quot;, id);</span></a>
 <a name="449"><span class="lineNum">     449 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="450"><span class="lineNum">     450 </span>                :            : }</a>
 <a name="451"><span class="lineNum">     451 </span>                :            : </a>
@@ -566,7 +566,7 @@
 <a name="492"><span class="lineNum">     492 </span>                :            :     }</a>
 <a name="493"><span class="lineNum">     493 </span>                :            :     else</a>
 <a name="494"><span class="lineNum">     494 </span>                :            :     {</a>
-<a name="495"><span class="lineNum">     495 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :       access::getLogger()-&gt;warn(&quot;Lane is not in the Store. {}&quot;, id);</span></a>
+<a name="495"><span class="lineNum">     495 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :       access::getLogger()-&gt;warn(&quot;Lane is not in the Store. {}&quot;, id);</span></a>
 <a name="496"><span class="lineNum">     496 </span>                :            :     }</a>
 <a name="497"><span class="lineNum">     497 </span>                :            :   }</a>
 <a name="498"><span class="lineNum">     498 </span>                :            :   else</a>
@@ -628,7 +628,7 @@
 <a name="553"><span class="lineNum">     553 </span>                :            :     }</a>
 <a name="554"><span class="lineNum">     554 </span>                :            :     else</a>
 <a name="555"><span class="lineNum">     555 </span>                :            :     {</a>
-<a name="556"><span class="lineNum">     556 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :       access::getLogger()-&gt;warn(&quot;Landmark is not in the Store. {}&quot;, id);</span></a>
+<a name="556"><span class="lineNum">     556 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :       access::getLogger()-&gt;warn(&quot;Landmark is not in the Store. {}&quot;, id);</span></a>
 <a name="557"><span class="lineNum">     557 </span>                :            :     }</a>
 <a name="558"><span class="lineNum">     558 </span>                :            :   }</a>
 <a name="559"><span class="lineNum">     559 </span>                :            :   else</a>

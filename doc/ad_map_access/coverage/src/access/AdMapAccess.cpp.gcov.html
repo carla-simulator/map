@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-08-08 12:16:48</td>
+            <td class="headerValue">2022-10-04 08:53:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -143,15 +143,15 @@
 <a name="70"><span class="lineNum">      70 </span>                :            :   }</a>
 <a name="71"><span class="lineNum">      71 </span>  [<span class="branchCov" title="Branch 0 was taken 193 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchCov" title="Branch 3 was taken 190 times"> + </span>]:<span class="lineCov">        193 :   if (!mConfigFileHandler.readConfig(configFileName))</span></a>
 <a name="72"><span class="lineNum">      72 </span>                :            :   {</a>
-<a name="73"><span class="lineNum">      73 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :     mLogger-&gt;warn(&quot;AdMapAccess::initialize(config) Failed to open {}&quot;, configFileName);</span></a>
+<a name="73"><span class="lineNum">      73 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          6 :     mLogger-&gt;warn(&quot;AdMapAccess::initialize(config) Failed to open {}&quot;, configFileName);</span></a>
 <a name="74"><span class="lineNum">      74 </span>                :<span class="lineCov">          3 :     return false;</span></a>
 <a name="75"><span class="lineNum">      75 </span>                :            :   }</a>
 <a name="76"><span class="lineNum">      76 </span>                :            : </a>
-<a name="77"><span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 0 was taken 190 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        190 :   mLogger-&gt;info(&quot;AdMapAccess::initialize(config) Successfully opened {}&quot;, configFileName);</span></a>
+<a name="77"><span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 0 was taken 190 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        380 :   mLogger-&gt;info(&quot;AdMapAccess::initialize(config) Successfully opened {}&quot;, configFileName);</span></a>
 <a name="78"><span class="lineNum">      78 </span>  [<span class="branchCov" title="Branch 0 was taken 190 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 190 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        190 :   if (!readMap(mConfigFileHandler.adMapEntry().filename))</span></a>
 <span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 3 times"> + </span><span class="branchCov" title="Branch 5 was taken 187 times"> + </span>]
 <a name="79"><span class="lineNum">      79 </span>                :            :   {</a>
-<a name="80"><span class="lineNum">      80 </span>  [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          3 :     mLogger-&gt;warn(&quot;Unable to read map {}&quot;, mConfigFileHandler.adMapEntry().filename);</span></a>
+<a name="80"><span class="lineNum">      80 </span>  [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          6 :     mLogger-&gt;warn(&quot;Unable to read map {}&quot;, mConfigFileHandler.adMapEntry().filename);</span></a>
 <a name="81"><span class="lineNum">      81 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :     reset();</span></a>
 <a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">          3 :     return false;</span></a>
 <a name="83"><span class="lineNum">      83 </span>                :            :   }</a>
@@ -289,19 +289,19 @@
 <a name="214"><span class="lineNum">     214 </span>  [<span class="branchCov" title="Branch 0 was taken 149 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 149 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        149 :   if (!serializer.open(mapName.c_str(), version_major, version_minor))</span></a>
 <span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 5 was taken 148 times"> + </span>]
 <a name="215"><span class="lineNum">     215 </span>                :            :   {</a>
-<a name="216"><span class="lineNum">     216 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     mLogger-&gt;warn(&quot;Unable to open map for reading {}&quot;, mapName);</span></a>
+<a name="216"><span class="lineNum">     216 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :     mLogger-&gt;warn(&quot;Unable to open map for reading {}&quot;, mapName);</span></a>
 <a name="217"><span class="lineNum">     217 </span>                :<span class="lineCov">          1 :     return false;</span></a>
 <a name="218"><span class="lineNum">     218 </span>                :            :   }</a>
-<a name="219"><span class="lineNum">     219 </span>        [<span class="branchCov" title="Branch 0 was taken 148 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        148 :   mLogger-&gt;info(&quot;Opened map {}&quot;, mapName);</span></a>
-<a name="220"><span class="lineNum">     220 </span>        [<span class="branchCov" title="Branch 0 was taken 148 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        148 :   mLogger-&gt;trace(&quot;Version {}.{}&quot;, version_major, version_minor);</span></a>
+<a name="219"><span class="lineNum">     219 </span>        [<span class="branchCov" title="Branch 0 was taken 148 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        296 :   mLogger-&gt;info(&quot;Opened map {}&quot;, mapName);</span></a>
+<a name="220"><span class="lineNum">     220 </span>        [<span class="branchCov" title="Branch 0 was taken 148 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        296 :   mLogger-&gt;trace(&quot;Version {}.{}&quot;, version_major, version_minor);</span></a>
 <a name="221"><span class="lineNum">     221 </span>  [<span class="branchCov" title="Branch 0 was taken 148 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 147 times"> + </span>]:<span class="lineCov">        148 :   if (!mStore-&gt;load(serializer))</span></a>
 <a name="222"><span class="lineNum">     222 </span>                :            :   {</a>
-<a name="223"><span class="lineNum">     223 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     mLogger-&gt;warn(&quot;Unable to read map {}&quot;, mapName);</span></a>
+<a name="223"><span class="lineNum">     223 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :     mLogger-&gt;warn(&quot;Unable to read map {}&quot;, mapName);</span></a>
 <a name="224"><span class="lineNum">     224 </span>                :<span class="lineCov">          1 :     return false;</span></a>
 <a name="225"><span class="lineNum">     225 </span>                :            :   }</a>
 <a name="226"><span class="lineNum">     226 </span>  [<span class="branchCov" title="Branch 0 was taken 147 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 146 times"> + </span>]:<span class="lineCov">        147 :   if (!serializer.close())</span></a>
 <a name="227"><span class="lineNum">     227 </span>                :            :   {</a>
-<a name="228"><span class="lineNum">     228 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     mLogger-&gt;warn(&quot;Map file is corrupt {}&quot;, mapName);</span></a>
+<a name="228"><span class="lineNum">     228 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :     mLogger-&gt;warn(&quot;Map file is corrupt {}&quot;, mapName);</span></a>
 <a name="229"><span class="lineNum">     229 </span>                :<span class="lineCov">          1 :     return false;</span></a>
 <a name="230"><span class="lineNum">     230 </span>                :            :   }</a>
 <a name="231"><span class="lineNum">     231 </span>                :            : </a>

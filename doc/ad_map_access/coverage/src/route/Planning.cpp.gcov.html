@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-08-08 12:16:48</td>
+            <td class="headerValue">2022-10-04 08:53:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">47</td>
@@ -385,7 +385,7 @@
 <a name="314"><span class="lineNum">     314 </span>        [<span class="branchCov" title="Branch 0 was taken 2860 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2860 :     alignRouteEndingPoints(rawRoute.paraPointList.back(), resultRoute);</span></a>
 <a name="315"><span class="lineNum">     315 </span>                :            :   }</a>
 <a name="316"><span class="lineNum">     316 </span>                :            : </a>
-<a name="317"><span class="lineNum">     317 </span>  [<span class="branchCov" title="Branch 0 was taken 2864 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2864 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       2864 :   access::getLogger()-&gt;trace(&quot;createFullRoute result {}&quot;, resultRoute);</span></a>
+<a name="317"><span class="lineNum">     317 </span>  [<span class="branchCov" title="Branch 0 was taken 2864 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2864 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       5728 :   access::getLogger()-&gt;trace(&quot;createFullRoute result {}&quot;, resultRoute);</span></a>
 <a name="318"><span class="lineNum">     318 </span>                :<span class="lineCov">       5728 :   return resultRoute;</span></a>
 <a name="319"><span class="lineNum">     319 </span>                :            : }</a>
 <a name="320"><span class="lineNum">     320 </span>                :            : </a>
@@ -773,7 +773,7 @@
 <a name="701"><span class="lineNum">     701 </span>        [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchCov" title="Branch 1 was taken 37 times"> + </span>]:<span class="lineCov">         54 :                    &amp;&amp; (comparisonResult == CompareRouteResult::Longer))</span></a>
 <a name="702"><span class="lineNum">     702 </span>                :            :           {</a>
 <a name="703"><span class="lineNum">     703 </span>                :            :             // the new route is longer, and so overwrites the current filtered one</a>
-<a name="704"><span class="lineNum">     704 </span>  [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         17 :             access::getLogger()-&gt;trace(</span></a>
+<a name="704"><span class="lineNum">     704 </span>  [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         34 :             access::getLogger()-&gt;trace(</span></a>
 <a name="705"><span class="lineNum">     705 </span>                :            :               &quot;filterDuplicatedRoutes: replacing route by longer one {} -&gt; {}&quot;, filteredRoute, route);</a>
 <a name="706"><span class="lineNum">     706 </span>        [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         17 :             filteredRoute = route;</span></a>
 <a name="707"><span class="lineNum">     707 </span>                :            :           }</a>
@@ -781,7 +781,7 @@
 <a name="709"><span class="lineNum">     709 </span>                :            :           {</a>
 <a name="710"><span class="lineNum">     710 </span>                :            :             // the new route is either identical or doesn't match the desired filter mode</a>
 <a name="711"><span class="lineNum">     711 </span>                :            :             // it is just skipped</a>
-<a name="712"><span class="lineNum">     712 </span>  [<span class="branchCov" title="Branch 0 was taken 40 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 40 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         40 :             access::getLogger()-&gt;trace(&quot;filterDuplicatedRoutes: skipping {} route {}&quot;, comparisonResult, route);</span></a>
+<a name="712"><span class="lineNum">     712 </span>  [<span class="branchCov" title="Branch 0 was taken 40 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 40 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         80 :             access::getLogger()-&gt;trace(&quot;filterDuplicatedRoutes: skipping {} route {}&quot;, comparisonResult, route);</span></a>
 <a name="713"><span class="lineNum">     713 </span>                :            :           }</a>
 <a name="714"><span class="lineNum">     714 </span>                :            :           // stop the inner loop on filteredRoutes</a>
 <a name="715"><span class="lineNum">     715 </span>                :<span class="lineCov">         57 :           break;</span></a>
@@ -790,7 +790,7 @@
 <a name="718"><span class="lineNum">     718 </span>                :            :       // new route differs to all filtered ones, so we have to add it</a>
 <a name="719"><span class="lineNum">     719 </span>        [<span class="branchCov" title="Branch 0 was taken 95 times"> + </span><span class="branchCov" title="Branch 1 was taken 57 times"> + </span>]:<span class="lineCov">        152 :       if (addRoute)</span></a>
 <a name="720"><span class="lineNum">     720 </span>                :            :       {</a>
-<a name="721"><span class="lineNum">     721 </span>  [<span class="branchCov" title="Branch 0 was taken 95 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 95 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         95 :         access::getLogger()-&gt;trace(&quot;filterDuplicatedRoutes: adding route {}&quot;, route);</span></a>
+<a name="721"><span class="lineNum">     721 </span>  [<span class="branchCov" title="Branch 0 was taken 95 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 95 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        190 :         access::getLogger()-&gt;trace(&quot;filterDuplicatedRoutes: adding route {}&quot;, route);</span></a>
 <a name="722"><span class="lineNum">     722 </span>        [<span class="branchCov" title="Branch 0 was taken 95 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         95 :         filteredRoutes.push_back(route);</span></a>
 <a name="723"><span class="lineNum">     723 </span>                :            :       }</a>
 <a name="724"><span class="lineNum">     724 </span>                :            :     }</a>
@@ -1360,7 +1360,7 @@
 <a name="1286"><span class="lineNum">    1286 </span>                :            :       // create the full routes</a>
 <a name="1287"><span class="lineNum">    1287 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          4 :       candidateIter-&gt;createFullRouteAndRating();</span></a>
 <a name="1288"><span class="lineNum">    1288 </span>                :            : </a>
-<a name="1289"><span class="lineNum">    1289 </span>  [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          4 :       access::getLogger()-&gt;trace(&quot;calculateConnectingRoute: analyze {}&quot;, *candidateIter);</span></a>
+<a name="1289"><span class="lineNum">    1289 </span>  [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          8 :       access::getLogger()-&gt;trace(&quot;calculateConnectingRoute: analyze {}&quot;, *candidateIter);</span></a>
 <a name="1290"><span class="lineNum">    1290 </span>                :            : </a>
 <a name="1291"><span class="lineNum">    1291 </span>                :            :       // special handling for degenerated routes upfront</a>
 <a name="1292"><span class="lineNum">    1292 </span>  [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 4 times"> + </span>]:<span class="lineCov">          4 :       if (candidateIter-&gt;isDegenerated())</span></a>
@@ -1408,7 +1408,7 @@
 <a name="1333"><span class="lineNum">    1333 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          4 :       if (candidateIter-&gt;isResultFeasible())</span></a>
 <a name="1334"><span class="lineNum">    1334 </span>                :            :       {</a>
 <a name="1335"><span class="lineNum">    1335 </span>                :            :         // found a valid and feasible connecting route, return</a>
-<a name="1336"><span class="lineNum">    1336 </span>  [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          3 :         access::getLogger()-&gt;trace(&quot;calculateConnectingRoute[]: select valid and feasible result {}&quot;, *candidateIter);</span></a>
+<a name="1336"><span class="lineNum">    1336 </span>  [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          6 :         access::getLogger()-&gt;trace(&quot;calculateConnectingRoute[]: select valid and feasible result {}&quot;, *candidateIter);</span></a>
 <a name="1337"><span class="lineNum">    1337 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :         return candidateIter-&gt;resultRoute;</span></a>
 <a name="1338"><span class="lineNum">    1338 </span>                :            :       }</a>
 <a name="1339"><span class="lineNum">    1339 </span>                :            : </a>
@@ -1422,7 +1422,7 @@
 <a name="1347"><span class="lineNum">    1347 </span>                :            :       else</a>
 <a name="1348"><span class="lineNum">    1348 </span>                :            :       {</a>
 <a name="1349"><span class="lineNum">    1349 </span>                :            :         // not valid, drop</a>
-<a name="1350"><span class="lineNum">    1350 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :         access::getLogger()-&gt;trace(&quot;calculateConnectingRoute[]: not valid, dropping. Continue... {}&quot;, *candidateIter);</span></a>
+<a name="1350"><span class="lineNum">    1350 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :         access::getLogger()-&gt;trace(&quot;calculateConnectingRoute[]: not valid, dropping. Continue... {}&quot;, *candidateIter);</span></a>
 <a name="1351"><span class="lineNum">    1351 </span>                :<span class="lineCov">          1 :         candidateIter = connectingRouteCandidates.erase(candidateIter);</span></a>
 <a name="1352"><span class="lineNum">    1352 </span>                :            :       }</a>
 <a name="1353"><span class="lineNum">    1353 </span>                :            :     }</a>
@@ -1481,7 +1481,7 @@
 <a name="1405"><span class="lineNum">    1405 </span>                :            :         }</a>
 <a name="1406"><span class="lineNum">    1406 </span>                :            :       }</a>
 <a name="1407"><span class="lineNum">    1407 </span>                :            :     }</a>
-<a name="1408"><span class="lineNum">    1408 </span>  [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          6 :     access::getLogger()-&gt;trace(&quot;calculateConnectingRoute[]: merge result {}&quot;, resultRoute);</span></a>
+<a name="1408"><span class="lineNum">    1408 </span>  [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         12 :     access::getLogger()-&gt;trace(&quot;calculateConnectingRoute[]: merge result {}&quot;, resultRoute);</span></a>
 <a name="1409"><span class="lineNum">    1409 </span>                :<span class="lineCov">          6 :     return resultRoute;</span></a>
 <a name="1410"><span class="lineNum">    1410 </span>                :            :   }</a>
 <a name="1411"><span class="lineNum">    1411 </span>                :            : </a>
