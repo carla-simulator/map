@@ -1,5 +1,6 @@
 ## Latest changes
 
+* Update spdlog to latest version on v1.x branch
 * Add OpenDrive support for sprial geometry
 * Make OpenDrive import more robust
 * Fix map matching with AltitudeUnknown
