@@ -57,7 +57,7 @@ bool OpenDriveParser::Parse(const char *xml,
 
     default:
     {
-      spdlog::error("OpenDriveParser::Parse >> invalid XmlInputType provided {}.", inputType);
+      spdlog::error("OpenDriveParser::Parse >> invalid XmlInputType provided {}.", int(inputType));
       return false;
     }
     break;
