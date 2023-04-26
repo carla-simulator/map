@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>ad_physics</name>
+  <version>2.6.1</version>
+  <description>C++ library for automated driving physics data types</description>
+
+  <maintainer email="adam.gotlib@robotec.ai">Adam Gotlib</maintainer>
+  <author email="bernd.gassmann@intel.com">Bernd Gassmann</author>
+  <license>MIT</license>
+
+  <depend>spdlog</depend>
+
+  <test_depend>gtest</test_depend>
+</package>
