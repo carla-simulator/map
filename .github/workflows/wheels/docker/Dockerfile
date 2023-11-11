@@ -15,9 +15,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   wget \
   autoconf \
   automake \
+  sqlite3 \
   castxml \
-  libpugixml-dev \
-  libproj-dev && \
+  libpugixml-dev && \
   rm -rf /var/lib/apt/lists/*
 
 RUN \

@@ -4,3 +4,6 @@
 [submodule "dependencies/odrSpiral"]
 	path = dependencies/odrSpiral
 	url = https://github.com/DLR-TS/odrSpiral
+[submodule "dependencies/PROJ4"]
+	path = dependencies/PROJ4
+	url = https://github.com/OSGeo/PROJ.git

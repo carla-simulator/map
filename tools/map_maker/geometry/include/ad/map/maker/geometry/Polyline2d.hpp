@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <vector>
 #include "ad/map/maker/geometry/Line2d.hpp"
 #include "ad/map/maker/geometry/Point2d.hpp"

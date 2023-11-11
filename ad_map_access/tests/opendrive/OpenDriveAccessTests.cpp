@@ -152,12 +152,12 @@ struct OpenDriveAccessTests : ::testing::Test
         }
       }
       EXPECT_NE(expectedLanes.size(), 0u);
-      for (auto const matchedPosition : mapMatchedPositions0)
+      for (auto const &matchedPosition : mapMatchedPositions0)
       {
         EXPECT_TRUE(lanesTestArea.find(matchedPosition.lanePoint.paraPoint.laneId) != lanesTestArea.end());
         expectedLanes.erase(matchedPosition.lanePoint.paraPoint.laneId);
       }
-      for (auto const matchedPosition : mapMatchedPositions1)
+      for (auto const &matchedPosition : mapMatchedPositions1)
       {
         EXPECT_TRUE(lanesTestArea.find(matchedPosition.lanePoint.paraPoint.laneId) != lanesTestArea.end());
         expectedLanes.erase(matchedPosition.lanePoint.paraPoint.laneId);
