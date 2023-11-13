@@ -1,5 +1,9 @@
 ## Latest changes
 
+## Release 2.6.3
+#### :ghost: Maintenance
+* Enable Ubuntu 22.04 builds
+
 ## Release 2.6.2
 #### :ghost: Maintenance
 * Update spdlog to latest version on v1.x branch
