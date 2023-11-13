@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-10-04 09:48:07</td>
+            <td class="headerValue">2023-11-13 09:50:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">22</td>
@@ -142,17 +142,17 @@
 <a name="71"><span class="lineNum">      71 </span>                :<span class="lineCov">   22953701 : physics::ParametricValue findNearestPointOnSegment(PointType const &amp;a, const PointType &amp;pt0, const PointType &amp;pt1)</span></a>
 <a name="72"><span class="lineNum">      72 </span>                :            : {</a>
 <a name="73"><span class="lineNum">      73 </span>        [<span class="branchCov" title="Branch 0 was taken 22953701 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">   22953701 :   auto const t = findNearestPointOnEdge(a, pt0, pt1);</span></a>
-<a name="74"><span class="lineNum">      74 </span>  [<span class="branchCov" title="Branch 0 was taken 22953701 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 10048700 times"> + </span><span class="branchCov" title="Branch 3 was taken 12904901 times"> + </span>]:<span class="lineCov">   22953701 :   if (t &lt; physics::RatioValue(0.))</span></a>
+<a name="74"><span class="lineNum">      74 </span>  [<span class="branchCov" title="Branch 0 was taken 22953701 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 10048600 times"> + </span><span class="branchCov" title="Branch 3 was taken 12905001 times"> + </span>]:<span class="lineCov">   22953701 :   if (t &lt; physics::RatioValue(0.))</span></a>
 <a name="75"><span class="lineNum">      75 </span>                :            :   {</a>
-<a name="76"><span class="lineNum">      76 </span>                :<span class="lineCov">   10048700 :     return physics::ParametricValue(0.);</span></a>
+<a name="76"><span class="lineNum">      76 </span>                :<span class="lineCov">   10048600 :     return physics::ParametricValue(0.);</span></a>
 <a name="77"><span class="lineNum">      77 </span>                :            :   }</a>
-<a name="78"><span class="lineNum">      78 </span>  [<span class="branchCov" title="Branch 0 was taken 12904901 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 10462300 times"> + </span><span class="branchCov" title="Branch 3 was taken 2442601 times"> + </span>]:<span class="lineCov">   12904901 :   else if (t &gt; physics::RatioValue(1.))</span></a>
+<a name="78"><span class="lineNum">      78 </span>  [<span class="branchCov" title="Branch 0 was taken 12905001 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 10462400 times"> + </span><span class="branchCov" title="Branch 3 was taken 2442581 times"> + </span>]:<span class="lineCov">   12905001 :   else if (t &gt; physics::RatioValue(1.))</span></a>
 <a name="79"><span class="lineNum">      79 </span>                :            :   {</a>
-<a name="80"><span class="lineNum">      80 </span>                :<span class="lineCov">   10462300 :     return physics::ParametricValue(1.);</span></a>
+<a name="80"><span class="lineNum">      80 </span>                :<span class="lineCov">   10462400 :     return physics::ParametricValue(1.);</span></a>
 <a name="81"><span class="lineNum">      81 </span>                :            :   }</a>
 <a name="82"><span class="lineNum">      82 </span>                :            :   else</a>
 <a name="83"><span class="lineNum">      83 </span>                :            :   {</a>
-<a name="84"><span class="lineNum">      84 </span>                :<span class="lineCov">    2442601 :     return physics::ParametricValue(static_cast&lt;double&gt;(t));</span></a>
+<a name="84"><span class="lineNum">      84 </span>                :<span class="lineCov">    2442581 :     return physics::ParametricValue(static_cast&lt;double&gt;(t));</span></a>
 <a name="85"><span class="lineNum">      85 </span>                :            :   }</a>
 <a name="86"><span class="lineNum">      86 </span>                :            : }</a>
 <a name="87"><span class="lineNum">      87 </span>                :            : </a>
