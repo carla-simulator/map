@@ -133,7 +133,6 @@ struct Road : MapDataElement
   MapDataId mSuccessor{InvalidId};   //! ID of succeeding element (if any), can be another road or an intersection
 
   Road() = delete;
-  Road &operator=(Road const &other) = delete;
 
   Road(MapDataStore &dataStore, common::LogChannel &logChannel);
 

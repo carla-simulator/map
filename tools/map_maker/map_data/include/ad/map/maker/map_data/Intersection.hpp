@@ -99,7 +99,6 @@ struct Intersection : MapDataElement
   std::vector<MapDataId> mRoads; //!< list of internal roads
 
   Intersection() = delete;
-  Intersection &operator=(Intersection const &other) = delete;
 
   Intersection(MapDataStore &dataStore, common::LogFactory &logFactory);
 
