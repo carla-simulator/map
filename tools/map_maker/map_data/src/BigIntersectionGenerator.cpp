@@ -80,7 +80,7 @@ void BigIntersectionGenerator::generateBigIntersections(double interpolationStep
   std::unordered_map<uint32_t, std::vector<MapDataId>> bigIntersectionsIdMap;
   detectBigIntersections(specialIntersectionsSet, bigIntersectionsIdMap);
 
-  for (auto const bigIntersectionIds : bigIntersectionsIdMap)
+  for (auto const &bigIntersectionIds : bigIntersectionsIdMap)
   {
     generateBigIntersection(bigIntersectionIds.second, interpolationStepSize, fullInterpolation);
   }
