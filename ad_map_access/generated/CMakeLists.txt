@@ -50,6 +50,22 @@ list(APPEND LIBRARIES ad_map_opendrive_reader)
 find_package(ad_physics 2.4.5 REQUIRED CONFIG)
 find_package(spdlog REQUIRED CONFIG)
 
+find_library(PROJ_LIBRARIES
+  NAMES proj
+  HINTS
+    ${CMAKE_CURRENT_BINARY_DIR}/../../../install/PROJ4/lib
+)
+find_path(PROJ_INCLUDE_DIR
+  NAMES proj_api.h
+  HINTS
+    ${CMAKE_CURRENT_BINARY_DIR}/../../../install/PROJ4/include
+)
+
+if((NOT PROJ_LIBRARIES) OR (NOT PROJ_INCLUDE_DIR))
+  message(FATAL "Dependency proj not found ${CMAKE_CURRENT_BINARY_DIR}!")
+endif()
+
+
 add_library(${PROJECT_NAME}
   ${ad_map_access_SOURCES}
   src/ad/map/access/PartitionId.cpp
@@ -92,6 +108,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   ${ad_map_access_TARGET_INCLUDE_DIRECTORIES}
   "$<BUILD_INTERFACE:${ad_map_access_INCLUDE_DIRS}>"
+  ${PROJ_INCLUDE_DIR}
   ${INCLUDE_DIRS}
 )
 
@@ -99,6 +116,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
   ad_physics
   spdlog::spdlog
   ${ad_map_access_TARGET_LINK_LIBRARIES}
+  ${PROJ_LIBRARIES}
   PRIVATE
   ${LIBRARIES}
 )

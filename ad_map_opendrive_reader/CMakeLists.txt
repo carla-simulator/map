@@ -75,13 +75,17 @@ endif()
 
 find_library(PROJ_LIBRARIES
   NAMES proj
+  HINTS
+    ${CMAKE_CURRENT_BINARY_DIR}/../../install/PROJ4/lib
 )
 find_path(PROJ_INCLUDE_DIR
   NAMES proj_api.h
+  HINTS
+    ${CMAKE_CURRENT_BINARY_DIR}/../../install/PROJ4/include
 )
 
 if((NOT PROJ_LIBRARIES) OR (NOT PROJ_INCLUDE_DIR))
-  message(FATAL "Dependency proj not found!")
+  message(FATAL "Dependency proj not found ${CMAKE_CURRENT_BINARY_DIR}!")
 endif()
 
 #odrSpiral
@@ -118,13 +122,7 @@ target_link_libraries(${PROJECT_NAME}
   ${PUGIXML_LIBRARIES}
   ${PROJ_LIBRARIES}
   ${ODRSPIRAL_LIBRARIES}
-)
-
-target_link_libraries(${PROJECT_NAME}
-  PRIVATE
-  ${PUGIXML_LIBRARIES}
   spdlog::spdlog
-  ${PROJ_LIBRARIES}
 )
 
 set(PROJECT_PUBLIC_HEADER_LIST
