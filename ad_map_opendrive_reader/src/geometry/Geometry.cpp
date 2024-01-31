@@ -11,11 +11,11 @@
  */
 
 #include "opendrive/geometry/Geometry.hpp"
-#include <boost/array.hpp>
 #include <boost/math/tools/rational.hpp>
 #include <cmath>
 #include <opendrive/types.hpp>
 #include <stdexcept>
+#include "opendrive/geometry/ArrayType.hpp"
 
 extern "C" {
 #include <odrSpiral.h>
@@ -146,7 +146,7 @@ GeometryPoly3::GeometryPoly3(
 
 const DirectedPoint GeometryPoly3::PosFromDist(const double dist) const
 {
-  auto poly = boost::array<double, 4>{{_a, _b, _c, _d}};
+  auto poly = ArrayType<double, 4>{{_a, _b, _c, _d}};
 
   double u = dist;
   double v = boost::math::tools::evaluate_polynomial(poly, u);
@@ -161,7 +161,7 @@ const DirectedPoint GeometryPoly3::PosFromDist(const double dist) const
   double y = u * sin_t + v * cos_t;
   double z = 0.0;
 
-  auto tangentPoly = boost::array<double, 4>{{_b, 2.0 * _c, 3.0 * _d}};
+  auto tangentPoly = ArrayType<double, 4>{{_b, 2.0 * _c, 3.0 * _d}};
 
   double tangentV = boost::math::tools::evaluate_polynomial(tangentPoly, u);
   double theta = atan2(tangentV, 1.0);
@@ -204,8 +204,8 @@ const DirectedPoint GeometryParamPoly3::PosFromDist(const double dist) const
     p = std::min(1.0, dist / _length);
   }
 
-  auto polyU = boost::array<double, 4>{{_aU, _bU, _cU, _dU}};
-  auto polyV = boost::array<double, 4>{{_aV, _bV, _cV, _dV}};
+  auto polyU = ArrayType<double, 4>{{_aU, _bU, _cU, _dU}};
+  auto polyV = ArrayType<double, 4>{{_aV, _bV, _cV, _dV}};
 
   double u = boost::math::tools::evaluate_polynomial(polyU, p);
   double v = boost::math::tools::evaluate_polynomial(polyV, p);
@@ -219,8 +219,8 @@ const DirectedPoint GeometryParamPoly3::PosFromDist(const double dist) const
   double y = u * sin_t + v * cos_t;
   double z = 0.0;
 
-  auto tangentPolyU = boost::array<double, 4>{{_bU, 2.0 * _cU, 3.0 * _dU, 0.0}};
-  auto tangentPolyV = boost::array<double, 4>{{_bV, 2.0 * _cV, 3.0 * _dV, 0.0}};
+  auto tangentPolyU = ArrayType<double, 4>{{_bU, 2.0 * _cU, 3.0 * _dU, 0.0}};
+  auto tangentPolyV = ArrayType<double, 4>{{_bV, 2.0 * _cV, 3.0 * _dV, 0.0}};
 
   double tangentU = boost::math::tools::evaluate_polynomial(tangentPolyU, p);
   double tangentV = boost::math::tools::evaluate_polynomial(tangentPolyV, p);
