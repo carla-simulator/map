@@ -67,19 +67,18 @@ To download the library, you may run:
 ```
 
 #### Supported systems <a name="systems"></a>
-Development systems are Ubuntu 18.04, Ubuntu 20.04 and Ubuntu 22.04
-Following compiler combinations are [tested continously](https://github.com/carla-simulator/map/blob/master/.travis.yml):
+Development systems are Ubuntu 20.04 and Ubuntu 22.04
+Following compiler combiDevelopment systems are Ubuntu 20.04 and Ubuntu 22.04
+Following compiler and Python combinations are [tested continously](https://github.com/intel/ad-rss-lib/blob/master/.github/workflows/build_test.yml):
 
-|                 | Ubuntu 18.04 | Ubuntu 20.04 | Ubuntu 22.04 |
-|:---------------:|:------------:|:------------:|:------------:|
-|  Clang 7        |       x      |              |              |
-|  Clang 8        |       x      |              |              |
-|   GCC 7         |       x      |              |              |
-|   GCC 8         |       x      |              |              |
-|   GCC 9         |              |       x      |              |
-|  Clang 10       |              |       x      |              |
-|   GCC 11        |              |              |       x      |
-|  Clang 14       |              |              |       x      |
+|                 | Ubuntu 20.04 | Ubuntu 22.04 |
+|:---------------:|:------------:|:------------:|
+|   GCC 9         |       x      |              |
+|  Clang 10       |       x      |              |
+|   GCC 11        |              |       x      |
+|  Clang 14       |              |       x      |
+|  Python 3.8     |       x      |              |
+|  Python 3.10    |       x      |       x      |
 
 Important: cmake is required to be at least version 3.5!
 

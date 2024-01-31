@@ -9,7 +9,7 @@
  */
 
 #include "opendrive/geometry/CenterLine.hpp"
-#include <boost/array.hpp>
+#include "opendrive/geometry/ArrayType.hpp"
 #include <boost/math/tools/rational.hpp>
 #include <cmath>
 #include <iostream>
