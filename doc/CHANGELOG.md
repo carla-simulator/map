@@ -1,4 +1,7 @@
 ## Latest changes
+#### :ghost: Maintenance
+* Disable Ubuntu 18.04 builds
+* Enable newer boost versions
 
 ## Release 2.6.3
 #### :ghost: Maintenance
