@@ -26,10 +26,9 @@
 namespace opendrive {
 namespace geometry {
 
-  template<class T, std::size_t N>
-  using ArrayType = boost::array<T,N>;
+template <class T, std::size_t N> using ArrayType = boost::array<T, N>;
 }
-}
+} // namespace opendrive
 
 #else
 
@@ -37,9 +36,8 @@ namespace geometry {
 
 namespace opendrive {
 namespace geometry {
-  template<class T, std::size_t N>
-  using ArrayType = std::array<T,N>;
+template <class T, std::size_t N> using ArrayType = std::array<T, N>;
 }
-}
+} // namespace opendrive
 
 #endif

@@ -11,11 +11,11 @@
  */
 
 #include "opendrive/geometry/Geometry.hpp"
-#include "opendrive/geometry/ArrayType.hpp"
 #include <boost/math/tools/rational.hpp>
 #include <cmath>
 #include <opendrive/types.hpp>
 #include <stdexcept>
+#include "opendrive/geometry/ArrayType.hpp"
 
 extern "C" {
 #include <odrSpiral.h>

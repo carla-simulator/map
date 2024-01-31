@@ -12,6 +12,9 @@ jobs:
     name: Build and Test Documentation
     runs-on: ubuntu-20.04
 
+    env:
+      PYTHON_BINDING_VERSION: "3.8"
+
     steps:
     - uses: actions/checkout@v2
       with:

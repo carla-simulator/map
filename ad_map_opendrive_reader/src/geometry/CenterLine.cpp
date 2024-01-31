@@ -9,11 +9,11 @@
  */
 
 #include "opendrive/geometry/CenterLine.hpp"
-#include "opendrive/geometry/ArrayType.hpp"
 #include <boost/math/tools/rational.hpp>
 #include <cmath>
 #include <iostream>
 #include <spdlog/spdlog.h>
+#include "opendrive/geometry/ArrayType.hpp"
 #include "opendrive/geometry/GeometryGenerator.hpp"
 #include "opendrive/geometry/LaneUtils.hpp"
 
