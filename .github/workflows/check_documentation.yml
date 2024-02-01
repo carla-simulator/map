@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: master
 
+permissions:
+  contents: read
+
 jobs:
   documentationjob:
 
@@ -16,7 +19,12 @@ jobs:
       PYTHON_BINDING_VERSION: "3.8"
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Harden Runner
+      uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+      with:
+        egress-policy: audit
+
+    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
       with:
         fetch-depth: 0
         submodules: true

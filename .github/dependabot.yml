@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+
+  - package-ecosystem: docker
+    directory: /.github/workflows/wheels/docker
+    schedule:
+      interval: daily
+
+  - package-ecosystem: pip
+    directory: /doc
+    schedule:
+      interval: daily
