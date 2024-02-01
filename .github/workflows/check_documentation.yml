@@ -44,5 +44,7 @@ jobs:
         bash .github/workflows/code_coverage.sh
 
     - name: Documentation Deployment (Test)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if [ ${{ github.event_name }} != 'pull_request' ]; then bash .github/workflows/deploy_documentation.sh true; else bash .github/workflows/deploy_documentation.sh false; fi
