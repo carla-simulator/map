@@ -3,7 +3,6 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/carla-simulator/map.svg)](https://github.com/carla-simulator/map/releases/latest)
 [![Build Status](https://github.com/carla-simulator/map/workflows/Build%20and%20Test%20of%20AD-Map%20Library/badge.svg?branch=master)](https://github.com/carla-simulator/map/actions?query=workflow%3A%22Build+and+Test+of+AD-Map+Library%22)
-[![Code Coverage](https://codecov.io/gh/carla-simulator/map/branch/master/graph/badge.svg)](https://codecov.io/gh/carla-simulator/map)
 
 #### Table of contents
 1. [Introduction](#introduction)
