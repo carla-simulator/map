@@ -30,7 +30,9 @@ jobs:
         submodules: true
 
     - name: Install Dependencies
-      run: bash .github/workflows/install_dependencies.sh && sudo apt-get install doxygen graphviz lcov
+      run: |
+        export BUILD_DOCU=true
+        bash .github/workflows/install_dependencies.sh
 
     - name: Build Documentation and Test
       run: |
@@ -39,9 +41,17 @@ jobs:
         colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics
         colcon test-result
 
-    - name: Code Coverage and CodeCov
+    - name: Code Coverage
       run: |
         bash .github/workflows/code_coverage.sh
+
+    - name: Upload coverage as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage_report
+        path: ./coverage
+        if-no-files-found: error
+        overwrite: true
 
     - name: Documentation Deployment (Test)
       env:
