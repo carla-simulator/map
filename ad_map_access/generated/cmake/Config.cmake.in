@@ -17,7 +17,7 @@
 
 include(CMakeFindDependencyMacro)
 
-find_package(Boost REQUIRED COMPONENTS program_options filesystem)
+find_package(Boost 1.80 REQUIRED COMPONENTS program_options filesystem)
 get_target_property(BOOST_PROGRAM_OPTIONS_INTERFACE_INCLUDE_DIRS Boost::program_options INTERFACE_INCLUDE_DIRECTORIES)
 list(APPEND INCLUDE_DIRS ${BOOST_PROGRAM_OPTIONS_INTERFACE_INCLUDE_DIRS})
 list(APPEND LIBRARIES Boost::program_options)

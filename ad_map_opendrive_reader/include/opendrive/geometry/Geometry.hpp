@@ -205,7 +205,7 @@ template <class T> double evalPoly3(std::set<T> const &sOffsetPoly3Set, double s
   }
   if (smallerOrEqual != sOffsetPoly3Set.end())
   {
-    auto poly = boost::array<double, 4>{{smallerOrEqual->a, smallerOrEqual->b, smallerOrEqual->c, smallerOrEqual->d}};
+    auto poly = std::array<double, 4>{{smallerOrEqual->a, smallerOrEqual->b, smallerOrEqual->c, smallerOrEqual->d}};
     return boost::math::tools::evaluate_polynomial(poly, s - smallerOrEqual->start_offset);
   }
   return 0.0;
