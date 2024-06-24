@@ -57,7 +57,7 @@ add_library(${PROJECT_NAME} ${PROJECT_SOURCE_LIST})
 # dependencies
 #####################################################################
 
-find_package(Boost REQUIRED)
+find_package(Boost 1.80 REQUIRED)
 
 find_package(spdlog REQUIRED CONFIG)
 

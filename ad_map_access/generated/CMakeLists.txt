@@ -34,7 +34,7 @@ if ((NOT ad_map_access_SOURCES) OR (NOT ad_map_access_INCLUDE_DIRS))
   message(FATAL_ERROR "${PROJECT_NAME}: Variable ad_map_access_SOURCES or ad_map_access_INCLUDE_DIRS pointing to the generator managed library not set!")
 endif()
 
-find_package(Boost REQUIRED COMPONENTS program_options filesystem)
+find_package(Boost 1.80 REQUIRED COMPONENTS program_options filesystem)
 get_target_property(BOOST_PROGRAM_OPTIONS_INTERFACE_INCLUDE_DIRS Boost::program_options INTERFACE_INCLUDE_DIRECTORIES)
 list(APPEND INCLUDE_DIRS ${BOOST_PROGRAM_OPTIONS_INTERFACE_INCLUDE_DIRS})
 list(APPEND LIBRARIES Boost::program_options)
