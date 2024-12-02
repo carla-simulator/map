@@ -72,11 +72,9 @@ Following compiler and Python combinations are [tested continously](https://gith
 
 |                 | Ubuntu 20.04 | Ubuntu 22.04 |
 |:---------------:|:------------:|:------------:|
-|   GCC 9         |       x      |              |
 |  Clang 10       |       x      |              |
 |   GCC 11        |              |       x      |
 |  Clang 14       |              |       x      |
-|  Python 3.8     |       x      |              |
 |  Python 3.10    |       x      |       x      |
 
 Important: cmake is required to be at least version 3.5!
