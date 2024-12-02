@@ -30,7 +30,7 @@ The components within this repository have some dependencies:
    - Osmium >= 2.13: <https://osmcode.org/libosmium/>
  - ***all components when enabling unit tests***:
    - gtest aka. googletests < 1.10 : <https://github.com/google/googletest>
-   - xmlrunner
+   - unittest-xml-reporting
 
 Dependencies provided by Ubunutu (>= 18.04):
 
@@ -50,7 +50,7 @@ $>  sudo apt-get install libboost-all-dev libpugixml-dev libgtest-dev libpython-
 Additional dependencies for the python bindings:
 ```bash
 $>  sudo apt-get install castxml
-$>  pip install --user python-wheel pygccxml pyplusplus xmlrunner
+$>  pip install --user python-wheel pygccxml pyplusplus unittest-xml-reporting
 ```
 
 Remaining dependencies are present as GIT submodules; also to fix the version of these:

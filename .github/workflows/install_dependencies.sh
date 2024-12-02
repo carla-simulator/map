@@ -48,7 +48,7 @@ curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python${PYTHON_BINDING_VERS
 # to handle some error on missing pip dependencies
 sudo pip${PYTHON_BINDING_VERSION} install testresources
 sudo pip${PYTHON_BINDING_VERSION} install --upgrade setuptools==59.6.0
-sudo pip${PYTHON_BINDING_VERSION} install colcon-common-extensions xmlrunner pygccxml pyplusplus
+sudo pip${PYTHON_BINDING_VERSION} install colcon-common-extensions unittest-xml-reporting pygccxml pyplusplus
 
 if (( IS_UBUNTU_20_04 && IS_PYTHON_3_10 )); then
   echo "!!!!!!! Ubunut 20.04 and python 3.10: compile boost 1.80 !!!!!!!"
