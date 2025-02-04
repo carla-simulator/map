@@ -6,7 +6,7 @@
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 include(../cmake/carla-map-version.cmake)
 project(ad_physics VERSION ${CARLA-MAP_VERSION})

@@ -9,7 +9,7 @@
 #####################################################################
 # MapMaker - Common - library
 #####################################################################
-find_package(Boost COMPONENTS REQUIRED
+find_package(Boost CONFIG COMPONENTS REQUIRED
   program_options
   system
   filesystem
