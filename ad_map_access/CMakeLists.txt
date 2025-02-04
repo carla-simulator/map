@@ -6,7 +6,7 @@
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 include(../cmake/carla-map-version.cmake)
 project(ad_map_access VERSION ${CARLA-MAP_VERSION})
@@ -27,7 +27,7 @@ include(CMakePackageConfigHelpers)
 set(ad_map_access_TARGET_INCLUDE_DIRECTORIES)
 set(ad_map_access_TARGET_LINK_LIBRARIES)
 
-find_package(Boost REQUIRED COMPONENTS program_options filesystem)
+find_package(Boost CONFIG REQUIRED COMPONENTS program_options filesystem)
 get_target_property(BOOST_PROGRAM_OPTIONS_INTERFACE_INCLUDE_DIRS Boost::program_options INTERFACE_INCLUDE_DIRECTORIES)
 list(APPEND ad_map_access_TARGET_INCLUDE_DIRECTORIES ${BOOST_PROGRAM_OPTIONS_INTERFACE_INCLUDE_DIRS})
 list(APPEND ad_map_access_TARGET_LINK_LIBRARIES Boost::program_options)

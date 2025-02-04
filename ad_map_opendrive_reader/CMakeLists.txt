@@ -6,7 +6,7 @@
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 include(../cmake/carla-map-version.cmake)
 project(ad_map_opendrive_reader VERSION ${CARLA-MAP_VERSION})
@@ -26,7 +26,7 @@ include(CMakePackageConfigHelpers)
 set(ad_map_opendrive_reader_TARGET_INCLUDE_DIRECTORIES)
 set(ad_map_opendrive_reader_TARGET_LINK_LIBRARIES)
 
-find_package(Boost REQUIRED)
+find_package(Boost CONFIG REQUIRED)
 list(APPEND ad_map_opendrive_reader_TARGET_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIRS})
 
 find_package(spdlog REQUIRED CONFIG)
