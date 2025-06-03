@@ -5,6 +5,9 @@
         },
         "ad_map_opendrive_reader": {
             "dependencies": ["odrSpiral", "PROJ4"]
-        }
+        },
+        "ad_map_access": {
+            "dependencies": ["ad_map_opendrive_reader"]
+        },
     }
 }
