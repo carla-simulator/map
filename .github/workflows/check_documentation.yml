@@ -13,10 +13,10 @@ jobs:
   documentationjob:
 
     name: Build and Test Documentation
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     env:
-      PYTHON_BINDING_VERSION: "3.8"
+      PYTHON_BINDING_VERSION: "3.10"
 
     steps:
     - name: Harden Runner

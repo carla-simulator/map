@@ -80,7 +80,7 @@ Unit testing code coverage of can be retrieved via github deployment:
 
 ### Compiler and compiler security flags
 
-The development platforms are Ubuntu Linux 20.04 Focal Fossa and 22.04 Jammy Jellyfish.
+The development platform is Ubuntu Linux 22.04 Jammy Jellyfish.
 
 A standard cmake toolchain has been used to compile the library.
 The compiler is g++ 9.3.0, other compilers are also supported (see README for details).
