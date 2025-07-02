@@ -33,7 +33,6 @@ sudo apt-get install -y --no-install-recommends build-essential castxml cmake sq
 
 
 sudo apt-get install -y --no-install-recommends python${PYTHON_BINDING_VERSION}-dev libpython${PYTHON_BINDING_VERSION}-dev
-curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python${PYTHON_BINDING_VERSION}
 
 if [[ "${BUILD_DOCU}x" != "x" ]]; then
   sudo apt-get install doxygen graphviz lcov
@@ -41,7 +40,6 @@ fi
 
 sudo apt remove python3-pygments
 
-# use virtual environment for our build dependencies
-python${PYTHON_BINDING_VERSION} -m venv build/map-build-venv
-source build/map-build-venv/bin/activate
+source activate_python_environment.sh
+curl -sS https://bootstrap.pypa.io/get-pip.py | python${PYTHON_BINDING_VERSION}
 python${PYTHON_BINDING_VERSION} -m pip install -r .github/workflows/requirements.txt
