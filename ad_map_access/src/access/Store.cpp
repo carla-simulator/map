@@ -214,17 +214,17 @@ physics::Distance Store::getCumulativeLaneLength() const
 
 point::BoundingSphere Store::getBoundingSphere() const
 {
-  point::BoundingSphere boundingSphere;
+  point::BoundingSphere bounding_sphere;
   if (lane_map_.empty())
   {
-    return boundingSphere;
+    return bounding_sphere;
   }
-  boundingSphere = lane_map_.begin()->second->boundingSphere;
+  bounding_sphere = lane_map_.begin()->second->bounding_sphere;
   for (auto id_and_lane : lane_map_)
   {
-    boundingSphere = boundingSphere + id_and_lane.second->boundingSphere;
+    bounding_sphere = bounding_sphere + id_and_lane.second->bounding_sphere;
   }
-  return boundingSphere;
+  return bounding_sphere;
 }
 
 } // namespace access

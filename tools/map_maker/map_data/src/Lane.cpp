@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -154,7 +154,7 @@ void Lane::invertLaneDirection(MapDataStore &store, bool invertBorderPolylines)
   }
 
   std::swap(leftBorder, rightBorder);
-  std::swap(leftNeighbor, rightNeighbor);
+  std::swap(left_neighbor, right_neighbor);
   std::swap(predecessors, successors);
 }
 

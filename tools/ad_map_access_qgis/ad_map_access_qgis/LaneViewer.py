@@ -19,54 +19,43 @@ from .LayerManager import LayerManager
 
 
 class LaneViewer(QgsMapTool):
-
     "..."
-    START_SELECTION = 1
-    DESTINATION_SELECTION = 2
-    #
-    WAYPOINT_TITLE = "Start/Destination"
-    WAYPOINT_SYMBOL = "star"
-    WAYPOINT_COLOR = "64, 255, 64"
-    WAYPOINT_SIZE = "8"
-    #
-    TITLE = "Enable"
-    COLOR = "255, 255, 255"
 
     def __init__(self, action):
         "..."
         QgsMapTool.__init__(self, Globs.iface.mapCanvas())
         self.action = action
         self.action.setChecked(False)
-        self.layer_group = ["INTERSECTION", "NORMAL", "OTHER", "UNKNOWN"]
-        self.layer_waypoints = None
-        self.layer_route = None
+        self.layer_group = ["INTERSECTION", "NORMAL", "SHOULDER", "PEDESTRIAN", "BIKE", "OTHER"]
+        self.activated = False
 
     def activate(self):
         "..."
         super(LaneViewer, self).activate()
-        self.__calculate_Lane_IDs__()
-        self.action.setChecked(True)
-        Globs.log.info("Lane IDs enabled for all layers at once")
 
     def deactivate(self):
         "..."
-        laneList = ad.map.lane.getLanes()
-        for each_layer in self.layer_group:
-            layer = QgsProject.instance().mapLayersByName(each_layer)[0]
-            for each_lane in laneList:
-                lane = ad.map.lane.getLane(each_lane)
-            layer.setLabelsEnabled(False)
-            layer.triggerRepaint(False)
-
         super(LaneViewer, self).deactivate()
-        self.action.setChecked(False)
-        Globs.log.info("Lane IDs disabled")
+
+    def toggle(self):
+        if self.activated:
+            for each_layer in self.layer_group:
+                layer = QgsProject.instance().mapLayersByName(each_layer)[0]
+                layer.setLabelsEnabled(False)
+                layer.triggerRepaint(False)
+            self.activated = False
+            Globs.log.info("Lane IDs disabled")
+        else:
+            self.__calculate_Lane_IDs__()
+            Globs.iface.mapCanvas().refresh()
+            self.activated = True
+            Globs.log.info("Lane IDs enabled")
+        self.action.setChecked(self.activated)
 
     def __calculate_Lane_IDs__(self):
         "..."
 
         laneList = ad.map.lane.getLanes()
-
         for each_layer in self.layer_group:
             layer = QgsProject.instance().mapLayersByName(each_layer)[0]
             for each_lane in laneList:
@@ -81,6 +70,6 @@ class LaneViewer(QgsMapTool):
                 label.placement = QgsPalLayerSettings.OverPoint
 
                 labeler = QgsVectorLayerSimpleLabeling(label)
-                layer.setLabelsEnabled(True)
                 layer.setLabeling(labeler)
+                layer.setLabelsEnabled(True)
                 layer.triggerRepaint(True)

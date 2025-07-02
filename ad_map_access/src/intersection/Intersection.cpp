@@ -21,16 +21,17 @@ namespace ad {
 namespace map {
 namespace intersection {
 
-IntersectionType fromContactTypes(lane::ContactTypeList const &types)
+IntersectionType Intersection::intersectionTypeFromContactTypes(lane::ContactTypeList const &types)
 {
   for (auto contactType : types)
   {
     // fallthrough is intended here
     switch (contactType)
     {
-      // clang-format off
+        // clang-format off
       // switched off to keep the formatting of the comments
       case lane::ContactType::FREE:               ///< There is no physical or legal obstacles between two objects.
+      case lane::ContactType::RIGHT_OF_WAY:
         return IntersectionType::HasWay;
       case lane::ContactType::STOP:               ///< STOP regulation at the end of the lane.
         return IntersectionType::Stop;
@@ -59,36 +60,39 @@ IntersectionType fromContactTypes(lane::ContactTypeList const &types)
       case lane::ContactType::GATE_SPIKES_CONTRA: ///< Spikes (in opposite direction) at the end of the lane.
       case lane::ContactType::CURB_UP:            ///< Curb up at the object side.
       case lane::ContactType::CURB_DOWN:          ///< Curb down at the object.
-      case lane::ContactType::RIGHT_OF_WAY:
         break;      // in all other cases, we do nothing, maybe another contact has valid information.
       // clang-format on
       default:
-        throw std::invalid_argument("Intersection fromContactTypes: Invalid contact type passed");
+        throw std::invalid_argument("Intersection from ContactTypes: Invalid contact type passed");
     }
   }
   return IntersectionType::Unknown;
 }
 
-IntersectionType getRightOfWayForTransition(lane::LaneId fromLaneId, lane::LaneId toLaneId, bool useSuccessor)
+IntersectionType getRightOfWayForTransition(lane::LaneId fromLaneId, lane::LaneId toLaneId)
 {
-  auto fromLane = lane::getLane(fromLaneId);
-  auto location = lane::ContactLocation::PREDECESSOR;
-  if (useSuccessor)
+  auto laneFrom = lane::getLane(fromLaneId);
+  auto contactLanesFromOutside = lane::getContactLane(laneFrom, toLaneId);
+  for (auto contact : contactLanesFromOutside)
   {
-    location = lane::ContactLocation::SUCCESSOR;
-  }
-  auto contacts = getContactLanes(fromLane, location);
-  for (auto const &contact : contacts)
-  {
-    if (contact.toLane == toLaneId)
+    auto intersectionTypeFromOutside = Intersection::intersectionTypeFromContactTypes(contact.types);
+    if (intersectionTypeFromOutside != IntersectionType::Unknown)
     {
-      auto result = fromContactTypes(contact.types);
-      if (result != IntersectionType::Unknown)
-      {
-        return result;
-      }
+      return intersectionTypeFromOutside;
     }
   }
+
+  auto laneTo = lane::getLane(toLaneId);
+  auto contactLanesFromInside = lane::getContactLane(laneTo, fromLaneId);
+  for (auto contact : contactLanesFromInside)
+  {
+    auto intersectionTypeFromInside = Intersection::intersectionTypeFromContactTypes(contact.types);
+    if (intersectionTypeFromInside != IntersectionType::Unknown)
+    {
+      return intersectionTypeFromInside;
+    }
+  }
+
   return IntersectionType::Unknown;
 }
 
@@ -117,7 +121,7 @@ IntersectionPtr Intersection::getIntersectionForRoadSegment(route::RouteIterator
 std::vector<IntersectionPtr> Intersection::getIntersectionsForRoute(route::FullRoute const &route)
 {
   std::vector<IntersectionPtr> result;
-  for (auto roadSegmentIter = route.roadSegments.begin(); roadSegmentIter != route.roadSegments.end();
+  for (auto roadSegmentIter = route.road_segments.begin(); roadSegmentIter != route.road_segments.end();
        roadSegmentIter++)
   {
     // @todo: also consider segments leaving intersection if first segment is already within intersection
@@ -133,7 +137,7 @@ std::vector<IntersectionPtr> Intersection::getIntersectionsForRoute(route::FullR
 IntersectionPtr Intersection::getNextIntersectionOnRoute(route::FullRoute const &route)
 {
   IntersectionPtr result;
-  for (auto roadSegmentIter = route.roadSegments.begin(); roadSegmentIter != route.roadSegments.end();
+  for (auto roadSegmentIter = route.road_segments.begin(); roadSegmentIter != route.road_segments.end();
        roadSegmentIter++)
   {
     // @todo: also consider segments leaving intersection if first segment is already within intersection
@@ -148,21 +152,21 @@ IntersectionPtr Intersection::getNextIntersectionOnRoute(route::FullRoute const 
 
 bool Intersection::segmentLeavesIntersectionOnRoute(route::FullRoute const &route,
                                                     route::RoadSegmentList::const_iterator const &roadSegmentIt,
-                                                    lane::LaneId laneId)
+                                                    lane::LaneId lane_id)
 {
   // end of iterator? -> false
   // lane is of type intersection? -> iterate through successors
   // lane of type normal -> true
-  if (roadSegmentIt == route.roadSegments.end())
+  if (roadSegmentIt == route.road_segments.end())
   {
     return false;
   }
-  if (isLanePartOfAnIntersection(laneId))
+  if (isLanePartOfAnIntersection(lane_id))
   {
-    mLanesOnRoute.insert(laneId);
-    for (auto const &segment : roadSegmentIt->drivableLaneSegments)
+    mLanesOnRoute.insert(lane_id);
+    for (auto const &segment : roadSegmentIt->drivable_lane_segments)
     {
-      if (segment.laneInterval.laneId == laneId)
+      if (segment.lane_interval.lane_id == lane_id)
       {
         for (auto successorId : segment.successors)
         {
@@ -177,8 +181,8 @@ bool Intersection::segmentLeavesIntersectionOnRoute(route::FullRoute const &rout
   }
   else
   {
-    // laneId is outside of the intersection, thus the route left the intersection
-    mOutgoingLanesOnRoute.insert(laneId);
+    // lane_id is outside of the intersection, thus the route left the intersection
+    mOutgoingLanesOnRoute.insert(lane_id);
     return true;
   }
   return false;
@@ -219,30 +223,32 @@ lane::LaneIdSet Intersection::successorsOnRouteLeavingIntersection(route::LaneSe
   return result;
 }
 
-void Intersection::extractRightOfWayAndCollectTrafficLights(route::LaneInterval const &laneInterval,
+void Intersection::extractRightOfWayAndCollectTrafficLights(route::LaneInterval const &lane_interval,
                                                             lane::LaneIdSet const &successors,
                                                             lane::LaneId &toLaneId)
 {
-  auto beforeLaneId = laneInterval.laneId;
-  bool const useSuccessor = (laneInterval.start < laneInterval.end);
+  auto beforeLaneId = lane_interval.lane_id;
   for (auto succId : successors)
   {
-    auto intersectionType = getRightOfWayForTransition(beforeLaneId, succId, useSuccessor);
-    if ((mIntersectionType != IntersectionType::Unknown) && (mIntersectionType != intersectionType))
+    auto intersectionType = getRightOfWayForTransition(beforeLaneId, succId);
+    if (intersectionType != IntersectionType::Unknown)
     {
-      access::getLogger()->warn("Different types of intersection detected! From {} To {}", beforeLaneId, succId);
+      if ((mIntersectionType != IntersectionType::Unknown) && (mIntersectionType != intersectionType))
+      {
+        access::getLogger()->warn("Different types of intersection detected! From {} To {}", beforeLaneId, succId);
+      }
+      toLaneId = succId;
+      mIntersectionType = intersectionType;
+      collectTrafficLights(beforeLaneId, toLaneId);
     }
-    toLaneId = succId;
-    mIntersectionType = intersectionType;
-    collectTrafficLights(beforeLaneId, toLaneId, useSuccessor);
   }
 }
 
 Intersection::Intersection(route::FullRoute const &route,
                            route::RoadSegmentList::const_iterator const &lastSegmentBeforeIntersection,
                            route::RoadSegmentList::const_iterator const &firstSegmentWithinIntersection)
-  : mRoutePlanningCounter(route.routePlanningCounter)
-  , mSegmentCountFromDestination(firstSegmentWithinIntersection->segmentCountFromDestination)
+  : mRoutePlanningCounter(route.route_planning_counter)
+  , mSegmentCountFromDestination(firstSegmentWithinIntersection->segment_count_from_destination)
   , mSpeedLimit(std::numeric_limits<physics::Speed>::max())
 {
   // ensure all intersection arms are initialized, to be safe when later accessing with std::map::at()
@@ -255,20 +261,20 @@ Intersection::Intersection(route::FullRoute const &route,
   // we don't need to check if the iterators are valid because this is called
   // from within getIntersectionForRoadSegment() only if the checks succeed
   lane::LaneId toLaneId{0};
-  for (auto const &segment : lastSegmentBeforeIntersection->drivableLaneSegments)
+  for (auto const &segment : lastSegmentBeforeIntersection->drivable_lane_segments)
   {
-    mIncomingLanesOnRoute.insert(segment.laneInterval.laneId);
+    mIncomingLanesOnRoute.insert(segment.lane_interval.lane_id);
     auto successors = successorsOnRouteLeavingIntersection(route, lastSegmentBeforeIntersection, segment);
-    extractRightOfWayAndCollectTrafficLights(segment.laneInterval, successors, toLaneId);
+    extractRightOfWayAndCollectTrafficLights(segment.lane_interval, successors, toLaneId);
   }
   if (toLaneId == lane::LaneId(0))
   {
     // seems as if the route doesn't lead out of the intersection
     // so try to collect all possible ways out
-    for (auto const &segment : lastSegmentBeforeIntersection->drivableLaneSegments)
+    for (auto const &segment : lastSegmentBeforeIntersection->drivable_lane_segments)
     {
       auto successors = successorsOnRouteLeavingIntersection(segment);
-      extractRightOfWayAndCollectTrafficLights(segment.laneInterval, successors, toLaneId);
+      extractRightOfWayAndCollectTrafficLights(segment.lane_interval, successors, toLaneId);
     }
   }
 
@@ -409,29 +415,29 @@ void Intersection::updateRouteCounters(route::RoutePlanningCounter newRoutePlann
 route::RouteParaPoint Intersection::getIntersectionStartOnRoute() const
 {
   route::RouteParaPoint result;
-  result.routePlanningCounter = getRoutePlanningCounter();
-  result.segmentCountFromDestination = getRouteSegmentCountFromDestination();
-  result.parametricOffset = physics::ParametricValue(0.);
+  result.route_planning_counter = getRoutePlanningCounter();
+  result.segment_count_from_destination = getRouteSegmentCountFromDestination();
+  result.parametric_offset = physics::ParametricValue(0.);
   return result;
 }
 
 void Intersection::extractIncomingLanes()
 {
-  for (auto laneId : entryLanes())
+  for (auto lane_id : entryLanes())
   {
-    if (mIncomingLanesOnRoute.count(laneId) == 0)
+    if (mIncomingLanesOnRoute.count(lane_id) == 0)
     {
-      mIncomingLanes.insert(laneId);
-      mIncomingParaPoints.push_back(getEntryParaPointOfExternalLane(laneId));
+      mIncomingLanes.insert(lane_id);
+      mIncomingParaPoints.push_back(getEntryParaPointOfExternalLane(lane_id));
     }
   }
 }
 
 void Intersection::calculateParaPoints()
 {
-  for (auto laneId : mIncomingLanesOnRoute)
+  for (auto lane_id : mIncomingLanesOnRoute)
   {
-    mIncomingParaPointsOnRoute.push_back(getEntryParaPointOfExternalLane(laneId));
+    mIncomingParaPointsOnRoute.push_back(getEntryParaPointOfExternalLane(lane_id));
   }
 
   for (auto outGoingLaneId : mOutgoingLanesOnRoute)
@@ -439,10 +445,10 @@ void Intersection::calculateParaPoints()
     mOutgoingParaPointsOnRoute.push_back(getExitParaPointOfExternalLane(outGoingLaneId));
   }
 
-  for (auto laneId : mLanesOnRoute)
+  for (auto lane_id : mLanesOnRoute)
   {
-    auto paraPoint = getEntryParaPointOfExternalLane(laneId);
-    mParaPointsOnRoute.push_back(paraPoint);
+    auto para_point = getEntryParaPointOfExternalLane(lane_id);
+    mParaPointsOnRoute.push_back(para_point);
   }
 }
 
@@ -456,21 +462,21 @@ void Intersection::extractCrossingLanes()
   // remove all lanes that are a successor of one of the incoming lanes on the route
   // otherwise vehicles driving in the same or parallel direction would also be considered...
   lane::LaneIdSet internalSuccessorsOfRouteEntry;
-  for (auto laneId : mIncomingLanesOnRoute)
+  for (auto lane_id : mIncomingLanesOnRoute)
   {
-    auto succ = getAllSuccessorsInLaneDirectionWithinIntersection(laneId, SuccessorMode::OwnIntersection);
+    auto succ = getAllSuccessorsInLaneDirectionWithinIntersection(lane_id, SuccessorMode::OwnIntersection);
     internalSuccessorsOfRouteEntry.insert(succ.begin(), succ.end());
   }
-  for (auto laneId : internalSuccessorsOfRouteEntry)
+  for (auto lane_id : internalSuccessorsOfRouteEntry)
   {
-    mCrossingLanes.erase(laneId);
+    mCrossingLanes.erase(lane_id);
   }
 }
 
-// this function return the directional angle of laneId
-point::ENUHeading getLaneDirectionalAngle(lane::LaneId laneId)
+// this function return the directional angle of lane_id
+point::ENUHeading getLaneDirectionalAngle(lane::LaneId lane_id)
 {
-  auto lane = lane::getLane(laneId);
+  auto lane = lane::getLane(lane_id);
 
   // Collect the parapoint of the lane
   physics::ParametricValue laneParapoint
@@ -495,7 +501,7 @@ static void directionOfLanes(point::ParaPointList const &lanes,
 {
   for (auto const &lane : lanes)
   {
-    auto angle = getLaneDirectionalAngle(lane.laneId);
+    auto angle = getLaneDirectionalAngle(lane.lane_id);
 
     // all angles should be relative to the angle of the arm where the route enters the intersection.
     angle = angle - referenceAngle;
@@ -558,11 +564,11 @@ void Intersection::orderIntersectionArmsAndExtractTurnDirection()
   for (auto laneDirection : intersectionLanesDirection)
   {
     auto turnDirection = turnDirectionForAngle(laneDirection.first);
-    if ((mTurnDirection == TurnDirection::Unknown) && (mOutgoingLanesOnRoute.count(laneDirection.second.laneId) > 0))
+    if ((mTurnDirection == TurnDirection::Unknown) && (mOutgoingLanesOnRoute.count(laneDirection.second.lane_id) > 0))
     {
       mTurnDirection = turnDirection;
     }
-    mIntersectionArms[turnDirection].insert(laneDirection.second.laneId);
+    mIntersectionArms[turnDirection].insert(laneDirection.second.lane_id);
   }
 }
 
@@ -599,30 +605,30 @@ void Intersection::extractLanesWithHigherPriority()
 
 void Intersection::extractLanesWithLowerPriority()
 {
-  for (auto laneId : mInternalLanes)
+  for (auto lane_id : mInternalLanes)
   {
-    if ((mLanesOnRoute.find(laneId) == mLanesOnRoute.end())
-        && (mInternalLanesWithHigherPriority.find(laneId) == mInternalLanesWithHigherPriority.end()))
+    if ((mLanesOnRoute.find(lane_id) == mLanesOnRoute.end())
+        && (mInternalLanesWithHigherPriority.find(lane_id) == mInternalLanesWithHigherPriority.end()))
     {
-      mInternalLanesWithLowerPriority.insert(laneId);
+      mInternalLanesWithLowerPriority.insert(lane_id);
     }
   }
 }
 
 void Intersection::extractLanesFromSameIntersectionArm()
 {
-  for (auto laneId : mIncomingLanesOnRoute)
+  for (auto lane_id : mIncomingLanesOnRoute)
   {
-    auto relevantLanes = getAllSuccessorsInLaneDirectionWithinIntersection(laneId, SuccessorMode::OwnIntersection);
+    auto relevantLanes = getAllSuccessorsInLaneDirectionWithinIntersection(lane_id, SuccessorMode::OwnIntersection);
     mInternalLanesFromSameIntersectionArm.insert(relevantLanes.begin(), relevantLanes.end());
   }
 }
 
 void Intersection::calculateEnteringProrityParaPoints()
 {
-  for (auto laneId : mIncomingLanes)
+  for (auto lane_id : mIncomingLanes)
   {
-    auto successorLanes = getAllSuccessorsInLaneDirectionWithinIntersection(laneId, SuccessorMode::OwnIntersection);
+    auto successorLanes = getAllSuccessorsInLaneDirectionWithinIntersection(lane_id, SuccessorMode::OwnIntersection);
     bool internalPriorityFound = false;
 
     for (auto successorLaneIter = successorLanes.begin();
@@ -636,15 +642,15 @@ void Intersection::calculateEnteringProrityParaPoints()
     }
     if (internalPriorityFound)
     {
-      auto paraPoint = getEntryParaPointOfExternalLane(laneId);
-      mIncomingParaPointsWithHigherPriority.push_back(paraPoint);
-      mIncomingLanesWithHigherPriority.insert(laneId);
+      auto para_point = getEntryParaPointOfExternalLane(lane_id);
+      mIncomingParaPointsWithHigherPriority.push_back(para_point);
+      mIncomingLanesWithHigherPriority.insert(lane_id);
     }
     else
     {
-      auto paraPoint = getEntryParaPointOfExternalLane(laneId);
-      mIncomingParaPointsWithLowerPriority.push_back(paraPoint);
-      mIncomingLanesWithLowerPriority.insert(laneId);
+      auto para_point = getEntryParaPointOfExternalLane(lane_id);
+      mIncomingParaPointsWithLowerPriority.push_back(para_point);
+      mIncomingLanesWithLowerPriority.insert(lane_id);
     }
   }
 }
@@ -663,10 +669,10 @@ bool Intersection::turnDirectionCrossesStraightTraffic() const
   }
 }
 
-bool Intersection::outgoingIntersectionArmCanBeReached(lane::LaneId const laneId,
+bool Intersection::outgoingIntersectionArmCanBeReached(lane::LaneId const lane_id,
                                                        TurnDirection const outgoingIntersectionArm)
 {
-  for (auto reachableOutgoingLaneId : getAllReachableOutgoingLanes(laneId, SuccessorMode::OwnIntersection))
+  for (auto reachableOutgoingLaneId : getAllReachableOutgoingLanes(lane_id, SuccessorMode::OwnIntersection))
   {
     if (mIntersectionArms[outgoingIntersectionArm].count(reachableOutgoingLaneId) > 0)
     {
@@ -696,9 +702,9 @@ void Intersection::addLaneAndSuccessorsToInternalLanesWithHigherPriorityIfCrossi
 void Intersection::addLaneAndSuccessorsToInternalLanesWithHigherPriorityIfCrossing(
   lane::LaneIdSet const &lanes, TurnDirection const restrictToOutgoingIntersectionArm)
 {
-  for (auto laneId : lanes)
+  for (auto lane_id : lanes)
   {
-    addLaneAndSuccessorsToInternalLanesWithHigherPriorityIfCrossing(laneId, restrictToOutgoingIntersectionArm);
+    addLaneAndSuccessorsToInternalLanesWithHigherPriorityIfCrossing(lane_id, restrictToOutgoingIntersectionArm);
   }
 }
 
@@ -719,9 +725,9 @@ void Intersection::addLaneAndSuccessorsToInternalLanesWithHigherPriority(
 void Intersection::addLaneAndSuccessorsToInternalLanesWithHigherPriority(
   lane::LaneIdSet const &lanes, TurnDirection const restrictToOutgoingIntersectionArm)
 {
-  for (auto laneId : lanes)
+  for (auto lane_id : lanes)
   {
-    addLaneAndSuccessorsToInternalLanesWithHigherPriority(laneId, restrictToOutgoingIntersectionArm);
+    addLaneAndSuccessorsToInternalLanesWithHigherPriority(lane_id, restrictToOutgoingIntersectionArm);
   }
 }
 
@@ -729,13 +735,13 @@ void Intersection::adjustLanesForHasWay()
 {
   for (auto const &intersectionArm : mIntersectionArms)
   {
-    for (auto laneId : intersectionArm.second)
+    for (auto lane_id : intersectionArm.second)
     {
-      auto sucessorLanes = getDirectSuccessorsInLaneDirectionWithinIntersection(laneId, SuccessorMode::OwnIntersection);
+      auto sucessorLanes
+        = getDirectSuccessorsInLaneDirectionWithinIntersection(lane_id, SuccessorMode::OwnIntersection);
       for (auto sucessorLaneId : sucessorLanes)
       {
-        auto trafficRuleAtOtherLane
-          = getRightOfWayForTransition(laneId, sucessorLaneId, !isLaneDirectionNegative(laneId));
+        auto trafficRuleAtOtherLane = getRightOfWayForTransition(lane_id, sucessorLaneId);
 
         // has way lanes have to be respected if we turn
         if ((trafficRuleAtOtherLane == IntersectionType::HasWay) && turnDirectionCrossesStraightTraffic())
@@ -751,13 +757,13 @@ void Intersection::adjustLanesForYield()
 {
   for (auto const &intersectionArm : mIntersectionArms)
   {
-    for (auto laneId : intersectionArm.second)
+    for (auto lane_id : intersectionArm.second)
     {
-      auto sucessorLanes = getDirectSuccessorsInLaneDirectionWithinIntersection(laneId, SuccessorMode::OwnIntersection);
+      auto sucessorLanes
+        = getDirectSuccessorsInLaneDirectionWithinIntersection(lane_id, SuccessorMode::OwnIntersection);
       for (auto sucessorLaneId : sucessorLanes)
       {
-        auto trafficRuleAtOtherLane
-          = getRightOfWayForTransition(laneId, sucessorLaneId, !isLaneDirectionNegative(laneId));
+        auto trafficRuleAtOtherLane = getRightOfWayForTransition(lane_id, sucessorLaneId);
         // need to give way to all of lanes that have way
         if (trafficRuleAtOtherLane == IntersectionType::HasWay)
         {
@@ -814,9 +820,9 @@ void Intersection::adjustLanesForTrafficLight()
 
 bool Intersection::objectOnIncomingLane(match::MapMatchedObjectBoundingBox const &object) const
 {
-  for (auto const &occupiedLane : object.laneOccupiedRegions)
+  for (auto const &occupiedLane : object.lane_occupied_regions)
   {
-    if (mIncomingLanes.count(occupiedLane.laneId) > 0)
+    if (mIncomingLanes.count(occupiedLane.lane_id) > 0)
     {
       return true;
     }
@@ -826,9 +832,9 @@ bool Intersection::objectOnIncomingLane(match::MapMatchedObjectBoundingBox const
 
 bool Intersection::objectOnInternalLaneWithLowerPriority(match::MapMatchedObjectBoundingBox const &object) const
 {
-  for (auto const &occupiedLane : object.laneOccupiedRegions)
+  for (auto const &occupiedLane : object.lane_occupied_regions)
   {
-    if (mInternalLanesWithLowerPriority.count(occupiedLane.laneId) > 0)
+    if (mInternalLanesWithLowerPriority.count(occupiedLane.lane_id) > 0)
     {
       return true;
     }
@@ -838,9 +844,9 @@ bool Intersection::objectOnInternalLaneWithLowerPriority(match::MapMatchedObject
 
 bool Intersection::objectOnIncomingLaneWithLowerPriority(match::MapMatchedObjectBoundingBox const &object) const
 {
-  for (auto const &occupiedLane : object.laneOccupiedRegions)
+  for (auto const &occupiedLane : object.lane_occupied_regions)
   {
-    if (mIncomingLanesWithLowerPriority.count(occupiedLane.laneId) > 0)
+    if (mIncomingLanesWithLowerPriority.count(occupiedLane.lane_id) > 0)
     {
       return true;
     }
@@ -855,9 +861,9 @@ bool Intersection::objectOnLaneWithLowerPriority(match::MapMatchedObjectBounding
 
 bool Intersection::objectOnInternalLaneWithHigherPriority(match::MapMatchedObjectBoundingBox const &object) const
 {
-  for (auto const &occupiedLane : object.laneOccupiedRegions)
+  for (auto const &occupiedLane : object.lane_occupied_regions)
   {
-    if (mInternalLanesWithHigherPriority.count(occupiedLane.laneId) > 0)
+    if (mInternalLanesWithHigherPriority.count(occupiedLane.lane_id) > 0)
     {
       return true;
     }
@@ -867,9 +873,9 @@ bool Intersection::objectOnInternalLaneWithHigherPriority(match::MapMatchedObjec
 
 bool Intersection::objectOnIncomingLaneWithHigherPriority(match::MapMatchedObjectBoundingBox const &object) const
 {
-  for (auto const &occupiedLane : object.laneOccupiedRegions)
+  for (auto const &occupiedLane : object.lane_occupied_regions)
   {
-    if (mIncomingLanesWithHigherPriority.count(occupiedLane.laneId) > 0)
+    if (mIncomingLanesWithHigherPriority.count(occupiedLane.lane_id) > 0)
     {
       return true;
     }
@@ -884,9 +890,9 @@ bool Intersection::objectOnLaneWithHigherPriority(match::MapMatchedObjectBoundin
 
 bool Intersection::objectOnCrossingLane(match::MapMatchedObjectBoundingBox const &object) const
 {
-  for (auto const &occupiedLane : object.laneOccupiedRegions)
+  for (auto const &occupiedLane : object.lane_occupied_regions)
   {
-    if (mCrossingLanes.count(occupiedLane.laneId) > 0)
+    if (mCrossingLanes.count(occupiedLane.lane_id) > 0)
     {
       return true;
     }
@@ -896,9 +902,9 @@ bool Intersection::objectOnCrossingLane(match::MapMatchedObjectBoundingBox const
 
 bool Intersection::objectOnIntersectionRoute(match::MapMatchedObjectBoundingBox const &object) const
 {
-  for (auto const &occupiedLane : object.laneOccupiedRegions)
+  for (auto const &occupiedLane : object.lane_occupied_regions)
   {
-    if (mLanesOnRoute.count(occupiedLane.laneId) > 0)
+    if (mLanesOnRoute.count(occupiedLane.lane_id) > 0)
     {
       return true;
     }
@@ -922,16 +928,16 @@ bool Intersection::objectRouteCrossesIntersectionRoute(route::FullRoute const &o
 bool Intersection::objectRouteFromSameArmAsIntersectionRoute(route::FullRoute const &objectRoute) const
 {
   bool routeLaneFound = false;
-  for (auto const &roadSegment : objectRoute.roadSegments)
+  for (auto const &roadSegment : objectRoute.road_segments)
   {
-    for (auto const &laneSegment : roadSegment.drivableLaneSegments)
+    for (auto const &laneSegment : roadSegment.drivable_lane_segments)
     {
-      if ((mInternalLanesFromSameIntersectionArm.count(laneSegment.laneInterval.laneId) > 0)
-          || (mIncomingLanesOnRoute.count(laneSegment.laneInterval.laneId) > 0))
+      if ((mInternalLanesFromSameIntersectionArm.count(laneSegment.lane_interval.lane_id) > 0)
+          || (mIncomingLanesOnRoute.count(laneSegment.lane_interval.lane_id) > 0))
       {
         routeLaneFound = true;
       }
-      else if (mInternalLanes.count(laneSegment.laneInterval.laneId) > 0)
+      else if (mInternalLanes.count(laneSegment.lane_interval.lane_id) > 0)
       {
         // another internal lane is found in the route, so route differs
         return false;
@@ -964,8 +970,9 @@ bool Intersection::objectRouteOppositeToIntersectionRoute(route::FullRoute const
   if (!findResult.isValid())
   {
     // check if the object route starts already within the intersection
-    if (!objectRoute.roadSegments.empty() && !objectRoute.roadSegments.begin()->drivableLaneSegments.empty()
-        && mInternalLanes.count(objectRoute.roadSegments.begin()->drivableLaneSegments.begin()->laneInterval.laneId)
+    if (!objectRoute.road_segments.empty() && !objectRoute.road_segments.begin()->drivable_lane_segments.empty()
+        && mInternalLanes.count(
+             objectRoute.road_segments.begin()->drivable_lane_segments.begin()->lane_interval.lane_id)
           > 0)
     {
       // object is already within intersection
@@ -974,12 +981,12 @@ bool Intersection::objectRouteOppositeToIntersectionRoute(route::FullRoute const
         auto internalLanesFromOutgoingIntersectionArm = getAllSuccessorsInLaneDirectionWithinIntersection(
           laneOnOutgoingIntersectionArm, SuccessorMode::OwnIntersection);
         if (internalLanesFromOutgoingIntersectionArm.count(
-              objectRoute.roadSegments.begin()->drivableLaneSegments.begin()->laneInterval.laneId)
+              objectRoute.road_segments.begin()->drivable_lane_segments.begin()->lane_interval.lane_id)
             > 0)
         {
           // and object came from outgoing intersection arm
           findResult = route::findWaypoint(
-            objectRoute.roadSegments.begin()->drivableLaneSegments.begin()->laneInterval.laneId, objectRoute);
+            objectRoute.road_segments.begin()->drivable_lane_segments.begin()->lane_interval.lane_id, objectRoute);
         }
       }
     }
@@ -1008,82 +1015,21 @@ physics::Distance Intersection::objectInterpenetrationDistanceWithIntersection(m
 {
   physics::Distance maxDistance(0.);
   TurnDirection coveredIntersectionArms = TurnDirection::Unknown;
-  for (auto const &occupiedLane : object.mapMatchedBoundingBox.laneOccupiedRegions)
+  for (auto const &occupiedLane : object.map_matched_bounding_box.lane_occupied_regions)
   {
-    if (mInternalLanes.count(occupiedLane.laneId) > 0u)
+    if ((mEntryBorderLanes.count(occupiedLane.lane_id)) > 0u || (mExitBorderLanes.count(occupiedLane.lane_id)) > 0)
     {
-      // internal lane
-      // if this lane is at the intersection border and the object is still touching that border
-      // then the range covered within this lane has to be considered for the inter penetration distances
-      bool isRelevantBorderLane = false;
-      if ((occupiedLane.longitudinalRange.maximum == physics::ParametricValue(1.))
-          || (occupiedLane.longitudinalRange.minimum == physics::ParametricValue(0.)))
-      {
-        // check predecessors
-        auto findPredecessors = mPredecessor.find(occupiedLane.laneId);
-        if (findPredecessors != mPredecessor.end())
-        {
-          for (auto predecessorId : findPredecessors->second)
-          {
-            if (!isLanePartOfAnIntersection(predecessorId))
-            {
-              // one of the predecessors is outside of the intersection
-              auto const entryBorderParaPoint = getEntryParaPointOfInternalLane(occupiedLane.laneId);
-              if ((entryBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.maximum)
-                  || (entryBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.minimum))
-              {
-                isRelevantBorderLane = true;
-                break;
-              }
-            }
-          }
-        }
-        if (!isRelevantBorderLane)
-        {
-          // check successors
-          auto findSuccessors = mSuccessor.find(occupiedLane.laneId);
-          if (findSuccessors != mSuccessor.end())
-          {
-            for (auto successorId : findSuccessors->second)
-            {
-              if (!isLanePartOfAnIntersection(successorId))
-              {
-                // one of the successors is outside of the intersection
-                auto const exitBorderParaPoint = getExitParaPointOfInternalLane(occupiedLane.laneId);
-                if ((exitBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.maximum)
-                    || (exitBorderParaPoint.parametricOffset == occupiedLane.longitudinalRange.minimum))
-                {
-                  isRelevantBorderLane = true;
-                  break;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      if (isRelevantBorderLane)
-      {
-        auto const laneLength = lane::getLane(occupiedLane.laneId).length;
-        physics::Distance const penetrationDistance
-          = (occupiedLane.longitudinalRange.maximum - occupiedLane.longitudinalRange.minimum) * laneLength;
-        maxDistance = std::max(maxDistance, penetrationDistance);
-      }
-      else
-      {
-        // otherwise this lane is touched as part of an actual internal intersection part and
-        // we only have to ensure that max-distance becomes > 0.
-        // and so, if no outgoing lane is touched (i.e. no intersection arm),
-        // the case fully within intersection is applied
-        maxDistance = std::max(maxDistance, physics::Distance(0.1));
-      }
+      auto const lane_length = lane::getLane(occupiedLane.lane_id).length;
+      physics::Distance const penetrationDistance
+        = (occupiedLane.longitudinal_range.maximum - occupiedLane.longitudinal_range.minimum) * lane_length;
+      maxDistance = std::max(maxDistance, penetrationDistance);
     }
-    else
+    else if (mInternalLanes.count(occupiedLane.lane_id) == 0u)
     {
       // not an internal lane, check if different intersection arms covered by the vehicle
       for (auto const &intersectionArm : mIntersectionArms)
       {
-        if (intersectionArm.second.count(occupiedLane.laneId) > 0u)
+        if (intersectionArm.second.count(occupiedLane.lane_id) > 0u)
         {
           if (coveredIntersectionArms == TurnDirection::Unknown)
           {
@@ -1092,7 +1038,7 @@ physics::Distance Intersection::objectInterpenetrationDistanceWithIntersection(m
           else if (coveredIntersectionArms != intersectionArm.first)
           {
             // covering two different intersection arms, actually crossing the intersection
-            return object.enuPosition.dimension.length;
+            return object.enu_position.dimension.length;
           }
         }
       }
@@ -1103,11 +1049,11 @@ physics::Distance Intersection::objectInterpenetrationDistanceWithIntersection(m
   {
     // not touching incoming/outgoing lane at all, but touching an internal lane
     // => fully within intersection
-    maxDistance = object.enuPosition.dimension.length;
+    maxDistance = object.enu_position.dimension.length;
   }
 
   // result must not extend length of the object
-  maxDistance = std::min(maxDistance, object.enuPosition.dimension.length);
+  maxDistance = std::min(maxDistance, object.enu_position.dimension.length);
   return maxDistance;
 }
 
@@ -1125,26 +1071,30 @@ bool Intersection::objectRouteCrossesLanesWithHigherPriority(route::FullRoute co
   return false;
 }
 
-void Intersection::collectTrafficLights(lane::LaneId fromLaneId, lane::LaneId toLaneId, bool useSuccessor)
+void Intersection::collectTrafficLights(lane::LaneId fromLaneId, lane::LaneId toLaneId)
 {
-  // keep the first match, we just need any match
-  auto fromLane = lane::getLane(fromLaneId);
-  auto location = lane::ContactLocation::PREDECESSOR;
-  if (useSuccessor)
+  auto laneFrom = lane::getLane(fromLaneId);
+  auto laneTo = lane::getLane(toLaneId);
+  auto contactLanesFromOutside = lane::getContactLane(laneFrom, toLaneId);
+  auto contactLanesFromInside = lane::getContactLane(laneTo, fromLaneId);
+  for (auto contactLaneFromOutside : contactLanesFromOutside)
   {
-    location = lane::ContactLocation::SUCCESSOR;
-  }
-  auto contacts = getContactLanes(fromLane, location);
-  for (auto const &contact : contacts)
-  {
-    if (contact.toLane == toLaneId)
+    for (auto const &contactType : contactLaneFromOutside.types)
     {
-      for (auto contactType : contact.types)
+      if (contactType == lane::ContactType::TRAFFIC_LIGHT)
       {
-        if (contactType == lane::ContactType::TRAFFIC_LIGHT)
-        {
-          mTrafficLightIds.insert(contact.trafficLightId);
-        }
+        mTrafficLightIds.insert(contactLaneFromOutside.landmark_id);
+      }
+    }
+  }
+
+  for (auto contactLaneFromInside : contactLanesFromInside)
+  {
+    for (auto const &contactType : contactLaneFromInside.types)
+    {
+      if (contactType == lane::ContactType::TRAFFIC_LIGHT)
+      {
+        mTrafficLightIds.insert(contactLaneFromInside.landmark_id);
       }
     }
   }
@@ -1159,14 +1109,14 @@ void Intersection::calculateSpeedLimit()
 {
   for (auto const &internalLaneId : mInternalLanes)
   {
-    route::LaneInterval laneInterval;
-    laneInterval.laneId = internalLaneId;
-    laneInterval.start = physics::ParametricValue(0.);
-    laneInterval.end = physics::ParametricValue(1.);
-    auto speedLimits = route::getSpeedLimits(laneInterval);
-    for (auto const &speedLimit : speedLimits)
+    route::LaneInterval lane_interval;
+    lane_interval.lane_id = internalLaneId;
+    lane_interval.start = physics::ParametricValue(0.);
+    lane_interval.end = physics::ParametricValue(1.);
+    auto speed_limits = route::getSpeedLimits(lane_interval);
+    for (auto const &speed_limit : speed_limits)
     {
-      mSpeedLimit = std::min(mSpeedLimit, speedLimit.speedLimit);
+      mSpeedLimit = std::min(mSpeedLimit, speed_limit.speed_limit);
     }
   }
 }
@@ -1174,7 +1124,7 @@ void Intersection::calculateSpeedLimit()
 landmark::TrafficLightType Intersection::extractTrafficLightType(landmark::LandmarkId trafficLightId)
 {
   auto trafficLight = landmark::getLandmark(trafficLightId);
-  return trafficLight.trafficLightType;
+  return trafficLight.traffic_light_type;
 }
 
 bool Intersection::isSolidTrafficLight(landmark::LandmarkId trafficLightId)
@@ -1228,6 +1178,10 @@ std::ostream &operator<<(std::ostream &os, ::ad::map::intersection::Intersection
   os << static_cast<::ad::map::intersection::CoreIntersection const &>(intersection);
   os << "Intersection[";
   os << toString(intersection.intersectionType());
+  if (intersection.intersectionType() == ::ad::map::intersection::IntersectionType::TrafficLight)
+  {
+    os << ": " << intersection.applicableTrafficLights();
+  }
   os << "]";
   os << std::endl;
   os << "->internalLanes: ";

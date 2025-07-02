@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -22,6 +22,9 @@
 #include <limits>
 #include <memory>
 #include <sstream>
+#include "spdlog/fmt/ostr.h"
+#include "spdlog/spdlog.h"
+
 /*!
  * @brief namespace ad
  */
@@ -99,8 +102,8 @@ struct GeometryStoreItem
    */
   bool operator==(const GeometryStoreItem &other) const
   {
-    return (leftEdgeOffset == other.leftEdgeOffset) && (rightEdgeOffset == other.rightEdgeOffset)
-      && (leftEdgePoints == other.leftEdgePoints) && (rightEdgePoints == other.rightEdgePoints);
+    return (left_edge_offset == other.left_edge_offset) && (right_edge_offset == other.right_edge_offset)
+      && (left_edge_points == other.left_edge_points) && (right_edge_points == other.right_edge_points);
   }
 
   /**
@@ -115,10 +118,10 @@ struct GeometryStoreItem
     return !operator==(other);
   }
 
-  uint32_t leftEdgeOffset{0};
-  uint32_t rightEdgeOffset{0};
-  uint32_t leftEdgePoints{0};
-  uint32_t rightEdgePoints{0};
+  uint32_t left_edge_offset{0};
+  uint32_t right_edge_offset{0};
+  uint32_t left_edge_points{0};
+  uint32_t right_edge_points{0};
 };
 
 } // namespace access
@@ -157,17 +160,17 @@ namespace access {
 inline std::ostream &operator<<(std::ostream &os, GeometryStoreItem const &_value)
 {
   os << "GeometryStoreItem(";
-  os << "leftEdgeOffset:";
-  os << _value.leftEdgeOffset;
+  os << "left_edge_offset:";
+  os << _value.left_edge_offset;
   os << ",";
-  os << "rightEdgeOffset:";
-  os << _value.rightEdgeOffset;
+  os << "right_edge_offset:";
+  os << _value.right_edge_offset;
   os << ",";
-  os << "leftEdgePoints:";
-  os << _value.leftEdgePoints;
+  os << "left_edge_points:";
+  os << _value.left_edge_points;
   os << ",";
-  os << "rightEdgePoints:";
-  os << _value.rightEdgePoints;
+  os << "right_edge_points:";
+  os << _value.right_edge_points;
   os << ")";
   return os;
 }
@@ -187,4 +190,16 @@ inline std::string to_string(::ad::map::access::GeometryStoreItem const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::access::GeometryStoreItem> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::access::GeometryStoreItem const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_ACCESS_GEOMETRYSTOREITEM

@@ -24,30 +24,30 @@ void expandBounds(point::ECEFPoint &upperBound, point::ECEFPoint &lowerBound, po
 
 point::BoundingSphere calcBoundingSphere(Geometry const &geometryLeft, Geometry const &geometryRight)
 {
-  point::BoundingSphere boundingSphere;
+  point::BoundingSphere bounding_sphere;
 
-  if (geometryLeft.ecefEdge.empty() && geometryRight.ecefEdge.empty())
+  if (geometryLeft.ecef_points.empty() && geometryRight.ecef_points.empty())
   {
-    return boundingSphere;
+    return bounding_sphere;
   }
 
   point::ECEFPoint upperBound;
   point::ECEFPoint lowerBound;
-  if (geometryLeft.ecefEdge.empty())
+  if (geometryLeft.ecef_points.empty())
   {
-    upperBound = geometryRight.ecefEdge.front();
+    upperBound = geometryRight.ecef_points.front();
   }
   else
   {
-    upperBound = geometryLeft.ecefEdge.front();
+    upperBound = geometryLeft.ecef_points.front();
   }
   lowerBound = upperBound;
 
-  for (auto const &point : geometryLeft.ecefEdge)
+  for (auto const &point : geometryLeft.ecef_points)
   {
     expandBounds(upperBound, lowerBound, point);
   }
-  for (auto const &point : geometryRight.ecefEdge)
+  for (auto const &point : geometryRight.ecef_points)
   {
     expandBounds(upperBound, lowerBound, point);
   }
@@ -55,10 +55,10 @@ point::BoundingSphere calcBoundingSphere(Geometry const &geometryLeft, Geometry 
   point::ECEFPoint const diagonalVector = upperBound - lowerBound;
   auto diagonalVectorLength = point::vectorLength(diagonalVector);
 
-  boundingSphere.radius = 0.5 * diagonalVectorLength;
-  boundingSphere.center = lowerBound + 0.5 * diagonalVector;
+  bounding_sphere.radius = 0.5 * diagonalVectorLength;
+  bounding_sphere.center = lowerBound + 0.5 * diagonalVector;
 
-  return boundingSphere;
+  return bounding_sphere;
 }
 
 } // namespace point

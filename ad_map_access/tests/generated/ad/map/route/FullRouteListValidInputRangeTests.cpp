@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,83 +28,84 @@ TEST(FullRouteListValidInputRangeTests, testValidInputRangeElementValid)
 {
   ::ad::map::route::FullRouteList value;
   ::ad::map::route::FullRoute element;
-  ::ad::map::route::RoadSegmentList elementRoadSegments;
-  ::ad::map::route::RoadSegment elementRoadSegmentsElement;
-  ::ad::map::route::LaneSegmentList elementRoadSegmentsElementDrivableLaneSegments;
-  ::ad::map::route::LaneSegment elementRoadSegmentsElementDrivableLaneSegmentsElement;
-  ::ad::map::lane::LaneId elementRoadSegmentsElementDrivableLaneSegmentsElementLeftNeighbor(1);
-  elementRoadSegmentsElementDrivableLaneSegmentsElement.leftNeighbor
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementLeftNeighbor;
-  ::ad::map::lane::LaneId elementRoadSegmentsElementDrivableLaneSegmentsElementRightNeighbor(1);
-  elementRoadSegmentsElementDrivableLaneSegmentsElement.rightNeighbor
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementRightNeighbor;
-  ::ad::map::lane::LaneIdList elementRoadSegmentsElementDrivableLaneSegmentsElementPredecessors;
-  ::ad::map::lane::LaneId elementRoadSegmentsElementDrivableLaneSegmentsElementPredecessorsElement(1);
-  elementRoadSegmentsElementDrivableLaneSegmentsElementPredecessors.resize(
-    1, elementRoadSegmentsElementDrivableLaneSegmentsElementPredecessorsElement);
-  elementRoadSegmentsElementDrivableLaneSegmentsElement.predecessors
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementPredecessors;
-  ::ad::map::lane::LaneIdList elementRoadSegmentsElementDrivableLaneSegmentsElementSuccessors;
-  ::ad::map::lane::LaneId elementRoadSegmentsElementDrivableLaneSegmentsElementSuccessorsElement(1);
-  elementRoadSegmentsElementDrivableLaneSegmentsElementSuccessors.resize(
-    1, elementRoadSegmentsElementDrivableLaneSegmentsElementSuccessorsElement);
-  elementRoadSegmentsElementDrivableLaneSegmentsElement.successors
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementSuccessors;
-  ::ad::map::route::LaneInterval elementRoadSegmentsElementDrivableLaneSegmentsElementLaneInterval;
-  ::ad::map::lane::LaneId elementRoadSegmentsElementDrivableLaneSegmentsElementLaneIntervalLaneId(1);
-  elementRoadSegmentsElementDrivableLaneSegmentsElementLaneInterval.laneId
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementLaneIntervalLaneId;
-  ::ad::physics::ParametricValue elementRoadSegmentsElementDrivableLaneSegmentsElementLaneIntervalStart(0.);
-  elementRoadSegmentsElementDrivableLaneSegmentsElementLaneInterval.start
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementLaneIntervalStart;
-  ::ad::physics::ParametricValue elementRoadSegmentsElementDrivableLaneSegmentsElementLaneIntervalEnd(0.);
-  elementRoadSegmentsElementDrivableLaneSegmentsElementLaneInterval.end
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementLaneIntervalEnd;
-  bool elementRoadSegmentsElementDrivableLaneSegmentsElementLaneIntervalWrongWay{true};
-  elementRoadSegmentsElementDrivableLaneSegmentsElementLaneInterval.wrongWay
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementLaneIntervalWrongWay;
-  elementRoadSegmentsElementDrivableLaneSegmentsElement.laneInterval
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementLaneInterval;
-  ::ad::map::route::RouteLaneOffset elementRoadSegmentsElementDrivableLaneSegmentsElementRouteLaneOffset(
+  ::ad::map::route::RoadSegmentList elementRoad_segments;
+  ::ad::map::route::RoadSegment elementRoad_segmentsElement;
+  ::ad::map::route::LaneSegmentList elementRoad_segmentsElementDrivable_lane_segments;
+  ::ad::map::route::LaneSegment elementRoad_segmentsElementDrivable_lane_segmentsElement;
+  ::ad::map::lane::LaneId elementRoad_segmentsElementDrivable_lane_segmentsElementLeft_neighbor(1);
+  elementRoad_segmentsElementDrivable_lane_segmentsElement.left_neighbor
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementLeft_neighbor;
+  ::ad::map::lane::LaneId elementRoad_segmentsElementDrivable_lane_segmentsElementRight_neighbor(1);
+  elementRoad_segmentsElementDrivable_lane_segmentsElement.right_neighbor
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementRight_neighbor;
+  ::ad::map::lane::LaneIdList elementRoad_segmentsElementDrivable_lane_segmentsElementPredecessors;
+  ::ad::map::lane::LaneId elementRoad_segmentsElementDrivable_lane_segmentsElementPredecessorsElement(1);
+  elementRoad_segmentsElementDrivable_lane_segmentsElementPredecessors.resize(
+    1, elementRoad_segmentsElementDrivable_lane_segmentsElementPredecessorsElement);
+  elementRoad_segmentsElementDrivable_lane_segmentsElement.predecessors
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementPredecessors;
+  ::ad::map::lane::LaneIdList elementRoad_segmentsElementDrivable_lane_segmentsElementSuccessors;
+  ::ad::map::lane::LaneId elementRoad_segmentsElementDrivable_lane_segmentsElementSuccessorsElement(1);
+  elementRoad_segmentsElementDrivable_lane_segmentsElementSuccessors.resize(
+    1, elementRoad_segmentsElementDrivable_lane_segmentsElementSuccessorsElement);
+  elementRoad_segmentsElementDrivable_lane_segmentsElement.successors
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementSuccessors;
+  ::ad::map::route::LaneInterval elementRoad_segmentsElementDrivable_lane_segmentsElementLane_interval;
+  ::ad::map::lane::LaneId elementRoad_segmentsElementDrivable_lane_segmentsElementLane_intervalLane_id(1);
+  elementRoad_segmentsElementDrivable_lane_segmentsElementLane_interval.lane_id
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementLane_intervalLane_id;
+  ::ad::physics::ParametricValue elementRoad_segmentsElementDrivable_lane_segmentsElementLane_intervalStart(0.);
+  elementRoad_segmentsElementDrivable_lane_segmentsElementLane_interval.start
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementLane_intervalStart;
+  ::ad::physics::ParametricValue elementRoad_segmentsElementDrivable_lane_segmentsElementLane_intervalEnd(0.);
+  elementRoad_segmentsElementDrivable_lane_segmentsElementLane_interval.end
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementLane_intervalEnd;
+  bool elementRoad_segmentsElementDrivable_lane_segmentsElementLane_intervalWrong_way{true};
+  elementRoad_segmentsElementDrivable_lane_segmentsElementLane_interval.wrong_way
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementLane_intervalWrong_way;
+  elementRoad_segmentsElementDrivable_lane_segmentsElement.lane_interval
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementLane_interval;
+  ::ad::map::route::RouteLaneOffset elementRoad_segmentsElementDrivable_lane_segmentsElementRoute_lane_offset(
     std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
-  elementRoadSegmentsElementDrivableLaneSegmentsElement.routeLaneOffset
-    = elementRoadSegmentsElementDrivableLaneSegmentsElementRouteLaneOffset;
-  elementRoadSegmentsElementDrivableLaneSegments.resize(1, elementRoadSegmentsElementDrivableLaneSegmentsElement);
-  elementRoadSegmentsElement.drivableLaneSegments = elementRoadSegmentsElementDrivableLaneSegments;
-  ::ad::map::route::SegmentCounter elementRoadSegmentsElementSegmentCountFromDestination(
+  elementRoad_segmentsElementDrivable_lane_segmentsElement.route_lane_offset
+    = elementRoad_segmentsElementDrivable_lane_segmentsElementRoute_lane_offset;
+  elementRoad_segmentsElementDrivable_lane_segments.resize(1, elementRoad_segmentsElementDrivable_lane_segmentsElement);
+  elementRoad_segmentsElement.drivable_lane_segments = elementRoad_segmentsElementDrivable_lane_segments;
+  ::ad::map::route::SegmentCounter elementRoad_segmentsElementSegment_count_from_destination(
     std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
-  elementRoadSegmentsElement.segmentCountFromDestination = elementRoadSegmentsElementSegmentCountFromDestination;
-  ::ad::map::point::BoundingSphere elementRoadSegmentsElementBoundingSphere;
-  ::ad::map::point::ECEFPoint elementRoadSegmentsElementBoundingSphereCenter;
-  ::ad::map::point::ECEFCoordinate elementRoadSegmentsElementBoundingSphereCenterX(-6400000);
-  elementRoadSegmentsElementBoundingSphereCenter.x = elementRoadSegmentsElementBoundingSphereCenterX;
-  ::ad::map::point::ECEFCoordinate elementRoadSegmentsElementBoundingSphereCenterY(-6400000);
-  elementRoadSegmentsElementBoundingSphereCenter.y = elementRoadSegmentsElementBoundingSphereCenterY;
-  ::ad::map::point::ECEFCoordinate elementRoadSegmentsElementBoundingSphereCenterZ(-6400000);
-  elementRoadSegmentsElementBoundingSphereCenter.z = elementRoadSegmentsElementBoundingSphereCenterZ;
-  elementRoadSegmentsElementBoundingSphere.center = elementRoadSegmentsElementBoundingSphereCenter;
-  ::ad::physics::Distance elementRoadSegmentsElementBoundingSphereRadius(-1e9);
-  elementRoadSegmentsElementBoundingSphere.radius = elementRoadSegmentsElementBoundingSphereRadius;
-  elementRoadSegmentsElement.boundingSphere = elementRoadSegmentsElementBoundingSphere;
-  elementRoadSegments.resize(1, elementRoadSegmentsElement);
-  element.roadSegments = elementRoadSegments;
-  ::ad::map::route::RoutePlanningCounter elementRoutePlanningCounter(
+  elementRoad_segmentsElement.segment_count_from_destination
+    = elementRoad_segmentsElementSegment_count_from_destination;
+  ::ad::map::point::BoundingSphere elementRoad_segmentsElementBounding_sphere;
+  ::ad::map::point::ECEFPoint elementRoad_segmentsElementBounding_sphereCenter;
+  ::ad::map::point::ECEFCoordinate elementRoad_segmentsElementBounding_sphereCenterX(-6400000);
+  elementRoad_segmentsElementBounding_sphereCenter.x = elementRoad_segmentsElementBounding_sphereCenterX;
+  ::ad::map::point::ECEFCoordinate elementRoad_segmentsElementBounding_sphereCenterY(-6400000);
+  elementRoad_segmentsElementBounding_sphereCenter.y = elementRoad_segmentsElementBounding_sphereCenterY;
+  ::ad::map::point::ECEFCoordinate elementRoad_segmentsElementBounding_sphereCenterZ(-6400000);
+  elementRoad_segmentsElementBounding_sphereCenter.z = elementRoad_segmentsElementBounding_sphereCenterZ;
+  elementRoad_segmentsElementBounding_sphere.center = elementRoad_segmentsElementBounding_sphereCenter;
+  ::ad::physics::Distance elementRoad_segmentsElementBounding_sphereRadius(-1e9);
+  elementRoad_segmentsElementBounding_sphere.radius = elementRoad_segmentsElementBounding_sphereRadius;
+  elementRoad_segmentsElement.bounding_sphere = elementRoad_segmentsElementBounding_sphere;
+  elementRoad_segments.resize(1, elementRoad_segmentsElement);
+  element.road_segments = elementRoad_segments;
+  ::ad::map::route::RoutePlanningCounter elementRoute_planning_counter(
     std::numeric_limits<::ad::map::route::RoutePlanningCounter>::lowest());
-  element.routePlanningCounter = elementRoutePlanningCounter;
-  ::ad::map::route::SegmentCounter elementFullRouteSegmentCount(
+  element.route_planning_counter = elementRoute_planning_counter;
+  ::ad::map::route::SegmentCounter elementFull_route_segment_count(
     std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
-  element.fullRouteSegmentCount = elementFullRouteSegmentCount;
-  ::ad::map::route::RouteLaneOffset elementDestinationLaneOffset(
+  element.full_route_segment_count = elementFull_route_segment_count;
+  ::ad::map::route::RouteLaneOffset elementDestination_lane_offset(
     std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
-  element.destinationLaneOffset = elementDestinationLaneOffset;
-  ::ad::map::route::RouteLaneOffset elementMinLaneOffset(
+  element.destination_lane_offset = elementDestination_lane_offset;
+  ::ad::map::route::RouteLaneOffset elementMin_lane_offset(
     std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
-  element.minLaneOffset = elementMinLaneOffset;
-  ::ad::map::route::RouteLaneOffset elementMaxLaneOffset(
+  element.min_lane_offset = elementMin_lane_offset;
+  ::ad::map::route::RouteLaneOffset elementMax_lane_offset(
     std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
-  element.maxLaneOffset = elementMaxLaneOffset;
-  ::ad::map::route::RouteCreationMode elementRouteCreationMode(::ad::map::route::RouteCreationMode::Undefined);
-  element.routeCreationMode = elementRouteCreationMode;
+  element.max_lane_offset = elementMax_lane_offset;
+  ::ad::map::route::RouteCreationMode elementRoute_creation_mode(::ad::map::route::RouteCreationMode::Undefined);
+  element.route_creation_mode = elementRoute_creation_mode;
   value.push_back(element);
   ASSERT_TRUE(withinValidInputRange(value));
 }
@@ -113,8 +114,8 @@ TEST(FullRouteListValidInputRangeTests, testValidInputRangeElementInvalid)
 {
   ::ad::map::route::FullRouteList value;
   ::ad::map::route::FullRoute element;
-  ::ad::map::route::RouteCreationMode elementRouteCreationMode(static_cast<::ad::map::route::RouteCreationMode>(-1));
-  element.routeCreationMode = elementRouteCreationMode;
+  ::ad::map::route::RouteCreationMode elementRoute_creation_mode(static_cast<::ad::map::route::RouteCreationMode>(-1));
+  element.route_creation_mode = elementRoute_creation_mode;
   value.push_back(element);
   ASSERT_FALSE(withinValidInputRange(value));
 }

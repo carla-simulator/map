@@ -22,15 +22,15 @@
  *
  * @returns v = a * t as speed value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Speed.
  */
 inline ad::physics::Speed operator*(ad::physics::Acceleration const &a, ad::physics::Duration const &t)
 {
   a.ensureValid();
   t.ensureValid();
-  ad::physics::Speed const v(static_cast<double>(a) * static_cast<double>(t));
-  v.ensureValid();
+  ad::physics::Speed v(a.mAcceleration * t.mDuration);
+  v.restrictToLimitsAndEnsureValid();
   return v;
 }
 
@@ -42,15 +42,15 @@ inline ad::physics::Speed operator*(ad::physics::Acceleration const &a, ad::phys
  *
  * @returns s = a * t2 as distance value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Distance.
  */
 inline ad::physics::Distance operator*(ad::physics::Acceleration const &a, ad::physics::DurationSquared const &t2)
 {
   a.ensureValid();
   t2.ensureValid();
-  ad::physics::Distance const s(static_cast<double>(a) * static_cast<double>(t2));
-  s.ensureValid();
+  ad::physics::Distance s(a.mAcceleration * t2.mDurationSquared);
+  s.restrictToLimitsAndEnsureValid();
   return s;
 }
 
@@ -62,15 +62,15 @@ inline ad::physics::Distance operator*(ad::physics::Acceleration const &a, ad::p
  *
  * @returns v2 = a * s as speed squared value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::SpeedSquared.
  */
 inline ad::physics::SpeedSquared operator*(ad::physics::Acceleration const &a, ad::physics::Distance const &s)
 {
   a.ensureValid();
   s.ensureValid();
-  ad::physics::SpeedSquared const v2(static_cast<double>(a) * static_cast<double>(s));
-  v2.ensureValid();
+  ad::physics::SpeedSquared v2(a.mAcceleration * s.mDistance);
+  v2.restrictToLimitsAndEnsureValid();
   return v2;
 }
 
@@ -82,12 +82,16 @@ inline ad::physics::SpeedSquared operator*(ad::physics::Acceleration const &a, a
  *
  * @returns v = a * t as speed value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Speed.
  */
 inline ad::physics::Speed operator*(ad::physics::Duration const &t, ad::physics::Acceleration const &a)
 {
-  return operator*(a, t);
+  t.ensureValid();
+  a.ensureValid();
+  ad::physics::Speed v(a.mAcceleration * t.mDuration);
+  v.restrictToLimitsAndEnsureValid();
+  return v;
 }
 
 /*!
@@ -98,15 +102,15 @@ inline ad::physics::Speed operator*(ad::physics::Duration const &t, ad::physics:
  *
  * @returns s = v * t as distance value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Distance.
  */
 inline ad::physics::Distance operator*(ad::physics::Speed const &v, ad::physics::Duration const &t)
 {
   v.ensureValid();
   t.ensureValid();
-  ad::physics::Distance const s(static_cast<double>(v) * static_cast<double>(t));
-  s.ensureValid();
+  ad::physics::Distance s(v.mSpeed * t.mDuration);
+  s.restrictToLimitsAndEnsureValid();
   return s;
 }
 
@@ -118,12 +122,16 @@ inline ad::physics::Distance operator*(ad::physics::Speed const &v, ad::physics:
  *
  * @returns s = v * t as distance value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Distance.
  */
 inline ad::physics::Distance operator*(ad::physics::Duration const &t, ad::physics::Speed const &v)
 {
-  return operator*(v, t);
+  t.ensureValid();
+  v.ensureValid();
+  ad::physics::Distance s(v.mSpeed * t.mDuration);
+  s.restrictToLimitsAndEnsureValid();
+  return s;
 }
 
 /*!
@@ -134,15 +142,15 @@ inline ad::physics::Distance operator*(ad::physics::Duration const &t, ad::physi
  *
  * @returns t = s / v as duration value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Duration.
  */
 inline ad::physics::Duration operator/(ad::physics::Distance const &s, ad::physics::Speed const &v)
 {
   s.ensureValid();
   v.ensureValidNonZero();
-  ad::physics::Duration const t(static_cast<double>(s) / static_cast<double>(v));
-  t.ensureValid();
+  ad::physics::Duration t(s.mDistance / v.mSpeed);
+  t.restrictToLimitsAndEnsureValid();
   return t;
 }
 
@@ -154,15 +162,15 @@ inline ad::physics::Duration operator/(ad::physics::Distance const &s, ad::physi
  *
  * @returns t = v / a as duration value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Duration.
  */
 inline ad::physics::Duration operator/(ad::physics::Speed const &v, ad::physics::Acceleration const &a)
 {
   v.ensureValid();
   a.ensureValidNonZero();
-  ad::physics::Duration const t(static_cast<double>(v) / static_cast<double>(a));
-  t.ensureValid();
+  ad::physics::Duration t(v.mSpeed / a.mAcceleration);
+  t.restrictToLimitsAndEnsureValid();
   return t;
 }
 
@@ -174,15 +182,15 @@ inline ad::physics::Duration operator/(ad::physics::Speed const &v, ad::physics:
  *
  * @returns a = v / t as acceleration value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Acceleration.
  */
 inline ad::physics::Acceleration operator/(ad::physics::Speed const &v, ad::physics::Duration const &t)
 {
   v.ensureValid();
   t.ensureValidNonZero();
-  ad::physics::Acceleration const a(static_cast<double>(v) / static_cast<double>(t));
-  a.ensureValid();
+  ad::physics::Acceleration a(v.mSpeed / t.mDuration);
+  a.restrictToLimitsAndEnsureValid();
   return a;
 }
 
@@ -194,16 +202,36 @@ inline ad::physics::Acceleration operator/(ad::physics::Speed const &v, ad::phys
  *
  * @returns s = v^2 / a as distance value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Distance.
  */
 inline ad::physics::Distance operator/(ad::physics::SpeedSquared const &v2, ad::physics::Acceleration const &a)
 {
   v2.ensureValid();
   a.ensureValidNonZero();
-  ad::physics::Distance const t(static_cast<double>(v2) / static_cast<double>(a));
-  t.ensureValid();
-  return t;
+  ad::physics::Distance d(v2.mSpeedSquared / a.mAcceleration);
+  d.restrictToLimitsAndEnsureValid();
+  return d;
+}
+
+/*!
+ * @brief Arithmetic physics operation a = v^2 / s
+ *
+ * @param[in] v2 squared speed value
+ * @param[in] s distance value
+ *
+ * @returns a = v^2 / s as acceleration value
+ *
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Acceleration.
+ */
+inline ad::physics::Acceleration operator/(ad::physics::SpeedSquared const &v2, ad::physics::Distance const &d)
+{
+  v2.ensureValid();
+  d.ensureValidNonZero();
+  ad::physics::Acceleration a(v2.mSpeedSquared / d.mDistance);
+  a.restrictToLimitsAndEnsureValid();
+  return a;
 }
 
 /*!
@@ -214,14 +242,14 @@ inline ad::physics::Distance operator/(ad::physics::SpeedSquared const &v2, ad::
  *
  * @returns t^2 = s / a as squared duration value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::DurationSquared.
  */
 inline ad::physics::DurationSquared operator/(ad::physics::Distance const &s, ad::physics::Acceleration const &a)
 {
   s.ensureValid();
   a.ensureValidNonZero();
-  ad::physics::DurationSquared const t2(static_cast<double>(s) / static_cast<double>(a));
-  t2.ensureValid();
+  ad::physics::DurationSquared t2(s.mDistance / a.mAcceleration);
+  t2.restrictToLimitsAndEnsureValid();
   return t2;
 }

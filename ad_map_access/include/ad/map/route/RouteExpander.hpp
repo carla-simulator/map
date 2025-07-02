@@ -136,13 +136,13 @@ protected:
   //! @returns \c true if the given origin point is the parametric start
   bool isStart(RoutingPoint const &origin)
   {
-    return origin.first.point.parametricOffset == physics::ParametricValue(0.);
+    return origin.first.point.parametric_offset == physics::ParametricValue(0.);
   }
 
   //! @returns \c true if the given origin point is the parametric end
   bool isEnd(RoutingPoint const &origin)
   {
-    return origin.first.point.parametricOffset == physics::ParametricValue(1.);
+    return origin.first.point.parametric_offset == physics::ParametricValue(1.);
   }
 
   //! @returns \c true if the given origin point on the given lane defines a positive movement
@@ -160,9 +160,9 @@ protected:
   }
 
   //! check if lane is relevant for route expander
-  bool isLaneRelevantForExpansion(lane::LaneId const laneId) const
+  bool isLaneRelevantForExpansion(lane::LaneId const lane_id) const
   {
-    return lane::isLaneRelevantForExpansion(laneId, mRelevantLanes);
+    return lane::isLaneRelevantForExpansion(lane_id, mRelevantLanes);
   }
 
   //! perform the expansion of the neighbor points on the same lane
@@ -193,7 +193,7 @@ void RouteExpander<RoutingCostData>::expandNeighbors(
     throw std::runtime_error("RouteExpander::ExpandNeighbors invalid routing direction!");
   }
 
-  lane::Lane::ConstPtr lane = lane::getLanePtr(origin.first.point.laneId);
+  lane::Lane::ConstPtr lane = lane::getLanePtr(origin.first.point.lane_id);
   if (lane)
   {
     if ( // lane has to be routable to expand
@@ -227,20 +227,20 @@ RouteExpander<RoutingCostData>::createNeighbor(lane::Lane::ConstPtr originLane,
   physics::Distance neighborDistance{0.};
   physics::Duration neighborDuration{0.};
   point::ECEFPoint pt_origin
-    = getParametricPoint(*originLane, origin.first.point.parametricOffset, physics::ParametricValue(0.5));
+    = getParametricPoint(*originLane, origin.first.point.parametric_offset, physics::ParametricValue(0.5));
   point::ECEFPoint pt_neighbor
-    = getParametricPoint(*neighborLane, neighbor.first.point.parametricOffset, physics::ParametricValue(0.5));
+    = getParametricPoint(*neighborLane, neighbor.first.point.parametric_offset, physics::ParametricValue(0.5));
   neighborDistance = point::distance(pt_neighbor, pt_origin);
   physics::ParametricRange drivingRange;
-  if (origin.first.point.parametricOffset < neighbor.first.point.parametricOffset)
+  if (origin.first.point.parametric_offset < neighbor.first.point.parametric_offset)
   {
-    drivingRange.minimum = origin.first.point.parametricOffset;
-    drivingRange.maximum = neighbor.first.point.parametricOffset;
+    drivingRange.minimum = origin.first.point.parametric_offset;
+    drivingRange.maximum = neighbor.first.point.parametric_offset;
   }
   else
   {
-    drivingRange.minimum = neighbor.first.point.parametricOffset;
-    drivingRange.maximum = origin.first.point.parametricOffset;
+    drivingRange.minimum = neighbor.first.point.parametric_offset;
+    drivingRange.maximum = origin.first.point.parametric_offset;
   }
 
   if (originLane == neighborLane)
@@ -275,9 +275,10 @@ template <class RoutingCostData>
 void RouteExpander<RoutingCostData>::expandSameLaneNeighbors(
   lane::Lane::ConstPtr lane, typename RouteExpander<RoutingCostData>::RoutingPoint const &origin)
 {
-  if ((lane->id == getDest().laneId)
-      && ((isPositiveMovement(lane, origin) && (origin.first.point.parametricOffset <= getDest().parametricOffset))
-          || (isNegativeMovement(lane, origin) && (origin.first.point.parametricOffset >= getDest().parametricOffset))))
+  if ((lane->id == getDest().lane_id)
+      && ((isPositiveMovement(lane, origin) && (origin.first.point.parametric_offset <= getDest().parametric_offset))
+          || (isNegativeMovement(lane, origin)
+              && (origin.first.point.parametric_offset >= getDest().parametric_offset))))
   {
     // approaching the destination from valid side
     auto const neighbor = createNeighbor(lane, origin, lane, getRoutingDest());
@@ -301,22 +302,22 @@ template <class RoutingCostData>
 void RouteExpander<RoutingCostData>::expandLongitudinalNeighbors(
   lane::Lane::ConstPtr lane, typename RouteExpander<RoutingCostData>::RoutingPoint const &origin)
 {
-  lane::ContactLaneList contactLanes;
+  lane::ContactLaneList contact_lanes;
   if (isEnd(origin) && isPositiveMovement(lane, origin))
   {
-    contactLanes = lane::getContactLanes(*lane, lane::ContactLocation::SUCCESSOR);
+    contact_lanes = lane::getContactLanes(*lane, lane::ContactLocation::SUCCESSOR);
   }
   else if (isStart(origin) && isNegativeMovement(lane, origin))
   {
-    contactLanes = lane::getContactLanes(*lane, lane::ContactLocation::PREDECESSOR);
+    contact_lanes = lane::getContactLanes(*lane, lane::ContactLocation::PREDECESSOR);
   }
-  for (auto contactLane : contactLanes)
+  for (auto contactLane : contact_lanes)
   {
-    if (!isLaneRelevantForExpansion(contactLane.toLane))
+    if (!isLaneRelevantForExpansion(contactLane.to_lane))
     {
       continue;
     }
-    lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.toLane);
+    lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.to_lane);
     if (otherLane)
     {
       if (isRouteable(*otherLane))
@@ -358,11 +359,11 @@ void RouteExpander<RoutingCostData>::expandLateralNeighbors(
   for (auto const &contactLane :
        lane::getContactLanes(*lane, {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT}))
   {
-    if (!isLaneRelevantForExpansion(contactLane.toLane))
+    if (!isLaneRelevantForExpansion(contactLane.to_lane))
     {
       continue;
     }
-    lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.toLane);
+    lane::Lane::ConstPtr otherLane = lane::getLanePtr(contactLane.to_lane);
     if (otherLane)
     {
       if (isRouteable(*otherLane))
@@ -373,7 +374,7 @@ void RouteExpander<RoutingCostData>::expandLateralNeighbors(
             lane,
             origin,
             otherLane,
-            createRoutingParaPoint(otherLane->id, origin.first.point.parametricOffset, origin.first.direction));
+            createRoutingParaPoint(otherLane->id, origin.first.point.parametric_offset, origin.first.direction));
           addNeighbor(lane, origin, otherLane, neighbor, ExpandReason::LateralNeighbor);
         }
       }

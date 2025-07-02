@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -49,9 +49,9 @@ namespace route {
  * lane in the sense of the route traveling direction.
  * The counter is assigned once on route planning indicating the segment count from
  * destination.
- * The first segment of the initially planned route should have a segmentCountFromDestination
+ * The first segment of the initially planned route should have a segment_count_from_destination
  * == 'number of route segments' and
- * the last segment a segmentCountFromDestination == 1.
+ * the last segment a segment_count_from_destination == 1.
  * If the stack transports only route previews or is shortening the route while traveling
  * along one gains information on how the route changed.
  * In addition the road segments bounding sphere is provided.
@@ -117,8 +117,9 @@ struct RoadSegment
    */
   bool operator==(const RoadSegment &other) const
   {
-    return (drivableLaneSegments == other.drivableLaneSegments)
-      && (segmentCountFromDestination == other.segmentCountFromDestination) && (boundingSphere == other.boundingSphere);
+    return (drivable_lane_segments == other.drivable_lane_segments)
+      && (segment_count_from_destination == other.segment_count_from_destination)
+      && (bounding_sphere == other.bounding_sphere);
   }
 
   /**
@@ -133,13 +134,13 @@ struct RoadSegment
     return !operator==(other);
   }
 
-  ::ad::map::route::LaneSegmentList drivableLaneSegments;
-  ::ad::map::route::SegmentCounter segmentCountFromDestination{0};
+  ::ad::map::route::LaneSegmentList drivable_lane_segments;
+  ::ad::map::route::SegmentCounter segment_count_from_destination{0};
 
   /*!
    * Bounding sphere of the road segment
    */
-  ::ad::map::point::BoundingSphere boundingSphere;
+  ::ad::map::point::BoundingSphere bounding_sphere;
 };
 
 } // namespace route
@@ -178,14 +179,14 @@ namespace route {
 inline std::ostream &operator<<(std::ostream &os, RoadSegment const &_value)
 {
   os << "RoadSegment(";
-  os << "drivableLaneSegments:";
-  os << _value.drivableLaneSegments;
+  os << "drivable_lane_segments:";
+  os << _value.drivable_lane_segments;
   os << ",";
-  os << "segmentCountFromDestination:";
-  os << _value.segmentCountFromDestination;
+  os << "segment_count_from_destination:";
+  os << _value.segment_count_from_destination;
   os << ",";
-  os << "boundingSphere:";
-  os << _value.boundingSphere;
+  os << "bounding_sphere:";
+  os << _value.bounding_sphere;
   os << ")";
   return os;
 }
@@ -205,4 +206,16 @@ inline std::string to_string(::ad::map::route::RoadSegment const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::route::RoadSegment> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::route::RoadSegment const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_ROUTE_ROADSEGMENT

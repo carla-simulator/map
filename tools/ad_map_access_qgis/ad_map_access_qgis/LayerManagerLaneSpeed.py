@@ -26,12 +26,13 @@ class LayerManagerLaneSpeed(LayerManager):
         "..."
 
     # WARNING: This code does not handle properly multiple sub-segments with same speed limit!
+
     def add_speed_limit(self, lane, speed_limit):
         "..."
         lane_id = lane.id
-        limit = round(float(speed_limit.speedLimit), 1)
-        tstart = speed_limit.lanePiece.minimum
-        tend = speed_limit.lanePiece.maximum
+        limit = round(speed_limit.speed_limit.mSpeed, 1)
+        tstart = speed_limit.lane_piece.minimum
+        tend = speed_limit.lane_piece.maximum
         LayerManager.remove_old_feature(self, lane_id)
         lla_left = GetLaneSubEdgeLeft(lane_id, tstart, tend)
         lla_right = GetLaneSubEdgeRight(lane_id, tstart, tend)
@@ -39,6 +40,7 @@ class LayerManagerLaneSpeed(LayerManager):
         feature = self.layer.add_lla2(lla_left, lla_right, attrs)
         LayerManager.add_new_feature(self, lane_id, feature)
 
-    def change_attribute_value(self, lane_id, index, val):
+    def change_attribute_value(self, lane_id, index, val, attributes):
         "..."
         Globs.log.warning("Attribute change not supported")
+        return False

@@ -20,6 +20,26 @@
 #include "ad/physics/Types.hpp"
 
 /*!
+ * @brief Multiplication of two probabilities
+ *
+ * @param[in] p1 a probability
+ * @param[in] p2 another probability
+ *
+ * @returns p = p1 * p2 as probability value
+ *
+ * \note throws a std::out_of_range exception if one of the two operands or the result of
+ *   the operation is not valid
+ */
+inline ad::physics::Probability operator*(ad::physics::Probability const &p1, ad::physics::Probability const &p2)
+{
+  p1.ensureValid();
+  p2.ensureValid();
+  ad::physics::Probability p(p1.mProbability * p2.mProbability);
+  p.restrictToLimitsAndEnsureValid();
+  return p;
+}
+
+/*!
  * @brief namespace ad
  */
 namespace ad {

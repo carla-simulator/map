@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -31,14 +31,14 @@ TEST(AngularVelocityTests, minIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(-1e3, ::ad::physics::AngularVelocity::cMinValue);
   EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::cMinValue,
-                   static_cast<double>(::ad::physics::AngularVelocity::getMin()));
+                   ::ad::physics::AngularVelocity::getMin().mAngularVelocity);
 }
 
 TEST(AngularVelocityTests, maxIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(1e3, ::ad::physics::AngularVelocity::cMaxValue);
   EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::cMaxValue,
-                   static_cast<double>(::ad::physics::AngularVelocity::getMax()));
+                   ::ad::physics::AngularVelocity::getMax().mAngularVelocity);
 }
 
 TEST(AngularVelocityTests, precisionIsDefinedAsExpected)
@@ -46,7 +46,7 @@ TEST(AngularVelocityTests, precisionIsDefinedAsExpected)
   EXPECT_LT(0., ::ad::physics::AngularVelocity::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-3, ::ad::physics::AngularVelocity::cPrecisionValue);
   EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::cPrecisionValue,
-                   static_cast<double>(::ad::physics::AngularVelocity::getPrecision()));
+                   ::ad::physics::AngularVelocity::getPrecision().mAngularVelocity);
 }
 
 TEST(AngularVelocityTests, minIsValid)
@@ -105,41 +105,41 @@ TEST(AngularVelocityTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(AngularVelocityTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::AngularVelocity::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::AngularVelocity>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::getMin().mAngularVelocity,
+                   std::numeric_limits<::ad::physics::AngularVelocity>::lowest().mAngularVelocity);
 }
 
 TEST(AngularVelocityTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::AngularVelocity::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::AngularVelocity>::max()));
+  EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::getMax().mAngularVelocity,
+                   std::numeric_limits<::ad::physics::AngularVelocity>::max().mAngularVelocity);
 }
 
 TEST(AngularVelocityTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::AngularVelocity::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::AngularVelocity>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::getPrecision().mAngularVelocity,
+                   std::numeric_limits<::ad::physics::AngularVelocity>::epsilon().mAngularVelocity);
 }
 
 TEST(AngularVelocityTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::AngularVelocity(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::AngularVelocity(-1.))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::physics::AngularVelocity(-0.)).mAngularVelocity);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::physics::AngularVelocity(-1.)).mAngularVelocity);
   EXPECT_DOUBLE_EQ(
     ::ad::physics::AngularVelocity::cPrecisionValue,
-    static_cast<double>(std::fabs(::ad::physics::AngularVelocity(::ad::physics::AngularVelocity::cPrecisionValue))));
+    std::fabs(::ad::physics::AngularVelocity(::ad::physics::AngularVelocity::cPrecisionValue).mAngularVelocity));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::physics::AngularVelocity::cMinValue),
-    static_cast<double>(std::fabs(::ad::physics::AngularVelocity(::ad::physics::AngularVelocity::cMinValue))));
+    std::fabs(::ad::physics::AngularVelocity(::ad::physics::AngularVelocity::cMinValue).mAngularVelocity));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::physics::AngularVelocity::cMinValue),
-    static_cast<double>(std::fabs(::ad::physics::AngularVelocity(-::ad::physics::AngularVelocity::cMinValue))));
+    std::fabs(::ad::physics::AngularVelocity(-::ad::physics::AngularVelocity::cMinValue).mAngularVelocity));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::physics::AngularVelocity::cMaxValue),
-    static_cast<double>(std::fabs(::ad::physics::AngularVelocity(::ad::physics::AngularVelocity::cMaxValue))));
+    std::fabs(::ad::physics::AngularVelocity(::ad::physics::AngularVelocity::cMaxValue).mAngularVelocity));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::physics::AngularVelocity::cMaxValue),
-    static_cast<double>(std::fabs(::ad::physics::AngularVelocity(-::ad::physics::AngularVelocity::cMaxValue))));
+    std::fabs(::ad::physics::AngularVelocity(-::ad::physics::AngularVelocity::cMaxValue).mAngularVelocity));
 }
 
 TEST(AngularVelocityTests, constructionFromValidFPValue)
@@ -147,7 +147,7 @@ TEST(AngularVelocityTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::AngularVelocity::cMinValue;
   ::ad::physics::AngularVelocity value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mAngularVelocity);
 }
 
 TEST(AngularVelocityTests, copyConstructionFromValidValue)
@@ -155,7 +155,7 @@ TEST(AngularVelocityTests, copyConstructionFromValidValue)
   ::ad::physics::AngularVelocity const validValue(::ad::physics::AngularVelocity::cMinValue);
   ::ad::physics::AngularVelocity value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mAngularVelocity, value.mAngularVelocity);
 }
 
 TEST(AngularVelocityTests, moveConstructionFromValidValue)
@@ -163,7 +163,7 @@ TEST(AngularVelocityTests, moveConstructionFromValidValue)
   ::ad::physics::AngularVelocity validValue(::ad::physics::AngularVelocity::cMinValue);
   ::ad::physics::AngularVelocity value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::cMinValue, value.mAngularVelocity);
 }
 
 TEST(AngularVelocityTests, assignmentFromValidValue)
@@ -172,7 +172,7 @@ TEST(AngularVelocityTests, assignmentFromValidValue)
   ::ad::physics::AngularVelocity value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mAngularVelocity, value.mAngularVelocity);
 }
 
 TEST(AngularVelocityTests, moveAssignmentFromValidValue)
@@ -181,7 +181,7 @@ TEST(AngularVelocityTests, moveAssignmentFromValidValue)
   ::ad::physics::AngularVelocity value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::AngularVelocity::cMinValue, value.mAngularVelocity);
 }
 
 TEST(AngularVelocityTests, constructionFromInvalidFPValue)
@@ -257,7 +257,7 @@ TEST(AngularVelocityTests, arithmeticOperatorsThrowOnInvalid)
   //  operator+(::ad::physics::AngularVelocity)
   EXPECT_THROW(invalidValue + maximalValue, std::out_of_range);
   EXPECT_THROW(maximalValue + invalidValue, std::out_of_range);
-  EXPECT_THROW(maximalValue + maximalValue, std::out_of_range);
+  EXPECT_EQ(maximalValue + maximalValue, maximalValue);
 
   //  operator+=(::ad::physics::AngularVelocity)
   calculationValue = invalidValue;
@@ -265,12 +265,12 @@ TEST(AngularVelocityTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = maximalValue;
   EXPECT_THROW(calculationValue += invalidValue, std::out_of_range);
   calculationValue = maximalValue;
-  EXPECT_THROW(calculationValue += maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue += maximalValue, maximalValue);
 
   //  operator-(::ad::physics::AngularVelocity)
   EXPECT_THROW(invalidValue - minimalValue, std::out_of_range);
   EXPECT_THROW(minimalValue - invalidValue, std::out_of_range);
-  EXPECT_THROW(minimalValue - maximalValue, std::out_of_range);
+  EXPECT_EQ(minimalValue - maximalValue, minimalValue);
 
   //  operator-=(::ad::physics::AngularVelocity)
   calculationValue = invalidValue;
@@ -278,17 +278,17 @@ TEST(AngularVelocityTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = minimalValue;
   EXPECT_THROW(calculationValue -= invalidValue, std::out_of_range);
   calculationValue = minimalValue;
-  EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue -= maximalValue, minimalValue);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mAngularVelocity, std::out_of_range);
+  EXPECT_EQ(maximalValue * maximalValue.mAngularVelocity, maximalValue);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mAngularVelocity, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mAngularVelocity, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
-  EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
+  EXPECT_EQ(maximalValue / 0.5, maximalValue);
 
   //  operator/(::ad::physics::AngularVelocity)
   EXPECT_THROW(invalidValue / maximalValue, std::out_of_range);
@@ -297,13 +297,13 @@ TEST(AngularVelocityTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mAngularVelocity) > std::fabs(minimalValue.mAngularVelocity))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mAngularVelocity) < std::fabs(minimalValue.mAngularVelocity))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -329,13 +329,13 @@ TEST(AngularVelocityTests, comparisonOperatorsRespectPrecision)
     value = ::ad::physics::AngularVelocity(precisionValueTimesTen);
   }
   ::ad::physics::AngularVelocity const sameValue = value;
-  ::ad::physics::AngularVelocity const slightlyBiggerValue(static_cast<double>(value)
+  ::ad::physics::AngularVelocity const slightlyBiggerValue(value.mAngularVelocity
                                                            + ::ad::physics::AngularVelocity::cPrecisionValue * 0.9);
-  ::ad::physics::AngularVelocity const slightlySmallerValue(static_cast<double>(value)
+  ::ad::physics::AngularVelocity const slightlySmallerValue(value.mAngularVelocity
                                                             - ::ad::physics::AngularVelocity::cPrecisionValue * 0.9);
-  ::ad::physics::AngularVelocity const actuallyBiggerValue(static_cast<double>(value)
+  ::ad::physics::AngularVelocity const actuallyBiggerValue(value.mAngularVelocity
                                                            + ::ad::physics::AngularVelocity::cPrecisionValue * 1.1);
-  ::ad::physics::AngularVelocity const actuallySmallerValue(static_cast<double>(value)
+  ::ad::physics::AngularVelocity const actuallySmallerValue(value.mAngularVelocity
                                                             - ::ad::physics::AngularVelocity::cPrecisionValue * 1.1);
 
   // operator ==
@@ -399,41 +399,41 @@ TEST(AngularVelocityTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::physics::AngularVelocity)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngularVelocity + value.mAngularVelocity, result.mAngularVelocity, cDoubleNear);
 
   //  operator+=(::ad::physics::AngularVelocity)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngularVelocity + value.mAngularVelocity, result.mAngularVelocity, cDoubleNear);
 
   //  operator-(::ad::physics::AngularVelocity)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngularVelocity - value.mAngularVelocity, result.mAngularVelocity, cDoubleNear);
 
   //  operator-=(::ad::physics::AngularVelocity)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngularVelocity - value.mAngularVelocity, result.mAngularVelocity, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngularVelocity * 5., result.mAngularVelocity, cDoubleNear);
 
   //  operator*(double, ::ad::physics::AngularVelocity)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngularVelocity * 5., result.mAngularVelocity, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mAngularVelocity;
+  EXPECT_NEAR(value.mAngularVelocity / value.mAngularVelocity, result.mAngularVelocity, cDoubleNear);
 
   //  operator/(::ad::physics::AngularVelocity)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mAngularVelocity / value.mAngularVelocity, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::physics::AngularVelocity::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::physics::AngularVelocity::cMaxValue))
+  if ((::ad::physics::AngularVelocity::cMinValue < -value.mAngularVelocity)
+      && (-value.mAngularVelocity < ::ad::physics::AngularVelocity::cMaxValue))
   {
     result = -value;
   }

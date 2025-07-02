@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -50,11 +50,13 @@ namespace access {
  * \brief Enable/Disable explicit conversion. Currently set to "only explicit conversion".
  */
 #define _AD_MAP_ACCESS_PARTITIONID_EXPLICIT_CONVERSION_ explicit
+#define _AD_MAP_ACCESS_PARTITIONID_OPERATOR_BASE_TYPE_ 0
 #else
 /*!
  * \brief Enable/Disable explicit conversion. Currently set to "implicit conversion allowed".
  */
 #define _AD_MAP_ACCESS_PARTITIONID_EXPLICIT_CONVERSION_
+#define _AD_MAP_ACCESS_PARTITIONID_OPERATOR_BASE_TYPE_ 1
 #endif
 
 /*!
@@ -229,8 +231,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    PartitionId const result(mPartitionId + other.mPartitionId);
-    result.ensureValid();
+    PartitionId result(mPartitionId + other.mPartitionId);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -249,7 +251,7 @@ public:
     ensureValid();
     other.ensureValid();
     mPartitionId += other.mPartitionId;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -267,8 +269,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    PartitionId const result(mPartitionId - other.mPartitionId);
-    result.ensureValid();
+    PartitionId result(mPartitionId - other.mPartitionId);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -287,7 +289,7 @@ public:
     ensureValid();
     other.ensureValid();
     mPartitionId -= other.mPartitionId;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -295,12 +297,35 @@ public:
    * \brief conversion to base type: uint64_t
    *
    * \note the conversion to the base type removes the physical unit.
-   *       \ref \_AD_MAP_ACCESS_PARTITIONID_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.
    */
-  _AD_MAP_ACCESS_PARTITIONID_EXPLICIT_CONVERSION_ operator uint64_t() const
+  uint64_t toBaseType() const
   {
     return mPartitionId;
   }
+
+  /*!
+   * \returns \c true if the PartitionId is a normal value
+   *
+   * An PartitionId value is defined to be normal if:
+   * - It is normal or zero (see std::fpclassify())
+   */
+  bool isNormal() const
+  {
+    auto const valueClass = std::fpclassify(mPartitionId);
+    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO));
+  }
+
+#if _AD_MAP_ACCESS_PARTITIONID_OPERATOR_BASE_TYPE_
+  /*!
+   * \brief conversion to base type: uint64_t
+   *
+   * \note the conversion to the base type removes the physical unit.
+   */
+  operator uint64_t() const
+  {
+    return mPartitionId;
+  }
+#endif
 
   /*!
    * \returns \c true if the PartitionId in a valid range
@@ -311,9 +336,7 @@ public:
    */
   bool isValid() const
   {
-    auto const valueClass = std::fpclassify(mPartitionId);
-    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) && (cMinValue <= mPartitionId)
-      && (mPartitionId <= cMaxValue);
+    return isNormal() && (cMinValue <= mPartitionId) && (mPartitionId <= cMaxValue);
   }
 
   /*!
@@ -326,7 +349,8 @@ public:
   {
     if (!isValid())
     {
-      spdlog::info("ensureValid(::ad::map::access::PartitionId)>> {} value out of range", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::map::access::PartitionId)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_MAP_ACCESS_PARTITIONID_THROWS_EXCEPTION == 1)
       throw std::out_of_range("PartitionId value out of range"); // LCOV_EXCL_BR_LINE
 #endif
@@ -344,9 +368,53 @@ public:
     ensureValid();
     if (operator==(PartitionId(0))) // LCOV_EXCL_BR_LINE
     {
-      spdlog::info("ensureValid(::ad::map::access::PartitionId)>> {} value is zero", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::map::access::PartitionId)>> {} value is zero",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_MAP_ACCESS_PARTITIONID_THROWS_EXCEPTION == 1)
       throw std::out_of_range("PartitionId value is zero"); // LCOV_EXCL_BR_LINE
+#endif
+    }
+  }
+
+  /**
+   * @brief if possible restrict the PartitionId to it's defined limits
+   *
+   * If the PartitionId isNormal(), but exceeds the defined limits, it is restricted to its limits.
+   * If PartitionId::isNormal() returns \c false an std::out_of_range() exception is thrown.
+   * - not isNormal(): std::out_of_range() exception is thrown
+   * - \ref cMinValue <= value <= \ref cMaxValue: nothing is done
+   * - value < \ref cMinValue: resulting value = cMinValue
+   * - value > \ref cMaxValue: resulting value = cMaxValue
+   */
+  void restrictToLimitsAndEnsureValid()
+  {
+    if (isNormal())
+    {
+      if (mPartitionId < cMinValue)
+      {
+        // mitigate exceeding the minimum
+        spdlog::info("restrictToLimits(::ad::map::access::PartitionId)>> {} value is smaller than allowed minimum {}. "
+                     "Restrict to minimum value.",
+                     *this,
+                     getMin()); // LCOV_EXCL_BR_LINE
+        mPartitionId = cMinValue;
+      }
+      else if (mPartitionId > cMaxValue)
+      {
+        // mitigate exceeding the maximum
+        spdlog::info("restrictToLimits(::ad::map::access::PartitionId)>> {} value is larger than allowed maximum {}. "
+                     "Restrict to maximum value.",
+                     *this,
+                     getMax()); // LCOV_EXCL_BR_LINE
+        mPartitionId = cMaxValue;
+      }
+    }
+    else
+    {
+      spdlog::info("restrictToLimits(::ad::map::access::PartitionId)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
+#if (AD_MAP_ACCESS_PARTITIONID_THROWS_EXCEPTION == 1)
+      throw std::out_of_range("PartitionId value out of range"); // LCOV_EXCL_BR_LINE
 #endif
     }
   }
@@ -367,7 +435,6 @@ public:
     return PartitionId(cMaxValue);
   }
 
-private:
   /*!
    * \brief the actual value of the type
    */
@@ -450,7 +517,7 @@ namespace access {
  */
 inline std::ostream &operator<<(std::ostream &os, PartitionId const &_value)
 {
-  return os << uint64_t(_value);
+  return os << _value.mPartitionId;
 }
 
 } // namespace access
@@ -463,7 +530,19 @@ namespace std {
  */
 inline std::string to_string(::ad::map::access::PartitionId const &value)
 {
-  return to_string(static_cast<uint64_t>(value));
+  return to_string(value.mPartitionId);
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::access::PartitionId> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::access::PartitionId const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_ACCESS_PARTITIONID

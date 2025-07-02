@@ -41,21 +41,24 @@ Dependencies provided by Ubunutu (>= 18.04):
  - libpython-dev
  - libosmium2-dev
  - liblapacke-dev
+ - libspdlog-dev
 
 Those can be installed by calling:
 ```bash
-$>  sudo apt-get install libboost-all-dev libpugixml-dev libgtest-dev libpython-dev libosmium2-dev liblapacke-dev libproj-dev
+map$>  sudo apt-get install libboost-all-dev libpugixml-dev libgtest-dev libpython-dev libosmium2-dev liblapacke-dev libproj-dev libspdlog-dev
 ```
 
 Additional dependencies for the python bindings:
 ```bash
-$>  sudo apt-get install castxml
-$>  pip install --user python-wheel pygccxml pyplusplus unittest-xml-reporting
+map$>  sudo apt-get install castxml
+map$>  mkdir -p build/map-build-venv
+map$>  python -m venv build/map-build-venv
+map$> source build/map-build-venv/bin/activate
+(map-build-venv)map$>  pip install setuptools pygccxml pyplusplus unittest-xml-reporting
 ```
 
 Remaining dependencies are present as GIT submodules; also to fix the version of these:
 
- - spdlog
  - odrSpiral
 
 ## Building
@@ -70,34 +73,35 @@ Those dependencies are part of the __dependencies__ folder as GIT submodules. To
 
 Once this is done, the full set of dependencies and components can be built calling:
 ```bash
- map$> colcon build
+`map$> colcon build
 ```
 All components will be compiled respecting the dependencies between them.
 
 The python bindings are disabled by default. To integrate them into the build you can make use of the prepared
 colcon meta file:
 ```bash
- map$> colcon build --metas colcon_python.meta
+ map$> source build/map-build-venv/bin/activate
+ (map-build-venv)map$> colcon build --metas colcon_python.meta
 ```
 __colcon_python.meta__ enables python build (-DBUILD_PYTHON_BINDING=ON). To specify the python version to be used you call e.g.:
 ```bash
- map$> colcon build --metas colcon_python.meta --cmake-args -DPYTHON_BINDING_VERSION=3.8
+ (map-build-venv)map$> colcon build --metas colcon_python.meta --cmake-args -DPYTHON_BINDING_VERSION=3.8
 ```
 
 If cmake isn't able to find the requested python version you can try to specify the python executable explicitly (e.g. under Ubuntu18.04):
 ```bash
- map$> colcon build --metas colcon_python.meta --cmake-args -DPYTHON_BINDING_VERSION=3.6 -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3.6
+ (map-build-venv)map$> colcon build --metas colcon_python.meta --cmake-args -DPYTHON_BINDING_VERSION=3.6 -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3.6
 ```
 
 The QGIS Plugin also requires the python build to be enabled
 (you have to adapt to your python version used):
 ```bash
- map$> colcon build --metas colcon_python.meta
- map$> echo "Setting PYTHONPATH and LD_LIBRARY_PATH:"
- map$> source install/setup.bash
- map$> echo "QGIS plugin built! Let's test it out:"
- map$> export QGIS_PLUGINPATH=<path/to/>map/install/ad_map_access_qgis/share/qgis/python/plugins
- map$> qgis
+ (map-build-venv)map$> colcon build --metas colcon_python.meta
+ (map-build-venv)map$> echo "Setting PYTHONPATH and LD_LIBRARY_PATH:"
+ (map-build-venv)map$> source install/setup.bash
+ (map-build-venv)map$> echo "QGIS plugin built! Let's test it out:"
+ (map-build-venv)map$> export QGIS_PLUGINPATH=<path/to/>map/install/ad_map_access_qgis/share/qgis/python/plugins
+ (map-build-venv)map$> qgis
 ```
 You should have seen 'CARLA ad_map_access Plug-in loaded' on successful loading of the plugin by qgis.
 
@@ -114,7 +118,7 @@ There are some CMake options affecting what or how the components are built.
 By default, all options are set to off. Any of these could be activate by adding them via the colcon call above as "--cmake-args -D&lt;OPTION&gt;=[ON|OFF]",
 e.g.:
 ```bash
- map$> colcon build --cmake-args -DBUILD_TESTING=ON -DBUILD_APIDOC=ON -DBUILD_PYTHON_BINDING=ON -DPYTHON_BINDING_VERSION=3.8
+ (map-build-venv)map$> colcon build --cmake-args -DBUILD_TESTING=ON -DBUILD_APIDOC=ON -DBUILD_PYTHON_BINDING=ON -DPYTHON_BINDING_VERSION=3.8
 ```
 
 ### Unit tests

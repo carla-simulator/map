@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -39,206 +39,215 @@ protected:
     ::ad::map::restriction::Restriction valueRestrictionsConjunctionsElement;
     bool valueRestrictionsConjunctionsElementNegated{true};
     valueRestrictionsConjunctionsElement.negated = valueRestrictionsConjunctionsElementNegated;
-    ::ad::map::restriction::RoadUserTypeList valueRestrictionsConjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::RoadUserType valueRestrictionsConjunctionsElementRoadUserTypesElement(
+    ::ad::map::restriction::RoadUserTypeList valueRestrictionsConjunctionsElementRoad_user_types;
+    ::ad::map::restriction::RoadUserType valueRestrictionsConjunctionsElementRoad_user_typesElement(
       ::ad::map::restriction::RoadUserType::INVALID);
-    valueRestrictionsConjunctionsElementRoadUserTypes.resize(1,
-                                                             valueRestrictionsConjunctionsElementRoadUserTypesElement);
-    valueRestrictionsConjunctionsElement.roadUserTypes = valueRestrictionsConjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::PassengerCount valueRestrictionsConjunctionsElementPassengersMin(
+    valueRestrictionsConjunctionsElementRoad_user_types.resize(
+      1, valueRestrictionsConjunctionsElementRoad_user_typesElement);
+    valueRestrictionsConjunctionsElement.road_user_types = valueRestrictionsConjunctionsElementRoad_user_types;
+    ::ad::map::restriction::PassengerCount valueRestrictionsConjunctionsElementPassengers_min(
       std::numeric_limits<::ad::map::restriction::PassengerCount>::lowest());
-    valueRestrictionsConjunctionsElement.passengersMin = valueRestrictionsConjunctionsElementPassengersMin;
+    valueRestrictionsConjunctionsElement.passengers_min = valueRestrictionsConjunctionsElementPassengers_min;
     valueRestrictionsConjunctions.resize(1, valueRestrictionsConjunctionsElement);
     valueRestrictions.conjunctions = valueRestrictionsConjunctions;
     ::ad::map::restriction::RestrictionList valueRestrictionsDisjunctions;
     ::ad::map::restriction::Restriction valueRestrictionsDisjunctionsElement;
     bool valueRestrictionsDisjunctionsElementNegated{true};
     valueRestrictionsDisjunctionsElement.negated = valueRestrictionsDisjunctionsElementNegated;
-    ::ad::map::restriction::RoadUserTypeList valueRestrictionsDisjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::RoadUserType valueRestrictionsDisjunctionsElementRoadUserTypesElement(
+    ::ad::map::restriction::RoadUserTypeList valueRestrictionsDisjunctionsElementRoad_user_types;
+    ::ad::map::restriction::RoadUserType valueRestrictionsDisjunctionsElementRoad_user_typesElement(
       ::ad::map::restriction::RoadUserType::INVALID);
-    valueRestrictionsDisjunctionsElementRoadUserTypes.resize(1,
-                                                             valueRestrictionsDisjunctionsElementRoadUserTypesElement);
-    valueRestrictionsDisjunctionsElement.roadUserTypes = valueRestrictionsDisjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::PassengerCount valueRestrictionsDisjunctionsElementPassengersMin(
+    valueRestrictionsDisjunctionsElementRoad_user_types.resize(
+      1, valueRestrictionsDisjunctionsElementRoad_user_typesElement);
+    valueRestrictionsDisjunctionsElement.road_user_types = valueRestrictionsDisjunctionsElementRoad_user_types;
+    ::ad::map::restriction::PassengerCount valueRestrictionsDisjunctionsElementPassengers_min(
       std::numeric_limits<::ad::map::restriction::PassengerCount>::lowest());
-    valueRestrictionsDisjunctionsElement.passengersMin = valueRestrictionsDisjunctionsElementPassengersMin;
+    valueRestrictionsDisjunctionsElement.passengers_min = valueRestrictionsDisjunctionsElementPassengers_min;
     valueRestrictionsDisjunctions.resize(1, valueRestrictionsDisjunctionsElement);
     valueRestrictions.disjunctions = valueRestrictionsDisjunctions;
     value.restrictions = valueRestrictions;
     ::ad::physics::Distance valueLength(-1e9);
     value.length = valueLength;
-    ::ad::physics::MetricRange valueLengthRange;
-    ::ad::physics::Distance valueLengthRangeMinimum(-1e9);
-    valueLengthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
-    valueLengthRange.minimum = valueLengthRangeMinimum;
-    ::ad::physics::Distance valueLengthRangeMaximum(-1e9);
-    valueLengthRange.maximum = valueLengthRangeMaximum;
-    valueLengthRange.maximum = valueLengthRange.minimum;
-    valueLengthRange.minimum = valueLengthRange.maximum;
-    value.lengthRange = valueLengthRange;
+    ::ad::physics::MetricRange valueLength_range;
+    ::ad::physics::Distance valueLength_rangeMinimum(-1e9);
+    valueLength_rangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
+    valueLength_range.minimum = valueLength_rangeMinimum;
+    ::ad::physics::Distance valueLength_rangeMaximum(-1e9);
+    valueLength_range.maximum = valueLength_rangeMaximum;
+    valueLength_range.maximum = valueLength_range.minimum;
+    valueLength_range.minimum = valueLength_range.maximum;
+    value.length_range = valueLength_range;
     ::ad::physics::Distance valueWidth(-1e9);
     value.width = valueWidth;
-    ::ad::physics::MetricRange valueWidthRange;
-    ::ad::physics::Distance valueWidthRangeMinimum(-1e9);
-    valueWidthRangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
-    valueWidthRange.minimum = valueWidthRangeMinimum;
-    ::ad::physics::Distance valueWidthRangeMaximum(-1e9);
-    valueWidthRange.maximum = valueWidthRangeMaximum;
-    valueWidthRange.maximum = valueWidthRange.minimum;
-    valueWidthRange.minimum = valueWidthRange.maximum;
-    value.widthRange = valueWidthRange;
-    ::ad::map::restriction::SpeedLimitList valueSpeedLimits;
-    ::ad::map::restriction::SpeedLimit valueSpeedLimitsElement;
-    ::ad::physics::Speed valueSpeedLimitsElementSpeedLimit(-100.);
-    valueSpeedLimitsElement.speedLimit = valueSpeedLimitsElementSpeedLimit;
-    ::ad::physics::ParametricRange valueSpeedLimitsElementLanePiece;
-    ::ad::physics::ParametricValue valueSpeedLimitsElementLanePieceMinimum(0.);
-    valueSpeedLimitsElementLanePiece.minimum = valueSpeedLimitsElementLanePieceMinimum;
-    ::ad::physics::ParametricValue valueSpeedLimitsElementLanePieceMaximum(0.);
-    valueSpeedLimitsElementLanePiece.maximum = valueSpeedLimitsElementLanePieceMaximum;
-    valueSpeedLimitsElementLanePiece.maximum = valueSpeedLimitsElementLanePiece.minimum;
-    valueSpeedLimitsElementLanePiece.minimum = valueSpeedLimitsElementLanePiece.maximum;
-    valueSpeedLimitsElement.lanePiece = valueSpeedLimitsElementLanePiece;
-    valueSpeedLimits.resize(1, valueSpeedLimitsElement);
-    value.speedLimits = valueSpeedLimits;
-    ::ad::map::point::Geometry valueEdgeLeft;
-    bool valueEdgeLeftIsValid{true};
-    valueEdgeLeft.isValid = valueEdgeLeftIsValid;
-    bool valueEdgeLeftIsClosed{true};
-    valueEdgeLeft.isClosed = valueEdgeLeftIsClosed;
-    ::ad::map::point::ECEFEdge valueEdgeLeftEcefEdge;
-    ::ad::map::point::ECEFPoint valueEdgeLeftEcefEdgeElement;
-    ::ad::map::point::ECEFCoordinate valueEdgeLeftEcefEdgeElementX(-6400000);
-    valueEdgeLeftEcefEdgeElement.x = valueEdgeLeftEcefEdgeElementX;
-    ::ad::map::point::ECEFCoordinate valueEdgeLeftEcefEdgeElementY(-6400000);
-    valueEdgeLeftEcefEdgeElement.y = valueEdgeLeftEcefEdgeElementY;
-    ::ad::map::point::ECEFCoordinate valueEdgeLeftEcefEdgeElementZ(-6400000);
-    valueEdgeLeftEcefEdgeElement.z = valueEdgeLeftEcefEdgeElementZ;
-    valueEdgeLeftEcefEdge.resize(1, valueEdgeLeftEcefEdgeElement);
-    valueEdgeLeft.ecefEdge = valueEdgeLeftEcefEdge;
-    ::ad::physics::Distance valueEdgeLeftLength(-1e9);
-    valueEdgeLeft.length = valueEdgeLeftLength;
-    ::ad::map::point::ENUEdgeCache valueEdgeLeftPrivate_enuEdgeCache;
-    ::ad::map::point::ENUEdge valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
-    ::ad::map::point::ENUPoint valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElement;
-    ::ad::map::point::ENUCoordinate valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-    valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElement.x = valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElementX;
-    ::ad::map::point::ENUCoordinate valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-    valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElement.y = valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElementY;
-    ::ad::map::point::ENUCoordinate valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-    valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElement.z = valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElementZ;
-    valueEdgeLeftPrivate_enuEdgeCacheEnuEdge.resize(1, valueEdgeLeftPrivate_enuEdgeCacheEnuEdgeElement);
-    valueEdgeLeftPrivate_enuEdgeCache.enuEdge = valueEdgeLeftPrivate_enuEdgeCacheEnuEdge;
-    uint64_t valueEdgeLeftPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-    valueEdgeLeftPrivate_enuEdgeCache.enuVersion = valueEdgeLeftPrivate_enuEdgeCacheEnuVersion;
-    valueEdgeLeft.private_enuEdgeCache = valueEdgeLeftPrivate_enuEdgeCache;
-    value.edgeLeft = valueEdgeLeft;
-    ::ad::map::point::Geometry valueEdgeRight;
-    bool valueEdgeRightIsValid{true};
-    valueEdgeRight.isValid = valueEdgeRightIsValid;
-    bool valueEdgeRightIsClosed{true};
-    valueEdgeRight.isClosed = valueEdgeRightIsClosed;
-    ::ad::map::point::ECEFEdge valueEdgeRightEcefEdge;
-    ::ad::map::point::ECEFPoint valueEdgeRightEcefEdgeElement;
-    ::ad::map::point::ECEFCoordinate valueEdgeRightEcefEdgeElementX(-6400000);
-    valueEdgeRightEcefEdgeElement.x = valueEdgeRightEcefEdgeElementX;
-    ::ad::map::point::ECEFCoordinate valueEdgeRightEcefEdgeElementY(-6400000);
-    valueEdgeRightEcefEdgeElement.y = valueEdgeRightEcefEdgeElementY;
-    ::ad::map::point::ECEFCoordinate valueEdgeRightEcefEdgeElementZ(-6400000);
-    valueEdgeRightEcefEdgeElement.z = valueEdgeRightEcefEdgeElementZ;
-    valueEdgeRightEcefEdge.resize(1, valueEdgeRightEcefEdgeElement);
-    valueEdgeRight.ecefEdge = valueEdgeRightEcefEdge;
-    ::ad::physics::Distance valueEdgeRightLength(-1e9);
-    valueEdgeRight.length = valueEdgeRightLength;
-    ::ad::map::point::ENUEdgeCache valueEdgeRightPrivate_enuEdgeCache;
-    ::ad::map::point::ENUEdge valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
-    ::ad::map::point::ENUPoint valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElement;
-    ::ad::map::point::ENUCoordinate valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-    valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElement.x = valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElementX;
-    ::ad::map::point::ENUCoordinate valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-    valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElement.y = valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElementY;
-    ::ad::map::point::ENUCoordinate valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-    valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElement.z = valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElementZ;
-    valueEdgeRightPrivate_enuEdgeCacheEnuEdge.resize(1, valueEdgeRightPrivate_enuEdgeCacheEnuEdgeElement);
-    valueEdgeRightPrivate_enuEdgeCache.enuEdge = valueEdgeRightPrivate_enuEdgeCacheEnuEdge;
-    uint64_t valueEdgeRightPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-    valueEdgeRightPrivate_enuEdgeCache.enuVersion = valueEdgeRightPrivate_enuEdgeCacheEnuVersion;
-    valueEdgeRight.private_enuEdgeCache = valueEdgeRightPrivate_enuEdgeCache;
-    value.edgeRight = valueEdgeRight;
-    ::ad::map::lane::ContactLaneList valueContactLanes;
-    ::ad::map::lane::ContactLane valueContactLanesElement;
-    ::ad::map::lane::LaneId valueContactLanesElementToLane(1);
-    valueContactLanesElement.toLane = valueContactLanesElementToLane;
-    ::ad::map::lane::ContactLocation valueContactLanesElementLocation(::ad::map::lane::ContactLocation::INVALID);
-    valueContactLanesElement.location = valueContactLanesElementLocation;
-    ::ad::map::lane::ContactTypeList valueContactLanesElementTypes;
-    ::ad::map::lane::ContactType valueContactLanesElementTypesElement(::ad::map::lane::ContactType::INVALID);
-    valueContactLanesElementTypes.resize(1, valueContactLanesElementTypesElement);
-    valueContactLanesElement.types = valueContactLanesElementTypes;
-    ::ad::map::restriction::Restrictions valueContactLanesElementRestrictions;
-    ::ad::map::restriction::RestrictionList valueContactLanesElementRestrictionsConjunctions;
-    ::ad::map::restriction::Restriction valueContactLanesElementRestrictionsConjunctionsElement;
-    bool valueContactLanesElementRestrictionsConjunctionsElementNegated{true};
-    valueContactLanesElementRestrictionsConjunctionsElement.negated
-      = valueContactLanesElementRestrictionsConjunctionsElementNegated;
-    ::ad::map::restriction::RoadUserTypeList valueContactLanesElementRestrictionsConjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::RoadUserType valueContactLanesElementRestrictionsConjunctionsElementRoadUserTypesElement(
+    ::ad::physics::MetricRange valueWidth_range;
+    ::ad::physics::Distance valueWidth_rangeMinimum(-1e9);
+    valueWidth_rangeMinimum = ::ad::physics::Distance(0.); // set to valid value within struct
+    valueWidth_range.minimum = valueWidth_rangeMinimum;
+    ::ad::physics::Distance valueWidth_rangeMaximum(-1e9);
+    valueWidth_range.maximum = valueWidth_rangeMaximum;
+    valueWidth_range.maximum = valueWidth_range.minimum;
+    valueWidth_range.minimum = valueWidth_range.maximum;
+    value.width_range = valueWidth_range;
+    ::ad::map::restriction::SpeedLimitList valueSpeed_limits;
+    ::ad::map::restriction::SpeedLimit valueSpeed_limitsElement;
+    ::ad::physics::Speed valueSpeed_limitsElementSpeed_limit(-100.);
+    valueSpeed_limitsElement.speed_limit = valueSpeed_limitsElementSpeed_limit;
+    ::ad::physics::ParametricRange valueSpeed_limitsElementLane_piece;
+    ::ad::physics::ParametricValue valueSpeed_limitsElementLane_pieceMinimum(0.);
+    valueSpeed_limitsElementLane_piece.minimum = valueSpeed_limitsElementLane_pieceMinimum;
+    ::ad::physics::ParametricValue valueSpeed_limitsElementLane_pieceMaximum(0.);
+    valueSpeed_limitsElementLane_piece.maximum = valueSpeed_limitsElementLane_pieceMaximum;
+    valueSpeed_limitsElementLane_piece.maximum = valueSpeed_limitsElementLane_piece.minimum;
+    valueSpeed_limitsElementLane_piece.minimum = valueSpeed_limitsElementLane_piece.maximum;
+    valueSpeed_limitsElement.lane_piece = valueSpeed_limitsElementLane_piece;
+    valueSpeed_limits.resize(1, valueSpeed_limitsElement);
+    value.speed_limits = valueSpeed_limits;
+    ::ad::map::point::Geometry valueEdge_left;
+    bool valueEdge_leftIs_valid{true};
+    valueEdge_left.is_valid = valueEdge_leftIs_valid;
+    bool valueEdge_leftIs_closed{true};
+    valueEdge_left.is_closed = valueEdge_leftIs_closed;
+    ::ad::map::point::ECEFPointList valueEdge_leftEcef_points;
+    ::ad::map::point::ECEFPoint valueEdge_leftEcef_pointsElement;
+    ::ad::map::point::ECEFCoordinate valueEdge_leftEcef_pointsElementX(-6400000);
+    valueEdge_leftEcef_pointsElement.x = valueEdge_leftEcef_pointsElementX;
+    ::ad::map::point::ECEFCoordinate valueEdge_leftEcef_pointsElementY(-6400000);
+    valueEdge_leftEcef_pointsElement.y = valueEdge_leftEcef_pointsElementY;
+    ::ad::map::point::ECEFCoordinate valueEdge_leftEcef_pointsElementZ(-6400000);
+    valueEdge_leftEcef_pointsElement.z = valueEdge_leftEcef_pointsElementZ;
+    valueEdge_leftEcef_points.resize(1, valueEdge_leftEcef_pointsElement);
+    valueEdge_left.ecef_points = valueEdge_leftEcef_points;
+    ::ad::physics::Distance valueEdge_leftLength(-1e9);
+    valueEdge_left.length = valueEdge_leftLength;
+    ::ad::map::point::ENUPointCache valueEdge_leftPrivate_enu_points_cache;
+    ::ad::map::point::ENUPointList valueEdge_leftPrivate_enu_points_cacheEnu_points;
+    ::ad::map::point::ENUPoint valueEdge_leftPrivate_enu_points_cacheEnu_pointsElement;
+    ::ad::map::point::ENUCoordinate valueEdge_leftPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+    valueEdge_leftPrivate_enu_points_cacheEnu_pointsElement.x
+      = valueEdge_leftPrivate_enu_points_cacheEnu_pointsElementX;
+    ::ad::map::point::ENUCoordinate valueEdge_leftPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+    valueEdge_leftPrivate_enu_points_cacheEnu_pointsElement.y
+      = valueEdge_leftPrivate_enu_points_cacheEnu_pointsElementY;
+    ::ad::map::point::ENUCoordinate valueEdge_leftPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+    valueEdge_leftPrivate_enu_points_cacheEnu_pointsElement.z
+      = valueEdge_leftPrivate_enu_points_cacheEnu_pointsElementZ;
+    valueEdge_leftPrivate_enu_points_cacheEnu_points.resize(1, valueEdge_leftPrivate_enu_points_cacheEnu_pointsElement);
+    valueEdge_leftPrivate_enu_points_cache.enu_points = valueEdge_leftPrivate_enu_points_cacheEnu_points;
+    uint64_t valueEdge_leftPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+    valueEdge_leftPrivate_enu_points_cache.enu_version = valueEdge_leftPrivate_enu_points_cacheEnu_version;
+    valueEdge_left.private_enu_points_cache = valueEdge_leftPrivate_enu_points_cache;
+    value.edge_left = valueEdge_left;
+    ::ad::map::point::Geometry valueEdge_right;
+    bool valueEdge_rightIs_valid{true};
+    valueEdge_right.is_valid = valueEdge_rightIs_valid;
+    bool valueEdge_rightIs_closed{true};
+    valueEdge_right.is_closed = valueEdge_rightIs_closed;
+    ::ad::map::point::ECEFPointList valueEdge_rightEcef_points;
+    ::ad::map::point::ECEFPoint valueEdge_rightEcef_pointsElement;
+    ::ad::map::point::ECEFCoordinate valueEdge_rightEcef_pointsElementX(-6400000);
+    valueEdge_rightEcef_pointsElement.x = valueEdge_rightEcef_pointsElementX;
+    ::ad::map::point::ECEFCoordinate valueEdge_rightEcef_pointsElementY(-6400000);
+    valueEdge_rightEcef_pointsElement.y = valueEdge_rightEcef_pointsElementY;
+    ::ad::map::point::ECEFCoordinate valueEdge_rightEcef_pointsElementZ(-6400000);
+    valueEdge_rightEcef_pointsElement.z = valueEdge_rightEcef_pointsElementZ;
+    valueEdge_rightEcef_points.resize(1, valueEdge_rightEcef_pointsElement);
+    valueEdge_right.ecef_points = valueEdge_rightEcef_points;
+    ::ad::physics::Distance valueEdge_rightLength(-1e9);
+    valueEdge_right.length = valueEdge_rightLength;
+    ::ad::map::point::ENUPointCache valueEdge_rightPrivate_enu_points_cache;
+    ::ad::map::point::ENUPointList valueEdge_rightPrivate_enu_points_cacheEnu_points;
+    ::ad::map::point::ENUPoint valueEdge_rightPrivate_enu_points_cacheEnu_pointsElement;
+    ::ad::map::point::ENUCoordinate valueEdge_rightPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+    valueEdge_rightPrivate_enu_points_cacheEnu_pointsElement.x
+      = valueEdge_rightPrivate_enu_points_cacheEnu_pointsElementX;
+    ::ad::map::point::ENUCoordinate valueEdge_rightPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+    valueEdge_rightPrivate_enu_points_cacheEnu_pointsElement.y
+      = valueEdge_rightPrivate_enu_points_cacheEnu_pointsElementY;
+    ::ad::map::point::ENUCoordinate valueEdge_rightPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+    valueEdge_rightPrivate_enu_points_cacheEnu_pointsElement.z
+      = valueEdge_rightPrivate_enu_points_cacheEnu_pointsElementZ;
+    valueEdge_rightPrivate_enu_points_cacheEnu_points.resize(1,
+                                                             valueEdge_rightPrivate_enu_points_cacheEnu_pointsElement);
+    valueEdge_rightPrivate_enu_points_cache.enu_points = valueEdge_rightPrivate_enu_points_cacheEnu_points;
+    uint64_t valueEdge_rightPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+    valueEdge_rightPrivate_enu_points_cache.enu_version = valueEdge_rightPrivate_enu_points_cacheEnu_version;
+    valueEdge_right.private_enu_points_cache = valueEdge_rightPrivate_enu_points_cache;
+    value.edge_right = valueEdge_right;
+    ::ad::map::lane::ContactLaneList valueContact_lanes;
+    ::ad::map::lane::ContactLane valueContact_lanesElement;
+    ::ad::map::lane::LaneId valueContact_lanesElementTo_lane(1);
+    valueContact_lanesElement.to_lane = valueContact_lanesElementTo_lane;
+    ::ad::map::lane::ContactLocation valueContact_lanesElementLocation(::ad::map::lane::ContactLocation::INVALID);
+    valueContact_lanesElement.location = valueContact_lanesElementLocation;
+    ::ad::map::lane::ContactTypeList valueContact_lanesElementTypes;
+    ::ad::map::lane::ContactType valueContact_lanesElementTypesElement(::ad::map::lane::ContactType::INVALID);
+    valueContact_lanesElementTypes.resize(1, valueContact_lanesElementTypesElement);
+    valueContact_lanesElement.types = valueContact_lanesElementTypes;
+    ::ad::map::restriction::Restrictions valueContact_lanesElementRestrictions;
+    ::ad::map::restriction::RestrictionList valueContact_lanesElementRestrictionsConjunctions;
+    ::ad::map::restriction::Restriction valueContact_lanesElementRestrictionsConjunctionsElement;
+    bool valueContact_lanesElementRestrictionsConjunctionsElementNegated{true};
+    valueContact_lanesElementRestrictionsConjunctionsElement.negated
+      = valueContact_lanesElementRestrictionsConjunctionsElementNegated;
+    ::ad::map::restriction::RoadUserTypeList valueContact_lanesElementRestrictionsConjunctionsElementRoad_user_types;
+    ::ad::map::restriction::RoadUserType valueContact_lanesElementRestrictionsConjunctionsElementRoad_user_typesElement(
       ::ad::map::restriction::RoadUserType::INVALID);
-    valueContactLanesElementRestrictionsConjunctionsElementRoadUserTypes.resize(
-      1, valueContactLanesElementRestrictionsConjunctionsElementRoadUserTypesElement);
-    valueContactLanesElementRestrictionsConjunctionsElement.roadUserTypes
-      = valueContactLanesElementRestrictionsConjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::PassengerCount valueContactLanesElementRestrictionsConjunctionsElementPassengersMin(
+    valueContact_lanesElementRestrictionsConjunctionsElementRoad_user_types.resize(
+      1, valueContact_lanesElementRestrictionsConjunctionsElementRoad_user_typesElement);
+    valueContact_lanesElementRestrictionsConjunctionsElement.road_user_types
+      = valueContact_lanesElementRestrictionsConjunctionsElementRoad_user_types;
+    ::ad::map::restriction::PassengerCount valueContact_lanesElementRestrictionsConjunctionsElementPassengers_min(
       std::numeric_limits<::ad::map::restriction::PassengerCount>::lowest());
-    valueContactLanesElementRestrictionsConjunctionsElement.passengersMin
-      = valueContactLanesElementRestrictionsConjunctionsElementPassengersMin;
-    valueContactLanesElementRestrictionsConjunctions.resize(1, valueContactLanesElementRestrictionsConjunctionsElement);
-    valueContactLanesElementRestrictions.conjunctions = valueContactLanesElementRestrictionsConjunctions;
-    ::ad::map::restriction::RestrictionList valueContactLanesElementRestrictionsDisjunctions;
-    ::ad::map::restriction::Restriction valueContactLanesElementRestrictionsDisjunctionsElement;
-    bool valueContactLanesElementRestrictionsDisjunctionsElementNegated{true};
-    valueContactLanesElementRestrictionsDisjunctionsElement.negated
-      = valueContactLanesElementRestrictionsDisjunctionsElementNegated;
-    ::ad::map::restriction::RoadUserTypeList valueContactLanesElementRestrictionsDisjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::RoadUserType valueContactLanesElementRestrictionsDisjunctionsElementRoadUserTypesElement(
+    valueContact_lanesElementRestrictionsConjunctionsElement.passengers_min
+      = valueContact_lanesElementRestrictionsConjunctionsElementPassengers_min;
+    valueContact_lanesElementRestrictionsConjunctions.resize(1,
+                                                             valueContact_lanesElementRestrictionsConjunctionsElement);
+    valueContact_lanesElementRestrictions.conjunctions = valueContact_lanesElementRestrictionsConjunctions;
+    ::ad::map::restriction::RestrictionList valueContact_lanesElementRestrictionsDisjunctions;
+    ::ad::map::restriction::Restriction valueContact_lanesElementRestrictionsDisjunctionsElement;
+    bool valueContact_lanesElementRestrictionsDisjunctionsElementNegated{true};
+    valueContact_lanesElementRestrictionsDisjunctionsElement.negated
+      = valueContact_lanesElementRestrictionsDisjunctionsElementNegated;
+    ::ad::map::restriction::RoadUserTypeList valueContact_lanesElementRestrictionsDisjunctionsElementRoad_user_types;
+    ::ad::map::restriction::RoadUserType valueContact_lanesElementRestrictionsDisjunctionsElementRoad_user_typesElement(
       ::ad::map::restriction::RoadUserType::INVALID);
-    valueContactLanesElementRestrictionsDisjunctionsElementRoadUserTypes.resize(
-      1, valueContactLanesElementRestrictionsDisjunctionsElementRoadUserTypesElement);
-    valueContactLanesElementRestrictionsDisjunctionsElement.roadUserTypes
-      = valueContactLanesElementRestrictionsDisjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::PassengerCount valueContactLanesElementRestrictionsDisjunctionsElementPassengersMin(
+    valueContact_lanesElementRestrictionsDisjunctionsElementRoad_user_types.resize(
+      1, valueContact_lanesElementRestrictionsDisjunctionsElementRoad_user_typesElement);
+    valueContact_lanesElementRestrictionsDisjunctionsElement.road_user_types
+      = valueContact_lanesElementRestrictionsDisjunctionsElementRoad_user_types;
+    ::ad::map::restriction::PassengerCount valueContact_lanesElementRestrictionsDisjunctionsElementPassengers_min(
       std::numeric_limits<::ad::map::restriction::PassengerCount>::lowest());
-    valueContactLanesElementRestrictionsDisjunctionsElement.passengersMin
-      = valueContactLanesElementRestrictionsDisjunctionsElementPassengersMin;
-    valueContactLanesElementRestrictionsDisjunctions.resize(1, valueContactLanesElementRestrictionsDisjunctionsElement);
-    valueContactLanesElementRestrictions.disjunctions = valueContactLanesElementRestrictionsDisjunctions;
-    valueContactLanesElement.restrictions = valueContactLanesElementRestrictions;
-    ::ad::map::landmark::LandmarkId valueContactLanesElementTrafficLightId(
+    valueContact_lanesElementRestrictionsDisjunctionsElement.passengers_min
+      = valueContact_lanesElementRestrictionsDisjunctionsElementPassengers_min;
+    valueContact_lanesElementRestrictionsDisjunctions.resize(1,
+                                                             valueContact_lanesElementRestrictionsDisjunctionsElement);
+    valueContact_lanesElementRestrictions.disjunctions = valueContact_lanesElementRestrictionsDisjunctions;
+    valueContact_lanesElement.restrictions = valueContact_lanesElementRestrictions;
+    ::ad::map::landmark::LandmarkId valueContact_lanesElementLandmark_id(
       std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
-    valueContactLanesElement.trafficLightId = valueContactLanesElementTrafficLightId;
-    valueContactLanes.resize(1, valueContactLanesElement);
-    value.contactLanes = valueContactLanes;
-    ::ad::map::lane::ComplianceVersion valueComplianceVersion(
+    valueContact_lanesElement.landmark_id = valueContact_lanesElementLandmark_id;
+    valueContact_lanes.resize(1, valueContact_lanesElement);
+    value.contact_lanes = valueContact_lanes;
+    ::ad::map::lane::ComplianceVersion valueCompliance_version(
       std::numeric_limits<::ad::map::lane::ComplianceVersion>::lowest());
-    value.complianceVersion = valueComplianceVersion;
-    ::ad::map::point::BoundingSphere valueBoundingSphere;
-    ::ad::map::point::ECEFPoint valueBoundingSphereCenter;
-    ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterX(-6400000);
-    valueBoundingSphereCenter.x = valueBoundingSphereCenterX;
-    ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterY(-6400000);
-    valueBoundingSphereCenter.y = valueBoundingSphereCenterY;
-    ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
-    valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
-    valueBoundingSphere.center = valueBoundingSphereCenter;
-    ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
-    valueBoundingSphere.radius = valueBoundingSphereRadius;
-    value.boundingSphere = valueBoundingSphere;
-    ::ad::map::landmark::LandmarkIdList valueVisibleLandmarks;
-    ::ad::map::landmark::LandmarkId valueVisibleLandmarksElement(
+    value.compliance_version = valueCompliance_version;
+    ::ad::map::point::BoundingSphere valueBounding_sphere;
+    ::ad::map::point::ECEFPoint valueBounding_sphereCenter;
+    ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterX(-6400000);
+    valueBounding_sphereCenter.x = valueBounding_sphereCenterX;
+    ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterY(-6400000);
+    valueBounding_sphereCenter.y = valueBounding_sphereCenterY;
+    ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterZ(-6400000);
+    valueBounding_sphereCenter.z = valueBounding_sphereCenterZ;
+    valueBounding_sphere.center = valueBounding_sphereCenter;
+    ::ad::physics::Distance valueBounding_sphereRadius(-1e9);
+    valueBounding_sphere.radius = valueBounding_sphereRadius;
+    value.bounding_sphere = valueBounding_sphere;
+    ::ad::map::landmark::LandmarkIdList valueVisible_landmarks;
+    ::ad::map::landmark::LandmarkId valueVisible_landmarksElement(
       std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
-    valueVisibleLandmarks.resize(1, valueVisibleLandmarksElement);
-    value.visibleLandmarks = valueVisibleLandmarks;
+    valueVisible_landmarks.resize(1, valueVisible_landmarksElement);
+    value.visible_landmarks = valueVisible_landmarks;
     mValue = value;
   }
 
@@ -305,7 +314,7 @@ TEST_F(LaneTests, comparisonOperatorIdDiffers)
 TEST_F(LaneTests, comparisonOperatorTypeDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::map::lane::LaneType type(::ad::map::lane::LaneType::BIKE);
+  ::ad::map::lane::LaneType type(::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE);
   valueA.type = type;
   ::ad::map::lane::Lane valueB = mValue;
 
@@ -332,28 +341,28 @@ TEST_F(LaneTests, comparisonOperatorRestrictionsDiffers)
   ::ad::map::restriction::Restriction restrictionsConjunctionsElement;
   bool restrictionsConjunctionsElementNegated{false};
   restrictionsConjunctionsElement.negated = restrictionsConjunctionsElementNegated;
-  ::ad::map::restriction::RoadUserTypeList restrictionsConjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::RoadUserType restrictionsConjunctionsElementRoadUserTypesElement(
+  ::ad::map::restriction::RoadUserTypeList restrictionsConjunctionsElementRoad_user_types;
+  ::ad::map::restriction::RoadUserType restrictionsConjunctionsElementRoad_user_typesElement(
     ::ad::map::restriction::RoadUserType::CAR_DIESEL);
-  restrictionsConjunctionsElementRoadUserTypes.resize(2, restrictionsConjunctionsElementRoadUserTypesElement);
-  restrictionsConjunctionsElement.roadUserTypes = restrictionsConjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::PassengerCount restrictionsConjunctionsElementPassengersMin(
+  restrictionsConjunctionsElementRoad_user_types.resize(2, restrictionsConjunctionsElementRoad_user_typesElement);
+  restrictionsConjunctionsElement.road_user_types = restrictionsConjunctionsElementRoad_user_types;
+  ::ad::map::restriction::PassengerCount restrictionsConjunctionsElementPassengers_min(
     std::numeric_limits<::ad::map::restriction::PassengerCount>::max());
-  restrictionsConjunctionsElement.passengersMin = restrictionsConjunctionsElementPassengersMin;
+  restrictionsConjunctionsElement.passengers_min = restrictionsConjunctionsElementPassengers_min;
   restrictionsConjunctions.resize(2, restrictionsConjunctionsElement);
   restrictions.conjunctions = restrictionsConjunctions;
   ::ad::map::restriction::RestrictionList restrictionsDisjunctions;
   ::ad::map::restriction::Restriction restrictionsDisjunctionsElement;
   bool restrictionsDisjunctionsElementNegated{false};
   restrictionsDisjunctionsElement.negated = restrictionsDisjunctionsElementNegated;
-  ::ad::map::restriction::RoadUserTypeList restrictionsDisjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::RoadUserType restrictionsDisjunctionsElementRoadUserTypesElement(
+  ::ad::map::restriction::RoadUserTypeList restrictionsDisjunctionsElementRoad_user_types;
+  ::ad::map::restriction::RoadUserType restrictionsDisjunctionsElementRoad_user_typesElement(
     ::ad::map::restriction::RoadUserType::CAR_DIESEL);
-  restrictionsDisjunctionsElementRoadUserTypes.resize(2, restrictionsDisjunctionsElementRoadUserTypesElement);
-  restrictionsDisjunctionsElement.roadUserTypes = restrictionsDisjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::PassengerCount restrictionsDisjunctionsElementPassengersMin(
+  restrictionsDisjunctionsElementRoad_user_types.resize(2, restrictionsDisjunctionsElementRoad_user_typesElement);
+  restrictionsDisjunctionsElement.road_user_types = restrictionsDisjunctionsElementRoad_user_types;
+  ::ad::map::restriction::PassengerCount restrictionsDisjunctionsElementPassengers_min(
     std::numeric_limits<::ad::map::restriction::PassengerCount>::max());
-  restrictionsDisjunctionsElement.passengersMin = restrictionsDisjunctionsElementPassengersMin;
+  restrictionsDisjunctionsElement.passengers_min = restrictionsDisjunctionsElementPassengers_min;
   restrictionsDisjunctions.resize(2, restrictionsDisjunctionsElement);
   restrictions.disjunctions = restrictionsDisjunctions;
   valueA.restrictions = restrictions;
@@ -374,18 +383,18 @@ TEST_F(LaneTests, comparisonOperatorLengthDiffers)
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneTests, comparisonOperatorLengthRangeDiffers)
+TEST_F(LaneTests, comparisonOperatorLength_rangeDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::physics::MetricRange lengthRange;
-  ::ad::physics::Distance lengthRangeMinimum(1e9);
-  lengthRange.minimum = lengthRangeMinimum;
-  ::ad::physics::Distance lengthRangeMaximum(1e9);
-  lengthRangeMaximum = ::ad::physics::Distance(1e6); // set to valid value within struct
-  lengthRange.maximum = lengthRangeMaximum;
-  lengthRange.maximum = lengthRange.minimum;
-  lengthRange.minimum = lengthRange.maximum;
-  valueA.lengthRange = lengthRange;
+  ::ad::physics::MetricRange length_range;
+  ::ad::physics::Distance length_rangeMinimum(1e9);
+  length_range.minimum = length_rangeMinimum;
+  ::ad::physics::Distance length_rangeMaximum(1e9);
+  length_rangeMaximum = ::ad::physics::Distance(1e6); // set to valid value within struct
+  length_range.maximum = length_rangeMaximum;
+  length_range.maximum = length_range.minimum;
+  length_range.minimum = length_range.maximum;
+  valueA.length_range = length_range;
   ::ad::map::lane::Lane valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
@@ -403,231 +412,231 @@ TEST_F(LaneTests, comparisonOperatorWidthDiffers)
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneTests, comparisonOperatorWidthRangeDiffers)
+TEST_F(LaneTests, comparisonOperatorWidth_rangeDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::physics::MetricRange widthRange;
-  ::ad::physics::Distance widthRangeMinimum(1e9);
-  widthRange.minimum = widthRangeMinimum;
-  ::ad::physics::Distance widthRangeMaximum(1e9);
-  widthRangeMaximum = ::ad::physics::Distance(1e6); // set to valid value within struct
-  widthRange.maximum = widthRangeMaximum;
-  widthRange.maximum = widthRange.minimum;
-  widthRange.minimum = widthRange.maximum;
-  valueA.widthRange = widthRange;
+  ::ad::physics::MetricRange width_range;
+  ::ad::physics::Distance width_rangeMinimum(1e9);
+  width_range.minimum = width_rangeMinimum;
+  ::ad::physics::Distance width_rangeMaximum(1e9);
+  width_rangeMaximum = ::ad::physics::Distance(1e6); // set to valid value within struct
+  width_range.maximum = width_rangeMaximum;
+  width_range.maximum = width_range.minimum;
+  width_range.minimum = width_range.maximum;
+  valueA.width_range = width_range;
   ::ad::map::lane::Lane valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneTests, comparisonOperatorSpeedLimitsDiffers)
+TEST_F(LaneTests, comparisonOperatorSpeed_limitsDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::map::restriction::SpeedLimitList speedLimits;
-  ::ad::map::restriction::SpeedLimit speedLimitsElement;
-  ::ad::physics::Speed speedLimitsElementSpeedLimit(100.);
-  speedLimitsElement.speedLimit = speedLimitsElementSpeedLimit;
-  ::ad::physics::ParametricRange speedLimitsElementLanePiece;
-  ::ad::physics::ParametricValue speedLimitsElementLanePieceMinimum(1.);
-  speedLimitsElementLanePiece.minimum = speedLimitsElementLanePieceMinimum;
-  ::ad::physics::ParametricValue speedLimitsElementLanePieceMaximum(1.);
-  speedLimitsElementLanePiece.maximum = speedLimitsElementLanePieceMaximum;
-  speedLimitsElementLanePiece.maximum = speedLimitsElementLanePiece.minimum;
-  speedLimitsElementLanePiece.minimum = speedLimitsElementLanePiece.maximum;
-  speedLimitsElement.lanePiece = speedLimitsElementLanePiece;
-  speedLimits.resize(2, speedLimitsElement);
-  valueA.speedLimits = speedLimits;
+  ::ad::map::restriction::SpeedLimitList speed_limits;
+  ::ad::map::restriction::SpeedLimit speed_limitsElement;
+  ::ad::physics::Speed speed_limitsElementSpeed_limit(100.);
+  speed_limitsElement.speed_limit = speed_limitsElementSpeed_limit;
+  ::ad::physics::ParametricRange speed_limitsElementLane_piece;
+  ::ad::physics::ParametricValue speed_limitsElementLane_pieceMinimum(1.);
+  speed_limitsElementLane_piece.minimum = speed_limitsElementLane_pieceMinimum;
+  ::ad::physics::ParametricValue speed_limitsElementLane_pieceMaximum(1.);
+  speed_limitsElementLane_piece.maximum = speed_limitsElementLane_pieceMaximum;
+  speed_limitsElementLane_piece.maximum = speed_limitsElementLane_piece.minimum;
+  speed_limitsElementLane_piece.minimum = speed_limitsElementLane_piece.maximum;
+  speed_limitsElement.lane_piece = speed_limitsElementLane_piece;
+  speed_limits.resize(2, speed_limitsElement);
+  valueA.speed_limits = speed_limits;
   ::ad::map::lane::Lane valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneTests, comparisonOperatorEdgeLeftDiffers)
+TEST_F(LaneTests, comparisonOperatorEdge_leftDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::map::point::Geometry edgeLeft;
-  bool edgeLeftIsValid{false};
-  edgeLeft.isValid = edgeLeftIsValid;
-  bool edgeLeftIsClosed{false};
-  edgeLeft.isClosed = edgeLeftIsClosed;
-  ::ad::map::point::ECEFEdge edgeLeftEcefEdge;
-  ::ad::map::point::ECEFPoint edgeLeftEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate edgeLeftEcefEdgeElementX(6400000);
-  edgeLeftEcefEdgeElement.x = edgeLeftEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate edgeLeftEcefEdgeElementY(6400000);
-  edgeLeftEcefEdgeElement.y = edgeLeftEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate edgeLeftEcefEdgeElementZ(6400000);
-  edgeLeftEcefEdgeElement.z = edgeLeftEcefEdgeElementZ;
-  edgeLeftEcefEdge.resize(2, edgeLeftEcefEdgeElement);
-  edgeLeft.ecefEdge = edgeLeftEcefEdge;
-  ::ad::physics::Distance edgeLeftLength(1e9);
-  edgeLeft.length = edgeLeftLength;
-  ::ad::map::point::ENUEdgeCache edgeLeftPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge edgeLeftPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint edgeLeftPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate edgeLeftPrivate_enuEdgeCacheEnuEdgeElementX(16384);
-  edgeLeftPrivate_enuEdgeCacheEnuEdgeElement.x = edgeLeftPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate edgeLeftPrivate_enuEdgeCacheEnuEdgeElementY(16384);
-  edgeLeftPrivate_enuEdgeCacheEnuEdgeElement.y = edgeLeftPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate edgeLeftPrivate_enuEdgeCacheEnuEdgeElementZ(16384);
-  edgeLeftPrivate_enuEdgeCacheEnuEdgeElement.z = edgeLeftPrivate_enuEdgeCacheEnuEdgeElementZ;
-  edgeLeftPrivate_enuEdgeCacheEnuEdge.resize(2, edgeLeftPrivate_enuEdgeCacheEnuEdgeElement);
-  edgeLeftPrivate_enuEdgeCache.enuEdge = edgeLeftPrivate_enuEdgeCacheEnuEdge;
-  uint64_t edgeLeftPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::max()};
-  edgeLeftPrivate_enuEdgeCache.enuVersion = edgeLeftPrivate_enuEdgeCacheEnuVersion;
-  edgeLeft.private_enuEdgeCache = edgeLeftPrivate_enuEdgeCache;
-  valueA.edgeLeft = edgeLeft;
+  ::ad::map::point::Geometry edge_left;
+  bool edge_leftIs_valid{false};
+  edge_left.is_valid = edge_leftIs_valid;
+  bool edge_leftIs_closed{false};
+  edge_left.is_closed = edge_leftIs_closed;
+  ::ad::map::point::ECEFPointList edge_leftEcef_points;
+  ::ad::map::point::ECEFPoint edge_leftEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate edge_leftEcef_pointsElementX(6400000);
+  edge_leftEcef_pointsElement.x = edge_leftEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate edge_leftEcef_pointsElementY(6400000);
+  edge_leftEcef_pointsElement.y = edge_leftEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate edge_leftEcef_pointsElementZ(6400000);
+  edge_leftEcef_pointsElement.z = edge_leftEcef_pointsElementZ;
+  edge_leftEcef_points.resize(2, edge_leftEcef_pointsElement);
+  edge_left.ecef_points = edge_leftEcef_points;
+  ::ad::physics::Distance edge_leftLength(1e9);
+  edge_left.length = edge_leftLength;
+  ::ad::map::point::ENUPointCache edge_leftPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList edge_leftPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint edge_leftPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate edge_leftPrivate_enu_points_cacheEnu_pointsElementX(1e8);
+  edge_leftPrivate_enu_points_cacheEnu_pointsElement.x = edge_leftPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate edge_leftPrivate_enu_points_cacheEnu_pointsElementY(1e8);
+  edge_leftPrivate_enu_points_cacheEnu_pointsElement.y = edge_leftPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate edge_leftPrivate_enu_points_cacheEnu_pointsElementZ(1e8);
+  edge_leftPrivate_enu_points_cacheEnu_pointsElement.z = edge_leftPrivate_enu_points_cacheEnu_pointsElementZ;
+  edge_leftPrivate_enu_points_cacheEnu_points.resize(2, edge_leftPrivate_enu_points_cacheEnu_pointsElement);
+  edge_leftPrivate_enu_points_cache.enu_points = edge_leftPrivate_enu_points_cacheEnu_points;
+  uint64_t edge_leftPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::max()};
+  edge_leftPrivate_enu_points_cache.enu_version = edge_leftPrivate_enu_points_cacheEnu_version;
+  edge_left.private_enu_points_cache = edge_leftPrivate_enu_points_cache;
+  valueA.edge_left = edge_left;
   ::ad::map::lane::Lane valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneTests, comparisonOperatorEdgeRightDiffers)
+TEST_F(LaneTests, comparisonOperatorEdge_rightDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::map::point::Geometry edgeRight;
-  bool edgeRightIsValid{false};
-  edgeRight.isValid = edgeRightIsValid;
-  bool edgeRightIsClosed{false};
-  edgeRight.isClosed = edgeRightIsClosed;
-  ::ad::map::point::ECEFEdge edgeRightEcefEdge;
-  ::ad::map::point::ECEFPoint edgeRightEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate edgeRightEcefEdgeElementX(6400000);
-  edgeRightEcefEdgeElement.x = edgeRightEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate edgeRightEcefEdgeElementY(6400000);
-  edgeRightEcefEdgeElement.y = edgeRightEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate edgeRightEcefEdgeElementZ(6400000);
-  edgeRightEcefEdgeElement.z = edgeRightEcefEdgeElementZ;
-  edgeRightEcefEdge.resize(2, edgeRightEcefEdgeElement);
-  edgeRight.ecefEdge = edgeRightEcefEdge;
-  ::ad::physics::Distance edgeRightLength(1e9);
-  edgeRight.length = edgeRightLength;
-  ::ad::map::point::ENUEdgeCache edgeRightPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge edgeRightPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint edgeRightPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate edgeRightPrivate_enuEdgeCacheEnuEdgeElementX(16384);
-  edgeRightPrivate_enuEdgeCacheEnuEdgeElement.x = edgeRightPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate edgeRightPrivate_enuEdgeCacheEnuEdgeElementY(16384);
-  edgeRightPrivate_enuEdgeCacheEnuEdgeElement.y = edgeRightPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate edgeRightPrivate_enuEdgeCacheEnuEdgeElementZ(16384);
-  edgeRightPrivate_enuEdgeCacheEnuEdgeElement.z = edgeRightPrivate_enuEdgeCacheEnuEdgeElementZ;
-  edgeRightPrivate_enuEdgeCacheEnuEdge.resize(2, edgeRightPrivate_enuEdgeCacheEnuEdgeElement);
-  edgeRightPrivate_enuEdgeCache.enuEdge = edgeRightPrivate_enuEdgeCacheEnuEdge;
-  uint64_t edgeRightPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::max()};
-  edgeRightPrivate_enuEdgeCache.enuVersion = edgeRightPrivate_enuEdgeCacheEnuVersion;
-  edgeRight.private_enuEdgeCache = edgeRightPrivate_enuEdgeCache;
-  valueA.edgeRight = edgeRight;
+  ::ad::map::point::Geometry edge_right;
+  bool edge_rightIs_valid{false};
+  edge_right.is_valid = edge_rightIs_valid;
+  bool edge_rightIs_closed{false};
+  edge_right.is_closed = edge_rightIs_closed;
+  ::ad::map::point::ECEFPointList edge_rightEcef_points;
+  ::ad::map::point::ECEFPoint edge_rightEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate edge_rightEcef_pointsElementX(6400000);
+  edge_rightEcef_pointsElement.x = edge_rightEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate edge_rightEcef_pointsElementY(6400000);
+  edge_rightEcef_pointsElement.y = edge_rightEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate edge_rightEcef_pointsElementZ(6400000);
+  edge_rightEcef_pointsElement.z = edge_rightEcef_pointsElementZ;
+  edge_rightEcef_points.resize(2, edge_rightEcef_pointsElement);
+  edge_right.ecef_points = edge_rightEcef_points;
+  ::ad::physics::Distance edge_rightLength(1e9);
+  edge_right.length = edge_rightLength;
+  ::ad::map::point::ENUPointCache edge_rightPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList edge_rightPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint edge_rightPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate edge_rightPrivate_enu_points_cacheEnu_pointsElementX(1e8);
+  edge_rightPrivate_enu_points_cacheEnu_pointsElement.x = edge_rightPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate edge_rightPrivate_enu_points_cacheEnu_pointsElementY(1e8);
+  edge_rightPrivate_enu_points_cacheEnu_pointsElement.y = edge_rightPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate edge_rightPrivate_enu_points_cacheEnu_pointsElementZ(1e8);
+  edge_rightPrivate_enu_points_cacheEnu_pointsElement.z = edge_rightPrivate_enu_points_cacheEnu_pointsElementZ;
+  edge_rightPrivate_enu_points_cacheEnu_points.resize(2, edge_rightPrivate_enu_points_cacheEnu_pointsElement);
+  edge_rightPrivate_enu_points_cache.enu_points = edge_rightPrivate_enu_points_cacheEnu_points;
+  uint64_t edge_rightPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::max()};
+  edge_rightPrivate_enu_points_cache.enu_version = edge_rightPrivate_enu_points_cacheEnu_version;
+  edge_right.private_enu_points_cache = edge_rightPrivate_enu_points_cache;
+  valueA.edge_right = edge_right;
   ::ad::map::lane::Lane valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneTests, comparisonOperatorContactLanesDiffers)
+TEST_F(LaneTests, comparisonOperatorContact_lanesDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::map::lane::ContactLaneList contactLanes;
-  ::ad::map::lane::ContactLane contactLanesElement;
-  ::ad::map::lane::LaneId contactLanesElementToLane(std::numeric_limits<::ad::map::lane::LaneId>::max());
-  contactLanesElement.toLane = contactLanesElementToLane;
-  ::ad::map::lane::ContactLocation contactLanesElementLocation(::ad::map::lane::ContactLocation::OVERLAP);
-  contactLanesElement.location = contactLanesElementLocation;
-  ::ad::map::lane::ContactTypeList contactLanesElementTypes;
-  ::ad::map::lane::ContactType contactLanesElementTypesElement(
+  ::ad::map::lane::ContactLaneList contact_lanes;
+  ::ad::map::lane::ContactLane contact_lanesElement;
+  ::ad::map::lane::LaneId contact_lanesElementTo_lane(std::numeric_limits<::ad::map::lane::LaneId>::max());
+  contact_lanesElement.to_lane = contact_lanesElementTo_lane;
+  ::ad::map::lane::ContactLocation contact_lanesElementLocation(::ad::map::lane::ContactLocation::OVERLAP);
+  contact_lanesElement.location = contact_lanesElementLocation;
+  ::ad::map::lane::ContactTypeList contact_lanesElementTypes;
+  ::ad::map::lane::ContactType contact_lanesElementTypesElement(
     ::ad::map::lane::ContactType::PRIO_TO_RIGHT_AND_STRAIGHT);
-  contactLanesElementTypes.resize(2, contactLanesElementTypesElement);
-  contactLanesElement.types = contactLanesElementTypes;
-  ::ad::map::restriction::Restrictions contactLanesElementRestrictions;
-  ::ad::map::restriction::RestrictionList contactLanesElementRestrictionsConjunctions;
-  ::ad::map::restriction::Restriction contactLanesElementRestrictionsConjunctionsElement;
-  bool contactLanesElementRestrictionsConjunctionsElementNegated{false};
-  contactLanesElementRestrictionsConjunctionsElement.negated
-    = contactLanesElementRestrictionsConjunctionsElementNegated;
-  ::ad::map::restriction::RoadUserTypeList contactLanesElementRestrictionsConjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::RoadUserType contactLanesElementRestrictionsConjunctionsElementRoadUserTypesElement(
+  contact_lanesElementTypes.resize(2, contact_lanesElementTypesElement);
+  contact_lanesElement.types = contact_lanesElementTypes;
+  ::ad::map::restriction::Restrictions contact_lanesElementRestrictions;
+  ::ad::map::restriction::RestrictionList contact_lanesElementRestrictionsConjunctions;
+  ::ad::map::restriction::Restriction contact_lanesElementRestrictionsConjunctionsElement;
+  bool contact_lanesElementRestrictionsConjunctionsElementNegated{false};
+  contact_lanesElementRestrictionsConjunctionsElement.negated
+    = contact_lanesElementRestrictionsConjunctionsElementNegated;
+  ::ad::map::restriction::RoadUserTypeList contact_lanesElementRestrictionsConjunctionsElementRoad_user_types;
+  ::ad::map::restriction::RoadUserType contact_lanesElementRestrictionsConjunctionsElementRoad_user_typesElement(
     ::ad::map::restriction::RoadUserType::CAR_DIESEL);
-  contactLanesElementRestrictionsConjunctionsElementRoadUserTypes.resize(
-    2, contactLanesElementRestrictionsConjunctionsElementRoadUserTypesElement);
-  contactLanesElementRestrictionsConjunctionsElement.roadUserTypes
-    = contactLanesElementRestrictionsConjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::PassengerCount contactLanesElementRestrictionsConjunctionsElementPassengersMin(
+  contact_lanesElementRestrictionsConjunctionsElementRoad_user_types.resize(
+    2, contact_lanesElementRestrictionsConjunctionsElementRoad_user_typesElement);
+  contact_lanesElementRestrictionsConjunctionsElement.road_user_types
+    = contact_lanesElementRestrictionsConjunctionsElementRoad_user_types;
+  ::ad::map::restriction::PassengerCount contact_lanesElementRestrictionsConjunctionsElementPassengers_min(
     std::numeric_limits<::ad::map::restriction::PassengerCount>::max());
-  contactLanesElementRestrictionsConjunctionsElement.passengersMin
-    = contactLanesElementRestrictionsConjunctionsElementPassengersMin;
-  contactLanesElementRestrictionsConjunctions.resize(2, contactLanesElementRestrictionsConjunctionsElement);
-  contactLanesElementRestrictions.conjunctions = contactLanesElementRestrictionsConjunctions;
-  ::ad::map::restriction::RestrictionList contactLanesElementRestrictionsDisjunctions;
-  ::ad::map::restriction::Restriction contactLanesElementRestrictionsDisjunctionsElement;
-  bool contactLanesElementRestrictionsDisjunctionsElementNegated{false};
-  contactLanesElementRestrictionsDisjunctionsElement.negated
-    = contactLanesElementRestrictionsDisjunctionsElementNegated;
-  ::ad::map::restriction::RoadUserTypeList contactLanesElementRestrictionsDisjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::RoadUserType contactLanesElementRestrictionsDisjunctionsElementRoadUserTypesElement(
+  contact_lanesElementRestrictionsConjunctionsElement.passengers_min
+    = contact_lanesElementRestrictionsConjunctionsElementPassengers_min;
+  contact_lanesElementRestrictionsConjunctions.resize(2, contact_lanesElementRestrictionsConjunctionsElement);
+  contact_lanesElementRestrictions.conjunctions = contact_lanesElementRestrictionsConjunctions;
+  ::ad::map::restriction::RestrictionList contact_lanesElementRestrictionsDisjunctions;
+  ::ad::map::restriction::Restriction contact_lanesElementRestrictionsDisjunctionsElement;
+  bool contact_lanesElementRestrictionsDisjunctionsElementNegated{false};
+  contact_lanesElementRestrictionsDisjunctionsElement.negated
+    = contact_lanesElementRestrictionsDisjunctionsElementNegated;
+  ::ad::map::restriction::RoadUserTypeList contact_lanesElementRestrictionsDisjunctionsElementRoad_user_types;
+  ::ad::map::restriction::RoadUserType contact_lanesElementRestrictionsDisjunctionsElementRoad_user_typesElement(
     ::ad::map::restriction::RoadUserType::CAR_DIESEL);
-  contactLanesElementRestrictionsDisjunctionsElementRoadUserTypes.resize(
-    2, contactLanesElementRestrictionsDisjunctionsElementRoadUserTypesElement);
-  contactLanesElementRestrictionsDisjunctionsElement.roadUserTypes
-    = contactLanesElementRestrictionsDisjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::PassengerCount contactLanesElementRestrictionsDisjunctionsElementPassengersMin(
+  contact_lanesElementRestrictionsDisjunctionsElementRoad_user_types.resize(
+    2, contact_lanesElementRestrictionsDisjunctionsElementRoad_user_typesElement);
+  contact_lanesElementRestrictionsDisjunctionsElement.road_user_types
+    = contact_lanesElementRestrictionsDisjunctionsElementRoad_user_types;
+  ::ad::map::restriction::PassengerCount contact_lanesElementRestrictionsDisjunctionsElementPassengers_min(
     std::numeric_limits<::ad::map::restriction::PassengerCount>::max());
-  contactLanesElementRestrictionsDisjunctionsElement.passengersMin
-    = contactLanesElementRestrictionsDisjunctionsElementPassengersMin;
-  contactLanesElementRestrictionsDisjunctions.resize(2, contactLanesElementRestrictionsDisjunctionsElement);
-  contactLanesElementRestrictions.disjunctions = contactLanesElementRestrictionsDisjunctions;
-  contactLanesElement.restrictions = contactLanesElementRestrictions;
-  ::ad::map::landmark::LandmarkId contactLanesElementTrafficLightId(
+  contact_lanesElementRestrictionsDisjunctionsElement.passengers_min
+    = contact_lanesElementRestrictionsDisjunctionsElementPassengers_min;
+  contact_lanesElementRestrictionsDisjunctions.resize(2, contact_lanesElementRestrictionsDisjunctionsElement);
+  contact_lanesElementRestrictions.disjunctions = contact_lanesElementRestrictionsDisjunctions;
+  contact_lanesElement.restrictions = contact_lanesElementRestrictions;
+  ::ad::map::landmark::LandmarkId contact_lanesElementLandmark_id(
     std::numeric_limits<::ad::map::landmark::LandmarkId>::max());
-  contactLanesElement.trafficLightId = contactLanesElementTrafficLightId;
-  contactLanes.resize(2, contactLanesElement);
-  valueA.contactLanes = contactLanes;
+  contact_lanesElement.landmark_id = contact_lanesElementLandmark_id;
+  contact_lanes.resize(2, contact_lanesElement);
+  valueA.contact_lanes = contact_lanes;
   ::ad::map::lane::Lane valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneTests, comparisonOperatorComplianceVersionDiffers)
+TEST_F(LaneTests, comparisonOperatorCompliance_versionDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::map::lane::ComplianceVersion complianceVersion(std::numeric_limits<::ad::map::lane::ComplianceVersion>::max());
-  valueA.complianceVersion = complianceVersion;
+  ::ad::map::lane::ComplianceVersion compliance_version(std::numeric_limits<::ad::map::lane::ComplianceVersion>::max());
+  valueA.compliance_version = compliance_version;
   ::ad::map::lane::Lane valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneTests, comparisonOperatorBoundingSphereDiffers)
+TEST_F(LaneTests, comparisonOperatorBounding_sphereDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::map::point::BoundingSphere boundingSphere;
-  ::ad::map::point::ECEFPoint boundingSphereCenter;
-  ::ad::map::point::ECEFCoordinate boundingSphereCenterX(6400000);
-  boundingSphereCenter.x = boundingSphereCenterX;
-  ::ad::map::point::ECEFCoordinate boundingSphereCenterY(6400000);
-  boundingSphereCenter.y = boundingSphereCenterY;
-  ::ad::map::point::ECEFCoordinate boundingSphereCenterZ(6400000);
-  boundingSphereCenter.z = boundingSphereCenterZ;
-  boundingSphere.center = boundingSphereCenter;
-  ::ad::physics::Distance boundingSphereRadius(1e9);
-  boundingSphere.radius = boundingSphereRadius;
-  valueA.boundingSphere = boundingSphere;
+  ::ad::map::point::BoundingSphere bounding_sphere;
+  ::ad::map::point::ECEFPoint bounding_sphereCenter;
+  ::ad::map::point::ECEFCoordinate bounding_sphereCenterX(6400000);
+  bounding_sphereCenter.x = bounding_sphereCenterX;
+  ::ad::map::point::ECEFCoordinate bounding_sphereCenterY(6400000);
+  bounding_sphereCenter.y = bounding_sphereCenterY;
+  ::ad::map::point::ECEFCoordinate bounding_sphereCenterZ(6400000);
+  bounding_sphereCenter.z = bounding_sphereCenterZ;
+  bounding_sphere.center = bounding_sphereCenter;
+  ::ad::physics::Distance bounding_sphereRadius(1e9);
+  bounding_sphere.radius = bounding_sphereRadius;
+  valueA.bounding_sphere = bounding_sphere;
   ::ad::map::lane::Lane valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneTests, comparisonOperatorVisibleLandmarksDiffers)
+TEST_F(LaneTests, comparisonOperatorVisible_landmarksDiffers)
 {
   ::ad::map::lane::Lane valueA = mValue;
-  ::ad::map::landmark::LandmarkIdList visibleLandmarks;
-  ::ad::map::landmark::LandmarkId visibleLandmarksElement(std::numeric_limits<::ad::map::landmark::LandmarkId>::max());
-  visibleLandmarks.resize(2, visibleLandmarksElement);
-  valueA.visibleLandmarks = visibleLandmarks;
+  ::ad::map::landmark::LandmarkIdList visible_landmarks;
+  ::ad::map::landmark::LandmarkId visible_landmarksElement(std::numeric_limits<::ad::map::landmark::LandmarkId>::max());
+  visible_landmarks.resize(2, visible_landmarksElement);
+  valueA.visible_landmarks = visible_landmarks;
   ::ad::map::lane::Lane valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

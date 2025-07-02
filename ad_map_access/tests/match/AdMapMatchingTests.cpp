@@ -38,7 +38,7 @@ struct AdMapMatchingTest : ::testing::Test
     access::cleanup();
   }
 
-  void compareMapMatching(int line, point::GeoPoint const &geoPoint, std::size_t const expectedNumberOfMatches);
+  void compareMapMatching(int line, point::GeoPoint const &geo_point, std::size_t const expectedNumberOfMatches);
 
   void addRouteHint()
   {
@@ -49,11 +49,11 @@ struct AdMapMatchingTest : ::testing::Test
     ASSERT_EQ(mapMatchingResults.size(), 1u);
     route::RoadSegment roadSegment;
     route::LaneSegment laneSegment;
-    laneSegment.laneInterval.laneId = mapMatchingResults.front().lanePoint.paraPoint.laneId;
-    laneSegment.laneInterval.start = physics::ParametricValue(0.);
-    laneSegment.laneInterval.end = physics::ParametricValue(1.);
-    roadSegment.drivableLaneSegments.push_back(laneSegment);
-    mRouteHint.roadSegments.push_back(roadSegment);
+    laneSegment.lane_interval.lane_id = mapMatchingResults.front().lane_point.para_point.lane_id;
+    laneSegment.lane_interval.start = physics::ParametricValue(0.);
+    laneSegment.lane_interval.end = physics::ParametricValue(1.);
+    roadSegment.drivable_lane_segments.push_back(laneSegment);
+    mRouteHint.road_segments.push_back(roadSegment);
   }
 
   /* A note on the test setup:
@@ -99,7 +99,7 @@ struct AdMapMatchingTest : ::testing::Test
 };
 
 void AdMapMatchingTest::compareMapMatching(int line,
-                                           point::GeoPoint const &geoPoint,
+                                           point::GeoPoint const &geo_point,
                                            std::size_t const expectedNumberOfMatches)
 {
   physics::Distance searchDist(1);
@@ -118,26 +118,26 @@ void AdMapMatchingTest::compareMapMatching(int line,
     mMapMatching->addHeadingHint(headingHint, ad::map::access::getENUReferencePoint());
   }
 
-  auto mapMatchingResults = mMapMatching->getMapMatchedPositions(geoPoint, searchDist, mMinProbabilty);
+  auto mapMatchingResults = mMapMatching->getMapMatchedPositions(geo_point, searchDist, mMinProbabilty);
 
   for (auto mapMatchingResult : mapMatchingResults)
   {
     TestResult result;
     result.mapMatchedPosition = mapMatchingResult;
-    result.laneDirection = lane::getLane(result.mapMatchedPosition.lanePoint.paraPoint.laneId).direction;
+    result.laneDirection = lane::getLane(result.mapMatchedPosition.lane_point.para_point.lane_id).direction;
     testResults.push_back(result);
   }
 
   ASSERT_EQ(expectedNumberOfMatches, testResults.size()) << " compareMapMatching called from " << line << "\n";
 
-  if ((mRouteHint.roadSegments.size() > 0u) && (testResults.size() > 0u))
+  if ((mRouteHint.road_segments.size() > 0u) && (testResults.size() > 0u))
   {
-    ASSERT_EQ(1u, mRouteHint.roadSegments.size()) << " compareMapMatching called from " << line << "\n";
-    ASSERT_EQ(1u, mRouteHint.roadSegments[0].drivableLaneSegments.size())
+    ASSERT_EQ(1u, mRouteHint.road_segments.size()) << " compareMapMatching called from " << line << "\n";
+    ASSERT_EQ(1u, mRouteHint.road_segments[0].drivable_lane_segments.size())
       << " compareMapMatching called from " << line << "\n";
     ASSERT_LT(0u, testResults.size()) << " compareMapMatching called from " << line << "\n";
-    ASSERT_EQ(mRouteHint.roadSegments[0].drivableLaneSegments[0].laneInterval.laneId,
-              testResults[0].mapMatchedPosition.lanePoint.paraPoint.laneId)
+    ASSERT_EQ(mRouteHint.road_segments[0].drivable_lane_segments[0].lane_interval.lane_id,
+              testResults[0].mapMatchedPosition.lane_point.para_point.lane_id)
       << " compareMapMatching called from " << line << "\n";
   }
 }
@@ -157,9 +157,9 @@ TEST_F(AdMapMatchingTest, isLanePartOfRouteHints)
   mMapMatching->addRouteHint(mRouteHint);
 
   EXPECT_TRUE(mMapMatching->isLanePartOfRouteHints(
-    mRouteHint.roadSegments.front().drivableLaneSegments.front().laneInterval.laneId));
+    mRouteHint.road_segments.front().drivable_lane_segments.front().lane_interval.lane_id));
   EXPECT_FALSE(mMapMatching->isLanePartOfRouteHints(
-    mRouteHint.roadSegments.front().drivableLaneSegments.front().laneInterval.laneId + lane::LaneId(1)));
+    mRouteHint.road_segments.front().drivable_lane_segments.front().lane_interval.lane_id + lane::LaneId(1)));
 }
 
 TEST_F(AdMapMatchingTest, perform_map_matching_with_route_hints)
@@ -201,28 +201,28 @@ TEST_F(AdMapMatchingTest, laneOperation)
   ASSERT_EQ(mapMatchingResults.size(), 0u);
   mapMatchingResults = mMapMatching->findLanes(toECEF(hintPoint), physics::Distance(0.01));
   ASSERT_EQ(mapMatchingResults.size(), 1u);
-  ASSERT_NEAR(double(ad::map::lane::calcWidth(toENU(hintPoint))), 3.0039, 0.0001);
+  ASSERT_NEAR(ad::map::lane::calcWidth(toENU(hintPoint)).mDistance, 3.0039, 0.0001);
 
-  LaneOccupiedRegionList laneOccupiedRegions;
+  LaneOccupiedRegionList lane_occupied_regions;
   LaneOccupiedRegionList otherLaneOccupiedRegions;
 
   LaneOccupiedRegion region1, region2;
-  region1.laneId = map::lane::LaneId(10);
+  region1.lane_id = map::lane::LaneId(10);
   physics::ParametricRange range;
   range.minimum = physics::ParametricValue(0.1);
   range.maximum = physics::ParametricValue(0.2);
-  region1.longitudinalRange = range;
+  region1.longitudinal_range = range;
   range.maximum = physics::ParametricValue(0.3);
-  region1.lateralRange = range;
+  region1.lateral_range = range;
   otherLaneOccupiedRegions.push_back(region1);
-  mMapMatching->addLaneRegions(laneOccupiedRegions, otherLaneOccupiedRegions);
-  ASSERT_EQ(laneOccupiedRegions[0].lateralRange, range);
+  mMapMatching->addLaneRegions(lane_occupied_regions, otherLaneOccupiedRegions);
+  ASSERT_EQ(lane_occupied_regions[0].lateral_range, range);
 
   region2 = region1;
   range.maximum = physics::ParametricValue(0.4);
-  region2.lateralRange = range;
+  region2.lateral_range = range;
   otherLaneOccupiedRegions.clear();
   otherLaneOccupiedRegions.push_back(region2);
-  mMapMatching->addLaneRegions(laneOccupiedRegions, otherLaneOccupiedRegions);
-  ASSERT_EQ(laneOccupiedRegions[0].lateralRange, range);
+  mMapMatching->addLaneRegions(lane_occupied_regions, otherLaneOccupiedRegions);
+  ASSERT_EQ(lane_occupied_regions[0].lateral_range, range);
 }

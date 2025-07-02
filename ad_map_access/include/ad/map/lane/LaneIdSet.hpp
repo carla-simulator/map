@@ -16,6 +16,8 @@
 #include <sstream>
 #include <string>
 #include "ad/map/lane/LaneId.hpp"
+#include "spdlog/fmt/ostr.h"
+#include "spdlog/spdlog.h"
 
 /** @brief namespace ad */
 namespace ad {
@@ -54,3 +56,14 @@ static inline std::string to_string(::ad::map::lane::LaneIdSet const &laneIdSet)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::lane::LaneIdSet> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::lane::LaneIdSet const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};

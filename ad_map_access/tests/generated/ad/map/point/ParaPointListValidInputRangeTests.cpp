@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,10 +28,10 @@ TEST(ParaPointListValidInputRangeTests, testValidInputRangeElementValid)
 {
   ::ad::map::point::ParaPointList value;
   ::ad::map::point::ParaPoint element;
-  ::ad::map::lane::LaneId elementLaneId(1);
-  element.laneId = elementLaneId;
-  ::ad::physics::ParametricValue elementParametricOffset(0.);
-  element.parametricOffset = elementParametricOffset;
+  ::ad::map::lane::LaneId elementLane_id(1);
+  element.lane_id = elementLane_id;
+  ::ad::physics::ParametricValue elementParametric_offset(0.);
+  element.parametric_offset = elementParametric_offset;
   value.push_back(element);
   ASSERT_TRUE(withinValidInputRange(value));
 }
@@ -40,8 +40,8 @@ TEST(ParaPointListValidInputRangeTests, testValidInputRangeElementInvalid)
 {
   ::ad::map::point::ParaPointList value;
   ::ad::map::point::ParaPoint element;
-  ::ad::physics::ParametricValue elementParametricOffset(0. - ::ad::physics::ParametricValue::cPrecisionValue);
-  element.parametricOffset = elementParametricOffset;
+  ::ad::physics::ParametricValue elementParametric_offset(0. - ::ad::physics::ParametricValue::cPrecisionValue);
+  element.parametric_offset = elementParametric_offset;
   value.push_back(element);
   ASSERT_FALSE(withinValidInputRange(value));
 }

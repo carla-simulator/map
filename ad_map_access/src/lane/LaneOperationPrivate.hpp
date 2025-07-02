@@ -23,7 +23,7 @@ struct IndexPairs
   std::vector<std::size_t> rightEdgeIndices;
 };
 
-IndexPairs getIndexPairs(point::ENUEdge const &leftEdge, point::ENUEdge const &rightEdge);
+IndexPairs getIndexPairs(ENUEdge const &leftEdge, ENUEdge const &rightEdge);
 void updateLaneLengths(Lane &lane);
 void interpolateHeadingParametricPoints(physics::Distance const &length,
                                         physics::ParametricValue const &headingT,

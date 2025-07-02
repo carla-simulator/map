@@ -27,8 +27,7 @@ namespace serialize {
  */
 inline bool doSerialize(ISerializer &serializer, restriction::PassengerCount &x)
 {
-  return serializer.serializeGeneratedType<restriction::PassengerCount, uint16_t, SerializeableMagic::PassengerCount>(
-    x);
+  return serializer.serialize(SerializeableMagic::PassengerCount) && serializer.serialize(x);
 }
 
 /**
@@ -37,7 +36,7 @@ inline bool doSerialize(ISerializer &serializer, restriction::PassengerCount &x)
 inline bool doSerialize(ISerializer &serializer, restriction::Restriction &x)
 {
   return serializer.serialize(SerializeableMagic::Restriction) && serializer.serialize(x.negated)
-    && doSerialize(serializer, x.passengersMin) && serializer.serializeVector(x.roadUserTypes);
+    && doSerialize(serializer, x.passengers_min) && serializer.serializeVector(x.road_user_types);
 }
 
 /**
@@ -56,15 +55,15 @@ inline bool doSerialize(ISerializer &serializer, restriction::Restrictions &x)
  */
 inline bool doSerialize(ISerializer &serializer, restriction::SpeedLimit &x)
 {
-  bool ok = serializer.serialize(SerializeableMagic::SpeedLimit) && doSerialize(serializer, x.speedLimit)
-    && doSerialize(serializer, x.lanePiece);
+  bool ok = serializer.serialize(SerializeableMagic::SpeedLimit) && doSerialize(serializer, x.speed_limit)
+    && doSerialize(serializer, x.lane_piece);
 
   if (ok)
   {
     // speed limits have to be actually positive!
-    if (x.speedLimit <= physics::Speed(0.))
+    if (x.speed_limit <= physics::Speed(0.))
     {
-      x.speedLimit = std::numeric_limits<physics::Speed>::max();
+      x.speed_limit = std::numeric_limits<physics::Speed>::max();
     }
   }
   return ok;

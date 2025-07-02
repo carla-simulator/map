@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -107,7 +107,7 @@ struct LaneInterval
    */
   bool operator==(const LaneInterval &other) const
   {
-    return (laneId == other.laneId) && (start == other.start) && (end == other.end) && (wrongWay == other.wrongWay);
+    return (lane_id == other.lane_id) && (start == other.start) && (end == other.end) && (wrong_way == other.wrong_way);
   }
 
   /**
@@ -122,14 +122,14 @@ struct LaneInterval
     return !operator==(other);
   }
 
-  ::ad::map::lane::LaneId laneId{0};
+  ::ad::map::lane::LaneId lane_id{0};
   ::ad::physics::ParametricValue start;
   ::ad::physics::ParametricValue end;
 
   /*!
    * True, if driving is against the correct driving direction
    */
-  bool wrongWay{false};
+  bool wrong_way{false};
 };
 
 } // namespace route
@@ -168,8 +168,8 @@ namespace route {
 inline std::ostream &operator<<(std::ostream &os, LaneInterval const &_value)
 {
   os << "LaneInterval(";
-  os << "laneId:";
-  os << _value.laneId;
+  os << "lane_id:";
+  os << _value.lane_id;
   os << ",";
   os << "start:";
   os << _value.start;
@@ -177,8 +177,8 @@ inline std::ostream &operator<<(std::ostream &os, LaneInterval const &_value)
   os << "end:";
   os << _value.end;
   os << ",";
-  os << "wrongWay:";
-  os << _value.wrongWay;
+  os << "wrong_way:";
+  os << _value.wrong_way;
   os << ")";
   return os;
 }
@@ -198,4 +198,16 @@ inline std::string to_string(::ad::map::route::LaneInterval const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::route::LaneInterval> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::route::LaneInterval const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_ROUTE_LANEINTERVAL

@@ -1,0 +1,22 @@
+// ----------------- BEGIN LICENSE BLOCK ---------------------------------
+//
+// Copyright (C) 2020-2021 Intel Corporation
+//
+// SPDX-License-Identifier: MIT
+//
+// ----------------- END LICENSE BLOCK -----------------------------------
+
+#include <boost/python.hpp>
+
+extern void export_ad_physics();
+extern void export_ad_geometry();
+extern void export_time_point();
+
+namespace bp = boost::python;
+
+BOOST_PYTHON_MODULE(ad_physics_@PYTHON_BINDING_NAME@)
+{
+  export_ad_physics();
+  export_ad_geometry();
+  export_time_point();
+}

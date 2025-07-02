@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -48,7 +48,8 @@ namespace route {
  * of the segments and a route planning counter
  * The counters are assigned once on route planning.
  * The route planning counter indicates if a replanning of the route took place.
- * The fullRouteSegmentCount indicates the number of route segments after route planning.
+ * The full_route_segment_count indicates the number of route segments after route
+ * planning.
  * If the stack transports only route previews or is shortening the route while traveling
  * along the counters remain untouched.
  *
@@ -115,10 +116,10 @@ struct FullRoute
    */
   bool operator==(const FullRoute &other) const
   {
-    return (roadSegments == other.roadSegments) && (routePlanningCounter == other.routePlanningCounter)
-      && (fullRouteSegmentCount == other.fullRouteSegmentCount)
-      && (destinationLaneOffset == other.destinationLaneOffset) && (minLaneOffset == other.minLaneOffset)
-      && (maxLaneOffset == other.maxLaneOffset) && (routeCreationMode == other.routeCreationMode);
+    return (road_segments == other.road_segments) && (route_planning_counter == other.route_planning_counter)
+      && (full_route_segment_count == other.full_route_segment_count)
+      && (destination_lane_offset == other.destination_lane_offset) && (min_lane_offset == other.min_lane_offset)
+      && (max_lane_offset == other.max_lane_offset) && (route_creation_mode == other.route_creation_mode);
   }
 
   /**
@@ -133,30 +134,30 @@ struct FullRoute
     return !operator==(other);
   }
 
-  ::ad::map::route::RoadSegmentList roadSegments;
-  ::ad::map::route::RoutePlanningCounter routePlanningCounter{0u};
-  ::ad::map::route::SegmentCounter fullRouteSegmentCount{0u};
+  ::ad::map::route::RoadSegmentList road_segments;
+  ::ad::map::route::RoutePlanningCounter route_planning_counter{0u};
+  ::ad::map::route::SegmentCounter full_route_segment_count{0u};
 
   /*!
    * The lane offset of the planning destination.
    */
-  ::ad::map::route::RouteLaneOffset destinationLaneOffset{0};
+  ::ad::map::route::RouteLaneOffset destination_lane_offset{0};
 
   /*!
    * The minimal lane offset of the route.
    */
-  ::ad::map::route::RouteLaneOffset minLaneOffset{0};
+  ::ad::map::route::RouteLaneOffset min_lane_offset{0};
 
   /*!
    * The maximal lane offset of the route.
    */
-  ::ad::map::route::RouteLaneOffset maxLaneOffset{0};
+  ::ad::map::route::RouteLaneOffset max_lane_offset{0};
 
   /*!
    * Store the information on how the route was initially created to be able to consider this when applying route
    * operations.
    */
-  ::ad::map::route::RouteCreationMode routeCreationMode{::ad::map::route::RouteCreationMode::Undefined};
+  ::ad::map::route::RouteCreationMode route_creation_mode{::ad::map::route::RouteCreationMode::Undefined};
 };
 
 } // namespace route
@@ -195,26 +196,26 @@ namespace route {
 inline std::ostream &operator<<(std::ostream &os, FullRoute const &_value)
 {
   os << "FullRoute(";
-  os << "roadSegments:";
-  os << _value.roadSegments;
+  os << "road_segments:";
+  os << _value.road_segments;
   os << ",";
-  os << "routePlanningCounter:";
-  os << _value.routePlanningCounter;
+  os << "route_planning_counter:";
+  os << _value.route_planning_counter;
   os << ",";
-  os << "fullRouteSegmentCount:";
-  os << _value.fullRouteSegmentCount;
+  os << "full_route_segment_count:";
+  os << _value.full_route_segment_count;
   os << ",";
-  os << "destinationLaneOffset:";
-  os << _value.destinationLaneOffset;
+  os << "destination_lane_offset:";
+  os << _value.destination_lane_offset;
   os << ",";
-  os << "minLaneOffset:";
-  os << _value.minLaneOffset;
+  os << "min_lane_offset:";
+  os << _value.min_lane_offset;
   os << ",";
-  os << "maxLaneOffset:";
-  os << _value.maxLaneOffset;
+  os << "max_lane_offset:";
+  os << _value.max_lane_offset;
   os << ",";
-  os << "routeCreationMode:";
-  os << _value.routeCreationMode;
+  os << "route_creation_mode:";
+  os << _value.route_creation_mode;
   os << ")";
   return os;
 }
@@ -234,4 +235,16 @@ inline std::string to_string(::ad::map::route::FullRoute const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::route::FullRoute> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::route::FullRoute const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_ROUTE_FULLROUTE

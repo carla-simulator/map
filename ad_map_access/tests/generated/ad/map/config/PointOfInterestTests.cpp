@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,14 +28,14 @@ protected:
   {
     // valid initialization
     ::ad::map::config::PointOfInterest value;
-    ::ad::map::point::GeoPoint valueGeoPoint;
-    ::ad::map::point::Longitude valueGeoPointLongitude(-180);
-    valueGeoPoint.longitude = valueGeoPointLongitude;
-    ::ad::map::point::Latitude valueGeoPointLatitude(-90);
-    valueGeoPoint.latitude = valueGeoPointLatitude;
-    ::ad::map::point::Altitude valueGeoPointAltitude(-11000);
-    valueGeoPoint.altitude = valueGeoPointAltitude;
-    value.geoPoint = valueGeoPoint;
+    ::ad::map::point::GeoPoint valueGeo_point;
+    ::ad::map::point::Longitude valueGeo_pointLongitude(-180);
+    valueGeo_point.longitude = valueGeo_pointLongitude;
+    ::ad::map::point::Latitude valueGeo_pointLatitude(-90);
+    valueGeo_point.latitude = valueGeo_pointLatitude;
+    ::ad::map::point::Altitude valueGeo_pointAltitude(-11000);
+    valueGeo_point.altitude = valueGeo_pointAltitude;
+    value.geo_point = valueGeo_point;
     std::string valueName{"min"};
     value.name = valueName;
     mValue = value;
@@ -90,17 +90,17 @@ TEST_F(PointOfInterestTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(PointOfInterestTests, comparisonOperatorGeoPointDiffers)
+TEST_F(PointOfInterestTests, comparisonOperatorGeo_pointDiffers)
 {
   ::ad::map::config::PointOfInterest valueA = mValue;
-  ::ad::map::point::GeoPoint geoPoint;
-  ::ad::map::point::Longitude geoPointLongitude(180);
-  geoPoint.longitude = geoPointLongitude;
-  ::ad::map::point::Latitude geoPointLatitude(90);
-  geoPoint.latitude = geoPointLatitude;
-  ::ad::map::point::Altitude geoPointAltitude(9000);
-  geoPoint.altitude = geoPointAltitude;
-  valueA.geoPoint = geoPoint;
+  ::ad::map::point::GeoPoint geo_point;
+  ::ad::map::point::Longitude geo_pointLongitude(180);
+  geo_point.longitude = geo_pointLongitude;
+  ::ad::map::point::Latitude geo_pointLatitude(90);
+  geo_point.latitude = geo_pointLatitude;
+  ::ad::map::point::Altitude geo_pointAltitude(9000);
+  geo_point.altitude = geo_pointAltitude;
+  valueA.geo_point = geo_point;
   ::ad::map::config::PointOfInterest valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

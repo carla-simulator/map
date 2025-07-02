@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,14 +28,14 @@ protected:
   {
     // valid initialization
     ::ad::map::route::LaneInterval value;
-    ::ad::map::lane::LaneId valueLaneId(1);
-    value.laneId = valueLaneId;
+    ::ad::map::lane::LaneId valueLane_id(1);
+    value.lane_id = valueLane_id;
     ::ad::physics::ParametricValue valueStart(0.);
     value.start = valueStart;
     ::ad::physics::ParametricValue valueEnd(0.);
     value.end = valueEnd;
-    bool valueWrongWay{true};
-    value.wrongWay = valueWrongWay;
+    bool valueWrong_way{true};
+    value.wrong_way = valueWrong_way;
     mValue = value;
   }
 
@@ -88,11 +88,11 @@ TEST_F(LaneIntervalTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(LaneIntervalTests, comparisonOperatorLaneIdDiffers)
+TEST_F(LaneIntervalTests, comparisonOperatorLane_idDiffers)
 {
   ::ad::map::route::LaneInterval valueA = mValue;
-  ::ad::map::lane::LaneId laneId(std::numeric_limits<::ad::map::lane::LaneId>::max());
-  valueA.laneId = laneId;
+  ::ad::map::lane::LaneId lane_id(std::numeric_limits<::ad::map::lane::LaneId>::max());
+  valueA.lane_id = lane_id;
   ::ad::map::route::LaneInterval valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
@@ -121,11 +121,11 @@ TEST_F(LaneIntervalTests, comparisonOperatorEndDiffers)
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneIntervalTests, comparisonOperatorWrongWayDiffers)
+TEST_F(LaneIntervalTests, comparisonOperatorWrong_wayDiffers)
 {
   ::ad::map::route::LaneInterval valueA = mValue;
-  bool wrongWay{false};
-  valueA.wrongWay = wrongWay;
+  bool wrong_way{false};
+  valueA.wrong_way = wrong_way;
   ::ad::map::route::LaneInterval valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -113,11 +113,11 @@ struct Lane
   bool operator==(const Lane &other) const
   {
     return (id == other.id) && (type == other.type) && (direction == other.direction)
-      && (restrictions == other.restrictions) && (length == other.length) && (lengthRange == other.lengthRange)
-      && (width == other.width) && (widthRange == other.widthRange) && (speedLimits == other.speedLimits)
-      && (edgeLeft == other.edgeLeft) && (edgeRight == other.edgeRight) && (contactLanes == other.contactLanes)
-      && (complianceVersion == other.complianceVersion) && (boundingSphere == other.boundingSphere)
-      && (visibleLandmarks == other.visibleLandmarks);
+      && (restrictions == other.restrictions) && (length == other.length) && (length_range == other.length_range)
+      && (width == other.width) && (width_range == other.width_range) && (speed_limits == other.speed_limits)
+      && (edge_left == other.edge_left) && (edge_right == other.edge_right) && (contact_lanes == other.contact_lanes)
+      && (compliance_version == other.compliance_version) && (bounding_sphere == other.bounding_sphere)
+      && (visible_landmarks == other.visible_landmarks);
   }
 
   /**
@@ -140,7 +140,7 @@ struct Lane
   /*!
    * Type of the lane
    */
-  ::ad::map::lane::LaneType type;
+  ::ad::map::lane::LaneType type{::ad::map::lane::LaneType::UNKNOWN};
 
   /*!
    * Driving direction of the lane
@@ -156,40 +156,40 @@ struct Lane
    * Length of the lane
    */
   ::ad::physics::Distance length;
-  ::ad::physics::MetricRange lengthRange;
+  ::ad::physics::MetricRange length_range;
 
   /*!
    * Width of the lane
    */
   ::ad::physics::Distance width;
-  ::ad::physics::MetricRange widthRange;
+  ::ad::physics::MetricRange width_range;
 
   /*!
    * List of speed limits
    */
-  ::ad::map::restriction::SpeedLimitList speedLimits;
+  ::ad::map::restriction::SpeedLimitList speed_limits;
 
   /*!
    * Left edge of the lane
    */
-  ::ad::map::point::Geometry edgeLeft;
+  ::ad::map::point::Geometry edge_left;
 
   /*!
    * Right edge of the lane
    */
-  ::ad::map::point::Geometry edgeRight;
+  ::ad::map::point::Geometry edge_right;
 
   /*!
    * List of contacting lanes
    */
-  ::ad::map::lane::ContactLaneList contactLanes;
-  ::ad::map::lane::ComplianceVersion complianceVersion;
-  ::ad::map::point::BoundingSphere boundingSphere;
+  ::ad::map::lane::ContactLaneList contact_lanes;
+  ::ad::map::lane::ComplianceVersion compliance_version{0};
+  ::ad::map::point::BoundingSphere bounding_sphere;
 
   /*!
    * List of visible landmarks
    */
-  ::ad::map::landmark::LandmarkIdList visibleLandmarks;
+  ::ad::map::landmark::LandmarkIdList visible_landmarks;
 };
 
 } // namespace lane
@@ -243,35 +243,35 @@ inline std::ostream &operator<<(std::ostream &os, Lane const &_value)
   os << "length:";
   os << _value.length;
   os << ",";
-  os << "lengthRange:";
-  os << _value.lengthRange;
+  os << "length_range:";
+  os << _value.length_range;
   os << ",";
   os << "width:";
   os << _value.width;
   os << ",";
-  os << "widthRange:";
-  os << _value.widthRange;
+  os << "width_range:";
+  os << _value.width_range;
   os << ",";
-  os << "speedLimits:";
-  os << _value.speedLimits;
+  os << "speed_limits:";
+  os << _value.speed_limits;
   os << ",";
-  os << "edgeLeft:";
-  os << _value.edgeLeft;
+  os << "edge_left:";
+  os << _value.edge_left;
   os << ",";
-  os << "edgeRight:";
-  os << _value.edgeRight;
+  os << "edge_right:";
+  os << _value.edge_right;
   os << ",";
-  os << "contactLanes:";
-  os << _value.contactLanes;
+  os << "contact_lanes:";
+  os << _value.contact_lanes;
   os << ",";
-  os << "complianceVersion:";
-  os << _value.complianceVersion;
+  os << "compliance_version:";
+  os << _value.compliance_version;
   os << ",";
-  os << "boundingSphere:";
-  os << _value.boundingSphere;
+  os << "bounding_sphere:";
+  os << _value.bounding_sphere;
   os << ",";
-  os << "visibleLandmarks:";
-  os << _value.visibleLandmarks;
+  os << "visible_landmarks:";
+  os << _value.visible_landmarks;
   os << ")";
   return os;
 }
@@ -291,4 +291,16 @@ inline std::string to_string(::ad::map::lane::Lane const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::lane::Lane> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::lane::Lane const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_LANE_LANE

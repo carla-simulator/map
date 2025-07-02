@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,83 +28,95 @@ protected:
   {
     // valid initialization
     ::ad::map::match::MapMatchedObjectBoundingBox value;
-    ::ad::map::match::LaneOccupiedRegionList valueLaneOccupiedRegions;
-    ::ad::map::match::LaneOccupiedRegion valueLaneOccupiedRegionsElement;
-    ::ad::map::lane::LaneId valueLaneOccupiedRegionsElementLaneId(1);
-    valueLaneOccupiedRegionsElement.laneId = valueLaneOccupiedRegionsElementLaneId;
-    ::ad::physics::ParametricRange valueLaneOccupiedRegionsElementLongitudinalRange;
-    ::ad::physics::ParametricValue valueLaneOccupiedRegionsElementLongitudinalRangeMinimum(0.);
-    valueLaneOccupiedRegionsElementLongitudinalRange.minimum = valueLaneOccupiedRegionsElementLongitudinalRangeMinimum;
-    ::ad::physics::ParametricValue valueLaneOccupiedRegionsElementLongitudinalRangeMaximum(0.);
-    valueLaneOccupiedRegionsElementLongitudinalRange.maximum = valueLaneOccupiedRegionsElementLongitudinalRangeMaximum;
-    valueLaneOccupiedRegionsElementLongitudinalRange.maximum = valueLaneOccupiedRegionsElementLongitudinalRange.minimum;
-    valueLaneOccupiedRegionsElementLongitudinalRange.minimum = valueLaneOccupiedRegionsElementLongitudinalRange.maximum;
-    valueLaneOccupiedRegionsElement.longitudinalRange = valueLaneOccupiedRegionsElementLongitudinalRange;
-    ::ad::physics::ParametricRange valueLaneOccupiedRegionsElementLateralRange;
-    ::ad::physics::ParametricValue valueLaneOccupiedRegionsElementLateralRangeMinimum(0.);
-    valueLaneOccupiedRegionsElementLateralRange.minimum = valueLaneOccupiedRegionsElementLateralRangeMinimum;
-    ::ad::physics::ParametricValue valueLaneOccupiedRegionsElementLateralRangeMaximum(0.);
-    valueLaneOccupiedRegionsElementLateralRange.maximum = valueLaneOccupiedRegionsElementLateralRangeMaximum;
-    valueLaneOccupiedRegionsElementLateralRange.maximum = valueLaneOccupiedRegionsElementLateralRange.minimum;
-    valueLaneOccupiedRegionsElementLateralRange.minimum = valueLaneOccupiedRegionsElementLateralRange.maximum;
-    valueLaneOccupiedRegionsElement.lateralRange = valueLaneOccupiedRegionsElementLateralRange;
-    valueLaneOccupiedRegions.resize(1, valueLaneOccupiedRegionsElement);
-    value.laneOccupiedRegions = valueLaneOccupiedRegions;
-    ::ad::map::match::MapMatchedObjectReferencePositionList valueReferencePointPositions;
-    ::ad::map::match::MapMatchedPositionConfidenceList valueReferencePointPositionsElement;
-    ::ad::map::match::MapMatchedPosition valueReferencePointPositionsElementElement;
-    ::ad::map::match::LanePoint valueReferencePointPositionsElementElementLanePoint;
-    ::ad::map::point::ParaPoint valueReferencePointPositionsElementElementLanePointParaPoint;
-    ::ad::map::lane::LaneId valueReferencePointPositionsElementElementLanePointParaPointLaneId(1);
-    valueReferencePointPositionsElementElementLanePointParaPoint.laneId
-      = valueReferencePointPositionsElementElementLanePointParaPointLaneId;
-    ::ad::physics::ParametricValue valueReferencePointPositionsElementElementLanePointParaPointParametricOffset(0.);
-    valueReferencePointPositionsElementElementLanePointParaPoint.parametricOffset
-      = valueReferencePointPositionsElementElementLanePointParaPointParametricOffset;
-    valueReferencePointPositionsElementElementLanePoint.paraPoint
-      = valueReferencePointPositionsElementElementLanePointParaPoint;
-    ::ad::physics::RatioValue valueReferencePointPositionsElementElementLanePointLateralT(
+    ::ad::map::match::LaneOccupiedRegionList valueLane_occupied_regions;
+    ::ad::map::match::LaneOccupiedRegion valueLane_occupied_regionsElement;
+    ::ad::map::lane::LaneId valueLane_occupied_regionsElementLane_id(1);
+    valueLane_occupied_regionsElement.lane_id = valueLane_occupied_regionsElementLane_id;
+    ::ad::physics::ParametricRange valueLane_occupied_regionsElementLongitudinal_range;
+    ::ad::physics::ParametricValue valueLane_occupied_regionsElementLongitudinal_rangeMinimum(0.);
+    valueLane_occupied_regionsElementLongitudinal_range.minimum
+      = valueLane_occupied_regionsElementLongitudinal_rangeMinimum;
+    ::ad::physics::ParametricValue valueLane_occupied_regionsElementLongitudinal_rangeMaximum(0.);
+    valueLane_occupied_regionsElementLongitudinal_range.maximum
+      = valueLane_occupied_regionsElementLongitudinal_rangeMaximum;
+    valueLane_occupied_regionsElementLongitudinal_range.maximum
+      = valueLane_occupied_regionsElementLongitudinal_range.minimum;
+    valueLane_occupied_regionsElementLongitudinal_range.minimum
+      = valueLane_occupied_regionsElementLongitudinal_range.maximum;
+    valueLane_occupied_regionsElement.longitudinal_range = valueLane_occupied_regionsElementLongitudinal_range;
+    ::ad::physics::ParametricRange valueLane_occupied_regionsElementLateral_range;
+    ::ad::physics::ParametricValue valueLane_occupied_regionsElementLateral_rangeMinimum(0.);
+    valueLane_occupied_regionsElementLateral_range.minimum = valueLane_occupied_regionsElementLateral_rangeMinimum;
+    ::ad::physics::ParametricValue valueLane_occupied_regionsElementLateral_rangeMaximum(0.);
+    valueLane_occupied_regionsElementLateral_range.maximum = valueLane_occupied_regionsElementLateral_rangeMaximum;
+    valueLane_occupied_regionsElementLateral_range.maximum = valueLane_occupied_regionsElementLateral_range.minimum;
+    valueLane_occupied_regionsElementLateral_range.minimum = valueLane_occupied_regionsElementLateral_range.maximum;
+    valueLane_occupied_regionsElement.lateral_range = valueLane_occupied_regionsElementLateral_range;
+    valueLane_occupied_regions.resize(1, valueLane_occupied_regionsElement);
+    value.lane_occupied_regions = valueLane_occupied_regions;
+    ::ad::map::match::MapMatchedObjectReferencePositionList valueReference_point_positions;
+    ::ad::map::match::MapMatchedPositionConfidenceList valueReference_point_positionsElement;
+    ::ad::map::match::MapMatchedPosition valueReference_point_positionsElementElement;
+    ::ad::map::match::LanePoint valueReference_point_positionsElementElementLane_point;
+    ::ad::map::point::ParaPoint valueReference_point_positionsElementElementLane_pointPara_point;
+    ::ad::map::lane::LaneId valueReference_point_positionsElementElementLane_pointPara_pointLane_id(1);
+    valueReference_point_positionsElementElementLane_pointPara_point.lane_id
+      = valueReference_point_positionsElementElementLane_pointPara_pointLane_id;
+    ::ad::physics::ParametricValue valueReference_point_positionsElementElementLane_pointPara_pointParametric_offset(
+      0.);
+    valueReference_point_positionsElementElementLane_pointPara_point.parametric_offset
+      = valueReference_point_positionsElementElementLane_pointPara_pointParametric_offset;
+    valueReference_point_positionsElementElementLane_point.para_point
+      = valueReference_point_positionsElementElementLane_pointPara_point;
+    ::ad::physics::RatioValue valueReference_point_positionsElementElementLane_pointLateral_t(
       std::numeric_limits<::ad::physics::RatioValue>::lowest());
-    valueReferencePointPositionsElementElementLanePoint.lateralT
-      = valueReferencePointPositionsElementElementLanePointLateralT;
-    ::ad::physics::Distance valueReferencePointPositionsElementElementLanePointLaneLength(-1e9);
-    valueReferencePointPositionsElementElementLanePoint.laneLength
-      = valueReferencePointPositionsElementElementLanePointLaneLength;
-    ::ad::physics::Distance valueReferencePointPositionsElementElementLanePointLaneWidth(-1e9);
-    valueReferencePointPositionsElementElementLanePoint.laneWidth
-      = valueReferencePointPositionsElementElementLanePointLaneWidth;
-    valueReferencePointPositionsElementElement.lanePoint = valueReferencePointPositionsElementElementLanePoint;
-    ::ad::map::match::MapMatchedPositionType valueReferencePointPositionsElementElementType(
+    valueReference_point_positionsElementElementLane_point.lateral_t
+      = valueReference_point_positionsElementElementLane_pointLateral_t;
+    ::ad::physics::Distance valueReference_point_positionsElementElementLane_pointLane_length(-1e9);
+    valueReference_point_positionsElementElementLane_point.lane_length
+      = valueReference_point_positionsElementElementLane_pointLane_length;
+    ::ad::physics::Distance valueReference_point_positionsElementElementLane_pointLane_width(-1e9);
+    valueReference_point_positionsElementElementLane_point.lane_width
+      = valueReference_point_positionsElementElementLane_pointLane_width;
+    valueReference_point_positionsElementElement.lane_point = valueReference_point_positionsElementElementLane_point;
+    ::ad::map::match::MapMatchedPositionType valueReference_point_positionsElementElementType(
       ::ad::map::match::MapMatchedPositionType::INVALID);
-    valueReferencePointPositionsElementElement.type = valueReferencePointPositionsElementElementType;
-    ::ad::map::point::ECEFPoint valueReferencePointPositionsElementElementMatchedPoint;
-    ::ad::map::point::ECEFCoordinate valueReferencePointPositionsElementElementMatchedPointX(-6400000);
-    valueReferencePointPositionsElementElementMatchedPoint.x = valueReferencePointPositionsElementElementMatchedPointX;
-    ::ad::map::point::ECEFCoordinate valueReferencePointPositionsElementElementMatchedPointY(-6400000);
-    valueReferencePointPositionsElementElementMatchedPoint.y = valueReferencePointPositionsElementElementMatchedPointY;
-    ::ad::map::point::ECEFCoordinate valueReferencePointPositionsElementElementMatchedPointZ(-6400000);
-    valueReferencePointPositionsElementElementMatchedPoint.z = valueReferencePointPositionsElementElementMatchedPointZ;
-    valueReferencePointPositionsElementElement.matchedPoint = valueReferencePointPositionsElementElementMatchedPoint;
-    ::ad::physics::Probability valueReferencePointPositionsElementElementProbability(0.);
-    valueReferencePointPositionsElementElement.probability = valueReferencePointPositionsElementElementProbability;
-    ::ad::map::point::ECEFPoint valueReferencePointPositionsElementElementQueryPoint;
-    ::ad::map::point::ECEFCoordinate valueReferencePointPositionsElementElementQueryPointX(-6400000);
-    valueReferencePointPositionsElementElementQueryPoint.x = valueReferencePointPositionsElementElementQueryPointX;
-    ::ad::map::point::ECEFCoordinate valueReferencePointPositionsElementElementQueryPointY(-6400000);
-    valueReferencePointPositionsElementElementQueryPoint.y = valueReferencePointPositionsElementElementQueryPointY;
-    ::ad::map::point::ECEFCoordinate valueReferencePointPositionsElementElementQueryPointZ(-6400000);
-    valueReferencePointPositionsElementElementQueryPoint.z = valueReferencePointPositionsElementElementQueryPointZ;
-    valueReferencePointPositionsElementElement.queryPoint = valueReferencePointPositionsElementElementQueryPoint;
-    ::ad::physics::Distance valueReferencePointPositionsElementElementMatchedPointDistance(-1e9);
-    valueReferencePointPositionsElementElement.matchedPointDistance
-      = valueReferencePointPositionsElementElementMatchedPointDistance;
-    valueReferencePointPositionsElement.resize(1, valueReferencePointPositionsElementElement);
-    valueReferencePointPositions.resize(1, valueReferencePointPositionsElement);
-    value.referencePointPositions = valueReferencePointPositions;
-    ::ad::physics::Distance valueSamplingDistance(-1e9);
-    value.samplingDistance = valueSamplingDistance;
-    ::ad::physics::Distance valueMatchRadius(-1e9);
-    value.matchRadius = valueMatchRadius;
+    valueReference_point_positionsElementElement.type = valueReference_point_positionsElementElementType;
+    ::ad::map::point::ECEFPoint valueReference_point_positionsElementElementMatched_point;
+    ::ad::map::point::ECEFCoordinate valueReference_point_positionsElementElementMatched_pointX(-6400000);
+    valueReference_point_positionsElementElementMatched_point.x
+      = valueReference_point_positionsElementElementMatched_pointX;
+    ::ad::map::point::ECEFCoordinate valueReference_point_positionsElementElementMatched_pointY(-6400000);
+    valueReference_point_positionsElementElementMatched_point.y
+      = valueReference_point_positionsElementElementMatched_pointY;
+    ::ad::map::point::ECEFCoordinate valueReference_point_positionsElementElementMatched_pointZ(-6400000);
+    valueReference_point_positionsElementElementMatched_point.z
+      = valueReference_point_positionsElementElementMatched_pointZ;
+    valueReference_point_positionsElementElement.matched_point
+      = valueReference_point_positionsElementElementMatched_point;
+    ::ad::physics::Probability valueReference_point_positionsElementElementProbability(0.);
+    valueReference_point_positionsElementElement.probability = valueReference_point_positionsElementElementProbability;
+    ::ad::map::point::ECEFPoint valueReference_point_positionsElementElementQuery_point;
+    ::ad::map::point::ECEFCoordinate valueReference_point_positionsElementElementQuery_pointX(-6400000);
+    valueReference_point_positionsElementElementQuery_point.x
+      = valueReference_point_positionsElementElementQuery_pointX;
+    ::ad::map::point::ECEFCoordinate valueReference_point_positionsElementElementQuery_pointY(-6400000);
+    valueReference_point_positionsElementElementQuery_point.y
+      = valueReference_point_positionsElementElementQuery_pointY;
+    ::ad::map::point::ECEFCoordinate valueReference_point_positionsElementElementQuery_pointZ(-6400000);
+    valueReference_point_positionsElementElementQuery_point.z
+      = valueReference_point_positionsElementElementQuery_pointZ;
+    valueReference_point_positionsElementElement.query_point = valueReference_point_positionsElementElementQuery_point;
+    ::ad::physics::Distance valueReference_point_positionsElementElementMatched_point_distance(-1e9);
+    valueReference_point_positionsElementElement.matched_point_distance
+      = valueReference_point_positionsElementElementMatched_point_distance;
+    valueReference_point_positionsElement.resize(1, valueReference_point_positionsElementElement);
+    valueReference_point_positions.resize(1, valueReference_point_positionsElement);
+    value.reference_point_positions = valueReference_point_positions;
+    ::ad::physics::Distance valueSampling_distance(-1e9);
+    value.sampling_distance = valueSampling_distance;
+    ::ad::physics::Distance valueMatch_radius(-1e9);
+    value.match_radius = valueMatch_radius;
     mValue = value;
   }
 
@@ -157,110 +169,114 @@ TEST_F(MapMatchedObjectBoundingBoxTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(MapMatchedObjectBoundingBoxTests, comparisonOperatorLaneOccupiedRegionsDiffers)
+TEST_F(MapMatchedObjectBoundingBoxTests, comparisonOperatorLane_occupied_regionsDiffers)
 {
   ::ad::map::match::MapMatchedObjectBoundingBox valueA = mValue;
-  ::ad::map::match::LaneOccupiedRegionList laneOccupiedRegions;
-  ::ad::map::match::LaneOccupiedRegion laneOccupiedRegionsElement;
-  ::ad::map::lane::LaneId laneOccupiedRegionsElementLaneId(std::numeric_limits<::ad::map::lane::LaneId>::max());
-  laneOccupiedRegionsElement.laneId = laneOccupiedRegionsElementLaneId;
-  ::ad::physics::ParametricRange laneOccupiedRegionsElementLongitudinalRange;
-  ::ad::physics::ParametricValue laneOccupiedRegionsElementLongitudinalRangeMinimum(1.);
-  laneOccupiedRegionsElementLongitudinalRange.minimum = laneOccupiedRegionsElementLongitudinalRangeMinimum;
-  ::ad::physics::ParametricValue laneOccupiedRegionsElementLongitudinalRangeMaximum(1.);
-  laneOccupiedRegionsElementLongitudinalRange.maximum = laneOccupiedRegionsElementLongitudinalRangeMaximum;
-  laneOccupiedRegionsElementLongitudinalRange.maximum = laneOccupiedRegionsElementLongitudinalRange.minimum;
-  laneOccupiedRegionsElementLongitudinalRange.minimum = laneOccupiedRegionsElementLongitudinalRange.maximum;
-  laneOccupiedRegionsElement.longitudinalRange = laneOccupiedRegionsElementLongitudinalRange;
-  ::ad::physics::ParametricRange laneOccupiedRegionsElementLateralRange;
-  ::ad::physics::ParametricValue laneOccupiedRegionsElementLateralRangeMinimum(1.);
-  laneOccupiedRegionsElementLateralRange.minimum = laneOccupiedRegionsElementLateralRangeMinimum;
-  ::ad::physics::ParametricValue laneOccupiedRegionsElementLateralRangeMaximum(1.);
-  laneOccupiedRegionsElementLateralRange.maximum = laneOccupiedRegionsElementLateralRangeMaximum;
-  laneOccupiedRegionsElementLateralRange.maximum = laneOccupiedRegionsElementLateralRange.minimum;
-  laneOccupiedRegionsElementLateralRange.minimum = laneOccupiedRegionsElementLateralRange.maximum;
-  laneOccupiedRegionsElement.lateralRange = laneOccupiedRegionsElementLateralRange;
-  laneOccupiedRegions.resize(2, laneOccupiedRegionsElement);
-  valueA.laneOccupiedRegions = laneOccupiedRegions;
+  ::ad::map::match::LaneOccupiedRegionList lane_occupied_regions;
+  ::ad::map::match::LaneOccupiedRegion lane_occupied_regionsElement;
+  ::ad::map::lane::LaneId lane_occupied_regionsElementLane_id(std::numeric_limits<::ad::map::lane::LaneId>::max());
+  lane_occupied_regionsElement.lane_id = lane_occupied_regionsElementLane_id;
+  ::ad::physics::ParametricRange lane_occupied_regionsElementLongitudinal_range;
+  ::ad::physics::ParametricValue lane_occupied_regionsElementLongitudinal_rangeMinimum(1.);
+  lane_occupied_regionsElementLongitudinal_range.minimum = lane_occupied_regionsElementLongitudinal_rangeMinimum;
+  ::ad::physics::ParametricValue lane_occupied_regionsElementLongitudinal_rangeMaximum(1.);
+  lane_occupied_regionsElementLongitudinal_range.maximum = lane_occupied_regionsElementLongitudinal_rangeMaximum;
+  lane_occupied_regionsElementLongitudinal_range.maximum = lane_occupied_regionsElementLongitudinal_range.minimum;
+  lane_occupied_regionsElementLongitudinal_range.minimum = lane_occupied_regionsElementLongitudinal_range.maximum;
+  lane_occupied_regionsElement.longitudinal_range = lane_occupied_regionsElementLongitudinal_range;
+  ::ad::physics::ParametricRange lane_occupied_regionsElementLateral_range;
+  ::ad::physics::ParametricValue lane_occupied_regionsElementLateral_rangeMinimum(1.);
+  lane_occupied_regionsElementLateral_range.minimum = lane_occupied_regionsElementLateral_rangeMinimum;
+  ::ad::physics::ParametricValue lane_occupied_regionsElementLateral_rangeMaximum(1.);
+  lane_occupied_regionsElementLateral_range.maximum = lane_occupied_regionsElementLateral_rangeMaximum;
+  lane_occupied_regionsElementLateral_range.maximum = lane_occupied_regionsElementLateral_range.minimum;
+  lane_occupied_regionsElementLateral_range.minimum = lane_occupied_regionsElementLateral_range.maximum;
+  lane_occupied_regionsElement.lateral_range = lane_occupied_regionsElementLateral_range;
+  lane_occupied_regions.resize(2, lane_occupied_regionsElement);
+  valueA.lane_occupied_regions = lane_occupied_regions;
   ::ad::map::match::MapMatchedObjectBoundingBox valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(MapMatchedObjectBoundingBoxTests, comparisonOperatorReferencePointPositionsDiffers)
+TEST_F(MapMatchedObjectBoundingBoxTests, comparisonOperatorReference_point_positionsDiffers)
 {
   ::ad::map::match::MapMatchedObjectBoundingBox valueA = mValue;
-  ::ad::map::match::MapMatchedObjectReferencePositionList referencePointPositions;
-  ::ad::map::match::MapMatchedPositionConfidenceList referencePointPositionsElement;
-  ::ad::map::match::MapMatchedPosition referencePointPositionsElementElement;
-  ::ad::map::match::LanePoint referencePointPositionsElementElementLanePoint;
-  ::ad::map::point::ParaPoint referencePointPositionsElementElementLanePointParaPoint;
-  ::ad::map::lane::LaneId referencePointPositionsElementElementLanePointParaPointLaneId(
+  ::ad::map::match::MapMatchedObjectReferencePositionList reference_point_positions;
+  ::ad::map::match::MapMatchedPositionConfidenceList reference_point_positionsElement;
+  ::ad::map::match::MapMatchedPosition reference_point_positionsElementElement;
+  ::ad::map::match::LanePoint reference_point_positionsElementElementLane_point;
+  ::ad::map::point::ParaPoint reference_point_positionsElementElementLane_pointPara_point;
+  ::ad::map::lane::LaneId reference_point_positionsElementElementLane_pointPara_pointLane_id(
     std::numeric_limits<::ad::map::lane::LaneId>::max());
-  referencePointPositionsElementElementLanePointParaPoint.laneId
-    = referencePointPositionsElementElementLanePointParaPointLaneId;
-  ::ad::physics::ParametricValue referencePointPositionsElementElementLanePointParaPointParametricOffset(1.);
-  referencePointPositionsElementElementLanePointParaPoint.parametricOffset
-    = referencePointPositionsElementElementLanePointParaPointParametricOffset;
-  referencePointPositionsElementElementLanePoint.paraPoint = referencePointPositionsElementElementLanePointParaPoint;
-  ::ad::physics::RatioValue referencePointPositionsElementElementLanePointLateralT(
+  reference_point_positionsElementElementLane_pointPara_point.lane_id
+    = reference_point_positionsElementElementLane_pointPara_pointLane_id;
+  ::ad::physics::ParametricValue reference_point_positionsElementElementLane_pointPara_pointParametric_offset(1.);
+  reference_point_positionsElementElementLane_pointPara_point.parametric_offset
+    = reference_point_positionsElementElementLane_pointPara_pointParametric_offset;
+  reference_point_positionsElementElementLane_point.para_point
+    = reference_point_positionsElementElementLane_pointPara_point;
+  ::ad::physics::RatioValue reference_point_positionsElementElementLane_pointLateral_t(
     std::numeric_limits<::ad::physics::RatioValue>::max());
-  referencePointPositionsElementElementLanePoint.lateralT = referencePointPositionsElementElementLanePointLateralT;
-  ::ad::physics::Distance referencePointPositionsElementElementLanePointLaneLength(1e9);
-  referencePointPositionsElementElementLanePoint.laneLength = referencePointPositionsElementElementLanePointLaneLength;
-  ::ad::physics::Distance referencePointPositionsElementElementLanePointLaneWidth(1e9);
-  referencePointPositionsElementElementLanePoint.laneWidth = referencePointPositionsElementElementLanePointLaneWidth;
-  referencePointPositionsElementElement.lanePoint = referencePointPositionsElementElementLanePoint;
-  ::ad::map::match::MapMatchedPositionType referencePointPositionsElementElementType(
+  reference_point_positionsElementElementLane_point.lateral_t
+    = reference_point_positionsElementElementLane_pointLateral_t;
+  ::ad::physics::Distance reference_point_positionsElementElementLane_pointLane_length(1e9);
+  reference_point_positionsElementElementLane_point.lane_length
+    = reference_point_positionsElementElementLane_pointLane_length;
+  ::ad::physics::Distance reference_point_positionsElementElementLane_pointLane_width(1e9);
+  reference_point_positionsElementElementLane_point.lane_width
+    = reference_point_positionsElementElementLane_pointLane_width;
+  reference_point_positionsElementElement.lane_point = reference_point_positionsElementElementLane_point;
+  ::ad::map::match::MapMatchedPositionType reference_point_positionsElementElementType(
     ::ad::map::match::MapMatchedPositionType::LANE_RIGHT);
-  referencePointPositionsElementElement.type = referencePointPositionsElementElementType;
-  ::ad::map::point::ECEFPoint referencePointPositionsElementElementMatchedPoint;
-  ::ad::map::point::ECEFCoordinate referencePointPositionsElementElementMatchedPointX(6400000);
-  referencePointPositionsElementElementMatchedPoint.x = referencePointPositionsElementElementMatchedPointX;
-  ::ad::map::point::ECEFCoordinate referencePointPositionsElementElementMatchedPointY(6400000);
-  referencePointPositionsElementElementMatchedPoint.y = referencePointPositionsElementElementMatchedPointY;
-  ::ad::map::point::ECEFCoordinate referencePointPositionsElementElementMatchedPointZ(6400000);
-  referencePointPositionsElementElementMatchedPoint.z = referencePointPositionsElementElementMatchedPointZ;
-  referencePointPositionsElementElement.matchedPoint = referencePointPositionsElementElementMatchedPoint;
-  ::ad::physics::Probability referencePointPositionsElementElementProbability(1.);
-  referencePointPositionsElementElement.probability = referencePointPositionsElementElementProbability;
-  ::ad::map::point::ECEFPoint referencePointPositionsElementElementQueryPoint;
-  ::ad::map::point::ECEFCoordinate referencePointPositionsElementElementQueryPointX(6400000);
-  referencePointPositionsElementElementQueryPoint.x = referencePointPositionsElementElementQueryPointX;
-  ::ad::map::point::ECEFCoordinate referencePointPositionsElementElementQueryPointY(6400000);
-  referencePointPositionsElementElementQueryPoint.y = referencePointPositionsElementElementQueryPointY;
-  ::ad::map::point::ECEFCoordinate referencePointPositionsElementElementQueryPointZ(6400000);
-  referencePointPositionsElementElementQueryPoint.z = referencePointPositionsElementElementQueryPointZ;
-  referencePointPositionsElementElement.queryPoint = referencePointPositionsElementElementQueryPoint;
-  ::ad::physics::Distance referencePointPositionsElementElementMatchedPointDistance(1e9);
-  referencePointPositionsElementElement.matchedPointDistance
-    = referencePointPositionsElementElementMatchedPointDistance;
-  referencePointPositionsElement.resize(2, referencePointPositionsElementElement);
-  referencePointPositions.resize(2, referencePointPositionsElement);
-  valueA.referencePointPositions = referencePointPositions;
+  reference_point_positionsElementElement.type = reference_point_positionsElementElementType;
+  ::ad::map::point::ECEFPoint reference_point_positionsElementElementMatched_point;
+  ::ad::map::point::ECEFCoordinate reference_point_positionsElementElementMatched_pointX(6400000);
+  reference_point_positionsElementElementMatched_point.x = reference_point_positionsElementElementMatched_pointX;
+  ::ad::map::point::ECEFCoordinate reference_point_positionsElementElementMatched_pointY(6400000);
+  reference_point_positionsElementElementMatched_point.y = reference_point_positionsElementElementMatched_pointY;
+  ::ad::map::point::ECEFCoordinate reference_point_positionsElementElementMatched_pointZ(6400000);
+  reference_point_positionsElementElementMatched_point.z = reference_point_positionsElementElementMatched_pointZ;
+  reference_point_positionsElementElement.matched_point = reference_point_positionsElementElementMatched_point;
+  ::ad::physics::Probability reference_point_positionsElementElementProbability(1.);
+  reference_point_positionsElementElement.probability = reference_point_positionsElementElementProbability;
+  ::ad::map::point::ECEFPoint reference_point_positionsElementElementQuery_point;
+  ::ad::map::point::ECEFCoordinate reference_point_positionsElementElementQuery_pointX(6400000);
+  reference_point_positionsElementElementQuery_point.x = reference_point_positionsElementElementQuery_pointX;
+  ::ad::map::point::ECEFCoordinate reference_point_positionsElementElementQuery_pointY(6400000);
+  reference_point_positionsElementElementQuery_point.y = reference_point_positionsElementElementQuery_pointY;
+  ::ad::map::point::ECEFCoordinate reference_point_positionsElementElementQuery_pointZ(6400000);
+  reference_point_positionsElementElementQuery_point.z = reference_point_positionsElementElementQuery_pointZ;
+  reference_point_positionsElementElement.query_point = reference_point_positionsElementElementQuery_point;
+  ::ad::physics::Distance reference_point_positionsElementElementMatched_point_distance(1e9);
+  reference_point_positionsElementElement.matched_point_distance
+    = reference_point_positionsElementElementMatched_point_distance;
+  reference_point_positionsElement.resize(2, reference_point_positionsElementElement);
+  reference_point_positions.resize(2, reference_point_positionsElement);
+  valueA.reference_point_positions = reference_point_positions;
   ::ad::map::match::MapMatchedObjectBoundingBox valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(MapMatchedObjectBoundingBoxTests, comparisonOperatorSamplingDistanceDiffers)
+TEST_F(MapMatchedObjectBoundingBoxTests, comparisonOperatorSampling_distanceDiffers)
 {
   ::ad::map::match::MapMatchedObjectBoundingBox valueA = mValue;
-  ::ad::physics::Distance samplingDistance(1e9);
-  valueA.samplingDistance = samplingDistance;
+  ::ad::physics::Distance sampling_distance(1e9);
+  valueA.sampling_distance = sampling_distance;
   ::ad::map::match::MapMatchedObjectBoundingBox valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(MapMatchedObjectBoundingBoxTests, comparisonOperatorMatchRadiusDiffers)
+TEST_F(MapMatchedObjectBoundingBoxTests, comparisonOperatorMatch_radiusDiffers)
 {
   ::ad::map::match::MapMatchedObjectBoundingBox valueA = mValue;
-  ::ad::physics::Distance matchRadius(1e9);
-  valueA.matchRadius = matchRadius;
+  ::ad::physics::Distance match_radius(1e9);
+  valueA.match_radius = match_radius;
   ::ad::map::match::MapMatchedObjectBoundingBox valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

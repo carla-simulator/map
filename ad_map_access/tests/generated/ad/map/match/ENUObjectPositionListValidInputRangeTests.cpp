@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,24 +28,24 @@ TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeValidInputRan
 {
   ::ad::map::match::ENUObjectPositionList value;
   ::ad::map::match::ENUObjectPosition element;
-  ::ad::map::point::ENUPoint elementCenterPoint;
-  ::ad::map::point::ENUCoordinate elementCenterPointX(-16384);
-  elementCenterPoint.x = elementCenterPointX;
-  ::ad::map::point::ENUCoordinate elementCenterPointY(-16384);
-  elementCenterPoint.y = elementCenterPointY;
-  ::ad::map::point::ENUCoordinate elementCenterPointZ(-16384);
-  elementCenterPoint.z = elementCenterPointZ;
-  element.centerPoint = elementCenterPoint;
+  ::ad::map::point::ENUPoint elementCenter_point;
+  ::ad::map::point::ENUCoordinate elementCenter_pointX(-1e8);
+  elementCenter_point.x = elementCenter_pointX;
+  ::ad::map::point::ENUCoordinate elementCenter_pointY(-1e8);
+  elementCenter_point.y = elementCenter_pointY;
+  ::ad::map::point::ENUCoordinate elementCenter_pointZ(-1e8);
+  elementCenter_point.z = elementCenter_pointZ;
+  element.center_point = elementCenter_point;
   ::ad::map::point::ENUHeading elementHeading(-3.141592655);
   element.heading = elementHeading;
-  ::ad::map::point::GeoPoint elementEnuReferencePoint;
-  ::ad::map::point::Longitude elementEnuReferencePointLongitude(-180);
-  elementEnuReferencePoint.longitude = elementEnuReferencePointLongitude;
-  ::ad::map::point::Latitude elementEnuReferencePointLatitude(-90);
-  elementEnuReferencePoint.latitude = elementEnuReferencePointLatitude;
-  ::ad::map::point::Altitude elementEnuReferencePointAltitude(-11000);
-  elementEnuReferencePoint.altitude = elementEnuReferencePointAltitude;
-  element.enuReferencePoint = elementEnuReferencePoint;
+  ::ad::map::point::GeoPoint elementEnu_reference_point;
+  ::ad::map::point::Longitude elementEnu_reference_pointLongitude(-180);
+  elementEnu_reference_point.longitude = elementEnu_reference_pointLongitude;
+  ::ad::map::point::Latitude elementEnu_reference_pointLatitude(-90);
+  elementEnu_reference_point.latitude = elementEnu_reference_pointLatitude;
+  ::ad::map::point::Altitude elementEnu_reference_pointAltitude(-11000);
+  elementEnu_reference_point.altitude = elementEnu_reference_pointAltitude;
+  element.enu_reference_point = elementEnu_reference_point;
   ::ad::physics::Dimension3D elementDimension;
   ::ad::physics::Distance elementDimensionLength(-1e9);
   elementDimension.length = elementDimensionLength;
@@ -62,10 +62,10 @@ TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementTypeIn
 {
   ::ad::map::match::ENUObjectPositionList value;
   ::ad::map::match::ENUObjectPosition element;
-  ::ad::map::point::ENUPoint elementCenterPoint;
-  ::ad::map::point::ENUCoordinate elementCenterPointX(-16384 * 1.1);
-  elementCenterPoint.x = elementCenterPointX;
-  element.centerPoint = elementCenterPoint;
+  ::ad::map::point::ENUPoint elementCenter_point;
+  ::ad::map::point::ENUCoordinate elementCenter_pointX(-1e8 * 1.1);
+  elementCenter_point.x = elementCenter_pointX;
+  element.center_point = elementCenter_point;
   value.resize(1, element);
   ASSERT_FALSE(withinValidInputRange(value));
 }
@@ -74,24 +74,24 @@ TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementValid)
 {
   ::ad::map::match::ENUObjectPositionList value;
   ::ad::map::match::ENUObjectPosition element;
-  ::ad::map::point::ENUPoint elementCenterPoint;
-  ::ad::map::point::ENUCoordinate elementCenterPointX(-16384);
-  elementCenterPoint.x = elementCenterPointX;
-  ::ad::map::point::ENUCoordinate elementCenterPointY(-16384);
-  elementCenterPoint.y = elementCenterPointY;
-  ::ad::map::point::ENUCoordinate elementCenterPointZ(-16384);
-  elementCenterPoint.z = elementCenterPointZ;
-  element.centerPoint = elementCenterPoint;
+  ::ad::map::point::ENUPoint elementCenter_point;
+  ::ad::map::point::ENUCoordinate elementCenter_pointX(-1e8);
+  elementCenter_point.x = elementCenter_pointX;
+  ::ad::map::point::ENUCoordinate elementCenter_pointY(-1e8);
+  elementCenter_point.y = elementCenter_pointY;
+  ::ad::map::point::ENUCoordinate elementCenter_pointZ(-1e8);
+  elementCenter_point.z = elementCenter_pointZ;
+  element.center_point = elementCenter_point;
   ::ad::map::point::ENUHeading elementHeading(-3.141592655);
   element.heading = elementHeading;
-  ::ad::map::point::GeoPoint elementEnuReferencePoint;
-  ::ad::map::point::Longitude elementEnuReferencePointLongitude(-180);
-  elementEnuReferencePoint.longitude = elementEnuReferencePointLongitude;
-  ::ad::map::point::Latitude elementEnuReferencePointLatitude(-90);
-  elementEnuReferencePoint.latitude = elementEnuReferencePointLatitude;
-  ::ad::map::point::Altitude elementEnuReferencePointAltitude(-11000);
-  elementEnuReferencePoint.altitude = elementEnuReferencePointAltitude;
-  element.enuReferencePoint = elementEnuReferencePoint;
+  ::ad::map::point::GeoPoint elementEnu_reference_point;
+  ::ad::map::point::Longitude elementEnu_reference_pointLongitude(-180);
+  elementEnu_reference_point.longitude = elementEnu_reference_pointLongitude;
+  ::ad::map::point::Latitude elementEnu_reference_pointLatitude(-90);
+  elementEnu_reference_point.latitude = elementEnu_reference_pointLatitude;
+  ::ad::map::point::Altitude elementEnu_reference_pointAltitude(-11000);
+  elementEnu_reference_point.altitude = elementEnu_reference_pointAltitude;
+  element.enu_reference_point = elementEnu_reference_point;
   ::ad::physics::Dimension3D elementDimension;
   ::ad::physics::Distance elementDimensionLength(-1e9);
   elementDimension.length = elementDimensionLength;
@@ -108,10 +108,10 @@ TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementInvali
 {
   ::ad::map::match::ENUObjectPositionList value;
   ::ad::map::match::ENUObjectPosition element;
-  ::ad::map::point::ENUPoint elementCenterPoint;
-  ::ad::map::point::ENUCoordinate elementCenterPointX(-16384 * 1.1);
-  elementCenterPoint.x = elementCenterPointX;
-  element.centerPoint = elementCenterPoint;
+  ::ad::map::point::ENUPoint elementCenter_point;
+  ::ad::map::point::ENUCoordinate elementCenter_pointX(-1e8 * 1.1);
+  elementCenter_point.x = elementCenter_pointX;
+  element.center_point = elementCenter_point;
   value.push_back(element);
   ASSERT_FALSE(withinValidInputRange(value));
 }

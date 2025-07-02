@@ -51,22 +51,22 @@ struct LaneOperationTest : ::testing::Test
     point::GeoPoint upLeft
       = point::createGeoPoint(point::Longitude(8.45006151), point::Latitude(49.00885163), point::Altitude(0.));
 
-    point::ECEFEdge rightPoints;
+    point::ECEFPointList rightPoints;
     rightPoints.push_back(point::toECEF(bottomRight));
     rightPoints.push_back(point::toECEF(upRight));
     rightEdge = point::createGeometry(rightPoints, false);
-    point::ECEFEdge leftPoints;
+    point::ECEFPointList leftPoints;
     leftPoints.push_back(point::toECEF(bottomLeft));
     leftPoints.push_back(point::toECEF(upLeft));
     leftEdge = point::createGeometry(leftPoints, false);
     pFactory->set(access::TrafficType::RIGHT_HAND_TRAFFIC);
 
-    pFactory->add(access::PartitionId(0), laneId, lane::LaneType::NORMAL, lane::LaneDirection::POSITIVE);
+    pFactory->add(access::PartitionId(0), lane_id, lane::LaneType::NORMAL, lane::LaneDirection::POSITIVE);
 
-    pFactory->set(laneId, leftEdge, rightEdge);
+    pFactory->set(lane_id, leftEdge, rightEdge);
     access::init(mStorePtr);
   }
-  lane::LaneId laneId{4711};
+  lane::LaneId lane_id{4711};
   point::Geometry leftEdge;
   point::Geometry rightEdge;
   access::Store::Ptr mStorePtr;
@@ -103,14 +103,14 @@ TEST_F(LaneOperationTest, getLaneHeading)
   std::vector<::point::ENUHeading> headings;
   std::vector<match::MapMatchedPosition> mapMatchedPositions;
   match::MapMatchedPosition position;
-  position.lanePoint.paraPoint.laneId = lane::uniqueLaneId(
+  position.lane_point.para_point.lane_id = lane::uniqueLaneId(
     point::createGeoPoint(point::Longitude(8.4398011), point::Latitude(49.0188015), point::Altitude(0.)));
-  position.lanePoint.paraPoint.parametricOffset = physics::ParametricValue(0.5);
-  position.lanePoint.lateralT = physics::RatioValue(0.5);
-  position.matchedPoint = point::toECEF(
+  position.lane_point.para_point.parametric_offset = physics::ParametricValue(0.5);
+  position.lane_point.lateral_t = physics::RatioValue(0.5);
+  position.matched_point = point::toECEF(
     point::createGeoPoint(point::Longitude(8.4401510), point::Latitude(49.0191792), point::Altitude(0.)));
   mapMatchedPositions.push_back(position);
-  position.lanePoint.paraPoint.laneId = lane::uniqueLaneId(
+  position.lane_point.para_point.lane_id = lane::uniqueLaneId(
     point::createGeoPoint(point::Longitude(8.4398226), point::Latitude(49.0187687), point::Altitude(0.)));
   mapMatchedPositions.push_back(position);
 
@@ -120,14 +120,14 @@ TEST_F(LaneOperationTest, getLaneHeading)
   }
   ASSERT_EQ(2u, headings.size());
   // since the two lanes are in opposite direction, the heading should differ by PI
-  ASSERT_NEAR(static_cast<double>(headings[0]) + M_PI, static_cast<double>(headings[1]), 0.1);
+  ASSERT_NEAR(headings[0].mENUHeading + M_PI, headings[1].mENUHeading, 0.1);
   headings.clear();
 }
 
 TEST_F(LaneOperationTest, findNearestPointOnEdge)
 {
   setupSingleLongLane();
-  auto lane = lane::getLane(laneId);
+  auto lane = lane::getLane(lane_id);
   // perform query
   point::GeoPoint requestPoint
     = point::createGeoPoint(point::Longitude(8.4493674), point::Latitude(49.0073880), point::Altitude(0.));
@@ -155,7 +155,7 @@ TEST_F(LaneOperationTest, findNearestPointOnEdge)
 TEST_F(LaneOperationTest, LaneRelation)
 {
   setupSingleLongLane();
-  ECEFEdge edge_ecef1, edge_ecef2, edge_ecef3, edge_ecef4;
+  ECEFPointList edge_ecef1, edge_ecef2, edge_ecef3, edge_ecef4;
   Geometry geo1, geo2, geo3, geo4;
   ECEFPoint basePoint = randECEFPoint();
   lane::LaneId x11, x12;
@@ -247,17 +247,17 @@ TEST_F(LaneOperationTest, LaneRelation)
   pFactory->set(x12, geo1, geo2);
 
   point::ParaPoint para1;
-  para1.laneId = x12;
-  para1.parametricOffset = physics::ParametricValue(0.5);
+  para1.lane_id = x12;
+  para1.parametric_offset = physics::ParametricValue(0.5);
   ASSERT_EQ(calcWidth(x12, physics::ParametricValue(0.5)), physics::Distance(2.));
   ASSERT_EQ(calcWidth(para1), physics::Distance(2.));
 
   match::LaneOccupiedRegion occupiedRegion;
-  occupiedRegion.laneId = x12;
-  occupiedRegion.longitudinalRange.minimum = physics::ParametricValue(0.2);
-  occupiedRegion.longitudinalRange.maximum = physics::ParametricValue(0.8);
-  occupiedRegion.lateralRange.minimum = physics::ParametricValue(0.3);
-  occupiedRegion.lateralRange.maximum = physics::ParametricValue(0.7);
+  occupiedRegion.lane_id = x12;
+  occupiedRegion.longitudinal_range.minimum = physics::ParametricValue(0.2);
+  occupiedRegion.longitudinal_range.maximum = physics::ParametricValue(0.8);
+  occupiedRegion.lateral_range.minimum = physics::ParametricValue(0.3);
+  occupiedRegion.lateral_range.maximum = physics::ParametricValue(0.7);
   ASSERT_EQ(calcWidth(occupiedRegion), physics::Distance(2.) * 0.4);
   ASSERT_EQ(calcLength(occupiedRegion), calcLength(x12) * 0.6);
 
@@ -397,9 +397,9 @@ TEST_F(LaneOperationTest, LanePoint)
   physics::ParametricValue leftPara(0.1);
   physics::ParametricValue rightPara(0.1);
   ASSERT_FALSE(isValid(getParametricPoint(badLane, leftPara, rightPara)));
-  auto lane = lane::getLane(laneId);
+  auto lane = lane::getLane(lane_id);
 
-  ECEFEdge edge_ecef1, edge_ecef2, edge_ecef3, edge_ecef4;
+  ECEFPointList edge_ecef1, edge_ecef2, edge_ecef3, edge_ecef4;
   Geometry geo1, geo2, geo3, geo4;
   ECEFPoint basePoint = randECEFPoint();
   lane::LaneId x11, x12, x13;
@@ -426,8 +426,8 @@ TEST_F(LaneOperationTest, LanePoint)
   GeoPoint geo_pt1 = toGeo(basePoint);
   ENUPoint enu1, enu2;
   access::setENUReferencePoint(geo_pt1);
-  para1.laneId = x11;
-  para1.parametricOffset = physics::ParametricValue(0.5);
+  para1.lane_id = x11;
+  para1.parametric_offset = physics::ParametricValue(0.5);
   enu2 = map::lane::getENULanePoint(para1, physics::ParametricValue(0.5));
   mCoordinateTransform.setENUReferencePoint(access::getENUReferencePoint());
   enu1 = mCoordinateTransform.ECEF2ENU(ecef_pt1);
@@ -452,7 +452,7 @@ TEST_F(LaneOperationTest, LanePoint)
   lane::ContactLocation left(lane::ContactLocation::LEFT);
   lane::ContactTypeList free({lane::ContactType::FREE});
   restriction::Restriction all_vehicles;
-  all_vehicles.roadUserTypes
+  all_vehicles.road_user_types
     = {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK};
   restriction::RestrictionList all_vehicles_list;
   all_vehicles_list.push_back(all_vehicles);
@@ -471,20 +471,20 @@ TEST_F(LaneOperationTest, LanePoint)
 TEST_F(LaneOperationTest, LaneOperation)
 {
   setupSingleLongLane();
-  auto lane = lane::getLane(laneId);
-  restriction::SpeedLimit speedLimit;
-  speedLimit.speedLimit = physics::Speed(0.);
-  ASSERT_TRUE(pFactory->add(laneId, speedLimit));
+  auto lane = lane::getLane(lane_id);
+  restriction::SpeedLimit speed_limit;
+  speed_limit.speed_limit = physics::Speed(0.);
+  ASSERT_TRUE(pFactory->add(lane_id, speed_limit));
 
   physics::ParametricRange trange;
   trange.minimum = physics::ParametricValue(0.2);
   trange.maximum = physics::ParametricValue(0.7);
-  auto ptrLane = lane::getLanePtr(laneId);
+  auto ptrLane = lane::getLanePtr(lane_id);
   physics::Speed maxSpeed(0);
   maxSpeed = getMaxSpeed(*ptrLane, trange);
   ASSERT_EQ(std::numeric_limits<physics::Speed>::max(), maxSpeed);
 
-  ECEFEdge edge_ecef1, edge_ecef2, edge_ecef3, edge_ecef4;
+  ECEFPointList edge_ecef1, edge_ecef2, edge_ecef3, edge_ecef4;
   Geometry geo1, geo2, geo3, geo4;
   lane::LaneId x11, x12;
   access::PartitionId p(0);
@@ -498,14 +498,14 @@ TEST_F(LaneOperationTest, LaneOperation)
   geo1 = createGeometry(edge_ecef1, false);
   geo2 = createGeometry(edge_ecef2, false);
   pFactory->set(x11, geo1, geo2);
-  speedLimit.speedLimit = physics::Speed(100.);
-  ASSERT_TRUE(pFactory->add(x11, speedLimit));
+  speed_limit.speed_limit = physics::Speed(100.);
+  ASSERT_TRUE(pFactory->add(x11, speed_limit));
 
   physics::Duration duration;
   duration = getDuration(*(lane::getLanePtr(x11)), trange);
   ASSERT_EQ(duration, physics::Duration(2.));
   route::LaneInterval laneInt1;
-  laneInt1.laneId = x11;
+  laneInt1.lane_id = x11;
   laneInt1.start = ::ad::physics::ParametricValue(0.2);
   laneInt1.end = ::ad::physics::ParametricValue(0.7);
   ASSERT_EQ(calcDuration(laneInt1), physics::Duration(2.));
@@ -516,145 +516,151 @@ TEST_F(LaneOperationTest, BorderOperation)
   ENUEdge edge_enu1, edge_enu2, edge_enu3, edge_enu4;
   ENUBorder border_enu1, border_enu2, border_enu3;
 
-  edge_enu1.push_back(createENUPoint(1, 4, 0));
-  edge_enu1.push_back(createENUPoint(4, 4, 0));
-  edge_enu2.push_back(createENUPoint(1, 2, 0));
-  edge_enu2.push_back(createENUPoint(4, 2, 0));
+  edge_enu1.points.push_back(createENUPoint(1, 4, 0));
+  edge_enu1.points.push_back(createENUPoint(4, 4, 0));
+  edge_enu1.lateral_alignment = lane::cLateralAlignmentLeft;
+  edge_enu1.edge_type = lane::EdgeType::LEFT;
+  edge_enu2.points.push_back(createENUPoint(1, 2, 0));
+  edge_enu2.points.push_back(createENUPoint(4, 2, 0));
+  edge_enu2.lateral_alignment = lane::cLateralAlignmentRight;
+  edge_enu2.edge_type = lane::EdgeType::RIGHT;
   border_enu1.left = edge_enu1;
   border_enu1.right = edge_enu2;
   normalizeBorder(border_enu1, &border_enu2);
-  ASSERT_EQ(border_enu1.right[1], createENUPoint(4, 2, 0));
+  ASSERT_EQ(border_enu1.right.points[1], createENUPoint(4, 2, 0));
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(1., 4., 0));
-  edge_enu1.push_back(createENUPoint(401., 4., 0));
-  edge_enu1.push_back(createENUPoint(701., 4., 0));
-  edge_enu2.push_back(createENUPoint(1., 2., 0));
-  edge_enu2.push_back(createENUPoint(701., 2., 0));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1., 4., 0));
+  edge_enu1.points.push_back(createENUPoint(401., 4., 0));
+  edge_enu1.points.push_back(createENUPoint(701., 4., 0));
+  edge_enu2.points.push_back(createENUPoint(1., 2., 0));
+  edge_enu2.points.push_back(createENUPoint(701., 2., 0));
   border_enu1.left = edge_enu1;
   border_enu1.right = edge_enu2;
   normalizeBorder(border_enu1, &border_enu2);
-  ASSERT_EQ(border_enu1.right.size(), 3u);
-  ASSERT_EQ(border_enu1.right[2], createENUPoint(701., 2., 0));
+  ASSERT_EQ(border_enu1.right.points.size(), 3u);
+  ASSERT_EQ(border_enu1.right.points[2], createENUPoint(701., 2., 0));
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(201., 4., 0));
-  edge_enu1.push_back(createENUPoint(401., 4., 0));
-  edge_enu1.push_back(createENUPoint(701., 4., 0));
-  edge_enu2.push_back(createENUPoint(201., 2., 0));
-  edge_enu2.push_back(createENUPoint(701., 2., 0));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu1.points.push_back(createENUPoint(201., 4., 0));
+  edge_enu1.points.push_back(createENUPoint(401., 4., 0));
+  edge_enu1.points.push_back(createENUPoint(701., 4., 0));
+  edge_enu2.points.push_back(createENUPoint(201., 2., 0));
+  edge_enu2.points.push_back(createENUPoint(701., 2., 0));
   border_enu1.left = edge_enu1;
   border_enu1.right = edge_enu2;
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(1, 4, 0));
-  edge_enu1.push_back(createENUPoint(101, 4, 0));
-  edge_enu2.push_back(createENUPoint(1, 2, 0));
-  edge_enu2.push_back(createENUPoint(101, 2, 0));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1, 4, 0));
+  edge_enu1.points.push_back(createENUPoint(101, 4, 0));
+  edge_enu2.points.push_back(createENUPoint(1, 2, 0));
+  edge_enu2.points.push_back(createENUPoint(101, 2, 0));
   border_enu2.left = edge_enu1;
   border_enu2.right = edge_enu2;
   normalizeBorder(border_enu1, &border_enu2);
-  ASSERT_EQ(border_enu1.right.size(), 3u);
-  ASSERT_EQ(border_enu1.right[2], createENUPoint(701., 2., 0));
+  ASSERT_EQ(border_enu1.right.points.size(), 3u);
+  ASSERT_EQ(border_enu1.right.points[2], createENUPoint(701., 2., 0));
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(1, 4, 1));
-  edge_enu1.push_back(createENUPoint(4, 4, 1));
-  edge_enu2.push_back(createENUPoint(1, 2, 1));
-  edge_enu2.push_back(createENUPoint(4, 2, 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1, 4, 1));
+  edge_enu1.points.push_back(createENUPoint(4, 4, 1));
+  edge_enu2.points.push_back(createENUPoint(1, 2, 1));
+  edge_enu2.points.push_back(createENUPoint(4, 2, 1));
   border_enu1.left = edge_enu1;
   border_enu1.right = edge_enu2;
   edge_enu3 = getLateralAlignmentEdge(border_enu1, physics::ParametricValue(0.5));
-  edge_enu4.clear();
-  edge_enu4.push_back(createENUPoint(1, 3, 1));
-  edge_enu4.push_back(createENUPoint(4, 3, 1));
+  edge_enu4.points.clear();
+  edge_enu4.points.push_back(createENUPoint(1, 3, 1));
+  edge_enu4.points.push_back(createENUPoint(4, 3, 1));
+  edge_enu4.lateral_alignment = physics::ParametricValue(0.5);
+  edge_enu4.edge_type = EdgeType::CENTER;
   ASSERT_EQ(edge_enu3, edge_enu4);
 
-  edge_enu3.clear();
-  edge_enu3.push_back(createENUPoint(1, 2, 1));
-  edge_enu3.push_back(createENUPoint(101, 2, 1));
+  edge_enu3.points.clear();
+  edge_enu3.points.push_back(createENUPoint(1, 2, 1));
+  edge_enu3.points.push_back(createENUPoint(101, 2, 1));
   physics::Distance dis = getDistanceEnuPointToLateralAlignmentEdge(createENUPoint(101, 202, 1), edge_enu3);
   ASSERT_EQ(dis, physics::Distance(200));
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu3.clear();
-  edge_enu1.push_back(createENUPoint(1., 4, 1));
-  edge_enu1.push_back(createENUPoint(401., 4, 1));
-  edge_enu2.push_back(createENUPoint(501., 401, 1));
-  edge_enu2.push_back(createENUPoint(901., 401, 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu3.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1., 4, 1));
+  edge_enu1.points.push_back(createENUPoint(401., 4, 1));
+  edge_enu2.points.push_back(createENUPoint(501., 401, 1));
+  edge_enu2.points.push_back(createENUPoint(901., 401, 1));
   edge_enu3 = edge_enu1;
   makeTransitionFromFirstEdgeContinuous(edge_enu1, edge_enu2);
-  ASSERT_EQ(edge_enu1.size(), 3u);
-  ASSERT_EQ(edge_enu1[0], edge_enu3[0]);
-  ASSERT_NE(edge_enu1[1], edge_enu3[1]);
+  ASSERT_EQ(edge_enu1.points.size(), 3u);
+  ASSERT_EQ(edge_enu1.points[0], edge_enu3.points[0]);
+  ASSERT_NE(edge_enu1.points[1], edge_enu3.points[1]);
   ASSERT_GT(calcLength(edge_enu1), calcLength(edge_enu3));
   dis = calcLength(edge_enu3);
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu3.clear();
-  edge_enu1.push_back(createENUPoint(1., 4, 1));
-  edge_enu1.push_back(createENUPoint(401., 4, 1));
-  edge_enu2.push_back(createENUPoint(501., 901, 1));
-  edge_enu2.push_back(createENUPoint(901., 901, 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu3.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1., 4, 1));
+  edge_enu1.points.push_back(createENUPoint(401., 4, 1));
+  edge_enu2.points.push_back(createENUPoint(501., 901, 1));
+  edge_enu2.points.push_back(createENUPoint(901., 901, 1));
   makeTransitionFromFirstEdgeContinuous(edge_enu1, edge_enu2);
   ASSERT_GT(calcLength(edge_enu1), dis);
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu3.clear();
-  edge_enu1.push_back(createENUPoint(1., 4, 1));
-  edge_enu1.push_back(createENUPoint(401., 4, 1));
-  edge_enu2.push_back(createENUPoint(501., 401, 1));
-  edge_enu2.push_back(createENUPoint(901., 401, 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu3.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1., 4, 1));
+  edge_enu1.points.push_back(createENUPoint(401., 4, 1));
+  edge_enu2.points.push_back(createENUPoint(501., 401, 1));
+  edge_enu2.points.push_back(createENUPoint(901., 401, 1));
   edge_enu3 = edge_enu2;
   makeTransitionToSecondEdgeContinuous(edge_enu1, edge_enu2);
-  ASSERT_EQ(edge_enu2.size(), 3u);
-  ASSERT_EQ(edge_enu2[0], edge_enu1[1]);
-  ASSERT_NE(edge_enu2[1], edge_enu3[0]);
-  ASSERT_EQ(edge_enu2[2], edge_enu3[1]);
+  ASSERT_EQ(edge_enu2.points.size(), 3u);
+  ASSERT_EQ(edge_enu2.points[0], edge_enu1.points[1]);
+  ASSERT_NE(edge_enu2.points[1], edge_enu3.points[0]);
+  ASSERT_EQ(edge_enu2.points[2], edge_enu3.points[1]);
   ASSERT_GT(calcLength(edge_enu2), calcLength(edge_enu3));
   dis = calcLength(edge_enu2);
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu3.clear();
-  edge_enu1.push_back(createENUPoint(1., 4, 1));
-  edge_enu1.push_back(createENUPoint(401., 4, 1));
-  edge_enu2.push_back(createENUPoint(501., 901, 1));
-  edge_enu2.push_back(createENUPoint(901., 901, 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu3.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1., 4, 1));
+  edge_enu1.points.push_back(createENUPoint(401., 4, 1));
+  edge_enu2.points.push_back(createENUPoint(501., 901, 1));
+  edge_enu2.points.push_back(createENUPoint(901., 901, 1));
   makeTransitionToSecondEdgeContinuous(edge_enu1, edge_enu2);
   ASSERT_GT(calcLength(edge_enu2), dis);
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(1., 404., 1));
-  edge_enu1.push_back(createENUPoint(401., 404., 1));
-  edge_enu2.push_back(createENUPoint(1., 4., 1));
-  edge_enu2.push_back(createENUPoint(401., 4., 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1., 404., 1));
+  edge_enu1.points.push_back(createENUPoint(401., 404., 1));
+  edge_enu2.points.push_back(createENUPoint(1., 4., 1));
+  edge_enu2.points.push_back(createENUPoint(401., 4., 1));
   border_enu1.left = edge_enu1;
   border_enu1.right = edge_enu2;
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(801., 604., 1));
-  edge_enu1.push_back(createENUPoint(1201., 604., 1));
-  edge_enu2.push_back(createENUPoint(801., 204., 1));
-  edge_enu2.push_back(createENUPoint(1201., 204., 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu1.points.push_back(createENUPoint(801., 604., 1));
+  edge_enu1.points.push_back(createENUPoint(1201., 604., 1));
+  edge_enu2.points.push_back(createENUPoint(801., 204., 1));
+  edge_enu2.points.push_back(createENUPoint(1201., 204., 1));
   border_enu2.left = edge_enu1;
   border_enu2.right = edge_enu2;
   border_enu3 = border_enu1;
   makeTransitionFromFirstBorderContinuous(border_enu1, border_enu2);
   ASSERT_NE(border_enu1, border_enu3);
-  ASSERT_EQ(border_enu1.left.size(), 4u);
-  ASSERT_EQ(border_enu1.right.size(), 4u);
-  ASSERT_EQ(border_enu1.left[0], border_enu3.left[0]);
-  ASSERT_EQ(border_enu1.left[3], border_enu2.left[0]);
-  ASSERT_EQ(border_enu1.right[0], border_enu3.right[0]);
-  ASSERT_EQ(border_enu1.right[3], border_enu2.right[0]);
+  ASSERT_EQ(border_enu1.left.points.size(), 4u);
+  ASSERT_EQ(border_enu1.right.points.size(), 4u);
+  ASSERT_EQ(border_enu1.left.points[0], border_enu3.left.points[0]);
+  ASSERT_EQ(border_enu1.left.points[3], border_enu2.left.points[0]);
+  ASSERT_EQ(border_enu1.right.points[0], border_enu3.right.points[0]);
+  ASSERT_EQ(border_enu1.right.points[3], border_enu2.right.points[0]);
   ASSERT_GT(calcLength(border_enu1.left), calcLength(border_enu3.left));
   ASSERT_GT(calcLength(border_enu1.right), calcLength(border_enu3.right));
   physics::Distance leftedge_length = calcLength(border_enu1.left);
@@ -666,20 +672,20 @@ TEST_F(LaneOperationTest, BorderOperation)
   lane::ENUBorderList enuBorderList{border_enu1, border_enu1, border_enu1};
   ASSERT_EQ(3.0 * borderLength, calcLength(enuBorderList));
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(1., 404., 1));
-  edge_enu1.push_back(createENUPoint(401., 404., 1));
-  edge_enu2.push_back(createENUPoint(1., 4., 1));
-  edge_enu2.push_back(createENUPoint(401., 4., 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1., 404., 1));
+  edge_enu1.points.push_back(createENUPoint(401., 404., 1));
+  edge_enu2.points.push_back(createENUPoint(1., 4., 1));
+  edge_enu2.points.push_back(createENUPoint(401., 4., 1));
   border_enu1.left = edge_enu1;
   border_enu1.right = edge_enu2;
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(801., 1004., 1));
-  edge_enu1.push_back(createENUPoint(1201., 1004., 1));
-  edge_enu2.push_back(createENUPoint(801., 604., 1));
-  edge_enu2.push_back(createENUPoint(1201., 604., 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu1.points.push_back(createENUPoint(801., 1004., 1));
+  edge_enu1.points.push_back(createENUPoint(1201., 1004., 1));
+  edge_enu2.points.push_back(createENUPoint(801., 604., 1));
+  edge_enu2.points.push_back(createENUPoint(1201., 604., 1));
   border_enu2.left = edge_enu1;
   border_enu2.right = edge_enu2;
   border_enu3 = border_enu1;
@@ -693,13 +699,13 @@ TEST_F(LaneOperationTest, BorderOperation)
   ASSERT_EQ(indexPairs.leftEdgeIndices[1], 1u);
   ASSERT_EQ(indexPairs.leftEdgeIndices, indexPairs.rightEdgeIndices);
 
-  edge_enu1.clear();
-  edge_enu2.clear();
-  edge_enu1.push_back(createENUPoint(1., 404., 1));
-  edge_enu1.push_back(createENUPoint(401., 404., 1));
-  edge_enu1.push_back(createENUPoint(801., 404., 1));
-  edge_enu2.push_back(createENUPoint(1., 4., 1));
-  edge_enu2.push_back(createENUPoint(401., 4., 1));
+  edge_enu1.points.clear();
+  edge_enu2.points.clear();
+  edge_enu1.points.push_back(createENUPoint(1., 404., 1));
+  edge_enu1.points.push_back(createENUPoint(401., 404., 1));
+  edge_enu1.points.push_back(createENUPoint(801., 404., 1));
+  edge_enu2.points.push_back(createENUPoint(1., 4., 1));
+  edge_enu2.points.push_back(createENUPoint(401., 4., 1));
   indexPairs = getIndexPairs(edge_enu1, edge_enu2);
   ASSERT_EQ(indexPairs.leftEdgeIndices.size(), 3u);
   ASSERT_EQ(indexPairs.leftEdgeIndices[0], 0u);
@@ -709,4 +715,25 @@ TEST_F(LaneOperationTest, BorderOperation)
   ASSERT_EQ(indexPairs.rightEdgeIndices[0], 0u);
   ASSERT_EQ(indexPairs.rightEdgeIndices[1], 1u);
   ASSERT_EQ(indexPairs.rightEdgeIndices[2], 1u);
+}
+
+TEST_F(LaneOperationTest, getENUHeadingOfRoute)
+{
+  ENUEdge edge_left;
+  edge_left.lateral_alignment = ad::physics::ParametricValue(1.0);
+  edge_left.points.push_back(createENUPoint(323.87, -201.159, -0.0114477));
+  edge_left.points.push_back(createENUPoint(316.518, -201.158, -0.0112015));
+  edge_left.edge_type = EdgeType::LEFT_PROJECTED;
+  ENUEdge edge_right;
+  edge_right.lateral_alignment = ad::physics::ParametricValue(0.0);
+  edge_right.points.push_back(createENUPoint(323.871, -193.159, -0.0111988));
+  edge_right.points.push_back(createENUPoint(316.519, -193.158, -0.0109526));
+  edge_right.edge_type = EdgeType::RIGHT_PROJECTED;
+  ENUBorder border;
+  border.left = edge_left;
+  border.right = edge_right;
+
+  auto const ref_point = createENUPoint(321.42, -195.159, 0);
+  auto const heading = getENUHeading({border}, ref_point);
+  ASSERT_LE(std::fabs(heading), ad::map::point::ENUHeading(M_PI));
 }

@@ -68,7 +68,7 @@ class LayerManager(object):
         "..."
         self.layer.refresh()
 
-    def change_attribute_value(self, lane_id, index, val):
+    def change_attribute_value(self, lane_id, index, val, attributes):
         "..."
         Globs.log.error("Unsupported change of column " + str(index) +
                         " for lane " + str(lane_id) +
@@ -97,7 +97,7 @@ class LayerManager(object):
                 attribute_map = changed_attribute_values[feature_id]
                 for index in attribute_map:
                     val = attribute_map[index]
-                    if self.change_attribute_value(lane_id, index, val):
+                    if self.change_attribute_value(lane_id, index, val, attributes):
                         dirty = True
                         attribute_changes_success = attribute_changes_success + 1
                     else:

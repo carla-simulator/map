@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,25 +28,37 @@ protected:
   {
     // valid initialization
     ::ad::map::lane::ENUBorder value;
-    ::ad::map::point::ENUEdge valueLeft;
-    ::ad::map::point::ENUPoint valueLeftElement;
-    ::ad::map::point::ENUCoordinate valueLeftElementX(-16384);
-    valueLeftElement.x = valueLeftElementX;
-    ::ad::map::point::ENUCoordinate valueLeftElementY(-16384);
-    valueLeftElement.y = valueLeftElementY;
-    ::ad::map::point::ENUCoordinate valueLeftElementZ(-16384);
-    valueLeftElement.z = valueLeftElementZ;
-    valueLeft.resize(1, valueLeftElement);
+    ::ad::map::lane::ENUEdge valueLeft;
+    ::ad::physics::ParametricValue valueLeftLateral_alignment(0.);
+    valueLeft.lateral_alignment = valueLeftLateral_alignment;
+    ::ad::map::point::ENUPointList valueLeftPoints;
+    ::ad::map::point::ENUPoint valueLeftPointsElement;
+    ::ad::map::point::ENUCoordinate valueLeftPointsElementX(-1e8);
+    valueLeftPointsElement.x = valueLeftPointsElementX;
+    ::ad::map::point::ENUCoordinate valueLeftPointsElementY(-1e8);
+    valueLeftPointsElement.y = valueLeftPointsElementY;
+    ::ad::map::point::ENUCoordinate valueLeftPointsElementZ(-1e8);
+    valueLeftPointsElement.z = valueLeftPointsElementZ;
+    valueLeftPoints.resize(1, valueLeftPointsElement);
+    valueLeft.points = valueLeftPoints;
+    ::ad::map::lane::EdgeType valueLeftEdge_type(::ad::map::lane::EdgeType::UNKNOWN);
+    valueLeft.edge_type = valueLeftEdge_type;
     value.left = valueLeft;
-    ::ad::map::point::ENUEdge valueRight;
-    ::ad::map::point::ENUPoint valueRightElement;
-    ::ad::map::point::ENUCoordinate valueRightElementX(-16384);
-    valueRightElement.x = valueRightElementX;
-    ::ad::map::point::ENUCoordinate valueRightElementY(-16384);
-    valueRightElement.y = valueRightElementY;
-    ::ad::map::point::ENUCoordinate valueRightElementZ(-16384);
-    valueRightElement.z = valueRightElementZ;
-    valueRight.resize(1, valueRightElement);
+    ::ad::map::lane::ENUEdge valueRight;
+    ::ad::physics::ParametricValue valueRightLateral_alignment(0.);
+    valueRight.lateral_alignment = valueRightLateral_alignment;
+    ::ad::map::point::ENUPointList valueRightPoints;
+    ::ad::map::point::ENUPoint valueRightPointsElement;
+    ::ad::map::point::ENUCoordinate valueRightPointsElementX(-1e8);
+    valueRightPointsElement.x = valueRightPointsElementX;
+    ::ad::map::point::ENUCoordinate valueRightPointsElementY(-1e8);
+    valueRightPointsElement.y = valueRightPointsElementY;
+    ::ad::map::point::ENUCoordinate valueRightPointsElementZ(-1e8);
+    valueRightPointsElement.z = valueRightPointsElementZ;
+    valueRightPoints.resize(1, valueRightPointsElement);
+    valueRight.points = valueRightPoints;
+    ::ad::map::lane::EdgeType valueRightEdge_type(::ad::map::lane::EdgeType::UNKNOWN);
+    valueRight.edge_type = valueRightEdge_type;
     value.right = valueRight;
     mValue = value;
   }
@@ -103,15 +115,21 @@ TEST_F(ENUBorderTests, stringConversionTest)
 TEST_F(ENUBorderTests, comparisonOperatorLeftDiffers)
 {
   ::ad::map::lane::ENUBorder valueA = mValue;
-  ::ad::map::point::ENUEdge left;
-  ::ad::map::point::ENUPoint leftElement;
-  ::ad::map::point::ENUCoordinate leftElementX(16384);
-  leftElement.x = leftElementX;
-  ::ad::map::point::ENUCoordinate leftElementY(16384);
-  leftElement.y = leftElementY;
-  ::ad::map::point::ENUCoordinate leftElementZ(16384);
-  leftElement.z = leftElementZ;
-  left.resize(2, leftElement);
+  ::ad::map::lane::ENUEdge left;
+  ::ad::physics::ParametricValue leftLateral_alignment(1.);
+  left.lateral_alignment = leftLateral_alignment;
+  ::ad::map::point::ENUPointList leftPoints;
+  ::ad::map::point::ENUPoint leftPointsElement;
+  ::ad::map::point::ENUCoordinate leftPointsElementX(1e8);
+  leftPointsElement.x = leftPointsElementX;
+  ::ad::map::point::ENUCoordinate leftPointsElementY(1e8);
+  leftPointsElement.y = leftPointsElementY;
+  ::ad::map::point::ENUCoordinate leftPointsElementZ(1e8);
+  leftPointsElement.z = leftPointsElementZ;
+  leftPoints.resize(2, leftPointsElement);
+  left.points = leftPoints;
+  ::ad::map::lane::EdgeType leftEdge_type(::ad::map::lane::EdgeType::RIGHT);
+  left.edge_type = leftEdge_type;
   valueA.left = left;
   ::ad::map::lane::ENUBorder valueB = mValue;
 
@@ -122,15 +140,21 @@ TEST_F(ENUBorderTests, comparisonOperatorLeftDiffers)
 TEST_F(ENUBorderTests, comparisonOperatorRightDiffers)
 {
   ::ad::map::lane::ENUBorder valueA = mValue;
-  ::ad::map::point::ENUEdge right;
-  ::ad::map::point::ENUPoint rightElement;
-  ::ad::map::point::ENUCoordinate rightElementX(16384);
-  rightElement.x = rightElementX;
-  ::ad::map::point::ENUCoordinate rightElementY(16384);
-  rightElement.y = rightElementY;
-  ::ad::map::point::ENUCoordinate rightElementZ(16384);
-  rightElement.z = rightElementZ;
-  right.resize(2, rightElement);
+  ::ad::map::lane::ENUEdge right;
+  ::ad::physics::ParametricValue rightLateral_alignment(1.);
+  right.lateral_alignment = rightLateral_alignment;
+  ::ad::map::point::ENUPointList rightPoints;
+  ::ad::map::point::ENUPoint rightPointsElement;
+  ::ad::map::point::ENUCoordinate rightPointsElementX(1e8);
+  rightPointsElement.x = rightPointsElementX;
+  ::ad::map::point::ENUCoordinate rightPointsElementY(1e8);
+  rightPointsElement.y = rightPointsElementY;
+  ::ad::map::point::ENUCoordinate rightPointsElementZ(1e8);
+  rightPointsElement.z = rightPointsElementZ;
+  rightPoints.resize(2, rightPointsElement);
+  right.points = rightPoints;
+  ::ad::map::lane::EdgeType rightEdge_type(::ad::map::lane::EdgeType::RIGHT);
+  right.edge_type = rightEdge_type;
   valueA.right = right;
   ::ad::map::lane::ENUBorder valueB = mValue;
 

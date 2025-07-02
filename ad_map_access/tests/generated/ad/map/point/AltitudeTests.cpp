@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -27,12 +27,23 @@ TEST(AltitudeTests, defaultConstructionIsInvalid)
   EXPECT_FALSE(value.isValid());
 }
 
+TEST(AltitudeTests, minIsDefinedAsExpected)
+{
+  EXPECT_DOUBLE_EQ(-11000, ::ad::map::point::Altitude::cMinValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cMinValue, ::ad::map::point::Altitude::getMin().mAltitude);
+}
+
+TEST(AltitudeTests, maxIsDefinedAsExpected)
+{
+  EXPECT_DOUBLE_EQ(9000, ::ad::map::point::Altitude::cMaxValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cMaxValue, ::ad::map::point::Altitude::getMax().mAltitude);
+}
+
 TEST(AltitudeTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::map::point::Altitude::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-3, ::ad::map::point::Altitude::cPrecisionValue);
-  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cPrecisionValue,
-                   static_cast<double>(::ad::map::point::Altitude::getPrecision()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cPrecisionValue, ::ad::map::point::Altitude::getPrecision().mAltitude);
 }
 
 TEST(AltitudeTests, minIsValid)
@@ -91,37 +102,36 @@ TEST(AltitudeTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(AltitudeTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Altitude::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::Altitude>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::getMin().mAltitude,
+                   std::numeric_limits<::ad::map::point::Altitude>::lowest().mAltitude);
 }
 
 TEST(AltitudeTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Altitude::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::Altitude>::max()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::getMax().mAltitude,
+                   std::numeric_limits<::ad::map::point::Altitude>::max().mAltitude);
 }
 
 TEST(AltitudeTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Altitude::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::Altitude>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::getPrecision().mAltitude,
+                   std::numeric_limits<::ad::map::point::Altitude>::epsilon().mAltitude);
 }
 
 TEST(AltitudeTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::Altitude(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::Altitude(-1.))));
-  EXPECT_DOUBLE_EQ(
-    ::ad::map::point::Altitude::cPrecisionValue,
-    static_cast<double>(std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::map::point::Altitude(-0.)).mAltitude);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::map::point::Altitude(-1.)).mAltitude);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cPrecisionValue,
+                   std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cPrecisionValue).mAltitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Altitude::cMinValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cMinValue))));
+                   std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cMinValue).mAltitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Altitude::cMinValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Altitude(-::ad::map::point::Altitude::cMinValue))));
+                   std::fabs(::ad::map::point::Altitude(-::ad::map::point::Altitude::cMinValue).mAltitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Altitude::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cMaxValue))));
+                   std::fabs(::ad::map::point::Altitude(::ad::map::point::Altitude::cMaxValue).mAltitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Altitude::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Altitude(-::ad::map::point::Altitude::cMaxValue))));
+                   std::fabs(::ad::map::point::Altitude(-::ad::map::point::Altitude::cMaxValue).mAltitude));
 }
 
 TEST(AltitudeTests, constructionFromValidFPValue)
@@ -129,7 +139,7 @@ TEST(AltitudeTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::Altitude::cMinValue;
   ::ad::map::point::Altitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mAltitude);
 }
 
 TEST(AltitudeTests, copyConstructionFromValidValue)
@@ -137,7 +147,7 @@ TEST(AltitudeTests, copyConstructionFromValidValue)
   ::ad::map::point::Altitude const validValue(::ad::map::point::Altitude::cMinValue);
   ::ad::map::point::Altitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mAltitude, value.mAltitude);
 }
 
 TEST(AltitudeTests, moveConstructionFromValidValue)
@@ -145,7 +155,7 @@ TEST(AltitudeTests, moveConstructionFromValidValue)
   ::ad::map::point::Altitude validValue(::ad::map::point::Altitude::cMinValue);
   ::ad::map::point::Altitude value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cMinValue, value.mAltitude);
 }
 
 TEST(AltitudeTests, assignmentFromValidValue)
@@ -154,7 +164,7 @@ TEST(AltitudeTests, assignmentFromValidValue)
   ::ad::map::point::Altitude value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mAltitude, value.mAltitude);
 }
 
 TEST(AltitudeTests, moveAssignmentFromValidValue)
@@ -163,7 +173,7 @@ TEST(AltitudeTests, moveAssignmentFromValidValue)
   ::ad::map::point::Altitude value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Altitude::cMinValue, value.mAltitude);
 }
 
 TEST(AltitudeTests, constructionFromInvalidFPValue)
@@ -239,7 +249,7 @@ TEST(AltitudeTests, arithmeticOperatorsThrowOnInvalid)
   //  operator+(::ad::map::point::Altitude)
   EXPECT_THROW(invalidValue + maximalValue, std::out_of_range);
   EXPECT_THROW(maximalValue + invalidValue, std::out_of_range);
-  EXPECT_THROW(maximalValue + maximalValue, std::out_of_range);
+  EXPECT_EQ(maximalValue + maximalValue, maximalValue);
 
   //  operator+=(::ad::map::point::Altitude)
   calculationValue = invalidValue;
@@ -247,12 +257,12 @@ TEST(AltitudeTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = maximalValue;
   EXPECT_THROW(calculationValue += invalidValue, std::out_of_range);
   calculationValue = maximalValue;
-  EXPECT_THROW(calculationValue += maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue += maximalValue, maximalValue);
 
   //  operator-(::ad::map::point::Altitude)
   EXPECT_THROW(invalidValue - minimalValue, std::out_of_range);
   EXPECT_THROW(minimalValue - invalidValue, std::out_of_range);
-  EXPECT_THROW(minimalValue - maximalValue, std::out_of_range);
+  EXPECT_EQ(minimalValue - maximalValue, minimalValue);
 
   //  operator-=(::ad::map::point::Altitude)
   calculationValue = invalidValue;
@@ -260,17 +270,17 @@ TEST(AltitudeTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = minimalValue;
   EXPECT_THROW(calculationValue -= invalidValue, std::out_of_range);
   calculationValue = minimalValue;
-  EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue -= maximalValue, minimalValue);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mAltitude, std::out_of_range);
+  EXPECT_EQ(maximalValue * maximalValue.mAltitude, maximalValue);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mAltitude, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mAltitude, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
-  EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
+  EXPECT_EQ(maximalValue / 0.5, maximalValue);
 
   //  operator/(::ad::map::point::Altitude)
   EXPECT_THROW(invalidValue / maximalValue, std::out_of_range);
@@ -279,13 +289,13 @@ TEST(AltitudeTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mAltitude) > std::fabs(minimalValue.mAltitude))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mAltitude) < std::fabs(minimalValue.mAltitude))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -311,13 +321,13 @@ TEST(AltitudeTests, comparisonOperatorsRespectPrecision)
     value = ::ad::map::point::Altitude(precisionValueTimesTen);
   }
   ::ad::map::point::Altitude const sameValue = value;
-  ::ad::map::point::Altitude const slightlyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::Altitude const slightlyBiggerValue(value.mAltitude
                                                        + ::ad::map::point::Altitude::cPrecisionValue * 0.9);
-  ::ad::map::point::Altitude const slightlySmallerValue(static_cast<double>(value)
+  ::ad::map::point::Altitude const slightlySmallerValue(value.mAltitude
                                                         - ::ad::map::point::Altitude::cPrecisionValue * 0.9);
-  ::ad::map::point::Altitude const actuallyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::Altitude const actuallyBiggerValue(value.mAltitude
                                                        + ::ad::map::point::Altitude::cPrecisionValue * 1.1);
-  ::ad::map::point::Altitude const actuallySmallerValue(static_cast<double>(value)
+  ::ad::map::point::Altitude const actuallySmallerValue(value.mAltitude
                                                         - ::ad::map::point::Altitude::cPrecisionValue * 1.1);
 
   // operator ==
@@ -381,41 +391,41 @@ TEST(AltitudeTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::map::point::Altitude)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAltitude + value.mAltitude, result.mAltitude, cDoubleNear);
 
   //  operator+=(::ad::map::point::Altitude)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAltitude + value.mAltitude, result.mAltitude, cDoubleNear);
 
   //  operator-(::ad::map::point::Altitude)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAltitude - value.mAltitude, result.mAltitude, cDoubleNear);
 
   //  operator-=(::ad::map::point::Altitude)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAltitude - value.mAltitude, result.mAltitude, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAltitude * 5., result.mAltitude, cDoubleNear);
 
   //  operator*(double, ::ad::map::point::Altitude)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAltitude * 5., result.mAltitude, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mAltitude;
+  EXPECT_NEAR(value.mAltitude / value.mAltitude, result.mAltitude, cDoubleNear);
 
   //  operator/(::ad::map::point::Altitude)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mAltitude / value.mAltitude, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::map::point::Altitude::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::map::point::Altitude::cMaxValue))
+  if ((::ad::map::point::Altitude::cMinValue < -value.mAltitude)
+      && (-value.mAltitude < ::ad::map::point::Altitude::cMaxValue))
   {
     result = -value;
   }

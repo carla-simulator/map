@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -106,7 +106,7 @@ struct ENULandmark
   bool operator==(const ENULandmark &other) const
   {
     return (id == other.id) && (type == other.type) && (position == other.position) && (heading == other.heading)
-      && (trafficLightType == other.trafficLightType);
+      && (traffic_light_type == other.traffic_light_type);
   }
 
   /**
@@ -140,7 +140,7 @@ struct ENULandmark
    * Landmark 2D orientation regardind Z axis (A.K.A. yaw/heading) [rad]Directional heading of the landmark.
    */
   ::ad::map::point::ENUHeading heading;
-  ::ad::map::landmark::TrafficLightType trafficLightType{::ad::map::landmark::TrafficLightType::INVALID};
+  ::ad::map::landmark::TrafficLightType traffic_light_type{::ad::map::landmark::TrafficLightType::INVALID};
 };
 
 } // namespace landmark
@@ -191,8 +191,8 @@ inline std::ostream &operator<<(std::ostream &os, ENULandmark const &_value)
   os << "heading:";
   os << _value.heading;
   os << ",";
-  os << "trafficLightType:";
-  os << _value.trafficLightType;
+  os << "traffic_light_type:";
+  os << _value.traffic_light_type;
   os << ")";
   return os;
 }
@@ -212,4 +212,16 @@ inline std::string to_string(::ad::map::landmark::ENULandmark const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::landmark::ENULandmark> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::landmark::ENULandmark const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_LANDMARK_ENULANDMARK

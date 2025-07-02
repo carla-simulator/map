@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -43,11 +43,13 @@ namespace physics {
  * \brief Enable/Disable explicit conversion. Currently set to "only explicit conversion".
  */
 #define _AD_PHYSICS_PARAMETRICVALUE_EXPLICIT_CONVERSION_ explicit
+#define _AD_PHYSICS_PARAMETRICVALUE_OPERATOR_BASE_TYPE_ 0
 #else
 /*!
  * \brief Enable/Disable explicit conversion. Currently set to "implicit conversion allowed".
  */
 #define _AD_PHYSICS_PARAMETRICVALUE_EXPLICIT_CONVERSION_
+#define _AD_PHYSICS_PARAMETRICVALUE_OPERATOR_BASE_TYPE_ 1
 #endif
 
 /*!
@@ -228,8 +230,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    ParametricValue const result(mParametricValue + other.mParametricValue);
-    result.ensureValid();
+    ParametricValue result(mParametricValue + other.mParametricValue);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -248,7 +250,7 @@ public:
     ensureValid();
     other.ensureValid();
     mParametricValue += other.mParametricValue;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -266,8 +268,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    ParametricValue const result(mParametricValue - other.mParametricValue);
-    result.ensureValid();
+    ParametricValue result(mParametricValue - other.mParametricValue);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -286,7 +288,7 @@ public:
     ensureValid();
     other.ensureValid();
     mParametricValue -= other.mParametricValue;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -303,8 +305,8 @@ public:
   ParametricValue operator*(const double &scalar) const
   {
     ensureValid();
-    ParametricValue const result(mParametricValue * scalar);
-    result.ensureValid();
+    ParametricValue result(mParametricValue * scalar);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -321,8 +323,8 @@ public:
   ParametricValue operator/(const double &scalar) const
   {
     ParametricValue const scalarParametricValue(scalar);
-    ParametricValue const result(operator/(scalarParametricValue));
-    result.ensureValid();
+    ParametricValue result(operator/(scalarParametricValue));
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -356,8 +358,8 @@ public:
   ParametricValue operator-() const
   {
     ensureValid();
-    ParametricValue const result(-mParametricValue);
-    result.ensureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
+    ParametricValue result(-mParametricValue);
+    result.restrictToLimitsAndEnsureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
     return result;
   }
 
@@ -365,12 +367,35 @@ public:
    * \brief conversion to base type: double
    *
    * \note the conversion to the base type removes the physical unit.
-   *       \ref \_AD_PHYSICS_PARAMETRICVALUE_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.
    */
-  _AD_PHYSICS_PARAMETRICVALUE_EXPLICIT_CONVERSION_ operator double() const
+  double toBaseType() const
   {
     return mParametricValue;
   }
+
+  /*!
+   * \returns \c true if the ParametricValue is a normal value
+   *
+   * An ParametricValue value is defined to be normal if:
+   * - It is normal or zero (see std::fpclassify())
+   */
+  bool isNormal() const
+  {
+    auto const valueClass = std::fpclassify(mParametricValue);
+    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO));
+  }
+
+#if _AD_PHYSICS_PARAMETRICVALUE_OPERATOR_BASE_TYPE_
+  /*!
+   * \brief conversion to base type: double
+   *
+   * \note the conversion to the base type removes the physical unit.
+   */
+  operator double() const
+  {
+    return mParametricValue;
+  }
+#endif
 
   /*!
    * \returns \c true if the ParametricValue in a valid range
@@ -381,9 +406,7 @@ public:
    */
   bool isValid() const
   {
-    auto const valueClass = std::fpclassify(mParametricValue);
-    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) && (cMinValue <= mParametricValue)
-      && (mParametricValue <= cMaxValue);
+    return isNormal() && (cMinValue <= mParametricValue) && (mParametricValue <= cMaxValue);
   }
 
   /*!
@@ -396,7 +419,8 @@ public:
   {
     if (!isValid())
     {
-      spdlog::info("ensureValid(::ad::physics::ParametricValue)>> {} value out of range", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::physics::ParametricValue)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_PHYSICS_PARAMETRICVALUE_THROWS_EXCEPTION == 1)
       throw std::out_of_range("ParametricValue value out of range"); // LCOV_EXCL_BR_LINE
 #endif
@@ -414,9 +438,53 @@ public:
     ensureValid();
     if (operator==(ParametricValue(0.))) // LCOV_EXCL_BR_LINE
     {
-      spdlog::info("ensureValid(::ad::physics::ParametricValue)>> {} value is zero", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::physics::ParametricValue)>> {} value is zero",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_PHYSICS_PARAMETRICVALUE_THROWS_EXCEPTION == 1)
       throw std::out_of_range("ParametricValue value is zero"); // LCOV_EXCL_BR_LINE
+#endif
+    }
+  }
+
+  /**
+   * @brief if possible restrict the ParametricValue to it's defined limits
+   *
+   * If the ParametricValue isNormal(), but exceeds the defined limits, it is restricted to its limits.
+   * If ParametricValue::isNormal() returns \c false an std::out_of_range() exception is thrown.
+   * - not isNormal(): std::out_of_range() exception is thrown
+   * - \ref cMinValue <= value <= \ref cMaxValue: nothing is done
+   * - value < \ref cMinValue: resulting value = cMinValue
+   * - value > \ref cMaxValue: resulting value = cMaxValue
+   */
+  void restrictToLimitsAndEnsureValid()
+  {
+    if (isNormal())
+    {
+      if (mParametricValue < cMinValue)
+      {
+        // mitigate exceeding the minimum
+        spdlog::info("restrictToLimits(::ad::physics::ParametricValue)>> {} value is smaller than allowed minimum {}. "
+                     "Restrict to minimum value.",
+                     *this,
+                     getMin()); // LCOV_EXCL_BR_LINE
+        mParametricValue = cMinValue;
+      }
+      else if (mParametricValue > cMaxValue)
+      {
+        // mitigate exceeding the maximum
+        spdlog::info("restrictToLimits(::ad::physics::ParametricValue)>> {} value is larger than allowed maximum {}. "
+                     "Restrict to maximum value.",
+                     *this,
+                     getMax()); // LCOV_EXCL_BR_LINE
+        mParametricValue = cMaxValue;
+      }
+    }
+    else
+    {
+      spdlog::info("restrictToLimits(::ad::physics::ParametricValue)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
+#if (AD_PHYSICS_PARAMETRICVALUE_THROWS_EXCEPTION == 1)
+      throw std::out_of_range("ParametricValue value out of range"); // LCOV_EXCL_BR_LINE
 #endif
     }
   }
@@ -445,7 +513,6 @@ public:
     return ParametricValue(cPrecisionValue);
   }
 
-private:
   /*!
    * \brief the actual value of the type
    */
@@ -480,7 +547,7 @@ namespace std {
  */
 inline ::ad::physics::ParametricValue fabs(const ::ad::physics::ParametricValue other)
 {
-  ::ad::physics::ParametricValue const result(std::fabs(static_cast<double>(other)));
+  ::ad::physics::ParametricValue const result(std::fabs(other.mParametricValue));
   return result;
 }
 
@@ -546,7 +613,7 @@ namespace physics {
  */
 inline std::ostream &operator<<(std::ostream &os, ParametricValue const &_value)
 {
-  return os << double(_value);
+  return os << _value.mParametricValue;
 }
 
 } // namespace physics
@@ -558,7 +625,19 @@ namespace std {
  */
 inline std::string to_string(::ad::physics::ParametricValue const &value)
 {
-  return to_string(static_cast<double>(value));
+  return to_string(value.mParametricValue);
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::physics::ParametricValue> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::physics::ParametricValue const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_PHYSICS_PARAMETRICVALUE

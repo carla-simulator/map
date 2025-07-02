@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -107,10 +107,10 @@ struct Landmark
    */
   bool operator==(const Landmark &other) const
   {
-    return (id == other.id) && (type == other.type) && (position == other.position)
-      && (orientation == other.orientation) && (boundingBox == other.boundingBox)
-      && (supplementaryText == other.supplementaryText) && (trafficLightType == other.trafficLightType)
-      && (trafficSignType == other.trafficSignType);
+    return (name == other.name) && (id == other.id) && (type == other.type) && (position == other.position)
+      && (orientation == other.orientation) && (bounding_box == other.bounding_box)
+      && (supplementary_text == other.supplementary_text) && (traffic_light_type == other.traffic_light_type)
+      && (traffic_sign_type == other.traffic_sign_type);
   }
 
   /**
@@ -124,6 +124,11 @@ struct Landmark
   {
     return !operator==(other);
   }
+
+  /*!
+   * name of the landmark (if available)
+   */
+  std::string name;
 
   /*!
    * Identifier of the landmark.
@@ -144,22 +149,22 @@ struct Landmark
    * Landmark 2D orientation regardind Z axis (A.K.A. yaw/heading) [rad]Directional heading of the landmark.
    */
   ::ad::map::point::ECEFPoint orientation;
-  ::ad::map::point::Geometry boundingBox;
+  ::ad::map::point::Geometry bounding_box;
 
   /*!
    * If landmark has supplementary text, this is stored in here.
    */
-  std::string supplementaryText;
+  std::string supplementary_text;
 
   /*!
    * Type of traffic light
    */
-  ::ad::map::landmark::TrafficLightType trafficLightType;
+  ::ad::map::landmark::TrafficLightType traffic_light_type;
 
   /*!
    * Type of traffic sign
    */
-  ::ad::map::landmark::TrafficSignType trafficSignType;
+  ::ad::map::landmark::TrafficSignType traffic_sign_type;
 };
 
 } // namespace landmark
@@ -198,6 +203,9 @@ namespace landmark {
 inline std::ostream &operator<<(std::ostream &os, Landmark const &_value)
 {
   os << "Landmark(";
+  os << "name:";
+  os << _value.name;
+  os << ",";
   os << "id:";
   os << _value.id;
   os << ",";
@@ -210,17 +218,17 @@ inline std::ostream &operator<<(std::ostream &os, Landmark const &_value)
   os << "orientation:";
   os << _value.orientation;
   os << ",";
-  os << "boundingBox:";
-  os << _value.boundingBox;
+  os << "bounding_box:";
+  os << _value.bounding_box;
   os << ",";
-  os << "supplementaryText:";
-  os << _value.supplementaryText;
+  os << "supplementary_text:";
+  os << _value.supplementary_text;
   os << ",";
-  os << "trafficLightType:";
-  os << _value.trafficLightType;
+  os << "traffic_light_type:";
+  os << _value.traffic_light_type;
   os << ",";
-  os << "trafficSignType:";
-  os << _value.trafficSignType;
+  os << "traffic_sign_type:";
+  os << _value.traffic_sign_type;
   os << ")";
   return os;
 }
@@ -240,4 +248,16 @@ inline std::string to_string(::ad::map::landmark::Landmark const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::landmark::Landmark> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::landmark::Landmark const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_LANDMARK_LANDMARK

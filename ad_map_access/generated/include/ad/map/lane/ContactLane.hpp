@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -103,8 +103,8 @@ struct ContactLane
    */
   bool operator==(const ContactLane &other) const
   {
-    return (toLane == other.toLane) && (location == other.location) && (types == other.types)
-      && (restrictions == other.restrictions) && (trafficLightId == other.trafficLightId);
+    return (to_lane == other.to_lane) && (location == other.location) && (types == other.types)
+      && (restrictions == other.restrictions) && (landmark_id == other.landmark_id);
   }
 
   /**
@@ -122,7 +122,7 @@ struct ContactLane
   /*!
    * Identifier of the lane to which connection is leading.
    */
-  ::ad::map::lane::LaneId toLane{0};
+  ::ad::map::lane::LaneId to_lane{0};
 
   /*!
    * Contact Location
@@ -140,10 +140,10 @@ struct ContactLane
   ::ad::map::restriction::Restrictions restrictions;
 
   /*!
-   * Identifier of the traffic light belong to the contact
-   * May be invalid if contact is not a traffic light
+   * Identifier of the landmark (e.g. traffic light, stop sign) that belongs to the contact.
+   * May be invalid if contact is not referring to a landmark.
    */
-  ::ad::map::landmark::LandmarkId trafficLightId{0};
+  ::ad::map::landmark::LandmarkId landmark_id{0};
 };
 
 } // namespace lane
@@ -182,8 +182,8 @@ namespace lane {
 inline std::ostream &operator<<(std::ostream &os, ContactLane const &_value)
 {
   os << "ContactLane(";
-  os << "toLane:";
-  os << _value.toLane;
+  os << "to_lane:";
+  os << _value.to_lane;
   os << ",";
   os << "location:";
   os << _value.location;
@@ -194,8 +194,8 @@ inline std::ostream &operator<<(std::ostream &os, ContactLane const &_value)
   os << "restrictions:";
   os << _value.restrictions;
   os << ",";
-  os << "trafficLightId:";
-  os << _value.trafficLightId;
+  os << "landmark_id:";
+  os << _value.landmark_id;
   os << ")";
   return os;
 }
@@ -215,4 +215,16 @@ inline std::string to_string(::ad::map::lane::ContactLane const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::lane::ContactLane> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::lane::ContactLane const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_LANE_CONTACTLANE

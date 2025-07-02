@@ -68,13 +68,15 @@ TEST_F(AdMapAccessTest, initializeFromOpenDriveContent)
   openDriveContentStream << mapFile.rdbuf();
   std::string openDriveContent = openDriveContentStream.str();
 
-  ASSERT_FALSE_NO_LOG(
-    access::initFromOpenDriveContent(std::string(), 0.2, intersection::IntersectionType::TrafficLight));
+  ASSERT_FALSE_NO_LOG(access::initFromOpenDriveContent(
+    std::string(), 0.2, intersection::IntersectionType::TrafficLight, landmark::TrafficLightType::SOLID_RED_YELLOW));
 
-  ASSERT_TRUE(access::initFromOpenDriveContent(openDriveContent, 0.2, intersection::IntersectionType::TrafficLight));
+  ASSERT_TRUE(access::initFromOpenDriveContent(
+    openDriveContent, 0.2, intersection::IntersectionType::TrafficLight, landmark::TrafficLightType::SOLID_RED_YELLOW));
 
   // twice the same initialization works
-  ASSERT_TRUE(access::initFromOpenDriveContent(openDriveContent, 0.2, intersection::IntersectionType::TrafficLight));
+  ASSERT_TRUE(access::initFromOpenDriveContent(
+    openDriveContent, 0.2, intersection::IntersectionType::TrafficLight, landmark::TrafficLightType::SOLID_RED_YELLOW));
 
   std::ifstream mapFile3("test_files/Town03.xodr");
   openDriveContentStream.clear();
@@ -82,14 +84,14 @@ TEST_F(AdMapAccessTest, initializeFromOpenDriveContent)
   openDriveContent = openDriveContentStream.str();
 
   // but different content fails
-  ASSERT_FALSE_NO_LOG(
-    access::initFromOpenDriveContent(openDriveContent, 0.2, intersection::IntersectionType::TrafficLight));
+  ASSERT_FALSE_NO_LOG(access::initFromOpenDriveContent(
+    openDriveContent, 0.2, intersection::IntersectionType::TrafficLight, landmark::TrafficLightType::SOLID_RED_YELLOW));
 
   access::cleanup();
 
   ASSERT_TRUE(access::init("test_files/TPK.adm.txt"));
-  ASSERT_FALSE_NO_LOG(
-    access::initFromOpenDriveContent(openDriveContent, 0.2, intersection::IntersectionType::TrafficLight));
+  ASSERT_FALSE_NO_LOG(access::initFromOpenDriveContent(
+    openDriveContent, 0.2, intersection::IntersectionType::TrafficLight, landmark::TrafficLightType::SOLID_RED_YELLOW));
 
   access::cleanup();
   access::Store::Ptr mStorePtr;
@@ -102,7 +104,7 @@ TEST_F(AdMapAccessTest, initializeFromOpenDriveContent)
   mStorePtr.reset(new access::Store());
   pFactory.reset(new access::Factory(*mStorePtr));
 
-  ECEFEdge rightPoints, leftPoints;
+  ECEFPointList rightPoints, leftPoints;
   leftPoints.push_back(
     toECEF(createGeoPoint(point::Longitude(8.44933898), point::Latitude(49.00737633), point::Altitude(0.))));
   leftPoints.push_back(

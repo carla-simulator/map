@@ -88,7 +88,7 @@ public: // Operations
     {
       if (mIsStoring)
       {
-        return write(static_cast<SerializeBaseType>(x));
+        return write(x.toBaseType());
       }
       else
       {

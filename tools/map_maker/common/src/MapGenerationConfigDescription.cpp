@@ -14,21 +14,22 @@ namespace map {
 namespace maker {
 namespace common {
 
+namespace po = ::boost::program_options;
+
+// Used to check that if we got a valid level of detail for map generation
+void map_generation_level_notifier(MapGenerationLevel value)
+{
+  if (value == MapGenerationLevel::Undefined)
+  {
+    throw po::validation_error(po::validation_error::invalid_option_value,
+                               "Invalid level for map generation",
+                               mapGenerationLevelToString(value));
+  }
+}
+
 MapGenerationConfigDescription::MapGenerationConfigDescription()
   : ::boost::program_options::options_description("MapGeneration specific options")
 {
-  namespace po = ::boost::program_options;
-
-  // Used to check that if we got a valid level of detail for map generation
-  auto notifier = []() {
-    return [](MapGenerationLevel value) {
-      if (value == MapGenerationLevel::Undefined)
-        throw po::validation_error(po::validation_error::invalid_option_value,
-                                   "Invalid level for map generation",
-                                   mapGenerationLevelToString(value));
-    };
-  };
-
   // clang-format off
   add_options()
       ("interpolation-steps",
@@ -43,7 +44,7 @@ MapGenerationConfigDescription::MapGenerationConfigDescription()
        "Use left-hand traffic regulation")
       ("prioToRightAndStraight", po::bool_switch(&config.prioToRightAndStraight),
        "Use prio_to_right_and_straight traffic regulation instead of prio_to_right")
-      ("generation-level", po::value<MapGenerationLevel>(&config.generationLevel)->notifier(notifier()),
+      ("generation-level", po::value<MapGenerationLevel>(&config.generationLevel)->notifier(&map_generation_level_notifier),
        "Level of detail of resulting map, one of [raw,skeleton,full], default: full");
   // clang-format on
 }

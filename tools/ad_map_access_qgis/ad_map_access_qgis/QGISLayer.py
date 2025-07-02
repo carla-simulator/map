@@ -176,7 +176,7 @@ class WGS84SVGPointLayer(WGS84Layer):
 
     def add_lla(self, point, attributes):
         "..."
-        qgs_point = QgsPointXY(point.longitude, point.latitude)
+        qgs_point = QgsPointXY(point.longitude.mLongitude, point.latitude.mLatitude)
         geometry = QgsGeometry.fromPointXY(qgs_point)
         return self.add_feature(geometry, attributes)
 
@@ -190,7 +190,7 @@ class WGS84PointLayer(WGS84Layer):
         WGS84Layer.__init__(self, iface, layer_name, "Point", visible, group)
         props = self.layer.renderer().symbol().symbolLayer(0).properties()
         symbol = QgsSymbol.defaultSymbol(QgsWkbTypes.PointGeometry)
-        symbol.setSize(1.5)
+        symbol.setSize(2)
         self.layer.renderer().setSymbol(symbol)
         WGS84Layer.refresh_legend(self)
         self.set_attributes(attributes)
@@ -204,8 +204,13 @@ class WGS84PointLayer(WGS84Layer):
     def add_ecef(self, point, attributes):
         "..."
         geo_point = ad.map.point.toGeo(point)
-        qgs_point = QgsPointXY(float(geo_point.longitude), float(geo_point.latitude))
+        qgs_point = QgsPointXY(geo_point.longitude.mLongitude, geo_point.latitude.mLatitude)
         geometry = QgsGeometry.fromPointXY(qgs_point)
+        return self.add_feature(geometry, attributes)
+
+    def add_QgsPointXY(self, point, attributes):
+        "..."
+        geometry = QgsGeometry.fromPointXY(point)
         return self.add_feature(geometry, attributes)
 
 
@@ -230,7 +235,7 @@ class WGS84PolylineLayer(WGS84Layer):
         if len(polyline) > 1:
             poly = []
             for point in polyline:
-                poly.append(QgsPoint(point.longitude, point.latitude, point.altitude))
+                poly.append(QgsPoint(point.longitude.mLongitude, point.latitude.mLatitude, point.altitude.mAltitude))
             geometry = QgsGeometry.fromPolyline(poly)
             return self.add_feature(geometry, attributes)
         return None
@@ -255,9 +260,9 @@ class WGS84ArrowLayer(WGS84Layer):
     def add_lla(self, pt_from, pt_to, attributes):
         "..."
         poly = []
-        pt = QgsPoint(pt_from.longitude, pt_from.latitude, pt_from.altitude)
+        pt = QgsPoint(pt_from.longitude.mLongitude, pt_from.latitude.mLatitude, pt_from.altitude.mAltitude)
         poly.append(pt)
-        pt1 = QgsPoint(pt_to.longitude, pt_to.latitude, pt_to.altitude)
+        pt1 = QgsPoint(pt_to.longitude.mLongitude, pt_to.latitude.mLatitude, pt_to.altitude.mAltitude)
         poly.append(pt1)
         geometry = QgsGeometry.fromPolyline(poly)
         return self.add_feature(geometry, attributes)
@@ -286,7 +291,7 @@ class WGS84SurfaceLayer(WGS84Layer):
         if len(polygon) > 1:
             poly = []
             for point in polygon:
-                poly.append(QgsPointXY(point.longitude, point.latitude))
+                poly.append(QgsPointXY(point.longitude.mLongitude, point.latitude.mLatitude))
             poly.append(poly[0])
             geom = QgsGeometry.fromPolygonXY([poly])
             return self.add_feature(geom, attrs)

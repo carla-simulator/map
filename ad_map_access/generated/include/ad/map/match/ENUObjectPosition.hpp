@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -102,8 +102,8 @@ struct ENUObjectPosition
    */
   bool operator==(const ENUObjectPosition &other) const
   {
-    return (centerPoint == other.centerPoint) && (heading == other.heading)
-      && (enuReferencePoint == other.enuReferencePoint) && (dimension == other.dimension);
+    return (center_point == other.center_point) && (heading == other.heading)
+      && (enu_reference_point == other.enu_reference_point) && (dimension == other.dimension);
   }
 
   /**
@@ -121,7 +121,7 @@ struct ENUObjectPosition
   /*!
    * 3D position in ENU coordinates
    */
-  ::ad::map::point::ENUPoint centerPoint;
+  ::ad::map::point::ENUPoint center_point;
 
   /*!
    * Angle in ENU coordinate system as angle measured from East to North axis (yaw) in radians.
@@ -131,7 +131,7 @@ struct ENUObjectPosition
   /*!
    * GNSS coordinate of the coordinate system origin / reference frame
    */
-  ::ad::map::point::GeoPoint enuReferencePoint;
+  ::ad::map::point::GeoPoint enu_reference_point;
 
   /*!
    * 3D dimension of the object
@@ -175,14 +175,14 @@ namespace match {
 inline std::ostream &operator<<(std::ostream &os, ENUObjectPosition const &_value)
 {
   os << "ENUObjectPosition(";
-  os << "centerPoint:";
-  os << _value.centerPoint;
+  os << "center_point:";
+  os << _value.center_point;
   os << ",";
   os << "heading:";
   os << _value.heading;
   os << ",";
-  os << "enuReferencePoint:";
-  os << _value.enuReferencePoint;
+  os << "enu_reference_point:";
+  os << _value.enu_reference_point;
   os << ",";
   os << "dimension:";
   os << _value.dimension;
@@ -205,4 +205,16 @@ inline std::string to_string(::ad::map::match::ENUObjectPosition const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::match::ENUObjectPosition> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::match::ENUObjectPosition const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_MATCH_ENUOBJECTPOSITION

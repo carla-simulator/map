@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -33,8 +33,7 @@
  *
  * \note the specified input range is defined by
  *       std::numeric_limits<::ad::map::point::ENUCoordinate>::lowest() <= \c input <=
- * std::numeric_limits<::ad::map::point::ENUCoordinate>::max()
- *       -1e8 <= \c input <= 1e8
+ * std::numeric_limits<::ad::map::point::ENUCoordinate>::max() -1e8 <= \c input <= 1e8
  */
 inline bool withinValidInputRange(::ad::map::point::ENUCoordinate const &input, bool const logErrors = true)
 {

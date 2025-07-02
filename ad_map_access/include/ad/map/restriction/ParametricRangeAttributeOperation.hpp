@@ -29,7 +29,7 @@ namespace restriction {
  */
 inline bool areAttributesEqual(SpeedLimit const &left, SpeedLimit const &right)
 {
-  return left.speedLimit == right.speedLimit;
+  return left.speed_limit == right.speed_limit;
 }
 
 /**
@@ -42,7 +42,7 @@ template <typename RangeAttribute> bool combineRangeAttributes(RangeAttribute &l
 {
   if (areAttributesEqual(left, right))
   {
-    return extendRangeWith(left.lanePiece, right.lanePiece);
+    return extendRangeWith(left.lane_piece, right.lane_piece);
   }
   return false;
 }
@@ -58,9 +58,9 @@ bool doesRangeAttributeOverlap(std::vector<RangeAttribute> const &attributeList,
 {
   for (auto const &listEntry : attributeList)
   {
-    if (doRangesOverlap(attribute.lanePiece, listEntry.lanePiece)
-        && !doesRangePredate(attribute.lanePiece, listEntry.lanePiece)
-        && !doesRangeSucceed(attribute.lanePiece, listEntry.lanePiece))
+    if (doRangesOverlap(attribute.lane_piece, listEntry.lane_piece)
+        && !doesRangePredate(attribute.lane_piece, listEntry.lane_piece)
+        && !doesRangeSucceed(attribute.lane_piece, listEntry.lane_piece))
     {
       return true;
     }
@@ -78,7 +78,7 @@ void insertRangeAttribute(std::vector<RangeAttribute> &attributeList, RangeAttri
 {
   for (auto it = attributeList.begin(); it != attributeList.end(); it++)
   {
-    if (attribute.lanePiece <= it->lanePiece)
+    if (attribute.lane_piece <= it->lane_piece)
     {
       attributeList.insert(it, attribute);
       optimizeRangeAttributeList(attributeList);

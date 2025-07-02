@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -21,57 +21,57 @@
 TEST(RouteParaPointValidInputRangeTests, testValidInputRange)
 {
   ::ad::map::route::RouteParaPoint value;
-  ::ad::map::route::RoutePlanningCounter valueRoutePlanningCounter(
+  ::ad::map::route::RoutePlanningCounter valueRoute_planning_counter(
     std::numeric_limits<::ad::map::route::RoutePlanningCounter>::lowest());
-  value.routePlanningCounter = valueRoutePlanningCounter;
-  ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
+  value.route_planning_counter = valueRoute_planning_counter;
+  ::ad::map::route::SegmentCounter valueSegment_count_from_destination(
     std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
-  value.segmentCountFromDestination = valueSegmentCountFromDestination;
-  ::ad::physics::ParametricValue valueParametricOffset(0.);
-  value.parametricOffset = valueParametricOffset;
+  value.segment_count_from_destination = valueSegment_count_from_destination;
+  ::ad::physics::ParametricValue valueParametric_offset(0.);
+  value.parametric_offset = valueParametric_offset;
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
-TEST(RouteParaPointValidInputRangeTests, testValidInputRangeParametricOffsetTooSmall)
+TEST(RouteParaPointValidInputRangeTests, testValidInputRangeParametric_offsetTooSmall)
 {
   ::ad::map::route::RouteParaPoint value;
-  ::ad::map::route::RoutePlanningCounter valueRoutePlanningCounter(
+  ::ad::map::route::RoutePlanningCounter valueRoute_planning_counter(
     std::numeric_limits<::ad::map::route::RoutePlanningCounter>::lowest());
-  value.routePlanningCounter = valueRoutePlanningCounter;
-  ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
+  value.route_planning_counter = valueRoute_planning_counter;
+  ::ad::map::route::SegmentCounter valueSegment_count_from_destination(
     std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
-  value.segmentCountFromDestination = valueSegmentCountFromDestination;
-  ::ad::physics::ParametricValue valueParametricOffset(0.);
-  value.parametricOffset = valueParametricOffset;
+  value.segment_count_from_destination = valueSegment_count_from_destination;
+  ::ad::physics::ParametricValue valueParametric_offset(0.);
+  value.parametric_offset = valueParametric_offset;
 
   // override member with data type value below input range minimum
   ::ad::physics::ParametricValue invalidInitializedMember(0. - ::ad::physics::ParametricValue::cPrecisionValue);
-  value.parametricOffset = invalidInitializedMember;
+  value.parametric_offset = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(RouteParaPointValidInputRangeTests, testValidInputRangeParametricOffsetTooBig)
+TEST(RouteParaPointValidInputRangeTests, testValidInputRangeParametric_offsetTooBig)
 {
   ::ad::map::route::RouteParaPoint value;
-  ::ad::map::route::RoutePlanningCounter valueRoutePlanningCounter(
+  ::ad::map::route::RoutePlanningCounter valueRoute_planning_counter(
     std::numeric_limits<::ad::map::route::RoutePlanningCounter>::lowest());
-  value.routePlanningCounter = valueRoutePlanningCounter;
-  ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
+  value.route_planning_counter = valueRoute_planning_counter;
+  ::ad::map::route::SegmentCounter valueSegment_count_from_destination(
     std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
-  value.segmentCountFromDestination = valueSegmentCountFromDestination;
-  ::ad::physics::ParametricValue valueParametricOffset(0.);
-  value.parametricOffset = valueParametricOffset;
+  value.segment_count_from_destination = valueSegment_count_from_destination;
+  ::ad::physics::ParametricValue valueParametric_offset(0.);
+  value.parametric_offset = valueParametric_offset;
 
   // override member with data type value above input range maximum
   ::ad::physics::ParametricValue invalidInitializedMember(1. * 1.1);
-  value.parametricOffset = invalidInitializedMember;
+  value.parametric_offset = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(RouteParaPointValidInputRangeTests, testValidInputRangeparametricOffsetDefault)
+TEST(RouteParaPointValidInputRangeTests, testValidInputRangeparametric_offsetDefault)
 {
   ::ad::map::route::RouteParaPoint value;
   ::ad::physics::ParametricValue valueDefault;
-  value.parametricOffset = valueDefault;
+  value.parametric_offset = valueDefault;
   ASSERT_FALSE(withinValidInputRange(value));
 }

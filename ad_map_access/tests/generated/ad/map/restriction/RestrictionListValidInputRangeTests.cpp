@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -30,13 +30,13 @@ TEST(RestrictionListValidInputRangeTests, testValidInputRangeElementValid)
   ::ad::map::restriction::Restriction element;
   bool elementNegated{true};
   element.negated = elementNegated;
-  ::ad::map::restriction::RoadUserTypeList elementRoadUserTypes;
-  ::ad::map::restriction::RoadUserType elementRoadUserTypesElement(::ad::map::restriction::RoadUserType::INVALID);
-  elementRoadUserTypes.resize(1, elementRoadUserTypesElement);
-  element.roadUserTypes = elementRoadUserTypes;
-  ::ad::map::restriction::PassengerCount elementPassengersMin(
+  ::ad::map::restriction::RoadUserTypeList elementRoad_user_types;
+  ::ad::map::restriction::RoadUserType elementRoad_user_typesElement(::ad::map::restriction::RoadUserType::INVALID);
+  elementRoad_user_types.resize(1, elementRoad_user_typesElement);
+  element.road_user_types = elementRoad_user_types;
+  ::ad::map::restriction::PassengerCount elementPassengers_min(
     std::numeric_limits<::ad::map::restriction::PassengerCount>::lowest());
-  element.passengersMin = elementPassengersMin;
+  element.passengers_min = elementPassengers_min;
   value.push_back(element);
   ASSERT_TRUE(withinValidInputRange(value));
 }

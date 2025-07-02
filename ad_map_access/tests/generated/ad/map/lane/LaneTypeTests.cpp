@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -65,6 +65,11 @@ TEST(LaneTypeTests, testFromString)
   ASSERT_EQ(fromString<::ad::map::lane::LaneType>("BIKE"), ::ad::map::lane::LaneType::BIKE);
   ASSERT_EQ(fromString<::ad::map::lane::LaneType>("::ad::map::lane::LaneType::BIKE"), ::ad::map::lane::LaneType::BIKE);
 
+  ASSERT_EQ(fromString<::ad::map::lane::LaneType>("OPENDRIVE_REFERENCE_LINE"),
+            ::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE);
+  ASSERT_EQ(fromString<::ad::map::lane::LaneType>("::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE"),
+            ::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE);
+
   EXPECT_ANY_THROW({ fromString<::ad::map::lane::LaneType>("NOT A VALID ENUM LITERAL"); });
 }
 
@@ -116,6 +121,11 @@ TEST(LaneTypeTests, testToString)
   ASSERT_EQ(toString(::ad::map::lane::LaneType::BIKE), "::ad::map::lane::LaneType::BIKE");
   minValue = std::min(minValue, static_cast<int32_t>(::ad::map::lane::LaneType::BIKE));
   maxValue = std::max(maxValue, static_cast<int32_t>(::ad::map::lane::LaneType::BIKE));
+
+  ASSERT_EQ(toString(::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE),
+            "::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE");
+  minValue = std::min(minValue, static_cast<int32_t>(::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE));
+  maxValue = std::max(maxValue, static_cast<int32_t>(::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE));
 
   ASSERT_EQ(toString(static_cast<::ad::map::lane::LaneType>(minValue - 1)), "UNKNOWN ENUM VALUE");
   ASSERT_EQ(toString(static_cast<::ad::map::lane::LaneType>(maxValue + 1)), "UNKNOWN ENUM VALUE");

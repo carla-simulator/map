@@ -60,28 +60,28 @@ Route::BasicRoute Route::getBasicRoute(size_t const routeIndex) const
   BasicRoute fr;
   for (size_t i = 0; i < rawRoute.paraPointList.size(); i++)
   {
-    const point::ParaPoint &paraPoint = rawRoute.paraPointList[i];
+    const point::ParaPoint &para_point = rawRoute.paraPointList[i];
     point::ParaPointList pps;
-    pps.push_back(paraPoint);
+    pps.push_back(para_point);
     for (auto contactLocation : {lane::ContactLocation::LEFT, lane::ContactLocation::RIGHT})
     {
-      for (lane::Lane::ConstPtr lane = lane::getLanePtr(paraPoint.laneId); lane;)
+      for (lane::Lane::ConstPtr lane = lane::getLanePtr(para_point.lane_id); lane;)
       {
         lane::LaneDirection const direction = lane->direction;
         lane::ContactLaneList const cl = getContactLanes(*lane, contactLocation);
         lane = nullptr;
         for (auto contact : cl)
         {
-          lane::LaneId otherLaneId = contact.toLane;
+          lane::LaneId otherLaneId = contact.to_lane;
           bool isPrev = false;
           if (i > 0)
           {
-            isPrev = otherLaneId == rawRoute.paraPointList[i - 1].laneId;
+            isPrev = otherLaneId == rawRoute.paraPointList[i - 1].lane_id;
           }
           bool isNext = false;
           if (i + 1 < rawRoute.paraPointList.size())
           {
-            isNext = otherLaneId == rawRoute.paraPointList[i + 1].laneId;
+            isNext = otherLaneId == rawRoute.paraPointList[i + 1].lane_id;
           }
           if (!isNext && !isPrev)
           {
@@ -89,8 +89,8 @@ Route::BasicRoute Route::getBasicRoute(size_t const routeIndex) const
             if ((direction == other_lane->direction) || laneDirectionIsIgnored())
             {
               point::ParaPoint ppt;
-              ppt.laneId = otherLaneId;
-              ppt.parametricOffset = paraPoint.parametricOffset;
+              ppt.lane_id = otherLaneId;
+              ppt.parametric_offset = para_point.parametric_offset;
               pps.push_back(ppt);
               lane = other_lane;
             }

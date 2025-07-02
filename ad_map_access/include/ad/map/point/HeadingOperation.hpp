@@ -17,7 +17,7 @@
 #include "ad/map/point/ENUPoint.hpp"
 #include "ad/map/point/GeoPoint.hpp"
 #include "ad/map/point/PointOperation.hpp"
-#include "ad/physics/Angle.hpp"
+#include "ad/physics/AngleOperation.hpp"
 #include "ad/physics/Distance.hpp"
 
 /** @brief namespace ad */
@@ -26,6 +26,11 @@ namespace ad {
 namespace map {
 /** @brief namespace point */
 namespace point {
+
+static const ENUHeading __attribute__((unused)) cHeadingEast(0.);
+static const ENUHeading __attribute__((unused)) cHeadingNorth(physics::cPI_2.mAngle);
+static const ENUHeading __attribute__((unused)) cHeadingWest(physics::cPI.mAngle);
+static const ENUHeading __attribute__((unused)) cHeadingSouth(-physics::cPI_2.mAngle);
 
 /**
  * @brief create a heading in ECEF as a directional vector
@@ -41,11 +46,11 @@ ECEFHeading createECEFHeading(ECEFPoint const &start, ECEFPoint const &end);
  * @brief create a heading in ECEF as a directional vector
  *
  * @param[in] yaw ENUHeading the heading in ENU coordinate frame
- * @param[in] enuReferencePoint the GeoPoint defining the ENU reference point
+ * @param[in] enu_reference_point the GeoPoint defining the ENU reference point
  *
  * @returns heading in ECEF as directional vector
  */
-ECEFHeading createECEFHeading(ENUHeading const &yaw, GeoPoint const &enuReferencePoint);
+ECEFHeading createECEFHeading(ENUHeading const &yaw, GeoPoint const &enu_reference_point);
 
 /**
  * @brief create a ENUHeading from yaw angle in radians
@@ -87,12 +92,12 @@ ENUHeading createENUHeading(ECEFHeading const &ecefHeading);
  * Heading in ENU coordinate system as angle measured from East to North axis (yaw) in radians
  *
  * @param[in] ecefHeading ECEFHeading value
- * @param[in] enuReferencePoint the reference point of the ENU coordinate system as GeoPoint
+ * @param[in] enu_reference_point the reference point of the ENU coordinate system as GeoPoint
  *
  * @returns heading with given yaw angle is normalized in the range -M_PI < heading <= M_PI
  *
  */
-ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enuReferencePoint);
+ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enu_reference_point);
 
 /**
  * @brief create a ENUHeading from ECEFHeading value
@@ -100,12 +105,12 @@ ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enuR
  * Heading in ENU coordinate system as angle measured from East to North axis (yaw) in radians
  *
  * @param[in] ecefHeading ECEFHeading value
- * @param[in] enuReferencePoint the reference point of the ENU coordinate system as ECEFPoint
+ * @param[in] enu_reference_point the reference point of the ENU coordinate system as ECEFPoint
  *
  * @returns heading with given yaw angle is normalized in the range -M_PI < heading <= M_PI
  *
  */
-ENUHeading createENUHeading(ECEFHeading const &ecefHeading, ECEFPoint const &enuReferencePoint);
+ENUHeading createENUHeading(ECEFHeading const &ecefHeading, ECEFPoint const &enu_reference_point);
 
 /**
  * @brief create a ENUHeading from a directional vector
@@ -133,8 +138,8 @@ ENUHeading normalizeENUHeading(ENUHeading const &heading);
 inline ENUPoint getDirectionalVectorZPlane(ENUHeading const &heading)
 {
   ENUPoint directionalVector;
-  directionalVector.x = ENUCoordinate(std::cos(static_cast<double>(heading)));
-  directionalVector.y = ENUCoordinate(std::sin(static_cast<double>(heading)));
+  directionalVector.x = ENUCoordinate(std::cos(heading.mENUHeading));
+  directionalVector.y = ENUCoordinate(std::sin(heading.mENUHeading));
   directionalVector.z = ENUCoordinate(0.);
   return directionalVector;
 }
@@ -149,8 +154,8 @@ inline ENUPoint getDirectionalVectorZPlane(ENUHeading const &heading)
 inline ENUPoint getOrthogonalVectorZPlane(ENUHeading const &heading)
 {
   ENUPoint orthogonalVector;
-  orthogonalVector.x = ENUCoordinate(-std::sin(static_cast<double>(heading)));
-  orthogonalVector.y = ENUCoordinate(std::cos(static_cast<double>(heading)));
+  orthogonalVector.x = ENUCoordinate(-std::sin(heading.mENUHeading));
+  orthogonalVector.y = ENUCoordinate(std::cos(heading.mENUHeading));
   orthogonalVector.z = ENUCoordinate(0.);
   return orthogonalVector;
 }

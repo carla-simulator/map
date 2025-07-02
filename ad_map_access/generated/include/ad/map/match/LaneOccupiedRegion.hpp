@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -102,8 +102,8 @@ struct LaneOccupiedRegion
    */
   bool operator==(const LaneOccupiedRegion &other) const
   {
-    return (laneId == other.laneId) && (longitudinalRange == other.longitudinalRange)
-      && (lateralRange == other.lateralRange);
+    return (lane_id == other.lane_id) && (longitudinal_range == other.longitudinal_range)
+      && (lateral_range == other.lateral_range);
   }
 
   /**
@@ -118,9 +118,9 @@ struct LaneOccupiedRegion
     return !operator==(other);
   }
 
-  ::ad::map::lane::LaneId laneId{0};
-  ::ad::physics::ParametricRange longitudinalRange;
-  ::ad::physics::ParametricRange lateralRange;
+  ::ad::map::lane::LaneId lane_id{0};
+  ::ad::physics::ParametricRange longitudinal_range;
+  ::ad::physics::ParametricRange lateral_range;
 };
 
 } // namespace match
@@ -159,14 +159,14 @@ namespace match {
 inline std::ostream &operator<<(std::ostream &os, LaneOccupiedRegion const &_value)
 {
   os << "LaneOccupiedRegion(";
-  os << "laneId:";
-  os << _value.laneId;
+  os << "lane_id:";
+  os << _value.lane_id;
   os << ",";
-  os << "longitudinalRange:";
-  os << _value.longitudinalRange;
+  os << "longitudinal_range:";
+  os << _value.longitudinal_range;
   os << ",";
-  os << "lateralRange:";
-  os << _value.lateralRange;
+  os << "lateral_range:";
+  os << _value.lateral_range;
   os << ")";
   return os;
 }
@@ -186,4 +186,16 @@ inline std::string to_string(::ad::map::match::LaneOccupiedRegion const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::match::LaneOccupiedRegion> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::match::LaneOccupiedRegion const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_MATCH_LANEOCCUPIEDREGION

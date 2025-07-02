@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -26,17 +26,17 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRange)
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
   value.type = valueType;
   ::ad::map::point::ENUPoint valuePosition;
-  ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
   valuePosition.x = valuePositionX;
-  ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
   valuePosition.y = valuePositionY;
-  ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
   valuePosition.z = valuePositionZ;
   value.position = valuePosition;
   ::ad::map::point::ENUHeading valueHeading(-3.141592655);
   value.heading = valueHeading;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
@@ -48,17 +48,17 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRangeTypeTooSmall)
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
   value.type = valueType;
   ::ad::map::point::ENUPoint valuePosition;
-  ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
   valuePosition.x = valuePositionX;
-  ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
   valuePosition.y = valuePositionY;
-  ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
   valuePosition.z = valuePositionZ;
   value.position = valuePosition;
   ::ad::map::point::ENUHeading valueHeading(-3.141592655);
   value.heading = valueHeading;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
 
   // override member with data type value below input range minimum
   ::ad::map::landmark::LandmarkType invalidInitializedMember(static_cast<::ad::map::landmark::LandmarkType>(-1));
@@ -74,17 +74,17 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRangeTypeTooBig)
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
   value.type = valueType;
   ::ad::map::point::ENUPoint valuePosition;
-  ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
   valuePosition.x = valuePositionX;
-  ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
   valuePosition.y = valuePositionY;
-  ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
   valuePosition.z = valuePositionZ;
   value.position = valuePosition;
   ::ad::map::point::ENUHeading valueHeading(-3.141592655);
   value.heading = valueHeading;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
 
   // override member with data type value above input range maximum
   ::ad::map::landmark::LandmarkType invalidInitializedMember(static_cast<::ad::map::landmark::LandmarkType>(-1));
@@ -100,21 +100,21 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRangePositionTooSmall)
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
   value.type = valueType;
   ::ad::map::point::ENUPoint valuePosition;
-  ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
   valuePosition.x = valuePositionX;
-  ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
   valuePosition.y = valuePositionY;
-  ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
   valuePosition.z = valuePositionZ;
   value.position = valuePosition;
   ::ad::map::point::ENUHeading valueHeading(-3.141592655);
   value.heading = valueHeading;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
 
   // override member with data type value below input range minimum
   ::ad::map::point::ENUPoint invalidInitializedMember;
-  ::ad::map::point::ENUCoordinate invalidInitializedMemberX(-16384 * 1.1);
+  ::ad::map::point::ENUCoordinate invalidInitializedMemberX(-1e8 * 1.1);
   invalidInitializedMember.x = invalidInitializedMemberX;
   value.position = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
@@ -128,21 +128,21 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRangePositionTooBig)
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
   value.type = valueType;
   ::ad::map::point::ENUPoint valuePosition;
-  ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
   valuePosition.x = valuePositionX;
-  ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
   valuePosition.y = valuePositionY;
-  ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
   valuePosition.z = valuePositionZ;
   value.position = valuePosition;
   ::ad::map::point::ENUHeading valueHeading(-3.141592655);
   value.heading = valueHeading;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
 
   // override member with data type value above input range maximum
   ::ad::map::point::ENUPoint invalidInitializedMember;
-  ::ad::map::point::ENUCoordinate invalidInitializedMemberX(16384 * 1.1);
+  ::ad::map::point::ENUCoordinate invalidInitializedMemberX(1e8 * 1.1);
   invalidInitializedMember.x = invalidInitializedMemberX;
   value.position = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
@@ -156,17 +156,17 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRangeHeadingTooSmall)
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
   value.type = valueType;
   ::ad::map::point::ENUPoint valuePosition;
-  ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
   valuePosition.x = valuePositionX;
-  ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
   valuePosition.y = valuePositionY;
-  ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
   valuePosition.z = valuePositionZ;
   value.position = valuePosition;
   ::ad::map::point::ENUHeading valueHeading(-3.141592655);
   value.heading = valueHeading;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
 
   // override member with data type value below input range minimum
   ::ad::map::point::ENUHeading invalidInitializedMember(-3.141592655 * 1.1);
@@ -182,17 +182,17 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRangeHeadingTooBig)
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
   value.type = valueType;
   ::ad::map::point::ENUPoint valuePosition;
-  ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
   valuePosition.x = valuePositionX;
-  ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
   valuePosition.y = valuePositionY;
-  ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
   valuePosition.z = valuePositionZ;
   value.position = valuePosition;
   ::ad::map::point::ENUHeading valueHeading(-3.141592655);
   value.heading = valueHeading;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
 
   // override member with data type value above input range maximum
   ::ad::map::point::ENUHeading invalidInitializedMember(3.141592655 * 1.1);
@@ -208,7 +208,7 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRangeheadingDefault)
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(ENULandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooSmall)
+TEST(ENULandmarkValidInputRangeTests, testValidInputRangeTraffic_light_typeTooSmall)
 {
   ::ad::map::landmark::ENULandmark value;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
@@ -216,26 +216,26 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooSmal
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
   value.type = valueType;
   ::ad::map::point::ENUPoint valuePosition;
-  ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
   valuePosition.x = valuePositionX;
-  ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
   valuePosition.y = valuePositionY;
-  ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
   valuePosition.z = valuePositionZ;
   value.position = valuePosition;
   ::ad::map::point::ENUHeading valueHeading(-3.141592655);
   value.heading = valueHeading;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
 
   // override member with data type value below input range minimum
   ::ad::map::landmark::TrafficLightType invalidInitializedMember(
     static_cast<::ad::map::landmark::TrafficLightType>(-1));
-  value.trafficLightType = invalidInitializedMember;
+  value.traffic_light_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(ENULandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooBig)
+TEST(ENULandmarkValidInputRangeTests, testValidInputRangeTraffic_light_typeTooBig)
 {
   ::ad::map::landmark::ENULandmark value;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
@@ -243,21 +243,21 @@ TEST(ENULandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooBig)
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
   value.type = valueType;
   ::ad::map::point::ENUPoint valuePosition;
-  ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
   valuePosition.x = valuePositionX;
-  ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
   valuePosition.y = valuePositionY;
-  ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+  ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
   valuePosition.z = valuePositionZ;
   value.position = valuePosition;
   ::ad::map::point::ENUHeading valueHeading(-3.141592655);
   value.heading = valueHeading;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
 
   // override member with data type value above input range maximum
   ::ad::map::landmark::TrafficLightType invalidInitializedMember(
     static_cast<::ad::map::landmark::TrafficLightType>(-1));
-  value.trafficLightType = invalidInitializedMember;
+  value.traffic_light_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }

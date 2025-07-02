@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -49,8 +49,8 @@ struct Lane : MapDataElement
   MapDataId rightBorder{InvalidId};
 
   // left, right neighbor lanes, with respect to the orientation (order) of the points
-  MapDataId leftNeighbor{InvalidId};
-  MapDataId rightNeighbor{InvalidId};
+  MapDataId left_neighbor{InvalidId};
+  MapDataId right_neighbor{InvalidId};
 
   // predecessor and successor lanes, with respect to the orientation (order) of the points
   std::vector<MapDataId> predecessors;

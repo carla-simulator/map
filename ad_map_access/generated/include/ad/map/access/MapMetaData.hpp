@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -100,7 +100,7 @@ struct MapMetaData
    */
   bool operator==(const MapMetaData &other) const
   {
-    return (trafficType == other.trafficType);
+    return (traffic_type == other.traffic_type);
   }
 
   /**
@@ -115,7 +115,7 @@ struct MapMetaData
     return !operator==(other);
   }
 
-  ::ad::map::access::TrafficType trafficType;
+  ::ad::map::access::TrafficType traffic_type;
 };
 
 } // namespace access
@@ -154,8 +154,8 @@ namespace access {
 inline std::ostream &operator<<(std::ostream &os, MapMetaData const &_value)
 {
   os << "MapMetaData(";
-  os << "trafficType:";
-  os << _value.trafficType;
+  os << "traffic_type:";
+  os << _value.traffic_type;
   os << ")";
   return os;
 }
@@ -175,4 +175,16 @@ inline std::string to_string(::ad::map::access::MapMetaData const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::access::MapMetaData> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::access::MapMetaData const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_ACCESS_MAPMETADATA

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -31,21 +31,20 @@ TEST(DistanceTests, defaultConstructionIsInvalid)
 TEST(DistanceTests, minIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(-1e9, ::ad::physics::Distance::cMinValue);
-  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cMinValue, static_cast<double>(::ad::physics::Distance::getMin()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cMinValue, ::ad::physics::Distance::getMin().mDistance);
 }
 
 TEST(DistanceTests, maxIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(1e9, ::ad::physics::Distance::cMaxValue);
-  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cMaxValue, static_cast<double>(::ad::physics::Distance::getMax()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cMaxValue, ::ad::physics::Distance::getMax().mDistance);
 }
 
 TEST(DistanceTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::Distance::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-3, ::ad::physics::Distance::cPrecisionValue);
-  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cPrecisionValue,
-                   static_cast<double>(::ad::physics::Distance::getPrecision()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cPrecisionValue, ::ad::physics::Distance::getPrecision().mDistance);
 }
 
 TEST(DistanceTests, minIsValid)
@@ -104,36 +103,36 @@ TEST(DistanceTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(DistanceTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Distance::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::Distance>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Distance::getMin().mDistance,
+                   std::numeric_limits<::ad::physics::Distance>::lowest().mDistance);
 }
 
 TEST(DistanceTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Distance::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::Distance>::max()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Distance::getMax().mDistance,
+                   std::numeric_limits<::ad::physics::Distance>::max().mDistance);
 }
 
 TEST(DistanceTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Distance::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::Distance>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Distance::getPrecision().mDistance,
+                   std::numeric_limits<::ad::physics::Distance>::epsilon().mDistance);
 }
 
 TEST(DistanceTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::Distance(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::Distance(-1.))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::physics::Distance(-0.)).mDistance);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::physics::Distance(-1.)).mDistance);
   EXPECT_DOUBLE_EQ(::ad::physics::Distance::cPrecisionValue,
-                   static_cast<double>(std::fabs(::ad::physics::Distance(::ad::physics::Distance::cPrecisionValue))));
+                   std::fabs(::ad::physics::Distance(::ad::physics::Distance::cPrecisionValue).mDistance));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Distance::cMinValue),
-                   static_cast<double>(std::fabs(::ad::physics::Distance(::ad::physics::Distance::cMinValue))));
+                   std::fabs(::ad::physics::Distance(::ad::physics::Distance::cMinValue).mDistance));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Distance::cMinValue),
-                   static_cast<double>(std::fabs(::ad::physics::Distance(-::ad::physics::Distance::cMinValue))));
+                   std::fabs(::ad::physics::Distance(-::ad::physics::Distance::cMinValue).mDistance));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Distance::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::physics::Distance(::ad::physics::Distance::cMaxValue))));
+                   std::fabs(::ad::physics::Distance(::ad::physics::Distance::cMaxValue).mDistance));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Distance::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::physics::Distance(-::ad::physics::Distance::cMaxValue))));
+                   std::fabs(::ad::physics::Distance(-::ad::physics::Distance::cMaxValue).mDistance));
 }
 
 TEST(DistanceTests, constructionFromValidFPValue)
@@ -141,7 +140,7 @@ TEST(DistanceTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::Distance::cMinValue;
   ::ad::physics::Distance value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mDistance);
 }
 
 TEST(DistanceTests, copyConstructionFromValidValue)
@@ -149,7 +148,7 @@ TEST(DistanceTests, copyConstructionFromValidValue)
   ::ad::physics::Distance const validValue(::ad::physics::Distance::cMinValue);
   ::ad::physics::Distance value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mDistance, value.mDistance);
 }
 
 TEST(DistanceTests, moveConstructionFromValidValue)
@@ -157,7 +156,7 @@ TEST(DistanceTests, moveConstructionFromValidValue)
   ::ad::physics::Distance validValue(::ad::physics::Distance::cMinValue);
   ::ad::physics::Distance value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cMinValue, value.mDistance);
 }
 
 TEST(DistanceTests, assignmentFromValidValue)
@@ -166,7 +165,7 @@ TEST(DistanceTests, assignmentFromValidValue)
   ::ad::physics::Distance value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mDistance, value.mDistance);
 }
 
 TEST(DistanceTests, moveAssignmentFromValidValue)
@@ -175,7 +174,7 @@ TEST(DistanceTests, moveAssignmentFromValidValue)
   ::ad::physics::Distance value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Distance::cMinValue, value.mDistance);
 }
 
 TEST(DistanceTests, constructionFromInvalidFPValue)
@@ -251,7 +250,7 @@ TEST(DistanceTests, arithmeticOperatorsThrowOnInvalid)
   //  operator+(::ad::physics::Distance)
   EXPECT_THROW(invalidValue + maximalValue, std::out_of_range);
   EXPECT_THROW(maximalValue + invalidValue, std::out_of_range);
-  EXPECT_THROW(maximalValue + maximalValue, std::out_of_range);
+  EXPECT_EQ(maximalValue + maximalValue, maximalValue);
 
   //  operator+=(::ad::physics::Distance)
   calculationValue = invalidValue;
@@ -259,12 +258,12 @@ TEST(DistanceTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = maximalValue;
   EXPECT_THROW(calculationValue += invalidValue, std::out_of_range);
   calculationValue = maximalValue;
-  EXPECT_THROW(calculationValue += maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue += maximalValue, maximalValue);
 
   //  operator-(::ad::physics::Distance)
   EXPECT_THROW(invalidValue - minimalValue, std::out_of_range);
   EXPECT_THROW(minimalValue - invalidValue, std::out_of_range);
-  EXPECT_THROW(minimalValue - maximalValue, std::out_of_range);
+  EXPECT_EQ(minimalValue - maximalValue, minimalValue);
 
   //  operator-=(::ad::physics::Distance)
   calculationValue = invalidValue;
@@ -272,21 +271,21 @@ TEST(DistanceTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = minimalValue;
   EXPECT_THROW(calculationValue -= invalidValue, std::out_of_range);
   calculationValue = minimalValue;
-  EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue -= maximalValue, minimalValue);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mDistance, std::out_of_range);
+  EXPECT_EQ(maximalValue * maximalValue.mDistance, maximalValue);
 
   //  operator*(::ad::physics::Distance)
   EXPECT_THROW(invalidValue * maximalValue, std::out_of_range);
   EXPECT_THROW(maximalValue * invalidValue, std::out_of_range);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mDistance, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mDistance, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
-  EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
+  EXPECT_EQ(maximalValue / 0.5, maximalValue);
 
   //  operator/(::ad::physics::Distance)
   EXPECT_THROW(invalidValue / maximalValue, std::out_of_range);
@@ -295,13 +294,13 @@ TEST(DistanceTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mDistance) > std::fabs(minimalValue.mDistance))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mDistance) < std::fabs(minimalValue.mDistance))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -327,14 +326,10 @@ TEST(DistanceTests, comparisonOperatorsRespectPrecision)
     value = ::ad::physics::Distance(precisionValueTimesTen);
   }
   ::ad::physics::Distance const sameValue = value;
-  ::ad::physics::Distance const slightlyBiggerValue(static_cast<double>(value)
-                                                    + ::ad::physics::Distance::cPrecisionValue * 0.9);
-  ::ad::physics::Distance const slightlySmallerValue(static_cast<double>(value)
-                                                     - ::ad::physics::Distance::cPrecisionValue * 0.9);
-  ::ad::physics::Distance const actuallyBiggerValue(static_cast<double>(value)
-                                                    + ::ad::physics::Distance::cPrecisionValue * 1.1);
-  ::ad::physics::Distance const actuallySmallerValue(static_cast<double>(value)
-                                                     - ::ad::physics::Distance::cPrecisionValue * 1.1);
+  ::ad::physics::Distance const slightlyBiggerValue(value.mDistance + ::ad::physics::Distance::cPrecisionValue * 0.9);
+  ::ad::physics::Distance const slightlySmallerValue(value.mDistance - ::ad::physics::Distance::cPrecisionValue * 0.9);
+  ::ad::physics::Distance const actuallyBiggerValue(value.mDistance + ::ad::physics::Distance::cPrecisionValue * 1.1);
+  ::ad::physics::Distance const actuallySmallerValue(value.mDistance - ::ad::physics::Distance::cPrecisionValue * 1.1);
 
   // operator ==
   EXPECT_TRUE(value == sameValue);
@@ -397,45 +392,45 @@ TEST(DistanceTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::physics::Distance)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mDistance + value.mDistance, result.mDistance, cDoubleNear);
 
   //  operator+=(::ad::physics::Distance)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mDistance + value.mDistance, result.mDistance, cDoubleNear);
 
   //  operator-(::ad::physics::Distance)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mDistance - value.mDistance, result.mDistance, cDoubleNear);
 
   //  operator-=(::ad::physics::Distance)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mDistance - value.mDistance, result.mDistance, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mDistance * 5., result.mDistance, cDoubleNear);
 
   //  operator*(::ad::physics::Distance)
   ::ad::physics::DistanceSquared const squaredResult = value * value;
-  EXPECT_NEAR(static_cast<double>(value) * static_cast<double>(value), static_cast<double>(squaredResult), cDoubleNear);
+  EXPECT_NEAR(value.mDistance * value.mDistance, squaredResult.mDistanceSquared, cDoubleNear);
 
   //  operator*(double, ::ad::physics::Distance)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mDistance * 5., result.mDistance, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mDistance;
+  EXPECT_NEAR(value.mDistance / value.mDistance, result.mDistance, cDoubleNear);
 
   //  operator/(::ad::physics::Distance)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mDistance / value.mDistance, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::physics::Distance::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::physics::Distance::cMaxValue))
+  if ((::ad::physics::Distance::cMinValue < -value.mDistance)
+      && (-value.mDistance < ::ad::physics::Distance::cMaxValue))
   {
     result = -value;
   }

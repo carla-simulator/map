@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -50,15 +50,16 @@ inline bool withinValidInputRange(::ad::map::lane::Lane const &input, bool const
   bool inValidInputRange = true;
   inValidInputRange = withinValidInputRange(input.id, logErrors) && withinValidInputRange(input.type, logErrors)
     && withinValidInputRange(input.direction, logErrors) && withinValidInputRange(input.restrictions, logErrors)
-    && withinValidInputRange(input.length, logErrors) && withinValidInputRange(input.lengthRange, logErrors)
-    && withinValidInputRange(input.width, logErrors) && withinValidInputRange(input.widthRange, logErrors)
-    && withinValidInputRange(input.speedLimits, logErrors) && withinValidInputRange(input.edgeLeft, logErrors)
-    && withinValidInputRange(input.edgeRight, logErrors) && withinValidInputRange(input.contactLanes, logErrors)
-    && withinValidInputRange(input.boundingSphere, logErrors)
-    && withinValidInputRange(input.visibleLandmarks, logErrors);
+    && withinValidInputRange(input.length, logErrors) && withinValidInputRange(input.length_range, logErrors)
+    && withinValidInputRange(input.width, logErrors) && withinValidInputRange(input.width_range, logErrors)
+    && withinValidInputRange(input.speed_limits, logErrors) && withinValidInputRange(input.edge_left, logErrors)
+    && withinValidInputRange(input.edge_right, logErrors) && withinValidInputRange(input.contact_lanes, logErrors)
+    && withinValidInputRange(input.bounding_sphere, logErrors)
+    && withinValidInputRange(input.visible_landmarks, logErrors);
   if (!inValidInputRange && logErrors)
   {
-    spdlog::error("withinValidInputRange(::ad::map::lane::Lane)>> {} has invalid member", input); // LCOV_EXCL_BR_LINE
+    spdlog::error("withinValidInputRange(::ad::map::lane::Lane)>> {} has invalid member",
+                  input); // LCOV_EXCL_BR_LINE
   }
 
   return inValidInputRange;

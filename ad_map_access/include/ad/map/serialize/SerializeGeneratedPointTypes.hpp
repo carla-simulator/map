@@ -76,10 +76,10 @@ inline bool doSerialize(ISerializer &serializer, point::Altitude &x)
 /**
  * @brief Serializer for point::ParaPoint
  */
-inline bool doSerialize(ISerializer &serializer, point::ParaPoint &paraPoint)
+inline bool doSerialize(ISerializer &serializer, point::ParaPoint &para_point)
 {
-  return serializer.serialize(SerializeableMagic::ParaPoint) && doSerialize(serializer, paraPoint.laneId)
-    && doSerialize(serializer, paraPoint.parametricOffset);
+  return serializer.serialize(SerializeableMagic::ParaPoint) && doSerialize(serializer, para_point.lane_id)
+    && doSerialize(serializer, para_point.parametric_offset);
 }
 
 /**
@@ -105,19 +105,19 @@ inline bool doSerialize(ISerializer &serializer, point::ECEFPoint &ecefPoint)
 /**
  * @brief Serializer for point::GeoPoint
  */
-inline bool doSerialize(ISerializer &serializer, point::GeoPoint &geoPoint)
+inline bool doSerialize(ISerializer &serializer, point::GeoPoint &geo_point)
 {
-  return serializer.serialize(SerializeableMagic::GeoPoint) && doSerialize(serializer, geoPoint.longitude)
-    && doSerialize(serializer, geoPoint.latitude) && doSerialize(serializer, geoPoint.altitude);
+  return serializer.serialize(SerializeableMagic::GeoPoint) && doSerialize(serializer, geo_point.longitude)
+    && doSerialize(serializer, geo_point.latitude) && doSerialize(serializer, geo_point.altitude);
 }
 
 /**
  * @brief Serializer for point::BoundingSphere
  */
-inline bool doSerialize(ISerializer &serializer, point::BoundingSphere &boundingSphere)
+inline bool doSerialize(ISerializer &serializer, point::BoundingSphere &bounding_sphere)
 {
   // @todo: keep original format, so no magic for bounding sphere for now
-  return doSerialize(serializer, boundingSphere.center) && doSerialize(serializer, boundingSphere.radius);
+  return doSerialize(serializer, bounding_sphere.center) && doSerialize(serializer, bounding_sphere.radius);
 }
 
 /**
@@ -128,27 +128,27 @@ inline bool doSerialize(ISerializer &serializer, point::Geometry &geometry)
   if (!serializer.isStoring())
   {
     // clear cache when reading
-    geometry.private_enuEdgeCache.enuVersion = 0;
-    geometry.private_enuEdgeCache.enuEdge.clear();
+    geometry.private_enu_points_cache.enu_version = 0;
+    geometry.private_enu_points_cache.enu_points.clear();
   }
-  bool ok = serializer.serialize(SerializeableMagic::Geometry) && serializer.serialize(geometry.isValid)
-    && serializer.serialize(geometry.isClosed) && serialize::doSerialize(serializer, geometry.length);
+  bool ok = serializer.serialize(SerializeableMagic::Geometry) && serializer.serialize(geometry.is_valid)
+    && serializer.serialize(geometry.is_closed) && serialize::doSerialize(serializer, geometry.length);
 
   if (serializer.isStoring())
   {
     if (serializer.useEmbeddedPoints())
     {
-      ok = ok && serializer.serializeObjectVector(geometry.ecefEdge);
+      ok = ok && serializer.serializeObjectVector(geometry.ecef_points);
     }
     else
     {
-      static point::ECEFEdge empty;
+      static point::ECEFPointList empty;
       ok = ok && serializer.serializeObjectVector(empty);
     }
   }
   else
   {
-    ok = ok && serializer.serializeObjectVector(geometry.ecefEdge);
+    ok = ok && serializer.serializeObjectVector(geometry.ecef_points);
   }
   return ok;
 }

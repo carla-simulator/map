@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #include "ad/physics/DistanceSquared.hpp"
@@ -39,8 +39,8 @@ namespace std {
 
 ::ad::physics::Distance sqrt(::ad::physics::DistanceSquared const other)
 {
-  ::ad::physics::Distance result(std::sqrt(static_cast<double>(other)));
-  result.ensureValid();
+  ::ad::physics::Distance result(std::sqrt(other.mDistanceSquared));
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 

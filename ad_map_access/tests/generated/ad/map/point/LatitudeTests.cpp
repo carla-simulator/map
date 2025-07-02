@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -27,12 +27,23 @@ TEST(LatitudeTests, defaultConstructionIsInvalid)
   EXPECT_FALSE(value.isValid());
 }
 
+TEST(LatitudeTests, minIsDefinedAsExpected)
+{
+  EXPECT_DOUBLE_EQ(-90, ::ad::map::point::Latitude::cMinValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cMinValue, ::ad::map::point::Latitude::getMin().mLatitude);
+}
+
+TEST(LatitudeTests, maxIsDefinedAsExpected)
+{
+  EXPECT_DOUBLE_EQ(90, ::ad::map::point::Latitude::cMaxValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cMaxValue, ::ad::map::point::Latitude::getMax().mLatitude);
+}
+
 TEST(LatitudeTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::map::point::Latitude::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-8, ::ad::map::point::Latitude::cPrecisionValue);
-  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cPrecisionValue,
-                   static_cast<double>(::ad::map::point::Latitude::getPrecision()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cPrecisionValue, ::ad::map::point::Latitude::getPrecision().mLatitude);
 }
 
 TEST(LatitudeTests, minIsValid)
@@ -91,37 +102,36 @@ TEST(LatitudeTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(LatitudeTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Latitude::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::Latitude>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::getMin().mLatitude,
+                   std::numeric_limits<::ad::map::point::Latitude>::lowest().mLatitude);
 }
 
 TEST(LatitudeTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Latitude::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::Latitude>::max()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::getMax().mLatitude,
+                   std::numeric_limits<::ad::map::point::Latitude>::max().mLatitude);
 }
 
 TEST(LatitudeTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Latitude::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::Latitude>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::getPrecision().mLatitude,
+                   std::numeric_limits<::ad::map::point::Latitude>::epsilon().mLatitude);
 }
 
 TEST(LatitudeTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::Latitude(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::Latitude(-1.))));
-  EXPECT_DOUBLE_EQ(
-    ::ad::map::point::Latitude::cPrecisionValue,
-    static_cast<double>(std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::map::point::Latitude(-0.)).mLatitude);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::map::point::Latitude(-1.)).mLatitude);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cPrecisionValue,
+                   std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cPrecisionValue).mLatitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Latitude::cMinValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cMinValue))));
+                   std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cMinValue).mLatitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Latitude::cMinValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Latitude(-::ad::map::point::Latitude::cMinValue))));
+                   std::fabs(::ad::map::point::Latitude(-::ad::map::point::Latitude::cMinValue).mLatitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Latitude::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cMaxValue))));
+                   std::fabs(::ad::map::point::Latitude(::ad::map::point::Latitude::cMaxValue).mLatitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Latitude::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Latitude(-::ad::map::point::Latitude::cMaxValue))));
+                   std::fabs(::ad::map::point::Latitude(-::ad::map::point::Latitude::cMaxValue).mLatitude));
 }
 
 TEST(LatitudeTests, constructionFromValidFPValue)
@@ -129,7 +139,7 @@ TEST(LatitudeTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::Latitude::cMinValue;
   ::ad::map::point::Latitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mLatitude);
 }
 
 TEST(LatitudeTests, copyConstructionFromValidValue)
@@ -137,7 +147,7 @@ TEST(LatitudeTests, copyConstructionFromValidValue)
   ::ad::map::point::Latitude const validValue(::ad::map::point::Latitude::cMinValue);
   ::ad::map::point::Latitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mLatitude, value.mLatitude);
 }
 
 TEST(LatitudeTests, moveConstructionFromValidValue)
@@ -145,7 +155,7 @@ TEST(LatitudeTests, moveConstructionFromValidValue)
   ::ad::map::point::Latitude validValue(::ad::map::point::Latitude::cMinValue);
   ::ad::map::point::Latitude value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cMinValue, value.mLatitude);
 }
 
 TEST(LatitudeTests, assignmentFromValidValue)
@@ -154,7 +164,7 @@ TEST(LatitudeTests, assignmentFromValidValue)
   ::ad::map::point::Latitude value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mLatitude, value.mLatitude);
 }
 
 TEST(LatitudeTests, moveAssignmentFromValidValue)
@@ -163,7 +173,7 @@ TEST(LatitudeTests, moveAssignmentFromValidValue)
   ::ad::map::point::Latitude value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Latitude::cMinValue, value.mLatitude);
 }
 
 TEST(LatitudeTests, constructionFromInvalidFPValue)
@@ -239,7 +249,7 @@ TEST(LatitudeTests, arithmeticOperatorsThrowOnInvalid)
   //  operator+(::ad::map::point::Latitude)
   EXPECT_THROW(invalidValue + maximalValue, std::out_of_range);
   EXPECT_THROW(maximalValue + invalidValue, std::out_of_range);
-  EXPECT_THROW(maximalValue + maximalValue, std::out_of_range);
+  EXPECT_EQ(maximalValue + maximalValue, maximalValue);
 
   //  operator+=(::ad::map::point::Latitude)
   calculationValue = invalidValue;
@@ -247,12 +257,12 @@ TEST(LatitudeTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = maximalValue;
   EXPECT_THROW(calculationValue += invalidValue, std::out_of_range);
   calculationValue = maximalValue;
-  EXPECT_THROW(calculationValue += maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue += maximalValue, maximalValue);
 
   //  operator-(::ad::map::point::Latitude)
   EXPECT_THROW(invalidValue - minimalValue, std::out_of_range);
   EXPECT_THROW(minimalValue - invalidValue, std::out_of_range);
-  EXPECT_THROW(minimalValue - maximalValue, std::out_of_range);
+  EXPECT_EQ(minimalValue - maximalValue, minimalValue);
 
   //  operator-=(::ad::map::point::Latitude)
   calculationValue = invalidValue;
@@ -260,17 +270,17 @@ TEST(LatitudeTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = minimalValue;
   EXPECT_THROW(calculationValue -= invalidValue, std::out_of_range);
   calculationValue = minimalValue;
-  EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue -= maximalValue, minimalValue);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mLatitude, std::out_of_range);
+  EXPECT_EQ(maximalValue * maximalValue.mLatitude, maximalValue);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mLatitude, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mLatitude, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
-  EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
+  EXPECT_EQ(maximalValue / 0.5, maximalValue);
 
   //  operator/(::ad::map::point::Latitude)
   EXPECT_THROW(invalidValue / maximalValue, std::out_of_range);
@@ -279,13 +289,13 @@ TEST(LatitudeTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mLatitude) > std::fabs(minimalValue.mLatitude))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mLatitude) < std::fabs(minimalValue.mLatitude))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -311,13 +321,13 @@ TEST(LatitudeTests, comparisonOperatorsRespectPrecision)
     value = ::ad::map::point::Latitude(precisionValueTimesTen);
   }
   ::ad::map::point::Latitude const sameValue = value;
-  ::ad::map::point::Latitude const slightlyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::Latitude const slightlyBiggerValue(value.mLatitude
                                                        + ::ad::map::point::Latitude::cPrecisionValue * 0.9);
-  ::ad::map::point::Latitude const slightlySmallerValue(static_cast<double>(value)
+  ::ad::map::point::Latitude const slightlySmallerValue(value.mLatitude
                                                         - ::ad::map::point::Latitude::cPrecisionValue * 0.9);
-  ::ad::map::point::Latitude const actuallyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::Latitude const actuallyBiggerValue(value.mLatitude
                                                        + ::ad::map::point::Latitude::cPrecisionValue * 1.1);
-  ::ad::map::point::Latitude const actuallySmallerValue(static_cast<double>(value)
+  ::ad::map::point::Latitude const actuallySmallerValue(value.mLatitude
                                                         - ::ad::map::point::Latitude::cPrecisionValue * 1.1);
 
   // operator ==
@@ -381,41 +391,41 @@ TEST(LatitudeTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::map::point::Latitude)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLatitude + value.mLatitude, result.mLatitude, cDoubleNear);
 
   //  operator+=(::ad::map::point::Latitude)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLatitude + value.mLatitude, result.mLatitude, cDoubleNear);
 
   //  operator-(::ad::map::point::Latitude)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLatitude - value.mLatitude, result.mLatitude, cDoubleNear);
 
   //  operator-=(::ad::map::point::Latitude)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLatitude - value.mLatitude, result.mLatitude, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLatitude * 5., result.mLatitude, cDoubleNear);
 
   //  operator*(double, ::ad::map::point::Latitude)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLatitude * 5., result.mLatitude, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mLatitude;
+  EXPECT_NEAR(value.mLatitude / value.mLatitude, result.mLatitude, cDoubleNear);
 
   //  operator/(::ad::map::point::Latitude)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mLatitude / value.mLatitude, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::map::point::Latitude::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::map::point::Latitude::cMaxValue))
+  if ((::ad::map::point::Latitude::cMinValue < -value.mLatitude)
+      && (-value.mLatitude < ::ad::map::point::Latitude::cMaxValue))
   {
     result = -value;
   }

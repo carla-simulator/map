@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -101,9 +101,9 @@ struct RouteParaPoint
    */
   bool operator==(const RouteParaPoint &other) const
   {
-    return (routePlanningCounter == other.routePlanningCounter)
-      && (segmentCountFromDestination == other.segmentCountFromDestination)
-      && (parametricOffset == other.parametricOffset);
+    return (route_planning_counter == other.route_planning_counter)
+      && (segment_count_from_destination == other.segment_count_from_destination)
+      && (parametric_offset == other.parametric_offset);
   }
 
   /**
@@ -118,8 +118,8 @@ struct RouteParaPoint
     return !operator==(other);
   }
 
-  ::ad::map::route::RoutePlanningCounter routePlanningCounter{0u};
-  ::ad::map::route::SegmentCounter segmentCountFromDestination{0};
+  ::ad::map::route::RoutePlanningCounter route_planning_counter{0u};
+  ::ad::map::route::SegmentCounter segment_count_from_destination{0};
 
   /*!
    * The parametric offset in the range of [0;1] within the lane's geometry as defined
@@ -130,7 +130,7 @@ struct RouteParaPoint
    * Be aware: Depending on the route direction on the lane either the parametric offset
    * 0.0 or 1.0 can define the start point of that route on that lane.
    */
-  ::ad::physics::ParametricValue parametricOffset;
+  ::ad::physics::ParametricValue parametric_offset;
 };
 
 } // namespace route
@@ -169,14 +169,14 @@ namespace route {
 inline std::ostream &operator<<(std::ostream &os, RouteParaPoint const &_value)
 {
   os << "RouteParaPoint(";
-  os << "routePlanningCounter:";
-  os << _value.routePlanningCounter;
+  os << "route_planning_counter:";
+  os << _value.route_planning_counter;
   os << ",";
-  os << "segmentCountFromDestination:";
-  os << _value.segmentCountFromDestination;
+  os << "segment_count_from_destination:";
+  os << _value.segment_count_from_destination;
   os << ",";
-  os << "parametricOffset:";
-  os << _value.parametricOffset;
+  os << "parametric_offset:";
+  os << _value.parametric_offset;
   os << ")";
   return os;
 }
@@ -196,4 +196,16 @@ inline std::string to_string(::ad::map::route::RouteParaPoint const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::route::RouteParaPoint> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::route::RouteParaPoint const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_ROUTE_ROUTEPARAPOINT

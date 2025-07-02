@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -44,7 +44,7 @@ inline bool withinValidInputRange(::ad::map::landmark::ENULandmark const &input,
   bool inValidInputRange = true;
   inValidInputRange = withinValidInputRange(input.id, logErrors) && withinValidInputRange(input.type, logErrors)
     && withinValidInputRange(input.position, logErrors) && withinValidInputRange(input.heading, logErrors)
-    && withinValidInputRange(input.trafficLightType, logErrors);
+    && withinValidInputRange(input.traffic_light_type, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::landmark::ENULandmark)>> {} has invalid member",

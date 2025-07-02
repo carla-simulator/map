@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -241,9 +241,9 @@ straight2d lineCoefs(Point const &first, Point const &second)
   return straight2d{first.y - second.y, second.x - first.x, first.x * second.y - second.x * first.y};
 }
 
-straight2d parallelShiftedLineCoefs(Point first, Point second, double const laneWidth, Side const side)
+straight2d parallelShiftedLineCoefs(Point first, Point second, double const lane_width, Side const side)
 {
-  vec2d const offset_vector = rotated90OffsetVector(first, second, laneWidth, side);
+  vec2d const offset_vector = rotated90OffsetVector(first, second, lane_width, side);
 
   move(offset_vector, first);
   move(offset_vector, second);

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -43,11 +43,13 @@ namespace physics {
  * \brief Enable/Disable explicit conversion. Currently set to "only explicit conversion".
  */
 #define _AD_PHYSICS_ANGULARACCELERATION_EXPLICIT_CONVERSION_ explicit
+#define _AD_PHYSICS_ANGULARACCELERATION_OPERATOR_BASE_TYPE_ 0
 #else
 /*!
  * \brief Enable/Disable explicit conversion. Currently set to "implicit conversion allowed".
  */
 #define _AD_PHYSICS_ANGULARACCELERATION_EXPLICIT_CONVERSION_
+#define _AD_PHYSICS_ANGULARACCELERATION_OPERATOR_BASE_TYPE_ 1
 #endif
 
 /*!
@@ -229,8 +231,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    AngularAcceleration const result(mAngularAcceleration + other.mAngularAcceleration);
-    result.ensureValid();
+    AngularAcceleration result(mAngularAcceleration + other.mAngularAcceleration);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -249,7 +251,7 @@ public:
     ensureValid();
     other.ensureValid();
     mAngularAcceleration += other.mAngularAcceleration;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -267,8 +269,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    AngularAcceleration const result(mAngularAcceleration - other.mAngularAcceleration);
-    result.ensureValid();
+    AngularAcceleration result(mAngularAcceleration - other.mAngularAcceleration);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -287,7 +289,7 @@ public:
     ensureValid();
     other.ensureValid();
     mAngularAcceleration -= other.mAngularAcceleration;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -304,8 +306,8 @@ public:
   AngularAcceleration operator*(const double &scalar) const
   {
     ensureValid();
-    AngularAcceleration const result(mAngularAcceleration * scalar);
-    result.ensureValid();
+    AngularAcceleration result(mAngularAcceleration * scalar);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -322,8 +324,8 @@ public:
   AngularAcceleration operator/(const double &scalar) const
   {
     AngularAcceleration const scalarAngularAcceleration(scalar);
-    AngularAcceleration const result(operator/(scalarAngularAcceleration));
-    result.ensureValid();
+    AngularAcceleration result(operator/(scalarAngularAcceleration));
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -357,8 +359,8 @@ public:
   AngularAcceleration operator-() const
   {
     ensureValid();
-    AngularAcceleration const result(-mAngularAcceleration);
-    result.ensureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
+    AngularAcceleration result(-mAngularAcceleration);
+    result.restrictToLimitsAndEnsureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
     return result;
   }
 
@@ -366,12 +368,35 @@ public:
    * \brief conversion to base type: double
    *
    * \note the conversion to the base type removes the physical unit.
-   *       \ref \_AD_PHYSICS_ANGULARACCELERATION_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.
    */
-  _AD_PHYSICS_ANGULARACCELERATION_EXPLICIT_CONVERSION_ operator double() const
+  double toBaseType() const
   {
     return mAngularAcceleration;
   }
+
+  /*!
+   * \returns \c true if the AngularAcceleration is a normal value
+   *
+   * An AngularAcceleration value is defined to be normal if:
+   * - It is normal or zero (see std::fpclassify())
+   */
+  bool isNormal() const
+  {
+    auto const valueClass = std::fpclassify(mAngularAcceleration);
+    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO));
+  }
+
+#if _AD_PHYSICS_ANGULARACCELERATION_OPERATOR_BASE_TYPE_
+  /*!
+   * \brief conversion to base type: double
+   *
+   * \note the conversion to the base type removes the physical unit.
+   */
+  operator double() const
+  {
+    return mAngularAcceleration;
+  }
+#endif
 
   /*!
    * \returns \c true if the AngularAcceleration in a valid range
@@ -382,9 +407,7 @@ public:
    */
   bool isValid() const
   {
-    auto const valueClass = std::fpclassify(mAngularAcceleration);
-    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) && (cMinValue <= mAngularAcceleration)
-      && (mAngularAcceleration <= cMaxValue);
+    return isNormal() && (cMinValue <= mAngularAcceleration) && (mAngularAcceleration <= cMaxValue);
   }
 
   /*!
@@ -416,9 +439,53 @@ public:
     ensureValid();
     if (operator==(AngularAcceleration(0.))) // LCOV_EXCL_BR_LINE
     {
-      spdlog::info("ensureValid(::ad::physics::AngularAcceleration)>> {} value is zero", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::physics::AngularAcceleration)>> {} value is zero",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_PHYSICS_ANGULARACCELERATION_THROWS_EXCEPTION == 1)
       throw std::out_of_range("AngularAcceleration value is zero"); // LCOV_EXCL_BR_LINE
+#endif
+    }
+  }
+
+  /**
+   * @brief if possible restrict the AngularAcceleration to it's defined limits
+   *
+   * If the AngularAcceleration isNormal(), but exceeds the defined limits, it is restricted to its limits.
+   * If AngularAcceleration::isNormal() returns \c false an std::out_of_range() exception is thrown.
+   * - not isNormal(): std::out_of_range() exception is thrown
+   * - \ref cMinValue <= value <= \ref cMaxValue: nothing is done
+   * - value < \ref cMinValue: resulting value = cMinValue
+   * - value > \ref cMaxValue: resulting value = cMaxValue
+   */
+  void restrictToLimitsAndEnsureValid()
+  {
+    if (isNormal())
+    {
+      if (mAngularAcceleration < cMinValue)
+      {
+        // mitigate exceeding the minimum
+        spdlog::info("restrictToLimits(::ad::physics::AngularAcceleration)>> {} value is smaller than allowed minimum "
+                     "{}. Restrict to minimum value.",
+                     *this,
+                     getMin()); // LCOV_EXCL_BR_LINE
+        mAngularAcceleration = cMinValue;
+      }
+      else if (mAngularAcceleration > cMaxValue)
+      {
+        // mitigate exceeding the maximum
+        spdlog::info("restrictToLimits(::ad::physics::AngularAcceleration)>> {} value is larger than allowed maximum "
+                     "{}. Restrict to maximum value.",
+                     *this,
+                     getMax()); // LCOV_EXCL_BR_LINE
+        mAngularAcceleration = cMaxValue;
+      }
+    }
+    else
+    {
+      spdlog::info("restrictToLimits(::ad::physics::AngularAcceleration)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
+#if (AD_PHYSICS_ANGULARACCELERATION_THROWS_EXCEPTION == 1)
+      throw std::out_of_range("AngularAcceleration value out of range"); // LCOV_EXCL_BR_LINE
 #endif
     }
   }
@@ -447,7 +514,6 @@ public:
     return AngularAcceleration(cPrecisionValue);
   }
 
-private:
   /*!
    * \brief the actual value of the type
    */
@@ -483,7 +549,7 @@ namespace std {
  */
 inline ::ad::physics::AngularAcceleration fabs(const ::ad::physics::AngularAcceleration other)
 {
-  ::ad::physics::AngularAcceleration const result(std::fabs(static_cast<double>(other)));
+  ::ad::physics::AngularAcceleration const result(std::fabs(other.mAngularAcceleration));
   return result;
 }
 
@@ -549,7 +615,7 @@ namespace physics {
  */
 inline std::ostream &operator<<(std::ostream &os, AngularAcceleration const &_value)
 {
-  return os << double(_value);
+  return os << _value.mAngularAcceleration;
 }
 
 } // namespace physics
@@ -561,7 +627,19 @@ namespace std {
  */
 inline std::string to_string(::ad::physics::AngularAcceleration const &value)
 {
-  return to_string(static_cast<double>(value));
+  return to_string(value.mAngularAcceleration);
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::physics::AngularAcceleration> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::physics::AngularAcceleration const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_PHYSICS_ANGULARACCELERATION

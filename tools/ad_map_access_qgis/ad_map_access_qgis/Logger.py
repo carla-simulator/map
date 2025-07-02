@@ -10,34 +10,31 @@
 from abc import ABCMeta, abstractmethod
 from qgis.core import QgsMessageLog, Qgis
 from qgis.gui import QgsMessageBar
-from PyQt5.QtCore import QThread, QObject
+from PyQt5 import QtCore
 
 
-class Logger(object):
+class Logger(QtCore.QObject):
 
-    "Logging for Python"
-    __metalcass__ = ABCMeta
+    """Logging for Python
+        Logs the msg.
+           level: 'ERROR', 'WARN.', 'INFO.', 'DEBUG'
+           msg:   msg to be written."""
+    log = QtCore.pyqtSignal(str, str)
 
     def __init__(self, level=4):
         "level: 0: errors,\n" \
             "       1: errors, warnings,\n" \
             "       2: errors, warnings, infos,\n" \
             "       3: errors, warnings, infos, debug.\n"
+        super(QtCore.QObject, self).__init__()
         self.level = level
-
-    @abstractmethod
-    def log(self, level, msg):
-        "Logs the msg.\n" \
-            "level: 'ERROR', 'WARN.', 'INFO.', 'DEBUG'\n" \
-            "msg:   msg to be written."
-        pass
 
     def error(self, msg):
         "Logs an Error.\n" \
             "msg: message.\n" \
             "Returns False."
         if self.level >= 0:
-            self.log("ERROR", msg)
+            self.log.emit("ERROR", msg)
         return False
 
     def warning(self, msg):
@@ -45,7 +42,7 @@ class Logger(object):
             "msg: message.\n" \
             "Returns False."
         if self.level >= 1:
-            self.log("WARN.", msg)
+            self.log.emit("WARN.", msg)
         return False
 
     def info(self, msg):
@@ -53,7 +50,7 @@ class Logger(object):
             "msg: message.\n" \
             "Returns False."
         if self.level >= 2:
-            self.log("INFO.", msg)
+            self.log.emit("INFO.", msg)
         return False
 
     def debug(self, msg):
@@ -61,13 +58,14 @@ class Logger(object):
             "msg: message.\n" \
             "Returns False."
         if self.level >= 3:
-            self.log("DEBUG", msg)
+            self.log.emit("DEBUG", msg)
         return False
 
 
 class LoggerConsole(Logger):
 
     "Logs to the console."
+    do_log = QtCore.pyqtSlot(str, str)
 
     def __init__(self, iface, reporting_level=4):
         "iface: QGIS interface object.\n" \
@@ -77,15 +75,17 @@ class LoggerConsole(Logger):
             "       3: errors, warnings, infos, debug.\n" \
             "       4: errors, warning,s infos and debug infos.\n"
         Logger.__init__(self, reporting_level)
+        self.log.connect(self.do_log)
 
-    def log(self, level, msg):
+    def do_log(self, level, msg):
         "Logger implementation."
-        print ("[" + str(QThread.currentThreadId()) + "]" + level + ": " + msg)
+        print("[" + level + "] " + msg)
 
 
 class LoggerQgs(Logger):
 
     "Logs to the QGIS GUI."
+    do_log = QtCore.pyqtSlot(str, str)
 
     def __init__(self, iface, reporting_level=4):
         "iface: QGIS interface object.\n" \
@@ -97,8 +97,9 @@ class LoggerQgs(Logger):
         Logger.__init__(self, reporting_level)
         self.message_bar = iface.messageBar()
         self.title = "CARLA ad_map_access"
+        self.log.connect(self.do_log)
 
-    def log(self, level, msg):
+    def do_log(self, level, msg):
         "Logger implementation."
         if level == "ERROR":
             self.message_bar.clearWidgets()

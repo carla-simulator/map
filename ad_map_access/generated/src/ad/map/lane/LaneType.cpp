@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #include "ad/map/lane/LaneType.hpp"
@@ -44,6 +44,8 @@ std::string toString(::ad::map::lane::LaneType const e)
       return std::string("::ad::map::lane::LaneType::TURN"); // LCOV_EXCL_BR_LINE
     case ::ad::map::lane::LaneType::BIKE:
       return std::string("::ad::map::lane::LaneType::BIKE"); // LCOV_EXCL_BR_LINE
+    case ::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE:
+      return std::string("::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE"); // LCOV_EXCL_BR_LINE
     default:
       return std::string("UNKNOWN ENUM VALUE"); // LCOV_EXCL_BR_LINE
   }
@@ -138,6 +140,14 @@ template <>::ad::map::lane::LaneType fromString(std::string const &str)
   if (str == std::string("BIKE")) // LCOV_EXCL_BR_LINE
   {
     return ::ad::map::lane::LaneType::BIKE;
+  }
+  if (str == std::string("::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE")) // LCOV_EXCL_BR_LINE
+  {
+    return ::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE;
+  }
+  if (str == std::string("OPENDRIVE_REFERENCE_LINE")) // LCOV_EXCL_BR_LINE
+  {
+    return ::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE;
   }
   throw std::out_of_range("Invalid enum literal"); // LCOV_EXCL_BR_LINE
 }

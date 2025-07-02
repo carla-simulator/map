@@ -56,7 +56,7 @@ to calculate the driving corridor for a vehicle within ENU coordinate frame.
 - Find (required) lane change
 - Find (neareast) waypoint on route based on diverse query input
    - lane::LaneId
-   - point::ParaPoint (laneId, parametricOffset)
+   - point::ParaPoint (lane_id, parametric_offset)
    - point::ParaPointList (list of point::ParaPoint)
    - MapMatchedPositionConfidenceList
    - Object on route: MapMatchedBoudingBox

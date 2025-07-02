@@ -1,7 +1,7 @@
 [ADMap]
 map=Town01copy.xodr
-openDriveOverlapMargin=0.2
-openDriveDefaultIntersectionType=Stop
+open_drive_overlap_margin=0.2
+open_drive_default_intersection_type=Stop
 
 [POI]
 poi=T1 48.9970472 8.4026912 0.1

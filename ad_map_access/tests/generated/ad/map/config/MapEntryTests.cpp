@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -30,14 +30,14 @@ protected:
     ::ad::map::config::MapEntry value;
     std::string valueFilename{"min"};
     value.filename = valueFilename;
-    ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
-    value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
-    ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
+    ::ad::physics::Distance valueOpen_drive_overlap_margin(-1e9);
+    value.open_drive_overlap_margin = valueOpen_drive_overlap_margin;
+    ::ad::map::intersection::IntersectionType valueOpen_drive_default_intersection_type(
       ::ad::map::intersection::IntersectionType::Unknown);
-    value.openDriveDefaultIntersectionType = valueOpenDriveDefaultIntersectionType;
-    ::ad::map::landmark::TrafficLightType valueOpenDriveDefaultTrafficLightType(
+    value.open_drive_default_intersection_type = valueOpen_drive_default_intersection_type;
+    ::ad::map::landmark::TrafficLightType valueOpen_drive_default_traffic_light_type(
       ::ad::map::landmark::TrafficLightType::INVALID);
-    value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
+    value.open_drive_default_traffic_light_type = valueOpen_drive_default_traffic_light_type;
     mValue = value;
   }
 
@@ -101,35 +101,35 @@ TEST_F(MapEntryTests, comparisonOperatorFilenameDiffers)
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(MapEntryTests, comparisonOperatorOpenDriveOverlapMarginDiffers)
+TEST_F(MapEntryTests, comparisonOperatorOpen_drive_overlap_marginDiffers)
 {
   ::ad::map::config::MapEntry valueA = mValue;
-  ::ad::physics::Distance openDriveOverlapMargin(1e9);
-  valueA.openDriveOverlapMargin = openDriveOverlapMargin;
+  ::ad::physics::Distance open_drive_overlap_margin(1e9);
+  valueA.open_drive_overlap_margin = open_drive_overlap_margin;
   ::ad::map::config::MapEntry valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(MapEntryTests, comparisonOperatorOpenDriveDefaultIntersectionTypeDiffers)
+TEST_F(MapEntryTests, comparisonOperatorOpen_drive_default_intersection_typeDiffers)
 {
   ::ad::map::config::MapEntry valueA = mValue;
-  ::ad::map::intersection::IntersectionType openDriveDefaultIntersectionType(
+  ::ad::map::intersection::IntersectionType open_drive_default_intersection_type(
     ::ad::map::intersection::IntersectionType::TrafficLight);
-  valueA.openDriveDefaultIntersectionType = openDriveDefaultIntersectionType;
+  valueA.open_drive_default_intersection_type = open_drive_default_intersection_type;
   ::ad::map::config::MapEntry valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(MapEntryTests, comparisonOperatorOpenDriveDefaultTrafficLightTypeDiffers)
+TEST_F(MapEntryTests, comparisonOperatorOpen_drive_default_traffic_light_typeDiffers)
 {
   ::ad::map::config::MapEntry valueA = mValue;
-  ::ad::map::landmark::TrafficLightType openDriveDefaultTrafficLightType(
+  ::ad::map::landmark::TrafficLightType open_drive_default_traffic_light_type(
     ::ad::map::landmark::TrafficLightType::BIKE_PEDESTRIAN_RED_YELLOW_GREEN);
-  valueA.openDriveDefaultTrafficLightType = openDriveDefaultTrafficLightType;
+  valueA.open_drive_default_traffic_light_type = open_drive_default_traffic_light_type;
   ::ad::map::config::MapEntry valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

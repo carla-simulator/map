@@ -9,7 +9,9 @@
 #include "ad/map/route/LaneIntervalOperation.hpp"
 
 #include <algorithm>
+#include "ad/map/access/Logging.hpp"
 #include "ad/map/access/Operation.hpp"
+#include "ad/map/lane/BorderOperation.hpp"
 #include "ad/map/lane/LaneOperation.hpp"
 #include "ad/map/point/Operation.hpp"
 
@@ -17,113 +19,118 @@ namespace ad {
 namespace map {
 namespace route {
 
-point::ParaPoint getIntervalStart(FullRoute const &route, lane::LaneId const &laneId)
+physics::ParametricValue calcParametricLength(LaneInterval const &lane_interval)
+{
+  return std::fabs(lane_interval.start - lane_interval.end);
+}
+
+point::ParaPoint getIntervalStart(FullRoute const &route, lane::LaneId const &lane_id)
 {
   point::ParaPoint result;
-  for (auto const &roadSegment : route.roadSegments)
+  for (auto const &roadSegment : route.road_segments)
   {
-    auto it = find_if(roadSegment.drivableLaneSegments.begin(),
-                      roadSegment.drivableLaneSegments.end(),
-                      [&laneId](const LaneSegment &l) { return l.laneInterval.laneId == laneId; });
+    auto it = find_if(roadSegment.drivable_lane_segments.begin(),
+                      roadSegment.drivable_lane_segments.end(),
+                      [&lane_id](const LaneSegment &l) { return l.lane_interval.lane_id == lane_id; });
 
-    if (it != roadSegment.drivableLaneSegments.end())
+    if (it != roadSegment.drivable_lane_segments.end())
     {
-      result.laneId = laneId;
-      result.parametricOffset = it->laneInterval.start;
+      result.lane_id = lane_id;
+      result.parametric_offset = it->lane_interval.start;
       return result;
     }
   }
 
-  throw std::invalid_argument("ad::map::route::getIntervalStart: laneId not found in route");
+  throw std::invalid_argument("ad::map::route::getIntervalStart: lane_id not found in route");
 }
 
 physics::ParametricValue
-getSignedDistance(LaneInterval const &laneInterval, point::ParaPoint const &first, point::ParaPoint const &second)
+getSignedDistance(LaneInterval const &lane_interval, point::ParaPoint const &first, point::ParaPoint const &second)
 {
-  if ((first.laneId != second.laneId) || (first.laneId != laneInterval.laneId))
+  if ((first.lane_id != second.lane_id) || (first.lane_id != lane_interval.lane_id))
   {
     throw std::invalid_argument("ad::map::route::getSignedDistance: lane id's not matching");
   }
 
-  if (isRouteDirectionPositive(laneInterval))
+  if (isRouteDirectionPositive(lane_interval))
   {
-    return second.parametricOffset - first.parametricOffset;
+    return second.parametric_offset - first.parametric_offset;
   }
   else
   {
-    return first.parametricOffset - second.parametricOffset;
+    return first.parametric_offset - second.parametric_offset;
   }
 }
 
 physics::ParametricValue
-getUnsignedDistance(LaneInterval const &laneInterval, point::ParaPoint const &first, point::ParaPoint const &second)
+getUnsignedDistance(LaneInterval const &lane_interval, point::ParaPoint const &first, point::ParaPoint const &second)
 {
-  if ((first.laneId != second.laneId) || (first.laneId != laneInterval.laneId))
+  if ((first.lane_id != second.lane_id) || (first.lane_id != lane_interval.lane_id))
   {
     throw std::invalid_argument("ad::map::route::getSignedDistance: lane id's not matching");
   }
-  return std::fabs(first.parametricOffset - second.parametricOffset);
+  return std::fabs(first.parametric_offset - second.parametric_offset);
 }
 
-bool isRouteDirectionPositive(LaneInterval const &laneInterval)
+bool isRouteDirectionPositive(LaneInterval const &lane_interval)
 {
-  if (laneInterval.start == laneInterval.end)
+  if (lane_interval.start == lane_interval.end)
   {
-    return lane::isLaneDirectionPositive(laneInterval.laneId) ^ laneInterval.wrongWay;
+    return lane::isLaneDirectionPositive(lane_interval.lane_id) ^ lane_interval.wrong_way;
   }
   else
   {
-    return (laneInterval.start < laneInterval.end);
+    return (lane_interval.start < lane_interval.end);
   }
 }
 
-bool isRouteDirectionAlignedWithDrivingDirection(LaneInterval const &laneInterval)
+bool isRouteDirectionAlignedWithDrivingDirection(LaneInterval const &lane_interval)
 {
-  if (isRouteDirectionPositive(laneInterval))
+  if (isRouteDirectionPositive(lane_interval))
   {
-    return lane::isLaneDirectionPositive(laneInterval.laneId);
+    return lane::isLaneDirectionPositive(lane_interval.lane_id);
   }
   else
   {
-    return lane::isLaneDirectionNegative(laneInterval.laneId);
+    return lane::isLaneDirectionNegative(lane_interval.lane_id);
   }
 }
 
 physics::ParametricValue getProjectedParametricOffsetOnNeighborLane(LaneInterval const &currentInterval,
                                                                     LaneInterval const &neighborInterval,
-                                                                    physics::ParametricValue const &parametricOffset)
+                                                                    physics::ParametricValue const &parametric_offset)
 {
-  if (!lane::isSameOrDirectNeighbor(currentInterval.laneId, neighborInterval.laneId))
+  if (!lane::isSameOrDirectNeighbor(currentInterval.lane_id, neighborInterval.lane_id))
   {
     throw std::invalid_argument("ad::map::route::getProjectedParametricOffsetOnNeighborLane: lanes are not neighbors");
   }
 
-  if (currentInterval.laneId == neighborInterval.laneId)
+  if (currentInterval.lane_id == neighborInterval.lane_id)
   {
-    return parametricOffset;
+    return parametric_offset;
   }
 
   // real neighbors
-  auto currentLane = lane::getLane(currentInterval.laneId);
-  auto neighborLane = lane::getLane(neighborInterval.laneId);
+  auto currentLane = lane::getLane(currentInterval.lane_id);
+  auto neighborLane = lane::getLane(neighborInterval.lane_id);
   auto leftNeighbors = lane::getContactLanes(currentLane, lane::ContactLocation::LEFT);
   auto rightNeighbors = lane::getContactLanes(currentLane, lane::ContactLocation::RIGHT);
 
   point::ECEFPoint leftECEFPoint;
   point::ECEFPoint rightECEFPoint;
   physics::ParametricValue offset;
-  lane::projectParametricPointToEdges(currentLane, parametricOffset, leftECEFPoint, rightECEFPoint);
+  lane::projectParametricPointToEdges(currentLane, parametric_offset, leftECEFPoint, rightECEFPoint);
 
-  if ((leftNeighbors.size() > 0) && (leftNeighbors[0].toLane == neighborInterval.laneId))
+  if ((leftNeighbors.size() > 0) && (leftNeighbors[0].to_lane == neighborInterval.lane_id))
   {
-    offset = ((point::findNearestPointOnEdge(neighborLane.edgeRight, leftECEFPoint)
-               + point::findNearestPointOnEdge(neighborLane.edgeLeft, leftECEFPoint))
+    offset = ((point::findNearestPointOnEdge(neighborLane.edge_right, leftECEFPoint)
+               + point::findNearestPointOnEdge(neighborLane.edge_left, leftECEFPoint))
               / 2.);
   }
-  else if ((rightNeighbors.size() > 0) && (rightNeighbors[0].toLane == neighborInterval.laneId))
+  else if ((rightNeighbors.size() > 0) && (rightNeighbors[0].to_lane == neighborInterval.lane_id))
   {
-    offset = ((point::findNearestPointOnEdge(neighborLane.edgeRight, rightECEFPoint)
-               + point::findNearestPointOnEdge(neighborLane.edgeLeft, rightECEFPoint))
+    offset = ((point::findNearestPointOnEdge(neighborLane.edge_right, rightECEFPoint)
+               + point::findNearestPointOnEdge(neighborLane.edge_left, rightECEFPoint))
               / 2.);
   }
   else
@@ -134,309 +141,317 @@ physics::ParametricValue getProjectedParametricOffsetOnNeighborLane(LaneInterval
   return offset;
 }
 
-physics::Distance calcLength(LaneInterval const &laneInterval)
+physics::Distance calcLength(LaneInterval const &lane_interval)
 {
-  auto currentLane = lane::getLane(laneInterval.laneId);
-  auto const resultDistance = currentLane.length * calcParametricLength(laneInterval);
+  auto currentLane = lane::getLane(lane_interval.lane_id);
+  auto const resultDistance = currentLane.length * calcParametricLength(lane_interval);
   return resultDistance;
 }
 
-physics::Duration calcDuration(LaneInterval const &laneInterval)
+physics::Duration calcDuration(LaneInterval const &lane_interval)
 {
-  auto currentLane = lane::getLane(laneInterval.laneId);
-  return lane::getDuration(currentLane, toParametricRange(laneInterval));
+  auto currentLane = lane::getLane(lane_interval.lane_id);
+  return lane::getDuration(currentLane, toParametricRange(lane_interval));
 }
 
-enum class EdgeType
+template <typename LaneEdge>
+void getEdge(LaneInterval const &lane_interval, lane::EdgeType edge_type, LaneEdge &outputEdge)
 {
-  LEFT,
-  RIGHT,
-  LEFT_PROJECTED,
-  RIGHT_PROJECTED
-};
+  auto currentLane = lane::getLane(lane_interval.lane_id);
 
-template <typename LaneEdge> void getEdge(LaneInterval const &laneInterval, EdgeType edgeType, LaneEdge &outputEdge)
-{
-  auto currentLane = lane::getLane(laneInterval.laneId);
-
-  if (isRouteDirectionPositive(laneInterval))
+  outputEdge.lateral_alignment = physics::ParametricValue();
+  auto projectedInterval = lane_interval;
+  if (isRouteDirectionPositive(lane_interval))
   {
-    if (edgeType == EdgeType::LEFT)
+    if (edge_type == lane::EdgeType::LEFT)
     {
-      point::getParametricRange(currentLane.edgeLeft, toParametricRange(laneInterval), outputEdge, false);
+      point::getParametricRange(currentLane.edge_left, toParametricRange(lane_interval), outputEdge.points, false);
+      outputEdge.lateral_alignment = lane::cLateralAlignmentLeft;
     }
-    else if (edgeType == EdgeType::LEFT_PROJECTED)
+    else if (edge_type == lane::EdgeType::LEFT_PROJECTED)
     {
-      auto projectedInterval = laneInterval;
       projectedInterval.start = point::findNearestPointOnEdge(
-        currentLane.edgeLeft,
-        lane::getProjectedParametricPoint(currentLane, laneInterval.start, physics::ParametricValue(0.)));
+        currentLane.edge_left,
+        lane::getProjectedParametricPoint(currentLane, lane_interval.start, physics::ParametricValue(0.)));
       projectedInterval.end = point::findNearestPointOnEdge(
-        currentLane.edgeLeft,
-        lane::getProjectedParametricPoint(currentLane, laneInterval.end, physics::ParametricValue(0.)));
-      point::getParametricRange(currentLane.edgeLeft, toParametricRange(projectedInterval), outputEdge, false);
+        currentLane.edge_left,
+        lane::getProjectedParametricPoint(currentLane, lane_interval.end, physics::ParametricValue(0.)));
+      point::getParametricRange(currentLane.edge_left, toParametricRange(projectedInterval), outputEdge.points, false);
+      outputEdge.lateral_alignment = lane::cLateralAlignmentLeft;
     }
-    else if (edgeType == EdgeType::RIGHT)
+    else if (edge_type == lane::EdgeType::RIGHT)
     {
-      point::getParametricRange(currentLane.edgeRight, toParametricRange(laneInterval), outputEdge, false);
+      point::getParametricRange(currentLane.edge_right, toParametricRange(lane_interval), outputEdge.points, false);
+      outputEdge.lateral_alignment = lane::cLateralAlignmentRight;
     }
-    else if (edgeType == EdgeType::RIGHT_PROJECTED)
+    else if (edge_type == lane::EdgeType::RIGHT_PROJECTED)
     {
-      auto projectedInterval = laneInterval;
       projectedInterval.start = point::findNearestPointOnEdge(
-        currentLane.edgeRight,
-        lane::getProjectedParametricPoint(currentLane, laneInterval.start, physics::ParametricValue(1.)));
+        currentLane.edge_right,
+        lane::getProjectedParametricPoint(currentLane, lane_interval.start, physics::ParametricValue(1.)));
       projectedInterval.end = point::findNearestPointOnEdge(
-        currentLane.edgeRight,
-        lane::getProjectedParametricPoint(currentLane, laneInterval.end, physics::ParametricValue(1.)));
-      point::getParametricRange(currentLane.edgeRight, toParametricRange(projectedInterval), outputEdge, false);
+        currentLane.edge_right,
+        lane::getProjectedParametricPoint(currentLane, lane_interval.end, physics::ParametricValue(1.)));
+      point::getParametricRange(currentLane.edge_right, toParametricRange(projectedInterval), outputEdge.points, false);
+      outputEdge.lateral_alignment = lane::cLateralAlignmentRight;
     }
   }
   else
   {
-    if (edgeType == EdgeType::LEFT)
+    if (edge_type == lane::EdgeType::LEFT)
     {
-      point::getParametricRange(currentLane.edgeRight, toParametricRange(laneInterval), outputEdge, true);
+      point::getParametricRange(currentLane.edge_right, toParametricRange(lane_interval), outputEdge.points, true);
+      outputEdge.lateral_alignment = lane::cLateralAlignmentLeft;
     }
-    else if (edgeType == EdgeType::LEFT_PROJECTED)
+    else if (edge_type == lane::EdgeType::LEFT_PROJECTED)
     {
-      auto projectedInterval = laneInterval;
       projectedInterval.start = point::findNearestPointOnEdge(
-        currentLane.edgeRight,
-        lane::getProjectedParametricPoint(currentLane, laneInterval.start, physics::ParametricValue(1.)));
+        currentLane.edge_right,
+        lane::getProjectedParametricPoint(currentLane, lane_interval.start, physics::ParametricValue(1.)));
       projectedInterval.end = point::findNearestPointOnEdge(
-        currentLane.edgeRight,
-        lane::getProjectedParametricPoint(currentLane, laneInterval.end, physics::ParametricValue(1.)));
-      point::getParametricRange(currentLane.edgeRight, toParametricRange(projectedInterval), outputEdge, true);
+        currentLane.edge_right,
+        lane::getProjectedParametricPoint(currentLane, lane_interval.end, physics::ParametricValue(1.)));
+      point::getParametricRange(currentLane.edge_right, toParametricRange(projectedInterval), outputEdge.points, true);
+      outputEdge.lateral_alignment = lane::cLateralAlignmentLeft;
     }
-    else if (edgeType == EdgeType::RIGHT)
+    else if (edge_type == lane::EdgeType::RIGHT)
     {
-      point::getParametricRange(currentLane.edgeLeft, toParametricRange(laneInterval), outputEdge, true);
+      point::getParametricRange(currentLane.edge_left, toParametricRange(lane_interval), outputEdge.points, true);
+      outputEdge.lateral_alignment = lane::cLateralAlignmentRight;
     }
-    else if (edgeType == EdgeType::RIGHT_PROJECTED)
+    else if (edge_type == lane::EdgeType::RIGHT_PROJECTED)
     {
-      auto projectedInterval = laneInterval;
       projectedInterval.start = point::findNearestPointOnEdge(
-        currentLane.edgeLeft,
-        lane::getProjectedParametricPoint(currentLane, laneInterval.start, physics::ParametricValue(0.)));
+        currentLane.edge_left,
+        lane::getProjectedParametricPoint(currentLane, lane_interval.start, physics::ParametricValue(0.)));
       projectedInterval.end = point::findNearestPointOnEdge(
-        currentLane.edgeLeft,
-        lane::getProjectedParametricPoint(currentLane, laneInterval.end, physics::ParametricValue(0.)));
-      point::getParametricRange(currentLane.edgeLeft, toParametricRange(projectedInterval), outputEdge, true);
+        currentLane.edge_left,
+        lane::getProjectedParametricPoint(currentLane, lane_interval.end, physics::ParametricValue(0.)));
+      point::getParametricRange(currentLane.edge_left, toParametricRange(projectedInterval), outputEdge.points, true);
+      outputEdge.lateral_alignment = lane::cLateralAlignmentRight;
     }
+  }
+  outputEdge.edge_type = edge_type;
+  if (!withinValidInputRange(outputEdge) || (outputEdge.points.size() < 2u))
+  {
+    access::getLogger()->error("ad::map::route::getEdge({}) invalid edge. projectedInterval({}). Lane {}. result {} ",
+                               lane_interval,
+                               projectedInterval,
+                               currentLane,
+                               outputEdge);
   }
 }
 
-void getLeftEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge)
+void getLeftEdge(LaneInterval const &lane_interval, lane::ENUEdge &enuEdge)
 {
-  getEdge(laneInterval, EdgeType::LEFT, enuEdge);
+  getEdge(lane_interval, lane::EdgeType::LEFT, enuEdge);
 }
 
-void getRightEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge)
+void getRightEdge(LaneInterval const &lane_interval, lane::ENUEdge &enuEdge)
 {
-  getEdge(laneInterval, EdgeType::RIGHT, enuEdge);
+  getEdge(lane_interval, lane::EdgeType::RIGHT, enuEdge);
 }
 
-void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge)
+void getLeftProjectedEdge(LaneInterval const &lane_interval, lane::ENUEdge &enuEdge)
 {
-  getEdge(laneInterval, EdgeType::LEFT_PROJECTED, enuEdge);
+  getEdge(lane_interval, lane::EdgeType::LEFT_PROJECTED, enuEdge);
 }
 
-void getRightProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge)
+void getRightProjectedEdge(LaneInterval const &lane_interval, lane::ENUEdge &enuEdge)
 {
-  getEdge(laneInterval, EdgeType::RIGHT_PROJECTED, enuEdge);
+  getEdge(lane_interval, lane::EdgeType::RIGHT_PROJECTED, enuEdge);
 }
 
-void getLeftEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge)
+void getLeftEdge(LaneInterval const &lane_interval, lane::GeoEdge &geoEdge)
 {
-  getEdge(laneInterval, EdgeType::LEFT, geoEdge);
+  getEdge(lane_interval, lane::EdgeType::LEFT, geoEdge);
 }
 
-void getRightEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge)
+void getRightEdge(LaneInterval const &lane_interval, lane::GeoEdge &geoEdge)
 {
-  getEdge(laneInterval, EdgeType::RIGHT, geoEdge);
+  getEdge(lane_interval, lane::EdgeType::RIGHT, geoEdge);
 }
 
-void getLeftProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge)
+void getLeftProjectedEdge(LaneInterval const &lane_interval, lane::GeoEdge &geoEdge)
 {
-  getEdge(laneInterval, EdgeType::LEFT_PROJECTED, geoEdge);
+  getEdge(lane_interval, lane::EdgeType::LEFT_PROJECTED, geoEdge);
 }
 
-void getRightProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge)
+void getRightProjectedEdge(LaneInterval const &lane_interval, lane::GeoEdge &geoEdge)
 {
-  getEdge(laneInterval, EdgeType::RIGHT_PROJECTED, geoEdge);
+  getEdge(lane_interval, lane::EdgeType::RIGHT_PROJECTED, geoEdge);
 }
 
-void getLeftEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge)
+void getLeftEdge(LaneInterval const &lane_interval, lane::ECEFEdge &ecefEdge)
 {
-  getEdge(laneInterval, EdgeType::LEFT, ecefEdge);
+  getEdge(lane_interval, lane::EdgeType::LEFT, ecefEdge);
 }
 
-void getRightEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge)
+void getRightEdge(LaneInterval const &lane_interval, lane::ECEFEdge &ecefEdge)
 {
-  getEdge(laneInterval, EdgeType::RIGHT, ecefEdge);
+  getEdge(lane_interval, lane::EdgeType::RIGHT, ecefEdge);
 }
 
-void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge)
+void getLeftProjectedEdge(LaneInterval const &lane_interval, lane::ECEFEdge &ecefEdge)
 {
-  getEdge(laneInterval, EdgeType::LEFT_PROJECTED, ecefEdge);
+  getEdge(lane_interval, lane::EdgeType::LEFT_PROJECTED, ecefEdge);
 }
 
-void getRightProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge)
+void getRightProjectedEdge(LaneInterval const &lane_interval, lane::ECEFEdge &ecefEdge)
 {
-  getEdge(laneInterval, EdgeType::RIGHT_PROJECTED, ecefEdge);
+  getEdge(lane_interval, lane::EdgeType::RIGHT_PROJECTED, ecefEdge);
 }
 
-point::ENUEdge getRightENUEdge(LaneInterval const &laneInterval)
+lane::ENUEdge getRightENUEdge(LaneInterval const &lane_interval)
 {
-  point::ENUEdge enuEdge;
-  getRightEdge(laneInterval, enuEdge);
+  lane::ENUEdge enuEdge;
+  getRightEdge(lane_interval, enuEdge);
   return enuEdge;
 }
 
-point::ECEFEdge getRightECEFEdge(LaneInterval const &laneInterval)
+lane::ECEFEdge getRightECEFEdge(LaneInterval const &lane_interval)
 {
-  point::ECEFEdge ecefEdge;
-  getRightEdge(laneInterval, ecefEdge);
+  lane::ECEFEdge ecefEdge;
+  getRightEdge(lane_interval, ecefEdge);
   return ecefEdge;
 }
 
-point::GeoEdge getRightGeoEdge(LaneInterval const &laneInterval)
+lane::GeoEdge getRightGeoEdge(LaneInterval const &lane_interval)
 {
-  point::GeoEdge geoEdge;
-  getRightEdge(laneInterval, geoEdge);
+  lane::GeoEdge geoEdge;
+  getRightEdge(lane_interval, geoEdge);
   return geoEdge;
 }
 
-point::ENUEdge getLeftENUEdge(LaneInterval const &laneInterval)
+lane::ENUEdge getLeftENUEdge(LaneInterval const &lane_interval)
 {
-  point::ENUEdge enuEdge;
-  getLeftEdge(laneInterval, enuEdge);
+  lane::ENUEdge enuEdge;
+  getLeftEdge(lane_interval, enuEdge);
   return enuEdge;
 }
 
-point::ECEFEdge getLeftECEFEdge(LaneInterval const &laneInterval)
+lane::ECEFEdge getLeftECEFEdge(LaneInterval const &lane_interval)
 {
-  point::ECEFEdge ecefEdge;
-  getLeftEdge(laneInterval, ecefEdge);
+  lane::ECEFEdge ecefEdge;
+  getLeftEdge(lane_interval, ecefEdge);
   return ecefEdge;
 }
 
-point::GeoEdge getLeftGeoEdge(LaneInterval const &laneInterval)
+lane::GeoEdge getLeftGeoEdge(LaneInterval const &lane_interval)
 {
-  point::GeoEdge geoEdge;
-  getLeftEdge(laneInterval, geoEdge);
+  lane::GeoEdge geoEdge;
+  getLeftEdge(lane_interval, geoEdge);
   return geoEdge;
 }
 
-point::ENUEdge getRightProjectedENUEdge(LaneInterval const &laneInterval)
+lane::ENUEdge getRightProjectedENUEdge(LaneInterval const &lane_interval)
 {
-  point::ENUEdge enuEdge;
-  getRightProjectedEdge(laneInterval, enuEdge);
+  lane::ENUEdge enuEdge;
+  getRightProjectedEdge(lane_interval, enuEdge);
   return enuEdge;
 }
 
-point::ECEFEdge getRightProjectedECEFEdge(LaneInterval const &laneInterval)
+lane::ECEFEdge getRightProjectedECEFEdge(LaneInterval const &lane_interval)
 {
-  point::ECEFEdge ecefEdge;
-  getRightProjectedEdge(laneInterval, ecefEdge);
+  lane::ECEFEdge ecefEdge;
+  getRightProjectedEdge(lane_interval, ecefEdge);
   return ecefEdge;
 }
 
-point::GeoEdge getRightProjectedGeoEdge(LaneInterval const &laneInterval)
+lane::GeoEdge getRightProjectedGeoEdge(LaneInterval const &lane_interval)
 {
-  point::GeoEdge geoEdge;
-  getRightProjectedEdge(laneInterval, geoEdge);
+  lane::GeoEdge geoEdge;
+  getRightProjectedEdge(lane_interval, geoEdge);
   return geoEdge;
 }
 
-point::ENUEdge getLeftProjectedENUEdge(LaneInterval const &laneInterval)
+lane::ENUEdge getLeftProjectedENUEdge(LaneInterval const &lane_interval)
 {
-  point::ENUEdge enuEdge;
-  getLeftProjectedEdge(laneInterval, enuEdge);
+  lane::ENUEdge enuEdge;
+  getLeftProjectedEdge(lane_interval, enuEdge);
   return enuEdge;
 }
 
-point::ECEFEdge getLeftProjectedECEFEdge(LaneInterval const &laneInterval)
+lane::ECEFEdge getLeftProjectedECEFEdge(LaneInterval const &lane_interval)
 {
-  point::ECEFEdge ecefEdge;
-  getLeftProjectedEdge(laneInterval, ecefEdge);
+  lane::ECEFEdge ecefEdge;
+  getLeftProjectedEdge(lane_interval, ecefEdge);
   return ecefEdge;
 }
 
-point::GeoEdge getLeftProjectedGeoEdge(LaneInterval const &laneInterval)
+lane::GeoEdge getLeftProjectedGeoEdge(LaneInterval const &lane_interval)
 {
-  point::GeoEdge geoEdge;
-  getLeftProjectedEdge(laneInterval, geoEdge);
+  lane::GeoEdge geoEdge;
+  getLeftProjectedEdge(lane_interval, geoEdge);
   return geoEdge;
 }
 
-lane::GeoBorder getGeoBorder(LaneInterval const &laneInterval)
+lane::GeoBorder getGeoBorder(LaneInterval const &lane_interval)
 {
   lane::GeoBorder geoBorder;
-  getLeftEdge(laneInterval, geoBorder.left);
-  getRightEdge(laneInterval, geoBorder.right);
+  getLeftEdge(lane_interval, geoBorder.left);
+  getRightEdge(lane_interval, geoBorder.right);
   return geoBorder;
 }
 
-lane::ECEFBorder getECEFBorder(LaneInterval const &laneInterval)
+lane::ECEFBorder getECEFBorder(LaneInterval const &lane_interval)
 {
   lane::ECEFBorder ecefBorder;
-  getLeftEdge(laneInterval, ecefBorder.left);
-  getRightEdge(laneInterval, ecefBorder.right);
+  getLeftEdge(lane_interval, ecefBorder.left);
+  getRightEdge(lane_interval, ecefBorder.right);
   return ecefBorder;
 }
 
-lane::ENUBorder getENUBorder(LaneInterval const &laneInterval)
+lane::ENUBorder getENUBorder(LaneInterval const &lane_interval)
 {
   lane::ENUBorder enuBorder;
-  getLeftEdge(laneInterval, enuBorder.left);
-  getRightEdge(laneInterval, enuBorder.right);
+  getLeftEdge(lane_interval, enuBorder.left);
+  getRightEdge(lane_interval, enuBorder.right);
   return enuBorder;
 }
 
-lane::ENUBorder getENUProjectedBorder(LaneInterval const &laneInterval)
+lane::ENUBorder getENUProjectedBorder(LaneInterval const &lane_interval)
 {
   lane::ENUBorder enuBorder;
-  getLeftProjectedEdge(laneInterval, enuBorder.left);
-  getRightProjectedEdge(laneInterval, enuBorder.right);
+  getLeftProjectedEdge(lane_interval, enuBorder.left);
+  getRightProjectedEdge(lane_interval, enuBorder.right);
   return enuBorder;
 }
 
-LaneInterval shortenIntervalFromBegin(LaneInterval const &laneInterval, physics::Distance const &distance)
+LaneInterval shortenIntervalFromBegin(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
-  LaneInterval result = laneInterval;
-  physics::ParametricValue delta(distance / lane::calcLength(laneInterval.laneId));
-  if (isRouteDirectionPositive(laneInterval))
+  LaneInterval result = lane_interval;
+  physics::ParametricValue delta(distance / lane::calcLength(lane_interval.lane_id));
+  if (isRouteDirectionPositive(lane_interval))
   {
-    result.start = std::min(laneInterval.start + delta, laneInterval.end);
+    result.start = std::min(lane_interval.start + delta, lane_interval.end);
   }
   else
   {
-    result.start = std::max(laneInterval.start - delta, laneInterval.end);
+    result.start = std::max(lane_interval.start - delta, lane_interval.end);
   }
   return result;
 }
 
-LaneInterval restrictIntervalFromBegin(LaneInterval const &laneInterval, physics::Distance const &distance)
+LaneInterval restrictIntervalFromBegin(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
-  LaneInterval result = laneInterval;
-  physics::ParametricValue delta(distance / lane::calcLength(laneInterval.laneId));
-  if (isRouteDirectionNegative(laneInterval))
+  LaneInterval result = lane_interval;
+  physics::ParametricValue delta(distance / lane::calcLength(lane_interval.lane_id));
+  if (isRouteDirectionNegative(lane_interval))
   {
-    result.end = std::max(physics::ParametricValue(0.), laneInterval.start - delta);
+    result.end = std::max(physics::ParametricValue(0.), lane_interval.start - delta);
   }
   else
   {
-    result.end = std::min(physics::ParametricValue(1.), laneInterval.start + delta);
+    result.end = std::min(physics::ParametricValue(1.), lane_interval.start + delta);
   }
 
   return result;
 }
 
-LaneInterval extendIntervalUntilEnd(LaneInterval const &laneInterval)
+LaneInterval extendIntervalUntilEnd(LaneInterval const &lane_interval)
 {
-  LaneInterval resultInterval = laneInterval;
+  LaneInterval resultInterval = lane_interval;
   if (isDegenerated(resultInterval))
   {
     // nothing to be done
@@ -452,66 +467,66 @@ LaneInterval extendIntervalUntilEnd(LaneInterval const &laneInterval)
   return resultInterval;
 }
 
-LaneInterval shortenIntervalFromEnd(LaneInterval const &laneInterval, physics::Distance const &distance)
+LaneInterval shortenIntervalFromEnd(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
-  LaneInterval result = laneInterval;
-  physics::ParametricValue delta(distance / lane::calcLength(laneInterval.laneId));
-  if (isRouteDirectionPositive(laneInterval))
+  LaneInterval result = lane_interval;
+  physics::ParametricValue delta(distance / lane::calcLength(lane_interval.lane_id));
+  if (isRouteDirectionPositive(lane_interval))
   {
-    result.end = std::max(laneInterval.end - delta, laneInterval.start);
+    result.end = std::max(lane_interval.end - delta, lane_interval.start);
   }
   else
   {
-    result.end = std::min(laneInterval.end + delta, laneInterval.start);
+    result.end = std::min(lane_interval.end + delta, lane_interval.start);
   }
   return result;
 }
 
-LaneInterval extendIntervalFromStart(LaneInterval const &laneInterval, physics::Distance const &distance)
+LaneInterval extendIntervalFromStart(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
-  if (isDegenerated(laneInterval))
+  if (isDegenerated(lane_interval))
   {
-    return laneInterval;
+    return lane_interval;
   }
 
-  LaneInterval resultInterval = laneInterval;
-  physics::ParametricValue offset(distance / lane::calcLength(laneInterval.laneId));
+  LaneInterval resultInterval = lane_interval;
+  physics::ParametricValue offset(distance / lane::calcLength(lane_interval.lane_id));
 
   if (isRouteDirectionPositive(resultInterval))
   {
-    resultInterval.start = std::max(physics::ParametricValue(0.0), laneInterval.start - offset);
+    resultInterval.start = std::max(physics::ParametricValue(0.0), lane_interval.start - offset);
   }
   else
   {
-    resultInterval.start = std::min(physics::ParametricValue(1.0), laneInterval.start + offset);
+    resultInterval.start = std::min(physics::ParametricValue(1.0), lane_interval.start + offset);
   }
   return resultInterval;
 }
 
-LaneInterval extendIntervalFromEnd(LaneInterval const &laneInterval, physics::Distance const &distance)
+LaneInterval extendIntervalFromEnd(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
-  if (isDegenerated(laneInterval))
+  if (isDegenerated(lane_interval))
   {
-    return laneInterval;
+    return lane_interval;
   }
 
-  LaneInterval resultInterval = laneInterval;
-  physics::ParametricValue offset(distance / lane::calcLength(laneInterval.laneId));
+  LaneInterval resultInterval = lane_interval;
+  physics::ParametricValue offset(distance / lane::calcLength(lane_interval.lane_id));
 
   if (isRouteDirectionPositive(resultInterval))
   {
-    resultInterval.end = std::min(physics::ParametricValue(1.0), laneInterval.end + offset);
+    resultInterval.end = std::min(physics::ParametricValue(1.0), lane_interval.end + offset);
   }
   else
   {
-    resultInterval.end = std::max(physics::ParametricValue(0.0), laneInterval.end - offset);
+    resultInterval.end = std::max(physics::ParametricValue(0.0), lane_interval.end - offset);
   }
   return resultInterval;
 }
 
-LaneInterval extendIntervalUntilStart(LaneInterval const &laneInterval)
+LaneInterval extendIntervalUntilStart(LaneInterval const &lane_interval)
 {
-  LaneInterval resultInterval = laneInterval;
+  LaneInterval resultInterval = lane_interval;
   if (isDegenerated(resultInterval))
   {
     // nothing to be done
@@ -527,59 +542,66 @@ LaneInterval extendIntervalUntilStart(LaneInterval const &laneInterval)
   return resultInterval;
 }
 
-LaneInterval cutIntervalAtStart(LaneInterval const &laneInterval, physics::ParametricValue const &newIntervalStart)
+LaneInterval cutIntervalAtStart(LaneInterval const &lane_interval, physics::ParametricValue const &newIntervalStart)
 {
-  LaneInterval result = laneInterval;
-  if (isWithinInterval(laneInterval, newIntervalStart))
+  LaneInterval result = lane_interval;
+  if (isWithinInterval(lane_interval, newIntervalStart))
   {
     result.start = newIntervalStart;
   }
   return result;
 }
 
-LaneInterval cutIntervalAtEnd(LaneInterval const &laneInterval, physics::ParametricValue const &newIntervalEnd)
+LaneInterval cutIntervalAtEnd(LaneInterval const &lane_interval, physics::ParametricValue const &newIntervalEnd)
 {
-  LaneInterval result = laneInterval;
-  if (isWithinInterval(laneInterval, newIntervalEnd))
+  LaneInterval result = lane_interval;
+  if (isWithinInterval(lane_interval, newIntervalEnd))
   {
     result.end = newIntervalEnd;
   }
   return result;
 }
 
-restriction::SpeedLimitList getSpeedLimits(LaneInterval const &laneInterval)
+restriction::SpeedLimitList getSpeedLimits(LaneInterval const &lane_interval)
 {
-  auto lanePtr = lane::getLanePtr(laneInterval.laneId);
-  return getSpeedLimits(*lanePtr, toParametricRange(laneInterval));
+  auto lanePtr = lane::getLanePtr(lane_interval.lane_id);
+  return getSpeedLimits(*lanePtr, toParametricRange(lane_interval));
 }
 
-void getMetricRanges(LaneInterval const &laneInterval,
-                     physics::MetricRange &lengthRange,
-                     physics::MetricRange &widthRange)
+void getMetricRanges(LaneInterval const &lane_interval,
+                     physics::MetricRange &length_range,
+                     physics::MetricRange &width_range)
 {
-  auto lanePtr = lane::getLanePtr(laneInterval.laneId);
-  if (std::fabs(laneInterval.end - laneInterval.start) == physics::ParametricValue(1.0))
+  auto lanePtr = lane::getLanePtr(lane_interval.lane_id);
+  if (std::fabs(lane_interval.end - lane_interval.start) == physics::ParametricValue(1.0))
   {
-    lengthRange = lanePtr->lengthRange;
-    widthRange = lanePtr->widthRange;
+    length_range = lanePtr->length_range;
+    width_range = lanePtr->width_range;
+  }
+  else if (std::fabs(lane_interval.end - lane_interval.start) == physics::ParametricValue(0.0))
+  {
+    length_range.minimum = physics::Distance(0.0);
+    length_range.maximum = physics::Distance(0.0);
+    width_range = lanePtr->width_range;
   }
   else
   {
-    auto const enuBorders = getENUProjectedBorder(laneInterval);
-    auto const leftLength = calcLength(enuBorders.left);
-    auto const rightLength = calcLength(enuBorders.right);
-    lengthRange.minimum = std::min(leftLength, rightLength);
-    lengthRange.maximum = std::max(leftLength, rightLength);
+    auto const enuBorders = getENUProjectedBorder(lane_interval);
+    auto const leftLength = calcLength(enuBorders.left.points);
+    auto const rightLength = calcLength(enuBorders.right.points);
+    length_range.minimum = std::min(leftLength, rightLength);
+    length_range.maximum = std::max(leftLength, rightLength);
 
-    if ((lanePtr->widthRange.maximum - lanePtr->widthRange.minimum) <= physics::Distance(.1))
-    {
-      widthRange = lanePtr->widthRange;
-    }
-    else
+    width_range = lanePtr->width_range;
+    if ((lanePtr->width_range.maximum - lanePtr->width_range.minimum) > physics::Distance(.1))
     {
       // take the effort on with range calculation only if there is significant difference within the lane
-      auto const widthRangeResult = calculateWidthRange(enuBorders.left, leftLength, enuBorders.right, rightLength);
-      widthRange = widthRangeResult.first;
+      auto const widthRangeResult
+        = calculateWidthRange(enuBorders.left.points, leftLength, enuBorders.right.points, rightLength);
+      if (physics::isRangeValid(widthRangeResult.first, false))
+      {
+        width_range = widthRangeResult.first;
+      }
     }
   }
 }

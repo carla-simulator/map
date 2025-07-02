@@ -34,7 +34,7 @@ struct GeometryOperationTest : ::testing::Test
 
 TEST_F(GeometryOperationTest, NearestPointOnEdge)
 {
-  ECEFEdge pts;
+  ECEFPointList pts;
   pts.push_back(createECEFPoint(2, 1, 0));
   pts.push_back(createECEFPoint(4, 1, 0));
   pts.push_back(createECEFPoint(6, 3, 0));
@@ -62,8 +62,8 @@ TEST_F(GeometryOperationTest, NearestPointOnEdge)
 
 TEST_F(GeometryOperationTest, Position)
 {
-  ECEFEdge edge_ecef1;
-  ECEFEdge edge_ecef2;
+  ECEFPointList edge_ecef1;
+  ECEFPointList edge_ecef2;
   Geometry geo1;
   Geometry geo2;
 
@@ -123,15 +123,15 @@ TEST_F(GeometryOperationTest, ParametricRange)
   physics::ParametricRange trange;
   trange.minimum = physics::ParametricValue(0.2);
   trange.maximum = physics::ParametricValue(0.8);
-  ECEFEdge edge_ecef1;
+  ECEFPointList edge_ecef1;
   edge_ecef1.push_back(createECEFPoint(1, 2, 3));
   edge_ecef1.push_back(createECEFPoint(2, 2, 3));
   edge_ecef1.push_back(createECEFPoint(3, 2, 3));
-  ECEFEdge edge_ecef2;
+  ECEFPointList edge_ecef2;
   Geometry geo1, geo2;
   geo1 = createGeometry(edge_ecef1, false);
 
-  ECEFEdge edge_ecef3;
+  ECEFPointList edge_ecef3;
   getParametricRange(geo1, trange, edge_ecef3, false);
   ASSERT_EQ(edge_ecef3.size(), 3u);
   ASSERT_EQ(edge_ecef3[0], createECEFPoint(1.4, 2, 3));
@@ -153,14 +153,6 @@ TEST_F(GeometryOperationTest, ParametricRange)
   edge_ecef1.push_back(createECEFPoint(30000, 200000, 300000));
   geo1 = createGeometry(edge_ecef1, false);
   getParametricRange(geo1, trange, edge_ecef3, false);
-  GeoEdge edge_geo1;
-  getParametricRange(geo1, trange, edge_geo1, false);
-  ASSERT_EQ(edge_geo1.size(), 3u);
-  GeoEdge edge_geo2;
-  edge_geo2 = toGeo(edge_ecef3);
-  ASSERT_EQ(edge_geo1[0], edge_geo2[0]);
-  ASSERT_EQ(edge_geo1[1], edge_geo2[1]);
-  ASSERT_EQ(edge_geo1[2], edge_geo2[2]);
 
   edge_ecef1.clear();
   edge_ecef2.clear();
@@ -170,12 +162,6 @@ TEST_F(GeometryOperationTest, ParametricRange)
   edge_ecef1.push_back(createECEFPoint(30000, 200000, 300000));
   geo1 = createGeometry(edge_ecef1, false);
   getParametricRange(geo1, trange, edge_ecef3, true);
-  getParametricRange(geo1, trange, edge_geo1, true);
-  ASSERT_EQ(edge_geo1.size(), 3u);
-  edge_geo2 = toGeo(edge_ecef3);
-  ASSERT_EQ(edge_geo1[0], edge_geo2[0]);
-  ASSERT_EQ(edge_geo1[1], edge_geo2[1]);
-  ASSERT_EQ(edge_geo1[2], edge_geo2[2]);
 
   edge_ecef1.clear();
   edge_ecef2.clear();
@@ -197,9 +183,9 @@ TEST_F(GeometryOperationTest, ParametricRange)
 TEST_F(GeometryOperationTest, ParametricRangeENU)
 {
   physics::ParametricRange trange;
-  ECEFEdge edge_ecef1, edge_ecef2;
+  ECEFPointList edge_ecef1, edge_ecef2;
   Geometry geome;
-  ENUEdge edge_enu;
+  ENUPointList edge_enu;
 
   trange.minimum = physics::ParametricValue(0.2);
   trange.maximum = physics::ParametricValue(0.8);

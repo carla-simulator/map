@@ -55,14 +55,18 @@ class MapSnappingTest(QgsMapToolEmitPoint):
         "..."
         self.layer.remove_all_features()
         raw_pt = self.toLayerCoordinates(self.layer.layer, event.pos())
-        pt_geo = ad.map.point.createGeoPoint(raw_pt.x(), raw_pt.y(), 0)
-        enu_pt = ad.map.point.toENU(pt_geo)
         mmpts = self.snapper.snap(raw_pt)
-        Globs.log.info("{} -> {}".format(pt_geo, enu_pt))
+
         if mmpts is not None:
             for mmpt in mmpts:
-                self.layer.add_ecef(mmpt.matchedPoint, [
-                                    int(mmpt.lanePoint.paraPoint.laneId), str(mmpt.type), float(mmpt.lanePoint.lateralT), float(mmpt.lanePoint.laneWidth), float(mmpt.lanePoint.laneLength), str(enu_pt)])
+                geo_pt = ad.map.point.toGeo(mmpt.matched_point)
+                enu_pt = ad.map.point.toENU(mmpt.matched_point)
+                Globs.log.info("Snapped to -> {},{}".format(geo_pt, enu_pt))
+                self.layer.add_ecef(mmpt.matched_point, [
+                                    mmpt.lane_point.para_point.lane_id.mLaneId, str(mmpt.type), mmpt.lane_point.lateral_t.mRatioValue, mmpt.lane_point.lane_width.mDistance, mmpt.lane_point.lane_length.mDistance, str(enu_pt)])
+        raw_geo = self.snapper.getGeoPointFromRaw(raw_pt)
+        raw_enu = ad.map.point.toENU(raw_geo)
+        Globs.log.info("Clicked Point {},{}".format(raw_geo, raw_enu))
         self.layer.refresh()
 
     def __create_layer__(self):

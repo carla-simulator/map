@@ -70,12 +70,12 @@ RouteAstar::RouteAstar(const RoutingParaPoint &start, const RoutingParaPoint &de
 
 void RouteAstar::initLanePointer()
 {
-  mDestLane = lane::getLanePtr(mDest.point.laneId);
+  mDestLane = lane::getLanePtr(mDest.point.lane_id);
   if (!mDestLane)
   {
     throw std::runtime_error("Dest lane not found!");
   }
-  mStartLane = lane::getLanePtr(mStart.point.laneId);
+  mStartLane = lane::getLanePtr(mStart.point.lane_id);
   if (!mStartLane)
   {
     throw std::runtime_error("Start lane not found!");
@@ -172,8 +172,8 @@ bool RouteAstar::calculate()
 
 physics::Distance RouteAstar::costEstimate(lane::Lane::ConstPtr neighborLane, point::ParaPoint const &neighbor)
 {
-  point::ECEFPoint pt_a = getParametricPoint(*neighborLane, neighbor.parametricOffset, physics::ParametricValue(0.5));
-  point::ECEFPoint pt_b = getParametricPoint(*mDestLane, getDest().parametricOffset, physics::ParametricValue(0.5));
+  point::ECEFPoint pt_a = getParametricPoint(*neighborLane, neighbor.parametric_offset, physics::ParametricValue(0.5));
+  point::ECEFPoint pt_b = getParametricPoint(*mDestLane, getDest().parametric_offset, physics::ParametricValue(0.5));
   physics::Distance d = distance(pt_a, pt_b);
   return d;
 }

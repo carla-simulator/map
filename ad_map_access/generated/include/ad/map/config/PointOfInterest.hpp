@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -101,7 +101,7 @@ struct PointOfInterest
    */
   bool operator==(const PointOfInterest &other) const
   {
-    return (geoPoint == other.geoPoint) && (name == other.name);
+    return (geo_point == other.geo_point) && (name == other.name);
   }
 
   /**
@@ -119,7 +119,7 @@ struct PointOfInterest
   /*!
    * The geo position of the point
    */
-  ::ad::map::point::GeoPoint geoPoint;
+  ::ad::map::point::GeoPoint geo_point;
 
   /*!
    * The name of the point of interest.
@@ -163,8 +163,8 @@ namespace config {
 inline std::ostream &operator<<(std::ostream &os, PointOfInterest const &_value)
 {
   os << "PointOfInterest(";
-  os << "geoPoint:";
-  os << _value.geoPoint;
+  os << "geo_point:";
+  os << _value.geo_point;
   os << ",";
   os << "name:";
   os << _value.name;
@@ -187,4 +187,16 @@ inline std::string to_string(::ad::map::config::PointOfInterest const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::config::PointOfInterest> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::config::PointOfInterest const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_CONFIG_POINTOFINTEREST

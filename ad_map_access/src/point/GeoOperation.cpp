@@ -16,11 +16,30 @@ namespace point {
 
 Altitude const AltitudeUnknown = ::ad::map::point::Altitude::getMin();
 
+struct CartesianCoordinate
+{
+  CartesianCoordinate(double const &value = 0.)
+    : coordinate(value)
+  {
+  }
+  double toBaseType() const
+  {
+    return coordinate;
+  }
+  operator double() const
+  {
+    return coordinate;
+  }
+
+  double coordinate;
+};
+
 struct CartesianCoordinates
 {
-  double x;
-  double y;
-  double z;
+  CartesianCoordinates() = default;
+  CartesianCoordinate x;
+  CartesianCoordinate y;
+  CartesianCoordinate z;
 };
 
 /**
@@ -28,7 +47,7 @@ struct CartesianCoordinates
  */
 CartesianCoordinates toCartesianCoordinates(GeoPoint const &point)
 {
-  double wgs84_r = static_cast<double>(CoordinateTransform::WGS84_R(point.latitude));
+  double wgs84_r = CoordinateTransform::WGS84_R(point.latitude).mDistance;
   double lat_rad = CoordinateTransform::geocentricLatitude(point.latitude);
   double lon_rad = toRadians(point.longitude);
 
@@ -44,9 +63,9 @@ CartesianCoordinates toCartesianCoordinates(GeoPoint const &point)
   double cos_glat = std::cos(toRadians(point.latitude));
   double sin_glat = std::sin(toRadians(point.latitude));
 
-  result.x += static_cast<double>(point.altitude) * cos_glat * cos_lon;
-  result.y += static_cast<double>(point.altitude) * cos_glat * sin_lon;
-  result.z += static_cast<double>(point.altitude) * sin_glat;
+  result.x = result.x + point.altitude.mAltitude * cos_glat * cos_lon;
+  result.y = result.y + point.altitude.mAltitude * cos_glat * sin_lon;
+  result.z = result.z + point.altitude.mAltitude * sin_glat;
 
   return result;
 }
@@ -71,7 +90,7 @@ physics::Distance flatDistance(GeoPoint const &point, GeoPoint const &other)
   return distance(zeroAltitude(point), zeroAltitude(other));
 }
 
-GeoPoint approxAltitude(GeoPoint const &point, const GeoEdge &pts)
+GeoPoint approxAltitude(GeoPoint const &point, const GeoPointList &pts)
 {
   GeoPoint pt(zeroAltitude(point));
   if (pts.size() == 0)
@@ -148,17 +167,17 @@ bool isOnTheLeft(GeoPoint const &point, const GeoPoint &pt0, const GeoPoint &pt1
   }
   else
   {
-    auto const slope = physics::RatioValue(static_cast<double>(pt1.latitude - pt0.latitude)
-                                           / static_cast<double>(pt1.longitude - pt0.longitude));
+    auto const slope
+      = physics::RatioValue((pt1.latitude - pt0.latitude).mLatitude / (pt1.longitude - pt0.longitude).mLongitude);
     if (slope != physics::RatioValue(0.))
     {
-      double yi = static_cast<double>(pt0.latitude) - static_cast<double>(pt0.longitude) * static_cast<double>(slope);
-      double cs = (static_cast<double>(slope) * static_cast<double>(point.longitude)) + yi;
-      if (static_cast<double>(point.latitude) > cs)
+      double yi = pt0.latitude.mLatitude - pt0.longitude.mLongitude * slope.mRatioValue;
+      double cs = (slope.mRatioValue * point.longitude.mLongitude) + yi;
+      if (point.latitude.mLatitude > cs)
       {
         return pt1.longitude > pt0.longitude;
       }
-      if (static_cast<double>(point.latitude) < cs)
+      if (point.latitude.mLatitude < cs)
       {
         return pt1.longitude < pt0.longitude;
       }
@@ -167,7 +186,7 @@ bool isOnTheLeft(GeoPoint const &point, const GeoPoint &pt0, const GeoPoint &pt1
   return false;
 }
 
-bool haveSameOrientation(const GeoEdge &pts0, const GeoEdge &pts1)
+bool haveSameOrientation(const GeoPointList &pts0, const GeoPointList &pts1)
 {
   if (pts0.size() > 1 && pts1.size() > 1)
   {
@@ -181,7 +200,7 @@ bool haveSameOrientation(const GeoEdge &pts0, const GeoEdge &pts1)
   }
 }
 
-bool isOnTheLeft(const GeoEdge &pts0, const GeoEdge &pts1)
+bool isOnTheLeft(const GeoPointList &pts0, const GeoPointList &pts1)
 {
   if (pts0.size() > 1 && pts1.size() > 1)
   {
@@ -193,9 +212,9 @@ bool isOnTheLeft(const GeoEdge &pts0, const GeoEdge &pts1)
   }
 }
 
-physics::Distance calcLength(GeoEdge const &edge)
+physics::Distance calcLength(GeoPointList const &pts)
 {
-  return calculateEdgeLength(edge);
+  return calculateEdgeLength(pts);
 }
 
 } // namespace point

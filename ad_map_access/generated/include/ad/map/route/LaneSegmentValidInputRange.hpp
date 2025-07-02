@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -40,9 +40,9 @@ inline bool withinValidInputRange(::ad::map::route::LaneSegment const &input, bo
 {
   // check for generic member input ranges
   bool inValidInputRange = true;
-  inValidInputRange = withinValidInputRange(input.leftNeighbor, logErrors)
-    && withinValidInputRange(input.rightNeighbor, logErrors) && withinValidInputRange(input.predecessors, logErrors)
-    && withinValidInputRange(input.successors, logErrors) && withinValidInputRange(input.laneInterval, logErrors);
+  inValidInputRange = withinValidInputRange(input.left_neighbor, logErrors)
+    && withinValidInputRange(input.right_neighbor, logErrors) && withinValidInputRange(input.predecessors, logErrors)
+    && withinValidInputRange(input.successors, logErrors) && withinValidInputRange(input.lane_interval, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::route::LaneSegment)>> {} has invalid member",

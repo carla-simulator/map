@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include "ad/map/lane/ECEFEdgeValidInputRange.hpp"
+#include "ad/map/lane/ENUEdgeValidInputRange.hpp"
+#include "ad/map/lane/GeoEdgeValidInputRange.hpp"
 #include "ad/map/lane/LaneIdValidInputRange.hpp"
 #include "ad/map/lane/LaneValidInputRange.hpp"
 #include "ad/map/lane/Types.hpp"
@@ -30,11 +33,11 @@ namespace lane {
 /**
  * @brief checks if the given LaneId is valid
  *
- * The laneId is valid if it's within valid input range.
+ * The lane_id is valid if it's within valid input range.
  */
-inline bool isValid(LaneId const &laneId, bool const logErrors = true)
+inline bool isValid(LaneId const &lane_id, bool const logErrors = true)
 {
-  return withinValidInputRange(laneId, logErrors);
+  return withinValidInputRange(lane_id, logErrors);
 }
 
 /**
@@ -75,9 +78,9 @@ LaneIdList getLanes();
 point::ECEFHeading getLaneECEFHeading(match::MapMatchedPosition const &mapMatchedPosition);
 
 /**
- * @return lane heading at a paraPoint
+ * @return lane heading at a para_point
  */
-point::ECEFHeading getLaneECEFHeading(point::ParaPoint const &paraPoint);
+point::ECEFHeading getLaneECEFHeading(point::ParaPoint const &para_point);
 
 /**
  * @return lane heading at a mapMatchedPosition
@@ -85,9 +88,9 @@ point::ECEFHeading getLaneECEFHeading(point::ParaPoint const &paraPoint);
 point::ENUHeading getLaneENUHeading(match::MapMatchedPosition const &mapMatchedPosition);
 
 /**
- * @return lane heading at a paraPoint with given gnssReference
+ * @return lane heading at a para_point with given gnssReference
  */
-point::ENUHeading getLaneENUHeading(point::ParaPoint const &paraPoint, point::GeoPoint const &gnssReference);
+point::ENUHeading getLaneENUHeading(point::ParaPoint const &para_point, point::GeoPoint const &gnssReference);
 
 /**
  * @return lane id at given location
@@ -117,12 +120,12 @@ inline bool isAccessOk(Lane const &lane, restriction::VehicleDescriptor const &v
 /**
  * @brief Checks if given sphere intersects with lane bounding ball.
  * @param[in] lane the lane.
- * @param[in] boundingSphere input sphere
+ * @param[in] bounding_sphere input sphere
  * @returns true given sphere intersects with lane bounding ball.
  */
-inline bool isNear(Lane const &lane, point::BoundingSphere const &boundingSphere)
+inline bool isNear(Lane const &lane, point::BoundingSphere const &bounding_sphere)
 {
-  return distance(lane.boundingSphere, boundingSphere) == physics::Distance(0.);
+  return distance(lane.bounding_sphere, bounding_sphere) == physics::Distance(0.);
 }
 
 /**
@@ -160,6 +163,7 @@ inline restriction::PassengerCount getHOV(Lane const &lane)
  * @brief Find contact lanes at specific relative location.
  * @param[in] lane the lane.
  * @param[in] location Location of interest.
+ *
  * @returns Contacts to lane at specified location.
  */
 ContactLaneList getContactLanes(Lane const &lane, ContactLocation const &location);
@@ -167,16 +171,54 @@ ContactLaneList getContactLanes(Lane const &lane, ContactLocation const &locatio
 /**
  * @brief Find contact lanes at specific relative locations.
  * @param[in] locations Locations of interest.
+ *
  * @returns Contacts to lanes at specified locations.
  */
 ContactLaneList getContactLanes(Lane const &lane, ContactLocationList const &locations);
 
 /**
  * @brief Check nature of contact between this lane and another lane.
- * @param[in] to_lane_id Another lane identifier.
- * @returns Type of the contact. Can be INVALID if there is no contact between lanes.
+ * @param[in] toLaneId Another lane identifier.
+ *
+ * @returns The location of the contact. Can be INVALID if there is no contact between lanes.
  */
-ContactLocation getContactLocation(Lane const &lane, LaneId const &to_lane_id);
+ContactLocation getContactLocation(Lane const &lane, LaneId const &toLaneId);
+
+/**
+ * @brief Check nature of contact between this lane and another lane.
+ *
+ * @param[in] lane the lane.
+ * @param[in] toLaneId Another lane identifier.
+ *
+ * @returns Contacts to lanes at specified lane id.
+ */
+ContactLaneList getContactLane(Lane const &lane, LaneId const &toLaneId);
+
+/**
+ * @brief Method to be called to change a secific contact type of a lane.
+ *     All contact occurences of the given old_contact type are replaced by
+ *     the given new_contact type
+ * @param[in] from_lane_id From-Lane Identifier.
+ * @param[in] to_lane_id  Identifier of lane to which connection is leading.
+ * @param[in] old_contact The original contact type to be replaced.
+ * @param[in] new_contact The new contact type to be set.
+ *
+ * @returns \c true if the operation succeeeded.
+ */
+bool switchLaneContact(LaneId const &from_lane_id,
+                       LaneId const &to_lane_id,
+                       ContactType const &old_contact,
+                       ContactType const &new_contact);
+
+/**
+ * @brief Method to be called to correct lane borders
+ *
+ * @param[in] from_lane_id From-Lane Identifier. That's the lane the borders are actually corrected.
+ * @param[in] to_lane_id  Identifier of lane to which (predecessor/successor) connection should be leading.
+ *
+ * @returns \c true if the operation succeeeded.
+ */
+bool correctLaneBorder(LaneId const &from_lane_id, LaneId const &to_lane_id);
 
 /**
  * @returns true if direction is POSITIVE or BIDIRECTIONAL.
@@ -327,7 +369,7 @@ bool satisfiesFilter(Lane const &lane, std::string const &typeFilter, bool isHov
 /**
  * @brief get the neighborhood relation to the other lane
  *
- * @param[in] laneId the main lane
+ * @param[in] lane_id the main lane
  * @param[in] checkLaneId the lane to be checked on the
  *
  * @retval lane::ContactLocation::OVERLAP: if it's the same lane
@@ -337,17 +379,17 @@ bool satisfiesFilter(Lane const &lane, std::string const &typeFilter, bool isHov
  * @retval lane::ContactLocation::PREDECESSOR: if it's a predecessor lane
  * @retval lane::ContactLocation::INVALID: if it's nothing of the above
  */
-ContactLocation getDirectNeighborhoodRelation(LaneId const laneId, LaneId const checkLaneId);
+ContactLocation getDirectNeighborhoodRelation(LaneId const lane_id, LaneId const checkLaneId);
 
 /**
  * @brief Check if a lane is successor or predecessor of a lane
  *
- * @param[in] laneId the main lane
+ * @param[in] lane_id the main lane
  * @param[in] checkLaneId the lane to be checked if it's a successor or predecessor of the main lane
  *
- * @returns \c true if the \a checkLaneId is a successor or predecessor of \a laneId
+ * @returns \c true if the \a checkLaneId is a successor or predecessor of \a lane_id
  */
-bool isSuccessorOrPredecessor(LaneId const laneId, LaneId const checkLaneId);
+bool isSuccessorOrPredecessor(LaneId const lane_id, LaneId const checkLaneId);
 
 /**
  * @brief Check if two lanes are direct neighbors of even the same
@@ -359,30 +401,30 @@ bool isSameOrDirectNeighbor(LaneId const id, LaneId const neighbor);
 /**
  * @brief Check if the lane direction is positive
  *
- * @param[in] laneId the id of the lane to be checked
+ * @param[in] lane_id the id of the lane to be checked
  *
  * @returns true if the lane direction is positive (positive || bidirectional)
  */
-bool isLaneDirectionPositive(LaneId const &laneId);
+bool isLaneDirectionPositive(LaneId const &lane_id);
 
 /**
  * @brief Check if the lane direction is negative
  *
- * @param[in] laneId the id of the lane to be checked
+ * @param[in] lane_id the id of the lane to be checked
  *
  * @returns true if the lane direction is negative (negative || bidirectional)
  */
-bool isLaneDirectionNegative(LaneId const &laneId);
+bool isLaneDirectionNegative(LaneId const &lane_id);
 
 /**
  * @brief Get the distance of an object to the lane boundaries
  *
  * If the object provides a map matched bounding box, this information is used first (speed-up and more accurate).
- * If the object's map matched bounding box is not touching the \c laneId at all, the object's center distance to the
+ * If the object's map matched bounding box is not touching the \c lane_id at all, the object's center distance to the
  * lane is calculated and reduced by max(width, length)/2 to obtain a good estimate for the shortest distance to the
  * lane.
  */
-physics::Distance getDistanceToLane(LaneId laneId, match::Object const &object);
+physics::Distance getDistanceToLane(LaneId lane_id, match::Object const &object);
 
 /**
  * @return the ENU heading of the lane at the given position
@@ -418,7 +460,7 @@ bool projectPositionToLaneInHeadingDirection(point::ParaPoint const &position,
  * @param[in] lane the lane.
  * @param[in] pt Given point.
  * @param[out] mmpos Resulting map-matched position.
- *   The resulting probability of the map matched position is derived from lateralT value:
+ *   The resulting probability of the map matched position is derived from lateral_t value:
  *     spans between [0.5; 1.0] for LANE_IN matches
  *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches
  *
@@ -427,17 +469,30 @@ bool projectPositionToLaneInHeadingDirection(point::ParaPoint const &position,
 bool findNearestPointOnLane(Lane const &lane, point::ECEFPoint const &pt, match::MapMatchedPosition &mmpos);
 
 /**
- * @brief Finds point on the lane interval nearest to the given point.
- * @param[in] laneInterval the interval of the lane to be considered.
- * @param[in] pt Given point.
+ * @brief Finds point on the lane nearest to the given point considering only the x,y components of the ENUPoint
+ * @param[in] lane the lane.
+ * @param[in] pt Given point (z-coordinate is ignored on the operation).
  * @param[out] mmpos Resulting map-matched position.
- *   The resulting probability of the map matched position is derived from lateralT value:
+ *   The resulting probability of the map matched position is derived from lateral_t value:
  *     spans between [0.5; 1.0] for LANE_IN matches
  *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches
  *
  * @returns true if successful.
  */
-bool findNearestPointOnLaneInterval(route::LaneInterval const &laneInterval,
+bool findNearestPointOnLaneIgnoreZ(Lane const &lane, point::ENUPoint const &pt, match::MapMatchedPosition &mmpos);
+
+/**
+ * @brief Finds point on the lane interval nearest to the given point.
+ * @param[in] lane_interval the interval of the lane to be considered.
+ * @param[in] pt Given point.
+ * @param[out] mmpos Resulting map-matched position.
+ *   The resulting probability of the map matched position is derived from lateral_t value:
+ *     spans between [0.5; 1.0] for LANE_IN matches
+ *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches
+ *
+ * @returns true if successful.
+ */
+bool findNearestPointOnLaneInterval(route::LaneInterval const &lane_interval,
                                     point::ECEFPoint const &pt,
                                     match::MapMatchedPosition &mmpos);
 
@@ -450,19 +505,19 @@ point::ENUPoint getENULanePoint(point::ParaPoint const parametricPoint,
 
 /** @brief calculate length of a lane with a given id
  */
-physics::Distance calcLength(LaneId const &laneId);
+physics::Distance calcLength(LaneId const &lane_id);
 
 /** @brief calculate length of a lane occupied region
  */
 physics::Distance calcLength(match::LaneOccupiedRegion const &laneOccupiedRegion);
 
-/** @brief calculate the width of the lane at the provided lanePoint
+/** @brief calculate the width of the lane at the provided lane_point
  */
-physics::Distance calcWidth(point::ParaPoint const &paraPoint);
+physics::Distance calcWidth(point::ParaPoint const &para_point);
 
 /** @brief calculate the width of the provided lane at the provided longitudinal position
  */
-physics::Distance calcWidth(LaneId const &laneId, physics::ParametricValue const &longOffset);
+physics::Distance calcWidth(LaneId const &lane_id, physics::ParametricValue const &longOffset);
 
 /**
  * @brief calculate the width of a lane at the provided ENU position
@@ -475,6 +530,13 @@ physics::Distance calcWidth(point::ENUPoint const &enuPoint);
  *  scales the with at the center of the occupied region by the lateral extend of the region
  */
 physics::Distance calcWidth(match::LaneOccupiedRegion const &laneOccupiedRegion);
+
+/**
+ * @brief Checks if the lane_id is relevant for expansion given the set of relevant lanes.
+ *
+ * @returns \c true if the \a relevantLanes set is empty, or if the lane_id can be found in the set of \a relevantLanes.
+ */
+bool isLaneRelevantForExpansion(lane::LaneId const &lane_id, lane::LaneIdSet const &relevantLanes);
 
 /**
  * @brief Struct to hold the altitude range of a lane
@@ -491,13 +553,6 @@ struct LaneAltitudeRange
  * @returns The range of the lanes altitude
  */
 LaneAltitudeRange calcLaneAltitudeRange(Lane const &lane);
-
-/**
- * @brief Checks if the laneId is relevant for expansion given the set of relevant lanes.
- *
- * @returns \c true if the \a relevantLanes set is empty, or if the laneId can be found in the set of \a relevantLanes.
- */
-bool isLaneRelevantForExpansion(lane::LaneId const &laneId, lane::LaneIdSet const &relevantLanes);
 
 } // namespace lane
 } // namespace map

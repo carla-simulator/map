@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -49,17 +49,19 @@ namespace point {
  * \brief Enable/Disable explicit conversion. Currently set to "only explicit conversion".
  */
 #define _AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION_ explicit
+#define _AD_MAP_POINT_ENUCOORDINATE_OPERATOR_BASE_TYPE_ 0
 #else
 /*!
  * \brief Enable/Disable explicit conversion. Currently set to "implicit conversion allowed".
  */
 #define _AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION_
+#define _AD_MAP_POINT_ENUCOORDINATE_OPERATOR_BASE_TYPE_ 1
 #endif
 
 /*!
  * \brief DataType ENUCoordinate
  *
- * Maximum ENU coordinate (16 km): 16384
+ * Maximum ENU coordinate: 1e8m (100000 km)
  * The unit is: Meter
  */
 class ENUCoordinate
@@ -234,8 +236,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    ENUCoordinate const result(mENUCoordinate + other.mENUCoordinate);
-    result.ensureValid();
+    ENUCoordinate result(mENUCoordinate + other.mENUCoordinate);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -254,7 +256,7 @@ public:
     ensureValid();
     other.ensureValid();
     mENUCoordinate += other.mENUCoordinate;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -272,8 +274,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    ENUCoordinate const result(mENUCoordinate - other.mENUCoordinate);
-    result.ensureValid();
+    ENUCoordinate result(mENUCoordinate - other.mENUCoordinate);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -292,7 +294,7 @@ public:
     ensureValid();
     other.ensureValid();
     mENUCoordinate -= other.mENUCoordinate;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -309,8 +311,8 @@ public:
   ENUCoordinate operator*(const double &scalar) const
   {
     ensureValid();
-    ENUCoordinate const result(mENUCoordinate * scalar);
-    result.ensureValid();
+    ENUCoordinate result(mENUCoordinate * scalar);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -327,8 +329,8 @@ public:
   ENUCoordinate operator/(const double &scalar) const
   {
     ENUCoordinate const scalarENUCoordinate(scalar);
-    ENUCoordinate const result(operator/(scalarENUCoordinate));
-    result.ensureValid();
+    ENUCoordinate result(operator/(scalarENUCoordinate));
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -362,8 +364,8 @@ public:
   ENUCoordinate operator-() const
   {
     ensureValid();
-    ENUCoordinate const result(-mENUCoordinate);
-    result.ensureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
+    ENUCoordinate result(-mENUCoordinate);
+    result.restrictToLimitsAndEnsureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
     return result;
   }
 
@@ -371,12 +373,35 @@ public:
    * \brief conversion to base type: double
    *
    * \note the conversion to the base type removes the physical unit.
-   *       \ref \_AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.
    */
-  _AD_MAP_POINT_ENUCOORDINATE_EXPLICIT_CONVERSION_ operator double() const
+  double toBaseType() const
   {
     return mENUCoordinate;
   }
+
+  /*!
+   * \returns \c true if the ENUCoordinate is a normal value
+   *
+   * An ENUCoordinate value is defined to be normal if:
+   * - It is normal or zero (see std::fpclassify())
+   */
+  bool isNormal() const
+  {
+    auto const valueClass = std::fpclassify(mENUCoordinate);
+    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO));
+  }
+
+#if _AD_MAP_POINT_ENUCOORDINATE_OPERATOR_BASE_TYPE_
+  /*!
+   * \brief conversion to base type: double
+   *
+   * \note the conversion to the base type removes the physical unit.
+   */
+  operator double() const
+  {
+    return mENUCoordinate;
+  }
+#endif
 
   /*!
    * \returns \c true if the ENUCoordinate in a valid range
@@ -387,9 +412,7 @@ public:
    */
   bool isValid() const
   {
-    auto const valueClass = std::fpclassify(mENUCoordinate);
-    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) && (cMinValue <= mENUCoordinate)
-      && (mENUCoordinate <= cMaxValue);
+    return isNormal() && (cMinValue <= mENUCoordinate) && (mENUCoordinate <= cMaxValue);
   }
 
   /*!
@@ -402,7 +425,8 @@ public:
   {
     if (!isValid())
     {
-      spdlog::info("ensureValid(::ad::map::point::ENUCoordinate)>> {} value out of range", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::map::point::ENUCoordinate)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_MAP_POINT_ENUCOORDINATE_THROWS_EXCEPTION == 1)
       throw std::out_of_range("ENUCoordinate value out of range"); // LCOV_EXCL_BR_LINE
 #endif
@@ -420,9 +444,53 @@ public:
     ensureValid();
     if (operator==(ENUCoordinate(0.))) // LCOV_EXCL_BR_LINE
     {
-      spdlog::info("ensureValid(::ad::map::point::ENUCoordinate)>> {} value is zero", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::map::point::ENUCoordinate)>> {} value is zero",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_MAP_POINT_ENUCOORDINATE_THROWS_EXCEPTION == 1)
       throw std::out_of_range("ENUCoordinate value is zero"); // LCOV_EXCL_BR_LINE
+#endif
+    }
+  }
+
+  /**
+   * @brief if possible restrict the ENUCoordinate to it's defined limits
+   *
+   * If the ENUCoordinate isNormal(), but exceeds the defined limits, it is restricted to its limits.
+   * If ENUCoordinate::isNormal() returns \c false an std::out_of_range() exception is thrown.
+   * - not isNormal(): std::out_of_range() exception is thrown
+   * - \ref cMinValue <= value <= \ref cMaxValue: nothing is done
+   * - value < \ref cMinValue: resulting value = cMinValue
+   * - value > \ref cMaxValue: resulting value = cMaxValue
+   */
+  void restrictToLimitsAndEnsureValid()
+  {
+    if (isNormal())
+    {
+      if (mENUCoordinate < cMinValue)
+      {
+        // mitigate exceeding the minimum
+        spdlog::info("restrictToLimits(::ad::map::point::ENUCoordinate)>> {} value is smaller than allowed minimum {}. "
+                     "Restrict to minimum value.",
+                     *this,
+                     getMin()); // LCOV_EXCL_BR_LINE
+        mENUCoordinate = cMinValue;
+      }
+      else if (mENUCoordinate > cMaxValue)
+      {
+        // mitigate exceeding the maximum
+        spdlog::info("restrictToLimits(::ad::map::point::ENUCoordinate)>> {} value is larger than allowed maximum {}. "
+                     "Restrict to maximum value.",
+                     *this,
+                     getMax()); // LCOV_EXCL_BR_LINE
+        mENUCoordinate = cMaxValue;
+      }
+    }
+    else
+    {
+      spdlog::info("restrictToLimits(::ad::map::point::ENUCoordinate)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
+#if (AD_MAP_POINT_ENUCOORDINATE_THROWS_EXCEPTION == 1)
+      throw std::out_of_range("ENUCoordinate value out of range"); // LCOV_EXCL_BR_LINE
 #endif
     }
   }
@@ -451,7 +519,6 @@ public:
     return ENUCoordinate(cPrecisionValue);
   }
 
-private:
   /*!
    * \brief the actual value of the type
    */
@@ -487,7 +554,7 @@ namespace std {
  */
 inline ::ad::map::point::ENUCoordinate fabs(const ::ad::map::point::ENUCoordinate other)
 {
-  ::ad::map::point::ENUCoordinate const result(std::fabs(static_cast<double>(other)));
+  ::ad::map::point::ENUCoordinate const result(std::fabs(other.mENUCoordinate));
   return result;
 }
 
@@ -559,7 +626,7 @@ namespace point {
  */
 inline std::ostream &operator<<(std::ostream &os, ENUCoordinate const &_value)
 {
-  return os << double(_value);
+  return os << _value.mENUCoordinate;
 }
 
 } // namespace point
@@ -572,7 +639,19 @@ namespace std {
  */
 inline std::string to_string(::ad::map::point::ENUCoordinate const &value)
 {
-  return to_string(static_cast<double>(value));
+  return to_string(value.mENUCoordinate);
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::point::ENUCoordinate> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::point::ENUCoordinate const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_POINT_ENUCOORDINATE

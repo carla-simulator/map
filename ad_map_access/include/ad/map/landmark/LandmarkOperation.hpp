@@ -36,11 +36,11 @@ inline bool isValid(Landmark const &landmark, bool const logErrors = true)
 /**
  * @brief checks if the given LandmarkId is valid
  *
- * The landmarkId is valid if it's within valid input range.
+ * The landmark_id is valid if it's within valid input range.
  */
-inline bool isValid(LandmarkId const &landmarkId, bool const logErrors = true)
+inline bool isValid(LandmarkId const &landmark_id, bool const logErrors = true)
 {
-  return withinValidInputRange(landmarkId, logErrors);
+  return withinValidInputRange(landmark_id, logErrors);
 }
 
 /**
@@ -79,34 +79,34 @@ ENULandmark getENULandmark(LandmarkId const &id);
 
 /**
  * @brief Method to be called to retrieve all the visible landmarks from the given lane
- * @param[in] laneId the lane the landmarks refer to
+ * @param[in] lane_id the lane the landmarks refer to
  * @returns Landmarks visible from given lane.
  */
-LandmarkIdList getVisibleLandmarks(lane::LaneId const &laneId);
+LandmarkIdList getVisibleLandmarks(lane::LaneId const &lane_id);
 
 /**
  * @brief Method to be called to retrieve all the visible landmarks of type landmarkType from the given lane
  * @param[in] landmarkType Landmark type desired.
- * @param[in] laneId the lane the landmarks refer to
+ * @param[in] lane_id the lane the landmarks refer to
  * @returns Landmarks of landmarkType visible from given lane.
  */
-LandmarkIdList getVisibleLandmarks(LandmarkType const &landmarkType, lane::LaneId const &laneId);
+LandmarkIdList getVisibleLandmarks(LandmarkType const &landmarkType, lane::LaneId const &lane_id);
 
 /**
  * @brief Method to be called to search the nearest landmarkid given the geo point
  * @param[in] The geo point given
  * @returns returns search result of Landmarkid from given geo point.
  */
-LandmarkId uniqueLandmarkId(point::GeoPoint const &geoPoint);
+LandmarkId uniqueLandmarkId(point::GeoPoint const &geo_point);
 
 /**
  * @brief Method to be called to retrieve all the visible traffic lights from the given lane
- * @param[in] laneId the lane the landmarks refer to
+ * @param[in] lane_id the lane the landmarks refer to
  * @returns Traffic light landmarks visible from given lane.
  */
-inline LandmarkIdList getVisibleTrafficLights(lane::LaneId const &laneId)
+inline LandmarkIdList getVisibleTrafficLights(lane::LaneId const &lane_id)
 {
-  return getVisibleLandmarks(landmark::LandmarkType::TRAFFIC_LIGHT, laneId);
+  return getVisibleLandmarks(landmark::LandmarkType::TRAFFIC_LIGHT, lane_id);
 }
 
 } // namespace landmark

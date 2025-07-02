@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -31,13 +31,13 @@ TEST(SpeedSquaredTests, defaultConstructionIsInvalid)
 TEST(SpeedSquaredTests, minIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(-1e6, ::ad::physics::SpeedSquared::cMinValue);
-  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMinValue, static_cast<double>(::ad::physics::SpeedSquared::getMin()));
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMinValue, ::ad::physics::SpeedSquared::getMin().mSpeedSquared);
 }
 
 TEST(SpeedSquaredTests, maxIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(1e6, ::ad::physics::SpeedSquared::cMaxValue);
-  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMaxValue, static_cast<double>(::ad::physics::SpeedSquared::getMax()));
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMaxValue, ::ad::physics::SpeedSquared::getMax().mSpeedSquared);
 }
 
 TEST(SpeedSquaredTests, precisionIsDefinedAsExpected)
@@ -45,7 +45,7 @@ TEST(SpeedSquaredTests, precisionIsDefinedAsExpected)
   EXPECT_LT(0., ::ad::physics::SpeedSquared::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-6, ::ad::physics::SpeedSquared::cPrecisionValue);
   EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cPrecisionValue,
-                   static_cast<double>(::ad::physics::SpeedSquared::getPrecision()));
+                   ::ad::physics::SpeedSquared::getPrecision().mSpeedSquared);
 }
 
 TEST(SpeedSquaredTests, minIsValid)
@@ -104,39 +104,36 @@ TEST(SpeedSquaredTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(SpeedSquaredTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::SpeedSquared::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::SpeedSquared>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::getMin().mSpeedSquared,
+                   std::numeric_limits<::ad::physics::SpeedSquared>::lowest().mSpeedSquared);
 }
 
 TEST(SpeedSquaredTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::SpeedSquared::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::SpeedSquared>::max()));
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::getMax().mSpeedSquared,
+                   std::numeric_limits<::ad::physics::SpeedSquared>::max().mSpeedSquared);
 }
 
 TEST(SpeedSquaredTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::SpeedSquared::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::SpeedSquared>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::getPrecision().mSpeedSquared,
+                   std::numeric_limits<::ad::physics::SpeedSquared>::epsilon().mSpeedSquared);
 }
 
 TEST(SpeedSquaredTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-1.))));
-  EXPECT_DOUBLE_EQ(
-    ::ad::physics::SpeedSquared::cPrecisionValue,
-    static_cast<double>(std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::physics::SpeedSquared(-0.)).mSpeedSquared);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::physics::SpeedSquared(-1.)).mSpeedSquared);
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cPrecisionValue,
+                   std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cPrecisionValue).mSpeedSquared));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::SpeedSquared::cMinValue),
-                   static_cast<double>(std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMinValue))));
-  EXPECT_DOUBLE_EQ(
-    std::fabs(::ad::physics::SpeedSquared::cMinValue),
-    static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-::ad::physics::SpeedSquared::cMinValue))));
+                   std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMinValue).mSpeedSquared));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::SpeedSquared::cMinValue),
+                   std::fabs(::ad::physics::SpeedSquared(-::ad::physics::SpeedSquared::cMinValue).mSpeedSquared));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::SpeedSquared::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMaxValue))));
-  EXPECT_DOUBLE_EQ(
-    std::fabs(::ad::physics::SpeedSquared::cMaxValue),
-    static_cast<double>(std::fabs(::ad::physics::SpeedSquared(-::ad::physics::SpeedSquared::cMaxValue))));
+                   std::fabs(::ad::physics::SpeedSquared(::ad::physics::SpeedSquared::cMaxValue).mSpeedSquared));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::SpeedSquared::cMaxValue),
+                   std::fabs(::ad::physics::SpeedSquared(-::ad::physics::SpeedSquared::cMaxValue).mSpeedSquared));
 }
 
 TEST(SpeedSquaredTests, constructionFromValidFPValue)
@@ -144,7 +141,7 @@ TEST(SpeedSquaredTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::SpeedSquared::cMinValue;
   ::ad::physics::SpeedSquared value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mSpeedSquared);
 }
 
 TEST(SpeedSquaredTests, copyConstructionFromValidValue)
@@ -152,7 +149,7 @@ TEST(SpeedSquaredTests, copyConstructionFromValidValue)
   ::ad::physics::SpeedSquared const validValue(::ad::physics::SpeedSquared::cMinValue);
   ::ad::physics::SpeedSquared value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mSpeedSquared, value.mSpeedSquared);
 }
 
 TEST(SpeedSquaredTests, moveConstructionFromValidValue)
@@ -160,7 +157,7 @@ TEST(SpeedSquaredTests, moveConstructionFromValidValue)
   ::ad::physics::SpeedSquared validValue(::ad::physics::SpeedSquared::cMinValue);
   ::ad::physics::SpeedSquared value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMinValue, value.mSpeedSquared);
 }
 
 TEST(SpeedSquaredTests, assignmentFromValidValue)
@@ -169,7 +166,7 @@ TEST(SpeedSquaredTests, assignmentFromValidValue)
   ::ad::physics::SpeedSquared value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mSpeedSquared, value.mSpeedSquared);
 }
 
 TEST(SpeedSquaredTests, moveAssignmentFromValidValue)
@@ -178,7 +175,7 @@ TEST(SpeedSquaredTests, moveAssignmentFromValidValue)
   ::ad::physics::SpeedSquared value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::SpeedSquared::cMinValue, value.mSpeedSquared);
 }
 
 TEST(SpeedSquaredTests, constructionFromInvalidFPValue)
@@ -254,7 +251,7 @@ TEST(SpeedSquaredTests, arithmeticOperatorsThrowOnInvalid)
   //  operator+(::ad::physics::SpeedSquared)
   EXPECT_THROW(invalidValue + maximalValue, std::out_of_range);
   EXPECT_THROW(maximalValue + invalidValue, std::out_of_range);
-  EXPECT_THROW(maximalValue + maximalValue, std::out_of_range);
+  EXPECT_EQ(maximalValue + maximalValue, maximalValue);
 
   //  operator+=(::ad::physics::SpeedSquared)
   calculationValue = invalidValue;
@@ -262,12 +259,12 @@ TEST(SpeedSquaredTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = maximalValue;
   EXPECT_THROW(calculationValue += invalidValue, std::out_of_range);
   calculationValue = maximalValue;
-  EXPECT_THROW(calculationValue += maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue += maximalValue, maximalValue);
 
   //  operator-(::ad::physics::SpeedSquared)
   EXPECT_THROW(invalidValue - minimalValue, std::out_of_range);
   EXPECT_THROW(minimalValue - invalidValue, std::out_of_range);
-  EXPECT_THROW(minimalValue - maximalValue, std::out_of_range);
+  EXPECT_EQ(minimalValue - maximalValue, minimalValue);
 
   //  operator-=(::ad::physics::SpeedSquared)
   calculationValue = invalidValue;
@@ -275,20 +272,20 @@ TEST(SpeedSquaredTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = minimalValue;
   EXPECT_THROW(calculationValue -= invalidValue, std::out_of_range);
   calculationValue = minimalValue;
-  EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue -= maximalValue, minimalValue);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mSpeedSquared, std::out_of_range);
+  EXPECT_EQ(maximalValue * maximalValue.mSpeedSquared, maximalValue);
 
   //  std::sqrt()
   EXPECT_THROW(std::sqrt(invalidValue), std::out_of_range);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mSpeedSquared, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mSpeedSquared, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
-  EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
+  EXPECT_EQ(maximalValue / 0.5, maximalValue);
 
   //  operator/(::ad::physics::SpeedSquared)
   EXPECT_THROW(invalidValue / maximalValue, std::out_of_range);
@@ -297,13 +294,13 @@ TEST(SpeedSquaredTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mSpeedSquared) > std::fabs(minimalValue.mSpeedSquared))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mSpeedSquared) < std::fabs(minimalValue.mSpeedSquared))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -329,13 +326,13 @@ TEST(SpeedSquaredTests, comparisonOperatorsRespectPrecision)
     value = ::ad::physics::SpeedSquared(precisionValueTimesTen);
   }
   ::ad::physics::SpeedSquared const sameValue = value;
-  ::ad::physics::SpeedSquared const slightlyBiggerValue(static_cast<double>(value)
+  ::ad::physics::SpeedSquared const slightlyBiggerValue(value.mSpeedSquared
                                                         + ::ad::physics::SpeedSquared::cPrecisionValue * 0.9);
-  ::ad::physics::SpeedSquared const slightlySmallerValue(static_cast<double>(value)
+  ::ad::physics::SpeedSquared const slightlySmallerValue(value.mSpeedSquared
                                                          - ::ad::physics::SpeedSquared::cPrecisionValue * 0.9);
-  ::ad::physics::SpeedSquared const actuallyBiggerValue(static_cast<double>(value)
+  ::ad::physics::SpeedSquared const actuallyBiggerValue(value.mSpeedSquared
                                                         + ::ad::physics::SpeedSquared::cPrecisionValue * 1.1);
-  ::ad::physics::SpeedSquared const actuallySmallerValue(static_cast<double>(value)
+  ::ad::physics::SpeedSquared const actuallySmallerValue(value.mSpeedSquared
                                                          - ::ad::physics::SpeedSquared::cPrecisionValue * 1.1);
 
   // operator ==
@@ -399,45 +396,45 @@ TEST(SpeedSquaredTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::physics::SpeedSquared)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mSpeedSquared + value.mSpeedSquared, result.mSpeedSquared, cDoubleNear);
 
   //  operator+=(::ad::physics::SpeedSquared)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mSpeedSquared + value.mSpeedSquared, result.mSpeedSquared, cDoubleNear);
 
   //  operator-(::ad::physics::SpeedSquared)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mSpeedSquared - value.mSpeedSquared, result.mSpeedSquared, cDoubleNear);
 
   //  operator-=(::ad::physics::SpeedSquared)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mSpeedSquared - value.mSpeedSquared, result.mSpeedSquared, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mSpeedSquared * 5., result.mSpeedSquared, cDoubleNear);
 
   //  std::sqrt()
   ::ad::physics::Speed const squareRootResult = std::sqrt(value);
-  EXPECT_NEAR(std::sqrt(static_cast<double>(value)), static_cast<double>(squareRootResult), cDoubleNear);
+  EXPECT_NEAR(std::sqrt(value.mSpeedSquared), squareRootResult.mSpeed, cDoubleNear);
 
   //  operator*(double, ::ad::physics::SpeedSquared)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mSpeedSquared * 5., result.mSpeedSquared, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mSpeedSquared;
+  EXPECT_NEAR(value.mSpeedSquared / value.mSpeedSquared, result.mSpeedSquared, cDoubleNear);
 
   //  operator/(::ad::physics::SpeedSquared)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mSpeedSquared / value.mSpeedSquared, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::physics::SpeedSquared::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::physics::SpeedSquared::cMaxValue))
+  if ((::ad::physics::SpeedSquared::cMinValue < -value.mSpeedSquared)
+      && (-value.mSpeedSquared < ::ad::physics::SpeedSquared::cMaxValue))
   {
     result = -value;
   }

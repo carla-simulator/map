@@ -60,13 +60,13 @@ bool FactoryTest::Fill()
   ok = ok && pFactory->add(p, x13, lane::LaneType::MULTI, lane::LaneDirection::BIDIRECTIONAL);
 
   edgeLeft11 = randGeometry(51, 11);
-  edgeRight11 = randGeometry(edgeLeft11.ecefEdge.front(), 52, 12);
+  edgeRight11 = randGeometry(edgeLeft11.ecef_points.front(), 52, 12);
   ok = ok && pFactory->set(x11, edgeLeft11, edgeRight11);
-  edgeLeft12 = randGeometry(edgeRight11.ecefEdge.front(), 53, 13);
-  edgeRight12 = randGeometry(edgeLeft12.ecefEdge.front(), 54, 14);
+  edgeLeft12 = randGeometry(edgeRight11.ecef_points.front(), 53, 13);
+  edgeRight12 = randGeometry(edgeLeft12.ecef_points.front(), 54, 14);
   ok = ok && pFactory->set(x12, edgeLeft12, edgeRight12);
-  edgeLeft13 = randGeometry(edgeRight12.ecefEdge.front(), 55, 15);
-  edgeRight13 = randGeometry(edgeLeft13.ecefEdge.front(), 56, 16);
+  edgeLeft13 = randGeometry(edgeRight12.ecef_points.front(), 55, 15);
+  edgeRight13 = randGeometry(edgeLeft13.ecef_points.front(), 56, 16);
   ok = ok && pFactory->set(x13, edgeLeft13, edgeRight13);
 
   lane::ContactLocation succ(lane::ContactLocation::SUCCESSOR);
@@ -79,12 +79,12 @@ bool FactoryTest::Fill()
   lane::ContactTypeList curb_down({lane::ContactType::FREE, lane::ContactType::CURB_DOWN});
 
   restriction::Restriction all_vehicles;
-  all_vehicles.roadUserTypes
+  all_vehicles.road_user_types
     = {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK};
   restriction::Restriction pedestrians;
-  pedestrians.roadUserTypes = {restriction::RoadUserType::PEDESTRIAN};
+  pedestrians.road_user_types = {restriction::RoadUserType::PEDESTRIAN};
   restriction::Restriction predestrian_and_bikes;
-  predestrian_and_bikes.roadUserTypes = {restriction::RoadUserType::PEDESTRIAN, restriction::RoadUserType::BICYCLE};
+  predestrian_and_bikes.road_user_types = {restriction::RoadUserType::PEDESTRIAN, restriction::RoadUserType::BICYCLE};
 
   restriction::RestrictionList all_vehicles_list;
   all_vehicles_list.push_back(all_vehicles);
@@ -113,12 +113,13 @@ bool FactoryTest::Fill()
   ok = ok && pFactory->add(x13, x11, succ, curb_up, all_vehicle_restrs);
   ok = ok && pFactory->add(x11, x13, pred, curb_down, all_vehicle_restrs);
 
-  landmark::LandmarkId landmarkId(1234);
+  landmark::LandmarkId landmark_id(1234);
   point::ECEFPoint orientation = point::createECEFPoint(0., 0., 0.);
   point::ECEFPoint position = point::createECEFPoint(1., 0., 0.);
   point::Geometry bounding_box = point::createGeometry({orientation, position}, true);
-  ok = ok && pFactory->addLandmark(p, landmarkId, landmark::LandmarkType::UNKNOWN, position, orientation, bounding_box);
-  ok = ok && pFactory->add(x11, landmarkId);
+  ok
+    = ok && pFactory->addLandmark(p, landmark_id, landmark::LandmarkType::UNKNOWN, position, orientation, bounding_box);
+  ok = ok && pFactory->add(x11, landmark_id);
 
   ok = ok && access::init(mStorePtr);
   return ok;
@@ -133,14 +134,14 @@ void FactoryTest::Check(const lane::LaneId &id, lane::LaneType type, lane::LaneD
   ASSERT_EQ(lane->direction, direction);
 }
 
-void FactoryTest::Check(const lane::LaneId &id, point::Geometry const &edgeLeft, point::Geometry const &edgeRight)
+void FactoryTest::Check(const lane::LaneId &id, point::Geometry const &edge_left, point::Geometry const &edge_right)
 {
   auto lane = lane::getLanePtr(id);
   ASSERT_TRUE(static_cast<bool>(lane));
-  ASSERT_EQ(lane->edgeLeft, edgeLeft);
-  ASSERT_EQ(lane->edgeRight, edgeRight);
-  ASSERT_NE(lane->edgeLeft, edgeRight);
-  ASSERT_NE(lane->edgeRight, edgeLeft);
+  ASSERT_EQ(lane->edge_left, edge_left);
+  ASSERT_EQ(lane->edge_right, edge_right);
+  ASSERT_NE(lane->edge_left, edge_right);
+  ASSERT_NE(lane->edge_right, edge_left);
 }
 
 void FactoryTest::Check(const lane::LaneId &id_from,
@@ -150,9 +151,9 @@ void FactoryTest::Check(const lane::LaneId &id_from,
 {
   auto lane = lane::getLanePtr(id_from);
   ASSERT_TRUE(static_cast<bool>(lane));
-  for (auto contact_lane : lane->contactLanes)
+  for (auto contact_lane : lane->contact_lanes)
   {
-    if (contact_lane.toLane == id_to)
+    if (contact_lane.to_lane == id_to)
     {
       ASSERT_EQ(contact_lane.location, location);
       ASSERT_EQ(contact_lane.types, types);
@@ -185,9 +186,9 @@ bool FactoryTest::IsTransitionOk(const lane::LaneId &id_from,
   auto lane = lane::getLanePtr(id_from);
   if (lane)
   {
-    for (auto contact_lane : lane->contactLanes)
+    for (auto contact_lane : lane->contact_lanes)
     {
-      if (contact_lane.toLane == id_to)
+      if (contact_lane.to_lane == id_to)
       {
         if (contact_lane.location != location)
         {
@@ -205,7 +206,7 @@ bool FactoryTest::IsTransitionOk(const lane::LaneId &id_from,
 TEST_F(FactoryTest, TestFactory)
 {
   MapMetaData emptyMetaData;
-  emptyMetaData.trafficType = TrafficType(99);
+  emptyMetaData.traffic_type = TrafficType(99);
   ASSERT_FALSE(isValid(emptyMetaData));
   Check(x11, lane::LaneType::NORMAL, lane::LaneDirection::POSITIVE);
   Check(x12, lane::LaneType::SHOULDER, lane::LaneDirection::NEGATIVE);
@@ -266,7 +267,7 @@ TEST_F(FactoryTest, TestFactory)
   ASSERT_TRUE(IsTransitionOk(x13, x12, righ, restriction::RoadUserType::PEDESTRIAN));
   ASSERT_FALSE(IsTransitionOk(x13, x12, righ, restriction::RoadUserType::BICYCLE));
 
-  auto landmarks = lane::getLane(x11).visibleLandmarks;
+  auto landmarks = lane::getLane(x11).visible_landmarks;
   ASSERT_EQ(landmarks.size(), 1u);
   ASSERT_TRUE(landmarks.front() == landmark::LandmarkId(1234));
 
@@ -276,7 +277,7 @@ TEST_F(FactoryTest, TestFactory)
 
   access::PartitionId p(0);
   lane::LaneId retId;
-  GeoEdge leftBorderPoints, rightBorderPoints;
+  GeoPointList leftBorderPoints, rightBorderPoints;
   leftBorderPoints.push_back(createGeoPoint(Longitude(8.3), Latitude(49.2), Altitude(115.)));
   leftBorderPoints.push_back(createGeoPoint(Longitude(8.5), Latitude(49.2), Altitude(115.)));
   rightBorderPoints.push_back(createGeoPoint(Longitude(8.3), Latitude(49.), Altitude(115.)));
@@ -287,8 +288,8 @@ TEST_F(FactoryTest, TestFactory)
 
   ad::map::restriction::Restriction rs1;
   ad::map::restriction::Restriction rs2;
-  rs1.roadUserTypes = {restriction::RoadUserType::CAR};
-  rs2.roadUserTypes = {restriction::RoadUserType::PEDESTRIAN};
+  rs1.road_user_types = {restriction::RoadUserType::CAR};
+  rs2.road_user_types = {restriction::RoadUserType::PEDESTRIAN};
   ASSERT_FALSE_NO_LOG(pFactory->add(x100, rs1, true));
   ASSERT_TRUE(pFactory->add(x11, rs1, true));
   ASSERT_TRUE(pFactory->add(x11, rs2, false));
@@ -313,13 +314,13 @@ TEST_F(FactoryTest, TestFactory)
   landmark::LandmarkId landMarkInvalid;
   ASSERT_TRUE(pFactory->add(x11, landMarkInvalid)); // bugs?
 
-  landmark::LandmarkId landmarkId(1234);
-  ASSERT_FALSE_NO_LOG(pFactory->add(x100, landmarkId));
+  landmark::LandmarkId landmark_id(1234);
+  ASSERT_FALSE_NO_LOG(pFactory->add(x100, landmark_id));
   ASSERT_FALSE_NO_LOG(pFactory->deleteLandmark(landMarkInvalid));
-  ASSERT_TRUE(pFactory->deleteLandmark(landmarkId));
+  ASSERT_TRUE(pFactory->deleteLandmark(landmark_id));
 
   restriction::Restriction all_vehicles;
-  all_vehicles.roadUserTypes
+  all_vehicles.road_user_types
     = {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK};
   restriction::RestrictionList all_vehicles_list;
   all_vehicles_list.push_back(all_vehicles);
@@ -329,11 +330,11 @@ TEST_F(FactoryTest, TestFactory)
 
   ad::map::lane::ContactLaneList cLaneList;
   lane::ContactLane contactLane;
-  contactLane.toLane = x12;
+  contactLane.to_lane = x12;
   contactLane.location = succ;
   contactLane.types = free;
   contactLane.restrictions = all_vehicle_restrs;
-  contactLane.trafficLightId = ad::map::landmark::LandmarkId();
+  contactLane.landmark_id = ad::map::landmark::LandmarkId();
   cLaneList.push_back(contactLane);
   ASSERT_FALSE_NO_LOG(pFactory->add(x100, cLaneList));
   ASSERT_TRUE(pFactory->add(x11, cLaneList));
@@ -341,7 +342,7 @@ TEST_F(FactoryTest, TestFactory)
   ASSERT_TRUE(pFactory->deleteContacts(x11, x12));
 
   lane::LaneId x14{14}, x15{15}, x16{16};
-  GeoEdge x14Left, x14Right, x15Left, x15Right, x16Left, x16Right;
+  GeoPointList x14Left, x14Right, x15Left, x15Right, x16Left, x16Right;
   x14Left.push_back(createGeoPoint(Longitude(8.3), Latitude(49.2), Altitude(115.)));
   x14Left.push_back(createGeoPoint(Longitude(8.5), Latitude(49.2), Altitude(115.)));
   x14Right.push_back(createGeoPoint(Longitude(8.3), Latitude(49.), Altitude(115.)));
@@ -363,7 +364,7 @@ TEST_F(FactoryTest, TestFactory)
   ASSERT_FALSE_NO_LOG(pFactory->autoConnect(x14, x100));
   ASSERT_FALSE(pFactory->autoConnect(x14, x16));
   lane::LaneId x17{17};
-  GeoEdge x17Left, x17Right;
+  GeoPointList x17Left, x17Right;
   x17Left.push_back(createGeoPoint(Longitude(8.5), Latitude(49.2), Altitude(115.)));
   x17Left.push_back(createGeoPoint(Longitude(8.9), Latitude(49.2), Altitude(115.)));
   x17Right.push_back(createGeoPoint(Longitude(8.5), Latitude(49.), Altitude(115.)));
@@ -372,7 +373,7 @@ TEST_F(FactoryTest, TestFactory)
   ASSERT_NE(x17, lane::LaneId());
   ASSERT_TRUE(pFactory->autoConnect(x16, x17));
   lane::LaneId x18{18};
-  GeoEdge x18Left, x18Right;
+  GeoPointList x18Left, x18Right;
   x18Left.push_back(createGeoPoint(Longitude(8.5), Latitude(49.2), Altitude(115.)));
   x18Left.push_back(createGeoPoint(Longitude(8.9), Latitude(49.2), Altitude(115.)));
   x18Right.push_back(createGeoPoint(Longitude(8.5), Latitude(49.), Altitude(115.)));
@@ -385,21 +386,21 @@ TEST_F(FactoryTest, TestFactory)
   ASSERT_FALSE_NO_LOG(pFactory->set(x100, leftGeo, rightGeo));
 
   point::CoordinateTransform cf;
-  point::ECEFEdge left_ecef;
-  point::ECEFEdge right_ecef;
+  point::ECEFPointList left_ecef;
+  point::ECEFPointList right_ecef;
   cf.convert(x15Left, left_ecef);
   cf.convert(x15Right, right_ecef);
   EXPECT_THROW_NO_LOG(pFactory->add(p, left_ecef, right_ecef, x11, x12), std::runtime_error);
   retId = pFactory->add(p, left_ecef, right_ecef, x14, x16);
   ASSERT_NE(retId, lane::LaneId());
 
-  restriction::SpeedLimit speedLimit;
-  speedLimit.speedLimit = physics::Speed(50.);
-  ASSERT_FALSE_NO_LOG(pFactory->add(x100, speedLimit));
+  restriction::SpeedLimit speed_limit;
+  speed_limit.speed_limit = physics::Speed(50.);
+  ASSERT_FALSE_NO_LOG(pFactory->add(x100, speed_limit));
   ASSERT_FALSE_NO_LOG(pFactory->set(x100, physics::Speed(50.)));
-  ASSERT_TRUE_NO_LOG(pFactory->add(x11, speedLimit));
-  speedLimit.speedLimit = physics::Speed(80.);
-  ASSERT_TRUE_NO_LOG(pFactory->add(x11, speedLimit));
+  ASSERT_TRUE_NO_LOG(pFactory->add(x11, speed_limit));
+  speed_limit.speed_limit = physics::Speed(80.);
+  ASSERT_TRUE_NO_LOG(pFactory->add(x11, speed_limit));
   ASSERT_TRUE(pFactory->set(x11, physics::Speed(50.)));
 
   landmark::LandmarkIdList landMarkList;
@@ -413,30 +414,30 @@ TEST_F(FactoryTest, TestRestriction)
 
   EXPECT_THROW_NO_LOG(isAccessOk(all_vehicles, vehicle), std::runtime_error);
 
-  all_vehicles.roadUserTypes
+  all_vehicles.road_user_types
     = {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK};
   all_vehicles.negated = true;
   vehicle = mVehicle;
-  all_vehicles.passengersMin = restriction::PassengerCount(3);
+  all_vehicles.passengers_min = restriction::PassengerCount(3);
   ASSERT_TRUE(isAccessOk(all_vehicles, vehicle));
   vehicle.passengers = restriction::PassengerCount(4);
-  all_vehicles.roadUserTypes.clear();
+  all_vehicles.road_user_types.clear();
   ASSERT_FALSE(isAccessOk(all_vehicles, vehicle));
 
   restriction::Restrictions roadRestrictions;
   ASSERT_TRUE(isAccessOk(roadRestrictions, vehicle));
 
   restriction::Restriction pedestrians;
-  pedestrians.roadUserTypes = {restriction::RoadUserType::PEDESTRIAN};
-  pedestrians.passengersMin = 5.;
+  pedestrians.road_user_types = {restriction::RoadUserType::PEDESTRIAN};
+  pedestrians.passengers_min = 5.;
   pedestrians.negated = true;
   roadRestrictions.disjunctions.push_back(pedestrians);
   ASSERT_TRUE(isAccessOk(roadRestrictions, vehicle));
 
   restriction::Restriction roadRestriction;
   roadRestriction.negated = false;
-  roadRestriction.passengersMin = 4.;
-  roadRestriction.roadUserTypes
+  roadRestriction.passengers_min = 4.;
+  roadRestriction.road_user_types
     = {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK};
   roadRestrictions.conjunctions.push_back(roadRestriction);
   restriction::PassengerCount ret(5.);
@@ -465,12 +466,12 @@ TEST_F(FactoryTest, StoreLaneLength)
   pFactory.reset(new access::Factory(*mStorePtr));
 
   point::Geometry geo1, geo2;
-  point::ECEFEdge leftPoints;
+  point::ECEFPointList leftPoints;
   point::ECEFPoint basePoint = randECEFPoint();
   leftPoints.push_back(basePoint);
   leftPoints.push_back(basePoint + point::createECEFPoint(70., 0., 0.));
   geo1 = point::createGeometry(leftPoints, false);
-  point::ECEFEdge rightPoints;
+  point::ECEFPointList rightPoints;
   rightPoints.push_back(basePoint + point::createECEFPoint(0., -10, 0.));
   rightPoints.push_back(basePoint + point::createECEFPoint(70., -10, 0.));
   geo2 = point::createGeometry(rightPoints, false);
@@ -482,7 +483,7 @@ TEST_F(FactoryTest, StoreLaneLength)
   access::init(mStorePtr);
   calcBoundingSphere(geo1, geo2);
   auto ret = mStorePtr->getCumulativeLaneLength();
-  ASSERT_DOUBLE_EQ(static_cast<double>(ret), 70.0);
+  ASSERT_DOUBLE_EQ(ret.mDistance, 70.0);
 
   lane::LaneIdList laneIdList;
   laneIdList = mStorePtr->getLanes(std::string("abc"), false);

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #include "ad/physics/Distance.hpp"
@@ -48,8 +48,9 @@ namespace physics {
 {
   ensureValid();
   other.ensureValid();
-  ::ad::physics::DistanceSquared const result(mDistance * other.mDistance);
-  result.ensureValid(); // LCOV_EXCL_BR_LINE On correct definition of squarerooted type, this cannot not happen
+  ::ad::physics::DistanceSquared result(mDistance * other.mDistance);
+  result.restrictToLimitsAndEnsureValid(); // LCOV_EXCL_BR_LINE On correct definition of squarerooted type, this cannot
+                                           // not happen
   return result;
 }
 

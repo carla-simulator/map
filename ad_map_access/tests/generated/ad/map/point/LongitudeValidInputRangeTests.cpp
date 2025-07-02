@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -21,6 +21,30 @@
 TEST(LongitudeValidInputRangeTests, testValidInputRangeUninitialized)
 {
   ::ad::map::point::Longitude value;
+  ASSERT_FALSE(withinValidInputRange(value));
+}
+
+TEST(LongitudeValidInputRangeTests, testValidInputRangeMinOk)
+{
+  ::ad::map::point::Longitude value(-180);
+  ASSERT_TRUE(withinValidInputRange(value));
+}
+
+TEST(LongitudeValidInputRangeTests, testValidInputRangeMaxOk)
+{
+  ::ad::map::point::Longitude value(180);
+  ASSERT_TRUE(withinValidInputRange(value));
+}
+
+TEST(LongitudeValidInputRangeTests, testValidInputRangeBelowMin)
+{
+  ::ad::map::point::Longitude value(::ad::map::point::Longitude::cMinValue * 1.1);
+  ASSERT_FALSE(withinValidInputRange(value));
+}
+
+TEST(LongitudeValidInputRangeTests, testValidInputRangeExceedsMax)
+{
+  ::ad::map::point::Longitude value(::ad::map::point::Longitude::cMaxValue * 1.1);
   ASSERT_FALSE(withinValidInputRange(value));
 }
 

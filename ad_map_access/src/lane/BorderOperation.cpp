@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2021 Intel Corporation
+// Copyright (C) 2018-2022 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -15,6 +15,36 @@
 namespace ad {
 namespace map {
 namespace lane {
+
+physics::Distance calcLength(ENUEdge const &edge)
+{
+  return calcLength(edge.points);
+}
+
+physics::Distance calcLength(ECEFEdge const &edge)
+{
+  return calcLength(edge.points);
+}
+
+physics::Distance calcLength(GeoEdge const &edge)
+{
+  return calcLength(edge.points);
+}
+
+physics::Distance calcLength(ENUBorder const &border)
+{
+  return (calcLength(border.left.points) + calcLength(border.right.points)) / 2.;
+}
+
+physics::Distance calcLength(ECEFBorder const &border)
+{
+  return (calcLength(border.left.points) + calcLength(border.right.points)) / 2.;
+}
+
+physics::Distance calcLength(GeoBorder const &border)
+{
+  return (calcLength(border.left.points) + calcLength(border.right.points)) / 2.;
+}
 
 physics::Distance calcLength(ENUBorderList const &borderList)
 {
@@ -46,9 +76,9 @@ physics::Distance calcLength(GeoBorderList const &borderList)
   return total;
 }
 
-void removeDegeneratedEdgePoints(point::ENUEdge &edge, point::ENUEdge const *previousEdge = nullptr)
+void removeDegeneratedEdgePoints(ENUEdge &edge, ENUEdge const *previousEdge = nullptr)
 {
-  if (edge.size() < 2u)
+  if (edge.points.size() < 2u)
   {
     return;
   }
@@ -56,20 +86,21 @@ void removeDegeneratedEdgePoints(point::ENUEdge &edge, point::ENUEdge const *pre
   point::ENUPoint previousEdgeDir;
   if (previousEdge != nullptr)
   {
-    if (previousEdge->size() < 2u)
+    if (previousEdge->points.size() < 2u)
     {
       return;
     }
     // decide if edge start point has to be adapted
-    previousEdgeDir = previousEdge->at(previousEdge->size() - 1u) - previousEdge->at(previousEdge->size() - 2u);
-    auto nextEdgeDir = edge[0] - previousEdge->at(previousEdge->size() - 1u);
+    previousEdgeDir = previousEdge->points.at(previousEdge->points.size() - 1u)
+      - previousEdge->points.at(previousEdge->points.size() - 2u);
+    auto nextEdgeDir = edge.points[0] - previousEdge->points.at(previousEdge->points.size() - 1u);
 
     // if the two edges are near to each other or the direction is dramatically different,
     // the start point is overwritten by the end of the previous edge
     if ((point::vectorLength(nextEdgeDir) > point::cEdgePointBorderDistance)
         || (point::vectorDotProduct(previousEdgeDir, nextEdgeDir) < 0.))
     {
-      edge[0] = previousEdge->at(previousEdge->size() - 1u);
+      edge.points[0] = previousEdge->points.at(previousEdge->points.size() - 1u);
     }
     else
     {
@@ -78,18 +109,18 @@ void removeDegeneratedEdgePoints(point::ENUEdge &edge, point::ENUEdge const *pre
   }
   else
   {
-    previousEdgeDir = edge[1] - edge[0];
+    previousEdgeDir = edge.points[1] - edge.points[0];
   }
 
   std::size_t pointsToDrop = 0u;
-  for (std::size_t i = 1u; i < edge.size(); ++i)
+  for (std::size_t i = 1u; i < edge.points.size(); ++i)
   {
     // i-pointsToDrop > 0
     if (pointsToDrop > 0u)
     {
-      edge[i - pointsToDrop] = edge[i];
+      edge.points[i - pointsToDrop] = edge.points[i];
     }
-    auto nextEdgeDir = edge[i - pointsToDrop] - edge[i - pointsToDrop - 1];
+    auto nextEdgeDir = edge.points[i - pointsToDrop] - edge.points[i - pointsToDrop - 1];
     auto dotProduct = point::vectorDotProduct(previousEdgeDir, nextEdgeDir);
     if (dotProduct < 0.)
     {
@@ -102,14 +133,13 @@ void removeDegeneratedEdgePoints(point::ENUEdge &edge, point::ENUEdge const *pre
   }
   if (pointsToDrop > 0u)
   {
-    std::size_t const newEdgeSize = std::max(std::size_t(2u), edge.size() - pointsToDrop);
-    edge.resize(newEdgeSize);
+    std::size_t const newEdgeSize = std::max(std::size_t(2u), edge.points.size() - pointsToDrop);
+    edge.points.resize(newEdgeSize);
   }
 }
 
-std::vector<std::size_t>
-calcSmallerEdgeIndexPairs(std::vector<physics::ParametricValue> const &biggerEdgeParametricPoints,
-                          std::vector<physics::ParametricValue> const &smallerEdgeParametricPoints)
+std::vector<std::size_t> calcSmallerEdgeIndexPairs(physics::ParametricValueList const &biggerEdgeParametricPoints,
+                                                   physics::ParametricValueList const &smallerEdgeParametricPoints)
 {
   std::vector<std::size_t> indexPairs;
   indexPairs.reserve(biggerEdgeParametricPoints.size());
@@ -154,22 +184,22 @@ point::ENUPoint interpolatePoint(point::ENUPoint const &pointBefore,
                                  physics::ParametricValue const pointInterpolatedParametricEdgeOffset,
                                  physics::ParametricValue const pointAfterParametricEdgeOffset)
 {
-  physics::ParametricValue const parametricOffset(
+  physics::ParametricValue const parametric_offset(
     (pointInterpolatedParametricEdgeOffset - pointBeforeParametricEdgeOffset)
     / (pointAfterParametricEdgeOffset - pointBeforeParametricEdgeOffset));
-  return point::vectorInterpolate(pointBefore, pointAfter, parametricOffset);
+  return point::vectorInterpolate(pointBefore, pointAfter, parametric_offset);
 }
 
-void fillSmallerEdge(point::ENUEdge const &biggerEdge, point::ENUEdge &smallerEdge)
+void fillSmallerEdge(ENUEdge const &biggerEdge, ENUEdge &smallerEdge)
 {
-  auto const biggerEdgeParametricPoints = getParametricEdgePoints(biggerEdge);
-  auto const smallerEdgeParametricPoints = getParametricEdgePoints(smallerEdge);
+  auto const biggerEdgeParametricPoints = getParametricEdgePoints(biggerEdge.points);
+  auto const smallerEdgeParametricPoints = getParametricEdgePoints(smallerEdge.points);
 
   auto const smallerEdgeIndices = calcSmallerEdgeIndexPairs(biggerEdgeParametricPoints, smallerEdgeParametricPoints);
 
-  point::ENUEdge newSmallerEdge;
-  newSmallerEdge.reserve(biggerEdge.size());
-  newSmallerEdge.push_back(smallerEdge.front());
+  ENUEdge newSmallerEdge;
+  newSmallerEdge.points.reserve(biggerEdge.points.size());
+  newSmallerEdge.points.push_back(smallerEdge.points.front());
   std::size_t lastWrittenSmallerEdgeIndex = 0u;
   for (std::size_t i = 1u; i < smallerEdgeIndices.size() - 1u; ++i)
   {
@@ -178,32 +208,33 @@ void fillSmallerEdge(point::ENUEdge const &biggerEdge, point::ENUEdge &smallerEd
     if ( // smaller point already processed, insert an interpolated
       (smallerEdgeIndices[i] == lastWrittenSmallerEdgeIndex)
       // the point before the last point of the smaller edge is already written, so we have to interpolate till the end
-      || (lastWrittenSmallerEdgeIndex == (smallerEdge.size() - 2u)))
+      || (lastWrittenSmallerEdgeIndex == (smallerEdge.points.size() - 2u)))
     {
-      auto interpolatedPoint = interpolatePoint(smallerEdge[lastWrittenSmallerEdgeIndex],
-                                                smallerEdge[lastWrittenSmallerEdgeIndex + 1u],
+      auto interpolatedPoint = interpolatePoint(smallerEdge.points[lastWrittenSmallerEdgeIndex],
+                                                smallerEdge.points[lastWrittenSmallerEdgeIndex + 1u],
                                                 biggerEdgeParametricPoints[i - 1],
                                                 biggerEdgeParametricPoints[i],
                                                 biggerEdgeParametricPoints[i + 1]);
-      newSmallerEdge.push_back(interpolatedPoint);
+      newSmallerEdge.points.push_back(interpolatedPoint);
     }
     else
     {
       lastWrittenSmallerEdgeIndex = smallerEdgeIndices[i];
-      newSmallerEdge.push_back(smallerEdge[lastWrittenSmallerEdgeIndex]);
+      newSmallerEdge.points.push_back(smallerEdge.points[lastWrittenSmallerEdgeIndex]);
     }
   }
-  newSmallerEdge.push_back(smallerEdge.back());
-  smallerEdge.swap(newSmallerEdge);
+  newSmallerEdge.points.push_back(smallerEdge.points.back());
+  smallerEdge.points.swap(newSmallerEdge.points);
 }
 
 void normalizeBorder(ENUBorder &border, ENUBorder const *previousBorder)
 {
-  if ((border.left.size() < 2u) || (border.right.size() < 2u))
+  if ((border.left.points.size() < 2u) || (border.right.points.size() < 2u))
   {
     return;
   }
-  if ((previousBorder != nullptr) && (previousBorder->left.size() >= 2u) && (previousBorder->right.size() >= 2u))
+  if ((previousBorder != nullptr) && (previousBorder->left.points.size() >= 2u)
+      && (previousBorder->right.points.size() >= 2u))
   {
     removeDegeneratedEdgePoints(border.left, &previousBorder->left);
     removeDegeneratedEdgePoints(border.right, &previousBorder->right);
@@ -213,13 +244,13 @@ void normalizeBorder(ENUBorder &border, ENUBorder const *previousBorder)
     removeDegeneratedEdgePoints(border.left);
     removeDegeneratedEdgePoints(border.right);
   }
-  if (border.left.size() == border.right.size())
+  if (border.left.points.size() == border.right.points.size())
   {
     return;
   }
 
   std::vector<std::size_t> smallerEdgeIndices;
-  if (border.left.size() > border.right.size())
+  if (border.left.points.size() > border.right.points.size())
   {
     fillSmallerEdge(border.left, border.right);
   }
@@ -229,9 +260,9 @@ void normalizeBorder(ENUBorder &border, ENUBorder const *previousBorder)
   }
 }
 
-IndexPairs getIndexPairs(point::ENUEdge const &leftEdge, point::ENUEdge const &rightEdge)
+IndexPairs getIndexPairs(ENUEdge const &leftEdge, ENUEdge const &rightEdge)
 {
-  std::size_t const maxSize = std::max(leftEdge.size(), rightEdge.size());
+  std::size_t const maxSize = std::max(leftEdge.points.size(), rightEdge.points.size());
   std::vector<std::size_t> equalIndices;
   equalIndices.reserve(maxSize);
   for (size_t i = 0u; i < maxSize; ++i)
@@ -240,52 +271,98 @@ IndexPairs getIndexPairs(point::ENUEdge const &leftEdge, point::ENUEdge const &r
   }
 
   IndexPairs indexPairs;
-  if (leftEdge.size() == rightEdge.size())
+  if (leftEdge.points.size() == rightEdge.points.size())
   {
     indexPairs.leftEdgeIndices = equalIndices;
     indexPairs.rightEdgeIndices.swap(equalIndices);
   }
-  else if (leftEdge.size() > rightEdge.size())
+  else if (leftEdge.points.size() > rightEdge.points.size())
   {
     indexPairs.leftEdgeIndices.swap(equalIndices);
     indexPairs.rightEdgeIndices
-      = calcSmallerEdgeIndexPairs(getParametricEdgePoints(leftEdge), getParametricEdgePoints(rightEdge));
+      = calcSmallerEdgeIndexPairs(getParametricEdgePoints(leftEdge.points), getParametricEdgePoints(rightEdge.points));
   }
   else
   {
     indexPairs.leftEdgeIndices
-      = calcSmallerEdgeIndexPairs(getParametricEdgePoints(rightEdge), getParametricEdgePoints(leftEdge));
+      = calcSmallerEdgeIndexPairs(getParametricEdgePoints(rightEdge.points), getParametricEdgePoints(leftEdge.points));
     indexPairs.rightEdgeIndices.swap(equalIndices);
   }
   return indexPairs;
 }
 
-point::ENUEdge getLateralAlignmentEdge(ENUBorder const &border, physics::ParametricValue const lateralAlignment)
+ENUEdge getLateralAlignmentEdge(ENUBorder const &border, physics::ParametricValue const lateral_alignment)
 {
-  return point::getLateralAlignmentEdge(border.left, border.right, lateralAlignment);
+  ENUEdge result;
+  result.points = point::getLateralAlignmentEdge(border.left.points, border.right.points, lateral_alignment);
+  result.lateral_alignment = lateral_alignment;
+  if (lateral_alignment == cLateralAlignmentLeft)
+  {
+    result.edge_type = EdgeType::LEFT;
+  }
+  else if (lateral_alignment == cLateralAlignmentRight)
+  {
+    result.edge_type = EdgeType::RIGHT;
+  }
+  else if (lateral_alignment == cLateralAlignmentCenter)
+  {
+    result.edge_type = EdgeType::CENTER;
+  }
+  else
+  {
+    result.edge_type = EdgeType::ALIGNED;
+  }
+  return result;
+}
+
+ENUEdge getLateralAlignmentEdge(ENUBorder const &border, physics::RatioValue const lateral_alignment)
+{
+  ENUEdge result;
+  result.points = point::getLateralAlignmentEdge(border.left.points, border.right.points, lateral_alignment);
+  result.lateral_alignment.mParametricValue = lateral_alignment.mRatioValue;
+  if (result.lateral_alignment == cLateralAlignmentLeft)
+  {
+    result.edge_type = EdgeType::LEFT;
+  }
+  else if (result.lateral_alignment == cLateralAlignmentRight)
+  {
+    result.edge_type = EdgeType::RIGHT;
+  }
+  else if (result.lateral_alignment == cLateralAlignmentCenter)
+  {
+    result.edge_type = EdgeType::CENTER;
+  }
+  else
+  {
+    result.edge_type = EdgeType::ALIGNED;
+  }
+  return result;
 }
 
 inline bool isPointWithinBorderPoints(point::ENUPoint const &ptLeft,
                                       point::ENUPoint const &ptRight,
-                                      point::ENUPoint const &enuPoint)
+                                      point::ENUPoint const &enuPoint,
+                                      physics::Distance const &tolerance = physics::Distance(0.01))
 {
   // check if the point is actually located in between the border points
   auto const towardsLeft = ptLeft - enuPoint;
   auto const towardsRight = ptRight - enuPoint;
   auto const dotProduct = point::vectorDotProduct(towardsLeft, towardsRight);
-  auto const withinBorders = (dotProduct < 0.) || (point::vectorLength(towardsLeft) < physics::Distance(0.01))
-    || (point::vectorLength(towardsRight) < physics::Distance(0.01));
+  auto const withinBorders = (dotProduct < 0.) || (point::vectorLength(towardsLeft) < tolerance)
+    || (point::vectorLength(towardsRight) < tolerance);
   return withinBorders;
 }
 
 inline point::ENUHeading createHeadingFromBorderPoints(point::ENUPoint const &ptLeft, point::ENUPoint const &ptRight)
 {
   auto const headingLeftToRight = point::createENUHeading(ptLeft, ptRight);
-  auto const resultHeading = point::createENUHeading(static_cast<double>(headingLeftToRight) + M_PI_2);
+  auto const resultHeading = point::createENUHeading(headingLeftToRight.mENUHeading + M_PI_2);
   return resultHeading;
 }
 
-point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint const &enuPoint)
+point::ENUHeading getENUHeading(ENUBorderList const &borderList,
+                                point::ENUPoint const &enuPoint,
+                                physics::Distance const &toleranceDistanceOutsideBorder)
 {
   point::ENUHeading resultHeading(2. * M_PI);
 
@@ -293,16 +370,16 @@ point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint
   auto lastAfterBorderDetected = borderList.end();
   for (auto borderIter = borderList.begin(); borderIter != borderList.end(); borderIter++)
   {
-    auto const edgeLeftLength = calcLength(borderIter->left);
-    auto const edgeRightLength = calcLength(borderIter->right);
+    auto const edgeLeftLength = calcLength(borderIter->left.points);
+    auto const edgeRightLength = calcLength(borderIter->right.points);
 
     // first of all we have to handle degenerated borders
     if ((edgeLeftLength == physics::Distance(0.)) || (edgeRightLength == physics::Distance(0.)))
     {
-      if ((borderIter->left.size() == 0u) || (borderIter->right.size() == 0u))
+      if ((borderIter->left.points.size() == 0u) || (borderIter->right.points.size() == 0u))
       {
         access::getLogger()->error(
-          "ad::map::lane::getENUHeading: invalid enu border of size border-left:{} border-rigth:{} query-point:{}!",
+          "ad::map::lane::getENUHeading: invalid enu border of size border-left:{} border-right:{} query-point:{}!",
           borderIter->left,
           borderIter->right,
           enuPoint);
@@ -310,9 +387,9 @@ point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint
       }
 
       // the question here is: are we actually before or after the border
-      auto const headingLeftToRight = point::createENUHeading(borderIter->left[0], borderIter->right[0]);
-      auto const headingLeftToPoint = point::createENUHeading(borderIter->left[0], enuPoint);
-      auto const headingDiff = point::createENUHeading(static_cast<double>(headingLeftToPoint - headingLeftToRight));
+      auto const headingLeftToRight = point::createENUHeading(borderIter->left.points[0], borderIter->right.points[0]);
+      auto const headingLeftToPoint = point::createENUHeading(borderIter->left.points[0], enuPoint);
+      auto const headingDiff = point::createENUHeading(headingLeftToPoint.mENUHeading - headingLeftToRight.mENUHeading);
       if (headingDiff < point::ENUHeading(0.))
       {
         if (firstBeforeBorderDetected == borderList.end())
@@ -327,16 +404,16 @@ point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint
     }
     else
     {
-      auto parametricOffsetLeft = point::findNearestPointOnEdge(borderIter->left, edgeLeftLength, enuPoint);
-      auto parametricOffsetRight = point::findNearestPointOnEdge(borderIter->right, edgeRightLength, enuPoint);
+      auto parametricOffsetLeft = point::findNearestPointOnEdge(borderIter->left.points, edgeLeftLength, enuPoint);
+      auto parametricOffsetRight = point::findNearestPointOnEdge(borderIter->right.points, edgeRightLength, enuPoint);
 
       // catch errors
       if ((!parametricOffsetLeft.isValid()) || (!parametricOffsetRight.isValid()))
       {
         access::getLogger()->error(
-          "ad::map::lane::getENUHeading: invalid input data border-left:{} border-rigth:{} query-point:{}",
+          "ad::map::lane::getENUHeading: invalid input data border-left:{} border-right:{} query-point:{}",
           borderIter->left,
-          borderIter->right,
+          borderIter->right.points,
           enuPoint);
         return resultHeading;
       }
@@ -357,8 +434,8 @@ point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint
       else
       {
         // looks as we have found a potential segment
-        auto const ptLeft = point::getParametricPoint(borderIter->left, parametricOffsetLeft);
-        auto const ptRight = point::getParametricPoint(borderIter->right, parametricOffsetRight);
+        auto const ptLeft = point::getParametricPoint(borderIter->left.points, parametricOffsetLeft);
+        auto const ptRight = point::getParametricPoint(borderIter->right.points, parametricOffsetRight);
         bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);
 
         if (withinBorder)
@@ -373,9 +450,9 @@ point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint
   // heading
   if (firstBeforeBorderDetected != borderList.end())
   {
-    auto const ptLeft = firstBeforeBorderDetected->left.front();
-    auto const ptRight = firstBeforeBorderDetected->right.front();
-    bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);
+    auto const ptLeft = firstBeforeBorderDetected->left.points.front();
+    auto const ptRight = firstBeforeBorderDetected->right.points.front();
+    bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint, toleranceDistanceOutsideBorder);
     if (withinBorder)
     {
       return createHeadingFromBorderPoints(ptLeft, ptRight);
@@ -383,9 +460,9 @@ point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint
   }
   if (lastAfterBorderDetected != borderList.end())
   {
-    auto const ptLeft = lastAfterBorderDetected->left.back();
-    auto const ptRight = lastAfterBorderDetected->right.back();
-    bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);
+    auto const ptLeft = lastAfterBorderDetected->left.points.back();
+    auto const ptRight = lastAfterBorderDetected->right.points.back();
+    bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint, toleranceDistanceOutsideBorder);
     if (withinBorder)
     {
       return createHeadingFromBorderPoints(ptLeft, ptRight);
@@ -396,23 +473,23 @@ point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint
 }
 
 physics::Distance getDistanceEnuPointToLateralAlignmentEdge(point::ENUPoint const &enuPoint,
-                                                            point::ENUEdge const &lateralAlignmentEdge)
+                                                            ENUEdge const &lateralAlignmentEdge)
 {
-  auto const edgeLength = calcLength(lateralAlignmentEdge);
-  auto const parametricOffset = point::findNearestPointOnEdge(lateralAlignmentEdge, edgeLength, enuPoint);
-  auto const projectedPoint = point::getParametricPoint(lateralAlignmentEdge, edgeLength, parametricOffset);
+  auto const edgeLength = calcLength(lateralAlignmentEdge.points);
+  auto const parametric_offset = point::findNearestPointOnEdge(lateralAlignmentEdge.points, edgeLength, enuPoint);
+  auto const projectedPoint = point::getParametricPoint(lateralAlignmentEdge.points, edgeLength, parametric_offset);
   auto const distance = point::distance(projectedPoint, enuPoint);
   return distance;
 }
 
-bool areEdgesContinuous(point::ENUEdge const &first, point::ENUEdge const &second)
+bool areEdgesContinuous(ENUEdge const &first, ENUEdge const &second)
 {
-  if ((first.size() < 2u) || (second.size() < 2u))
+  if ((first.points.size() < 2u) || (second.points.size() < 2u))
   {
     return true;
   }
 
-  auto const firstToSecondDistance = point::distance(second.front(), first.back());
+  auto const firstToSecondDistance = point::distance(second.points.front(), first.points.back());
   if (firstToSecondDistance < point::cEdgePointBorderDistance)
   {
     return true;
@@ -420,55 +497,54 @@ bool areEdgesContinuous(point::ENUEdge const &first, point::ENUEdge const &secon
   return false;
 }
 
-void performMakeTransitionToSecondEdgeContinuous(point::ENUEdge const &first,
-                                                 point::ENUEdge &second,
-                                                 point::ENUEdge *secondOtherLane = nullptr)
+void performMakeTransitionToSecondEdgeContinuous(ENUEdge const &first,
+                                                 ENUEdge &second,
+                                                 ENUEdge *secondOtherLane = nullptr)
 {
   if (areEdgesContinuous(first, second))
   {
     return;
   }
-  auto const firstToSecondVec = second.front() - first.back();
+  auto const firstToSecondVec = second.points.front() - first.points.back();
   auto const firstToSecondDistance = point::vectorLength(firstToSecondVec);
   auto const firstToSecondDir = point::vectorNorm(firstToSecondVec);
-  auto const firstEndDir = getEdgeEndDirectionalVector(first);
-  auto const secondStartDir = getEdgeStartDirectionalVector(second);
+  auto const firstEndDir = getEdgeEndDirectionalVector(first.points);
+  auto const secondStartDir = getEdgeStartDirectionalVector(second.points);
   auto const averageEdgeDir = 0.5 * (firstEndDir + secondStartDir);
-  double const sinAngle
-    = static_cast<double>(point::vectorLength(point::vectorCrossProduct(averageEdgeDir, firstToSecondDir)));
+  double const sinAngle = point::vectorLength(point::vectorCrossProduct(averageEdgeDir, firstToSecondDir)).mDistance;
   // the distance of our interpolation changes depend on the offset of the two edges ends and the lateral offset
   // (given by the sine of the angle between the general edge direction and the offset direction)
   // e.g. if the offset is 3m and orthogonal we get a 6m interpolating distance
   auto const interpolatingDistance = sinAngle * 2.0 * firstToSecondDistance;
 
-  auto const secondLength = calcLength(second);
+  auto const secondLength = calcLength(second.points);
 
   physics::ParametricValue const parametricInterpolatingDistance(std::min(.95, interpolatingDistance / secondLength));
 
-  auto const secondParametricEdgePoints = getParametricEdgePoints(second);
+  auto const secondParametricEdgePoints = getParametricEdgePoints(second.points);
 
-  std::size_t const newSecondSize = second.size() + 1u;
-  point::ENUEdge newSecond;
-  newSecond.reserve(newSecondSize);
-  point::ENUEdge newOtherSecond;
-  if ((secondOtherLane != nullptr) && (secondOtherLane->size() == second.size()))
+  std::size_t const newSecondSize = second.points.size() + 1u;
+  ENUEdge newSecond;
+  newSecond.points.reserve(newSecondSize);
+  ENUEdge newOtherSecond;
+  if ((secondOtherLane != nullptr) && (secondOtherLane->points.size() == second.points.size()))
   {
-    newOtherSecond.resize(newSecondSize);
+    newOtherSecond.points.resize(newSecondSize);
   }
   for (std::size_t i = 1u; i < secondParametricEdgePoints.size(); ++i)
   {
     if (secondParametricEdgePoints[i] >= parametricInterpolatingDistance)
     {
-      if (newSecond.empty())
+      if (newSecond.points.empty())
       {
         // first point found
 
         // take the last point of the first edge
-        newSecond.push_back(first.back());
+        newSecond.points.push_back(first.points.back());
 
         // calculate the interpolated point
-        point::ENUPoint interpolatedPoint = interpolatePoint(second[i - 1],
-                                                             second[i],
+        point::ENUPoint interpolatedPoint = interpolatePoint(second.points[i - 1],
+                                                             second.points[i],
                                                              secondParametricEdgePoints[i - 1],
                                                              parametricInterpolatingDistance,
                                                              secondParametricEdgePoints[i]);
@@ -496,70 +572,70 @@ void performMakeTransitionToSecondEdgeContinuous(point::ENUEdge const &first,
         // newSecond[0] -> interpolatedPoint if there have been others skipped
         for (std::size_t j = 1u; j < i; ++j)
         {
-          auto innerInterpolatedPoint = interpolatePoint(newSecond[0],
+          auto innerInterpolatedPoint = interpolatePoint(newSecond.points[0],
                                                          interpolatedPoint,
                                                          physics::ParametricValue(0.),
                                                          secondParametricEdgePoints[j],
                                                          parametricInterpolatingDistance);
-          newSecond.push_back(innerInterpolatedPoint);
+          newSecond.points.push_back(innerInterpolatedPoint);
         }
 
         // then we add the interpolated point
-        newSecond.push_back(interpolatedPoint);
+        newSecond.points.push_back(interpolatedPoint);
 
         // fill the newOtherSecond lane if available
-        if (newOtherSecond.size() > 0u)
+        if (newOtherSecond.points.size() > 0u)
         {
           std::size_t j = 0u;
-          for (; (j < i) && (j < newOtherSecond.size()) && (j < secondOtherLane->size()); ++j)
+          for (; (j < i) && (j < newOtherSecond.points.size()) && (j < secondOtherLane->points.size()); ++j)
           {
-            newOtherSecond[j] = secondOtherLane->at(j);
+            newOtherSecond.points[j] = secondOtherLane->points.at(j);
           }
-          if ((j < newOtherSecond.size()) && (j < secondOtherLane->size()))
+          if ((j < newOtherSecond.points.size()) && (j < secondOtherLane->points.size()))
           {
             // same parametric range than the interpolated point
-            newOtherSecond[j] = interpolatePoint(secondOtherLane->at(j - 1u),
-                                                 secondOtherLane->at(j),
-                                                 secondParametricEdgePoints[i - 1],
-                                                 parametricInterpolatingDistance,
-                                                 secondParametricEdgePoints[i]);
+            newOtherSecond.points[j] = interpolatePoint(secondOtherLane->points.at(j - 1u),
+                                                        secondOtherLane->points.at(j),
+                                                        secondParametricEdgePoints[i - 1],
+                                                        parametricInterpolatingDistance,
+                                                        secondParametricEdgePoints[i]);
           }
-          for (; ((j + 1u) < newOtherSecond.size()) && (j < secondOtherLane->size()); j++)
+          for (; ((j + 1u) < newOtherSecond.points.size()) && (j < secondOtherLane->points.size()); j++)
           {
-            newOtherSecond[j + 1u] = secondOtherLane->at(j);
+            newOtherSecond.points[j + 1u] = secondOtherLane->points.at(j);
           }
         }
       }
       // add this one
-      newSecond.push_back(second[i]);
+      newSecond.points.push_back(second.points[i]);
     }
   }
-  second.swap(newSecond);
+  second.points.swap(newSecond.points);
   if (secondOtherLane != nullptr)
   {
-    secondOtherLane->swap(newOtherSecond);
+    secondOtherLane->points.swap(newOtherSecond.points);
   }
 }
 
-void makeTransitionToSecondEdgeContinuous(point::ENUEdge const &first, point::ENUEdge &second)
+void makeTransitionToSecondEdgeContinuous(ENUEdge const &first, ENUEdge &second)
 {
   performMakeTransitionToSecondEdgeContinuous(first, second);
 }
 
-void makeTransitionFromFirstEdgeContinuous(point::ENUEdge &first, point::ENUEdge const &second)
+void makeTransitionFromFirstEdgeContinuous(ENUEdge &first, ENUEdge const &second)
 {
   if (areEdgesContinuous(first, second))
   {
     return;
   }
   // if actually something has to be calculated, we reverse the edge and let the other function do the job
-  point::ENUEdge invertedFirstEdge = first;
-  std::reverse(invertedFirstEdge.begin(), invertedFirstEdge.end());
-  point::ENUEdge invertedSecondEdge = second;
-  std::reverse(invertedSecondEdge.begin(), invertedSecondEdge.end());
+  ENUEdge invertedFirstEdge = first;
+  std::reverse(invertedFirstEdge.points.begin(), invertedFirstEdge.points.end());
+  ENUEdge invertedSecondEdge = second;
+  std::reverse(invertedSecondEdge.points.begin(), invertedSecondEdge.points.end());
   performMakeTransitionToSecondEdgeContinuous(invertedSecondEdge, invertedFirstEdge);
   first = invertedFirstEdge;
-  std::reverse(first.begin(), first.end());
+  std::reverse(first.points.begin(), first.points.end());
 }
 
 void makeTransitionToSecondBorderContinuous(ENUBorder const &first, ENUBorder &second)
@@ -575,20 +651,16 @@ void makeTransitionFromFirstBorderContinuous(ENUBorder &first, ENUBorder const &
     return;
   }
   // if actually something has to be calculated, we reverse the borders and let the other function do the job
-  ENUBorder invertedFirstBorder;
-  invertedFirstBorder.left = first.left;
-  invertedFirstBorder.right = first.right;
-  std::reverse(invertedFirstBorder.left.begin(), invertedFirstBorder.left.end());
-  std::reverse(invertedFirstBorder.right.begin(), invertedFirstBorder.right.end());
-  ENUBorder invertedSecondBorder;
-  invertedSecondBorder.left = second.left;
-  invertedSecondBorder.right = second.right;
-  std::reverse(invertedSecondBorder.left.begin(), invertedSecondBorder.left.end());
-  std::reverse(invertedSecondBorder.right.begin(), invertedSecondBorder.right.end());
+  ENUBorder invertedFirstBorder = first;
+  std::reverse(invertedFirstBorder.left.points.begin(), invertedFirstBorder.left.points.end());
+  std::reverse(invertedFirstBorder.right.points.begin(), invertedFirstBorder.right.points.end());
+  ENUBorder invertedSecondBorder = second;
+  std::reverse(invertedSecondBorder.left.points.begin(), invertedSecondBorder.left.points.end());
+  std::reverse(invertedSecondBorder.right.points.begin(), invertedSecondBorder.right.points.end());
   makeTransitionToSecondBorderContinuous(invertedSecondBorder, invertedFirstBorder);
   first = invertedFirstBorder;
-  std::reverse(first.left.begin(), first.left.end());
-  std::reverse(first.right.begin(), first.right.end());
+  std::reverse(first.left.points.begin(), first.left.points.end());
+  std::reverse(first.right.points.begin(), first.right.points.end());
 }
 
 } // namespace lane

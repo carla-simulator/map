@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -109,9 +109,9 @@ struct LaneSegment
    */
   bool operator==(const LaneSegment &other) const
   {
-    return (leftNeighbor == other.leftNeighbor) && (rightNeighbor == other.rightNeighbor)
+    return (left_neighbor == other.left_neighbor) && (right_neighbor == other.right_neighbor)
       && (predecessors == other.predecessors) && (successors == other.successors)
-      && (laneInterval == other.laneInterval) && (routeLaneOffset == other.routeLaneOffset);
+      && (lane_interval == other.lane_interval) && (route_lane_offset == other.route_lane_offset);
   }
 
   /**
@@ -129,12 +129,12 @@ struct LaneSegment
   /*!
    * The identifier of the left neighboring lane
    */
-  ::ad::map::lane::LaneId leftNeighbor{0};
+  ::ad::map::lane::LaneId left_neighbor{0};
 
   /*!
    * The identifier of the right neighboring lane
    */
-  ::ad::map::lane::LaneId rightNeighbor{0};
+  ::ad::map::lane::LaneId right_neighbor{0};
 
   /*!
    * The list of lane identifiers of preceding lanes
@@ -149,12 +149,12 @@ struct LaneSegment
   /*!
    * The interval of the lane
    */
-  ::ad::map::route::LaneInterval laneInterval;
+  ::ad::map::route::LaneInterval lane_interval;
 
   /*!
    * The offset of the lane in number of lane changes left (--) or right (++) from start of the route planning.
    */
-  ::ad::map::route::RouteLaneOffset routeLaneOffset{0};
+  ::ad::map::route::RouteLaneOffset route_lane_offset{0};
 };
 
 } // namespace route
@@ -193,11 +193,11 @@ namespace route {
 inline std::ostream &operator<<(std::ostream &os, LaneSegment const &_value)
 {
   os << "LaneSegment(";
-  os << "leftNeighbor:";
-  os << _value.leftNeighbor;
+  os << "left_neighbor:";
+  os << _value.left_neighbor;
   os << ",";
-  os << "rightNeighbor:";
-  os << _value.rightNeighbor;
+  os << "right_neighbor:";
+  os << _value.right_neighbor;
   os << ",";
   os << "predecessors:";
   os << _value.predecessors;
@@ -205,11 +205,11 @@ inline std::ostream &operator<<(std::ostream &os, LaneSegment const &_value)
   os << "successors:";
   os << _value.successors;
   os << ",";
-  os << "laneInterval:";
-  os << _value.laneInterval;
+  os << "lane_interval:";
+  os << _value.lane_interval;
   os << ",";
-  os << "routeLaneOffset:";
-  os << _value.routeLaneOffset;
+  os << "route_lane_offset:";
+  os << _value.route_lane_offset;
   os << ")";
   return os;
 }
@@ -229,4 +229,16 @@ inline std::string to_string(::ad::map::route::LaneSegment const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::route::LaneSegment> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::route::LaneSegment const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_ROUTE_LANESEGMENT

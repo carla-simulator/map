@@ -21,18 +21,18 @@ bool isAccessOk(Restriction const &restriction, VehicleDescriptor const &vehicle
     throw std::runtime_error("isAccessOk: vehicle invalid");
   }
   //* \todo Full implementation.
-  if (vehicle.passengers < restriction.passengersMin)
+  if (vehicle.passengers < restriction.passengers_min)
   {
     return restriction.negated;
   }
-  if (restriction.roadUserTypes.empty())
+  if (restriction.road_user_types.empty())
   {
     return !restriction.negated;
   }
   else
   {
-    auto it = std::find(restriction.roadUserTypes.begin(), restriction.roadUserTypes.end(), vehicle.type);
-    if (it != restriction.roadUserTypes.end())
+    auto it = std::find(restriction.road_user_types.begin(), restriction.road_user_types.end(), vehicle.type);
+    if (it != restriction.road_user_types.end())
     {
       return !restriction.negated;
     }
@@ -83,11 +83,11 @@ PassengerCount getHOV(Restrictions const &restrictions)
   PassengerCount hov(0);
   for (auto const &conjunction : restrictions.conjunctions)
   {
-    hov = std::max(hov, conjunction.passengersMin);
+    hov = std::max(hov, conjunction.passengers_min);
   }
   for (auto const &disjunction : restrictions.disjunctions)
   {
-    hov = std::max(hov, disjunction.passengersMin);
+    hov = std::max(hov, disjunction.passengers_min);
   }
   return hov;
 }

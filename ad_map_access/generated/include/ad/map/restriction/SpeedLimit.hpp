@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -100,7 +100,7 @@ struct SpeedLimit
    */
   bool operator==(const SpeedLimit &other) const
   {
-    return (speedLimit == other.speedLimit) && (lanePiece == other.lanePiece);
+    return (speed_limit == other.speed_limit) && (lane_piece == other.lane_piece);
   }
 
   /**
@@ -115,8 +115,8 @@ struct SpeedLimit
     return !operator==(other);
   }
 
-  ::ad::physics::Speed speedLimit;
-  ::ad::physics::ParametricRange lanePiece;
+  ::ad::physics::Speed speed_limit;
+  ::ad::physics::ParametricRange lane_piece;
 };
 
 } // namespace restriction
@@ -155,11 +155,11 @@ namespace restriction {
 inline std::ostream &operator<<(std::ostream &os, SpeedLimit const &_value)
 {
   os << "SpeedLimit(";
-  os << "speedLimit:";
-  os << _value.speedLimit;
+  os << "speed_limit:";
+  os << _value.speed_limit;
   os << ",";
-  os << "lanePiece:";
-  os << _value.lanePiece;
+  os << "lane_piece:";
+  os << _value.lane_piece;
   os << ")";
   return os;
 }
@@ -179,4 +179,16 @@ inline std::string to_string(::ad::map::restriction::SpeedLimit const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::restriction::SpeedLimit> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::restriction::SpeedLimit const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_RESTRICTION_SPEEDLIMIT

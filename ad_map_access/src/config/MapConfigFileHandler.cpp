@@ -77,7 +77,7 @@ bool MapConfigFileHandler::isInitialized() const
   return !mConfigFileName.empty();
 }
 
-std::vector<PointOfInterest> const &MapConfigFileHandler::pointsOfInterest() const
+PointOfInterestList const &MapConfigFileHandler::pointsOfInterest() const
 {
   return mPointsOfInterest;
 }
@@ -111,9 +111,9 @@ bool MapConfigFileHandler::parseConfigFile(std::string const &configFileName)
   po::options_description options;
   // clang-format off
   options.add_options()("ADMap.map", po::value<std::string>(), "AD map")
-                       ("ADMap.openDriveOverlapMargin", po::value<std::string>(), "OpenDrive Map reader margin for overlap calculation")
-                       ("ADMap.openDriveDefaultIntersectionType", po::value<std::string>(), "OpenDrive Map default intersection type")
-                       ("ADMap.openDriveDefaultTrafficLightType", po::value<std::string>(), "OpenDrive Map default traffic light type (only relevant for IntersectionType::TrafficLight)")
+                       ("ADMap.open_drive_overlap_margin", po::value<std::string>(), "OpenDrive Map reader margin for overlap calculation")
+                       ("ADMap.open_drive_default_intersection_type", po::value<std::string>(), "OpenDrive Map default intersection type")
+                       ("ADMap.open_drive_default_traffic_light_type", po::value<std::string>(), "OpenDrive Map default traffic light type (only relevant for IntersectionType::TrafficLight)")
                        ("POI.poi", po::value<std::vector<std::string>>(), "Points of interest")
                        ("ENUReference.default", po::value<std::string>(), "Default ENU reference point");
   // clang-format on
@@ -151,41 +151,41 @@ bool MapConfigFileHandler::parseConfigFile(std::string const &configFileName)
       }
       mapEntry.filename = path.string();
 
-      physics::Distance openDriveOverlapMargin{0.};
-      if (vm.count("ADMap.openDriveOverlapMargin"))
+      physics::Distance open_drive_overlap_margin{0.};
+      if (vm.count("ADMap.open_drive_overlap_margin"))
       {
-        auto const overlapMarginString = vm["ADMap.openDriveOverlapMargin"].as<std::string>();
+        auto const overlapMarginString = vm["ADMap.open_drive_overlap_margin"].as<std::string>();
         std::istringstream input{overlapMarginString};
-        if (!(input >> openDriveOverlapMargin))
+        if (!(input >> open_drive_overlap_margin))
         {
-          access::getLogger()->warn("Error extracting openDriveOverlapMargin");
+          access::getLogger()->warn("Error extracting open_drive_overlap_margin");
           return false;
         }
       }
-      mapEntry.openDriveOverlapMargin = openDriveOverlapMargin;
+      mapEntry.open_drive_overlap_margin = open_drive_overlap_margin;
 
-      intersection::IntersectionType openDriveDefaultIntersectionType = intersection::IntersectionType::Unknown;
-      if (vm.count("ADMap.openDriveDefaultIntersectionType"))
+      intersection::IntersectionType open_drive_default_intersection_type = intersection::IntersectionType::Unknown;
+      if (vm.count("ADMap.open_drive_default_intersection_type"))
       {
         auto const openDriveDefaultIntersectionTypeString
-          = vm["ADMap.openDriveDefaultIntersectionType"].as<std::string>();
-        openDriveDefaultIntersectionType
+          = vm["ADMap.open_drive_default_intersection_type"].as<std::string>();
+        open_drive_default_intersection_type
           = fromString<intersection::IntersectionType>(openDriveDefaultIntersectionTypeString);
       }
-      mapEntry.openDriveDefaultIntersectionType = openDriveDefaultIntersectionType;
+      mapEntry.open_drive_default_intersection_type = open_drive_default_intersection_type;
 
-      if (mapEntry.openDriveDefaultIntersectionType == intersection::IntersectionType::TrafficLight)
+      if (mapEntry.open_drive_default_intersection_type == intersection::IntersectionType::TrafficLight)
       {
-        landmark::TrafficLightType openDriveDefaultTrafficLightType
+        landmark::TrafficLightType open_drive_default_traffic_light_type
           = landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN;
-        if (vm.count("ADMap.openDriveDefaultTrafficLightType"))
+        if (vm.count("ADMap.open_drive_default_traffic_light_type"))
         {
           auto const openDriveDefaultTrafficLightTypeString
-            = vm["ADMap.openDriveDefaultTrafficLightType"].as<std::string>();
-          openDriveDefaultTrafficLightType
+            = vm["ADMap.open_drive_default_traffic_light_type"].as<std::string>();
+          open_drive_default_traffic_light_type
             = fromString<landmark::TrafficLightType>(openDriveDefaultTrafficLightTypeString);
         }
-        mapEntry.openDriveDefaultTrafficLightType = openDriveDefaultTrafficLightType;
+        mapEntry.open_drive_default_traffic_light_type = open_drive_default_traffic_light_type;
       }
 
       mAdMapEntry = mapEntry;
@@ -232,17 +232,17 @@ bool MapConfigFileHandler::parsePointOfIntereset(std::string const &entry)
     access::getLogger()->warn("Error extracting name of poi!");
     return false;
   }
-  if (!(input >> poi.geoPoint.latitude))
+  if (!(input >> poi.geo_point.latitude))
   {
     access::getLogger()->warn("Error extracting lat");
     return false;
   }
-  if (!(input >> poi.geoPoint.longitude))
+  if (!(input >> poi.geo_point.longitude))
   {
     access::getLogger()->warn("Error extracting lon");
     return false;
   }
-  if (!(input >> poi.geoPoint.altitude))
+  if (!(input >> poi.geo_point.altitude))
   {
     access::getLogger()->warn("Error extracting altitude");
     return false;

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -40,7 +40,7 @@ inline bool withinValidInputRange(::ad::map::restriction::SpeedLimit const &inpu
   // check for generic member input ranges
   bool inValidInputRange = true;
   inValidInputRange
-    = withinValidInputRange(input.speedLimit, logErrors) && withinValidInputRange(input.lanePiece, logErrors);
+    = withinValidInputRange(input.speed_limit, logErrors) && withinValidInputRange(input.lane_piece, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::restriction::SpeedLimit)>> {} has invalid member",

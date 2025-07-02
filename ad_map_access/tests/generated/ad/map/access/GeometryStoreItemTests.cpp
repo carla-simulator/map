@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,14 +28,14 @@ protected:
   {
     // valid initialization
     ::ad::map::access::GeometryStoreItem value;
-    uint32_t valueLeftEdgeOffset{std::numeric_limits<uint32_t>::min()};
-    value.leftEdgeOffset = valueLeftEdgeOffset;
-    uint32_t valueRightEdgeOffset{std::numeric_limits<uint32_t>::min()};
-    value.rightEdgeOffset = valueRightEdgeOffset;
-    uint32_t valueLeftEdgePoints{std::numeric_limits<uint32_t>::min()};
-    value.leftEdgePoints = valueLeftEdgePoints;
-    uint32_t valueRightEdgePoints{std::numeric_limits<uint32_t>::min()};
-    value.rightEdgePoints = valueRightEdgePoints;
+    uint32_t valueLeft_edge_offset{std::numeric_limits<uint32_t>::min()};
+    value.left_edge_offset = valueLeft_edge_offset;
+    uint32_t valueRight_edge_offset{std::numeric_limits<uint32_t>::min()};
+    value.right_edge_offset = valueRight_edge_offset;
+    uint32_t valueLeft_edge_points{std::numeric_limits<uint32_t>::min()};
+    value.left_edge_points = valueLeft_edge_points;
+    uint32_t valueRight_edge_points{std::numeric_limits<uint32_t>::min()};
+    value.right_edge_points = valueRight_edge_points;
     mValue = value;
   }
 
@@ -88,44 +88,44 @@ TEST_F(GeometryStoreItemTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(GeometryStoreItemTests, comparisonOperatorLeftEdgeOffsetDiffers)
+TEST_F(GeometryStoreItemTests, comparisonOperatorLeft_edge_offsetDiffers)
 {
   ::ad::map::access::GeometryStoreItem valueA = mValue;
-  uint32_t leftEdgeOffset{std::numeric_limits<uint32_t>::max()};
-  valueA.leftEdgeOffset = leftEdgeOffset;
+  uint32_t left_edge_offset{std::numeric_limits<uint32_t>::max()};
+  valueA.left_edge_offset = left_edge_offset;
   ::ad::map::access::GeometryStoreItem valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(GeometryStoreItemTests, comparisonOperatorRightEdgeOffsetDiffers)
+TEST_F(GeometryStoreItemTests, comparisonOperatorRight_edge_offsetDiffers)
 {
   ::ad::map::access::GeometryStoreItem valueA = mValue;
-  uint32_t rightEdgeOffset{std::numeric_limits<uint32_t>::max()};
-  valueA.rightEdgeOffset = rightEdgeOffset;
+  uint32_t right_edge_offset{std::numeric_limits<uint32_t>::max()};
+  valueA.right_edge_offset = right_edge_offset;
   ::ad::map::access::GeometryStoreItem valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(GeometryStoreItemTests, comparisonOperatorLeftEdgePointsDiffers)
+TEST_F(GeometryStoreItemTests, comparisonOperatorLeft_edge_pointsDiffers)
 {
   ::ad::map::access::GeometryStoreItem valueA = mValue;
-  uint32_t leftEdgePoints{std::numeric_limits<uint32_t>::max()};
-  valueA.leftEdgePoints = leftEdgePoints;
+  uint32_t left_edge_points{std::numeric_limits<uint32_t>::max()};
+  valueA.left_edge_points = left_edge_points;
   ::ad::map::access::GeometryStoreItem valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(GeometryStoreItemTests, comparisonOperatorRightEdgePointsDiffers)
+TEST_F(GeometryStoreItemTests, comparisonOperatorRight_edge_pointsDiffers)
 {
   ::ad::map::access::GeometryStoreItem valueA = mValue;
-  uint32_t rightEdgePoints{std::numeric_limits<uint32_t>::max()};
-  valueA.rightEdgePoints = rightEdgePoints;
+  uint32_t right_edge_points{std::numeric_limits<uint32_t>::max()};
+  valueA.right_edge_points = right_edge_points;
   ::ad::map::access::GeometryStoreItem valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

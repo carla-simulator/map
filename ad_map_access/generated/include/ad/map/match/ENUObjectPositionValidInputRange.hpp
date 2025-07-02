@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -41,8 +41,8 @@ inline bool withinValidInputRange(::ad::map::match::ENUObjectPosition const &inp
 {
   // check for generic member input ranges
   bool inValidInputRange = true;
-  inValidInputRange = withinValidInputRange(input.centerPoint, logErrors)
-    && withinValidInputRange(input.heading, logErrors) && withinValidInputRange(input.enuReferencePoint, logErrors)
+  inValidInputRange = withinValidInputRange(input.center_point, logErrors)
+    && withinValidInputRange(input.heading, logErrors) && withinValidInputRange(input.enu_reference_point, logErrors)
     && withinValidInputRange(input.dimension, logErrors);
   if (!inValidInputRange && logErrors)
   {

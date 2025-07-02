@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,24 +28,24 @@ protected:
   {
     // valid initialization
     ::ad::map::match::LaneOccupiedRegion value;
-    ::ad::map::lane::LaneId valueLaneId(1);
-    value.laneId = valueLaneId;
-    ::ad::physics::ParametricRange valueLongitudinalRange;
-    ::ad::physics::ParametricValue valueLongitudinalRangeMinimum(0.);
-    valueLongitudinalRange.minimum = valueLongitudinalRangeMinimum;
-    ::ad::physics::ParametricValue valueLongitudinalRangeMaximum(0.);
-    valueLongitudinalRange.maximum = valueLongitudinalRangeMaximum;
-    valueLongitudinalRange.maximum = valueLongitudinalRange.minimum;
-    valueLongitudinalRange.minimum = valueLongitudinalRange.maximum;
-    value.longitudinalRange = valueLongitudinalRange;
-    ::ad::physics::ParametricRange valueLateralRange;
-    ::ad::physics::ParametricValue valueLateralRangeMinimum(0.);
-    valueLateralRange.minimum = valueLateralRangeMinimum;
-    ::ad::physics::ParametricValue valueLateralRangeMaximum(0.);
-    valueLateralRange.maximum = valueLateralRangeMaximum;
-    valueLateralRange.maximum = valueLateralRange.minimum;
-    valueLateralRange.minimum = valueLateralRange.maximum;
-    value.lateralRange = valueLateralRange;
+    ::ad::map::lane::LaneId valueLane_id(1);
+    value.lane_id = valueLane_id;
+    ::ad::physics::ParametricRange valueLongitudinal_range;
+    ::ad::physics::ParametricValue valueLongitudinal_rangeMinimum(0.);
+    valueLongitudinal_range.minimum = valueLongitudinal_rangeMinimum;
+    ::ad::physics::ParametricValue valueLongitudinal_rangeMaximum(0.);
+    valueLongitudinal_range.maximum = valueLongitudinal_rangeMaximum;
+    valueLongitudinal_range.maximum = valueLongitudinal_range.minimum;
+    valueLongitudinal_range.minimum = valueLongitudinal_range.maximum;
+    value.longitudinal_range = valueLongitudinal_range;
+    ::ad::physics::ParametricRange valueLateral_range;
+    ::ad::physics::ParametricValue valueLateral_rangeMinimum(0.);
+    valueLateral_range.minimum = valueLateral_rangeMinimum;
+    ::ad::physics::ParametricValue valueLateral_rangeMaximum(0.);
+    valueLateral_range.maximum = valueLateral_rangeMaximum;
+    valueLateral_range.maximum = valueLateral_range.minimum;
+    valueLateral_range.minimum = valueLateral_range.maximum;
+    value.lateral_range = valueLateral_range;
     mValue = value;
   }
 
@@ -98,45 +98,45 @@ TEST_F(LaneOccupiedRegionTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(LaneOccupiedRegionTests, comparisonOperatorLaneIdDiffers)
+TEST_F(LaneOccupiedRegionTests, comparisonOperatorLane_idDiffers)
 {
   ::ad::map::match::LaneOccupiedRegion valueA = mValue;
-  ::ad::map::lane::LaneId laneId(std::numeric_limits<::ad::map::lane::LaneId>::max());
-  valueA.laneId = laneId;
+  ::ad::map::lane::LaneId lane_id(std::numeric_limits<::ad::map::lane::LaneId>::max());
+  valueA.lane_id = lane_id;
   ::ad::map::match::LaneOccupiedRegion valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneOccupiedRegionTests, comparisonOperatorLongitudinalRangeDiffers)
+TEST_F(LaneOccupiedRegionTests, comparisonOperatorLongitudinal_rangeDiffers)
 {
   ::ad::map::match::LaneOccupiedRegion valueA = mValue;
-  ::ad::physics::ParametricRange longitudinalRange;
-  ::ad::physics::ParametricValue longitudinalRangeMinimum(1.);
-  longitudinalRange.minimum = longitudinalRangeMinimum;
-  ::ad::physics::ParametricValue longitudinalRangeMaximum(1.);
-  longitudinalRange.maximum = longitudinalRangeMaximum;
-  longitudinalRange.maximum = longitudinalRange.minimum;
-  longitudinalRange.minimum = longitudinalRange.maximum;
-  valueA.longitudinalRange = longitudinalRange;
+  ::ad::physics::ParametricRange longitudinal_range;
+  ::ad::physics::ParametricValue longitudinal_rangeMinimum(1.);
+  longitudinal_range.minimum = longitudinal_rangeMinimum;
+  ::ad::physics::ParametricValue longitudinal_rangeMaximum(1.);
+  longitudinal_range.maximum = longitudinal_rangeMaximum;
+  longitudinal_range.maximum = longitudinal_range.minimum;
+  longitudinal_range.minimum = longitudinal_range.maximum;
+  valueA.longitudinal_range = longitudinal_range;
   ::ad::map::match::LaneOccupiedRegion valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LaneOccupiedRegionTests, comparisonOperatorLateralRangeDiffers)
+TEST_F(LaneOccupiedRegionTests, comparisonOperatorLateral_rangeDiffers)
 {
   ::ad::map::match::LaneOccupiedRegion valueA = mValue;
-  ::ad::physics::ParametricRange lateralRange;
-  ::ad::physics::ParametricValue lateralRangeMinimum(1.);
-  lateralRange.minimum = lateralRangeMinimum;
-  ::ad::physics::ParametricValue lateralRangeMaximum(1.);
-  lateralRange.maximum = lateralRangeMaximum;
-  lateralRange.maximum = lateralRange.minimum;
-  lateralRange.minimum = lateralRange.maximum;
-  valueA.lateralRange = lateralRange;
+  ::ad::physics::ParametricRange lateral_range;
+  ::ad::physics::ParametricValue lateral_rangeMinimum(1.);
+  lateral_range.minimum = lateral_rangeMinimum;
+  ::ad::physics::ParametricValue lateral_rangeMaximum(1.);
+  lateral_range.maximum = lateral_rangeMaximum;
+  lateral_range.maximum = lateral_range.minimum;
+  lateral_range.minimum = lateral_range.maximum;
+  valueA.lateral_range = lateral_range;
   ::ad::map::match::LaneOccupiedRegion valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

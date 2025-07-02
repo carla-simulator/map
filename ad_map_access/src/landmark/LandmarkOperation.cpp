@@ -53,30 +53,30 @@ ENULandmark getENULandmark(LandmarkId const &id)
   landmark.id = landmarkPtr->id;
   landmark.type = landmarkPtr->type;
   landmark.position = point::toENU(landmarkPtr->position);
-  landmark.trafficLightType = landmarkPtr->trafficLightType;
+  landmark.traffic_light_type = landmarkPtr->traffic_light_type;
   landmark.heading = getENUHeading(*landmarkPtr);
 
   return landmark;
 }
 
-LandmarkIdList getVisibleLandmarks(lane::LaneId const &laneId)
+LandmarkIdList getVisibleLandmarks(lane::LaneId const &lane_id)
 {
   LandmarkIdList landmarks;
-  auto const lanePtr = lane::getLanePtr(laneId);
+  auto const lanePtr = lane::getLanePtr(lane_id);
   if (!bool(lanePtr))
   {
-    throw std::invalid_argument("ad::map::landmark::getVisibleLandmarks: laneId not found in store");
+    throw std::invalid_argument("ad::map::landmark::getVisibleLandmarks: lane_id not found in store");
   }
-  return lanePtr->visibleLandmarks;
+  return lanePtr->visible_landmarks;
 }
 
-LandmarkIdList getVisibleLandmarks(LandmarkType const &landmarkType, lane::LaneId const &laneId)
+LandmarkIdList getVisibleLandmarks(LandmarkType const &landmarkType, lane::LaneId const &lane_id)
 {
   LandmarkIdList landmarks;
-  auto const visibleLandmarkIds = getVisibleLandmarks(laneId);
-  for (const auto &landmarkId : visibleLandmarkIds)
+  auto const visibleLandmarkIds = getVisibleLandmarks(lane_id);
+  for (const auto &landmark_id : visibleLandmarkIds)
   {
-    auto const landmarkPtr = getLandmarkPtr(landmarkId);
+    auto const landmarkPtr = getLandmarkPtr(landmark_id);
     if (landmarkPtr && landmarkPtr->type == landmarkType)
     {
       landmarks.push_back(landmarkPtr->id);
@@ -86,28 +86,30 @@ LandmarkIdList getVisibleLandmarks(LandmarkType const &landmarkType, lane::LaneI
   return landmarks;
 }
 
-LandmarkId uniqueLandmarkId(point::GeoPoint const &geoPoint)
+LandmarkId uniqueLandmarkId(point::GeoPoint const &geo_point)
 {
   LandmarkIdList landmarksIds;
   LandmarkId id;
 
   landmarksIds = access::getStore().getLandmarks();
   if (landmarksIds.size() == 0)
-    throw std::invalid_argument("There is no landmarks in the map.");
-
-  point::ECEFPoint ecefDstPoint = toECEF(geoPoint);
-  physics::Distance minDistance = std::numeric_limits<physics::Distance>::max();
-  for (auto const &landmarkId : landmarksIds)
   {
-    auto const landmarkPtr = getLandmarkPtr(landmarkId);
+    throw std::invalid_argument("There is no landmarks in the map.");
+  }
+
+  point::ECEFPoint ecefDstPoint = toECEF(geo_point);
+  physics::Distance minDistance = std::numeric_limits<physics::Distance>::max();
+  for (auto const &landmark_id : landmarksIds)
+  {
+    auto const landmarkPtr = getLandmarkPtr(landmark_id);
     point::GeoPoint geoSrcPoint = toGeo(landmarkPtr->position);
-    geoSrcPoint.altitude = geoPoint.altitude;
+    geoSrcPoint.altitude = geo_point.altitude;
     point::ECEFPoint ecefSrcPoint = toECEF(geoSrcPoint);
     auto distance = point::distance(ecefSrcPoint, ecefDstPoint);
 
-    if (landmarkPtr->boundingBox.isValid)
+    if (landmarkPtr->bounding_box.is_valid)
     {
-      if (distance <= landmarkPtr->boundingBox.length && distance < minDistance)
+      if (distance <= landmarkPtr->bounding_box.length && distance < minDistance)
       {
         minDistance = distance;
         id = landmarkPtr->id;
@@ -120,9 +122,10 @@ LandmarkId uniqueLandmarkId(point::GeoPoint const &geoPoint)
     }
   }
 
-  if ((uint64_t)id == std::numeric_limits<uint64_t>::quiet_NaN())
+  if (id.mLandmarkId == std::numeric_limits<uint64_t>::quiet_NaN())
+  {
     throw std::invalid_argument("Cannot find any lardmark given geo point.");
-
+  }
   return id;
 }
 

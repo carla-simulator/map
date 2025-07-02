@@ -12,6 +12,7 @@
 #include "../lane/LaneOperationPrivate.hpp"
 #include "ad/map/access/Logging.hpp"
 #include "ad/map/access/Store.hpp"
+#include "ad/map/intersection/Intersection.hpp"
 #include "ad/map/landmark/LandmarkOperation.hpp"
 #include "ad/map/lane/LaneOperation.hpp"
 #include "ad/map/point/GeometryOperation.hpp"
@@ -37,14 +38,14 @@ bool Factory::add(PartitionId part_id, const lane::LaneId &id, lane::LaneType ty
   return insertResult.second;
 }
 
-lane::LaneId Factory::add(PartitionId pid, const point::GeoEdge &left_geo, const point::GeoEdge &right_geo)
+lane::LaneId Factory::add(PartitionId pid, const point::GeoPointList &left_geo, const point::GeoPointList &right_geo)
 {
   lane::LaneId new_lane_id = getNextLaneId();
   if (add(pid, new_lane_id, lane::LaneType::NORMAL, lane::LaneDirection::POSITIVE))
   {
     point::CoordinateTransform cf;
-    point::ECEFEdge left_ecef;
-    point::ECEFEdge right_ecef;
+    point::ECEFPointList left_ecef;
+    point::ECEFPointList right_ecef;
     cf.convert(left_geo, left_ecef);
     cf.convert(right_geo, right_ecef);
     point::Geometry const left_edge = point::createGeometry(left_ecef, false);
@@ -59,8 +60,8 @@ lane::LaneId Factory::add(PartitionId pid, const point::GeoEdge &left_geo, const
 }
 
 lane::LaneId Factory::add(PartitionId pid,
-                          const point::ECEFEdge &left_ecef,
-                          const point::ECEFEdge &right_ecef,
+                          const point::ECEFPointList &left_ecef,
+                          const point::ECEFPointList &right_ecef,
                           const lane::LaneId &lane_id_0,
                           const lane::LaneId &lane_id_1)
 {
@@ -159,10 +160,10 @@ bool Factory::add(PartitionId part_id,
   landmarkPtr->type = type;
   landmarkPtr->position = position;
   landmarkPtr->orientation = orientation;
-  landmarkPtr->boundingBox = bounding_box;
-  landmarkPtr->trafficLightType = traffic_light_type;
-  landmarkPtr->trafficSignType = traffic_sign_type;
-  landmarkPtr->supplementaryText = text;
+  landmarkPtr->bounding_box = bounding_box;
+  landmarkPtr->traffic_light_type = traffic_light_type;
+  landmarkPtr->traffic_sign_type = traffic_sign_type;
+  landmarkPtr->supplementary_text = text;
   // @todo: Do we need to ensure that we handle only valid objects?
   return insertResult.second;
 }
@@ -178,14 +179,14 @@ bool Factory::add(const lane::LaneId &id, const lane::ContactLane &contact_lane)
     lane::Lane::Ptr lane = it->second;
     if (lane)
     {
-      for (auto const &existing_contact_lane : lane->contactLanes)
+      for (auto const &existing_contact_lane : lane->contact_lanes)
       {
         if (contact_lane == existing_contact_lane)
         {
           return true;
         }
       }
-      lane->contactLanes.push_back(contact_lane);
+      lane->contact_lanes.push_back(contact_lane);
       return true;
     }
   }
@@ -206,7 +207,7 @@ bool Factory::add(const lane::LaneId &id, const lane::ContactLaneList &contact_l
   return true;
 }
 
-bool Factory::add(const lane::LaneId &id, const restriction::SpeedLimit &speedLimit)
+bool Factory::add(const lane::LaneId &id, const restriction::SpeedLimit &speed_limit)
 {
   auto it = mStore.lane_map_.find(id);
   if (it != mStore.lane_map_.end())
@@ -214,11 +215,11 @@ bool Factory::add(const lane::LaneId &id, const restriction::SpeedLimit &speedLi
     lane::Lane::Ptr lane = it->second;
     if (lane)
     {
-      if (restriction::doesRangeAttributeOverlap(lane->speedLimits, speedLimit))
+      if (restriction::doesRangeAttributeOverlap(lane->speed_limits, speed_limit))
       {
-        access::getLogger()->warn("Lane para-speed overlaps existing value!? {}, {}", id, speedLimit);
+        access::getLogger()->warn("Lane para-speed overlaps existing value!? {}, {}", id, speed_limit);
       }
-      restriction::insertRangeAttribute(lane->speedLimits, speedLimit);
+      restriction::insertRangeAttribute(lane->speed_limits, speed_limit);
       return true;
     }
   }
@@ -226,11 +227,11 @@ bool Factory::add(const lane::LaneId &id, const restriction::SpeedLimit &speedLi
   return false;
 }
 
-bool Factory::add(const lane::LaneId &id, const landmark::LandmarkId &landmarkId)
+bool Factory::add(const lane::LaneId &id, const landmark::LandmarkId &landmark_id)
 {
-  if (!isValid(landmarkId))
+  if (!isValid(landmark_id))
   {
-    access::getLogger()->error("Cannot add landmark with invalid id. {}", landmarkId);
+    access::getLogger()->error("Cannot add landmark with invalid id. {}", landmark_id);
     return false;
   }
   auto it = mStore.lane_map_.find(id);
@@ -239,14 +240,14 @@ bool Factory::add(const lane::LaneId &id, const landmark::LandmarkId &landmarkId
     lane::Lane::Ptr lane = it->second;
     if (lane)
     {
-      for (auto existing_visible_landmark : lane->visibleLandmarks)
+      for (auto existing_visible_landmark : lane->visible_landmarks)
       {
-        if (landmarkId == existing_visible_landmark)
+        if (landmark_id == existing_visible_landmark)
         {
           return true;
         }
       }
-      lane->visibleLandmarks.push_back(landmarkId);
+      lane->visible_landmarks.push_back(landmark_id);
       return true;
     }
   }
@@ -290,11 +291,11 @@ bool Factory::add(const lane::LaneId &id_from,
   }
 
   lane::ContactLane contactLane;
-  contactLane.toLane = id_to;
+  contactLane.to_lane = id_to;
   contactLane.location = location;
   contactLane.types = types;
   contactLane.restrictions = restrs;
-  contactLane.trafficLightId = landmark::LandmarkId();
+  contactLane.landmark_id = landmark::LandmarkId();
   return add(id_from, contactLane);
 }
 
@@ -318,11 +319,11 @@ bool Factory::add(const lane::LaneId &id_from,
   }
 
   lane::ContactLane contactLane;
-  contactLane.toLane = id_to;
+  contactLane.to_lane = id_to;
   contactLane.location = location;
   contactLane.types = types;
   contactLane.restrictions = restrs;
-  contactLane.trafficLightId = traffic_light;
+  contactLane.landmark_id = traffic_light;
   return add(id_from, contactLane);
 }
 
@@ -369,7 +370,7 @@ bool Factory::set(const lane::LaneId &id, lane::ComplianceVersion compliance_ver
     lane::Lane::Ptr lane = it->second;
     if (lane)
     {
-      lane->complianceVersion = compliance_ver;
+      lane->compliance_version = compliance_ver;
       return true;
     }
   }
@@ -385,9 +386,9 @@ bool Factory::set(const lane::LaneId &id, const point::Geometry &edge_left, cons
     lane::Lane::Ptr lane = it->second;
     if (lane)
     {
-      lane->edgeLeft = edge_left;
-      lane->edgeRight = edge_right;
-      lane->boundingSphere = point::calcBoundingSphere(edge_left, edge_right);
+      lane->edge_left = edge_left;
+      lane->edge_right = edge_right;
+      lane->bounding_sphere = point::calcBoundingSphere(edge_left, edge_right);
       lane::updateLaneLengths(*lane);
       return true;
     }
@@ -404,12 +405,12 @@ bool Factory::set(const lane::LaneId &id, const physics::Speed &maxSpeed)
     lane::Lane::Ptr lane = it->second;
     if (lane)
     {
-      lane->speedLimits.clear();
-      restriction::SpeedLimit speedLimit;
-      speedLimit.lanePiece.minimum = physics::ParametricValue(0.);
-      speedLimit.lanePiece.maximum = physics::ParametricValue(1.);
-      speedLimit.speedLimit = maxSpeed;
-      lane->speedLimits.push_back(speedLimit);
+      lane->speed_limits.clear();
+      restriction::SpeedLimit speed_limit;
+      speed_limit.lane_piece.minimum = physics::ParametricValue(0.);
+      speed_limit.lane_piece.maximum = physics::ParametricValue(1.);
+      speed_limit.speed_limit = maxSpeed;
+      lane->speed_limits.push_back(speed_limit);
       return true;
     }
   }
@@ -441,7 +442,7 @@ bool Factory::set(const lane::LaneId &id, const landmark::LandmarkIdList &landma
     lane::Lane::Ptr lane = it->second;
     if (lane)
     {
-      lane->visibleLandmarks = landmarks;
+      lane->visible_landmarks = landmarks;
       return true;
     }
   }
@@ -456,7 +457,7 @@ bool Factory::set(const TrafficType &traffic_type)
 {
   if (traffic_type != TrafficType::INVALID)
   {
-    mStore.meta_data_.trafficType = traffic_type;
+    mStore.meta_data_.traffic_type = traffic_type;
     return true;
   }
 
@@ -512,9 +513,9 @@ bool Factory::deleteContacts(lane::LaneId id, lane::LaneId to_id)
       lane::Lane::Ptr lane = it->second;
       if (lane)
       {
-        lane::ContactLaneList &cls = lane->contactLanes;
+        lane::ContactLaneList &cls = lane->contact_lanes;
         cls.erase(
-          std::remove_if(cls.begin(), cls.end(), [to_id](const lane::ContactLane &cl) { return cl.toLane == to_id; }));
+          std::remove_if(cls.begin(), cls.end(), [to_id](const lane::ContactLane &cl) { return cl.to_lane == to_id; }));
         return true;
       }
     }
@@ -563,8 +564,210 @@ bool Factory::deleteLandmark(landmark::LandmarkId id)
   return false;
 }
 
+bool Factory::changeLaneContact(const lane::LaneId &id_from,
+                                const lane::LaneId &id_to,
+                                const lane::ContactType &old_contact,
+                                const lane::ContactType &new_contact)
+{
+  bool changeSucceeded = false;
+  if (lane::isValid(id_from) && lane::isValid(id_to))
+  {
+    auto it = mStore.lane_map_.find(id_from);
+    if (it != mStore.lane_map_.end())
+    {
+      lane::Lane::Ptr lane = it->second;
+      if (lane)
+      {
+        for (auto &contact_lane : lane->contact_lanes)
+        {
+          if (contact_lane.to_lane == id_to)
+          {
+            for (auto &contact_type : contact_lane.types)
+            {
+              if (contact_type == old_contact)
+              {
+                contact_type = new_contact;
+                changeSucceeded = true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  else
+  {
+    access::getLogger()->error("Invalid lane identifier passed to Factory::changeLaneContact()");
+  }
+  return changeSucceeded;
+}
+
 ////////////////
 // Other Methods
+bool correctLaneEdgeAtFront(::ad::map::point::Geometry &first,
+                            ::ad::map::point::ECEFPoint const &new_end_point,
+                            ad::physics::Distance const max_delta_length)
+{
+  auto previousDirection = new_end_point - first.ecef_points.back();
+  ad::map::point::ECEFPointList newPoints;
+  for (auto iter = first.ecef_points.rbegin(); iter != first.ecef_points.rend(); ++iter)
+  {
+    auto nextDirection = new_end_point - *iter;
+    if (point::vectorDotProduct(previousDirection, nextDirection) < 0.)
+    {
+      newPoints.push_back(new_end_point);
+      ad::physics::Distance newLength = calcLength(newPoints);
+      // now the direction towards the new end point switches by more than 90 degrees at once
+      // that should be the point where to cut the edge
+      // but we only cut if we don't cut more than the given maximum allowed
+      if (first.length < newLength + max_delta_length)
+      {
+        access::getLogger()->error(
+          "Factory::correctLaneEdgeAtFront() points size change {} -> {} at the end. Length {} -> {}",
+          first.ecef_points.size(),
+          newPoints.size(),
+          first.length,
+          newLength);
+        std::reverse(newPoints.begin(), newPoints.end());
+        first.ecef_points.swap(newPoints);
+        first.length = newLength;
+        return true;
+      }
+      else
+      {
+        access::getLogger()->error(
+          "Factory::correctLaneEdgeAtFront() failed. Required points size change {} -> {} at the end. Length {} -> {}",
+          first.ecef_points.size(),
+          newPoints.size(),
+          first.length,
+          newLength);
+        return false;
+      }
+    }
+    else
+    {
+      newPoints.push_back(*iter);
+    }
+  }
+  // there seems to be nothing requirred to be cut
+  access::getLogger()->error(
+    "Factory::correctLaneEdgeAtFront() failed. No direction switch in respect to new end point detected!");
+  return false;
+}
+
+bool correctLaneEdgeAtBack(::ad::map::point::Geometry &first,
+                           ::ad::map::point::ECEFPoint const &new_end_point,
+                           ad::physics::Distance const max_delta_length)
+{
+  auto previousDirection = new_end_point - first.ecef_points.front();
+  ad::map::point::ECEFPointList newPoints;
+  for (auto iter = first.ecef_points.begin(); iter != first.ecef_points.end(); ++iter)
+  {
+    auto nextDirection = new_end_point - *iter;
+    if (point::vectorDotProduct(previousDirection, nextDirection) < 0.)
+    {
+      newPoints.push_back(new_end_point);
+      ad::physics::Distance newLength = calcLength(newPoints);
+      // now the direction towards the new end point switches by more than 90 degrees at once
+      // that should be the point where to cut the edge
+      // but we only cut if we don't cut more than the given maximum allowed
+      if (first.length < newLength + max_delta_length)
+      {
+        access::getLogger()->error(
+          "Factory::correctLaneEdgeAtBack() points size change {} -> {} at the end. Length {} -> {}",
+          first.ecef_points.size(),
+          newPoints.size(),
+          first.length,
+          newLength);
+        first.ecef_points = newPoints;
+        first.length = newLength;
+        return true;
+      }
+      else
+      {
+        access::getLogger()->error(
+          "Factory::correctLaneEdgeAtBack() failed. Required points size change {} -> {} at the end. Length {} -> {}",
+          first.ecef_points.size(),
+          newPoints.size(),
+          first.length,
+          newLength);
+        return false;
+      }
+    }
+    else
+    {
+      newPoints.push_back(*iter);
+    }
+  }
+  // there seems to be nothing requirred to be cut
+  access::getLogger()->error(
+    "Factory::correctLaneEdgeAtBack() failed. No direction switch in respect to new end point detected!");
+  return false;
+}
+
+bool correctLaneEdge(::ad::map::point::Geometry &first,
+                     ::ad::map::point::Geometry const &second,
+                     ad::physics::Distance const max_correction_distance = ad::physics::Distance(.5))
+{
+  bool ok = false;
+  if (ad::map::point::distance(first.ecef_points.back(), second.ecef_points.front()) < max_correction_distance)
+  {
+    ok = correctLaneEdgeAtBack(first, second.ecef_points.front(), max_correction_distance);
+  }
+  else if (ad::map::point::distance(first.ecef_points.back(), second.ecef_points.back()) < max_correction_distance)
+  {
+    ok = correctLaneEdgeAtBack(first, second.ecef_points.back(), max_correction_distance);
+  }
+  else if (ad::map::point::distance(first.ecef_points.front(), second.ecef_points.front()) < max_correction_distance)
+  {
+    ok = correctLaneEdgeAtFront(first, second.ecef_points.front(), max_correction_distance);
+  }
+  else if (ad::map::point::distance(first.ecef_points.front(), second.ecef_points.back()) < max_correction_distance)
+  {
+    ok = correctLaneEdgeAtFront(first, second.ecef_points.back(), max_correction_distance);
+  }
+  return ok;
+}
+
+bool Factory::correctLaneBorder(lane::LaneId from_id, lane::LaneId to_id)
+{
+  bool ok = false;
+  if (lane::isValid(from_id) && lane::isValid(to_id))
+  {
+    lane::Lane::Ptr from_lane = std::const_pointer_cast<lane::Lane>(mStore.getLanePtr(from_id));
+    if (from_lane)
+    {
+      lane::Lane::ConstPtr to_lane = mStore.getLanePtr(to_id);
+      if (to_lane)
+      {
+        if (from_lane->direction == to_lane->direction)
+        {
+          auto correct_left_result = correctLaneEdge(from_lane->edge_left, to_lane->edge_left);
+          auto correct_right_result = correctLaneEdge(from_lane->edge_right, to_lane->edge_right);
+          ok = correct_left_result && correct_right_result;
+        }
+        else
+        {
+          auto correct_left_result = correctLaneEdge(from_lane->edge_left, to_lane->edge_right);
+          auto correct_right_result = correctLaneEdge(from_lane->edge_right, to_lane->edge_left);
+          ok = correct_left_result && correct_right_result;
+        }
+      }
+    }
+  }
+
+  if (!ok)
+  {
+    access::getLogger()->error("Factory::correctLaneBorder({} -> {}) failed", from_id, to_id);
+  }
+  else
+  {
+    access::getLogger()->info("Factory::correctLaneBorder({} -> {}) succeeded", from_id, to_id);
+  }
+  ok = autoConnect(from_id, to_id);
+  ok &= autoConnect(to_id, from_id);
+  return ok;
+}
 
 bool Factory::autoConnect(lane::LaneId from_id, lane::LaneId to_id)
 {
@@ -586,18 +789,22 @@ bool Factory::autoConnect(lane::LaneId from_id, lane::LaneId to_id)
           if (lane::getStartPoint(*from_lane) == lane::getStartPoint(*to_lane))
           {
             ok = add(from_id, to_id, pred, types, restrs);
+            access::getLogger()->debug("Factory::autoConnect({} -> {}) pred succeeded {}", from_id, to_id, ok);
           }
           else if (lane::getStartPoint(*from_lane) == lane::getEndPoint(*to_lane))
           {
             ok = add(from_id, to_id, pred, types, restrs);
+            access::getLogger()->debug("Factory::autoConnect({} -> {}) pred succeeded {}", from_id, to_id, ok);
           }
           else if (lane::getEndPoint(*from_lane) == lane::getStartPoint(*to_lane))
           {
             ok = add(from_id, to_id, succ, types, restrs);
+            access::getLogger()->debug("Factory::autoConnect({} -> {}) succ succeeded {}", from_id, to_id, ok);
           }
           else if (lane::getEndPoint(*from_lane) == lane::getEndPoint(*to_lane))
           {
             ok = add(from_id, to_id, succ, types, restrs);
+            access::getLogger()->debug("Factory::autoConnect({} -> {}) succ succeeded {}", from_id, to_id, ok);
           }
         }
       }
@@ -616,6 +823,152 @@ bool Factory::autoConnect(lane::LaneId from_id, lane::LaneId to_id)
     access::getLogger()->error("Invalid lane identifier passed to Factory::autoConnect()");
   }
   return ok;
+}
+
+void Factory::setDefaultIntersectionType(intersection::IntersectionType const defaultIntersectionType)
+{
+  mDefaultIntersectionType = defaultIntersectionType;
+}
+
+void Factory::setDefaultTrafficLightType(landmark::TrafficLightType const defaultTrafficLightType)
+{
+  mDefaultTrafficLightType = defaultTrafficLightType;
+}
+
+restriction::Restrictions Factory::createRoadRestrictions() const
+{
+  restriction::Restriction roadRestriction;
+  roadRestriction.negated = false;
+  roadRestriction.passengers_min = 0.;
+  roadRestriction.road_user_types
+    = {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK};
+  restriction::Restrictions roadRestrictions;
+  roadRestrictions.conjunctions.push_back(roadRestriction);
+  return roadRestrictions;
+}
+
+void Factory::addDefaultIntersectionContacts()
+{
+  lane::ContactType defaultIntersectionContact;
+  switch (mDefaultIntersectionType)
+  {
+    case intersection::IntersectionType::HasWay:
+      defaultIntersectionContact = lane::ContactType::RIGHT_OF_WAY;
+      break;
+    case intersection::IntersectionType::Stop:
+      defaultIntersectionContact = lane::ContactType::STOP;
+      break;
+    case intersection::IntersectionType::AllWayStop:
+      defaultIntersectionContact = lane::ContactType::STOP_ALL;
+      break;
+    case intersection::IntersectionType::Yield:
+      defaultIntersectionContact = lane::ContactType::YIELD;
+      break;
+    case intersection::IntersectionType::Crosswalk:
+      defaultIntersectionContact = lane::ContactType::CROSSWALK;
+      break;
+    case intersection::IntersectionType::PriorityToRight:
+      defaultIntersectionContact = lane::ContactType::PRIO_TO_RIGHT;
+      break;
+    case intersection::IntersectionType::PriorityToRightAndStraight:
+      defaultIntersectionContact = lane::ContactType::PRIO_TO_RIGHT_AND_STRAIGHT;
+      break;
+    case intersection::IntersectionType::TrafficLight:
+      defaultIntersectionContact = lane::ContactType::TRAFFIC_LIGHT;
+      break;
+    case intersection::IntersectionType::Unknown:
+      return;
+    default:
+      access::getLogger()->error("Invalid defaultIntersectionType passed {}",
+                                 static_cast<int>(mDefaultIntersectionType));
+      return;
+  }
+
+  for (auto &lane_entry : mStore.lane_map_)
+  {
+    auto lane_id = lane_entry.first;
+    auto lanePtr = lane_entry.second;
+
+    if (lanePtr->type == lane::LaneType::INTERSECTION)
+    {
+      continue;
+    }
+
+    // lane is not an intersection
+    lane::ContactLaneList unknownIntersectionTransitions;
+    lane::LaneIdSet knownIntersectionTransitions;
+    for (auto const &outerContact :
+         lane::getContactLanes(*lanePtr, {lane::ContactLocation::SUCCESSOR, lane::ContactLocation::PREDECESSOR}))
+    {
+      auto intersectionLanePtr = mStore.getLanePtr(outerContact.to_lane);
+      if (intersectionLanePtr->type == lane::LaneType::INTERSECTION)
+      {
+        // intersection successor or predecessor found
+        if (((outerContact.location == lane::ContactLocation::SUCCESSOR) && !lane::isLaneDirectionNegative(*lanePtr))
+            || ((outerContact.location == lane::ContactLocation::PREDECESSOR)
+                && !lane::isLaneDirectionPositive(*lanePtr)))
+        {
+          auto intersectionType = intersection::Intersection::intersectionTypeFromContactTypes(outerContact.types);
+          if (intersectionType == intersection::IntersectionType::Unknown)
+          {
+            // check the other side of the transition which could carry intersection info
+            for (auto const &innerContact : intersectionLanePtr->contact_lanes)
+            {
+              if (innerContact.to_lane == lane_id)
+              {
+                if (intersection::Intersection::intersectionTypeFromContactTypes(innerContact.types)
+                    != intersection::IntersectionType::Unknown)
+                {
+                  knownIntersectionTransitions.insert(intersectionLanePtr->id);
+                }
+              }
+            }
+            if (knownIntersectionTransitions.find(intersectionLanePtr->id) == knownIntersectionTransitions.end())
+            {
+              unknownIntersectionTransitions.push_back(outerContact);
+            }
+          }
+          else
+          {
+            knownIntersectionTransitions.insert(intersectionLanePtr->id);
+          }
+        }
+      }
+    }
+
+    for (auto const &contact : unknownIntersectionTransitions)
+    {
+      if (knownIntersectionTransitions.find(contact.to_lane) == knownIntersectionTransitions.end())
+      {
+        auto restrictions = createRoadRestrictions();
+        if (defaultIntersectionContact == lane::ContactType::TRAFFIC_LIGHT)
+        {
+          landmark::LandmarkId fakeTrafficLightId(landmark::LandmarkId::cMaxValue);
+          point::Geometry bounding_box;
+          point::ECEFPoint position;
+          point::ECEFPoint orientation;
+          if (contact.location == lane::ContactLocation::SUCCESSOR)
+          {
+            position = lanePtr->edge_right.ecef_points[lanePtr->edge_right.ecef_points.size() - 1];
+            orientation = lanePtr->edge_right.ecef_points[lanePtr->edge_right.ecef_points.size() - 2];
+          }
+          else
+          {
+            position = lanePtr->edge_left.ecef_points[0];
+            orientation = lanePtr->edge_left.ecef_points[1];
+          }
+          (void)addTrafficLight(
+            access::PartitionId(0), fakeTrafficLightId, mDefaultTrafficLightType, position, orientation, bounding_box);
+          add(
+            lane_id, contact.to_lane, contact.location, {defaultIntersectionContact}, restrictions, fakeTrafficLightId);
+        }
+        else
+        {
+          add(lane_id, contact.to_lane, contact.location, {defaultIntersectionContact}, restrictions);
+        }
+      }
+    }
+  }
 }
 
 /////////////

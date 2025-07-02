@@ -11,17 +11,26 @@
 #include <ad/map/access/Store.hpp>
 #include <ad/map/config/MapConfigFileHandler.hpp>
 #include <ad/map/intersection/Intersection.hpp>
+#include <ad/map/intersection/IntersectionType.hpp>
+#include <ad/map/intersection/Types.hpp>
 #include <ad/map/landmark/LandmarkOperation.hpp>
+#include <ad/map/lane/ContactLane.hpp>
+#include <ad/map/lane/ContactLaneList.hpp>
 #include <ad/map/lane/LaneOperation.hpp>
+#include <ad/map/lane/Types.hpp>
 #include <ad/map/match/AdMapMatching.hpp>
 #include <ad/map/opendrive/AdMapFactory.hpp>
 #include <ad/map/point/Operation.hpp>
+#include <ad/map/point/Types.hpp>
+#include <ad/map/route/Planning.hpp>
+#include <ad/map/route/RouteOperation.hpp>
 #include <ad/map/serialize/SerializerFileCRC32.hpp>
-#include <gtest/gtest.h>
-
 #include <fstream>
+#include <gtest/gtest.h>
 #include <streambuf>
 #include <string>
+#include "ad/map/access/Logging.hpp"
+#include "spdlog/spdlog.h"
 
 using namespace ::ad;
 using namespace ::ad::map;
@@ -39,9 +48,9 @@ struct OpenDriveAccessTests : ::testing::Test
     access::cleanup();
   }
 
-  void checkEdgePoints(lane::LaneId laneId, point::ECEFEdge const &edge)
+  void checkEdgePoints(lane::LaneId lane_id, point::ECEFPointList const &edge)
   {
-    EXPECT_GE(edge.size(), 2u) << static_cast<uint64_t>(laneId);
+    EXPECT_GE(edge.size(), 2u) << lane_id;
     if (edge.size() > 2u)
     {
       for (auto pointIter = edge.begin(); pointIter != edge.end(); pointIter++)
@@ -51,7 +60,7 @@ struct OpenDriveAccessTests : ::testing::Test
         {
           auto deltaPoints = *pointIter - *nextPointIter;
           auto pointDistance = vectorLength(deltaPoints);
-          EXPECT_NE(pointDistance, physics::Distance(0.)) << static_cast<uint64_t>(laneId) << " num: " << edge.size();
+          EXPECT_NE(pointDistance, physics::Distance(0.)) << lane_id << " num: " << edge.size();
         }
       }
     }
@@ -59,7 +68,7 @@ struct OpenDriveAccessTests : ::testing::Test
     trange.minimum = physics::ParametricValue(0.);
     trange.maximum = physics::ParametricValue(1.);
     auto ecefs = point::getParametricRange(edge, trange);
-    EXPECT_EQ(edge.size(), ecefs.size()) << static_cast<uint64_t>(laneId);
+    EXPECT_EQ(edge.size(), ecefs.size()) << lane_id;
   }
 
   void checkEdgeContacts(lane::Lane const &lane)
@@ -68,55 +77,67 @@ struct OpenDriveAccessTests : ::testing::Test
     {
       for (auto successorContact : lane::getContactLanes(lane, lane::ContactLocation::SUCCESSOR))
       {
-        auto successorLane = lane::getLane(successorContact.toLane);
+        auto successorLane = lane::getLane(successorContact.to_lane);
         if (successorLane.direction == lane.direction)
         {
-          EXPECT_EQ(lane.edgeLeft.ecefEdge.back(), successorLane.edgeLeft.ecefEdge.front())
-            << static_cast<uint64_t>(lane.id) << " succ: " << static_cast<uint64_t>(successorLane.id);
-          EXPECT_EQ(lane.edgeRight.ecefEdge.back(), successorLane.edgeRight.ecefEdge.front())
-            << static_cast<uint64_t>(lane.id) << " succ: " << static_cast<uint64_t>(successorLane.id);
+          EXPECT_EQ(lane.edge_left.ecef_points.back(), successorLane.edge_left.ecef_points.front())
+            << lane.id << " succ: " << successorLane.id << " " << toENU(lane.edge_left.ecef_points.back())
+            << toENU(successorLane.edge_left.ecef_points.front());
+          EXPECT_EQ(lane.edge_right.ecef_points.back(), successorLane.edge_right.ecef_points.front())
+            << lane.id << " succ: " << successorLane.id << " " << toENU(lane.edge_right.ecef_points.back())
+            << toENU(successorLane.edge_right.ecef_points.front());
         }
         else
         {
-          EXPECT_EQ(lane.edgeLeft.ecefEdge.back(), successorLane.edgeRight.ecefEdge.back())
-            << static_cast<uint64_t>(lane.id) << " succ: " << static_cast<uint64_t>(successorLane.id);
-          EXPECT_EQ(lane.edgeRight.ecefEdge.back(), successorLane.edgeLeft.ecefEdge.back())
-            << static_cast<uint64_t>(lane.id) << " succ: " << static_cast<uint64_t>(successorLane.id);
+          EXPECT_EQ(lane.edge_left.ecef_points.back(), successorLane.edge_right.ecef_points.back())
+            << lane.id << " succ: " << successorLane.id << " " << toENU(lane.edge_left.ecef_points.back())
+            << toENU(successorLane.edge_right.ecef_points.back());
+          EXPECT_EQ(lane.edge_right.ecef_points.back(), successorLane.edge_left.ecef_points.back())
+            << lane.id << " succ: " << successorLane.id << " " << toENU(lane.edge_right.ecef_points.back())
+            << toENU(successorLane.edge_left.ecef_points.back());
         }
       }
       for (auto predecessorContact : lane::getContactLanes(lane, lane::ContactLocation::PREDECESSOR))
       {
-        auto predecessorLane = lane::getLane(predecessorContact.toLane);
+        auto predecessorLane = lane::getLane(predecessorContact.to_lane);
         if (predecessorLane.direction == lane.direction)
         {
-          EXPECT_EQ(lane.edgeLeft.ecefEdge.front(), predecessorLane.edgeLeft.ecefEdge.back())
-            << static_cast<uint64_t>(lane.id) << " pre: " << static_cast<uint64_t>(predecessorLane.id);
-          EXPECT_EQ(lane.edgeRight.ecefEdge.front(), predecessorLane.edgeRight.ecefEdge.back())
-            << static_cast<uint64_t>(lane.id) << " pre: " << static_cast<uint64_t>(predecessorLane.id);
+          EXPECT_EQ(lane.edge_left.ecef_points.front(), predecessorLane.edge_left.ecef_points.back())
+            << lane.id << " pre: " << predecessorLane.id << " " << toENU(lane.edge_left.ecef_points.front())
+            << toENU(predecessorLane.edge_left.ecef_points.back());
+          EXPECT_EQ(lane.edge_right.ecef_points.front(), predecessorLane.edge_right.ecef_points.back())
+            << lane.id << " pre: " << predecessorLane.id << " " << toENU(lane.edge_right.ecef_points.front())
+            << toENU(predecessorLane.edge_right.ecef_points.back());
         }
         else
         {
-          EXPECT_EQ(lane.edgeLeft.ecefEdge.front(), predecessorLane.edgeRight.ecefEdge.front())
-            << static_cast<uint64_t>(lane.id) << " pre: " << static_cast<uint64_t>(predecessorLane.id);
-          EXPECT_EQ(lane.edgeRight.ecefEdge.front(), predecessorLane.edgeLeft.ecefEdge.front())
-            << static_cast<uint64_t>(lane.id) << " pre: " << static_cast<uint64_t>(predecessorLane.id);
+          EXPECT_EQ(lane.edge_left.ecef_points.front(), predecessorLane.edge_right.ecef_points.front())
+            << lane.id << " pre: " << predecessorLane.id << " " << toENU(lane.edge_left.ecef_points.front())
+            << toENU(predecessorLane.edge_right.ecef_points.front());
+          EXPECT_EQ(lane.edge_right.ecef_points.front(), predecessorLane.edge_left.ecef_points.front())
+            << lane.id << " pre: " << predecessorLane.id << " " << toENU(lane.edge_right.ecef_points.front())
+            << toENU(predecessorLane.edge_left.ecef_points.front());
         }
       }
       for (auto leftContact : lane::getContactLanes(lane, lane::ContactLocation::LEFT))
       {
-        auto leftLane = lane::getLane(leftContact.toLane);
-        EXPECT_EQ(lane.edgeLeft.ecefEdge.front(), leftLane.edgeRight.ecefEdge.front())
-          << static_cast<uint64_t>(lane.id) << " left: " << static_cast<uint64_t>(leftLane.id);
-        EXPECT_EQ(lane.edgeLeft.ecefEdge.back(), leftLane.edgeRight.ecefEdge.back())
-          << static_cast<uint64_t>(lane.id) << " left: " << static_cast<uint64_t>(leftLane.id);
+        auto leftLane = lane::getLane(leftContact.to_lane);
+        EXPECT_EQ(lane.edge_left.ecef_points.front(), leftLane.edge_right.ecef_points.front())
+          << lane.id << " left: " << leftLane.id << " " << toENU(lane.edge_left.ecef_points.front())
+          << toENU(leftLane.edge_right.ecef_points.front());
+        EXPECT_EQ(lane.edge_left.ecef_points.back(), leftLane.edge_right.ecef_points.back())
+          << lane.id << " left: " << leftLane.id << " " << toENU(lane.edge_left.ecef_points.back())
+          << toENU(leftLane.edge_right.ecef_points.back());
       }
       for (auto rightContact : lane::getContactLanes(lane, lane::ContactLocation::RIGHT))
       {
-        auto rightLane = lane::getLane(rightContact.toLane);
-        EXPECT_EQ(lane.edgeRight.ecefEdge.front(), rightLane.edgeLeft.ecefEdge.front())
-          << static_cast<uint64_t>(lane.id) << " right: " << static_cast<uint64_t>(rightLane.id);
-        EXPECT_EQ(lane.edgeRight.ecefEdge.back(), rightLane.edgeLeft.ecefEdge.back())
-          << static_cast<uint64_t>(lane.id) << " right: " << static_cast<uint64_t>(rightLane.id);
+        auto rightLane = lane::getLane(rightContact.to_lane);
+        EXPECT_EQ(lane.edge_right.ecef_points.front(), rightLane.edge_left.ecef_points.front())
+          << lane.id << " right: " << rightLane.id << " " << toENU(lane.edge_right.ecef_points.front())
+          << toENU(rightLane.edge_left.ecef_points.front());
+        EXPECT_EQ(lane.edge_right.ecef_points.back(), rightLane.edge_left.ecef_points.back())
+          << lane.id << " right: " << rightLane.id << " " << toENU(lane.edge_right.ecef_points.back())
+          << toENU(rightLane.edge_left.ecef_points.back());
       }
     }
   }
@@ -126,9 +147,9 @@ struct OpenDriveAccessTests : ::testing::Test
     match::AdMapMatching mapMatching;
     mapMatching.setRelevantLanes(lanesTestArea);
 
-    for (auto laneId : lanesToTest)
+    for (auto lane_id : lanesToTest)
     {
-      auto lane = lane::getLane(laneId);
+      auto lane = lane::getLane(lane_id);
       auto ecefPoint0 = lane::getParametricPoint(lane, physics::ParametricValue(0.), physics::ParametricValue(.5));
       auto enuPoint0 = point::toENU(ecefPoint0);
       auto mapMatchedPositions0
@@ -137,35 +158,35 @@ struct OpenDriveAccessTests : ::testing::Test
       auto enuPoint1 = point::toENU(ecefPoint1);
       auto mapMatchedPositions1
         = mapMatching.getMapMatchedPositions(enuPoint1, physics::Distance(5.), physics::Probability(0.));
-      auto contactLanes = lane::getContactLanes(lane,
-                                                {lane::ContactLocation::LEFT,
-                                                 lane::ContactLocation::RIGHT,
-                                                 lane::ContactLocation::SUCCESSOR,
-                                                 lane::ContactLocation::PREDECESSOR});
+      auto contact_lanes = lane::getContactLanes(lane,
+                                                 {lane::ContactLocation::LEFT,
+                                                  lane::ContactLocation::RIGHT,
+                                                  lane::ContactLocation::SUCCESSOR,
+                                                  lane::ContactLocation::PREDECESSOR});
       lane::LaneIdSet expectedLanes;
       expectedLanes.insert(lane.id);
-      for (auto contactLane : contactLanes)
+      for (auto contactLane : contact_lanes)
       {
-        if (lanesTestArea.find(contactLane.toLane) != lanesTestArea.end())
+        if (lanesTestArea.find(contactLane.to_lane) != lanesTestArea.end())
         {
-          expectedLanes.insert(contactLane.toLane);
+          expectedLanes.insert(contactLane.to_lane);
         }
       }
       EXPECT_NE(expectedLanes.size(), 0u);
       for (auto const &matchedPosition : mapMatchedPositions0)
       {
-        EXPECT_TRUE(lanesTestArea.find(matchedPosition.lanePoint.paraPoint.laneId) != lanesTestArea.end());
-        expectedLanes.erase(matchedPosition.lanePoint.paraPoint.laneId);
+        EXPECT_TRUE(lanesTestArea.find(matchedPosition.lane_point.para_point.lane_id) != lanesTestArea.end());
+        expectedLanes.erase(matchedPosition.lane_point.para_point.lane_id);
       }
       for (auto const &matchedPosition : mapMatchedPositions1)
       {
-        EXPECT_TRUE(lanesTestArea.find(matchedPosition.lanePoint.paraPoint.laneId) != lanesTestArea.end());
-        expectedLanes.erase(matchedPosition.lanePoint.paraPoint.laneId);
+        EXPECT_TRUE(lanesTestArea.find(matchedPosition.lane_point.para_point.lane_id) != lanesTestArea.end());
+        expectedLanes.erase(matchedPosition.lane_point.para_point.lane_id);
       }
 
       EXPECT_EQ(expectedLanes.size(), 0u)
         << "LaneID: " << lane.id << " expectedLanes: " << expectedLanes << " testArea: " << lanesTestArea
-        << " pos0: " << mapMatchedPositions0 << " pos1: " << mapMatchedPositions1 << " contact: " << contactLanes;
+        << " pos0: " << mapMatchedPositions0 << " pos1: " << mapMatchedPositions1 << " contact: " << contact_lanes;
 
       mapMatching.addHeadingHint(point::createENUHeading(0.), access::getENUReferencePoint());
       for (auto paramLon = physics::ParametricValue(0.); paramLon <= physics::ParametricValue(1.);
@@ -182,6 +203,54 @@ struct OpenDriveAccessTests : ::testing::Test
       }
     }
   }
+
+  intersection::IntersectionType checkRightOfWay(lane::LaneId laneIdOfEntryPoint,
+                                                 lane::ContactLocation currentContactLocation)
+  {
+    auto laneOutside = lane::getLane(laneIdOfEntryPoint);
+    for (auto &currentContactFromOutside : lane::getContactLanes(laneOutside, currentContactLocation))
+    {
+      auto intersectionTypeFromOutside
+        = intersection::Intersection::intersectionTypeFromContactTypes(currentContactFromOutside.types);
+      if (intersectionTypeFromOutside != intersection::IntersectionType::Unknown)
+      {
+        return intersectionTypeFromOutside;
+      }
+      else
+      {
+        auto laneInside = lane::getLane(currentContactFromOutside.to_lane);
+        auto contactLanesFromInside = lane::getContactLane(laneInside, laneIdOfEntryPoint);
+        for (auto currentContactLaneFromInside : contactLanesFromInside)
+        {
+          auto intersectionTypeFromInside
+            = intersection::Intersection::intersectionTypeFromContactTypes(currentContactLaneFromInside.types);
+          if (intersectionTypeFromInside != intersection::IntersectionType::Unknown)
+          {
+            return intersectionTypeFromInside;
+          }
+        }
+      }
+    }
+    return intersection::IntersectionType::Unknown;
+  }
+
+  intersection::IntersectionType getIntersectionTypeFromParaPoints(point::ParaPointList const &paraPointsList)
+  {
+    intersection::IntersectionType intersectionType = intersection::IntersectionType::Unknown;
+
+    for (auto &currentPoint : paraPointsList)
+    {
+      if (currentPoint.parametric_offset == physics::ParametricValue(1.0))
+      {
+        intersectionType = checkRightOfWay(currentPoint.lane_id, lane::ContactLocation::SUCCESSOR);
+      }
+      else
+      {
+        intersectionType = checkRightOfWay(currentPoint.lane_id, lane::ContactLocation::PREDECESSOR);
+      }
+    }
+    return intersectionType;
+  }
 };
 
 TEST_F(OpenDriveAccessTests, read_config)
@@ -195,36 +264,24 @@ TEST_F(OpenDriveAccessTests, read_map)
 {
   ASSERT_TRUE(access::init("test_files/Town01.txt"));
 
-  point::Longitude validLon(8.00);
-  point::Latitude validLat(49.00);
-  point::Altitude validAlt(0.);
-
-  auto p = point::createGeoPoint(validLon, validLat, validAlt);
-  access::setENUReferencePoint(p);
-
   auto lanes = lane::getLanes();
   ASSERT_GT(lanes.size(), 0u);
 
   // write map for convenience
-  serialize::SerializerFileCRC32 serializer(true);
-  size_t versionMajorWrite = ::ad::map::serialize::SerializerFileCRC32::VERSION_MAJOR;
-  size_t versionMinorWrite = ::ad::map::serialize::SerializerFileCRC32::VERSION_MINOR;
-  serializer.open("test_files/Town01.adm", versionMajorWrite, versionMinorWrite);
-  access::getStore().save(serializer);
-  serializer.close();
+  access::saveAsAdm("test_files/Town01.adm");
 }
 
 TEST_F(OpenDriveAccessTests, read_written_map)
 {
   ASSERT_TRUE(access::init("test_files/Town01.adm.txt"));
 
-  point::Longitude validLon(8.00);
-  point::Latitude validLat(49.00);
+  point::Longitude validLon(0.);
+  point::Latitude validLat(0.);
   point::Altitude validAlt(0.);
 
-  auto p = point::createGeoPoint(validLon, validLat, validAlt);
-
-  access::setENUReferencePoint(p);
+  auto pExpected = point::createGeoPoint(validLon, validLat, validAlt);
+  auto p = access::getENUReferencePoint();
+  ASSERT_EQ(pExpected, p);
 
   auto lanes = lane::getLanes();
   ASSERT_GT(lanes.size(), 0u);
@@ -234,11 +291,11 @@ TEST_F(OpenDriveAccessTests, lane_points_town01)
 {
   ASSERT_TRUE(access::init("test_files/Town01.txt"));
 
-  for (auto laneId : lane::getLanes())
+  for (auto lane_id : lane::getLanes())
   {
-    auto lane = lane::getLane(laneId);
-    checkEdgePoints(lane.id, lane.edgeLeft.ecefEdge);
-    checkEdgePoints(lane.id, lane.edgeRight.ecefEdge);
+    auto lane = lane::getLane(lane_id);
+    checkEdgePoints(lane.id, lane.edge_left.ecef_points);
+    checkEdgePoints(lane.id, lane.edge_right.ecef_points);
   }
 }
 
@@ -246,9 +303,9 @@ TEST_F(OpenDriveAccessTests, lane_contact_points_town01)
 {
   ASSERT_TRUE(access::init("test_files/Town01.txt"));
 
-  for (auto laneId : lane::getLanes())
+  for (auto lane_id : lane::getLanes())
   {
-    auto lane = lane::getLane(laneId);
+    auto lane = lane::getLane(lane_id);
     checkEdgeContacts(lane);
   }
 }
@@ -257,11 +314,11 @@ TEST_F(OpenDriveAccessTests, lane_points_town03)
 {
   ASSERT_TRUE(access::init("test_files/Town03.txt"));
 
-  for (auto laneId : lane::getLanes())
+  for (auto lane_id : lane::getLanes())
   {
-    auto lane = lane::getLane(laneId);
-    checkEdgePoints(lane.id, lane.edgeLeft.ecefEdge);
-    checkEdgePoints(lane.id, lane.edgeRight.ecefEdge);
+    auto lane = lane::getLane(lane_id);
+    checkEdgePoints(lane.id, lane.edge_left.ecef_points);
+    checkEdgePoints(lane.id, lane.edge_right.ecef_points);
   }
 }
 
@@ -269,9 +326,9 @@ TEST_F(OpenDriveAccessTests, lane_contact_points_town03)
 {
   ASSERT_TRUE(access::init("test_files/Town03.txt"));
 
-  for (auto laneId : lane::getLanes())
+  for (auto lane_id : lane::getLanes())
   {
-    auto lane = lane::getLane(laneId);
+    auto lane = lane::getLane(lane_id);
     checkEdgeContacts(lane);
   }
 }
@@ -280,11 +337,11 @@ TEST_F(OpenDriveAccessTests, lane_points_town04)
 {
   ASSERT_TRUE(access::init("test_files/Town04.txt"));
 
-  for (auto laneId : lane::getLanes())
+  for (auto lane_id : lane::getLanes())
   {
-    auto lane = lane::getLane(laneId);
-    checkEdgePoints(lane.id, lane.edgeLeft.ecefEdge);
-    checkEdgePoints(lane.id, lane.edgeRight.ecefEdge);
+    auto lane = lane::getLane(lane_id);
+    checkEdgePoints(lane.id, lane.edge_left.ecef_points);
+    checkEdgePoints(lane.id, lane.edge_right.ecef_points);
   }
 }
 
@@ -292,9 +349,9 @@ TEST_F(OpenDriveAccessTests, lane_contact_points_town04)
 {
   ASSERT_TRUE(access::init("test_files/Town04.txt"));
 
-  for (auto laneId : lane::getLanes())
+  for (auto lane_id : lane::getLanes())
   {
-    auto lane = lane::getLane(laneId);
+    auto lane = lane::getLane(lane_id);
     checkEdgeContacts(lane);
   }
 }
@@ -305,16 +362,16 @@ TEST_F(OpenDriveAccessTests, map_matching_town01_relevant_lanes_map_area)
 
   std::vector<point::BoundingSphere> boundingSpheres;
   auto tileRadius = physics::Distance(10);
-  for (auto xCoordinate = point::ENUCoordinate(-double(tileRadius)); xCoordinate < point::ENUCoordinate(500.);
-       xCoordinate += point::ENUCoordinate(1.5 * double(tileRadius)))
+  for (auto xCoordinate = point::ENUCoordinate(-tileRadius.mDistance); xCoordinate < point::ENUCoordinate(500.);
+       xCoordinate += point::ENUCoordinate(1.5 * tileRadius.mDistance))
   {
-    for (auto yCoordinate = point::ENUCoordinate(double(tileRadius)); yCoordinate > -point::ENUCoordinate(500.);
-         yCoordinate -= point::ENUCoordinate(1.5 * double(tileRadius)))
+    for (auto yCoordinate = point::ENUCoordinate(tileRadius.mDistance); yCoordinate > -point::ENUCoordinate(500.);
+         yCoordinate -= point::ENUCoordinate(1.5 * tileRadius.mDistance))
     {
-      point::BoundingSphere boundingSphere;
-      boundingSphere.center = point::toECEF(point::createENUPoint(xCoordinate, yCoordinate, point::ENUCoordinate(0.)));
-      boundingSphere.radius = tileRadius;
-      boundingSpheres.push_back(boundingSphere);
+      point::BoundingSphere bounding_sphere;
+      bounding_sphere.center = point::toECEF(point::createENUPoint(xCoordinate, yCoordinate, point::ENUCoordinate(0.)));
+      bounding_sphere.radius = tileRadius;
+      boundingSpheres.push_back(bounding_sphere);
     }
   }
 
@@ -322,26 +379,26 @@ TEST_F(OpenDriveAccessTests, map_matching_town01_relevant_lanes_map_area)
   std::vector<lane::LaneIdSet> boundingSphereLanesTestArea;
   boundingSphereLanesToTest.resize(boundingSpheres.size());
   boundingSphereLanesTestArea.resize(boundingSpheres.size());
-  for (auto laneId : lane::getLanes())
+  for (auto lane_id : lane::getLanes())
   {
-    auto lane = lane::getLane(laneId);
+    auto lane = lane::getLane(lane_id);
     bool laneConsidered = false;
     for (auto i = 0u; i < boundingSpheres.size(); i++)
     {
-      auto const laneDistance = point::distance(lane.boundingSphere, boundingSpheres[i]);
+      auto const laneDistance = point::distance(lane.bounding_sphere, boundingSpheres[i]);
       if (!laneConsidered && (laneDistance == physics::Distance(0.)))
       {
-        boundingSphereLanesToTest[i].insert(laneId);
+        boundingSphereLanesToTest[i].insert(lane_id);
         laneConsidered = true;
       }
       if (laneDistance <= physics::Distance(5.))
       {
-        boundingSphereLanesTestArea[i].insert(laneId);
+        boundingSphereLanesTestArea[i].insert(lane_id);
       }
     }
     if (!laneConsidered)
     {
-      EXPECT_TRUE(false) << laneId << " " << point::toENU(lane.boundingSphere.center);
+      EXPECT_TRUE(false) << lane_id << " " << point::toENU(lane.bounding_sphere.center);
     }
   }
 
@@ -391,12 +448,10 @@ TEST_F(OpenDriveAccessTests, branch)
   access::Store::Ptr mStorePtr;
   mStorePtr.reset(new access::Store());
   ad::map::opendrive::AdMapFactory factory(*mStorePtr);
-  ASSERT_FALSE(
-    factory.createAdMap(std::string("test_files/bad/NoneExists.xodr"), 2.0, intersection::IntersectionType::HasWay));
+  ASSERT_FALSE(factory.createAdMap(std::string("test_files/bad/NoneExists.xodr"), 2.0));
 
   access::cleanup();
-  ASSERT_FALSE(
-    factory.createAdMap(std::string("test_files/bad/TownEmpty.xodr"), 2.0, intersection::IntersectionType::HasWay));
+  ASSERT_FALSE(factory.createAdMap(std::string("test_files/bad/TownEmpty.xodr"), 2.0));
 }
 
 TEST_F(OpenDriveAccessTests, DataTypeConversion)
@@ -479,17 +534,91 @@ TEST_F(OpenDriveAccessTests, DataTypeConversion)
   ASSERT_EQ(landmark::LandmarkId(100), toLandmarkId((int)100));
 }
 
-TEST_F(OpenDriveAccessTests, read_karlsruhe_map_with_other_proj_string)
+TEST_F(OpenDriveAccessTests, verify_intersections_Town01)
 {
-  access::cleanup();
-  std::ifstream mapFile("test_files/Karlsruhe.xodr");
+  ASSERT_TRUE(access::init("test_files/Town01.txt"));
+
+  auto coreIntersections = ad::map::intersection::CoreIntersection::getCoreIntersectionsForMap();
+  ASSERT_EQ(12u, coreIntersections.size());
+
+  point::ParaPointList entryParaPoints, exitParaPoints;
+
+  for (auto &eachcoreIntersection : coreIntersections)
+  {
+    entryParaPoints = eachcoreIntersection->entryParaPoints();
+    EXPECT_EQ(intersection::IntersectionType::TrafficLight, getIntersectionTypeFromParaPoints(entryParaPoints));
+  }
+
+  for (auto &eachcoreIntersection : coreIntersections)
+  {
+    exitParaPoints = eachcoreIntersection->exitParaPoints();
+    EXPECT_EQ(intersection::IntersectionType::Unknown, getIntersectionTypeFromParaPoints(exitParaPoints));
+  }
+}
+
+TEST_F(OpenDriveAccessTests, verify_intersections_AllWayStop)
+{
+  ASSERT_TRUE(access::init("test_files/AllWayStop.adm.txt"));
+  auto coreIntersections = ad::map::intersection::CoreIntersection::getCoreIntersectionsForMap();
+  ASSERT_EQ(1u, coreIntersections.size());
+
+  point::ParaPointList entryParaPoints, exitParaPoints;
+
+  for (auto &eachcoreIntersection : coreIntersections)
+  {
+    entryParaPoints = eachcoreIntersection->entryParaPoints();
+    EXPECT_EQ(intersection::IntersectionType::AllWayStop, getIntersectionTypeFromParaPoints(entryParaPoints));
+  }
+
+  for (auto &eachcoreIntersection : coreIntersections)
+  {
+    exitParaPoints = eachcoreIntersection->exitParaPoints();
+    EXPECT_EQ(intersection::IntersectionType::Unknown, getIntersectionTypeFromParaPoints(exitParaPoints));
+  }
+}
+
+TEST_F(OpenDriveAccessTests, verify_default_handling)
+{
+  std::ifstream mapFile("test_files/Town04.xodr");
   std::stringstream openDriveContentStream;
 
   openDriveContentStream << mapFile.rdbuf();
   std::string openDriveContent = openDriveContentStream.str();
-  ASSERT_TRUE(access::initFromOpenDriveContent(openDriveContent, 0.2, intersection::IntersectionType::TrafficLight));
-  ASSERT_TRUE(access::isENUReferencePointSet());
-  const auto refPoint = access::getENUReferencePoint();
-  ASSERT_EQ(refPoint.latitude, ad::map::point::Latitude(49.02067835));
-  ASSERT_EQ(refPoint.longitude, ad::map::point::Longitude(8.43531364));
+  ASSERT_TRUE(access::initFromOpenDriveContent(
+    openDriveContent, 0.2, intersection::IntersectionType::HasWay, landmark::TrafficLightType::SOLID_RED_YELLOW));
+
+  auto incomingLane
+    = point::createGeoPoint(point::Longitude(-0.00118857), point::Latitude(-0.000331594), point::AltitudeUnknown);
+  lane::LaneId incomingLaneId = lane::uniqueLaneId(incomingLane);
+  auto outgoingLane
+    = createGeoPoint(point::Longitude(-0.00103814), point::Latitude(-0.000329589), point::AltitudeUnknown);
+  lane::LaneId outgoingLaneId = lane::uniqueLaneId(outgoingLane);
+  point::ParaPoint routeStart(point::createParaPoint(incomingLaneId, physics::ParametricValue(0.5)));
+  point::ParaPoint routeEnd(point::createParaPoint(outgoingLaneId, physics::ParametricValue(0.5)));
+  auto fullRoute = route::planning::planRoute(routeStart, routeEnd);
+  ASSERT_GT(route::calcLength(fullRoute), physics::Distance(0.));
+  std::vector<intersection::IntersectionPtr> intersections;
+  ASSERT_NO_THROW(intersections = intersection::Intersection::getIntersectionsForRoute(fullRoute));
+  ASSERT_EQ(1u, intersections.size());
+
+  for (auto &each : intersections)
+  {
+    auto entryParaPoints = each->entryParaPoints();
+    for (auto &eachParaPoint : entryParaPoints)
+    {
+      if (eachParaPoint.lane_id == incomingLaneId)
+      {
+        EXPECT_EQ(intersection::IntersectionType::HasWay, getIntersectionTypeFromParaPoints({eachParaPoint}));
+      }
+    }
+
+    auto exitParaPoints = each->exitParaPoints();
+    for (auto &eachParaPoint : exitParaPoints)
+    {
+      if (eachParaPoint.lane_id == outgoingLaneId)
+      {
+        EXPECT_EQ(intersection::IntersectionType::Unknown, getIntersectionTypeFromParaPoints({eachParaPoint}));
+      }
+    }
+  }
 }

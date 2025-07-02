@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2017-2020 Intel Corporation
+// Copyright (C) 2017-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //

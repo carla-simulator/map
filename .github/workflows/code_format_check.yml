@@ -1,4 +1,4 @@
-name: Check Code Formatting for AD-Map Library
+name: Check Code Formatting for carla-map libraries
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   check_cpp:
-
+ 
     name: Check Code Formatting
 
     runs-on: ubuntu-22.04

@@ -53,9 +53,10 @@ you have to set the PYTHONPATH, LD_LIBRARY_PATH and QGIS_PLUGINPATH before start
 ### CARLA ad_map_access toolbar <a name="toolbar"></a>
 The CARLA ad_map_access toolbar looks like this when the plugin is loaded:
 
-| ![QGIS toolbar](images/Qgis_toolbar.png) |
+| ![QGIS toolbar](images/toolbar.png) |
 | -- |
 | *Screenshot of the QGIS toolbar when the plugin is loaded into the tool* |
+
 
 The different features provided by the plugin are:
 #### Load New Map
@@ -74,6 +75,8 @@ The different features provided by the plugin are:
  ![Prediction Test](images/Predictiontest.png) : Provides the Prediction test on the loaded map. On selecting this icon, user will get options to select the route creation mode, length and duration of the prediction test. Post selection of the test specific features, the lane for prediction can be selected on the map.
 #### Enable all lane IDs
  ![Enable All](images/ID.png) : Generally it is required to select each layer(INTERSECTION, NORMAL, OTHER or UNKNOWN) under Lane Types, and then activate the lane id attribute to visualize the lane ids on the map. Enabling this button helps the user to bypass those steps, and directly visualize the lane ids on the map. Also, disabling the button removes the lane IDs from the map.
+#### Create polygon
+ ![Create Polygon](images/Createpolygon.png) : User can activate this icon to select a reference point for the ego vehicle on the map, the influence distance to be considered around the ego vehicle and at the end to select points on the map to create a freespace polygon. The polygon can be completed by deactivating the plugin button.
 
 ### How to use the tool <a name="howtouse"></a>
 - Once the plugin is loaded, the CARLA ad_map_access toolbar is now available for use.
@@ -115,7 +118,20 @@ After selecting the layer to be visualized, the feature identification tool on a
 
 - In order to manually enable any attributes of a particular layer, the *Layer Properties* of the layer is accessed any attribute is enabled to be visible.
   ![](images/Attributes.png)
+  
+- By activating the polygon creation tool, user first has to select a reference point for the ego vehicle on the map. 
+  ![](images/ReferencePoint.png)
+  *Select a reference point for the ego vehicle by clicking on the map*
+  
+- Next the user should enter an influence distance to be considered around the reference point, default value being 100.0. 
+  ![](images/InfluenceDistance.png)
+  *The influence distance*
 
+- As a next step, the points of the freespace polygon can be added by the user by selecting points on the map. The polygon can be completed by deactivating the icon, which completes the polygon and the occupied region is then reflected on the map. 
+  ![](images/SelectPoints.png) 
+  ![](images/ResultingPolygon.png)
+  *The outer points of the polygon entered by clicking on the map and the resulting occupied regions*
+  
 ### Layer view <a name="Layerview"></a>
 When a map is loaded in QGis, all the layers of the map are visible in the Layers Panel on the QGis main window as below:
 

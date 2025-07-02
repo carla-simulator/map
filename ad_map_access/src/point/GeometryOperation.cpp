@@ -17,33 +17,33 @@ namespace ad {
 namespace map {
 namespace point {
 
-Geometry createGeometry(const ECEFEdge &points, bool closed)
+Geometry createGeometry(const ECEFPointList &points, bool closed)
 {
   Geometry geometry;
-  geometry.isClosed = closed;
-  geometry.ecefEdge = points;
-  geometry.private_enuEdgeCache.enuVersion = 0;
-  geometry.isValid = (points.size() >= 2) && isValid(points);
+  geometry.is_closed = closed;
+  geometry.ecef_points = points;
+  geometry.private_enu_points_cache.enu_version = 0;
+  geometry.is_valid = (points.size() >= 2) && isValid(points);
   geometry.length = calcLength(points);
   return geometry;
 }
 
-ENUEdge getCachedENUEdge(Geometry const &geometry)
+ENUPointList getCachedENUPointList(Geometry const &geometry)
 {
   auto coordinateTransform = access::getCoordinateTransform();
-  ENUEdgeCache &mutable_enuEdgeCache = const_cast<Geometry *>(&geometry)->private_enuEdgeCache;
-  if (!coordinateTransform || geometry.private_enuEdgeCache.enuVersion != coordinateTransform->getENURef())
+  ENUPointCache &mutable_enuPointsCache = const_cast<Geometry *>(&geometry)->private_enu_points_cache;
+  if (!coordinateTransform || geometry.private_enu_points_cache.enu_version != coordinateTransform->getENURef())
   {
-    mutable_enuEdgeCache.enuEdge.clear();
+    mutable_enuPointsCache.enu_points.clear();
   }
-  if (geometry.private_enuEdgeCache.enuEdge.empty())
+  if (geometry.private_enu_points_cache.enu_points.empty())
   {
     if (coordinateTransform)
     {
       if (coordinateTransform->isENUValid())
       {
-        mutable_enuEdgeCache.enuVersion = coordinateTransform->getENURef();
-        coordinateTransform->convert(geometry.ecefEdge, mutable_enuEdgeCache.enuEdge);
+        mutable_enuPointsCache.enu_version = coordinateTransform->getENURef();
+        coordinateTransform->convert(geometry.ecef_points, mutable_enuPointsCache.enu_points);
       }
       else
       {
@@ -55,7 +55,7 @@ ENUEdge getCachedENUEdge(Geometry const &geometry)
       access::getLogger()->error("Geometry::GetENU: Coordinate transformations not defined.");
     }
   }
-  return geometry.private_enuEdgeCache.enuEdge;
+  return geometry.private_enu_points_cache.enu_points;
 }
 
 /////////////
@@ -63,15 +63,15 @@ ENUEdge getCachedENUEdge(Geometry const &geometry)
 
 bool isSuccessor(Geometry const &geometry, const Geometry &other)
 {
-  if (geometry.ecefEdge.empty() || other.ecefEdge.empty())
+  if (geometry.ecef_points.empty() || other.ecef_points.empty())
   {
     return false;
   }
-  else if (geometry.ecefEdge.front() == other.ecefEdge.back())
+  else if (geometry.ecef_points.front() == other.ecef_points.back())
   {
     return true;
   }
-  else if (geometry.ecefEdge.back() == other.ecefEdge.back())
+  else if (geometry.ecef_points.back() == other.ecef_points.back())
   {
     return true;
   }
@@ -83,15 +83,15 @@ bool isSuccessor(Geometry const &geometry, const Geometry &other)
 
 bool isPredecessor(Geometry const &geometry, const Geometry &other)
 {
-  if (geometry.ecefEdge.empty() || other.ecefEdge.empty())
+  if (geometry.ecef_points.empty() || other.ecef_points.empty())
   {
     return false;
   }
-  else if (geometry.ecefEdge.front() == other.ecefEdge.front())
+  else if (geometry.ecef_points.front() == other.ecef_points.front())
   {
     return true;
   }
-  else if (geometry.ecefEdge.back() == other.ecefEdge.front())
+  else if (geometry.ecef_points.back() == other.ecef_points.front())
   {
     return true;
   }
@@ -103,79 +103,91 @@ bool isPredecessor(Geometry const &geometry, const Geometry &other)
 
 bool haveSameStart(Geometry const &geometry, const Geometry &other)
 {
-  if (geometry.ecefEdge.empty() || other.ecefEdge.empty())
+  if (geometry.ecef_points.empty() || other.ecef_points.empty())
   {
     return false;
   }
   else
   {
-    return geometry.ecefEdge.front() == other.ecefEdge.front();
+    return geometry.ecef_points.front() == other.ecef_points.front();
   }
 }
 
 bool haveSameEnd(Geometry const &geometry, const Geometry &other)
 {
-  if (geometry.ecefEdge.empty() || other.ecefEdge.empty())
+  if (geometry.ecef_points.empty() || other.ecef_points.empty())
   {
     return false;
   }
   else
   {
-    return geometry.ecefEdge.back() == other.ecefEdge.back();
+    return geometry.ecef_points.back() == other.ecef_points.back();
   }
 }
 
 point::ECEFPoint getParametricPoint(Geometry const &geometry, const physics::ParametricValue &t)
 {
-  return point::getParametricPoint(geometry.ecefEdge, geometry.length, t);
+  return point::getParametricPoint(geometry.ecef_points, geometry.length, t);
 }
 
 void getParametricRange(Geometry const &geometry,
                         const physics::ParametricRange &trange,
-                        ECEFEdge &outputEdge,
+                        ECEFPointList &outputPoints,
                         const bool revertOrder)
 {
-  outputEdge = point::getParametricRange(geometry.ecefEdge, geometry.length, trange);
+  outputPoints = point::getParametricRange(geometry.ecef_points, geometry.length, trange);
   if (revertOrder)
   {
-    std::reverse(outputEdge.begin(), outputEdge.end());
+    std::reverse(outputPoints.begin(), outputPoints.end());
   }
 }
 
 void getParametricRange(Geometry const &geometry,
                         const physics::ParametricRange &trange,
-                        GeoEdge &outputEdge,
+                        GeoPointList &outputPoints,
                         const bool revertOrder)
 {
-  ECEFEdge const ecefEdge = point::getParametricRange(geometry.ecefEdge, geometry.length, trange);
-  outputEdge = toGeo(ecefEdge);
+  ECEFPointList const ecef_points = point::getParametricRange(geometry.ecef_points, geometry.length, trange);
+  outputPoints = toGeo(ecef_points);
   if (revertOrder)
   {
-    std::reverse(outputEdge.begin(), outputEdge.end());
+    std::reverse(outputPoints.begin(), outputPoints.end());
   }
 }
 
 void getParametricRange(Geometry const &geometry,
                         const physics::ParametricRange &trange,
-                        ENUEdge &outputEdge,
+                        ENUPointList &outputPoints,
                         const bool revertOrder)
 {
-  outputEdge = point::getParametricRange(getCachedENUEdge(geometry), geometry.length, trange);
+  outputPoints = point::getParametricRange(getCachedENUPointList(geometry), geometry.length, trange);
   if (revertOrder)
   {
-    std::reverse(outputEdge.begin(), outputEdge.end());
+    std::reverse(outputPoints.begin(), outputPoints.end());
   }
 }
 
-ECEFEdge getMiddleEdge(Geometry const &geometry, Geometry const &other)
+ECEFPointList getMiddleEdge(Geometry const &geometry, Geometry const &other)
 {
   return point::getLateralAlignmentEdge(
-    geometry.ecefEdge, geometry.length, other.ecefEdge, other.length, physics::ParametricValue(0.5));
+    geometry.ecef_points, geometry.length, other.ecef_points, other.length, physics::ParametricValue(0.5));
 }
 
 physics::ParametricValue findNearestPointOnEdge(Geometry const &geometry, const point::ECEFPoint &pt)
 {
-  return findNearestPointOnEdge(geometry.ecefEdge, geometry.length, pt);
+  return findNearestPointOnEdge(geometry.ecef_points, geometry.length, pt);
+}
+
+physics::ParametricValue findNearestPointOnEdgeIgnoreZ(Geometry const &geometry, const point::ENUPoint &pt)
+{
+  auto enu_points = getCachedENUPointList(geometry);
+  for (auto &point : enu_points)
+  {
+    point.z = ENUCoordinate(0.);
+  }
+  auto search = pt;
+  search.z = ENUCoordinate(0.);
+  return findNearestPointOnEdge(enu_points, search);
 }
 
 } // namespace point

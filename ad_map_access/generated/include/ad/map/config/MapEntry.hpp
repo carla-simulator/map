@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -104,9 +104,9 @@ struct MapEntry
    */
   bool operator==(const MapEntry &other) const
   {
-    return (filename == other.filename) && (openDriveOverlapMargin == other.openDriveOverlapMargin)
-      && (openDriveDefaultIntersectionType == other.openDriveDefaultIntersectionType)
-      && (openDriveDefaultTrafficLightType == other.openDriveDefaultTrafficLightType);
+    return (filename == other.filename) && (open_drive_overlap_margin == other.open_drive_overlap_margin)
+      && (open_drive_default_intersection_type == other.open_drive_default_intersection_type)
+      && (open_drive_default_traffic_light_type == other.open_drive_default_traffic_light_type);
   }
 
   /**
@@ -129,14 +129,14 @@ struct MapEntry
   /*!
    * optional parameter for open drive maps defining the margin to be used when calculating lane overlaps
    */
-  ::ad::physics::Distance openDriveOverlapMargin{0.};
+  ::ad::physics::Distance open_drive_overlap_margin{0.};
 
   /*!
    * The default intersection type
    */
-  ::ad::map::intersection::IntersectionType openDriveDefaultIntersectionType{
+  ::ad::map::intersection::IntersectionType open_drive_default_intersection_type{
     ::ad::map::intersection::IntersectionType::Unknown};
-  ::ad::map::landmark::TrafficLightType openDriveDefaultTrafficLightType{
+  ::ad::map::landmark::TrafficLightType open_drive_default_traffic_light_type{
     ::ad::map::landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN};
 };
 
@@ -179,14 +179,14 @@ inline std::ostream &operator<<(std::ostream &os, MapEntry const &_value)
   os << "filename:";
   os << _value.filename;
   os << ",";
-  os << "openDriveOverlapMargin:";
-  os << _value.openDriveOverlapMargin;
+  os << "open_drive_overlap_margin:";
+  os << _value.open_drive_overlap_margin;
   os << ",";
-  os << "openDriveDefaultIntersectionType:";
-  os << _value.openDriveDefaultIntersectionType;
+  os << "open_drive_default_intersection_type:";
+  os << _value.open_drive_default_intersection_type;
   os << ",";
-  os << "openDriveDefaultTrafficLightType:";
-  os << _value.openDriveDefaultTrafficLightType;
+  os << "open_drive_default_traffic_light_type:";
+  os << _value.open_drive_default_traffic_light_type;
   os << ")";
   return os;
 }
@@ -206,4 +206,16 @@ inline std::string to_string(::ad::map::config::MapEntry const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::config::MapEntry> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::config::MapEntry const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_CONFIG_MAPENTRY

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -40,9 +40,9 @@ inline bool withinValidInputRange(::ad::map::match::LanePoint const &input, bool
 {
   // check for generic member input ranges
   bool inValidInputRange = true;
-  inValidInputRange = withinValidInputRange(input.paraPoint, logErrors)
-    && withinValidInputRange(input.lateralT, logErrors) && withinValidInputRange(input.laneLength, logErrors)
-    && withinValidInputRange(input.laneWidth, logErrors);
+  inValidInputRange = withinValidInputRange(input.para_point, logErrors)
+    && withinValidInputRange(input.lateral_t, logErrors) && withinValidInputRange(input.lane_length, logErrors)
+    && withinValidInputRange(input.lane_width, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::match::LanePoint)>> {} has invalid member",

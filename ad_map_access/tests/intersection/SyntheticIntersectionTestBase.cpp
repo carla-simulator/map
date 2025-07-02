@@ -14,8 +14,8 @@
 // comparison operator for sorting
 bool smaller(const ad::map::point::ParaPoint &left, const ad::map::point::ParaPoint &right)
 {
-  return (left.laneId < right.laneId)
-    || ((left.laneId == right.laneId) && (left.parametricOffset < right.parametricOffset));
+  return (left.lane_id < right.lane_id)
+    || ((left.lane_id == right.lane_id) && (left.parametric_offset < right.parametric_offset));
 }
 
 namespace ad {
@@ -37,8 +37,8 @@ point::ParaPointList SyntheticIntersectionTestBase::getIncomingParaPointsWithHig
   auto const incomingLanesWithLowerPriority = getIncomingLanesWithLowerPriority();
   resultVector.erase(std::remove_if(resultVector.begin(),
                                     resultVector.end(),
-                                    [&incomingLanesWithLowerPriority](point::ParaPoint const &paraPoint) {
-                                      return incomingLanesWithLowerPriority.count(paraPoint.laneId) > 0;
+                                    [&incomingLanesWithLowerPriority](point::ParaPoint const &para_point) {
+                                      return incomingLanesWithLowerPriority.count(para_point.lane_id) > 0;
                                     }),
                      resultVector.end());
   return resultVector;
@@ -60,8 +60,8 @@ point::ParaPointList SyntheticIntersectionTestBase::getIncomingParaPointsWithLow
   auto const incomingLanesWithHigherPriority = getIncomingLanesWithHigherPriority();
   resultVector.erase(std::remove_if(resultVector.begin(),
                                     resultVector.end(),
-                                    [&incomingLanesWithHigherPriority](point::ParaPoint const &paraPoint) {
-                                      return incomingLanesWithHigherPriority.count(paraPoint.laneId) > 0;
+                                    [&incomingLanesWithHigherPriority](point::ParaPoint const &para_point) {
+                                      return incomingLanesWithHigherPriority.count(para_point.lane_id) > 0;
                                     }),
                      resultVector.end());
   return resultVector;
@@ -110,21 +110,19 @@ void SyntheticIntersectionTestBase::performBasicChecks()
   }
 }
 
-TrafficLightForTest SyntheticIntersectionTestBase::expectedTrafficLight(uint64_t landmarkId,
+TrafficLightForTest SyntheticIntersectionTestBase::expectedTrafficLight(landmark::LandmarkId landmark_id,
                                                                         landmark::TrafficLightType type) const
 {
   TrafficLightForTest expected;
-  expected.id = landmark::LandmarkId(landmarkId);
+  expected.id = landmark_id;
   expected.type = type;
   return expected;
 }
 
-TrafficLightForTest SyntheticIntersectionTestBase::expectedTrafficLight(uint64_t landmarkId) const
+TrafficLightForTest SyntheticIntersectionTestBase::expectedTrafficLight(uint64_t landmark_id,
+                                                                        landmark::TrafficLightType type) const
 {
-  TrafficLightForTest expected;
-  expected.id = landmark::LandmarkId(landmarkId);
-  expected.type = landmark::TrafficLightType::UNKNOWN;
-  return expected;
+  return expectedTrafficLight(landmark::LandmarkId(landmark_id), type);
 }
 
 void SyntheticIntersectionTestBase::performBasicTrafficLightsChecks(
@@ -136,7 +134,7 @@ void SyntheticIntersectionTestBase::performBasicTrafficLightsChecks(
   for (auto expectedTrafficLight : expectedTrafficLights)
   {
     ASSERT_EQ(1u, trafficLights.count(expectedTrafficLight.id))
-      << "Traffic Light ID=" << static_cast<uint64_t>(expectedTrafficLight.id) << "  NOT FOUND";
+      << "Traffic Light ID=" << expectedTrafficLight.id << "  NOT FOUND";
     if (expectedTrafficLight.type != landmark::TrafficLightType::UNKNOWN)
     {
       ASSERT_EQ(mIntersection->extractTrafficLightType(expectedTrafficLight.id), expectedTrafficLight.type)

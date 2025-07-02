@@ -8,7 +8,7 @@
 
 #pragma once
 
-/* @brief namespace map_setup */
+/** @brief namespace map_setup */
 namespace map_setup {
 
 /*

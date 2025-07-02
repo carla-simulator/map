@@ -16,18 +16,19 @@ namespace common {
 
 namespace po = ::boost::program_options;
 
+// Used to check that if we got a valid traffic regulation
+void right_of_way_notifier(RightOfWay value)
+{
+  if ((value != RightOfWay::AllWayStop) && (value != RightOfWay::PriorityToRight) && (value != RightOfWay::Stop))
+  {
+    throw po::validation_error(
+      po::validation_error::invalid_option_value, "Invalid default right of way", rowToString(value));
+  }
+}
+
 OsmConverterConfigDescription::OsmConverterConfigDescription()
   : ::boost::program_options::options_description("Reading OSM data")
 {
-  // Used to check that if we got a valid traffic regulation
-  auto notifier = []() {
-    return [](RightOfWay value) {
-      if ((value != RightOfWay::AllWayStop) && (value != RightOfWay::PriorityToRight) && (value != RightOfWay::Stop))
-        throw po::validation_error(
-          po::validation_error::invalid_option_value, "Invalid default right of way", rowToString(value));
-    };
-  };
-
   // clang-format off
   add_options()
       ("acceptable-highway-types,t",
@@ -37,7 +38,7 @@ OsmConverterConfigDescription::OsmConverterConfigDescription()
        "Do not extract lane information from map (number of lanes, widths of lanes)")
       ("adjust-lateral-offset", po::bool_switch(&config.adjustLateralOffsetOfRoad),
        "Adjust lateral offset of roads")
-      ("default-priority", po::value<RightOfWay>(&config.defaultPriority)->notifier(notifier()),
+      ("default-priority", po::value<RightOfWay>(&config.defaultPriority)->notifier(&right_of_way_notifier),
        "Default priority rule on intersections if none is specified in the map, one of stop, priority_to_right, all_way_stop. Default: all_way_stop")
       ("default-lane-width", po::value<std::string>(&config.laneWidthsDefaults)->default_value(config.laneWidthsDefaults),
        "Comma-separated list of default width of lanes used to generate lanes, e.g. 3,residential:2.5 "

@@ -122,8 +122,9 @@ bool AdMapAccess::initializeFromOpenDriveContent(std::string const &openDriveCon
   auto store = std::make_shared<Store>();
   opendrive::AdMapFactory factory(*store);
 
-  bool result
-    = factory.createAdMapFromString(openDriveContent, overlapMargin, defaultIntersectionType, defaultTrafficLightType);
+  factory.setDefaultIntersectionType(defaultIntersectionType);
+  factory.setDefaultTrafficLightType(defaultTrafficLightType);
+  bool result = factory.createAdMapFromString(openDriveContent, overlapMargin);
   if (result)
   {
     mInitializeFromOpenDriveContentChecksum = openDriveContentChecksum;
@@ -168,8 +169,8 @@ bool AdMapAccess::initialize(Store::Ptr store)
   mInitializedFromStore = true;
 
   mStore = store;
-  auto boundingSphere = mStore->getBoundingSphere();
-  auto centerGeo = point::toGeo(boundingSphere.center);
+  auto bounding_sphere = mStore->getBoundingSphere();
+  auto centerGeo = point::toGeo(bounding_sphere.center);
   setENUReferencePoint(centerGeo);
 
   mLogger->info("AdMapAccess::initialized from store");
@@ -200,10 +201,9 @@ bool AdMapAccess::readMap(std::string const &mapName)
 bool AdMapAccess::readOpenDriveMap(std::string const &mapName)
 {
   opendrive::AdMapFactory factory(*mStore);
-  return factory.createAdMap(mapName,
-                             static_cast<double>(mConfigFileHandler.adMapEntry().openDriveOverlapMargin),
-                             mConfigFileHandler.adMapEntry().openDriveDefaultIntersectionType,
-                             mConfigFileHandler.adMapEntry().openDriveDefaultTrafficLightType);
+  factory.setDefaultIntersectionType(mConfigFileHandler.adMapEntry().open_drive_default_intersection_type);
+  factory.setDefaultTrafficLightType(mConfigFileHandler.adMapEntry().open_drive_default_traffic_light_type);
+  return factory.createAdMap(mapName, mConfigFileHandler.adMapEntry().open_drive_overlap_margin.mDistance);
 }
 
 bool AdMapAccess::readAdMap(std::string const &mapName)
@@ -227,6 +227,19 @@ bool AdMapAccess::readAdMap(std::string const &mapName)
   {
     mLogger->warn("Map file is corrupt {}", mapName);
     return false;
+  }
+
+  // support default intersection type also for adm files
+  if (mConfigFileHandler.adMapEntry().open_drive_default_intersection_type != intersection::IntersectionType::Unknown)
+  {
+    Factory factory(*mStore);
+    factory.setDefaultIntersectionType(mConfigFileHandler.adMapEntry().open_drive_default_intersection_type);
+    factory.setDefaultTrafficLightType(mConfigFileHandler.adMapEntry().open_drive_default_traffic_light_type);
+    mLogger->info("Adding default intersection type {} with traffic lights {} after loading map {}",
+                  mConfigFileHandler.adMapEntry().open_drive_default_intersection_type,
+                  mConfigFileHandler.adMapEntry().open_drive_default_traffic_light_type,
+                  mapName);
+    factory.addDefaultIntersectionContacts();
   }
 
   return true;

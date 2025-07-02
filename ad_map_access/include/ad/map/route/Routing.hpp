@@ -13,12 +13,27 @@
 
 #include <set>
 #include "ad/map/point/ParaPointOperation.hpp"
+#include "ad/map/route/planning/RoutingParaPointList.hpp"
 
-/* @brief namespace ad */
+/**
+ * @brief Standard comparison operator.
+ * @returns True if this objects can be taken as smaller than the other.
+ */
+inline bool operator<(const ::ad::map::route::planning::RoutingParaPoint &left,
+                      const ::ad::map::route::planning::RoutingParaPoint &right)
+{
+  if (left.direction == right.direction)
+  {
+    return left.point < right.point;
+  }
+  return left.direction < right.direction;
+}
+
+/** @brief namespace ad */
 namespace ad {
-/* @brief namespace map */
+/** @brief namespace map */
 namespace map {
-/* @brief namespace route */
+/** @brief namespace route */
 namespace route {
 /**
  * @brief provides route planning capabilities on the road network of the map
@@ -26,73 +41,31 @@ namespace route {
 namespace planning {
 
 /**
- * @brief direction at the para point in respect to the lane orientation
+ * @brief Comparison struct for RoutingParaPoint usage in std::map/set.
  */
-enum class RoutingDirection
+struct RoutingParaPointCompare
 {
-  DONT_CARE, ///< Vehicle direction is not relevant.
-  POSITIVE,  ///< Vehicle direction is same as Lane orientation.
-  NEGATIVE   ///< Vehicle direction is opposite of Lane orientation.
-};
-
-/**
- * @brief routing para point
- *
- * It is essential to know in which direction a vehicle is oriented in respect to the lane when trying to route.
- * Therefore, the routing para point extends the para point by a RoutingDirection.
- */
-struct RoutingParaPoint
-{
-  /**
-   * @brief Standard comparison operator.
-   * @returns True if two objects can be taken as equal.
-   */
-  bool operator==(const RoutingParaPoint &other) const
+  bool operator()(const RoutingParaPoint &left, const RoutingParaPoint &right) const
   {
-    return (direction == other.direction) && (point == other.point);
+    return left < right;
   }
-
-  /**
-   * @brief Standard comparison operator.
-   * @returns True if two objects can be taken as distinct.
-   */
-  bool operator!=(const RoutingParaPoint &other) const
-  {
-    return !operator==(other);
-  }
-
-  /**
-   * @brief Standard comparison operator.
-   * @returns True if this objects can be taken as smaller than the other.
-   */
-  bool operator<(const RoutingParaPoint &other) const
-  {
-    if (direction == other.direction)
-    {
-      return point < other.point;
-    }
-    return direction < other.direction;
-  }
-
-  point::ParaPoint point;
-  RoutingDirection direction{RoutingDirection::DONT_CARE};
 };
 
 /**
  * @brief create a RoutingParaPoint
  *
- * @param[in] laneId  the lane id
- * @param[in] parametricOffset the parametric offset
+ * @param[in] lane_id  the lane id
+ * @param[in] parametric_offset the parametric offset
  * @param[in] routingDirection the routing direction in respect to the lane orientation
  *   Be aware: this might be different from the nominal driving direction!
  */
-inline RoutingParaPoint createRoutingParaPoint(lane::LaneId const &laneId,
-                                               physics::ParametricValue const &parametricOffset,
+inline RoutingParaPoint createRoutingParaPoint(lane::LaneId const &lane_id,
+                                               physics::ParametricValue const &parametric_offset,
                                                RoutingDirection const &routingDirection = RoutingDirection::DONT_CARE)
 {
   RoutingParaPoint routingPoint;
-  routingPoint.point.laneId = laneId;
-  routingPoint.point.parametricOffset = parametricOffset;
+  routingPoint.point.lane_id = lane_id;
+  routingPoint.point.parametric_offset = parametric_offset;
   routingPoint.direction = routingDirection;
   return routingPoint;
 }

@@ -114,15 +114,15 @@ TEST_F(PointOperationTest, enu_heading_normalization)
 
 TEST_F(PointOperationTest, enu_heading_construction)
 {
-  GeoPoint enuReferencePoint;
-  enuReferencePoint.longitude = Longitude(8.4399515);
-  enuReferencePoint.latitude = Latitude(49.0189305);
-  enuReferencePoint.altitude = Altitude(0.);
+  GeoPoint enu_reference_point;
+  enu_reference_point.longitude = Longitude(8.4399515);
+  enu_reference_point.latitude = Latitude(49.0189305);
+  enu_reference_point.altitude = Altitude(0.);
 
   access::init("test_files/TPK.adm.txt");
 
-  access::setENUReferencePoint(enuReferencePoint);
-  ECEFPoint enuReferencePointEcef = toECEF(enuReferencePoint);
+  access::setENUReferencePoint(enu_reference_point);
+  ECEFPoint enuReferencePointEcef = toECEF(enu_reference_point);
 
   std::vector<std::pair<ENUPoint, double>> pointPairs{std::make_pair(createENUPoint(1., 0., 0.), 0.),
                                                       std::make_pair(createENUPoint(0., 1., 0.), 90.),
@@ -140,7 +140,7 @@ TEST_F(PointOperationTest, enu_heading_construction)
   for (auto pairElement : pointPairs)
   {
     ECEFHeading heading = createECEFHeading(enuReferencePointEcef, toECEF(pairElement.first));
-    ENUHeading a = createENUHeading(heading, enuReferencePoint);
+    ENUHeading a = createENUHeading(heading, enu_reference_point);
     EXPECT_EQ(a, ENUHeading(degree2radians(pairElement.second)));
   }
 }
@@ -181,11 +181,11 @@ TEST_F(PointOperationTest, CalcENUDistance)
 {
   ENUPoint pt1 = point::createENUPoint(1., 2., 3.);
   ENUPoint pt2 = point::createENUPoint(2., 3., 4.);
-  ENUEdge edge;
+  ENUPointList edge;
   edge.push_back(pt1);
   edge.push_back(pt2);
   auto ret = point::calcLength(edge);
-  ASSERT_DOUBLE_EQ(static_cast<double>(ret), std::sqrt(3.));
+  ASSERT_DOUBLE_EQ(ret.mDistance, std::sqrt(3.));
   ENUHeading heading = normalizeENUHeading(point::createENUHeading(M_PI_2));
   ASSERT_EQ(heading, createENUHeading(M_PI_2));
 }

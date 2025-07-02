@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -101,9 +101,9 @@ struct MapMatchedObjectBoundingBox
    */
   bool operator==(const MapMatchedObjectBoundingBox &other) const
   {
-    return (laneOccupiedRegions == other.laneOccupiedRegions)
-      && (referencePointPositions == other.referencePointPositions) && (samplingDistance == other.samplingDistance)
-      && (matchRadius == other.matchRadius);
+    return (lane_occupied_regions == other.lane_occupied_regions)
+      && (reference_point_positions == other.reference_point_positions)
+      && (sampling_distance == other.sampling_distance) && (match_radius == other.match_radius);
   }
 
   /**
@@ -118,18 +118,18 @@ struct MapMatchedObjectBoundingBox
     return !operator==(other);
   }
 
-  ::ad::map::match::LaneOccupiedRegionList laneOccupiedRegions;
-  ::ad::map::match::MapMatchedObjectReferencePositionList referencePointPositions;
+  ::ad::map::match::LaneOccupiedRegionList lane_occupied_regions;
+  ::ad::map::match::MapMatchedObjectReferencePositionList reference_point_positions;
 
   /*!
    * Sampling distance used to calculate the bounding box.
    */
-  ::ad::physics::Distance samplingDistance{0.0};
+  ::ad::physics::Distance sampling_distance{0.0};
 
   /*!
    * The actual map matching radius around the object.
    */
-  ::ad::physics::Distance matchRadius{0.0};
+  ::ad::physics::Distance match_radius{0.0};
 };
 
 } // namespace match
@@ -168,17 +168,17 @@ namespace match {
 inline std::ostream &operator<<(std::ostream &os, MapMatchedObjectBoundingBox const &_value)
 {
   os << "MapMatchedObjectBoundingBox(";
-  os << "laneOccupiedRegions:";
-  os << _value.laneOccupiedRegions;
+  os << "lane_occupied_regions:";
+  os << _value.lane_occupied_regions;
   os << ",";
-  os << "referencePointPositions:";
-  os << _value.referencePointPositions;
+  os << "reference_point_positions:";
+  os << _value.reference_point_positions;
   os << ",";
-  os << "samplingDistance:";
-  os << _value.samplingDistance;
+  os << "sampling_distance:";
+  os << _value.sampling_distance;
   os << ",";
-  os << "matchRadius:";
-  os << _value.matchRadius;
+  os << "match_radius:";
+  os << _value.match_radius;
   os << ")";
   return os;
 }
@@ -198,4 +198,17 @@ inline std::string to_string(::ad::map::match::MapMatchedObjectBoundingBox const
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::match::MapMatchedObjectBoundingBox> : formatter<string_view>
+{
+  template <typename FormatContext>
+  auto format(::ad::map::match::MapMatchedObjectBoundingBox const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_MATCH_MAPMATCHEDOBJECTBOUNDINGBOX

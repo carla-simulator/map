@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (c) 2021 Computer Vision Center (CVC) at the Universitat Autonoma
-# de Barcelona (UAB).
-# Copyright (c) 2021 Intel Corporation
+# Copyright (C) 2021 Computer Vision Center (CVC) at the Universitat Autonomade Barcelona (UAB).
+# Copyright (C) 2021 Intel Corporation
+#
+# SPDX-License-Identifier: MIT
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
 
@@ -16,6 +17,7 @@ from setuptools.dist import Distribution
 
 class BinaryDistribution(Distribution):
     """Distribution which always forces a binary package with platform name"""
+
     def has_ext_modules(self):
         return True
 
@@ -25,6 +27,7 @@ class Install(_install):
         _install.finalize_options(self)
         if self.distribution.has_ext_modules():
             self.install_lib = self.install_platlib
+
 
 programming_language_classifier = "Programming Language :: Python :: {}".format(sys.version_info.major)
 

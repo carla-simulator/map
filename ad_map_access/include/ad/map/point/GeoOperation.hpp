@@ -11,8 +11,7 @@
 
 #pragma once
 
-#include "ad/map/point/GeoEdgeValidInputRange.hpp"
-#include "ad/map/point/GeoPointValidInputRange.hpp"
+#include "ad/map/point/GeoPointListValidInputRange.hpp"
 #include "ad/map/point/PointOperation.hpp"
 #include "ad/physics/Distance.hpp"
 
@@ -39,13 +38,13 @@ inline bool isValid(GeoPoint const &point, bool const logErrors = true)
 }
 
 /**
- * @brief checks if the given GeoEdge is valid
+ * @brief checks if the given GeoPointList is valid
  *
  * The point is valid if it's within valid input range.
  */
-inline bool isValid(GeoEdge const &edge, bool const logErrors = true)
+inline bool isValid(GeoPointList const &pts, bool const logErrors = true)
 {
-  return withinValidInputRange(edge, logErrors);
+  return withinValidInputRange(pts, logErrors);
 }
 
 /**
@@ -75,7 +74,7 @@ inline double radians2degree(double radians)
  */
 inline double toRadians(Latitude const &latitude)
 {
-  return degree2radians(static_cast<double>(latitude));
+  return degree2radians(latitude.mLatitude);
 }
 
 /**
@@ -85,7 +84,7 @@ inline double toRadians(Latitude const &latitude)
  */
 inline double toRadians(Longitude const &longitude)
 {
-  return degree2radians(static_cast<double>(longitude));
+  return degree2radians(longitude.mLongitude);
 }
 
 /**
@@ -127,7 +126,7 @@ physics::Distance flatDistance(GeoPoint const &point, const GeoPoint &other);
  * @param[in] pts Set of other points that will be used in approximation.
  * @returns New point with same longitude and latitude, but approximated altitude.
  */
-GeoPoint approxAltitude(GeoPoint const &point, const GeoEdge &pts);
+GeoPoint approxAltitude(GeoPoint const &point, const GeoPointList &pts);
 
 /**
  * @brief Checks if point is on the left side of the line defined by two points.
@@ -139,26 +138,26 @@ GeoPoint approxAltitude(GeoPoint const &point, const GeoEdge &pts);
 bool isOnTheLeft(GeoPoint const &point, const GeoPoint &pt0, const GeoPoint &pt1);
 
 /**
- * @brief Checks if two GeoEdge have same orientation by taking
+ * @brief Checks if two GeoPointList have same orientation by taking
  *        in account distances between first and last points.
- * @param[in] pts0 First GeoEdge
- * @param[in] pts1 Second GeoEdge
+ * @param[in] pts0 First GeoPointList
+ * @param[in] pts1 Second GeoPointList
  * @returns true if d(pt0[0], pt1[0]) <= d(pt0[0], pt1[last])
  */
-bool haveSameOrientation(const GeoEdge &pts0, const GeoEdge &pts1);
+bool haveSameOrientation(const GeoPointList &pts0, const GeoPointList &pts1);
 
 /**
  * @brief Checks if one polyline is on the left side of another polyline.
- * @param[in] pts0 First GeoEdge
- * @param[in] pts1 Second GeoEdge
+ * @param[in] pts0 First GeoPointList
+ * @param[in] pts1 Second GeoPointList
  * @returns true if pts0 is left of pts1.
  * \note Altitude is not taken in the account!
  */
-bool isOnTheLeft(const GeoEdge &pts0, const GeoEdge &pts1);
+bool isOnTheLeft(const GeoPointList &pts0, const GeoPointList &pts1);
 
 /** @brief calculate the length of the provided border as distance value
  */
-physics::Distance calcLength(GeoEdge const &edge);
+physics::Distance calcLength(GeoPointList const &pts);
 
 /** @brief specialization of vectorExtrapolate for GeoPoint
  */

@@ -177,9 +177,9 @@ TEST_F(CoordianteTransformTest, Distances)
     ASSERT_EQ(d_enu_12, d_ecef_12);
     ASSERT_EQ(d_enu_13, d_ecef_13);
     ASSERT_EQ(d_enu_23, d_ecef_23);
-    ASSERT_EQ(d_geo_23, Distance(static_cast<double>(dh)));
-    ASSERT_EQ(d_enu_23, Distance(static_cast<double>(dh)));
-    ASSERT_EQ(d_ecef_23, Distance(static_cast<double>(dh)));
+    ASSERT_EQ(d_geo_23, Distance(dh.mAltitude));
+    ASSERT_EQ(d_enu_23, Distance(dh.mAltitude));
+    ASSERT_EQ(d_ecef_23, Distance(dh.mAltitude));
   }
 }
 
@@ -256,22 +256,22 @@ TEST_F(CoordianteTransformTest, ENUGeometry)
   EXPECT_TRUE(isValid(geo2));
 
   // no ENU reference set
-  EXPECT_THROW_NO_LOG(toENU(geo1.ecefEdge), std::invalid_argument);
-  EXPECT_THROW_NO_LOG(toENU(geo2.ecefEdge), std::invalid_argument);
+  EXPECT_THROW_NO_LOG(toENU(geo1.ecef_points), std::invalid_argument);
+  EXPECT_THROW_NO_LOG(toENU(geo2.ecef_points), std::invalid_argument);
 
-  const ENUEdge geo1_cf1_enu1 = toENU(geo1.ecefEdge, pt1_geo);
+  const ENUPointList geo1_cf1_enu1 = toENU(geo1.ecef_points, pt1_geo);
   EXPECT_TRUE(isValid(geo1_cf1_enu1));
-  const ENUEdge geo2_cf1_enu1 = toENU(geo2.ecefEdge, pt1_geo);
+  const ENUPointList geo2_cf1_enu1 = toENU(geo2.ecef_points, pt1_geo);
   EXPECT_TRUE(isValid(geo2_cf1_enu1));
 
-  const ENUEdge geo1_cf1_enu2 = toENU(geo1.ecefEdge, pt2_geo);
+  const ENUPointList geo1_cf1_enu2 = toENU(geo1.ecef_points, pt2_geo);
   EXPECT_TRUE(isValid(geo1_cf1_enu2));
-  const ENUEdge geo2_cf1_enu2 = toENU(geo2.ecefEdge, pt2_geo);
+  const ENUPointList geo2_cf1_enu2 = toENU(geo2.ecef_points, pt2_geo);
   EXPECT_TRUE(isValid(geo2_cf1_enu2));
 
-  const ENUEdge geo1_cf1_enu1a = toENU(geo1.ecefEdge, pt1_geo);
+  const ENUPointList geo1_cf1_enu1a = toENU(geo1.ecef_points, pt1_geo);
   EXPECT_TRUE(isValid(geo1_cf1_enu1a));
-  const ENUEdge geo2_cf1_enu1a = toENU(geo2.ecefEdge, pt1_geo);
+  const ENUPointList geo2_cf1_enu1a = toENU(geo2.ecef_points, pt1_geo);
   EXPECT_TRUE(isValid(geo2_cf1_enu1a));
 
   EXPECT_NE(geo1_cf1_enu1, geo1_cf1_enu2);
@@ -279,19 +279,19 @@ TEST_F(CoordianteTransformTest, ENUGeometry)
   EXPECT_NE(geo2_cf1_enu1, geo2_cf1_enu2);
   EXPECT_EQ(geo2_cf1_enu1, geo2_cf1_enu1a);
 
-  const ENUEdge geo1_cf2_enu2 = toENU(geo1.ecefEdge, pt2_geo);
+  const ENUPointList geo1_cf2_enu2 = toENU(geo1.ecef_points, pt2_geo);
   EXPECT_TRUE(isValid(geo1_cf2_enu2));
-  const ENUEdge geo2_cf2_enu2 = toENU(geo2.ecefEdge, pt2_geo);
+  const ENUPointList geo2_cf2_enu2 = toENU(geo2.ecef_points, pt2_geo);
   EXPECT_TRUE(isValid(geo2_cf2_enu2));
 
-  const ENUEdge geo1_cf2_enu1 = toENU(geo1.ecefEdge, pt1_geo);
+  const ENUPointList geo1_cf2_enu1 = toENU(geo1.ecef_points, pt1_geo);
   EXPECT_TRUE(isValid(geo1_cf2_enu1));
-  const ENUEdge geo2_cf2_enu1 = toENU(geo2.ecefEdge, pt1_geo);
+  const ENUPointList geo2_cf2_enu1 = toENU(geo2.ecef_points, pt1_geo);
   EXPECT_TRUE(isValid(geo2_cf2_enu1));
 
-  const ENUEdge geo1_cf2_enu2a = toENU(geo1.ecefEdge, pt2_geo);
+  const ENUPointList geo1_cf2_enu2a = toENU(geo1.ecef_points, pt2_geo);
   EXPECT_TRUE(isValid(geo1_cf2_enu2a));
-  const ENUEdge geo2_cf2_enu2a = toENU(geo2.ecefEdge, pt2_geo);
+  const ENUPointList geo2_cf2_enu2a = toENU(geo2.ecef_points, pt2_geo);
   EXPECT_TRUE(isValid(geo2_cf2_enu2a));
 
   EXPECT_NE(geo1_cf2_enu1, geo1_cf2_enu2);
@@ -312,7 +312,7 @@ TEST_F(CoordianteTransformTest, TOENU)
   // Position of San Jose Fire Department Station 29
   GeoPoint pt2_geo = createGeoPoint(Longitude(-121.933886), Latitude(37.401112), Altitude(123.456));
   Distance geo_abs_length = distance(pt1_geo, pt2_geo);
-  GeoEdge geo_edge;
+  GeoPointList geo_edge;
   geo_edge.push_back(pt1_geo);
   geo_edge.push_back(pt2_geo);
   Distance geo_edge_length = calcLength(geo_edge);
@@ -323,7 +323,7 @@ TEST_F(CoordianteTransformTest, TOENU)
   ECEFPoint pt2_ecef = toECEF(pt2_geo);
   EXPECT_TRUE(isValid(pt2_ecef));
   Distance ecef_abs_length = distance(pt1_ecef, pt2_ecef);
-  ECEFEdge ecef_edge;
+  ECEFPointList ecef_edge;
   ecef_edge.push_back(pt1_ecef);
   ecef_edge.push_back(pt2_ecef);
   Distance ecef_edge_length = calcLength(ecef_edge);
@@ -347,20 +347,20 @@ TEST_F(CoordianteTransformTest, TOENU)
   enu_length = distance(pt1_enu, pt2_enu);
   EXPECT_EQ(enu_length, ecef_abs_length);
 
-  ENUEdge enu_edge;
+  ENUPointList enu_edge;
   enu_edge.push_back(pt1_enu);
   enu_edge.push_back(pt2_enu);
-  GeoEdge geo_edge_ret;
+  GeoPointList geo_edge_ret;
   geo_edge_ret = toGeo(enu_edge, enu_origin);
   Distance geo_from_enu_length = calcLength(geo_edge_ret);
   EXPECT_EQ(geo_from_enu_length, geo_edge_length);
 
-  ECEFEdge ecef_edge_ret;
+  ECEFPointList ecef_edge_ret;
   ecef_edge_ret = toECEF(enu_edge, enu_origin);
   Distance ecef_from_enu_length = calcLength(ecef_edge_ret);
   EXPECT_EQ(ecef_from_enu_length, ecef_edge_length);
 
-  ENUEdge enu_edge_ret;
+  ENUPointList enu_edge_ret;
   enu_edge_ret = toENU(geo_edge_ret, enu_origin);
   enu_length = calcLength(enu_edge_ret);
   EXPECT_EQ(enu_length, geo_edge_length);

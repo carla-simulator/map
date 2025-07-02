@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -21,28 +21,28 @@
 TEST(LaneIntervalValidInputRangeTests, testValidInputRange)
 {
   ::ad::map::route::LaneInterval value;
-  ::ad::map::lane::LaneId valueLaneId(1);
-  value.laneId = valueLaneId;
+  ::ad::map::lane::LaneId valueLane_id(1);
+  value.lane_id = valueLane_id;
   ::ad::physics::ParametricValue valueStart(0.);
   value.start = valueStart;
   ::ad::physics::ParametricValue valueEnd(0.);
   value.end = valueEnd;
-  bool valueWrongWay{true};
-  value.wrongWay = valueWrongWay;
+  bool valueWrong_way{true};
+  value.wrong_way = valueWrong_way;
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
 TEST(LaneIntervalValidInputRangeTests, testValidInputRangeStartTooSmall)
 {
   ::ad::map::route::LaneInterval value;
-  ::ad::map::lane::LaneId valueLaneId(1);
-  value.laneId = valueLaneId;
+  ::ad::map::lane::LaneId valueLane_id(1);
+  value.lane_id = valueLane_id;
   ::ad::physics::ParametricValue valueStart(0.);
   value.start = valueStart;
   ::ad::physics::ParametricValue valueEnd(0.);
   value.end = valueEnd;
-  bool valueWrongWay{true};
-  value.wrongWay = valueWrongWay;
+  bool valueWrong_way{true};
+  value.wrong_way = valueWrong_way;
 
   // override member with data type value below input range minimum
   ::ad::physics::ParametricValue invalidInitializedMember(0. - ::ad::physics::ParametricValue::cPrecisionValue);
@@ -53,14 +53,14 @@ TEST(LaneIntervalValidInputRangeTests, testValidInputRangeStartTooSmall)
 TEST(LaneIntervalValidInputRangeTests, testValidInputRangeStartTooBig)
 {
   ::ad::map::route::LaneInterval value;
-  ::ad::map::lane::LaneId valueLaneId(1);
-  value.laneId = valueLaneId;
+  ::ad::map::lane::LaneId valueLane_id(1);
+  value.lane_id = valueLane_id;
   ::ad::physics::ParametricValue valueStart(0.);
   value.start = valueStart;
   ::ad::physics::ParametricValue valueEnd(0.);
   value.end = valueEnd;
-  bool valueWrongWay{true};
-  value.wrongWay = valueWrongWay;
+  bool valueWrong_way{true};
+  value.wrong_way = valueWrong_way;
 
   // override member with data type value above input range maximum
   ::ad::physics::ParametricValue invalidInitializedMember(1. * 1.1);
@@ -79,14 +79,14 @@ TEST(LaneIntervalValidInputRangeTests, testValidInputRangestartDefault)
 TEST(LaneIntervalValidInputRangeTests, testValidInputRangeEndTooSmall)
 {
   ::ad::map::route::LaneInterval value;
-  ::ad::map::lane::LaneId valueLaneId(1);
-  value.laneId = valueLaneId;
+  ::ad::map::lane::LaneId valueLane_id(1);
+  value.lane_id = valueLane_id;
   ::ad::physics::ParametricValue valueStart(0.);
   value.start = valueStart;
   ::ad::physics::ParametricValue valueEnd(0.);
   value.end = valueEnd;
-  bool valueWrongWay{true};
-  value.wrongWay = valueWrongWay;
+  bool valueWrong_way{true};
+  value.wrong_way = valueWrong_way;
 
   // override member with data type value below input range minimum
   ::ad::physics::ParametricValue invalidInitializedMember(0. - ::ad::physics::ParametricValue::cPrecisionValue);
@@ -97,14 +97,14 @@ TEST(LaneIntervalValidInputRangeTests, testValidInputRangeEndTooSmall)
 TEST(LaneIntervalValidInputRangeTests, testValidInputRangeEndTooBig)
 {
   ::ad::map::route::LaneInterval value;
-  ::ad::map::lane::LaneId valueLaneId(1);
-  value.laneId = valueLaneId;
+  ::ad::map::lane::LaneId valueLane_id(1);
+  value.lane_id = valueLane_id;
   ::ad::physics::ParametricValue valueStart(0.);
   value.start = valueStart;
   ::ad::physics::ParametricValue valueEnd(0.);
   value.end = valueEnd;
-  bool valueWrongWay{true};
-  value.wrongWay = valueWrongWay;
+  bool valueWrong_way{true};
+  value.wrong_way = valueWrong_way;
 
   // override member with data type value above input range maximum
   ::ad::physics::ParametricValue invalidInitializedMember(1. * 1.1);

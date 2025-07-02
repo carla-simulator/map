@@ -77,12 +77,12 @@ lane::LaneDirection toLaneDirection(::opendrive::Lane const &lane, bool rightHan
 /**
  * @brief Converts an opendrive::Point type (in geo coordinates) to a point::GeoPoint type
  */
-point::GeoPoint toGeo(::opendrive::Point const &geoPoint);
+point::GeoPoint toGeo(::opendrive::Point const &geo_point);
 
 /**
  * @brief Converts an opendrive::Point type (in geo coordinates) to a point::ECEFPoint type
  */
-point::ECEFPoint toECEF(::opendrive::Point const &geoPoint);
+point::ECEFPoint toECEF(::opendrive::Point const &geo_point);
 
 /**
  * @brief Converts an opendrive::Edge type to a point::Geometry type

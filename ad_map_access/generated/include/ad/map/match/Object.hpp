@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -99,7 +99,7 @@ struct Object
    */
   bool operator==(const Object &other) const
   {
-    return (enuPosition == other.enuPosition) && (mapMatchedBoundingBox == other.mapMatchedBoundingBox);
+    return (enu_position == other.enu_position) && (map_matched_bounding_box == other.map_matched_bounding_box);
   }
 
   /**
@@ -117,8 +117,8 @@ struct Object
   /*!
    * Position of the object
    */
-  ::ad::map::match::ENUObjectPosition enuPosition;
-  ::ad::map::match::MapMatchedObjectBoundingBox mapMatchedBoundingBox;
+  ::ad::map::match::ENUObjectPosition enu_position;
+  ::ad::map::match::MapMatchedObjectBoundingBox map_matched_bounding_box;
 };
 
 } // namespace match
@@ -157,11 +157,11 @@ namespace match {
 inline std::ostream &operator<<(std::ostream &os, Object const &_value)
 {
   os << "Object(";
-  os << "enuPosition:";
-  os << _value.enuPosition;
+  os << "enu_position:";
+  os << _value.enu_position;
   os << ",";
-  os << "mapMatchedBoundingBox:";
-  os << _value.mapMatchedBoundingBox;
+  os << "map_matched_bounding_box:";
+  os << _value.map_matched_bounding_box;
   os << ")";
   return os;
 }
@@ -181,4 +181,16 @@ inline std::string to_string(::ad::map::match::Object const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::match::Object> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::match::Object const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_MATCH_OBJECT

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,36 +28,36 @@ protected:
   {
     // valid initialization
     ::ad::map::point::Geometry value;
-    bool valueIsValid{true};
-    value.isValid = valueIsValid;
-    bool valueIsClosed{true};
-    value.isClosed = valueIsClosed;
-    ::ad::map::point::ECEFEdge valueEcefEdge;
-    ::ad::map::point::ECEFPoint valueEcefEdgeElement;
-    ::ad::map::point::ECEFCoordinate valueEcefEdgeElementX(-6400000);
-    valueEcefEdgeElement.x = valueEcefEdgeElementX;
-    ::ad::map::point::ECEFCoordinate valueEcefEdgeElementY(-6400000);
-    valueEcefEdgeElement.y = valueEcefEdgeElementY;
-    ::ad::map::point::ECEFCoordinate valueEcefEdgeElementZ(-6400000);
-    valueEcefEdgeElement.z = valueEcefEdgeElementZ;
-    valueEcefEdge.resize(1, valueEcefEdgeElement);
-    value.ecefEdge = valueEcefEdge;
+    bool valueIs_valid{true};
+    value.is_valid = valueIs_valid;
+    bool valueIs_closed{true};
+    value.is_closed = valueIs_closed;
+    ::ad::map::point::ECEFPointList valueEcef_points;
+    ::ad::map::point::ECEFPoint valueEcef_pointsElement;
+    ::ad::map::point::ECEFCoordinate valueEcef_pointsElementX(-6400000);
+    valueEcef_pointsElement.x = valueEcef_pointsElementX;
+    ::ad::map::point::ECEFCoordinate valueEcef_pointsElementY(-6400000);
+    valueEcef_pointsElement.y = valueEcef_pointsElementY;
+    ::ad::map::point::ECEFCoordinate valueEcef_pointsElementZ(-6400000);
+    valueEcef_pointsElement.z = valueEcef_pointsElementZ;
+    valueEcef_points.resize(1, valueEcef_pointsElement);
+    value.ecef_points = valueEcef_points;
     ::ad::physics::Distance valueLength(-1e9);
     value.length = valueLength;
-    ::ad::map::point::ENUEdgeCache valuePrivate_enuEdgeCache;
-    ::ad::map::point::ENUEdge valuePrivate_enuEdgeCacheEnuEdge;
-    ::ad::map::point::ENUPoint valuePrivate_enuEdgeCacheEnuEdgeElement;
-    ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-    valuePrivate_enuEdgeCacheEnuEdgeElement.x = valuePrivate_enuEdgeCacheEnuEdgeElementX;
-    ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-    valuePrivate_enuEdgeCacheEnuEdgeElement.y = valuePrivate_enuEdgeCacheEnuEdgeElementY;
-    ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-    valuePrivate_enuEdgeCacheEnuEdgeElement.z = valuePrivate_enuEdgeCacheEnuEdgeElementZ;
-    valuePrivate_enuEdgeCacheEnuEdge.resize(1, valuePrivate_enuEdgeCacheEnuEdgeElement);
-    valuePrivate_enuEdgeCache.enuEdge = valuePrivate_enuEdgeCacheEnuEdge;
-    uint64_t valuePrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-    valuePrivate_enuEdgeCache.enuVersion = valuePrivate_enuEdgeCacheEnuVersion;
-    value.private_enuEdgeCache = valuePrivate_enuEdgeCache;
+    ::ad::map::point::ENUPointCache valuePrivate_enu_points_cache;
+    ::ad::map::point::ENUPointList valuePrivate_enu_points_cacheEnu_points;
+    ::ad::map::point::ENUPoint valuePrivate_enu_points_cacheEnu_pointsElement;
+    ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+    valuePrivate_enu_points_cacheEnu_pointsElement.x = valuePrivate_enu_points_cacheEnu_pointsElementX;
+    ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+    valuePrivate_enu_points_cacheEnu_pointsElement.y = valuePrivate_enu_points_cacheEnu_pointsElementY;
+    ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+    valuePrivate_enu_points_cacheEnu_pointsElement.z = valuePrivate_enu_points_cacheEnu_pointsElementZ;
+    valuePrivate_enu_points_cacheEnu_points.resize(1, valuePrivate_enu_points_cacheEnu_pointsElement);
+    valuePrivate_enu_points_cache.enu_points = valuePrivate_enu_points_cacheEnu_points;
+    uint64_t valuePrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+    valuePrivate_enu_points_cache.enu_version = valuePrivate_enu_points_cacheEnu_version;
+    value.private_enu_points_cache = valuePrivate_enu_points_cache;
     mValue = value;
   }
 
@@ -110,41 +110,41 @@ TEST_F(GeometryTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(GeometryTests, comparisonOperatorIsValidDiffers)
+TEST_F(GeometryTests, comparisonOperatorIs_validDiffers)
 {
   ::ad::map::point::Geometry valueA = mValue;
-  bool isValid{false};
-  valueA.isValid = isValid;
+  bool is_valid{false};
+  valueA.is_valid = is_valid;
   ::ad::map::point::Geometry valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(GeometryTests, comparisonOperatorIsClosedDiffers)
+TEST_F(GeometryTests, comparisonOperatorIs_closedDiffers)
 {
   ::ad::map::point::Geometry valueA = mValue;
-  bool isClosed{false};
-  valueA.isClosed = isClosed;
+  bool is_closed{false};
+  valueA.is_closed = is_closed;
   ::ad::map::point::Geometry valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(GeometryTests, comparisonOperatorEcefEdgeDiffers)
+TEST_F(GeometryTests, comparisonOperatorEcef_pointsDiffers)
 {
   ::ad::map::point::Geometry valueA = mValue;
-  ::ad::map::point::ECEFEdge ecefEdge;
-  ::ad::map::point::ECEFPoint ecefEdgeElement;
-  ::ad::map::point::ECEFCoordinate ecefEdgeElementX(6400000);
-  ecefEdgeElement.x = ecefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate ecefEdgeElementY(6400000);
-  ecefEdgeElement.y = ecefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate ecefEdgeElementZ(6400000);
-  ecefEdgeElement.z = ecefEdgeElementZ;
-  ecefEdge.resize(2, ecefEdgeElement);
-  valueA.ecefEdge = ecefEdge;
+  ::ad::map::point::ECEFPointList ecef_points;
+  ::ad::map::point::ECEFPoint ecef_pointsElement;
+  ::ad::map::point::ECEFCoordinate ecef_pointsElementX(6400000);
+  ecef_pointsElement.x = ecef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate ecef_pointsElementY(6400000);
+  ecef_pointsElement.y = ecef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate ecef_pointsElementZ(6400000);
+  ecef_pointsElement.z = ecef_pointsElementZ;
+  ecef_points.resize(2, ecef_pointsElement);
+  valueA.ecef_points = ecef_points;
   ::ad::map::point::Geometry valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
@@ -162,23 +162,23 @@ TEST_F(GeometryTests, comparisonOperatorLengthDiffers)
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(GeometryTests, comparisonOperatorPrivate_enuEdgeCacheDiffers)
+TEST_F(GeometryTests, comparisonOperatorPrivate_enu_points_cacheDiffers)
 {
   ::ad::map::point::Geometry valueA = mValue;
-  ::ad::map::point::ENUEdgeCache private_enuEdgeCache;
-  ::ad::map::point::ENUEdge private_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint private_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate private_enuEdgeCacheEnuEdgeElementX(16384);
-  private_enuEdgeCacheEnuEdgeElement.x = private_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate private_enuEdgeCacheEnuEdgeElementY(16384);
-  private_enuEdgeCacheEnuEdgeElement.y = private_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate private_enuEdgeCacheEnuEdgeElementZ(16384);
-  private_enuEdgeCacheEnuEdgeElement.z = private_enuEdgeCacheEnuEdgeElementZ;
-  private_enuEdgeCacheEnuEdge.resize(2, private_enuEdgeCacheEnuEdgeElement);
-  private_enuEdgeCache.enuEdge = private_enuEdgeCacheEnuEdge;
-  uint64_t private_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::max()};
-  private_enuEdgeCache.enuVersion = private_enuEdgeCacheEnuVersion;
-  valueA.private_enuEdgeCache = private_enuEdgeCache;
+  ::ad::map::point::ENUPointCache private_enu_points_cache;
+  ::ad::map::point::ENUPointList private_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint private_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate private_enu_points_cacheEnu_pointsElementX(1e8);
+  private_enu_points_cacheEnu_pointsElement.x = private_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate private_enu_points_cacheEnu_pointsElementY(1e8);
+  private_enu_points_cacheEnu_pointsElement.y = private_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate private_enu_points_cacheEnu_pointsElementZ(1e8);
+  private_enu_points_cacheEnu_pointsElement.z = private_enu_points_cacheEnu_pointsElementZ;
+  private_enu_points_cacheEnu_points.resize(2, private_enu_points_cacheEnu_pointsElement);
+  private_enu_points_cache.enu_points = private_enu_points_cacheEnu_points;
+  uint64_t private_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::max()};
+  private_enu_points_cache.enu_version = private_enu_points_cacheEnu_version;
+  valueA.private_enu_points_cache = private_enu_points_cache;
   ::ad::map::point::Geometry valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

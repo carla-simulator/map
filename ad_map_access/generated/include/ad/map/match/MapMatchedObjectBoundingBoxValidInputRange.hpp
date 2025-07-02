@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -41,9 +41,10 @@ inline bool withinValidInputRange(::ad::map::match::MapMatchedObjectBoundingBox 
 {
   // check for generic member input ranges
   bool inValidInputRange = true;
-  inValidInputRange = withinValidInputRange(input.laneOccupiedRegions, logErrors)
-    && withinValidInputRange(input.referencePointPositions, logErrors)
-    && withinValidInputRange(input.samplingDistance, logErrors) && withinValidInputRange(input.matchRadius, logErrors);
+  inValidInputRange = withinValidInputRange(input.lane_occupied_regions, logErrors)
+    && withinValidInputRange(input.reference_point_positions, logErrors)
+    && withinValidInputRange(input.sampling_distance, logErrors)
+    && withinValidInputRange(input.match_radius, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::match::MapMatchedObjectBoundingBox)>> {} has invalid member",

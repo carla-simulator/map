@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,16 +28,16 @@ protected:
   {
     // valid initialization
     ::ad::map::restriction::SpeedLimit value;
-    ::ad::physics::Speed valueSpeedLimit(-100.);
-    value.speedLimit = valueSpeedLimit;
-    ::ad::physics::ParametricRange valueLanePiece;
-    ::ad::physics::ParametricValue valueLanePieceMinimum(0.);
-    valueLanePiece.minimum = valueLanePieceMinimum;
-    ::ad::physics::ParametricValue valueLanePieceMaximum(0.);
-    valueLanePiece.maximum = valueLanePieceMaximum;
-    valueLanePiece.maximum = valueLanePiece.minimum;
-    valueLanePiece.minimum = valueLanePiece.maximum;
-    value.lanePiece = valueLanePiece;
+    ::ad::physics::Speed valueSpeed_limit(-100.);
+    value.speed_limit = valueSpeed_limit;
+    ::ad::physics::ParametricRange valueLane_piece;
+    ::ad::physics::ParametricValue valueLane_pieceMinimum(0.);
+    valueLane_piece.minimum = valueLane_pieceMinimum;
+    ::ad::physics::ParametricValue valueLane_pieceMaximum(0.);
+    valueLane_piece.maximum = valueLane_pieceMaximum;
+    valueLane_piece.maximum = valueLane_piece.minimum;
+    valueLane_piece.minimum = valueLane_piece.maximum;
+    value.lane_piece = valueLane_piece;
     mValue = value;
   }
 
@@ -90,28 +90,28 @@ TEST_F(SpeedLimitTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(SpeedLimitTests, comparisonOperatorSpeedLimitDiffers)
+TEST_F(SpeedLimitTests, comparisonOperatorSpeed_limitDiffers)
 {
   ::ad::map::restriction::SpeedLimit valueA = mValue;
-  ::ad::physics::Speed speedLimit(100.);
-  valueA.speedLimit = speedLimit;
+  ::ad::physics::Speed speed_limit(100.);
+  valueA.speed_limit = speed_limit;
   ::ad::map::restriction::SpeedLimit valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(SpeedLimitTests, comparisonOperatorLanePieceDiffers)
+TEST_F(SpeedLimitTests, comparisonOperatorLane_pieceDiffers)
 {
   ::ad::map::restriction::SpeedLimit valueA = mValue;
-  ::ad::physics::ParametricRange lanePiece;
-  ::ad::physics::ParametricValue lanePieceMinimum(1.);
-  lanePiece.minimum = lanePieceMinimum;
-  ::ad::physics::ParametricValue lanePieceMaximum(1.);
-  lanePiece.maximum = lanePieceMaximum;
-  lanePiece.maximum = lanePiece.minimum;
-  lanePiece.minimum = lanePiece.maximum;
-  valueA.lanePiece = lanePiece;
+  ::ad::physics::ParametricRange lane_piece;
+  ::ad::physics::ParametricValue lane_pieceMinimum(1.);
+  lane_piece.minimum = lane_pieceMinimum;
+  ::ad::physics::ParametricValue lane_pieceMaximum(1.);
+  lane_piece.maximum = lane_pieceMaximum;
+  lane_piece.maximum = lane_piece.minimum;
+  lane_piece.minimum = lane_piece.maximum;
+  valueA.lane_piece = lane_piece;
   ::ad::map::restriction::SpeedLimit valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
