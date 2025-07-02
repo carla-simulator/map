@@ -51,9 +51,9 @@ map$>  sudo apt-get install libboost-all-dev libpugixml-dev libgtest-dev libpyth
 Additional dependencies for the python bindings:
 ```bash
 map$>  sudo apt-get install castxml
-map$>  mkdir -p build/map-build-venv
-map$>  python -m venv build/map-build-venv
-map$> source build/map-build-venv/bin/activate
+map$>  mkdir -p map-build-venv
+map$>  python -m venv map-build-venv
+map$> source map-build-venv/bin/activate
 (map-build-venv)map$>  pip install setuptools pygccxml pyplusplus unittest-xml-reporting
 ```
 
@@ -80,7 +80,7 @@ All components will be compiled respecting the dependencies between them.
 The python bindings are disabled by default. To integrate them into the build you can make use of the prepared
 colcon meta file:
 ```bash
- map$> source build/map-build-venv/bin/activate
+ map$> source map-build-venv/bin/activate
  (map-build-venv)map$> colcon build --metas colcon_python.meta
 ```
 __colcon_python.meta__ enables python build (-DBUILD_PYTHON_BINDING=ON). To specify the python version to be used you call e.g.:

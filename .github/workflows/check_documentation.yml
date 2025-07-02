@@ -36,7 +36,7 @@ jobs:
 
     - name: Build Documentation and Test
       run: |
-        source build/map-build-venv/bin/activate
+        source map-build-venv/bin/activate
         GTEST_OUTPUT="xml:test_results"
         colcon build --event-handlers console_direct+ --executor sequential --packages-up-to ad_map_access ad_physics --cmake-args -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DBUILD_COVERAGE=ON -DBUILD_APIDOC=ON
         colcon test --event-handlers console_direct+ --packages-select ad_map_access ad_physics

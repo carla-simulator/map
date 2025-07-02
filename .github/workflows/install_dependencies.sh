@@ -40,10 +40,10 @@ fi
 
 sudo apt remove python3-pygments
 
-echo "creating virtual python${PYTHON_BINDING_VERSION} environment at $PWD/build/map-build-venv"
+echo "creating virtual python${PYTHON_BINDING_VERSION} environment at $PWD/map-build-venv"
 export PYTHONNOUSERSITE=1
-python${PYTHON_BINDING_VERSION} -m venv build/map-build-venv
-source build/map-build-venv/bin/activate && \
+python${PYTHON_BINDING_VERSION} -m venv map-build-venv
+source map-build-venv/bin/activate && \
 echo "activating virtual environment at $(which python${PYTHON_BINDING_VERSION})" && \
 curl -sS https://bootstrap.pypa.io/get-pip.py | python${PYTHON_BINDING_VERSION}  && \
 python${PYTHON_BINDING_VERSION} -m pip install -r .github/workflows/requirements.txt
