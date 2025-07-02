@@ -40,4 +40,8 @@ if [[ "${BUILD_DOCU}x" != "x" ]]; then
 fi
 
 sudo apt remove python3-pygments
-sudo python${PYTHON_BINDING_VERSION} -m pip install -r .github/workflows/requirements.txt
+
+# use virtual environment for our build dependencies
+python${PYTHON_BINDING_VERSION} -m venv build/map-build-venv
+source build/map-build-venv/bin/activate
+python${PYTHON_BINDING_VERSION} -m pip install -r .github/workflows/requirements.txt
