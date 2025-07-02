@@ -94,7 +94,7 @@ jobs:
 
       - name: Build 
         run: |
-          colcon build --event-handlers console_direct+ --executor sequential --packages-up-to ad_map_access --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON
+          source map-build-venv/bin/activate && colcon build --event-handlers console_direct+ --executor sequential --packages-up-to ad_map_access --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@b7bf0a3ed3ecfa44160715d7c442788f65f0f923 # v3.23.2

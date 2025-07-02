@@ -28,8 +28,9 @@ install_boost() {
       cat bootstrap.log
     fi
 
-    ./b2 --prefix="/usr" cxxflags="-fPIC" -j 10 stage release
-    sudo ./b2 --prefix="/usr" cxxflags="-fPIC" -j 10 install
+    # the python headers were installed via system and not by the virtual environment
+    ./b2 --prefix="/usr" cxxflags="-fPIC -I/usr/include/python${PYTHON_BINDING_VERSION}" -j 10 stage release
+    sudo ./b2 --prefix="/usr" cxxflags="-fPIC -I/usr/include/python${PYTHON_BINDING_VERSION}" -j 10 install
 
     # ensure our colcon build process ignores boost sources
     touch COLCON_IGNORE
