@@ -76,6 +76,7 @@ Following compiler and Python combinations are [tested continously](.github/work
 |  Clang 14       |       x      |              |
 |  Clang 18       |              |       x      |
 |  Python 3.10    |       x      |              |
+|  Python 3.11    |       x      |       x      |
 |  Python 3.12    |              |       x      |
 
 Important: cmake is required to be at least version 3.10!
