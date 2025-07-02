@@ -40,6 +40,7 @@ fi
 
 sudo apt remove python3-pygments
 
-source activate_python_environment.sh
+python${PYTHON_BINDING_VERSION} -m venv build/map-build-venv
+source build/map-build-venv/bin/activate
 curl -sS https://bootstrap.pypa.io/get-pip.py | python${PYTHON_BINDING_VERSION}
 python${PYTHON_BINDING_VERSION} -m pip install -r .github/workflows/requirements.txt
