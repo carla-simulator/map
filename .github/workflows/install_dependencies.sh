@@ -32,7 +32,7 @@ sudo apt-get install -y --no-install-recommends build-essential castxml cmake sq
 
 
 
-sudo apt-get install -y --no-install-recommends python${PYTHON_BINDING_VERSION}-dev libpython${PYTHON_BINDING_VERSION}-dev
+sudo apt-get install -y --no-install-recommends python${PYTHON_BINDING_VERSION}-dev python${PYTHON_BINDING_VERSION}-venv libpython${PYTHON_BINDING_VERSION}-dev
 
 if [[ "${BUILD_DOCU}x" != "x" ]]; then
   sudo apt-get install doxygen graphviz lcov
