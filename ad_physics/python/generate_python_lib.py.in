@@ -41,10 +41,12 @@ def main():
         additional_replacements = [
          ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less__double_comma__boost_scope_geometry_scope_cs_scope_cartesian__greater__comma__false_comma__true_comma__std_scope_vector_comma__std_scope_vector_comma__std_scope_allocator_comma__std_scope_allocator__greater_", "Polygon"),
          ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less__double__greater__comma__false_comma__true__greater_", "Polygon"),
+         ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less__double__greater__comma__false__greater_", "Polygon"),
          ("polygon_less_boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less_double_greater__comma__false_greater_", "Polygon"),
 
          ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_Point_comma__false_comma__true_comma__std_scope_vector_comma__std_scope_vector_comma__std_scope_allocator_comma__std_scope_allocator__greater_", "Polygon"),
          ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_Point_comma__false_comma__true__greater_", "Polygon"),
+         ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_Point_comma__false__greater_", "Polygon"),
          ("polygon_less_boost_scope_geometry_scope_model_scope_d2_scope_Point_comma__false_greater_", "Polygon"),
 
          ("vector_less__boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less_double_comma__boost_scope_geometry_scope_cs_scope_cartesian_greater___greater_", "PointVector"),

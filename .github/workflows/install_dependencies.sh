@@ -10,7 +10,6 @@ install_boost() {
 
     BOOST_VERSION=1.83.0
     BOOST_PACKAGE_BASENAME=boost_${BOOST_VERSION//./_}
-    wget "https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/${BOOST_PACKAGE_BASENAME}.tar.gz"
     wget "https://archives.boost.io/release/${BOOST_VERSION}/source/${BOOST_PACKAGE_BASENAME}.tar.gz"
 
     tar -xzf ${BOOST_PACKAGE_BASENAME}.tar.gz
