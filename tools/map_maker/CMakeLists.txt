@@ -43,6 +43,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_compile_options(-Wall -Wextra -Werror -Wconversion -pedantic)
 
+if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 9.0.0)
+  add_compile_options(-Wno-final-dtor-non-final-class)
+endif()
+
 #####################################################################
 # Libraries
 #####################################################################
