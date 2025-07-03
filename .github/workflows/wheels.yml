@@ -20,8 +20,10 @@ jobs:
             PYTHON_BINDING_VERSION: "3.10"
           - os: ubuntu-22.04
             PYTHON_BINDING_VERSION: "3.11"
-          - os: ubuntu-24.04
+          - os: ubuntu-22.04
             PYTHON_BINDING_VERSION: "3.12"
+          - os: ubuntu-22.04
+            PYTHON_BINDING_VERSION: "3.13"
 
     name: ${{ matrix.os }}, python-${{ matrix.PYTHON_BINDING_VERSION }}
     runs-on: ${{ matrix.os }}
