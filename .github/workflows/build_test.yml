@@ -41,7 +41,7 @@ jobs:
             EXTRA_PACKAGES: clang-18
             CC: /usr/bin/clang-18
             CXX: /usr/bin/clang++-18
-            PYTHON_BINDING_VERSION: "3.11"
+            PYTHON_BINDING_VERSION: "3.13"
 
     name: ${{ matrix.os }}, ${{ matrix.compiler }}, python-${{ matrix.PYTHON_BINDING_VERSION }}
     runs-on: ${{ matrix.os }}
