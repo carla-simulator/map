@@ -1,6 +1,8 @@
 <map id="generated/include/ad/physics/AngleValidInputRange.hpp" name="generated/include/ad/physics/AngleValidInputRange.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="101,5,351,47"/>
-<area shape="rect" id="node2" href="$AngleListValidInputRange_8hpp.html" title=" " alt="" coords="5,95,209,151"/>
-<area shape="rect" id="node3" href="$AngleRangeValidInputRange_8hpp.html" title=" " alt="" coords="233,95,456,151"/>
-<area shape="rect" id="node4" href="$AngleRangeListValidInputRange_8hpp.html" title=" " alt="" coords="239,199,451,255"/>
+<area shape="rect" id="node1" title=" " alt="" coords="231,5,481,47"/>
+<area shape="rect" id="node2" href="$HeadingRangeValidInputRange_8hpp.html" title=" " alt="" coords="10,95,230,151"/>
+<area shape="rect" id="node4" href="$AngleListValidInputRange_8hpp.html" title=" " alt="" coords="254,95,458,151"/>
+<area shape="rect" id="node5" href="$AngleRangeValidInputRange_8hpp.html" title=" " alt="" coords="482,95,705,151"/>
+<area shape="rect" id="node3" href="$HeadingRangeVectorValidInputRange_8hpp.html" title=" " alt="" coords="5,199,235,255"/>
+<area shape="rect" id="node6" href="$AngleRangeListValidInputRange_8hpp.html" title=" " alt="" coords="487,199,699,255"/>
 </map>

@@ -1,13 +1,15 @@
 <map id="generated/include/ad/map/restriction/Restriction.hpp" name="generated/include/ad/map/restriction/Restriction.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="138,5,365,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="522,273,602,300"/>
-<area shape="rect" id="node3" title=" " alt="" coords="30,102,89,129"/>
-<area shape="rect" id="node4" title=" " alt="" coords="94,273,171,300"/>
-<area shape="rect" id="node5" title=" " alt="" coords="191,191,266,218"/>
-<area shape="rect" id="node6" href="$PassengerCount_8hpp.html" title=" " alt="" coords="113,95,272,136"/>
-<area shape="rect" id="node8" href="$RoadUserTypeList_8hpp.html" title=" " alt="" coords="347,95,518,136"/>
-<area shape="rect" id="node7" title=" " alt="" coords="101,191,167,218"/>
-<area shape="rect" id="node9" title=" " alt="" coords="461,191,524,218"/>
-<area shape="rect" id="node10" href="$RoadUserType_8hpp.html" title=" " alt="" coords="290,184,437,225"/>
-<area shape="rect" id="node11" title=" " alt="" coords="334,273,393,300"/>
+<area shape="rect" id="node1" title=" " alt="" coords="142,5,368,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="551,273,631,300"/>
+<area shape="rect" id="node3" title=" " alt="" coords="34,102,92,129"/>
+<area shape="rect" id="node4" title=" " alt="" coords="23,273,100,300"/>
+<area shape="rect" id="node5" title=" " alt="" coords="195,191,270,218"/>
+<area shape="rect" id="node6" href="$PassengerCount_8hpp.html" title=" " alt="" coords="117,95,276,136"/>
+<area shape="rect" id="node8" href="$RoadUserTypeList_8hpp.html" title=" " alt="" coords="351,95,522,136"/>
+<area shape="rect" id="node7" title=" " alt="" coords="104,191,171,218"/>
+<area shape="rect" id="node9" title=" " alt="" coords="465,191,528,218"/>
+<area shape="rect" id="node10" href="$RoadUserType_8hpp.html" title=" " alt="" coords="294,184,440,225"/>
+<area shape="rect" id="node11" title=" " alt="" coords="163,273,222,300"/>
+<area shape="rect" id="node12" title=" " alt="" coords="246,273,378,300"/>
+<area shape="rect" id="node13" title=" " alt="" coords="402,273,526,300"/>
 </map>

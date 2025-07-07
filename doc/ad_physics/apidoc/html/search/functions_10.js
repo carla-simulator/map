@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['velocity_556',['Velocity',['../structad_1_1physics_1_1Velocity.html#a9aafd0d934c3758f6f775ac7007924fd',1,'ad::physics::Velocity::Velocity()=default'],['../structad_1_1physics_1_1Velocity.html#a3349ec958b9614f51156c461e4e094b7',1,'ad::physics::Velocity::Velocity(const Velocity &amp;other)=default'],['../structad_1_1physics_1_1Velocity.html#a91e34fcb6b381455e41faf18bb5c1573',1,'ad::physics::Velocity::Velocity(Velocity &amp;&amp;other)=default']]]
+  ['unionrangewith_764',['unionRangeWith',['../namespacead_1_1physics.html#a867f3f6465eca5eff2664572f5ebf6b4',1,'ad::physics::unionRangeWith(RangeType &amp;left, RangeType const &amp;right)'],['../namespacead_1_1physics.html#a31688de0674f7994e7d55fed960dcf9d',1,'ad::physics::unionRangeWith(RangeType &amp;left, RangeBaseType const &amp;value)']]]
 ];

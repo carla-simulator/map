@@ -1,10 +1,12 @@
 <map id="generated/include/ad/map/point/ParaPointValidInputRange.hpp" name="generated/include/ad/map/point/ParaPointValidInputRange.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="165,5,388,61"/>
+<area shape="rect" id="node1" title=" " alt="" coords="289,5,512,61"/>
 <area shape="rect" id="node2" href="$LanePointValidInputRange_8hpp.html" title=" " alt="" coords="37,109,271,165"/>
 <area shape="rect" id="node8" href="$ParaPointListValidInputRange_8hpp.html" title=" " alt="" coords="295,109,507,165"/>
+<area shape="rect" id="node9" href="$RoutingParaPointValidInputRange_8hpp.html" title=" " alt="" coords="531,109,748,165"/>
 <area shape="rect" id="node3" href="$MapMatchedPositionValidInputRange_8hpp.html" title=" " alt="" coords="34,213,274,269"/>
 <area shape="rect" id="node4" href="$MapMatchedPositionConfidenceListValidInputRange_8hpp.html" title=" " alt="" coords="29,317,279,373"/>
 <area shape="rect" id="node5" href="$MapMatchedObjectReferencePositionListValidInputRange_8hpp.html" title=" " alt="" coords="5,421,303,477"/>
 <area shape="rect" id="node6" href="$MapMatchedObjectBoundingBoxValidInputRange_8hpp.html" title=" " alt="" coords="33,525,275,581"/>
 <area shape="rect" id="node7" href="$ObjectValidInputRange_8hpp.html" title=" " alt="" coords="49,629,259,685"/>
+<area shape="rect" id="node10" href="$RoutingParaPointListValidInputRange_8hpp.html" title=" " alt="" coords="519,213,759,269"/>
 </map>

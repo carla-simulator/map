@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:19</td>
+            <td class="headerValue">2025-07-07 13:29:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -72,7 +72,7 @@
 <a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
 <a name="2"><span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <a name="3"><span class="lineNum">       3 </span>                :            :  *</a>
-<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2020 Intel Corporation</a>
+<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2022 Intel Corporation</a>
 <a name="5"><span class="lineNum">       5 </span>                :            :  *</a>
 <a name="6"><span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT</a>
 <a name="7"><span class="lineNum">       7 </span>                :            :  *</a>
@@ -83,7 +83,7 @@
 <a name="12"><span class="lineNum">      12 </span>                :            :  * Generated file</a>
 <a name="13"><span class="lineNum">      13 </span>                :            :  * @file</a>
 <a name="14"><span class="lineNum">      14 </span>                :            :  *</a>
-<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997</a>
+<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-2046</a>
 <a name="16"><span class="lineNum">      16 </span>                :            :  */</a>
 <a name="17"><span class="lineNum">      17 </span>                :            : </a>
 <a name="18"><span class="lineNum">      18 </span>                :            : #include &quot;ad/physics/Distance.hpp&quot;</a>
@@ -119,13 +119,14 @@
 <a name="48"><span class="lineNum">      48 </span>                :            : {</a>
 <a name="49"><span class="lineNum">      49 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          3 :   ensureValid();</span></a>
 <a name="50"><span class="lineNum">      50 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :   other.ensureValid();</span></a>
-<a name="51"><span class="lineNum">      51 </span>                :<span class="lineCov">          1 :   ::ad::physics::DistanceSquared const result(mDistance * other.mDistance);</span></a>
-<a name="52"><span class="lineNum">      52 </span>                :<span class="lineCov">          1 :   result.ensureValid(); // LCOV_EXCL_BR_LINE On correct definition of squarerooted type, this cannot not happen</span></a>
-<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">          1 :   return result;</span></a>
-<a name="54"><span class="lineNum">      54 </span>                :            : }</a>
-<a name="55"><span class="lineNum">      55 </span>                :            : </a>
-<a name="56"><span class="lineNum">      56 </span>                :            : } // namespace physics</a>
-<a name="57"><span class="lineNum">      57 </span>                :            : } // namespace ad</a>
+<a name="51"><span class="lineNum">      51 </span>                :<span class="lineCov">          1 :   ::ad::physics::DistanceSquared result(mDistance * other.mDistance);</span></a>
+<a name="52"><span class="lineNum">      52 </span>                :<span class="lineCov">          1 :   result.restrictToLimitsAndEnsureValid(); // LCOV_EXCL_BR_LINE On correct definition of squarerooted type, this cannot</span></a>
+<a name="53"><span class="lineNum">      53 </span>                :            :                                            // not happen</a>
+<a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">          1 :   return result;</span></a>
+<a name="55"><span class="lineNum">      55 </span>                :            : }</a>
+<a name="56"><span class="lineNum">      56 </span>                :            : </a>
+<a name="57"><span class="lineNum">      57 </span>                :            : } // namespace physics</a>
+<a name="58"><span class="lineNum">      58 </span>                :            : } // namespace ad</a>
 </pre>
       </td>
     </tr>

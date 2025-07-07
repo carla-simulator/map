@@ -1,11 +1,12 @@
 <map id="include/ad/map/point/BoundingSphereOperation.hpp" name="include/ad/map/point/BoundingSphereOperation.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="248,5,472,47"/>
-<area shape="rect" id="node2" href="$LaneOperation_8hpp.html" title=" " alt="" coords="192,95,347,136"/>
-<area shape="rect" id="node7" href="$point_2Operation_8hpp.html" title=" " alt="" coords="374,95,533,136"/>
-<area shape="rect" id="node3" href="$lane_2Operation_8hpp.html" title=" " alt="" coords="11,184,165,225"/>
-<area shape="rect" id="node4" href="$RouteExpander_8hpp.html" title=" " alt="" coords="189,184,349,225"/>
-<area shape="rect" id="node5" href="$RouteAStar_8hpp.html" title=" " alt="" coords="5,273,165,315"/>
-<area shape="rect" id="node6" href="$RoutePrediction_8hpp.html" title=" " alt="" coords="189,273,349,315"/>
-<area shape="rect" id="node8" href="$AdMapMatching_8hpp.html" title=" " alt="" coords="374,184,541,225"/>
-<area shape="rect" id="node9" href="$match_2Operation_8hpp.html" title=" " alt="" coords="374,273,541,315"/>
+<area shape="rect" id="node1" title=" " alt="" coords="252,5,476,47"/>
+<area shape="rect" id="node2" href="$LaneOperation_8hpp.html" title=" " alt="" coords="196,95,351,136"/>
+<area shape="rect" id="node8" href="$point_2Operation_8hpp.html" title=" " alt="" coords="383,95,542,136"/>
+<area shape="rect" id="node3" href="$PolygonOperation_8hpp.html" title=" " alt="" coords="368,184,557,225"/>
+<area shape="rect" id="node4" href="$lane_2Operation_8hpp.html" title=" " alt="" coords="5,184,160,225"/>
+<area shape="rect" id="node5" href="$RouteExpander_8hpp.html" title=" " alt="" coords="184,184,344,225"/>
+<area shape="rect" id="node6" href="$RouteAStar_8hpp.html" title=" " alt="" coords="92,273,252,315"/>
+<area shape="rect" id="node7" href="$RoutePrediction_8hpp.html" title=" " alt="" coords="276,273,436,315"/>
+<area shape="rect" id="node9" href="$AdMapMatching_8hpp.html" title=" " alt="" coords="582,184,749,225"/>
+<area shape="rect" id="node10" href="$match_2Operation_8hpp.html" title=" " alt="" coords="582,273,749,315"/>
 </map>

@@ -1,8 +1,10 @@
 <map id="generated/include/ad/map/point/ENUHeadingValidInputRange.hpp" name="generated/include/ad/map/point/ENUHeadingValidInputRange.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="140,5,383,61"/>
-<area shape="rect" id="node2" href="$ENULandmarkValidInputRange_8hpp.html" title=" " alt="" coords="5,109,256,165"/>
-<area shape="rect" id="node4" href="$ENUObjectPositionValidInputRange_8hpp.html" title=" " alt="" coords="280,109,507,165"/>
-<area shape="rect" id="node3" href="$ENULandmarkListValidInputRange_8hpp.html" title=" " alt="" coords="10,213,251,269"/>
-<area shape="rect" id="node5" href="$ENUObjectPositionListValidInputRange_8hpp.html" title=" " alt="" coords="277,213,504,269"/>
-<area shape="rect" id="node6" href="$ObjectValidInputRange_8hpp.html" title=" " alt="" coords="528,213,739,269"/>
+<area shape="rect" id="node1" title=" " alt="" coords="437,5,679,61"/>
+<area shape="rect" id="node2" href="$ENULandmarkValidInputRange_8hpp.html" title=" " alt="" coords="114,109,365,165"/>
+<area shape="rect" id="node4" href="$ENUObjectPositionValidInputRange_8hpp.html" title=" " alt="" coords="445,109,671,165"/>
+<area shape="rect" id="node7" href="$ConnectingRouteValidInputRange_8hpp.html" title=" " alt="" coords="723,109,963,165"/>
+<area shape="rect" id="node3" href="$ENULandmarkListValidInputRange_8hpp.html" title=" " alt="" coords="5,213,247,269"/>
+<area shape="rect" id="node5" href="$ENUObjectPositionListValidInputRange_8hpp.html" title=" " alt="" coords="271,213,498,269"/>
+<area shape="rect" id="node6" href="$ObjectValidInputRange_8hpp.html" title=" " alt="" coords="522,213,733,269"/>
+<area shape="rect" id="node8" href="$ConnectingRouteListValidInputRange_8hpp.html" title=" " alt="" coords="757,213,988,269"/>
 </map>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -72,7 +72,7 @@
 <a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
 <a name="2"><span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <a name="3"><span class="lineNum">       3 </span>                :            :  *</a>
-<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2020 Intel Corporation</a>
+<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2022 Intel Corporation</a>
 <a name="5"><span class="lineNum">       5 </span>                :            :  *</a>
 <a name="6"><span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT</a>
 <a name="7"><span class="lineNum">       7 </span>                :            :  *</a>
@@ -83,7 +83,7 @@
 <a name="12"><span class="lineNum">      12 </span>                :            :  * Generated file</a>
 <a name="13"><span class="lineNum">      13 </span>                :            :  * @file</a>
 <a name="14"><span class="lineNum">      14 </span>                :            :  *</a>
-<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997</a>
+<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-2046</a>
 <a name="16"><span class="lineNum">      16 </span>                :            :  */</a>
 <a name="17"><span class="lineNum">      17 </span>                :            : </a>
 <a name="18"><span class="lineNum">      18 </span>                :            : #pragma once</a>
@@ -111,9 +111,9 @@
 <a name="40"><span class="lineNum">      40 </span>                :            : {</a>
 <a name="41"><span class="lineNum">      41 </span>                :            :   // check for generic member input ranges</a>
 <a name="42"><span class="lineNum">      42 </span>                :<span class="lineCov">         33 :   bool inValidInputRange = true;</span></a>
-<a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">         33 :   inValidInputRange = withinValidInputRange(input.paraPoint, logErrors)</span></a>
-<a name="44"><span class="lineNum">      44 </span>  [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 22 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">         24 :     &amp;&amp; withinValidInputRange(input.lateralT, logErrors) &amp;&amp; withinValidInputRange(input.laneLength, logErrors)</span></a>
-<a name="45"><span class="lineNum">      45 </span>  [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchCov" title="Branch 2 was taken 20 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">         57 :     &amp;&amp; withinValidInputRange(input.laneWidth, logErrors);</span></a>
+<a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">         33 :   inValidInputRange = withinValidInputRange(input.para_point, logErrors)</span></a>
+<a name="44"><span class="lineNum">      44 </span>  [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 22 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">         24 :     &amp;&amp; withinValidInputRange(input.lateral_t, logErrors) &amp;&amp; withinValidInputRange(input.lane_length, logErrors)</span></a>
+<a name="45"><span class="lineNum">      45 </span>  [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchCov" title="Branch 1 was taken 9 times"> + </span><span class="branchCov" title="Branch 2 was taken 20 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">         57 :     &amp;&amp; withinValidInputRange(input.lane_width, logErrors);</span></a>
 <a name="46"><span class="lineNum">      46 </span>  [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchCov" title="Branch 1 was taken 20 times"> + </span><span class="branchCov" title="Branch 2 was taken 13 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         33 :   if (!inValidInputRange &amp;&amp; logErrors)</span></a>
 <a name="47"><span class="lineNum">      47 </span>                :            :   {</a>
 <a name="48"><span class="lineNum">      48 </span>        [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         13 :     spdlog::error(&quot;withinValidInputRange(::ad::map::match::LanePoint)&gt;&gt; {} has invalid member&quot;,</span></a>

@@ -1,0 +1,51 @@
+<map id="include/ad/geometry/Types.hpp" name="include/ad/geometry/Types.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="847,5,1003,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,102,156,129"/>
+<area shape="rect" id="node3" title=" " alt="" coords="181,95,383,136"/>
+<area shape="rect" id="node4" title=" " alt="" coords="407,95,610,136"/>
+<area shape="rect" id="node5" title=" " alt="" coords="634,95,837,136"/>
+<area shape="rect" id="node6" title=" " alt="" coords="795,437,870,464"/>
+<area shape="rect" id="node7" href="$HeadingRange_8hpp.html" title=" " alt="" coords="935,281,1167,307"/>
+<area shape="rect" id="node16" href="$HeadingRangeVector_8hpp.html" title=" " alt="" coords="963,184,1167,225"/>
+<area shape="rect" id="node18" href="$AngleOperation_8hpp.html" title=" " alt="" coords="3294,102,3518,129"/>
+<area shape="rect" id="node29" href="$Distance_8hpp.html" title=" " alt="" coords="1909,363,2089,389"/>
+<area shape="rect" id="node48" href="$Distance2D_8hpp.html" title=" " alt="" coords="4753,281,4952,307"/>
+<area shape="rect" id="node49" href="$Distance2DList_8hpp.html" title=" " alt="" coords="4742,191,4963,218"/>
+<area shape="rect" id="node8" title=" " alt="" coords="4235,437,4315,464"/>
+<area shape="rect" id="node9" title=" " alt="" coords="2890,437,2949,464"/>
+<area shape="rect" id="node10" title=" " alt="" coords="5034,363,5111,389"/>
+<area shape="rect" id="node11" href="$Angle_8hpp.html" title=" " alt="" coords="971,363,1131,389"/>
+<area shape="rect" id="node12" title=" " alt="" coords="2776,437,2839,464"/>
+<area shape="rect" id="node13" title=" " alt="" coords="2361,437,2448,464"/>
+<area shape="rect" id="node14" title=" " alt="" coords="2472,437,2604,464"/>
+<area shape="rect" id="node15" title=" " alt="" coords="2628,437,2752,464"/>
+<area shape="rect" id="node17" title=" " alt="" coords="4643,363,4705,389"/>
+<area shape="rect" id="node19" href="$physics_2Types_8hpp.html" title=" " alt="" coords="3059,191,3219,218"/>
+<area shape="rect" id="node20" title=" " alt="" coords="5111,281,5170,307"/>
+<area shape="rect" id="node21" href="$AccelerationList_8hpp.html" title=" " alt="" coords="1423,281,1650,307"/>
+<area shape="rect" id="node23" href="$AngleList_8hpp.html" title=" " alt="" coords="1675,281,1857,307"/>
+<area shape="rect" id="node24" href="$AngularAccelerationList_8hpp.html" title=" " alt="" coords="1882,273,2109,315"/>
+<area shape="rect" id="node26" href="$AngularVelocityList_8hpp.html" title=" " alt="" coords="2133,273,2330,315"/>
+<area shape="rect" id="node28" href="$DistanceList_8hpp.html" title=" " alt="" coords="2354,281,2557,307"/>
+<area shape="rect" id="node30" href="$DistanceSquaredList_8hpp.html" title=" " alt="" coords="2581,273,2786,315"/>
+<area shape="rect" id="node32" href="$DurationList_8hpp.html" title=" " alt="" coords="2810,281,3013,307"/>
+<area shape="rect" id="node34" href="$DurationSquaredList_8hpp.html" title=" " alt="" coords="3037,273,3241,315"/>
+<area shape="rect" id="node36" href="$ParametricValueList_8hpp.html" title=" " alt="" coords="3265,273,3467,315"/>
+<area shape="rect" id="node38" href="$ProbabilityList_8hpp.html" title=" " alt="" coords="3491,281,3707,307"/>
+<area shape="rect" id="node40" href="$RatioValueList_8hpp.html" title=" " alt="" coords="3731,281,3947,307"/>
+<area shape="rect" id="node42" href="$SpeedList_8hpp.html" title=" " alt="" coords="3971,281,4158,307"/>
+<area shape="rect" id="node44" href="$SpeedSquaredList_8hpp.html" title=" " alt="" coords="4183,281,4421,307"/>
+<area shape="rect" id="node46" href="$WeightList_8hpp.html" title=" " alt="" coords="4445,281,4636,307"/>
+<area shape="rect" id="node22" href="$Acceleration_8hpp.html" title=" " alt="" coords="1156,363,1360,389"/>
+<area shape="rect" id="node25" href="$AngularAcceleration_8hpp.html" title=" " alt="" coords="1384,363,1639,389"/>
+<area shape="rect" id="node27" href="$AngularVelocity_8hpp.html" title=" " alt="" coords="1663,363,1885,389"/>
+<area shape="rect" id="node31" href="$DistanceSquared_8hpp.html" title=" " alt="" coords="2113,363,2347,389"/>
+<area shape="rect" id="node33" href="$Duration_8hpp.html" title=" " alt="" coords="2371,363,2550,389"/>
+<area shape="rect" id="node35" href="$DurationSquared_8hpp.html" title=" " alt="" coords="2574,363,2806,389"/>
+<area shape="rect" id="node37" href="$ParametricValue_8hpp.html" title=" " alt="" coords="2830,363,3059,389"/>
+<area shape="rect" id="node39" href="$Probability_8hpp.html" title=" " alt="" coords="3084,363,3275,389"/>
+<area shape="rect" id="node41" href="$RatioValue_8hpp.html" title=" " alt="" coords="3299,363,3492,389"/>
+<area shape="rect" id="node43" href="$Speed_8hpp.html" title=" " alt="" coords="3517,363,3679,389"/>
+<area shape="rect" id="node45" href="$SpeedSquared_8hpp.html" title=" " alt="" coords="3703,363,3919,389"/>
+<area shape="rect" id="node47" href="$Weight_8hpp.html" title=" " alt="" coords="3943,363,4111,389"/>
+</map>

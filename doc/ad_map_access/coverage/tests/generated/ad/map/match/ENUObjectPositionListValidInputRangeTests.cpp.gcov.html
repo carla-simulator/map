@@ -31,17 +31,17 @@
             <td class="headerValue">ad_map_access</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">83</td>
-            <td class="headerCovTableEntry">83</td>
+            <td class="headerCovTableEntry">88</td>
+            <td class="headerCovTableEntry">88</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">10</td>
-            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">15</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">14</td>
-            <td class="headerCovTableEntry">68</td>
-            <td class="headerCovTableEntryLo">20.6 %</td>
+            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntry">88</td>
+            <td class="headerCovTableEntryLo">27.3 %</td>
           </tr>
           <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -72,7 +72,7 @@
 <a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
 <a name="2"><span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <a name="3"><span class="lineNum">       3 </span>                :            :  *</a>
-<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2021 Intel Corporation</a>
+<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2022 Intel Corporation</a>
 <a name="5"><span class="lineNum">       5 </span>                :            :  *</a>
 <a name="6"><span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT</a>
 <a name="7"><span class="lineNum">       7 </span>                :            :  *</a>
@@ -89,36 +89,37 @@
 <a name="18"><span class="lineNum">      18 </span>                :            : </a>
 <a name="19"><span class="lineNum">      19 </span>                :            : #include &quot;ad/map/match/ENUObjectPositionListValidInputRange.hpp&quot;</a>
 <a name="20"><span class="lineNum">      20 </span>                :            : </a>
-<a name="21"><span class="lineNum">      21 </span>                :<span class="lineCov">          2 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeLowerThanInputRangeMin)</span></a>
+<a name="21"><span class="lineNum">      21 </span>                :<span class="lineCov">          4 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeLowerThanInputRangeMin)</span></a>
 <a name="22"><span class="lineNum">      22 </span>                :            : {</a>
 <a name="23"><span class="lineNum">      23 </span>                :<span class="lineCov">          1 :   ::ad::map::match::ENUObjectPositionList value;</span></a>
 <a name="24"><span class="lineNum">      24 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_FALSE(withinValidInputRange(value));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<a name="25"><span class="lineNum">      25 </span>                :            : }</a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<a name="25"><span class="lineNum">      25 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 : }</span></a>
 <a name="26"><span class="lineNum">      26 </span>                :            : </a>
-<a name="27"><span class="lineNum">      27 </span>                :<span class="lineCov">          2 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeValidInputRangeMin)</span></a>
+<a name="27"><span class="lineNum">      27 </span>                :<span class="lineCov">          4 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeValidInputRangeMin)</span></a>
 <a name="28"><span class="lineNum">      28 </span>                :            : {</a>
 <a name="29"><span class="lineNum">      29 </span>                :<span class="lineCov">          1 :   ::ad::map::match::ENUObjectPositionList value;</span></a>
 <a name="30"><span class="lineNum">      30 </span>                :<span class="lineCov">          1 :   ::ad::map::match::ENUObjectPosition element;</span></a>
-<a name="31"><span class="lineNum">      31 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUPoint elementCenterPoint;</span></a>
-<a name="32"><span class="lineNum">      32 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenterPointX(-16384);</span></a>
-<a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">          1 :   elementCenterPoint.x = elementCenterPointX;</span></a>
-<a name="34"><span class="lineNum">      34 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenterPointY(-16384);</span></a>
-<a name="35"><span class="lineNum">      35 </span>                :<span class="lineCov">          1 :   elementCenterPoint.y = elementCenterPointY;</span></a>
-<a name="36"><span class="lineNum">      36 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenterPointZ(-16384);</span></a>
-<a name="37"><span class="lineNum">      37 </span>                :<span class="lineCov">          1 :   elementCenterPoint.z = elementCenterPointZ;</span></a>
-<a name="38"><span class="lineNum">      38 </span>                :<span class="lineCov">          1 :   element.centerPoint = elementCenterPoint;</span></a>
+<a name="31"><span class="lineNum">      31 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUPoint elementCenter_point;</span></a>
+<a name="32"><span class="lineNum">      32 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenter_pointX(-1e8);</span></a>
+<a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">          1 :   elementCenter_point.x = elementCenter_pointX;</span></a>
+<a name="34"><span class="lineNum">      34 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenter_pointY(-1e8);</span></a>
+<a name="35"><span class="lineNum">      35 </span>                :<span class="lineCov">          1 :   elementCenter_point.y = elementCenter_pointY;</span></a>
+<a name="36"><span class="lineNum">      36 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenter_pointZ(-1e8);</span></a>
+<a name="37"><span class="lineNum">      37 </span>                :<span class="lineCov">          1 :   elementCenter_point.z = elementCenter_pointZ;</span></a>
+<a name="38"><span class="lineNum">      38 </span>                :<span class="lineCov">          1 :   element.center_point = elementCenter_point;</span></a>
 <a name="39"><span class="lineNum">      39 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUHeading elementHeading(-3.141592655);</span></a>
 <a name="40"><span class="lineNum">      40 </span>                :<span class="lineCov">          1 :   element.heading = elementHeading;</span></a>
-<a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">          1 :   ::ad::map::point::GeoPoint elementEnuReferencePoint;</span></a>
-<a name="42"><span class="lineNum">      42 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Longitude elementEnuReferencePointLongitude(-180);</span></a>
-<a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">          1 :   elementEnuReferencePoint.longitude = elementEnuReferencePointLongitude;</span></a>
-<a name="44"><span class="lineNum">      44 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Latitude elementEnuReferencePointLatitude(-90);</span></a>
-<a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">          1 :   elementEnuReferencePoint.latitude = elementEnuReferencePointLatitude;</span></a>
-<a name="46"><span class="lineNum">      46 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Altitude elementEnuReferencePointAltitude(-11000);</span></a>
-<a name="47"><span class="lineNum">      47 </span>                :<span class="lineCov">          1 :   elementEnuReferencePoint.altitude = elementEnuReferencePointAltitude;</span></a>
-<a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">          1 :   element.enuReferencePoint = elementEnuReferencePoint;</span></a>
+<a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">          1 :   ::ad::map::point::GeoPoint elementEnu_reference_point;</span></a>
+<a name="42"><span class="lineNum">      42 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Longitude elementEnu_reference_pointLongitude(-180);</span></a>
+<a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">          1 :   elementEnu_reference_point.longitude = elementEnu_reference_pointLongitude;</span></a>
+<a name="44"><span class="lineNum">      44 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Latitude elementEnu_reference_pointLatitude(-90);</span></a>
+<a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">          1 :   elementEnu_reference_point.latitude = elementEnu_reference_pointLatitude;</span></a>
+<a name="46"><span class="lineNum">      46 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Altitude elementEnu_reference_pointAltitude(-11000);</span></a>
+<a name="47"><span class="lineNum">      47 </span>                :<span class="lineCov">          1 :   elementEnu_reference_point.altitude = elementEnu_reference_pointAltitude;</span></a>
+<a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">          1 :   element.enu_reference_point = elementEnu_reference_point;</span></a>
 <a name="49"><span class="lineNum">      49 </span>                :<span class="lineCov">          1 :   ::ad::physics::Dimension3D elementDimension;</span></a>
 <a name="50"><span class="lineNum">      50 </span>                :<span class="lineCov">          1 :   ::ad::physics::Distance elementDimensionLength(-1e9);</span></a>
 <a name="51"><span class="lineNum">      51 </span>                :<span class="lineCov">          1 :   elementDimension.length = elementDimensionLength;</span></a>
@@ -130,45 +131,47 @@
 <a name="57"><span class="lineNum">      57 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   value.resize(1, element);</span></a>
 <a name="58"><span class="lineNum">      58 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_TRUE(withinValidInputRange(value));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<a name="59"><span class="lineNum">      59 </span>                :            : }</a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<a name="59"><span class="lineNum">      59 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 : }</span></a>
 <a name="60"><span class="lineNum">      60 </span>                :            : </a>
-<a name="61"><span class="lineNum">      61 </span>                :<span class="lineCov">          2 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementTypeInvalid)</span></a>
+<a name="61"><span class="lineNum">      61 </span>                :<span class="lineCov">          4 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementTypeInvalid)</span></a>
 <a name="62"><span class="lineNum">      62 </span>                :            : {</a>
 <a name="63"><span class="lineNum">      63 </span>                :<span class="lineCov">          1 :   ::ad::map::match::ENUObjectPositionList value;</span></a>
 <a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">          1 :   ::ad::map::match::ENUObjectPosition element;</span></a>
-<a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUPoint elementCenterPoint;</span></a>
-<a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenterPointX(-16384 * 1.1);</span></a>
-<a name="67"><span class="lineNum">      67 </span>                :<span class="lineCov">          1 :   elementCenterPoint.x = elementCenterPointX;</span></a>
-<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">          1 :   element.centerPoint = elementCenterPoint;</span></a>
+<a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUPoint elementCenter_point;</span></a>
+<a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenter_pointX(-1e8 * 1.1);</span></a>
+<a name="67"><span class="lineNum">      67 </span>                :<span class="lineCov">          1 :   elementCenter_point.x = elementCenter_pointX;</span></a>
+<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">          1 :   element.center_point = elementCenter_point;</span></a>
 <a name="69"><span class="lineNum">      69 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   value.resize(1, element);</span></a>
 <a name="70"><span class="lineNum">      70 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_FALSE(withinValidInputRange(value));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<a name="71"><span class="lineNum">      71 </span>                :            : }</a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<a name="71"><span class="lineNum">      71 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 : }</span></a>
 <a name="72"><span class="lineNum">      72 </span>                :            : </a>
-<a name="73"><span class="lineNum">      73 </span>                :<span class="lineCov">          2 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementValid)</span></a>
+<a name="73"><span class="lineNum">      73 </span>                :<span class="lineCov">          4 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementValid)</span></a>
 <a name="74"><span class="lineNum">      74 </span>                :            : {</a>
 <a name="75"><span class="lineNum">      75 </span>                :<span class="lineCov">          1 :   ::ad::map::match::ENUObjectPositionList value;</span></a>
 <a name="76"><span class="lineNum">      76 </span>                :<span class="lineCov">          1 :   ::ad::map::match::ENUObjectPosition element;</span></a>
-<a name="77"><span class="lineNum">      77 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUPoint elementCenterPoint;</span></a>
-<a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenterPointX(-16384);</span></a>
-<a name="79"><span class="lineNum">      79 </span>                :<span class="lineCov">          1 :   elementCenterPoint.x = elementCenterPointX;</span></a>
-<a name="80"><span class="lineNum">      80 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenterPointY(-16384);</span></a>
-<a name="81"><span class="lineNum">      81 </span>                :<span class="lineCov">          1 :   elementCenterPoint.y = elementCenterPointY;</span></a>
-<a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenterPointZ(-16384);</span></a>
-<a name="83"><span class="lineNum">      83 </span>                :<span class="lineCov">          1 :   elementCenterPoint.z = elementCenterPointZ;</span></a>
-<a name="84"><span class="lineNum">      84 </span>                :<span class="lineCov">          1 :   element.centerPoint = elementCenterPoint;</span></a>
+<a name="77"><span class="lineNum">      77 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUPoint elementCenter_point;</span></a>
+<a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenter_pointX(-1e8);</span></a>
+<a name="79"><span class="lineNum">      79 </span>                :<span class="lineCov">          1 :   elementCenter_point.x = elementCenter_pointX;</span></a>
+<a name="80"><span class="lineNum">      80 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenter_pointY(-1e8);</span></a>
+<a name="81"><span class="lineNum">      81 </span>                :<span class="lineCov">          1 :   elementCenter_point.y = elementCenter_pointY;</span></a>
+<a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenter_pointZ(-1e8);</span></a>
+<a name="83"><span class="lineNum">      83 </span>                :<span class="lineCov">          1 :   elementCenter_point.z = elementCenter_pointZ;</span></a>
+<a name="84"><span class="lineNum">      84 </span>                :<span class="lineCov">          1 :   element.center_point = elementCenter_point;</span></a>
 <a name="85"><span class="lineNum">      85 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUHeading elementHeading(-3.141592655);</span></a>
 <a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">          1 :   element.heading = elementHeading;</span></a>
-<a name="87"><span class="lineNum">      87 </span>                :<span class="lineCov">          1 :   ::ad::map::point::GeoPoint elementEnuReferencePoint;</span></a>
-<a name="88"><span class="lineNum">      88 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Longitude elementEnuReferencePointLongitude(-180);</span></a>
-<a name="89"><span class="lineNum">      89 </span>                :<span class="lineCov">          1 :   elementEnuReferencePoint.longitude = elementEnuReferencePointLongitude;</span></a>
-<a name="90"><span class="lineNum">      90 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Latitude elementEnuReferencePointLatitude(-90);</span></a>
-<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">          1 :   elementEnuReferencePoint.latitude = elementEnuReferencePointLatitude;</span></a>
-<a name="92"><span class="lineNum">      92 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Altitude elementEnuReferencePointAltitude(-11000);</span></a>
-<a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">          1 :   elementEnuReferencePoint.altitude = elementEnuReferencePointAltitude;</span></a>
-<a name="94"><span class="lineNum">      94 </span>                :<span class="lineCov">          1 :   element.enuReferencePoint = elementEnuReferencePoint;</span></a>
+<a name="87"><span class="lineNum">      87 </span>                :<span class="lineCov">          1 :   ::ad::map::point::GeoPoint elementEnu_reference_point;</span></a>
+<a name="88"><span class="lineNum">      88 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Longitude elementEnu_reference_pointLongitude(-180);</span></a>
+<a name="89"><span class="lineNum">      89 </span>                :<span class="lineCov">          1 :   elementEnu_reference_point.longitude = elementEnu_reference_pointLongitude;</span></a>
+<a name="90"><span class="lineNum">      90 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Latitude elementEnu_reference_pointLatitude(-90);</span></a>
+<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">          1 :   elementEnu_reference_point.latitude = elementEnu_reference_pointLatitude;</span></a>
+<a name="92"><span class="lineNum">      92 </span>                :<span class="lineCov">          1 :   ::ad::map::point::Altitude elementEnu_reference_pointAltitude(-11000);</span></a>
+<a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">          1 :   elementEnu_reference_point.altitude = elementEnu_reference_pointAltitude;</span></a>
+<a name="94"><span class="lineNum">      94 </span>                :<span class="lineCov">          1 :   element.enu_reference_point = elementEnu_reference_point;</span></a>
 <a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">          1 :   ::ad::physics::Dimension3D elementDimension;</span></a>
 <a name="96"><span class="lineNum">      96 </span>                :<span class="lineCov">          1 :   ::ad::physics::Distance elementDimensionLength(-1e9);</span></a>
 <a name="97"><span class="lineNum">      97 </span>                :<span class="lineCov">          1 :   elementDimension.length = elementDimensionLength;</span></a>
@@ -180,22 +183,24 @@
 <a name="103"><span class="lineNum">     103 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   value.push_back(element);</span></a>
 <a name="104"><span class="lineNum">     104 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_TRUE(withinValidInputRange(value));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<a name="105"><span class="lineNum">     105 </span>                :            : }</a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<a name="105"><span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 : }</span></a>
 <a name="106"><span class="lineNum">     106 </span>                :            : </a>
-<a name="107"><span class="lineNum">     107 </span>                :<span class="lineCov">          2 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementInvalid)</span></a>
+<a name="107"><span class="lineNum">     107 </span>                :<span class="lineCov">          4 : TEST(ENUObjectPositionListValidInputRangeTests, testValidInputRangeElementInvalid)</span></a>
 <a name="108"><span class="lineNum">     108 </span>                :            : {</a>
 <a name="109"><span class="lineNum">     109 </span>                :<span class="lineCov">          1 :   ::ad::map::match::ENUObjectPositionList value;</span></a>
 <a name="110"><span class="lineNum">     110 </span>                :<span class="lineCov">          1 :   ::ad::map::match::ENUObjectPosition element;</span></a>
-<a name="111"><span class="lineNum">     111 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUPoint elementCenterPoint;</span></a>
-<a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenterPointX(-16384 * 1.1);</span></a>
-<a name="113"><span class="lineNum">     113 </span>                :<span class="lineCov">          1 :   elementCenterPoint.x = elementCenterPointX;</span></a>
-<a name="114"><span class="lineNum">     114 </span>                :<span class="lineCov">          1 :   element.centerPoint = elementCenterPoint;</span></a>
+<a name="111"><span class="lineNum">     111 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUPoint elementCenter_point;</span></a>
+<a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">          1 :   ::ad::map::point::ENUCoordinate elementCenter_pointX(-1e8 * 1.1);</span></a>
+<a name="113"><span class="lineNum">     113 </span>                :<span class="lineCov">          1 :   elementCenter_point.x = elementCenter_pointX;</span></a>
+<a name="114"><span class="lineNum">     114 </span>                :<span class="lineCov">          1 :   element.center_point = elementCenter_point;</span></a>
 <a name="115"><span class="lineNum">     115 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   value.push_back(element);</span></a>
 <a name="116"><span class="lineNum">     116 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_FALSE(withinValidInputRange(value));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<a name="117"><span class="lineNum">     117 </span>                :            : }</a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<a name="117"><span class="lineNum">     117 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 : }</span></a>
 </pre>
       </td>
     </tr>

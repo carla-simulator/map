@@ -1,13 +1,13 @@
 <map id="ad::map::match::Object" name="ad::map::match::Object">
-<area shape="rect" id="node1" title="DataType Object." alt="" coords="1495,145,1669,171"/>
-<area shape="rect" id="node2" href="$structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html" title="DataType MapMatchedObjectBoundingBox." alt="" coords="1055,79,1271,120"/>
+<area shape="rect" id="node1" title="DataType Object." alt="" coords="1529,145,1704,171"/>
+<area shape="rect" id="node2" href="$structad_1_1map_1_1match_1_1MapMatchedObjectBoundingBox.html" title="DataType MapMatchedObjectBoundingBox." alt="" coords="1069,79,1285,120"/>
 <area shape="rect" id="node3" title=" " alt="" coords="617,5,848,47"/>
 <area shape="rect" id="node4" href="$structad_1_1map_1_1match_1_1LaneOccupiedRegion.html" title="DataType LaneOccupiedRegion." alt="" coords="281,5,504,47"/>
 <area shape="rect" id="node5" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId." alt="" coords="5,13,168,39"/>
 <area shape="rect" id="node6" title=" " alt="" coords="625,71,840,127"/>
-<area shape="rect" id="node7" title="STL class." alt="" coords="328,77,457,103"/>
+<area shape="rect" id="node7" title=" " alt="" coords="328,77,457,103"/>
 <area shape="rect" id="node8" title=" " alt="" coords="67,77,106,103"/>
-<area shape="rect" id="node9" href="$structad_1_1map_1_1match_1_1ENUObjectPosition.html" title="DataType ENUObjectPosition." alt="" coords="1061,169,1264,211"/>
+<area shape="rect" id="node9" href="$structad_1_1map_1_1match_1_1ENUObjectPosition.html" title="DataType ENUObjectPosition." alt="" coords="1076,169,1279,211"/>
 <area shape="rect" id="node10" href="$structad_1_1map_1_1point_1_1ENUPoint.html" title="DataType ENUPoint." alt="" coords="640,151,825,178"/>
 <area shape="rect" id="node11" href="$classad_1_1map_1_1point_1_1ENUCoordinate.html" title="DataType ENUCoordinate." alt="" coords="281,151,504,178"/>
 <area shape="rect" id="node12" href="$structad_1_1map_1_1point_1_1GeoPoint.html" title="DataType GeoPoint." alt="" coords="641,202,824,229"/>

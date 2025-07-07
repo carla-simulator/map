@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -107,9 +107,9 @@
 <a name="36"><span class="lineNum">      36 </span>                :            : /**</a>
 <a name="37"><span class="lineNum">      37 </span>                :            :  * @brief Serializer for point::ECEFCoordinate</a>
 <a name="38"><span class="lineNum">      38 </span>                :            :  */</a>
-<a name="39"><span class="lineNum">      39 </span>                :<span class="lineCov">    1481670 : inline bool doSerialize(ISerializer &amp;serializer, point::ECEFCoordinate &amp;x)</span></a>
+<a name="39"><span class="lineNum">      39 </span>                :<span class="lineCov">    1484691 : inline bool doSerialize(ISerializer &amp;serializer, point::ECEFCoordinate &amp;x)</span></a>
 <a name="40"><span class="lineNum">      40 </span>                :            : {</a>
-<a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">    1481670 :   return serializer.serializeGeneratedType&lt;point::ECEFCoordinate, double, SerializeableMagic::ECEFCoordinate&gt;(x);</span></a>
+<a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">    1484691 :   return serializer.serializeGeneratedType&lt;point::ECEFCoordinate, double, SerializeableMagic::ECEFCoordinate&gt;(x);</span></a>
 <a name="42"><span class="lineNum">      42 </span>                :            : }</a>
 <a name="43"><span class="lineNum">      43 </span>                :            : </a>
 <a name="44"><span class="lineNum">      44 </span>                :            : /**</a>
@@ -147,10 +147,10 @@
 <a name="76"><span class="lineNum">      76 </span>                :            : /**</a>
 <a name="77"><span class="lineNum">      77 </span>                :            :  * @brief Serializer for point::ParaPoint</a>
 <a name="78"><span class="lineNum">      78 </span>                :            :  */</a>
-<a name="79"><span class="lineNum">      79 </span>                :            : inline bool doSerialize(ISerializer &amp;serializer, point::ParaPoint &amp;paraPoint)</a>
+<a name="79"><span class="lineNum">      79 </span>                :            : inline bool doSerialize(ISerializer &amp;serializer, point::ParaPoint &amp;para_point)</a>
 <a name="80"><span class="lineNum">      80 </span>                :            : {</a>
-<a name="81"><span class="lineNum">      81 </span>                :            :   return serializer.serialize(SerializeableMagic::ParaPoint) &amp;&amp; doSerialize(serializer, paraPoint.laneId)</a>
-<a name="82"><span class="lineNum">      82 </span>                :            :     &amp;&amp; doSerialize(serializer, paraPoint.parametricOffset);</a>
+<a name="81"><span class="lineNum">      81 </span>                :            :   return serializer.serialize(SerializeableMagic::ParaPoint) &amp;&amp; doSerialize(serializer, para_point.lane_id)</a>
+<a name="82"><span class="lineNum">      82 </span>                :            :     &amp;&amp; doSerialize(serializer, para_point.parametric_offset);</a>
 <a name="83"><span class="lineNum">      83 </span>                :            : }</a>
 <a name="84"><span class="lineNum">      84 </span>                :            : </a>
 <a name="85"><span class="lineNum">      85 </span>                :            : /**</a>
@@ -166,71 +166,71 @@
 <a name="95"><span class="lineNum">      95 </span>                :            : /**</a>
 <a name="96"><span class="lineNum">      96 </span>                :            :  * @brief Serializer for point::ECEFPoint</a>
 <a name="97"><span class="lineNum">      97 </span>                :            :  */</a>
-<a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">     493889 : inline bool doSerialize(ISerializer &amp;serializer, point::ECEFPoint &amp;ecefPoint)</span></a>
+<a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">     494897 : inline bool doSerialize(ISerializer &amp;serializer, point::ECEFPoint &amp;ecefPoint)</span></a>
 <a name="99"><span class="lineNum">      99 </span>                :            : {</a>
 <a name="100"><span class="lineNum">     100 </span>                :            :   //@todo: fix ECEFCoordinate -&gt; ECEFPoint: currently here for backward compat</a>
-<a name="101"><span class="lineNum">     101 </span>  [<span class="branchCov" title="Branch 0 was taken 493889 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 493889 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     987778 :   return serializer.serialize(SerializeableMagic::ECEFCoordinate) &amp;&amp; doSerialize(serializer, ecefPoint.x)</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 493889 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
-<a name="102"><span class="lineNum">     102 </span>  [<span class="branchCov" title="Branch 0 was taken 493889 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 493889 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     987778 :     &amp;&amp; doSerialize(serializer, ecefPoint.y) &amp;&amp; doSerialize(serializer, ecefPoint.z);</span></a>
-<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 493889 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 493889 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 493889 times"> + </span> 
+<a name="101"><span class="lineNum">     101 </span>  [<span class="branchCov" title="Branch 0 was taken 494897 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 494897 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     989794 :   return serializer.serialize(SerializeableMagic::ECEFCoordinate) &amp;&amp; doSerialize(serializer, ecefPoint.x)</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 494897 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="102"><span class="lineNum">     102 </span>  [<span class="branchCov" title="Branch 0 was taken 494897 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 494897 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     989794 :     &amp;&amp; doSerialize(serializer, ecefPoint.y) &amp;&amp; doSerialize(serializer, ecefPoint.z);</span></a>
+<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 494897 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 494897 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 494897 times"> + </span> 
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
 <a name="103"><span class="lineNum">     103 </span>                :            : }</a>
 <a name="104"><span class="lineNum">     104 </span>                :            : </a>
 <a name="105"><span class="lineNum">     105 </span>                :            : /**</a>
 <a name="106"><span class="lineNum">     106 </span>                :            :  * @brief Serializer for point::GeoPoint</a>
 <a name="107"><span class="lineNum">     107 </span>                :            :  */</a>
-<a name="108"><span class="lineNum">     108 </span>                :            : inline bool doSerialize(ISerializer &amp;serializer, point::GeoPoint &amp;geoPoint)</a>
+<a name="108"><span class="lineNum">     108 </span>                :            : inline bool doSerialize(ISerializer &amp;serializer, point::GeoPoint &amp;geo_point)</a>
 <a name="109"><span class="lineNum">     109 </span>                :            : {</a>
-<a name="110"><span class="lineNum">     110 </span>                :            :   return serializer.serialize(SerializeableMagic::GeoPoint) &amp;&amp; doSerialize(serializer, geoPoint.longitude)</a>
-<a name="111"><span class="lineNum">     111 </span>                :            :     &amp;&amp; doSerialize(serializer, geoPoint.latitude) &amp;&amp; doSerialize(serializer, geoPoint.altitude);</a>
+<a name="110"><span class="lineNum">     110 </span>                :            :   return serializer.serialize(SerializeableMagic::GeoPoint) &amp;&amp; doSerialize(serializer, geo_point.longitude)</a>
+<a name="111"><span class="lineNum">     111 </span>                :            :     &amp;&amp; doSerialize(serializer, geo_point.latitude) &amp;&amp; doSerialize(serializer, geo_point.altitude);</a>
 <a name="112"><span class="lineNum">     112 </span>                :            : }</a>
 <a name="113"><span class="lineNum">     113 </span>                :            : </a>
 <a name="114"><span class="lineNum">     114 </span>                :            : /**</a>
 <a name="115"><span class="lineNum">     115 </span>                :            :  * @brief Serializer for point::BoundingSphere</a>
 <a name="116"><span class="lineNum">     116 </span>                :            :  */</a>
-<a name="117"><span class="lineNum">     117 </span>                :<span class="lineCov">      26085 : inline bool doSerialize(ISerializer &amp;serializer, point::BoundingSphere &amp;boundingSphere)</span></a>
+<a name="117"><span class="lineNum">     117 </span>                :<span class="lineCov">      26145 : inline bool doSerialize(ISerializer &amp;serializer, point::BoundingSphere &amp;bounding_sphere)</span></a>
 <a name="118"><span class="lineNum">     118 </span>                :            : {</a>
 <a name="119"><span class="lineNum">     119 </span>                :            :   // @todo: keep original format, so no magic for bounding sphere for now</a>
-<a name="120"><span class="lineNum">     120 </span>  [<span class="branchCov" title="Branch 0 was taken 26085 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 26085 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      26085 :   return doSerialize(serializer, boundingSphere.center) &amp;&amp; doSerialize(serializer, boundingSphere.radius);</span></a>
+<a name="120"><span class="lineNum">     120 </span>  [<span class="branchCov" title="Branch 0 was taken 26145 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 26145 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      26145 :   return doSerialize(serializer, bounding_sphere.center) &amp;&amp; doSerialize(serializer, bounding_sphere.radius);</span></a>
 <a name="121"><span class="lineNum">     121 </span>                :            : }</a>
 <a name="122"><span class="lineNum">     122 </span>                :            : </a>
 <a name="123"><span class="lineNum">     123 </span>                :            : /**</a>
 <a name="124"><span class="lineNum">     124 </span>                :            :  * @brief Serializer for point::Geometry</a>
 <a name="125"><span class="lineNum">     125 </span>                :            :  */</a>
-<a name="126"><span class="lineNum">     126 </span>                :<span class="lineCov">      83489 : inline bool doSerialize(ISerializer &amp;serializer, point::Geometry &amp;geometry)</span></a>
+<a name="126"><span class="lineNum">     126 </span>                :<span class="lineCov">      83615 : inline bool doSerialize(ISerializer &amp;serializer, point::Geometry &amp;geometry)</span></a>
 <a name="127"><span class="lineNum">     127 </span>                :            : {</a>
-<a name="128"><span class="lineNum">     128 </span>        [<span class="branchCov" title="Branch 0 was taken 81481 times"> + </span><span class="branchCov" title="Branch 1 was taken 2008 times"> + </span>]:<span class="lineCov">      83489 :   if (!serializer.isStoring())</span></a>
+<a name="128"><span class="lineNum">     128 </span>        [<span class="branchCov" title="Branch 0 was taken 81610 times"> + </span><span class="branchCov" title="Branch 1 was taken 2005 times"> + </span>]:<span class="lineCov">      83615 :   if (!serializer.isStoring())</span></a>
 <a name="129"><span class="lineNum">     129 </span>                :            :   {</a>
 <a name="130"><span class="lineNum">     130 </span>                :            :     // clear cache when reading</a>
-<a name="131"><span class="lineNum">     131 </span>                :<span class="lineCov">      81481 :     geometry.private_enuEdgeCache.enuVersion = 0;</span></a>
-<a name="132"><span class="lineNum">     132 </span>                :<span class="lineCov">      81481 :     geometry.private_enuEdgeCache.enuEdge.clear();</span></a>
+<a name="131"><span class="lineNum">     131 </span>                :<span class="lineCov">      81610 :     geometry.private_enu_points_cache.enu_version = 0;</span></a>
+<a name="132"><span class="lineNum">     132 </span>                :<span class="lineCov">      81610 :     geometry.private_enu_points_cache.enu_points.clear();</span></a>
 <a name="133"><span class="lineNum">     133 </span>                :            :   }</a>
-<a name="134"><span class="lineNum">     134 </span>  [<span class="branchCov" title="Branch 0 was taken 83489 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 83489 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     166978 :   bool ok = serializer.serialize(SerializeableMagic::Geometry) &amp;&amp; serializer.serialize(geometry.isValid)</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 83489 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
-<a name="135"><span class="lineNum">     135 </span>  [<span class="branchCov" title="Branch 0 was taken 83489 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 83489 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     166978 :     &amp;&amp; serializer.serialize(geometry.isClosed) &amp;&amp; serialize::doSerialize(serializer, geometry.length);</span></a>
-<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 83489 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 83489 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 83489 times"> + </span> 
+<a name="134"><span class="lineNum">     134 </span>  [<span class="branchCov" title="Branch 0 was taken 83615 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 83615 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     167230 :   bool ok = serializer.serialize(SerializeableMagic::Geometry) &amp;&amp; serializer.serialize(geometry.is_valid)</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 83615 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="135"><span class="lineNum">     135 </span>  [<span class="branchCov" title="Branch 0 was taken 83615 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 83615 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     167230 :     &amp;&amp; serializer.serialize(geometry.is_closed) &amp;&amp; serialize::doSerialize(serializer, geometry.length);</span></a>
+<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 83615 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 83615 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 83615 times"> + </span> 
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
 <a name="136"><span class="lineNum">     136 </span>                :            : </a>
-<a name="137"><span class="lineNum">     137 </span>        [<span class="branchCov" title="Branch 0 was taken 2008 times"> + </span><span class="branchCov" title="Branch 1 was taken 81481 times"> + </span>]:<span class="lineCov">      83489 :   if (serializer.isStoring())</span></a>
+<a name="137"><span class="lineNum">     137 </span>        [<span class="branchCov" title="Branch 0 was taken 2005 times"> + </span><span class="branchCov" title="Branch 1 was taken 81610 times"> + </span>]:<span class="lineCov">      83615 :   if (serializer.isStoring())</span></a>
 <a name="138"><span class="lineNum">     138 </span>                :            :   {</a>
-<a name="139"><span class="lineNum">     139 </span>        [<span class="branchCov" title="Branch 0 was taken 1371 times"> + </span><span class="branchCov" title="Branch 1 was taken 637 times"> + </span>]:<span class="lineCov">       2008 :     if (serializer.useEmbeddedPoints())</span></a>
+<a name="139"><span class="lineNum">     139 </span>        [<span class="branchCov" title="Branch 0 was taken 1369 times"> + </span><span class="branchCov" title="Branch 1 was taken 636 times"> + </span>]:<span class="lineCov">       2005 :     if (serializer.useEmbeddedPoints())</span></a>
 <a name="140"><span class="lineNum">     140 </span>                :            :     {</a>
-<a name="141"><span class="lineNum">     141 </span>  [<span class="branchCov" title="Branch 0 was taken 1371 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1371 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">       1371 :       ok = ok &amp;&amp; serializer.serializeObjectVector(geometry.ecefEdge);</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 1371 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="141"><span class="lineNum">     141 </span>  [<span class="branchCov" title="Branch 0 was taken 1369 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1369 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">       1369 :       ok = ok &amp;&amp; serializer.serializeObjectVector(geometry.ecef_points);</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 1369 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
 <a name="142"><span class="lineNum">     142 </span>                :            :     }</a>
 <a name="143"><span class="lineNum">     143 </span>                :            :     else</a>
 <a name="144"><span class="lineNum">     144 </span>                :            :     {</a>
-<a name="145"><span class="lineNum">     145 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 636 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        637 :       static point::ECEFEdge empty;</span></a>
-<a name="146"><span class="lineNum">     146 </span>  [<span class="branchCov" title="Branch 0 was taken 637 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 637 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        637 :       ok = ok &amp;&amp; serializer.serializeObjectVector(empty);</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 637 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="145"><span class="lineNum">     145 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 635 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        636 :       static point::ECEFPointList empty;</span></a>
+<a name="146"><span class="lineNum">     146 </span>  [<span class="branchCov" title="Branch 0 was taken 636 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 636 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        636 :       ok = ok &amp;&amp; serializer.serializeObjectVector(empty);</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 636 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
 <a name="147"><span class="lineNum">     147 </span>                :            :     }</a>
 <a name="148"><span class="lineNum">     148 </span>                :            :   }</a>
 <a name="149"><span class="lineNum">     149 </span>                :            :   else</a>
 <a name="150"><span class="lineNum">     150 </span>                :            :   {</a>
-<a name="151"><span class="lineNum">     151 </span>  [<span class="branchCov" title="Branch 0 was taken 81481 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 81481 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">      81481 :     ok = ok &amp;&amp; serializer.serializeObjectVector(geometry.ecefEdge);</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 81481 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="151"><span class="lineNum">     151 </span>  [<span class="branchCov" title="Branch 0 was taken 81610 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 81610 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">      81610 :     ok = ok &amp;&amp; serializer.serializeObjectVector(geometry.ecef_points);</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 81610 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
 <a name="152"><span class="lineNum">     152 </span>                :            :   }</a>
-<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">      83489 :   return ok;</span></a>
+<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">      83615 :   return ok;</span></a>
 <a name="154"><span class="lineNum">     154 </span>                :            : }</a>
 <a name="155"><span class="lineNum">     155 </span>                :            : </a>
 <a name="156"><span class="lineNum">     156 </span>                :            : } // namespace serialize</a>

@@ -108,13 +108,13 @@ still are of type _SHOULDER_ to distinguish them from drivable and routable lane
 But the lane type is not the only relevant attribute. Especially the lane contacts provide relevant
 semantic information. E.g. the IntersectionXLane3 physical contacts are the following:
 
-- toLane: RoadALane3, location: _PREDECESSOR_
-- toLane: RoadBLane3, location: _SUCCESSOR_
-- toLane: IntersectionXLane2, location: _LEFT_
-- toLane: IntersectionXLane4, location: _OVERLAP_
-- toLane: IntersectionXLane5, location: _RIGHT_
+- to_lane: RoadALane3, location: _PREDECESSOR_
+- to_lane: RoadBLane3, location: _SUCCESSOR_
+- to_lane: IntersectionXLane2, location: _LEFT_
+- to_lane: IntersectionXLane4, location: _OVERLAP_
+- to_lane: IntersectionXLane5, location: _RIGHT_
 
-It is to mention, that in the actual map the lanes are identified by an unique laneId instead of a
+It is to mention, that in the actual map the lanes are identified by an unique lane_id instead of a
 descriptive name as used for explanation herein.
 
 #### Pedestrian Crossing
@@ -136,7 +136,7 @@ When looking into detailed attributes of the lanes in contact with the intersect
 the type of contact of these lanes is the special _CROSSWALK_ type. The contact from RoadALane3
 look e.g. the following:
 
-- toLane: IntersectionXLane3, location: _SUCCESSOR_, type: _CROSSWALK_
+- to_lane: IntersectionXLane3, location: _SUCCESSOR_, type: _CROSSWALK_
 
 | ![Pedestrian Crossing Lane Attributes](images/PedestrianCrossing_LaneAttributes.png) |
 | -- |
@@ -151,7 +151,7 @@ As already illustrated in the pictures of the crosswalk above, there are also tr
 traffic lights in the map data having specific semantics. In the end these are summarized by the
 general term *Landmark* supporting different types of landmarks
 { TRAFFIC_SIGN, TRAFFIC_LIGHT, POLE, GUIDE_POST, TREE, STREET_LAMP, etc.}.
-Similar to lanes, every landmark has its landmarkId as unique identifier.
+Similar to lanes, every landmark has its landmark_id as unique identifier.
 Landmarks have a dedicated position and orientation in the world as well as a bounding box.
 Traffic lights and Traffic signs have additional information  defining the concrete details on
 it (like subtype or supplementary text).

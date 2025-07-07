@@ -1,6 +1,7 @@
 <map id="ad::map::lane::ENUBorder" name="ad::map::lane::ENUBorder">
-<area shape="rect" id="node1" title="DataType ENUBorder." alt="" coords="21,332,212,359"/>
-<area shape="rect" id="node2" title=" " alt="" coords="35,213,198,255"/>
-<area shape="rect" id="node3" href="$structad_1_1map_1_1point_1_1ENUPoint.html" title="DataType ENUPoint." alt="" coords="24,124,209,151"/>
-<area shape="rect" id="node4" href="$classad_1_1map_1_1point_1_1ENUCoordinate.html" title="DataType ENUCoordinate." alt="" coords="5,5,228,32"/>
+<area shape="rect" id="node1" title="DataType ENUBorder." alt="" coords="21,421,212,448"/>
+<area shape="rect" id="node2" href="$structad_1_1map_1_1lane_1_1ENUEdge.html" title="DataType ENUEdge." alt="" coords="27,317,206,344"/>
+<area shape="rect" id="node3" title=" " alt="" coords="35,213,198,255"/>
+<area shape="rect" id="node4" href="$structad_1_1map_1_1point_1_1ENUPoint.html" title="DataType ENUPoint." alt="" coords="24,124,209,151"/>
+<area shape="rect" id="node5" href="$classad_1_1map_1_1point_1_1ENUCoordinate.html" title="DataType ENUCoordinate." alt="" coords="5,5,228,32"/>
 </map>

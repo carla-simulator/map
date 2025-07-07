@@ -1,9 +1,11 @@
 <map id="generated/include/ad/map/restriction/RoadUserTypeList.hpp" name="generated/include/ad/map/restriction/RoadUserTypeList.hpp">
 <area shape="rect" id="node1" title=" " alt="" coords="5,5,228,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="53,199,133,225"/>
+<area shape="rect" id="node2" title=" " alt="" coords="6,199,86,225"/>
 <area shape="rect" id="node3" title=" " alt="" coords="33,117,107,143"/>
 <area shape="rect" id="node4" title=" " alt="" coords="132,117,195,143"/>
 <area shape="rect" id="node5" href="$RoadUserType_8hpp.html" title=" " alt="" coords="219,109,366,151"/>
-<area shape="rect" id="node6" title=" " alt="" coords="207,199,285,225"/>
-<area shape="rect" id="node7" title=" " alt="" coords="309,199,367,225"/>
+<area shape="rect" id="node6" title=" " alt="" coords="135,199,213,225"/>
+<area shape="rect" id="node7" title=" " alt="" coords="237,199,295,225"/>
+<area shape="rect" id="node8" title=" " alt="" coords="320,199,452,225"/>
+<area shape="rect" id="node9" title=" " alt="" coords="476,199,600,225"/>
 </map>

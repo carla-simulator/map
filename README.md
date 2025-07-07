@@ -3,7 +3,6 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/carla-simulator/map.svg)](https://github.com/carla-simulator/map/releases/latest)
 [![Build Status](https://github.com/carla-simulator/map/workflows/Build%20and%20Test%20of%20AD-Map%20Library/badge.svg?branch=master)](https://github.com/carla-simulator/map/actions?query=workflow%3A%22Build+and+Test+of+AD-Map+Library%22)
-[![Code Coverage](https://codecov.io/gh/carla-simulator/map/branch/master/graph/badge.svg)](https://codecov.io/gh/carla-simulator/map)
 
 #### Table of contents
 1. [Introduction](#introduction)
@@ -48,8 +47,8 @@ The initial release of the map C++ software libraries.
 ## Getting started <a name="started"></a>
 
 #### Installation of dependencies
-Currently, the focused operating system is Ubuntu 20.04. Nevertheless, the library should work in a similar way for any other Linux OS.
-To install the dependencies for Ubuntu 20.04 execute the following command:
+Currently, the focused operating system is Ubuntu 22.04. Nevertheless, the library should work in a similar way for any other Linux OS.
+To install the dependencies for Ubuntu 22.04 execute the following command:
 ```bash
  user$> sudo apt-get install git build-essential cmake
 ```
@@ -67,20 +66,21 @@ To download the library, you may run:
 ```
 
 #### Supported systems <a name="systems"></a>
-Development systems are Ubuntu 20.04 and Ubuntu 22.04
-Following compiler combiDevelopment systems are Ubuntu 20.04 and Ubuntu 22.04
-Following compiler and Python combinations are [tested continously](https://github.com/intel/ad-rss-lib/blob/master/.github/workflows/build_test.yml):
+Development systems are Ubuntu 22.04 and 24.04 
+Following compiler and Python combinations are [tested continously](.github/workflows/build_test.yml):
 
-|                 | Ubuntu 20.04 | Ubuntu 22.04 |
+|                 | Ubuntu 22.04 | Ubuntu 24.04 |
 |:---------------:|:------------:|:------------:|
-|   GCC 9         |       x      |              |
-|  Clang 10       |       x      |              |
-|   GCC 11        |              |       x      |
-|  Clang 14       |              |       x      |
-|  Python 3.8     |       x      |              |
-|  Python 3.10    |       x      |       x      |
+|   GCC 11        |       x      |              |
+|   GCC 13        |              |       x      |
+|  Clang 14       |       x      |              |
+|  Clang 18       |              |       x      |
+|  Python 3.10    |       x      |              |
+|  Python 3.11    |       x      |              |
+|  Python 3.12    |              |       x      |
+|  Python 3.13    |              |       x      |
 
-Important: cmake is required to be at least version 3.5!
+Important: cmake is required to be at least version 3.10!
 
 ## Building the library <a name="building"></a>
 See the detailed [Build instructions](https://ad-map-access.readthedocs.io/en/latest/BUILDING/index.html).

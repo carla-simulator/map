@@ -1,5 +1,5 @@
 <map id="ad::map::route::LaneSegment" name="ad::map::route::LaneSegment">
-<area shape="rect" id="node1" title="DataType LaneSegment." alt="" coords="623,55,837,81"/>
+<area shape="rect" id="node1" title="DataType LaneSegment." alt="" coords="627,55,841,81"/>
 <area shape="rect" id="node2" href="$structad_1_1map_1_1route_1_1LaneInterval.html" title="DataType LaneInterval." alt="" coords="281,56,488,83"/>
 <area shape="rect" id="node3" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId." alt="" coords="5,56,168,83"/>
 <area shape="rect" id="node4" title=" " alt="" coords="303,107,466,149"/>

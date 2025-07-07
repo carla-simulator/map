@@ -31,17 +31,17 @@
             <td class="headerValue">ad_map_access</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">107</td>
-            <td class="headerCovTableEntry">114</td>
-            <td class="headerCovTableEntryHi">93.9 %</td>
+            <td class="headerCovTableEntry">115</td>
+            <td class="headerCovTableEntry">120</td>
+            <td class="headerCovTableEntryHi">95.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">15</td>
-            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">20</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">91</td>
-            <td class="headerCovTableEntry">282</td>
-            <td class="headerCovTableEntryLo">32.3 %</td>
+            <td class="headerCovTableEntry">107</td>
+            <td class="headerCovTableEntry">314</td>
+            <td class="headerCovTableEntryLo">34.1 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -112,7 +112,7 @@
 <a name="38"><span class="lineNum">      38 </span>                :<span class="lineCov">          5 :     access::cleanup();</span></a>
 <a name="39"><span class="lineNum">      39 </span>                :<span class="lineCov">          5 :   }</span></a>
 <a name="40"><span class="lineNum">      40 </span>                :            : </a>
-<a name="41"><span class="lineNum">      41 </span>                :            :   void compareMapMatching(int line, point::GeoPoint const &amp;geoPoint, std::size_t const expectedNumberOfMatches);</a>
+<a name="41"><span class="lineNum">      41 </span>                :            :   void compareMapMatching(int line, point::GeoPoint const &amp;geo_point, std::size_t const expectedNumberOfMatches);</a>
 <a name="42"><span class="lineNum">      42 </span>                :            : </a>
 <a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">          3 :   void addRouteHint()</span></a>
 <a name="44"><span class="lineNum">      44 </span>                :            :   {</a>
@@ -122,15 +122,15 @@
 <a name="48"><span class="lineNum">      48 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :     auto mapMatchingResults = mMapMatching-&gt;getMapMatchedPositions(hintPoint, physics::Distance(0.01), mMinProbabilty);</span></a>
 <a name="49"><span class="lineNum">      49 </span>  [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 3 times"> + </span> :<span class="lineCov">          3 :     ASSERT_EQ(mapMatchingResults.size(), 1u);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="50"><span class="lineNum">      50 </span>                :<span class="lineCov">          6 :     route::RoadSegment roadSegment;</span></a>
 <a name="51"><span class="lineNum">      51 </span>                :<span class="lineCov">          6 :     route::LaneSegment laneSegment;</span></a>
-<a name="52"><span class="lineNum">      52 </span>                :<span class="lineCov">          3 :     laneSegment.laneInterval.laneId = mapMatchingResults.front().lanePoint.paraPoint.laneId;</span></a>
-<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">          3 :     laneSegment.laneInterval.start = physics::ParametricValue(0.);</span></a>
-<a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">          3 :     laneSegment.laneInterval.end = physics::ParametricValue(1.);</span></a>
-<a name="55"><span class="lineNum">      55 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :     roadSegment.drivableLaneSegments.push_back(laneSegment);</span></a>
-<a name="56"><span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :     mRouteHint.roadSegments.push_back(roadSegment);</span></a>
-<a name="57"><span class="lineNum">      57 </span>                :            :   }</a>
+<a name="52"><span class="lineNum">      52 </span>                :<span class="lineCov">          3 :     laneSegment.lane_interval.lane_id = mapMatchingResults.front().lane_point.para_point.lane_id;</span></a>
+<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">          3 :     laneSegment.lane_interval.start = physics::ParametricValue(0.);</span></a>
+<a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">          3 :     laneSegment.lane_interval.end = physics::ParametricValue(1.);</span></a>
+<a name="55"><span class="lineNum">      55 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :     roadSegment.drivable_lane_segments.push_back(laneSegment);</span></a>
+<a name="56"><span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :     mRouteHint.road_segments.push_back(roadSegment);</span></a>
+<a name="57"><span class="lineNum">      57 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :   }</span></a>
 <a name="58"><span class="lineNum">      58 </span>                :            : </a>
 <a name="59"><span class="lineNum">      59 </span>                :            :   /* A note on the test setup:</a>
 <a name="60"><span class="lineNum">      60 </span>                :            :    * Location is the intersection Albert-Nestler-Str crossing Ada-Lovelace-Str</a>
@@ -158,15 +158,15 @@
 <a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">          5 :                    0u),</span></a>
 <a name="83"><span class="lineNum">      83 </span>                :<span class="lineNoCov">          0 :     std::make_pair(point::createGeoPoint(point::Longitude(8.4401882), point::Latitude(49.0191939), point::Altitude(0.)),</span></a>
 <a name="84"><span class="lineNum">      84 </span>                :<span class="lineCov">          5 :                    1u),</span></a>
-<a name="85"><span class="lineNum">      85 </span>                :            :     std::make_pair(</a>
+<a name="85"><span class="lineNum">      85 </span>                :<span class="lineNoCov">          0 :     std::make_pair(</span></a>
 <a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">          5 :       point::createGeoPoint(point::Longitude(8.4401882), point::Latitude(49.0191939), point::AltitudeUnknown), 1u),</span></a>
 <a name="87"><span class="lineNum">      87 </span>                :<span class="lineNoCov">          0 :     std::make_pair(point::createGeoPoint(point::Longitude(8.4401510), point::Latitude(49.0191792), point::Altitude(0.)),</span></a>
 <a name="88"><span class="lineNum">      88 </span>                :<span class="lineCov">          5 :                    2u),</span></a>
 <a name="89"><span class="lineNum">      89 </span>                :<span class="lineNoCov">          0 :     std::make_pair(point::createGeoPoint(point::Longitude(8.4401742), point::Latitude(49.0192009), point::Altitude(0.)),</span></a>
 <a name="90"><span class="lineNum">      90 </span>                :<span class="lineCov">          5 :                    3u),</span></a>
 <a name="91"><span class="lineNum">      91 </span>                :            :     // approaching middle of the intersection</a>
-<a name="92"><span class="lineNum">      92 </span>                :<span class="lineNoCov">          0 :     std::make_pair(point::createGeoPoint(point::Longitude(8.4401540), point::Latitude(49.0192082), point::Altitude(0.)),</span></a>
-<a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">         10 :                    4u)};</span></a>
+<a name="92"><span class="lineNum">      92 </span>                :<span class="lineCov">          5 :     std::make_pair(point::createGeoPoint(point::Longitude(8.4401540), point::Latitude(49.0192082), point::Altitude(0.)),</span></a>
+<a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">          5 :                    4u)};</span></a>
 <a name="94"><span class="lineNum">      94 </span>                :            : </a>
 <a name="95"><span class="lineNum">      95 </span>                :            :   route::FullRoute mRouteHint;</a>
 <a name="96"><span class="lineNum">      96 </span>                :            :   std::vector&lt;point::ENUHeading&gt; mHeadingHints;</a>
@@ -175,7 +175,7 @@
 <a name="99"><span class="lineNum">      99 </span>                :            : };</a>
 <a name="100"><span class="lineNum">     100 </span>                :            : </a>
 <a name="101"><span class="lineNum">     101 </span>                :<span class="lineCov">         24 : void AdMapMatchingTest::compareMapMatching(int line,</span></a>
-<a name="102"><span class="lineNum">     102 </span>                :            :                                            point::GeoPoint const &amp;geoPoint,</a>
+<a name="102"><span class="lineNum">     102 </span>                :            :                                            point::GeoPoint const &amp;geo_point,</a>
 <a name="103"><span class="lineNum">     103 </span>                :            :                                            std::size_t const expectedNumberOfMatches)</a>
 <a name="104"><span class="lineNum">     104 </span>                :            : {</a>
 <a name="105"><span class="lineNum">     105 </span>                :<span class="lineCov">         24 :   physics::Distance searchDist(1);</span></a>
@@ -194,47 +194,47 @@
 <a name="118"><span class="lineNum">     118 </span>  [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         12 :     mMapMatching-&gt;addHeadingHint(headingHint, ad::map::access::getENUReferencePoint());</span></a>
 <a name="119"><span class="lineNum">     119 </span>                :            :   }</a>
 <a name="120"><span class="lineNum">     120 </span>                :            : </a>
-<a name="121"><span class="lineNum">     121 </span>        [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         24 :   auto mapMatchingResults = mMapMatching-&gt;getMapMatchedPositions(geoPoint, searchDist, mMinProbabilty);</span></a>
+<a name="121"><span class="lineNum">     121 </span>        [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         24 :   auto mapMatchingResults = mMapMatching-&gt;getMapMatchedPositions(geo_point, searchDist, mMinProbabilty);</span></a>
 <a name="122"><span class="lineNum">     122 </span>                :            : </a>
 <a name="123"><span class="lineNum">     123 </span>        [<span class="branchCov" title="Branch 0 was taken 44 times"> + </span><span class="branchCov" title="Branch 1 was taken 24 times"> + </span>]:<span class="lineCov">         68 :   for (auto mapMatchingResult : mapMatchingResults)</span></a>
 <a name="124"><span class="lineNum">     124 </span>                :            :   {</a>
 <a name="125"><span class="lineNum">     125 </span>                :<span class="lineCov">         44 :     TestResult result;</span></a>
 <a name="126"><span class="lineNum">     126 </span>                :<span class="lineCov">         44 :     result.mapMatchedPosition = mapMatchingResult;</span></a>
-<a name="127"><span class="lineNum">     127 </span>        [<span class="branchCov" title="Branch 0 was taken 44 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         44 :     result.laneDirection = lane::getLane(result.mapMatchedPosition.lanePoint.paraPoint.laneId).direction;</span></a>
+<a name="127"><span class="lineNum">     127 </span>        [<span class="branchCov" title="Branch 0 was taken 44 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         44 :     result.laneDirection = lane::getLane(result.mapMatchedPosition.lane_point.para_point.lane_id).direction;</span></a>
 <a name="128"><span class="lineNum">     128 </span>        [<span class="branchCov" title="Branch 0 was taken 44 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         44 :     testResults.push_back(result);</span></a>
 <a name="129"><span class="lineNum">     129 </span>                :            :   }</a>
 <a name="130"><span class="lineNum">     130 </span>                :            : </a>
 <a name="131"><span class="lineNum">     131 </span>  [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 24 times"> + </span> :<span class="lineCov">         24 :   ASSERT_EQ(expectedNumberOfMatches, testResults.size()) &lt;&lt; &quot; compareMapMatching called from &quot; &lt;&lt; line &lt;&lt; &quot;\n&quot;;</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span><span class="branchNoCov" title="Branch 13 was not taken"> - </span> 
-<span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 14 was not taken"> - </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span>]
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 14 was not taken"> - </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span><span class="branchCov" title="Branch 16 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 17 was not taken"> - </span>]
 <a name="132"><span class="lineNum">     132 </span>                :            : </a>
-<a name="133"><span class="lineNum">     133 </span>  [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 18 times"> + </span><span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">         24 :   if ((mRouteHint.roadSegments.size() &gt; 0u) &amp;&amp; (testResults.size() &gt; 0u))</span></a>
+<a name="133"><span class="lineNum">     133 </span>  [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 18 times"> + </span><span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">         24 :   if ((mRouteHint.road_segments.size() &gt; 0u) &amp;&amp; (testResults.size() &gt; 0u))</span></a>
 <span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 5 times"> + </span><span class="branchCov" title="Branch 5 was taken 19 times"> + </span>]
 <a name="134"><span class="lineNum">     134 </span>                :            :   {</a>
-<a name="135"><span class="lineNum">     135 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span> :<span class="lineCov">          5 :     ASSERT_EQ(1u, mRouteHint.roadSegments.size()) &lt;&lt; &quot; compareMapMatching called from &quot; &lt;&lt; line &lt;&lt; &quot;\n&quot;;</span></a>
+<a name="135"><span class="lineNum">     135 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span> :<span class="lineCov">          5 :     ASSERT_EQ(1u, mRouteHint.road_segments.size()) &lt;&lt; &quot; compareMapMatching called from &quot; &lt;&lt; line &lt;&lt; &quot;\n&quot;;</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span><span class="branchNoCov" title="Branch 13 was not taken"> - </span> 
-<span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 14 was not taken"> - </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span>]
-<a name="136"><span class="lineNum">     136 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span> :<span class="lineCov">          5 :     ASSERT_EQ(1u, mRouteHint.roadSegments[0].drivableLaneSegments.size())</span></a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 14 was not taken"> - </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span><span class="branchCov" title="Branch 16 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 17 was not taken"> - </span>]
+<a name="136"><span class="lineNum">     136 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span> :<span class="lineCov">          5 :     ASSERT_EQ(1u, mRouteHint.road_segments[0].drivable_lane_segments.size())</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<a name="137"><span class="lineNum">     137 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span> :<span class="lineNoCov">          0 :       &lt;&lt; &quot; compareMapMatching called from &quot; &lt;&lt; line &lt;&lt; &quot;\n&quot;;</span></a>
-<span class="lineNum">         </span>         <span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]
+<a name="137"><span class="lineNum">     137 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          5 :       &lt;&lt; &quot; compareMapMatching called from &quot; &lt;&lt; line &lt;&lt; &quot;\n&quot;;</span></a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
 <a name="138"><span class="lineNum">     138 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span> :<span class="lineCov">          5 :     ASSERT_LT(0u, testResults.size()) &lt;&lt; &quot; compareMapMatching called from &quot; &lt;&lt; line &lt;&lt; &quot;\n&quot;;</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span><span class="branchNoCov" title="Branch 13 was not taken"> - </span> 
-<span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 14 was not taken"> - </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span>]
-<a name="139"><span class="lineNum">     139 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span> :<span class="lineCov">          5 :     ASSERT_EQ(mRouteHint.roadSegments[0].drivableLaneSegments[0].laneInterval.laneId,</span></a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 14 was not taken"> - </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span><span class="branchCov" title="Branch 16 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 17 was not taken"> - </span>]
+<a name="139"><span class="lineNum">     139 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span> :<span class="lineCov">          5 :     ASSERT_EQ(mRouteHint.road_segments[0].drivable_lane_segments[0].lane_interval.lane_id,</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<a name="140"><span class="lineNum">     140 </span>                :            :               testResults[0].mapMatchedPosition.lanePoint.paraPoint.laneId)</a>
-<a name="141"><span class="lineNum">     141 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span> :<span class="lineNoCov">          0 :       &lt;&lt; &quot; compareMapMatching called from &quot; &lt;&lt; line &lt;&lt; &quot;\n&quot;;</span></a>
-<span class="lineNum">         </span>         <span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span>]
+<a name="140"><span class="lineNum">     140 </span>                :            :               testResults[0].mapMatchedPosition.lane_point.para_point.lane_id)</a>
+<a name="141"><span class="lineNum">     141 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          5 :       &lt;&lt; &quot; compareMapMatching called from &quot; &lt;&lt; line &lt;&lt; &quot;\n&quot;;</span></a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
 <a name="142"><span class="lineNum">     142 </span>                :            :   }</a>
-<a name="143"><span class="lineNum">     143 </span>                :            : }</a>
+<a name="143"><span class="lineNum">     143 </span>  [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         24 : }</span></a>
 <a name="144"><span class="lineNum">     144 </span>                :            : </a>
-<a name="145"><span class="lineNum">     145 </span>                :<span class="lineCov">          2 : TEST_F(AdMapMatchingTest, perform_map_matching_no_route_hints)</span></a>
+<a name="145"><span class="lineNum">     145 </span>                :<span class="lineCov">          4 : TEST_F(AdMapMatchingTest, perform_map_matching_no_route_hints)</span></a>
 <a name="146"><span class="lineNum">     146 </span>                :            : {</a>
 <a name="147"><span class="lineNum">     147 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          7 :   for (auto testElement : mTestPoints)</span></a>
 <a name="148"><span class="lineNum">     148 </span>                :            :   {</a>
@@ -242,7 +242,7 @@
 <a name="150"><span class="lineNum">     150 </span>                :            :   }</a>
 <a name="151"><span class="lineNum">     151 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="152"><span class="lineNum">     152 </span>                :            : </a>
-<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">          2 : TEST_F(AdMapMatchingTest, isLanePartOfRouteHints)</span></a>
+<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">          4 : TEST_F(AdMapMatchingTest, isLanePartOfRouteHints)</span></a>
 <a name="154"><span class="lineNum">     154 </span>                :            : {</a>
 <a name="155"><span class="lineNum">     155 </span>                :<span class="lineCov">          1 :   addRouteHint();</span></a>
 <a name="156"><span class="lineNum">     156 </span>                :            : </a>
@@ -251,15 +251,15 @@
 <a name="159"><span class="lineNum">     159 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   EXPECT_TRUE(mMapMatching-&gt;isLanePartOfRouteHints(</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
 <span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<a name="160"><span class="lineNum">     160 </span>                :            :     mRouteHint.roadSegments.front().drivableLaneSegments.front().laneInterval.laneId));</a>
+<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">          1 :     mRouteHint.road_segments.front().drivable_lane_segments.front().lane_interval.lane_id));</span></a>
 <a name="161"><span class="lineNum">     161 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          1 :   EXPECT_FALSE(mMapMatching-&gt;isLanePartOfRouteHints(</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
 <span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span> 
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
-<a name="162"><span class="lineNum">     162 </span>                :            :     mRouteHint.roadSegments.front().drivableLaneSegments.front().laneInterval.laneId + lane::LaneId(1)));</a>
+<a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">          1 :     mRouteHint.road_segments.front().drivable_lane_segments.front().lane_interval.lane_id + lane::LaneId(1)));</span></a>
 <a name="163"><span class="lineNum">     163 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="164"><span class="lineNum">     164 </span>                :            : </a>
-<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">          2 : TEST_F(AdMapMatchingTest, perform_map_matching_with_route_hints)</span></a>
+<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">          4 : TEST_F(AdMapMatchingTest, perform_map_matching_with_route_hints)</span></a>
 <a name="166"><span class="lineNum">     166 </span>                :            : {</a>
 <a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">          1 :   addRouteHint();</span></a>
 <a name="168"><span class="lineNum">     168 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          7 :   for (auto testElement : mTestPoints)</span></a>
@@ -268,7 +268,7 @@
 <a name="171"><span class="lineNum">     171 </span>                :            :   }</a>
 <a name="172"><span class="lineNum">     172 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="173"><span class="lineNum">     173 </span>                :            : </a>
-<a name="174"><span class="lineNum">     174 </span>                :<span class="lineCov">          2 : TEST_F(AdMapMatchingTest, perform_map_matching_with_heading_hints)</span></a>
+<a name="174"><span class="lineNum">     174 </span>                :<span class="lineCov">          4 : TEST_F(AdMapMatchingTest, perform_map_matching_with_heading_hints)</span></a>
 <a name="175"><span class="lineNum">     175 </span>                :            : {</a>
 <a name="176"><span class="lineNum">     176 </span>                :<span class="lineCov">          1 :   mMinProbabilty = physics::Probability(0.05);</span></a>
 <a name="177"><span class="lineNum">     177 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   mHeadingHints.push_back(point::createENUHeading(point::degree2radians(70)));</span></a>
@@ -285,7 +285,7 @@
 <a name="188"><span class="lineNum">     188 </span>                :            :   }</a>
 <a name="189"><span class="lineNum">     189 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="190"><span class="lineNum">     190 </span>                :            : </a>
-<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">          2 : TEST_F(AdMapMatchingTest, laneOperation)</span></a>
+<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">          4 : TEST_F(AdMapMatchingTest, laneOperation)</span></a>
 <a name="192"><span class="lineNum">     192 </span>                :            : {</a>
 <a name="193"><span class="lineNum">     193 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   addRouteHint();</span></a>
 <a name="194"><span class="lineNum">     194 </span>                :            : </a>
@@ -297,47 +297,47 @@
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
 <a name="199"><span class="lineNum">     199 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_EQ(mapMatchingResults.size(), 0u);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="200"><span class="lineNum">     200 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   mapMatchingResults = mMapMatching-&gt;findLanes(toECEF(hintPoint), physics::Distance());</span></a>
 <a name="201"><span class="lineNum">     201 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_EQ(mapMatchingResults.size(), 0u);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="202"><span class="lineNum">     202 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :   mapMatchingResults = mMapMatching-&gt;findLanes(toECEF(hintPoint), physics::Distance(0.01));</span></a>
 <a name="203"><span class="lineNum">     203 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_EQ(mapMatchingResults.size(), 1u);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<a name="204"><span class="lineNum">     204 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          1 :   ASSERT_NEAR(double(ad::map::lane::calcWidth(toENU(hintPoint))), 3.0039, 0.0001);</span></a>
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<a name="204"><span class="lineNum">     204 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          1 :   ASSERT_NEAR(ad::map::lane::calcWidth(toENU(hintPoint)).mDistance, 3.0039, 0.0001);</span></a>
 <span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<span class="lineNum">         </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span><span class="branchNoCov" title="Branch 13 was not taken"> - </span> 
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 14 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span>]
 <a name="205"><span class="lineNum">     205 </span>                :            : </a>
-<a name="206"><span class="lineNum">     206 </span>                :<span class="lineCov">          1 :   LaneOccupiedRegionList laneOccupiedRegions;</span></a>
+<a name="206"><span class="lineNum">     206 </span>                :<span class="lineCov">          1 :   LaneOccupiedRegionList lane_occupied_regions;</span></a>
 <a name="207"><span class="lineNum">     207 </span>                :<span class="lineCov">          1 :   LaneOccupiedRegionList otherLaneOccupiedRegions;</span></a>
 <a name="208"><span class="lineNum">     208 </span>                :            : </a>
 <a name="209"><span class="lineNum">     209 </span>                :<span class="lineCov">          1 :   LaneOccupiedRegion region1, region2;</span></a>
-<a name="210"><span class="lineNum">     210 </span>                :<span class="lineCov">          1 :   region1.laneId = map::lane::LaneId(10);</span></a>
+<a name="210"><span class="lineNum">     210 </span>                :<span class="lineCov">          1 :   region1.lane_id = map::lane::LaneId(10);</span></a>
 <a name="211"><span class="lineNum">     211 </span>                :<span class="lineCov">          1 :   physics::ParametricRange range;</span></a>
 <a name="212"><span class="lineNum">     212 </span>                :<span class="lineCov">          1 :   range.minimum = physics::ParametricValue(0.1);</span></a>
 <a name="213"><span class="lineNum">     213 </span>                :<span class="lineCov">          1 :   range.maximum = physics::ParametricValue(0.2);</span></a>
-<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">          1 :   region1.longitudinalRange = range;</span></a>
+<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">          1 :   region1.longitudinal_range = range;</span></a>
 <a name="215"><span class="lineNum">     215 </span>                :<span class="lineCov">          1 :   range.maximum = physics::ParametricValue(0.3);</span></a>
-<a name="216"><span class="lineNum">     216 </span>                :<span class="lineCov">          1 :   region1.lateralRange = range;</span></a>
+<a name="216"><span class="lineNum">     216 </span>                :<span class="lineCov">          1 :   region1.lateral_range = range;</span></a>
 <a name="217"><span class="lineNum">     217 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   otherLaneOccupiedRegions.push_back(region1);</span></a>
-<a name="218"><span class="lineNum">     218 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   mMapMatching-&gt;addLaneRegions(laneOccupiedRegions, otherLaneOccupiedRegions);</span></a>
-<a name="219"><span class="lineNum">     219 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_EQ(laneOccupiedRegions[0].lateralRange, range);</span></a>
+<a name="218"><span class="lineNum">     218 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   mMapMatching-&gt;addLaneRegions(lane_occupied_regions, otherLaneOccupiedRegions);</span></a>
+<a name="219"><span class="lineNum">     219 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_EQ(lane_occupied_regions[0].lateral_range, range);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="220"><span class="lineNum">     220 </span>                :            : </a>
 <a name="221"><span class="lineNum">     221 </span>                :<span class="lineCov">          1 :   region2 = region1;</span></a>
 <a name="222"><span class="lineNum">     222 </span>                :<span class="lineCov">          1 :   range.maximum = physics::ParametricValue(0.4);</span></a>
-<a name="223"><span class="lineNum">     223 </span>                :<span class="lineCov">          1 :   region2.lateralRange = range;</span></a>
+<a name="223"><span class="lineNum">     223 </span>                :<span class="lineCov">          1 :   region2.lateral_range = range;</span></a>
 <a name="224"><span class="lineNum">     224 </span>                :<span class="lineCov">          1 :   otherLaneOccupiedRegions.clear();</span></a>
 <a name="225"><span class="lineNum">     225 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   otherLaneOccupiedRegions.push_back(region2);</span></a>
-<a name="226"><span class="lineNum">     226 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   mMapMatching-&gt;addLaneRegions(laneOccupiedRegions, otherLaneOccupiedRegions);</span></a>
-<a name="227"><span class="lineNum">     227 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_EQ(laneOccupiedRegions[0].lateralRange, range);</span></a>
+<a name="226"><span class="lineNum">     226 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   mMapMatching-&gt;addLaneRegions(lane_occupied_regions, otherLaneOccupiedRegions);</span></a>
+<a name="227"><span class="lineNum">     227 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_EQ(lane_occupied_regions[0].lateral_range, range);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
-<a name="228"><span class="lineNum">     228 </span>                :            : }</a>
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<a name="228"><span class="lineNum">     228 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 : }</span></a>
 </pre>
       </td>
     </tr>

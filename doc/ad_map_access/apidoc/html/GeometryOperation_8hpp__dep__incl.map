@@ -1,6 +1,7 @@
 <map id="include/ad/map/point/GeometryOperation.hpp" name="include/ad/map/point/GeometryOperation.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,188,47"/>
-<area shape="rect" id="node2" href="$point_2Operation_8hpp.html" title=" " alt="" coords="17,95,176,136"/>
-<area shape="rect" id="node3" href="$AdMapMatching_8hpp.html" title=" " alt="" coords="13,184,180,225"/>
-<area shape="rect" id="node4" href="$match_2Operation_8hpp.html" title=" " alt="" coords="13,273,180,315"/>
+<area shape="rect" id="node1" title=" " alt="" coords="110,5,293,47"/>
+<area shape="rect" id="node2" href="$point_2Operation_8hpp.html" title=" " alt="" coords="122,95,281,136"/>
+<area shape="rect" id="node3" href="$PolygonOperation_8hpp.html" title=" " alt="" coords="5,184,195,225"/>
+<area shape="rect" id="node4" href="$AdMapMatching_8hpp.html" title=" " alt="" coords="219,184,386,225"/>
+<area shape="rect" id="node5" href="$match_2Operation_8hpp.html" title=" " alt="" coords="219,273,386,315"/>
 </map>

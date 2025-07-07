@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -82,497 +82,552 @@
 <a name="11"><span class="lineNum">      11 </span>                :            : </a>
 <a name="12"><span class="lineNum">      12 </span>                :            : #pragma once</a>
 <a name="13"><span class="lineNum">      13 </span>                :            : </a>
-<a name="14"><span class="lineNum">      14 </span>                :            : #include &quot;ad/map/lane/LaneIdValidInputRange.hpp&quot;</a>
-<a name="15"><span class="lineNum">      15 </span>                :            : #include &quot;ad/map/lane/LaneValidInputRange.hpp&quot;</a>
-<a name="16"><span class="lineNum">      16 </span>                :            : #include &quot;ad/map/lane/Types.hpp&quot;</a>
-<a name="17"><span class="lineNum">      17 </span>                :            : #include &quot;ad/map/match/Types.hpp&quot;</a>
-<a name="18"><span class="lineNum">      18 </span>                :            : #include &quot;ad/map/point/BoundingSphereOperation.hpp&quot;</a>
-<a name="19"><span class="lineNum">      19 </span>                :            : #include &quot;ad/map/point/Types.hpp&quot;</a>
-<a name="20"><span class="lineNum">      20 </span>                :            : #include &quot;ad/map/restriction/RestrictionOperation.hpp&quot;</a>
-<a name="21"><span class="lineNum">      21 </span>                :            : #include &quot;ad/physics/Duration.hpp&quot;</a>
-<a name="22"><span class="lineNum">      22 </span>                :            : </a>
-<a name="23"><span class="lineNum">      23 </span>                :            : /** @brief namespace ad */</a>
-<a name="24"><span class="lineNum">      24 </span>                :            : namespace ad {</a>
-<a name="25"><span class="lineNum">      25 </span>                :            : /** @brief namespace map */</a>
-<a name="26"><span class="lineNum">      26 </span>                :            : namespace map {</a>
-<a name="27"><span class="lineNum">      27 </span>                :            : /** @brief namespace lane */</a>
-<a name="28"><span class="lineNum">      28 </span>                :            : namespace lane {</a>
-<a name="29"><span class="lineNum">      29 </span>                :            : </a>
-<a name="30"><span class="lineNum">      30 </span>                :            : /**</a>
-<a name="31"><span class="lineNum">      31 </span>                :            :  * @brief checks if the given LaneId is valid</a>
-<a name="32"><span class="lineNum">      32 </span>                :            :  *</a>
-<a name="33"><span class="lineNum">      33 </span>                :            :  * The laneId is valid if it's within valid input range.</a>
-<a name="34"><span class="lineNum">      34 </span>                :            :  */</a>
-<a name="35"><span class="lineNum">      35 </span>                :<span class="lineCov">      32248 : inline bool isValid(LaneId const &amp;laneId, bool const logErrors = true)</span></a>
-<a name="36"><span class="lineNum">      36 </span>                :            : {</a>
-<a name="37"><span class="lineNum">      37 </span>                :<span class="lineCov">      32248 :   return withinValidInputRange(laneId, logErrors);</span></a>
-<a name="38"><span class="lineNum">      38 </span>                :            : }</a>
-<a name="39"><span class="lineNum">      39 </span>                :            : </a>
-<a name="40"><span class="lineNum">      40 </span>                :            : /**</a>
-<a name="41"><span class="lineNum">      41 </span>                :            :  * @brief checks if the given Lane is valid</a>
-<a name="42"><span class="lineNum">      42 </span>                :            :  *</a>
-<a name="43"><span class="lineNum">      43 </span>                :            :  * The lane is valid if it's within valid input range.</a>
-<a name="44"><span class="lineNum">      44 </span>                :            :  */</a>
-<a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">         49 : inline bool isValid(Lane const &amp;lane, bool const logErrors = true)</span></a>
-<a name="46"><span class="lineNum">      46 </span>                :            : {</a>
-<a name="47"><span class="lineNum">      47 </span>                :<span class="lineCov">         49 :   return withinValidInputRange(lane, logErrors);</span></a>
-<a name="48"><span class="lineNum">      48 </span>                :            : }</a>
-<a name="49"><span class="lineNum">      49 </span>                :            : </a>
-<a name="50"><span class="lineNum">      50 </span>                :            : /**</a>
-<a name="51"><span class="lineNum">      51 </span>                :            :  * @brief Method to be called to retrieve Lane from the Store.</a>
-<a name="52"><span class="lineNum">      52 </span>                :            :  * @param[in] id Lane identifier.</a>
-<a name="53"><span class="lineNum">      53 </span>                :            :  * @returns Lane with given identifier.</a>
-<a name="54"><span class="lineNum">      54 </span>                :            :  *          Throws std::invalid_argument if id is not valid or if lane does not exist in the store.</a>
-<a name="55"><span class="lineNum">      55 </span>                :            :  */</a>
-<a name="56"><span class="lineNum">      56 </span>                :            : Lane::ConstPtr getLanePtr(LaneId const &amp;id);</a>
-<a name="57"><span class="lineNum">      57 </span>                :            : </a>
-<a name="58"><span class="lineNum">      58 </span>                :            : /**</a>
-<a name="59"><span class="lineNum">      59 </span>                :            :  * @brief Method to be called to retrieve Lane from the Store.</a>
-<a name="60"><span class="lineNum">      60 </span>                :            :  * @param[in] id Lane identifier.</a>
-<a name="61"><span class="lineNum">      61 </span>                :            :  * @returns Lane with given identifier.</a>
-<a name="62"><span class="lineNum">      62 </span>                :            :  *          Throws std::invalid_argument if id is not valid or if lane does not exist in the store.</a>
-<a name="63"><span class="lineNum">      63 </span>                :            :  */</a>
-<a name="64"><span class="lineNum">      64 </span>                :            : Lane const &amp;getLane(lane::LaneId const &amp;id);</a>
-<a name="65"><span class="lineNum">      65 </span>                :            : </a>
-<a name="66"><span class="lineNum">      66 </span>                :            : /**</a>
-<a name="67"><span class="lineNum">      67 </span>                :            :  * @brief Method to be called to retrieve identifiers of all Lanes in the Store.</a>
-<a name="68"><span class="lineNum">      68 </span>                :            :  * @returns Identifiers of all lanes in the store.</a>
-<a name="69"><span class="lineNum">      69 </span>                :            :  */</a>
-<a name="70"><span class="lineNum">      70 </span>                :            : LaneIdList getLanes();</a>
-<a name="71"><span class="lineNum">      71 </span>                :            : </a>
-<a name="72"><span class="lineNum">      72 </span>                :            : /**</a>
-<a name="73"><span class="lineNum">      73 </span>                :            :  * @return lane heading at a mapMatchedPosition</a>
-<a name="74"><span class="lineNum">      74 </span>                :            :  */</a>
-<a name="75"><span class="lineNum">      75 </span>                :            : point::ECEFHeading getLaneECEFHeading(match::MapMatchedPosition const &amp;mapMatchedPosition);</a>
-<a name="76"><span class="lineNum">      76 </span>                :            : </a>
-<a name="77"><span class="lineNum">      77 </span>                :            : /**</a>
-<a name="78"><span class="lineNum">      78 </span>                :            :  * @return lane heading at a paraPoint</a>
-<a name="79"><span class="lineNum">      79 </span>                :            :  */</a>
-<a name="80"><span class="lineNum">      80 </span>                :            : point::ECEFHeading getLaneECEFHeading(point::ParaPoint const &amp;paraPoint);</a>
-<a name="81"><span class="lineNum">      81 </span>                :            : </a>
-<a name="82"><span class="lineNum">      82 </span>                :            : /**</a>
-<a name="83"><span class="lineNum">      83 </span>                :            :  * @return lane heading at a mapMatchedPosition</a>
-<a name="84"><span class="lineNum">      84 </span>                :            :  */</a>
-<a name="85"><span class="lineNum">      85 </span>                :            : point::ENUHeading getLaneENUHeading(match::MapMatchedPosition const &amp;mapMatchedPosition);</a>
-<a name="86"><span class="lineNum">      86 </span>                :            : </a>
-<a name="87"><span class="lineNum">      87 </span>                :            : /**</a>
-<a name="88"><span class="lineNum">      88 </span>                :            :  * @return lane heading at a paraPoint with given gnssReference</a>
-<a name="89"><span class="lineNum">      89 </span>                :            :  */</a>
-<a name="90"><span class="lineNum">      90 </span>                :            : point::ENUHeading getLaneENUHeading(point::ParaPoint const &amp;paraPoint, point::GeoPoint const &amp;gnssReference);</a>
-<a name="91"><span class="lineNum">      91 </span>                :            : </a>
-<a name="92"><span class="lineNum">      92 </span>                :            : /**</a>
-<a name="93"><span class="lineNum">      93 </span>                :            :  * @return lane id at given location</a>
-<a name="94"><span class="lineNum">      94 </span>                :            :  *</a>
-<a name="95"><span class="lineNum">      95 </span>                :            :  * Throws if there is more than one lane at the given position</a>
-<a name="96"><span class="lineNum">      96 </span>                :            :  */</a>
-<a name="97"><span class="lineNum">      97 </span>                :            : LaneId uniqueLaneId(point::GeoPoint const &amp;point);</a>
-<a name="98"><span class="lineNum">      98 </span>                :            : </a>
-<a name="99"><span class="lineNum">      99 </span>                :            : /**</a>
-<a name="100"><span class="lineNum">     100 </span>                :            :  * @return parametric point at given location</a>
-<a name="101"><span class="lineNum">     101 </span>                :            :  *</a>
-<a name="102"><span class="lineNum">     102 </span>                :            :  * Throws if there is more than one lane at the given position</a>
-<a name="103"><span class="lineNum">     103 </span>                :            :  */</a>
-<a name="104"><span class="lineNum">     104 </span>                :            : point::ParaPoint uniqueParaPoint(point::GeoPoint const &amp;point);</a>
-<a name="105"><span class="lineNum">     105 </span>                :            : </a>
-<a name="106"><span class="lineNum">     106 </span>                :            : /**</a>
-<a name="107"><span class="lineNum">     107 </span>                :            :  * @brief Checks if vehicle fits the lanes restriction criteria.</a>
-<a name="108"><span class="lineNum">     108 </span>                :            :  * @param[in] lane the lane.</a>
-<a name="109"><span class="lineNum">     109 </span>                :            :  * @param[in] vehicle Description of the vehicle.</a>
-<a name="110"><span class="lineNum">     110 </span>                :            :  * @returns true of vehicle fits the restrictions criteria.</a>
-<a name="111"><span class="lineNum">     111 </span>                :            :  */</a>
-<a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">         12 : inline bool isAccessOk(Lane const &amp;lane, restriction::VehicleDescriptor const &amp;vehicle)</span></a>
-<a name="113"><span class="lineNum">     113 </span>                :            : {</a>
-<a name="114"><span class="lineNum">     114 </span>                :<span class="lineCov">         12 :   return isAccessOk(lane.restrictions, vehicle);</span></a>
-<a name="115"><span class="lineNum">     115 </span>                :            : }</a>
-<a name="116"><span class="lineNum">     116 </span>                :            : </a>
-<a name="117"><span class="lineNum">     117 </span>                :            : /**</a>
-<a name="118"><span class="lineNum">     118 </span>                :            :  * @brief Checks if given sphere intersects with lane bounding ball.</a>
-<a name="119"><span class="lineNum">     119 </span>                :            :  * @param[in] lane the lane.</a>
-<a name="120"><span class="lineNum">     120 </span>                :            :  * @param[in] boundingSphere input sphere</a>
-<a name="121"><span class="lineNum">     121 </span>                :            :  * @returns true given sphere intersects with lane bounding ball.</a>
-<a name="122"><span class="lineNum">     122 </span>                :            :  */</a>
-<a name="123"><span class="lineNum">     123 </span>                :<span class="lineCov">     129192 : inline bool isNear(Lane const &amp;lane, point::BoundingSphere const &amp;boundingSphere)</span></a>
-<a name="124"><span class="lineNum">     124 </span>                :            : {</a>
-<a name="125"><span class="lineNum">     125 </span>  [<span class="branchCov" title="Branch 0 was taken 129192 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 129192 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     129192 :   return distance(lane.boundingSphere, boundingSphere) == physics::Distance(0.);</span></a>
-<a name="126"><span class="lineNum">     126 </span>                :            : }</a>
-<a name="127"><span class="lineNum">     127 </span>                :            : </a>
-<a name="128"><span class="lineNum">     128 </span>                :            : /**</a>
-<a name="129"><span class="lineNum">     129 </span>                :            :  * @param[in] lane the lane.</a>
-<a name="130"><span class="lineNum">     130 </span>                :            :  * @param[in] longitudinalOffset the longitudinal parametric offset</a>
-<a name="131"><span class="lineNum">     131 </span>                :            :  * @returns Width of the lane at the given longitudinal parametric offset \a longitudinalOffset</a>
-<a name="132"><span class="lineNum">     132 </span>                :            :  */</a>
-<a name="133"><span class="lineNum">     133 </span>                :            : physics::Distance getWidth(Lane const &amp;lane, physics::ParametricValue const &amp;longitudinalOffset);</a>
-<a name="134"><span class="lineNum">     134 </span>                :            : </a>
-<a name="135"><span class="lineNum">     135 </span>                :            : /**</a>
-<a name="136"><span class="lineNum">     136 </span>                :            :  * @returns Speed limits on the provided parametric \a range along the \a lane.</a>
-<a name="137"><span class="lineNum">     137 </span>                :            :  */</a>
-<a name="138"><span class="lineNum">     138 </span>                :            : physics::Speed getMaxSpeed(Lane const &amp;lane, physics::ParametricRange const &amp;range);</a>
-<a name="139"><span class="lineNum">     139 </span>                :            : </a>
-<a name="140"><span class="lineNum">     140 </span>                :            : /**</a>
-<a name="141"><span class="lineNum">     141 </span>                :            :  * @returns Speed limits on the provided parametric \a range along the \a lane.</a>
-<a name="142"><span class="lineNum">     142 </span>                :            :  */</a>
-<a name="143"><span class="lineNum">     143 </span>                :            : restriction::SpeedLimitList getSpeedLimits(Lane const &amp;lane, physics::ParametricRange const &amp;range);</a>
-<a name="144"><span class="lineNum">     144 </span>                :            : </a>
-<a name="145"><span class="lineNum">     145 </span>                :            : /**</a>
-<a name="146"><span class="lineNum">     146 </span>                :            :  * @return minimum duration to drive the provided parametric \a range along the \a lane based on the speed limits of the</a>
-<a name="147"><span class="lineNum">     147 </span>                :            :  * lane.</a>
-<a name="148"><span class="lineNum">     148 </span>                :            :  */</a>
-<a name="149"><span class="lineNum">     149 </span>                :            : physics::Duration getDuration(Lane const &amp;lane, physics::ParametricRange const &amp;range);</a>
-<a name="150"><span class="lineNum">     150 </span>                :            : </a>
-<a name="151"><span class="lineNum">     151 </span>                :            : /**</a>
-<a name="152"><span class="lineNum">     152 </span>                :            :  * @returns Maximum of HOV restriction for the \a lane</a>
-<a name="153"><span class="lineNum">     153 </span>                :            :  */</a>
-<a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">          5 : inline restriction::PassengerCount getHOV(Lane const &amp;lane)</span></a>
-<a name="155"><span class="lineNum">     155 </span>                :            : {</a>
-<a name="156"><span class="lineNum">     156 </span>                :<span class="lineCov">          5 :   return getHOV(lane.restrictions);</span></a>
-<a name="157"><span class="lineNum">     157 </span>                :            : }</a>
-<a name="158"><span class="lineNum">     158 </span>                :            : </a>
-<a name="159"><span class="lineNum">     159 </span>                :            : /**</a>
-<a name="160"><span class="lineNum">     160 </span>                :            :  * @brief Find contact lanes at specific relative location.</a>
-<a name="161"><span class="lineNum">     161 </span>                :            :  * @param[in] lane the lane.</a>
-<a name="162"><span class="lineNum">     162 </span>                :            :  * @param[in] location Location of interest.</a>
-<a name="163"><span class="lineNum">     163 </span>                :            :  * @returns Contacts to lane at specified location.</a>
-<a name="164"><span class="lineNum">     164 </span>                :            :  */</a>
-<a name="165"><span class="lineNum">     165 </span>                :            : ContactLaneList getContactLanes(Lane const &amp;lane, ContactLocation const &amp;location);</a>
-<a name="166"><span class="lineNum">     166 </span>                :            : </a>
-<a name="167"><span class="lineNum">     167 </span>                :            : /**</a>
-<a name="168"><span class="lineNum">     168 </span>                :            :  * @brief Find contact lanes at specific relative locations.</a>
-<a name="169"><span class="lineNum">     169 </span>                :            :  * @param[in] locations Locations of interest.</a>
-<a name="170"><span class="lineNum">     170 </span>                :            :  * @returns Contacts to lanes at specified locations.</a>
-<a name="171"><span class="lineNum">     171 </span>                :            :  */</a>
-<a name="172"><span class="lineNum">     172 </span>                :            : ContactLaneList getContactLanes(Lane const &amp;lane, ContactLocationList const &amp;locations);</a>
-<a name="173"><span class="lineNum">     173 </span>                :            : </a>
-<a name="174"><span class="lineNum">     174 </span>                :            : /**</a>
-<a name="175"><span class="lineNum">     175 </span>                :            :  * @brief Check nature of contact between this lane and another lane.</a>
-<a name="176"><span class="lineNum">     176 </span>                :            :  * @param[in] to_lane_id Another lane identifier.</a>
-<a name="177"><span class="lineNum">     177 </span>                :            :  * @returns Type of the contact. Can be INVALID if there is no contact between lanes.</a>
-<a name="178"><span class="lineNum">     178 </span>                :            :  */</a>
-<a name="179"><span class="lineNum">     179 </span>                :            : ContactLocation getContactLocation(Lane const &amp;lane, LaneId const &amp;to_lane_id);</a>
-<a name="180"><span class="lineNum">     180 </span>                :            : </a>
-<a name="181"><span class="lineNum">     181 </span>                :            : /**</a>
-<a name="182"><span class="lineNum">     182 </span>                :            :  * @returns true if direction is POSITIVE or BIDIRECTIONAL.</a>
-<a name="183"><span class="lineNum">     183 </span>                :            :  */</a>
-<a name="184"><span class="lineNum">     184 </span>                :<span class="lineCov">     168562 : inline bool isLaneDirectionPositive(Lane const &amp;lane)</span></a>
-<a name="185"><span class="lineNum">     185 </span>                :            : {</a>
-<a name="186"><span class="lineNum">     186 </span>  [<span class="branchCov" title="Branch 0 was taken 110671 times"> + </span><span class="branchCov" title="Branch 1 was taken 57891 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 110671 times"> + </span>]:<span class="lineCov">     168562 :   return lane.direction == LaneDirection::POSITIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span></a>
-<a name="187"><span class="lineNum">     187 </span>                :            : }</a>
-<a name="188"><span class="lineNum">     188 </span>                :            : </a>
-<a name="189"><span class="lineNum">     189 </span>                :            : /**</a>
-<a name="190"><span class="lineNum">     190 </span>                :            :  * @returns true if direction is NEGATIVE or BIDIRECTIONAL.</a>
-<a name="191"><span class="lineNum">     191 </span>                :            :  */</a>
-<a name="192"><span class="lineNum">     192 </span>                :<span class="lineCov">      47880 : inline bool isLaneDirectionNegative(Lane const &amp;lane)</span></a>
-<a name="193"><span class="lineNum">     193 </span>                :            : {</a>
-<a name="194"><span class="lineNum">     194 </span>  [<span class="branchCov" title="Branch 0 was taken 27727 times"> + </span><span class="branchCov" title="Branch 1 was taken 20153 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 27727 times"> + </span>]:<span class="lineCov">      47880 :   return lane.direction == LaneDirection::NEGATIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span></a>
-<a name="195"><span class="lineNum">     195 </span>                :            : }</a>
+<a name="14"><span class="lineNum">      14 </span>                :            : #include &quot;ad/map/lane/ECEFEdgeValidInputRange.hpp&quot;</a>
+<a name="15"><span class="lineNum">      15 </span>                :            : #include &quot;ad/map/lane/ENUEdgeValidInputRange.hpp&quot;</a>
+<a name="16"><span class="lineNum">      16 </span>                :            : #include &quot;ad/map/lane/GeoEdgeValidInputRange.hpp&quot;</a>
+<a name="17"><span class="lineNum">      17 </span>                :            : #include &quot;ad/map/lane/LaneIdValidInputRange.hpp&quot;</a>
+<a name="18"><span class="lineNum">      18 </span>                :            : #include &quot;ad/map/lane/LaneValidInputRange.hpp&quot;</a>
+<a name="19"><span class="lineNum">      19 </span>                :            : #include &quot;ad/map/lane/Types.hpp&quot;</a>
+<a name="20"><span class="lineNum">      20 </span>                :            : #include &quot;ad/map/match/Types.hpp&quot;</a>
+<a name="21"><span class="lineNum">      21 </span>                :            : #include &quot;ad/map/point/BoundingSphereOperation.hpp&quot;</a>
+<a name="22"><span class="lineNum">      22 </span>                :            : #include &quot;ad/map/point/Types.hpp&quot;</a>
+<a name="23"><span class="lineNum">      23 </span>                :            : #include &quot;ad/map/restriction/RestrictionOperation.hpp&quot;</a>
+<a name="24"><span class="lineNum">      24 </span>                :            : #include &quot;ad/physics/Duration.hpp&quot;</a>
+<a name="25"><span class="lineNum">      25 </span>                :            : </a>
+<a name="26"><span class="lineNum">      26 </span>                :            : /** @brief namespace ad */</a>
+<a name="27"><span class="lineNum">      27 </span>                :            : namespace ad {</a>
+<a name="28"><span class="lineNum">      28 </span>                :            : /** @brief namespace map */</a>
+<a name="29"><span class="lineNum">      29 </span>                :            : namespace map {</a>
+<a name="30"><span class="lineNum">      30 </span>                :            : /** @brief namespace lane */</a>
+<a name="31"><span class="lineNum">      31 </span>                :            : namespace lane {</a>
+<a name="32"><span class="lineNum">      32 </span>                :            : </a>
+<a name="33"><span class="lineNum">      33 </span>                :            : /**</a>
+<a name="34"><span class="lineNum">      34 </span>                :            :  * @brief checks if the given LaneId is valid</a>
+<a name="35"><span class="lineNum">      35 </span>                :            :  *</a>
+<a name="36"><span class="lineNum">      36 </span>                :            :  * The lane_id is valid if it's within valid input range.</a>
+<a name="37"><span class="lineNum">      37 </span>                :            :  */</a>
+<a name="38"><span class="lineNum">      38 </span>                :<span class="lineCov">      32941 : inline bool isValid(LaneId const &amp;lane_id, bool const logErrors = true)</span></a>
+<a name="39"><span class="lineNum">      39 </span>                :            : {</a>
+<a name="40"><span class="lineNum">      40 </span>                :<span class="lineCov">      32941 :   return withinValidInputRange(lane_id, logErrors);</span></a>
+<a name="41"><span class="lineNum">      41 </span>                :            : }</a>
+<a name="42"><span class="lineNum">      42 </span>                :            : </a>
+<a name="43"><span class="lineNum">      43 </span>                :            : /**</a>
+<a name="44"><span class="lineNum">      44 </span>                :            :  * @brief checks if the given Lane is valid</a>
+<a name="45"><span class="lineNum">      45 </span>                :            :  *</a>
+<a name="46"><span class="lineNum">      46 </span>                :            :  * The lane is valid if it's within valid input range.</a>
+<a name="47"><span class="lineNum">      47 </span>                :            :  */</a>
+<a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">         49 : inline bool isValid(Lane const &amp;lane, bool const logErrors = true)</span></a>
+<a name="49"><span class="lineNum">      49 </span>                :            : {</a>
+<a name="50"><span class="lineNum">      50 </span>                :<span class="lineCov">         49 :   return withinValidInputRange(lane, logErrors);</span></a>
+<a name="51"><span class="lineNum">      51 </span>                :            : }</a>
+<a name="52"><span class="lineNum">      52 </span>                :            : </a>
+<a name="53"><span class="lineNum">      53 </span>                :            : /**</a>
+<a name="54"><span class="lineNum">      54 </span>                :            :  * @brief Method to be called to retrieve Lane from the Store.</a>
+<a name="55"><span class="lineNum">      55 </span>                :            :  * @param[in] id Lane identifier.</a>
+<a name="56"><span class="lineNum">      56 </span>                :            :  * @returns Lane with given identifier.</a>
+<a name="57"><span class="lineNum">      57 </span>                :            :  *          Throws std::invalid_argument if id is not valid or if lane does not exist in the store.</a>
+<a name="58"><span class="lineNum">      58 </span>                :            :  */</a>
+<a name="59"><span class="lineNum">      59 </span>                :            : Lane::ConstPtr getLanePtr(LaneId const &amp;id);</a>
+<a name="60"><span class="lineNum">      60 </span>                :            : </a>
+<a name="61"><span class="lineNum">      61 </span>                :            : /**</a>
+<a name="62"><span class="lineNum">      62 </span>                :            :  * @brief Method to be called to retrieve Lane from the Store.</a>
+<a name="63"><span class="lineNum">      63 </span>                :            :  * @param[in] id Lane identifier.</a>
+<a name="64"><span class="lineNum">      64 </span>                :            :  * @returns Lane with given identifier.</a>
+<a name="65"><span class="lineNum">      65 </span>                :            :  *          Throws std::invalid_argument if id is not valid or if lane does not exist in the store.</a>
+<a name="66"><span class="lineNum">      66 </span>                :            :  */</a>
+<a name="67"><span class="lineNum">      67 </span>                :            : Lane const &amp;getLane(lane::LaneId const &amp;id);</a>
+<a name="68"><span class="lineNum">      68 </span>                :            : </a>
+<a name="69"><span class="lineNum">      69 </span>                :            : /**</a>
+<a name="70"><span class="lineNum">      70 </span>                :            :  * @brief Method to be called to retrieve identifiers of all Lanes in the Store.</a>
+<a name="71"><span class="lineNum">      71 </span>                :            :  * @returns Identifiers of all lanes in the store.</a>
+<a name="72"><span class="lineNum">      72 </span>                :            :  */</a>
+<a name="73"><span class="lineNum">      73 </span>                :            : LaneIdList getLanes();</a>
+<a name="74"><span class="lineNum">      74 </span>                :            : </a>
+<a name="75"><span class="lineNum">      75 </span>                :            : /**</a>
+<a name="76"><span class="lineNum">      76 </span>                :            :  * @return lane heading at a mapMatchedPosition</a>
+<a name="77"><span class="lineNum">      77 </span>                :            :  */</a>
+<a name="78"><span class="lineNum">      78 </span>                :            : point::ECEFHeading getLaneECEFHeading(match::MapMatchedPosition const &amp;mapMatchedPosition);</a>
+<a name="79"><span class="lineNum">      79 </span>                :            : </a>
+<a name="80"><span class="lineNum">      80 </span>                :            : /**</a>
+<a name="81"><span class="lineNum">      81 </span>                :            :  * @return lane heading at a para_point</a>
+<a name="82"><span class="lineNum">      82 </span>                :            :  */</a>
+<a name="83"><span class="lineNum">      83 </span>                :            : point::ECEFHeading getLaneECEFHeading(point::ParaPoint const &amp;para_point);</a>
+<a name="84"><span class="lineNum">      84 </span>                :            : </a>
+<a name="85"><span class="lineNum">      85 </span>                :            : /**</a>
+<a name="86"><span class="lineNum">      86 </span>                :            :  * @return lane heading at a mapMatchedPosition</a>
+<a name="87"><span class="lineNum">      87 </span>                :            :  */</a>
+<a name="88"><span class="lineNum">      88 </span>                :            : point::ENUHeading getLaneENUHeading(match::MapMatchedPosition const &amp;mapMatchedPosition);</a>
+<a name="89"><span class="lineNum">      89 </span>                :            : </a>
+<a name="90"><span class="lineNum">      90 </span>                :            : /**</a>
+<a name="91"><span class="lineNum">      91 </span>                :            :  * @return lane heading at a para_point with given gnssReference</a>
+<a name="92"><span class="lineNum">      92 </span>                :            :  */</a>
+<a name="93"><span class="lineNum">      93 </span>                :            : point::ENUHeading getLaneENUHeading(point::ParaPoint const &amp;para_point, point::GeoPoint const &amp;gnssReference);</a>
+<a name="94"><span class="lineNum">      94 </span>                :            : </a>
+<a name="95"><span class="lineNum">      95 </span>                :            : /**</a>
+<a name="96"><span class="lineNum">      96 </span>                :            :  * @return lane id at given location</a>
+<a name="97"><span class="lineNum">      97 </span>                :            :  *</a>
+<a name="98"><span class="lineNum">      98 </span>                :            :  * Throws if there is more than one lane at the given position</a>
+<a name="99"><span class="lineNum">      99 </span>                :            :  */</a>
+<a name="100"><span class="lineNum">     100 </span>                :            : LaneId uniqueLaneId(point::GeoPoint const &amp;point);</a>
+<a name="101"><span class="lineNum">     101 </span>                :            : </a>
+<a name="102"><span class="lineNum">     102 </span>                :            : /**</a>
+<a name="103"><span class="lineNum">     103 </span>                :            :  * @return parametric point at given location</a>
+<a name="104"><span class="lineNum">     104 </span>                :            :  *</a>
+<a name="105"><span class="lineNum">     105 </span>                :            :  * Throws if there is more than one lane at the given position</a>
+<a name="106"><span class="lineNum">     106 </span>                :            :  */</a>
+<a name="107"><span class="lineNum">     107 </span>                :            : point::ParaPoint uniqueParaPoint(point::GeoPoint const &amp;point);</a>
+<a name="108"><span class="lineNum">     108 </span>                :            : </a>
+<a name="109"><span class="lineNum">     109 </span>                :            : /**</a>
+<a name="110"><span class="lineNum">     110 </span>                :            :  * @brief Checks if vehicle fits the lanes restriction criteria.</a>
+<a name="111"><span class="lineNum">     111 </span>                :            :  * @param[in] lane the lane.</a>
+<a name="112"><span class="lineNum">     112 </span>                :            :  * @param[in] vehicle Description of the vehicle.</a>
+<a name="113"><span class="lineNum">     113 </span>                :            :  * @returns true of vehicle fits the restrictions criteria.</a>
+<a name="114"><span class="lineNum">     114 </span>                :            :  */</a>
+<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">         12 : inline bool isAccessOk(Lane const &amp;lane, restriction::VehicleDescriptor const &amp;vehicle)</span></a>
+<a name="116"><span class="lineNum">     116 </span>                :            : {</a>
+<a name="117"><span class="lineNum">     117 </span>                :<span class="lineCov">         12 :   return isAccessOk(lane.restrictions, vehicle);</span></a>
+<a name="118"><span class="lineNum">     118 </span>                :            : }</a>
+<a name="119"><span class="lineNum">     119 </span>                :            : </a>
+<a name="120"><span class="lineNum">     120 </span>                :            : /**</a>
+<a name="121"><span class="lineNum">     121 </span>                :            :  * @brief Checks if given sphere intersects with lane bounding ball.</a>
+<a name="122"><span class="lineNum">     122 </span>                :            :  * @param[in] lane the lane.</a>
+<a name="123"><span class="lineNum">     123 </span>                :            :  * @param[in] bounding_sphere input sphere</a>
+<a name="124"><span class="lineNum">     124 </span>                :            :  * @returns true given sphere intersects with lane bounding ball.</a>
+<a name="125"><span class="lineNum">     125 </span>                :            :  */</a>
+<a name="126"><span class="lineNum">     126 </span>                :<span class="lineCov">     129280 : inline bool isNear(Lane const &amp;lane, point::BoundingSphere const &amp;bounding_sphere)</span></a>
+<a name="127"><span class="lineNum">     127 </span>                :            : {</a>
+<a name="128"><span class="lineNum">     128 </span>  [<span class="branchCov" title="Branch 0 was taken 129280 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 129280 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">     129280 :   return distance(lane.bounding_sphere, bounding_sphere) == physics::Distance(0.);</span></a>
+<a name="129"><span class="lineNum">     129 </span>                :            : }</a>
+<a name="130"><span class="lineNum">     130 </span>                :            : </a>
+<a name="131"><span class="lineNum">     131 </span>                :            : /**</a>
+<a name="132"><span class="lineNum">     132 </span>                :            :  * @param[in] lane the lane.</a>
+<a name="133"><span class="lineNum">     133 </span>                :            :  * @param[in] longitudinalOffset the longitudinal parametric offset</a>
+<a name="134"><span class="lineNum">     134 </span>                :            :  * @returns Width of the lane at the given longitudinal parametric offset \a longitudinalOffset</a>
+<a name="135"><span class="lineNum">     135 </span>                :            :  */</a>
+<a name="136"><span class="lineNum">     136 </span>                :            : physics::Distance getWidth(Lane const &amp;lane, physics::ParametricValue const &amp;longitudinalOffset);</a>
+<a name="137"><span class="lineNum">     137 </span>                :            : </a>
+<a name="138"><span class="lineNum">     138 </span>                :            : /**</a>
+<a name="139"><span class="lineNum">     139 </span>                :            :  * @returns Speed limits on the provided parametric \a range along the \a lane.</a>
+<a name="140"><span class="lineNum">     140 </span>                :            :  */</a>
+<a name="141"><span class="lineNum">     141 </span>                :            : physics::Speed getMaxSpeed(Lane const &amp;lane, physics::ParametricRange const &amp;range);</a>
+<a name="142"><span class="lineNum">     142 </span>                :            : </a>
+<a name="143"><span class="lineNum">     143 </span>                :            : /**</a>
+<a name="144"><span class="lineNum">     144 </span>                :            :  * @returns Speed limits on the provided parametric \a range along the \a lane.</a>
+<a name="145"><span class="lineNum">     145 </span>                :            :  */</a>
+<a name="146"><span class="lineNum">     146 </span>                :            : restriction::SpeedLimitList getSpeedLimits(Lane const &amp;lane, physics::ParametricRange const &amp;range);</a>
+<a name="147"><span class="lineNum">     147 </span>                :            : </a>
+<a name="148"><span class="lineNum">     148 </span>                :            : /**</a>
+<a name="149"><span class="lineNum">     149 </span>                :            :  * @return minimum duration to drive the provided parametric \a range along the \a lane based on the speed limits of the</a>
+<a name="150"><span class="lineNum">     150 </span>                :            :  * lane.</a>
+<a name="151"><span class="lineNum">     151 </span>                :            :  */</a>
+<a name="152"><span class="lineNum">     152 </span>                :            : physics::Duration getDuration(Lane const &amp;lane, physics::ParametricRange const &amp;range);</a>
+<a name="153"><span class="lineNum">     153 </span>                :            : </a>
+<a name="154"><span class="lineNum">     154 </span>                :            : /**</a>
+<a name="155"><span class="lineNum">     155 </span>                :            :  * @returns Maximum of HOV restriction for the \a lane</a>
+<a name="156"><span class="lineNum">     156 </span>                :            :  */</a>
+<a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">          5 : inline restriction::PassengerCount getHOV(Lane const &amp;lane)</span></a>
+<a name="158"><span class="lineNum">     158 </span>                :            : {</a>
+<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">          5 :   return getHOV(lane.restrictions);</span></a>
+<a name="160"><span class="lineNum">     160 </span>                :            : }</a>
+<a name="161"><span class="lineNum">     161 </span>                :            : </a>
+<a name="162"><span class="lineNum">     162 </span>                :            : /**</a>
+<a name="163"><span class="lineNum">     163 </span>                :            :  * @brief Find contact lanes at specific relative location.</a>
+<a name="164"><span class="lineNum">     164 </span>                :            :  * @param[in] lane the lane.</a>
+<a name="165"><span class="lineNum">     165 </span>                :            :  * @param[in] location Location of interest.</a>
+<a name="166"><span class="lineNum">     166 </span>                :            :  *</a>
+<a name="167"><span class="lineNum">     167 </span>                :            :  * @returns Contacts to lane at specified location.</a>
+<a name="168"><span class="lineNum">     168 </span>                :            :  */</a>
+<a name="169"><span class="lineNum">     169 </span>                :            : ContactLaneList getContactLanes(Lane const &amp;lane, ContactLocation const &amp;location);</a>
+<a name="170"><span class="lineNum">     170 </span>                :            : </a>
+<a name="171"><span class="lineNum">     171 </span>                :            : /**</a>
+<a name="172"><span class="lineNum">     172 </span>                :            :  * @brief Find contact lanes at specific relative locations.</a>
+<a name="173"><span class="lineNum">     173 </span>                :            :  * @param[in] locations Locations of interest.</a>
+<a name="174"><span class="lineNum">     174 </span>                :            :  *</a>
+<a name="175"><span class="lineNum">     175 </span>                :            :  * @returns Contacts to lanes at specified locations.</a>
+<a name="176"><span class="lineNum">     176 </span>                :            :  */</a>
+<a name="177"><span class="lineNum">     177 </span>                :            : ContactLaneList getContactLanes(Lane const &amp;lane, ContactLocationList const &amp;locations);</a>
+<a name="178"><span class="lineNum">     178 </span>                :            : </a>
+<a name="179"><span class="lineNum">     179 </span>                :            : /**</a>
+<a name="180"><span class="lineNum">     180 </span>                :            :  * @brief Check nature of contact between this lane and another lane.</a>
+<a name="181"><span class="lineNum">     181 </span>                :            :  * @param[in] toLaneId Another lane identifier.</a>
+<a name="182"><span class="lineNum">     182 </span>                :            :  *</a>
+<a name="183"><span class="lineNum">     183 </span>                :            :  * @returns The location of the contact. Can be INVALID if there is no contact between lanes.</a>
+<a name="184"><span class="lineNum">     184 </span>                :            :  */</a>
+<a name="185"><span class="lineNum">     185 </span>                :            : ContactLocation getContactLocation(Lane const &amp;lane, LaneId const &amp;toLaneId);</a>
+<a name="186"><span class="lineNum">     186 </span>                :            : </a>
+<a name="187"><span class="lineNum">     187 </span>                :            : /**</a>
+<a name="188"><span class="lineNum">     188 </span>                :            :  * @brief Check nature of contact between this lane and another lane.</a>
+<a name="189"><span class="lineNum">     189 </span>                :            :  *</a>
+<a name="190"><span class="lineNum">     190 </span>                :            :  * @param[in] lane the lane.</a>
+<a name="191"><span class="lineNum">     191 </span>                :            :  * @param[in] toLaneId Another lane identifier.</a>
+<a name="192"><span class="lineNum">     192 </span>                :            :  *</a>
+<a name="193"><span class="lineNum">     193 </span>                :            :  * @returns Contacts to lanes at specified lane id.</a>
+<a name="194"><span class="lineNum">     194 </span>                :            :  */</a>
+<a name="195"><span class="lineNum">     195 </span>                :            : ContactLaneList getContactLane(Lane const &amp;lane, LaneId const &amp;toLaneId);</a>
 <a name="196"><span class="lineNum">     196 </span>                :            : </a>
 <a name="197"><span class="lineNum">     197 </span>                :            : /**</a>
-<a name="198"><span class="lineNum">     198 </span>                :            :  * @returns true if lane can be used in Routing.</a>
-<a name="199"><span class="lineNum">     199 </span>                :            :  */</a>
-<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">      88133 : inline bool isRouteable(Lane const &amp;lane)</span></a>
-<a name="201"><span class="lineNum">     201 </span>                :            : {</a>
-<a name="202"><span class="lineNum">     202 </span>  [<span class="branchCov" title="Branch 0 was taken 38924 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3080 times"> + </span><span class="branchCov" title="Branch 3 was taken 35844 times"> + </span>]:<span class="lineCov">      38924 :   return lane.type == LaneType::INTERSECTION || lane.type == LaneType::MULTI || lane.type == LaneType::NORMAL</span></a>
-<a name="203"><span class="lineNum">     203 </span>  [<span class="branchCov" title="Branch 0 was taken 38924 times"> + </span><span class="branchCov" title="Branch 1 was taken 49209 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 3080 times"> + </span>]:<span class="lineCov">     127057 :     || lane.type == LaneType::TURN;</span></a>
-<a name="204"><span class="lineNum">     204 </span>                :            : }</a>
-<a name="205"><span class="lineNum">     205 </span>                :            : </a>
-<a name="206"><span class="lineNum">     206 </span>                :            : /**</a>
-<a name="207"><span class="lineNum">     207 </span>                :            :  * @returns true if lane is part of an intersection.</a>
-<a name="208"><span class="lineNum">     208 </span>                :            :  */</a>
-<a name="209"><span class="lineNum">     209 </span>                :<span class="lineCov">       9837 : inline bool isLanePartOfAnIntersection(Lane const &amp;lane)</span></a>
-<a name="210"><span class="lineNum">     210 </span>                :            : {</a>
-<a name="211"><span class="lineNum">     211 </span>                :<span class="lineCov">       9837 :   return (lane.type == lane::LaneType::INTERSECTION);</span></a>
-<a name="212"><span class="lineNum">     212 </span>                :            : }</a>
-<a name="213"><span class="lineNum">     213 </span>                :            : </a>
-<a name="214"><span class="lineNum">     214 </span>                :            : /**</a>
-<a name="215"><span class="lineNum">     215 </span>                :            :  * @returns true if there are no lanes left of this one.</a>
-<a name="216"><span class="lineNum">     216 </span>                :            :  */</a>
-<a name="217"><span class="lineNum">     217 </span>                :            : inline bool isLeftMost(Lane const &amp;lane)</a>
-<a name="218"><span class="lineNum">     218 </span>                :            : {</a>
-<a name="219"><span class="lineNum">     219 </span>                :            :   return getContactLanes(lane, ContactLocation::LEFT).empty();</a>
-<a name="220"><span class="lineNum">     220 </span>                :            : }</a>
-<a name="221"><span class="lineNum">     221 </span>                :            : </a>
-<a name="222"><span class="lineNum">     222 </span>                :            : /**</a>
-<a name="223"><span class="lineNum">     223 </span>                :            :  * @returns true if there are no lanes right of this one.</a>
-<a name="224"><span class="lineNum">     224 </span>                :            :  */</a>
-<a name="225"><span class="lineNum">     225 </span>                :            : inline bool isRightMost(Lane const &amp;lane)</a>
-<a name="226"><span class="lineNum">     226 </span>                :            : {</a>
-<a name="227"><span class="lineNum">     227 </span>                :            :   return getContactLanes(lane, ContactLocation::RIGHT).empty();</a>
-<a name="228"><span class="lineNum">     228 </span>                :            : }</a>
-<a name="229"><span class="lineNum">     229 </span>                :            : </a>
-<a name="230"><span class="lineNum">     230 </span>                :            : /**</a>
-<a name="231"><span class="lineNum">     231 </span>                :            :  * @brief Calculates parametric point on the lane.</a>
-<a name="232"><span class="lineNum">     232 </span>                :            :  *        Point is calculated by first calculating t_long parametric point</a>
-<a name="233"><span class="lineNum">     233 </span>                :            :  *        on the left and on the right boundary, and then parametric point</a>
-<a name="234"><span class="lineNum">     234 </span>                :            :  *        t_lat between those two points.</a>
-<a name="235"><span class="lineNum">     235 </span>                :            :  * @param[in] t_long Longitudinal parameter.</a>
-<a name="236"><span class="lineNum">     236 </span>                :            :  * @param[in] t_lat  Lateral parameter relative to the left edge.</a>
-<a name="237"><span class="lineNum">     237 </span>                :            :  * @return Parametric point on the lane. Can be invalid.</a>
-<a name="238"><span class="lineNum">     238 </span>                :            :  */</a>
-<a name="239"><span class="lineNum">     239 </span>                :            : point::ECEFPoint getParametricPoint(Lane const &amp;lane,</a>
-<a name="240"><span class="lineNum">     240 </span>                :            :                                     physics::ParametricValue const &amp;longitudinalOffset,</a>
-<a name="241"><span class="lineNum">     241 </span>                :            :                                     physics::ParametricValue const &amp;lateralOffset);</a>
-<a name="242"><span class="lineNum">     242 </span>                :            : </a>
-<a name="243"><span class="lineNum">     243 </span>                :            : /**</a>
-<a name="244"><span class="lineNum">     244 </span>                :            :  * @brief Calculates the projection on left and right boundary of the given referencePoint.</a>
-<a name="245"><span class="lineNum">     245 </span>                :            :  * @param[in] referencePoint reference point.</a>
-<a name="246"><span class="lineNum">     246 </span>                :            :  * @param[out] point_on_left_edge projected point on the left boundary</a>
-<a name="247"><span class="lineNum">     247 </span>                :            :  * @param[out] point_on_right_edge projected point on the right boundary</a>
-<a name="248"><span class="lineNum">     248 </span>                :            :  * @return True if the operation succeeded.</a>
-<a name="249"><span class="lineNum">     249 </span>                :            :  */</a>
-<a name="250"><span class="lineNum">     250 </span>                :            : bool projectParametricPointToEdges(Lane const &amp;lane,</a>
-<a name="251"><span class="lineNum">     251 </span>                :            :                                    point::ECEFPoint const &amp;referencePoint,</a>
-<a name="252"><span class="lineNum">     252 </span>                :            :                                    point::ECEFPoint &amp;point_on_left_edge,</a>
-<a name="253"><span class="lineNum">     253 </span>                :            :                                    point::ECEFPoint &amp;point_on_right_edge);</a>
-<a name="254"><span class="lineNum">     254 </span>                :            : </a>
-<a name="255"><span class="lineNum">     255 </span>                :            : /**</a>
-<a name="256"><span class="lineNum">     256 </span>                :            :  * @brief Calculates the projection on left and right boundary of the parametric point on the center of the lane.</a>
-<a name="257"><span class="lineNum">     257 </span>                :            :  * @param[in] longitudinalOffset Longitudinal parameter on the lane.</a>
-<a name="258"><span class="lineNum">     258 </span>                :            :  * @param[out] point_on_left_edge projected point on the left boundary</a>
-<a name="259"><span class="lineNum">     259 </span>                :            :  * @param[out] point_on_right_edge projected point on the right boundary</a>
-<a name="260"><span class="lineNum">     260 </span>                :            :  * @return True if the operation succeeded.</a>
-<a name="261"><span class="lineNum">     261 </span>                :            :  */</a>
-<a name="262"><span class="lineNum">     262 </span>                :            : bool projectParametricPointToEdges(Lane const &amp;lane,</a>
-<a name="263"><span class="lineNum">     263 </span>                :            :                                    physics::ParametricValue const &amp;longitudinalOffset,</a>
-<a name="264"><span class="lineNum">     264 </span>                :            :                                    point::ECEFPoint &amp;point_on_left_edge,</a>
-<a name="265"><span class="lineNum">     265 </span>                :            :                                    point::ECEFPoint &amp;point_on_right_edge);</a>
-<a name="266"><span class="lineNum">     266 </span>                :            : </a>
-<a name="267"><span class="lineNum">     267 </span>                :            : /**</a>
-<a name="268"><span class="lineNum">     268 </span>                :            :  * @brief Calculates projected parametric point on the lane.</a>
-<a name="269"><span class="lineNum">     269 </span>                :            :  *        Point is calculated by first calculating the projected points on left and right boundary using</a>
-<a name="270"><span class="lineNum">     270 </span>                :            :  *        ProjectParametricPointToEdges(), and then parametric point t_lat between those two points.</a>
-<a name="271"><span class="lineNum">     271 </span>                :            :  * @param[in] longitudinalOffset Longitudinal parameter.</a>
-<a name="272"><span class="lineNum">     272 </span>                :            :  * @param[in] lateralOffset  Lateral parameter relative to the left edge.</a>
-<a name="273"><span class="lineNum">     273 </span>                :            :  * @return Parametric point on the lane. Can be invalid.</a>
-<a name="274"><span class="lineNum">     274 </span>                :            :  */</a>
-<a name="275"><span class="lineNum">     275 </span>                :            : point::ECEFPoint getProjectedParametricPoint(Lane const &amp;lane,</a>
-<a name="276"><span class="lineNum">     276 </span>                :            :                                              physics::ParametricValue const &amp;longitudinalOffset,</a>
-<a name="277"><span class="lineNum">     277 </span>                :            :                                              physics::ParametricValue const &amp;lateralOffset);</a>
-<a name="278"><span class="lineNum">     278 </span>                :            : </a>
-<a name="279"><span class="lineNum">     279 </span>                :            : /**</a>
-<a name="280"><span class="lineNum">     280 </span>                :            :  * @returns Middle of the lane at the start.</a>
-<a name="281"><span class="lineNum">     281 </span>                :            :  */</a>
-<a name="282"><span class="lineNum">     282 </span>                :<span class="lineCov">         28 : inline point::ECEFPoint getStartPoint(Lane const &amp;lane)</span></a>
-<a name="283"><span class="lineNum">     283 </span>                :            : {</a>
-<a name="284"><span class="lineNum">     284 </span>        [<span class="branchCov" title="Branch 0 was taken 28 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         56 :   return getParametricPoint(lane, physics::ParametricValue(0.), physics::ParametricValue(0.5));</span></a>
-<a name="285"><span class="lineNum">     285 </span>                :            : }</a>
-<a name="286"><span class="lineNum">     286 </span>                :            : </a>
-<a name="287"><span class="lineNum">     287 </span>                :            : /**</a>
-<a name="288"><span class="lineNum">     288 </span>                :            :  * @returns Middle of the lane at the end.</a>
-<a name="289"><span class="lineNum">     289 </span>                :            :  */</a>
-<a name="290"><span class="lineNum">     290 </span>                :<span class="lineCov">         18 : inline point::ECEFPoint getEndPoint(Lane const &amp;lane)</span></a>
-<a name="291"><span class="lineNum">     291 </span>                :            : {</a>
-<a name="292"><span class="lineNum">     292 </span>        [<span class="branchCov" title="Branch 0 was taken 18 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         36 :   return getParametricPoint(lane, physics::ParametricValue(1.), physics::ParametricValue(0.5));</span></a>
-<a name="293"><span class="lineNum">     293 </span>                :            : }</a>
-<a name="294"><span class="lineNum">     294 </span>                :            : </a>
-<a name="295"><span class="lineNum">     295 </span>                :            : /**</a>
-<a name="296"><span class="lineNum">     296 </span>                :            :  * @brief Checks if Lane is longitudinally connected with another Lane at the end.</a>
-<a name="297"><span class="lineNum">     297 </span>                :            :  * @param[in] other Other object. Must be IsValid()!</a>
-<a name="298"><span class="lineNum">     298 </span>                :            :  * @returns True if this Lane longitudinally connected with another Lane at the end.</a>
-<a name="299"><span class="lineNum">     299 </span>                :            :  */</a>
-<a name="300"><span class="lineNum">     300 </span>                :            : bool isPyhsicalSuccessor(Lane const &amp;lane, Lane const &amp;other);</a>
-<a name="301"><span class="lineNum">     301 </span>                :            : </a>
-<a name="302"><span class="lineNum">     302 </span>                :            : /**</a>
-<a name="303"><span class="lineNum">     303 </span>                :            :  * @brief Checks if Lane is longitudinally connected with another Lane at the start.</a>
-<a name="304"><span class="lineNum">     304 </span>                :            :  * @param[in] other Other object. Must be IsValid()!</a>
-<a name="305"><span class="lineNum">     305 </span>                :            :  * @returns True if this Lane longitudinally connected with another Lane at the start.</a>
-<a name="306"><span class="lineNum">     306 </span>                :            :  */</a>
-<a name="307"><span class="lineNum">     307 </span>                :            : bool isPhysicalPredecessor(Lane const &amp;lane, Lane const &amp;other);</a>
+<a name="198"><span class="lineNum">     198 </span>                :            :  * @brief Method to be called to change a secific contact type of a lane.</a>
+<a name="199"><span class="lineNum">     199 </span>                :            :  *     All contact occurences of the given old_contact type are replaced by</a>
+<a name="200"><span class="lineNum">     200 </span>                :            :  *     the given new_contact type</a>
+<a name="201"><span class="lineNum">     201 </span>                :            :  * @param[in] from_lane_id From-Lane Identifier.</a>
+<a name="202"><span class="lineNum">     202 </span>                :            :  * @param[in] to_lane_id  Identifier of lane to which connection is leading.</a>
+<a name="203"><span class="lineNum">     203 </span>                :            :  * @param[in] old_contact The original contact type to be replaced.</a>
+<a name="204"><span class="lineNum">     204 </span>                :            :  * @param[in] new_contact The new contact type to be set.</a>
+<a name="205"><span class="lineNum">     205 </span>                :            :  *</a>
+<a name="206"><span class="lineNum">     206 </span>                :            :  * @returns \c true if the operation succeeeded.</a>
+<a name="207"><span class="lineNum">     207 </span>                :            :  */</a>
+<a name="208"><span class="lineNum">     208 </span>                :            : bool switchLaneContact(LaneId const &amp;from_lane_id,</a>
+<a name="209"><span class="lineNum">     209 </span>                :            :                        LaneId const &amp;to_lane_id,</a>
+<a name="210"><span class="lineNum">     210 </span>                :            :                        ContactType const &amp;old_contact,</a>
+<a name="211"><span class="lineNum">     211 </span>                :            :                        ContactType const &amp;new_contact);</a>
+<a name="212"><span class="lineNum">     212 </span>                :            : </a>
+<a name="213"><span class="lineNum">     213 </span>                :            : /**</a>
+<a name="214"><span class="lineNum">     214 </span>                :            :  * @brief Method to be called to correct lane borders</a>
+<a name="215"><span class="lineNum">     215 </span>                :            :  *</a>
+<a name="216"><span class="lineNum">     216 </span>                :            :  * @param[in] from_lane_id From-Lane Identifier. That's the lane the borders are actually corrected.</a>
+<a name="217"><span class="lineNum">     217 </span>                :            :  * @param[in] to_lane_id  Identifier of lane to which (predecessor/successor) connection should be leading.</a>
+<a name="218"><span class="lineNum">     218 </span>                :            :  *</a>
+<a name="219"><span class="lineNum">     219 </span>                :            :  * @returns \c true if the operation succeeeded.</a>
+<a name="220"><span class="lineNum">     220 </span>                :            :  */</a>
+<a name="221"><span class="lineNum">     221 </span>                :            : bool correctLaneBorder(LaneId const &amp;from_lane_id, LaneId const &amp;to_lane_id);</a>
+<a name="222"><span class="lineNum">     222 </span>                :            : </a>
+<a name="223"><span class="lineNum">     223 </span>                :            : /**</a>
+<a name="224"><span class="lineNum">     224 </span>                :            :  * @returns true if direction is POSITIVE or BIDIRECTIONAL.</a>
+<a name="225"><span class="lineNum">     225 </span>                :            :  */</a>
+<a name="226"><span class="lineNum">     226 </span>                :<span class="lineCov">     171139 : inline bool isLaneDirectionPositive(Lane const &amp;lane)</span></a>
+<a name="227"><span class="lineNum">     227 </span>                :            : {</a>
+<a name="228"><span class="lineNum">     228 </span>  [<span class="branchCov" title="Branch 0 was taken 111997 times"> + </span><span class="branchCov" title="Branch 1 was taken 59142 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 111997 times"> + </span>]:<span class="lineCov">     171139 :   return lane.direction == LaneDirection::POSITIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span></a>
+<a name="229"><span class="lineNum">     229 </span>                :            : }</a>
+<a name="230"><span class="lineNum">     230 </span>                :            : </a>
+<a name="231"><span class="lineNum">     231 </span>                :            : /**</a>
+<a name="232"><span class="lineNum">     232 </span>                :            :  * @returns true if direction is NEGATIVE or BIDIRECTIONAL.</a>
+<a name="233"><span class="lineNum">     233 </span>                :            :  */</a>
+<a name="234"><span class="lineNum">     234 </span>                :<span class="lineCov">      53049 : inline bool isLaneDirectionNegative(Lane const &amp;lane)</span></a>
+<a name="235"><span class="lineNum">     235 </span>                :            : {</a>
+<a name="236"><span class="lineNum">     236 </span>  [<span class="branchCov" title="Branch 0 was taken 30435 times"> + </span><span class="branchCov" title="Branch 1 was taken 22614 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 30435 times"> + </span>]:<span class="lineCov">      53049 :   return lane.direction == LaneDirection::NEGATIVE || lane.direction == LaneDirection::BIDIRECTIONAL;</span></a>
+<a name="237"><span class="lineNum">     237 </span>                :            : }</a>
+<a name="238"><span class="lineNum">     238 </span>                :            : </a>
+<a name="239"><span class="lineNum">     239 </span>                :            : /**</a>
+<a name="240"><span class="lineNum">     240 </span>                :            :  * @returns true if lane can be used in Routing.</a>
+<a name="241"><span class="lineNum">     241 </span>                :            :  */</a>
+<a name="242"><span class="lineNum">     242 </span>                :<span class="lineCov">     101340 : inline bool isRouteable(Lane const &amp;lane)</span></a>
+<a name="243"><span class="lineNum">     243 </span>                :            : {</a>
+<a name="244"><span class="lineNum">     244 </span>  [<span class="branchCov" title="Branch 0 was taken 48081 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 4751 times"> + </span><span class="branchCov" title="Branch 3 was taken 43330 times"> + </span>]:<span class="lineCov">      48081 :   return lane.type == LaneType::INTERSECTION || lane.type == LaneType::MULTI || lane.type == LaneType::NORMAL</span></a>
+<a name="245"><span class="lineNum">     245 </span>  [<span class="branchCov" title="Branch 0 was taken 48081 times"> + </span><span class="branchCov" title="Branch 1 was taken 53259 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 4751 times"> + </span>]:<span class="lineCov">     149421 :     || lane.type == LaneType::TURN;</span></a>
+<a name="246"><span class="lineNum">     246 </span>                :            : }</a>
+<a name="247"><span class="lineNum">     247 </span>                :            : </a>
+<a name="248"><span class="lineNum">     248 </span>                :            : /**</a>
+<a name="249"><span class="lineNum">     249 </span>                :            :  * @returns true if lane is part of an intersection.</a>
+<a name="250"><span class="lineNum">     250 </span>                :            :  */</a>
+<a name="251"><span class="lineNum">     251 </span>                :<span class="lineCov">      11586 : inline bool isLanePartOfAnIntersection(Lane const &amp;lane)</span></a>
+<a name="252"><span class="lineNum">     252 </span>                :            : {</a>
+<a name="253"><span class="lineNum">     253 </span>                :<span class="lineCov">      11586 :   return (lane.type == lane::LaneType::INTERSECTION);</span></a>
+<a name="254"><span class="lineNum">     254 </span>                :            : }</a>
+<a name="255"><span class="lineNum">     255 </span>                :            : </a>
+<a name="256"><span class="lineNum">     256 </span>                :            : /**</a>
+<a name="257"><span class="lineNum">     257 </span>                :            :  * @returns true if there are no lanes left of this one.</a>
+<a name="258"><span class="lineNum">     258 </span>                :            :  */</a>
+<a name="259"><span class="lineNum">     259 </span>                :            : inline bool isLeftMost(Lane const &amp;lane)</a>
+<a name="260"><span class="lineNum">     260 </span>                :            : {</a>
+<a name="261"><span class="lineNum">     261 </span>                :            :   return getContactLanes(lane, ContactLocation::LEFT).empty();</a>
+<a name="262"><span class="lineNum">     262 </span>                :            : }</a>
+<a name="263"><span class="lineNum">     263 </span>                :            : </a>
+<a name="264"><span class="lineNum">     264 </span>                :            : /**</a>
+<a name="265"><span class="lineNum">     265 </span>                :            :  * @returns true if there are no lanes right of this one.</a>
+<a name="266"><span class="lineNum">     266 </span>                :            :  */</a>
+<a name="267"><span class="lineNum">     267 </span>                :            : inline bool isRightMost(Lane const &amp;lane)</a>
+<a name="268"><span class="lineNum">     268 </span>                :            : {</a>
+<a name="269"><span class="lineNum">     269 </span>                :            :   return getContactLanes(lane, ContactLocation::RIGHT).empty();</a>
+<a name="270"><span class="lineNum">     270 </span>                :            : }</a>
+<a name="271"><span class="lineNum">     271 </span>                :            : </a>
+<a name="272"><span class="lineNum">     272 </span>                :            : /**</a>
+<a name="273"><span class="lineNum">     273 </span>                :            :  * @brief Calculates parametric point on the lane.</a>
+<a name="274"><span class="lineNum">     274 </span>                :            :  *        Point is calculated by first calculating t_long parametric point</a>
+<a name="275"><span class="lineNum">     275 </span>                :            :  *        on the left and on the right boundary, and then parametric point</a>
+<a name="276"><span class="lineNum">     276 </span>                :            :  *        t_lat between those two points.</a>
+<a name="277"><span class="lineNum">     277 </span>                :            :  * @param[in] t_long Longitudinal parameter.</a>
+<a name="278"><span class="lineNum">     278 </span>                :            :  * @param[in] t_lat  Lateral parameter relative to the left edge.</a>
+<a name="279"><span class="lineNum">     279 </span>                :            :  * @return Parametric point on the lane. Can be invalid.</a>
+<a name="280"><span class="lineNum">     280 </span>                :            :  */</a>
+<a name="281"><span class="lineNum">     281 </span>                :            : point::ECEFPoint getParametricPoint(Lane const &amp;lane,</a>
+<a name="282"><span class="lineNum">     282 </span>                :            :                                     physics::ParametricValue const &amp;longitudinalOffset,</a>
+<a name="283"><span class="lineNum">     283 </span>                :            :                                     physics::ParametricValue const &amp;lateralOffset);</a>
+<a name="284"><span class="lineNum">     284 </span>                :            : </a>
+<a name="285"><span class="lineNum">     285 </span>                :            : /**</a>
+<a name="286"><span class="lineNum">     286 </span>                :            :  * @brief Calculates the projection on left and right boundary of the given referencePoint.</a>
+<a name="287"><span class="lineNum">     287 </span>                :            :  * @param[in] referencePoint reference point.</a>
+<a name="288"><span class="lineNum">     288 </span>                :            :  * @param[out] point_on_left_edge projected point on the left boundary</a>
+<a name="289"><span class="lineNum">     289 </span>                :            :  * @param[out] point_on_right_edge projected point on the right boundary</a>
+<a name="290"><span class="lineNum">     290 </span>                :            :  * @return True if the operation succeeded.</a>
+<a name="291"><span class="lineNum">     291 </span>                :            :  */</a>
+<a name="292"><span class="lineNum">     292 </span>                :            : bool projectParametricPointToEdges(Lane const &amp;lane,</a>
+<a name="293"><span class="lineNum">     293 </span>                :            :                                    point::ECEFPoint const &amp;referencePoint,</a>
+<a name="294"><span class="lineNum">     294 </span>                :            :                                    point::ECEFPoint &amp;point_on_left_edge,</a>
+<a name="295"><span class="lineNum">     295 </span>                :            :                                    point::ECEFPoint &amp;point_on_right_edge);</a>
+<a name="296"><span class="lineNum">     296 </span>                :            : </a>
+<a name="297"><span class="lineNum">     297 </span>                :            : /**</a>
+<a name="298"><span class="lineNum">     298 </span>                :            :  * @brief Calculates the projection on left and right boundary of the parametric point on the center of the lane.</a>
+<a name="299"><span class="lineNum">     299 </span>                :            :  * @param[in] longitudinalOffset Longitudinal parameter on the lane.</a>
+<a name="300"><span class="lineNum">     300 </span>                :            :  * @param[out] point_on_left_edge projected point on the left boundary</a>
+<a name="301"><span class="lineNum">     301 </span>                :            :  * @param[out] point_on_right_edge projected point on the right boundary</a>
+<a name="302"><span class="lineNum">     302 </span>                :            :  * @return True if the operation succeeded.</a>
+<a name="303"><span class="lineNum">     303 </span>                :            :  */</a>
+<a name="304"><span class="lineNum">     304 </span>                :            : bool projectParametricPointToEdges(Lane const &amp;lane,</a>
+<a name="305"><span class="lineNum">     305 </span>                :            :                                    physics::ParametricValue const &amp;longitudinalOffset,</a>
+<a name="306"><span class="lineNum">     306 </span>                :            :                                    point::ECEFPoint &amp;point_on_left_edge,</a>
+<a name="307"><span class="lineNum">     307 </span>                :            :                                    point::ECEFPoint &amp;point_on_right_edge);</a>
 <a name="308"><span class="lineNum">     308 </span>                :            : </a>
 <a name="309"><span class="lineNum">     309 </span>                :            : /**</a>
-<a name="310"><span class="lineNum">     310 </span>                :            :  * @returns true if this lane is vanishing at the start.</a>
-<a name="311"><span class="lineNum">     311 </span>                :            :  */</a>
-<a name="312"><span class="lineNum">     312 </span>                :            : bool isVanishingLaneStart(Lane const &amp;lane);</a>
-<a name="313"><span class="lineNum">     313 </span>                :            : </a>
-<a name="314"><span class="lineNum">     314 </span>                :            : /**</a>
-<a name="315"><span class="lineNum">     315 </span>                :            :  * @returns true if this lane is vanishing at the end.</a>
+<a name="310"><span class="lineNum">     310 </span>                :            :  * @brief Calculates projected parametric point on the lane.</a>
+<a name="311"><span class="lineNum">     311 </span>                :            :  *        Point is calculated by first calculating the projected points on left and right boundary using</a>
+<a name="312"><span class="lineNum">     312 </span>                :            :  *        ProjectParametricPointToEdges(), and then parametric point t_lat between those two points.</a>
+<a name="313"><span class="lineNum">     313 </span>                :            :  * @param[in] longitudinalOffset Longitudinal parameter.</a>
+<a name="314"><span class="lineNum">     314 </span>                :            :  * @param[in] lateralOffset  Lateral parameter relative to the left edge.</a>
+<a name="315"><span class="lineNum">     315 </span>                :            :  * @return Parametric point on the lane. Can be invalid.</a>
 <a name="316"><span class="lineNum">     316 </span>                :            :  */</a>
-<a name="317"><span class="lineNum">     317 </span>                :            : bool isVanishingLaneEnd(Lane const &amp;lane);</a>
-<a name="318"><span class="lineNum">     318 </span>                :            : </a>
-<a name="319"><span class="lineNum">     319 </span>                :            : /**</a>
-<a name="320"><span class="lineNum">     320 </span>                :            :  * @brief Checks if Lane satisfies filter condition.</a>
-<a name="321"><span class="lineNum">     321 </span>                :            :  * @param[in] typeFilter    Type of the lane as string.</a>
-<a name="322"><span class="lineNum">     322 </span>                :            :  * @param[in] isHov         True if only lanes with HOV restriction shall be returned.</a>
-<a name="323"><span class="lineNum">     323 </span>                :            :  * @returns true if Lane satisfies filter condition.</a>
-<a name="324"><span class="lineNum">     324 </span>                :            :  */</a>
-<a name="325"><span class="lineNum">     325 </span>                :            : bool satisfiesFilter(Lane const &amp;lane, std::string const &amp;typeFilter, bool isHov);</a>
-<a name="326"><span class="lineNum">     326 </span>                :            : </a>
-<a name="327"><span class="lineNum">     327 </span>                :            : /**</a>
-<a name="328"><span class="lineNum">     328 </span>                :            :  * @brief get the neighborhood relation to the other lane</a>
-<a name="329"><span class="lineNum">     329 </span>                :            :  *</a>
-<a name="330"><span class="lineNum">     330 </span>                :            :  * @param[in] laneId the main lane</a>
-<a name="331"><span class="lineNum">     331 </span>                :            :  * @param[in] checkLaneId the lane to be checked on the</a>
-<a name="332"><span class="lineNum">     332 </span>                :            :  *</a>
-<a name="333"><span class="lineNum">     333 </span>                :            :  * @retval lane::ContactLocation::OVERLAP: if it's the same lane</a>
-<a name="334"><span class="lineNum">     334 </span>                :            :  * @retval lane::ContactLocation::LEFT: if it's a left neighbor</a>
-<a name="335"><span class="lineNum">     335 </span>                :            :  * @retval lane::ContactLocation::RIGHT: if it's a right neighbor</a>
-<a name="336"><span class="lineNum">     336 </span>                :            :  * @retval lane::ContactLocation::SUCCESSOR: if it a successor lane</a>
-<a name="337"><span class="lineNum">     337 </span>                :            :  * @retval lane::ContactLocation::PREDECESSOR: if it's a predecessor lane</a>
-<a name="338"><span class="lineNum">     338 </span>                :            :  * @retval lane::ContactLocation::INVALID: if it's nothing of the above</a>
-<a name="339"><span class="lineNum">     339 </span>                :            :  */</a>
-<a name="340"><span class="lineNum">     340 </span>                :            : ContactLocation getDirectNeighborhoodRelation(LaneId const laneId, LaneId const checkLaneId);</a>
-<a name="341"><span class="lineNum">     341 </span>                :            : </a>
-<a name="342"><span class="lineNum">     342 </span>                :            : /**</a>
-<a name="343"><span class="lineNum">     343 </span>                :            :  * @brief Check if a lane is successor or predecessor of a lane</a>
-<a name="344"><span class="lineNum">     344 </span>                :            :  *</a>
-<a name="345"><span class="lineNum">     345 </span>                :            :  * @param[in] laneId the main lane</a>
-<a name="346"><span class="lineNum">     346 </span>                :            :  * @param[in] checkLaneId the lane to be checked if it's a successor or predecessor of the main lane</a>
-<a name="347"><span class="lineNum">     347 </span>                :            :  *</a>
-<a name="348"><span class="lineNum">     348 </span>                :            :  * @returns \c true if the \a checkLaneId is a successor or predecessor of \a laneId</a>
-<a name="349"><span class="lineNum">     349 </span>                :            :  */</a>
-<a name="350"><span class="lineNum">     350 </span>                :            : bool isSuccessorOrPredecessor(LaneId const laneId, LaneId const checkLaneId);</a>
-<a name="351"><span class="lineNum">     351 </span>                :            : </a>
-<a name="352"><span class="lineNum">     352 </span>                :            : /**</a>
-<a name="353"><span class="lineNum">     353 </span>                :            :  * @brief Check if two lanes are direct neighbors of even the same</a>
-<a name="354"><span class="lineNum">     354 </span>                :            :  *</a>
-<a name="355"><span class="lineNum">     355 </span>                :            :  * @returns \c true if the ids belong to the same or neighboring lanes, false otherwise</a>
-<a name="356"><span class="lineNum">     356 </span>                :            :  */</a>
-<a name="357"><span class="lineNum">     357 </span>                :            : bool isSameOrDirectNeighbor(LaneId const id, LaneId const neighbor);</a>
-<a name="358"><span class="lineNum">     358 </span>                :            : </a>
-<a name="359"><span class="lineNum">     359 </span>                :            : /**</a>
-<a name="360"><span class="lineNum">     360 </span>                :            :  * @brief Check if the lane direction is positive</a>
-<a name="361"><span class="lineNum">     361 </span>                :            :  *</a>
-<a name="362"><span class="lineNum">     362 </span>                :            :  * @param[in] laneId the id of the lane to be checked</a>
-<a name="363"><span class="lineNum">     363 </span>                :            :  *</a>
-<a name="364"><span class="lineNum">     364 </span>                :            :  * @returns true if the lane direction is positive (positive || bidirectional)</a>
-<a name="365"><span class="lineNum">     365 </span>                :            :  */</a>
-<a name="366"><span class="lineNum">     366 </span>                :            : bool isLaneDirectionPositive(LaneId const &amp;laneId);</a>
-<a name="367"><span class="lineNum">     367 </span>                :            : </a>
-<a name="368"><span class="lineNum">     368 </span>                :            : /**</a>
-<a name="369"><span class="lineNum">     369 </span>                :            :  * @brief Check if the lane direction is negative</a>
-<a name="370"><span class="lineNum">     370 </span>                :            :  *</a>
-<a name="371"><span class="lineNum">     371 </span>                :            :  * @param[in] laneId the id of the lane to be checked</a>
-<a name="372"><span class="lineNum">     372 </span>                :            :  *</a>
-<a name="373"><span class="lineNum">     373 </span>                :            :  * @returns true if the lane direction is negative (negative || bidirectional)</a>
-<a name="374"><span class="lineNum">     374 </span>                :            :  */</a>
-<a name="375"><span class="lineNum">     375 </span>                :            : bool isLaneDirectionNegative(LaneId const &amp;laneId);</a>
-<a name="376"><span class="lineNum">     376 </span>                :            : </a>
-<a name="377"><span class="lineNum">     377 </span>                :            : /**</a>
-<a name="378"><span class="lineNum">     378 </span>                :            :  * @brief Get the distance of an object to the lane boundaries</a>
-<a name="379"><span class="lineNum">     379 </span>                :            :  *</a>
-<a name="380"><span class="lineNum">     380 </span>                :            :  * If the object provides a map matched bounding box, this information is used first (speed-up and more accurate).</a>
-<a name="381"><span class="lineNum">     381 </span>                :            :  * If the object's map matched bounding box is not touching the \c laneId at all, the object's center distance to the</a>
-<a name="382"><span class="lineNum">     382 </span>                :            :  * lane is calculated and reduced by max(width, length)/2 to obtain a good estimate for the shortest distance to the</a>
-<a name="383"><span class="lineNum">     383 </span>                :            :  * lane.</a>
-<a name="384"><span class="lineNum">     384 </span>                :            :  */</a>
-<a name="385"><span class="lineNum">     385 </span>                :            : physics::Distance getDistanceToLane(LaneId laneId, match::Object const &amp;object);</a>
-<a name="386"><span class="lineNum">     386 </span>                :            : </a>
-<a name="387"><span class="lineNum">     387 </span>                :            : /**</a>
-<a name="388"><span class="lineNum">     388 </span>                :            :  * @return the ENU heading of the lane at the given position</a>
-<a name="389"><span class="lineNum">     389 </span>                :            :  */</a>
-<a name="390"><span class="lineNum">     390 </span>                :            : point::ENUHeading getLaneENUHeading(point::ParaPoint const &amp;position);</a>
-<a name="391"><span class="lineNum">     391 </span>                :            : </a>
-<a name="392"><span class="lineNum">     392 </span>                :            : /**</a>
-<a name="393"><span class="lineNum">     393 </span>                :            :  * @brief Check if the provided heading is along the lane direction</a>
-<a name="394"><span class="lineNum">     394 </span>                :            :  *</a>
-<a name="395"><span class="lineNum">     395 </span>                :            :  * @param[in] position is the position at which the lane heading is obtained</a>
-<a name="396"><span class="lineNum">     396 </span>                :            :  * @param[in] heading is the heading to be checked</a>
-<a name="397"><span class="lineNum">     397 </span>                :            :  *</a>
-<a name="398"><span class="lineNum">     398 </span>                :            :  * @return true if the heading is within 90° of the lane direction, false otherwise</a>
-<a name="399"><span class="lineNum">     399 </span>                :            :  */</a>
-<a name="400"><span class="lineNum">     400 </span>                :            : bool isHeadingInLaneDirection(point::ParaPoint const &amp;position, point::ENUHeading const &amp;heading);</a>
-<a name="401"><span class="lineNum">     401 </span>                :            : </a>
-<a name="402"><span class="lineNum">     402 </span>                :            : /**</a>
-<a name="403"><span class="lineNum">     403 </span>                :            :  * @brief project a position to a neighboring lane (incl. the lane itself), which has the provided heading</a>
-<a name="404"><span class="lineNum">     404 </span>                :            :  *</a>
-<a name="405"><span class="lineNum">     405 </span>                :            :  * @param[in]  position to be projected</a>
-<a name="406"><span class="lineNum">     406 </span>                :            :  * @param[in]  heading to be checked</a>
-<a name="407"><span class="lineNum">     407 </span>                :            :  * @param[out] projectedPosition is the projected position (can be position, if the lane is already in heading</a>
-<a name="408"><span class="lineNum">     408 </span>                :            :  *             direction)</a>
-<a name="409"><span class="lineNum">     409 </span>                :            :  *</a>
-<a name="410"><span class="lineNum">     410 </span>                :            :  * @return true if a valid projection was found, false otherwise</a>
-<a name="411"><span class="lineNum">     411 </span>                :            :  */</a>
-<a name="412"><span class="lineNum">     412 </span>                :            : bool projectPositionToLaneInHeadingDirection(point::ParaPoint const &amp;position,</a>
-<a name="413"><span class="lineNum">     413 </span>                :            :                                              point::ENUHeading const &amp;heading,</a>
-<a name="414"><span class="lineNum">     414 </span>                :            :                                              point::ParaPoint &amp;projectedPosition);</a>
-<a name="415"><span class="lineNum">     415 </span>                :            : </a>
-<a name="416"><span class="lineNum">     416 </span>                :            : /**</a>
-<a name="417"><span class="lineNum">     417 </span>                :            :  * @brief Finds point on the lane nearest to the given point.</a>
-<a name="418"><span class="lineNum">     418 </span>                :            :  * @param[in] lane the lane.</a>
-<a name="419"><span class="lineNum">     419 </span>                :            :  * @param[in] pt Given point.</a>
-<a name="420"><span class="lineNum">     420 </span>                :            :  * @param[out] mmpos Resulting map-matched position.</a>
-<a name="421"><span class="lineNum">     421 </span>                :            :  *   The resulting probability of the map matched position is derived from lateralT value:</a>
-<a name="422"><span class="lineNum">     422 </span>                :            :  *     spans between [0.5; 1.0] for LANE_IN matches</a>
-<a name="423"><span class="lineNum">     423 </span>                :            :  *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches</a>
-<a name="424"><span class="lineNum">     424 </span>                :            :  *</a>
-<a name="425"><span class="lineNum">     425 </span>                :            :  * @returns true if successful.</a>
+<a name="317"><span class="lineNum">     317 </span>                :            : point::ECEFPoint getProjectedParametricPoint(Lane const &amp;lane,</a>
+<a name="318"><span class="lineNum">     318 </span>                :            :                                              physics::ParametricValue const &amp;longitudinalOffset,</a>
+<a name="319"><span class="lineNum">     319 </span>                :            :                                              physics::ParametricValue const &amp;lateralOffset);</a>
+<a name="320"><span class="lineNum">     320 </span>                :            : </a>
+<a name="321"><span class="lineNum">     321 </span>                :            : /**</a>
+<a name="322"><span class="lineNum">     322 </span>                :            :  * @returns Middle of the lane at the start.</a>
+<a name="323"><span class="lineNum">     323 </span>                :            :  */</a>
+<a name="324"><span class="lineNum">     324 </span>                :<span class="lineCov">         28 : inline point::ECEFPoint getStartPoint(Lane const &amp;lane)</span></a>
+<a name="325"><span class="lineNum">     325 </span>                :            : {</a>
+<a name="326"><span class="lineNum">     326 </span>        [<span class="branchCov" title="Branch 0 was taken 28 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         28 :   return getParametricPoint(lane, physics::ParametricValue(0.), physics::ParametricValue(0.5));</span></a>
+<a name="327"><span class="lineNum">     327 </span>                :            : }</a>
+<a name="328"><span class="lineNum">     328 </span>                :            : </a>
+<a name="329"><span class="lineNum">     329 </span>                :            : /**</a>
+<a name="330"><span class="lineNum">     330 </span>                :            :  * @returns Middle of the lane at the end.</a>
+<a name="331"><span class="lineNum">     331 </span>                :            :  */</a>
+<a name="332"><span class="lineNum">     332 </span>                :<span class="lineCov">         18 : inline point::ECEFPoint getEndPoint(Lane const &amp;lane)</span></a>
+<a name="333"><span class="lineNum">     333 </span>                :            : {</a>
+<a name="334"><span class="lineNum">     334 </span>        [<span class="branchCov" title="Branch 0 was taken 18 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         18 :   return getParametricPoint(lane, physics::ParametricValue(1.), physics::ParametricValue(0.5));</span></a>
+<a name="335"><span class="lineNum">     335 </span>                :            : }</a>
+<a name="336"><span class="lineNum">     336 </span>                :            : </a>
+<a name="337"><span class="lineNum">     337 </span>                :            : /**</a>
+<a name="338"><span class="lineNum">     338 </span>                :            :  * @brief Checks if Lane is longitudinally connected with another Lane at the end.</a>
+<a name="339"><span class="lineNum">     339 </span>                :            :  * @param[in] other Other object. Must be IsValid()!</a>
+<a name="340"><span class="lineNum">     340 </span>                :            :  * @returns True if this Lane longitudinally connected with another Lane at the end.</a>
+<a name="341"><span class="lineNum">     341 </span>                :            :  */</a>
+<a name="342"><span class="lineNum">     342 </span>                :            : bool isPyhsicalSuccessor(Lane const &amp;lane, Lane const &amp;other);</a>
+<a name="343"><span class="lineNum">     343 </span>                :            : </a>
+<a name="344"><span class="lineNum">     344 </span>                :            : /**</a>
+<a name="345"><span class="lineNum">     345 </span>                :            :  * @brief Checks if Lane is longitudinally connected with another Lane at the start.</a>
+<a name="346"><span class="lineNum">     346 </span>                :            :  * @param[in] other Other object. Must be IsValid()!</a>
+<a name="347"><span class="lineNum">     347 </span>                :            :  * @returns True if this Lane longitudinally connected with another Lane at the start.</a>
+<a name="348"><span class="lineNum">     348 </span>                :            :  */</a>
+<a name="349"><span class="lineNum">     349 </span>                :            : bool isPhysicalPredecessor(Lane const &amp;lane, Lane const &amp;other);</a>
+<a name="350"><span class="lineNum">     350 </span>                :            : </a>
+<a name="351"><span class="lineNum">     351 </span>                :            : /**</a>
+<a name="352"><span class="lineNum">     352 </span>                :            :  * @returns true if this lane is vanishing at the start.</a>
+<a name="353"><span class="lineNum">     353 </span>                :            :  */</a>
+<a name="354"><span class="lineNum">     354 </span>                :            : bool isVanishingLaneStart(Lane const &amp;lane);</a>
+<a name="355"><span class="lineNum">     355 </span>                :            : </a>
+<a name="356"><span class="lineNum">     356 </span>                :            : /**</a>
+<a name="357"><span class="lineNum">     357 </span>                :            :  * @returns true if this lane is vanishing at the end.</a>
+<a name="358"><span class="lineNum">     358 </span>                :            :  */</a>
+<a name="359"><span class="lineNum">     359 </span>                :            : bool isVanishingLaneEnd(Lane const &amp;lane);</a>
+<a name="360"><span class="lineNum">     360 </span>                :            : </a>
+<a name="361"><span class="lineNum">     361 </span>                :            : /**</a>
+<a name="362"><span class="lineNum">     362 </span>                :            :  * @brief Checks if Lane satisfies filter condition.</a>
+<a name="363"><span class="lineNum">     363 </span>                :            :  * @param[in] typeFilter    Type of the lane as string.</a>
+<a name="364"><span class="lineNum">     364 </span>                :            :  * @param[in] isHov         True if only lanes with HOV restriction shall be returned.</a>
+<a name="365"><span class="lineNum">     365 </span>                :            :  * @returns true if Lane satisfies filter condition.</a>
+<a name="366"><span class="lineNum">     366 </span>                :            :  */</a>
+<a name="367"><span class="lineNum">     367 </span>                :            : bool satisfiesFilter(Lane const &amp;lane, std::string const &amp;typeFilter, bool isHov);</a>
+<a name="368"><span class="lineNum">     368 </span>                :            : </a>
+<a name="369"><span class="lineNum">     369 </span>                :            : /**</a>
+<a name="370"><span class="lineNum">     370 </span>                :            :  * @brief get the neighborhood relation to the other lane</a>
+<a name="371"><span class="lineNum">     371 </span>                :            :  *</a>
+<a name="372"><span class="lineNum">     372 </span>                :            :  * @param[in] lane_id the main lane</a>
+<a name="373"><span class="lineNum">     373 </span>                :            :  * @param[in] checkLaneId the lane to be checked on the</a>
+<a name="374"><span class="lineNum">     374 </span>                :            :  *</a>
+<a name="375"><span class="lineNum">     375 </span>                :            :  * @retval lane::ContactLocation::OVERLAP: if it's the same lane</a>
+<a name="376"><span class="lineNum">     376 </span>                :            :  * @retval lane::ContactLocation::LEFT: if it's a left neighbor</a>
+<a name="377"><span class="lineNum">     377 </span>                :            :  * @retval lane::ContactLocation::RIGHT: if it's a right neighbor</a>
+<a name="378"><span class="lineNum">     378 </span>                :            :  * @retval lane::ContactLocation::SUCCESSOR: if it a successor lane</a>
+<a name="379"><span class="lineNum">     379 </span>                :            :  * @retval lane::ContactLocation::PREDECESSOR: if it's a predecessor lane</a>
+<a name="380"><span class="lineNum">     380 </span>                :            :  * @retval lane::ContactLocation::INVALID: if it's nothing of the above</a>
+<a name="381"><span class="lineNum">     381 </span>                :            :  */</a>
+<a name="382"><span class="lineNum">     382 </span>                :            : ContactLocation getDirectNeighborhoodRelation(LaneId const lane_id, LaneId const checkLaneId);</a>
+<a name="383"><span class="lineNum">     383 </span>                :            : </a>
+<a name="384"><span class="lineNum">     384 </span>                :            : /**</a>
+<a name="385"><span class="lineNum">     385 </span>                :            :  * @brief Check if a lane is successor or predecessor of a lane</a>
+<a name="386"><span class="lineNum">     386 </span>                :            :  *</a>
+<a name="387"><span class="lineNum">     387 </span>                :            :  * @param[in] lane_id the main lane</a>
+<a name="388"><span class="lineNum">     388 </span>                :            :  * @param[in] checkLaneId the lane to be checked if it's a successor or predecessor of the main lane</a>
+<a name="389"><span class="lineNum">     389 </span>                :            :  *</a>
+<a name="390"><span class="lineNum">     390 </span>                :            :  * @returns \c true if the \a checkLaneId is a successor or predecessor of \a lane_id</a>
+<a name="391"><span class="lineNum">     391 </span>                :            :  */</a>
+<a name="392"><span class="lineNum">     392 </span>                :            : bool isSuccessorOrPredecessor(LaneId const lane_id, LaneId const checkLaneId);</a>
+<a name="393"><span class="lineNum">     393 </span>                :            : </a>
+<a name="394"><span class="lineNum">     394 </span>                :            : /**</a>
+<a name="395"><span class="lineNum">     395 </span>                :            :  * @brief Check if two lanes are direct neighbors of even the same</a>
+<a name="396"><span class="lineNum">     396 </span>                :            :  *</a>
+<a name="397"><span class="lineNum">     397 </span>                :            :  * @returns \c true if the ids belong to the same or neighboring lanes, false otherwise</a>
+<a name="398"><span class="lineNum">     398 </span>                :            :  */</a>
+<a name="399"><span class="lineNum">     399 </span>                :            : bool isSameOrDirectNeighbor(LaneId const id, LaneId const neighbor);</a>
+<a name="400"><span class="lineNum">     400 </span>                :            : </a>
+<a name="401"><span class="lineNum">     401 </span>                :            : /**</a>
+<a name="402"><span class="lineNum">     402 </span>                :            :  * @brief Check if the lane direction is positive</a>
+<a name="403"><span class="lineNum">     403 </span>                :            :  *</a>
+<a name="404"><span class="lineNum">     404 </span>                :            :  * @param[in] lane_id the id of the lane to be checked</a>
+<a name="405"><span class="lineNum">     405 </span>                :            :  *</a>
+<a name="406"><span class="lineNum">     406 </span>                :            :  * @returns true if the lane direction is positive (positive || bidirectional)</a>
+<a name="407"><span class="lineNum">     407 </span>                :            :  */</a>
+<a name="408"><span class="lineNum">     408 </span>                :            : bool isLaneDirectionPositive(LaneId const &amp;lane_id);</a>
+<a name="409"><span class="lineNum">     409 </span>                :            : </a>
+<a name="410"><span class="lineNum">     410 </span>                :            : /**</a>
+<a name="411"><span class="lineNum">     411 </span>                :            :  * @brief Check if the lane direction is negative</a>
+<a name="412"><span class="lineNum">     412 </span>                :            :  *</a>
+<a name="413"><span class="lineNum">     413 </span>                :            :  * @param[in] lane_id the id of the lane to be checked</a>
+<a name="414"><span class="lineNum">     414 </span>                :            :  *</a>
+<a name="415"><span class="lineNum">     415 </span>                :            :  * @returns true if the lane direction is negative (negative || bidirectional)</a>
+<a name="416"><span class="lineNum">     416 </span>                :            :  */</a>
+<a name="417"><span class="lineNum">     417 </span>                :            : bool isLaneDirectionNegative(LaneId const &amp;lane_id);</a>
+<a name="418"><span class="lineNum">     418 </span>                :            : </a>
+<a name="419"><span class="lineNum">     419 </span>                :            : /**</a>
+<a name="420"><span class="lineNum">     420 </span>                :            :  * @brief Get the distance of an object to the lane boundaries</a>
+<a name="421"><span class="lineNum">     421 </span>                :            :  *</a>
+<a name="422"><span class="lineNum">     422 </span>                :            :  * If the object provides a map matched bounding box, this information is used first (speed-up and more accurate).</a>
+<a name="423"><span class="lineNum">     423 </span>                :            :  * If the object's map matched bounding box is not touching the \c lane_id at all, the object's center distance to the</a>
+<a name="424"><span class="lineNum">     424 </span>                :            :  * lane is calculated and reduced by max(width, length)/2 to obtain a good estimate for the shortest distance to the</a>
+<a name="425"><span class="lineNum">     425 </span>                :            :  * lane.</a>
 <a name="426"><span class="lineNum">     426 </span>                :            :  */</a>
-<a name="427"><span class="lineNum">     427 </span>                :            : bool findNearestPointOnLane(Lane const &amp;lane, point::ECEFPoint const &amp;pt, match::MapMatchedPosition &amp;mmpos);</a>
+<a name="427"><span class="lineNum">     427 </span>                :            : physics::Distance getDistanceToLane(LaneId lane_id, match::Object const &amp;object);</a>
 <a name="428"><span class="lineNum">     428 </span>                :            : </a>
 <a name="429"><span class="lineNum">     429 </span>                :            : /**</a>
-<a name="430"><span class="lineNum">     430 </span>                :            :  * @brief Finds point on the lane interval nearest to the given point.</a>
-<a name="431"><span class="lineNum">     431 </span>                :            :  * @param[in] laneInterval the interval of the lane to be considered.</a>
-<a name="432"><span class="lineNum">     432 </span>                :            :  * @param[in] pt Given point.</a>
-<a name="433"><span class="lineNum">     433 </span>                :            :  * @param[out] mmpos Resulting map-matched position.</a>
-<a name="434"><span class="lineNum">     434 </span>                :            :  *   The resulting probability of the map matched position is derived from lateralT value:</a>
-<a name="435"><span class="lineNum">     435 </span>                :            :  *     spans between [0.5; 1.0] for LANE_IN matches</a>
-<a name="436"><span class="lineNum">     436 </span>                :            :  *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches</a>
-<a name="437"><span class="lineNum">     437 </span>                :            :  *</a>
-<a name="438"><span class="lineNum">     438 </span>                :            :  * @returns true if successful.</a>
-<a name="439"><span class="lineNum">     439 </span>                :            :  */</a>
-<a name="440"><span class="lineNum">     440 </span>                :            : bool findNearestPointOnLaneInterval(route::LaneInterval const &amp;laneInterval,</a>
-<a name="441"><span class="lineNum">     441 </span>                :            :                                     point::ECEFPoint const &amp;pt,</a>
-<a name="442"><span class="lineNum">     442 </span>                :            :                                     match::MapMatchedPosition &amp;mmpos);</a>
+<a name="430"><span class="lineNum">     430 </span>                :            :  * @return the ENU heading of the lane at the given position</a>
+<a name="431"><span class="lineNum">     431 </span>                :            :  */</a>
+<a name="432"><span class="lineNum">     432 </span>                :            : point::ENUHeading getLaneENUHeading(point::ParaPoint const &amp;position);</a>
+<a name="433"><span class="lineNum">     433 </span>                :            : </a>
+<a name="434"><span class="lineNum">     434 </span>                :            : /**</a>
+<a name="435"><span class="lineNum">     435 </span>                :            :  * @brief Check if the provided heading is along the lane direction</a>
+<a name="436"><span class="lineNum">     436 </span>                :            :  *</a>
+<a name="437"><span class="lineNum">     437 </span>                :            :  * @param[in] position is the position at which the lane heading is obtained</a>
+<a name="438"><span class="lineNum">     438 </span>                :            :  * @param[in] heading is the heading to be checked</a>
+<a name="439"><span class="lineNum">     439 </span>                :            :  *</a>
+<a name="440"><span class="lineNum">     440 </span>                :            :  * @return true if the heading is within 90° of the lane direction, false otherwise</a>
+<a name="441"><span class="lineNum">     441 </span>                :            :  */</a>
+<a name="442"><span class="lineNum">     442 </span>                :            : bool isHeadingInLaneDirection(point::ParaPoint const &amp;position, point::ENUHeading const &amp;heading);</a>
 <a name="443"><span class="lineNum">     443 </span>                :            : </a>
 <a name="444"><span class="lineNum">     444 </span>                :            : /**</a>
-<a name="445"><span class="lineNum">     445 </span>                :            :  * @brief get the ENU point of a lane</a>
+<a name="445"><span class="lineNum">     445 </span>                :            :  * @brief project a position to a neighboring lane (incl. the lane itself), which has the provided heading</a>
 <a name="446"><span class="lineNum">     446 </span>                :            :  *</a>
-<a name="447"><span class="lineNum">     447 </span>                :            :  */</a>
-<a name="448"><span class="lineNum">     448 </span>                :            : point::ENUPoint getENULanePoint(point::ParaPoint const parametricPoint,</a>
-<a name="449"><span class="lineNum">     449 </span>                :            :                                 physics::ParametricValue const &amp;lateralOffset = physics::ParametricValue(0.5));</a>
-<a name="450"><span class="lineNum">     450 </span>                :            : </a>
-<a name="451"><span class="lineNum">     451 </span>                :            : /** @brief calculate length of a lane with a given id</a>
-<a name="452"><span class="lineNum">     452 </span>                :            :  */</a>
-<a name="453"><span class="lineNum">     453 </span>                :            : physics::Distance calcLength(LaneId const &amp;laneId);</a>
-<a name="454"><span class="lineNum">     454 </span>                :            : </a>
-<a name="455"><span class="lineNum">     455 </span>                :            : /** @brief calculate length of a lane occupied region</a>
-<a name="456"><span class="lineNum">     456 </span>                :            :  */</a>
-<a name="457"><span class="lineNum">     457 </span>                :            : physics::Distance calcLength(match::LaneOccupiedRegion const &amp;laneOccupiedRegion);</a>
-<a name="458"><span class="lineNum">     458 </span>                :            : </a>
-<a name="459"><span class="lineNum">     459 </span>                :            : /** @brief calculate the width of the lane at the provided lanePoint</a>
-<a name="460"><span class="lineNum">     460 </span>                :            :  */</a>
-<a name="461"><span class="lineNum">     461 </span>                :            : physics::Distance calcWidth(point::ParaPoint const &amp;paraPoint);</a>
-<a name="462"><span class="lineNum">     462 </span>                :            : </a>
-<a name="463"><span class="lineNum">     463 </span>                :            : /** @brief calculate the width of the provided lane at the provided longitudinal position</a>
-<a name="464"><span class="lineNum">     464 </span>                :            :  */</a>
-<a name="465"><span class="lineNum">     465 </span>                :            : physics::Distance calcWidth(LaneId const &amp;laneId, physics::ParametricValue const &amp;longOffset);</a>
-<a name="466"><span class="lineNum">     466 </span>                :            : </a>
-<a name="467"><span class="lineNum">     467 </span>                :            : /**</a>
-<a name="468"><span class="lineNum">     468 </span>                :            :  * @brief calculate the width of a lane at the provided ENU position</a>
-<a name="469"><span class="lineNum">     469 </span>                :            :  *</a>
-<a name="470"><span class="lineNum">     470 </span>                :            :  * @return -1 in case the enuPoint could not be found on a lane</a>
-<a name="471"><span class="lineNum">     471 </span>                :            :  */</a>
-<a name="472"><span class="lineNum">     472 </span>                :            : physics::Distance calcWidth(point::ENUPoint const &amp;enuPoint);</a>
-<a name="473"><span class="lineNum">     473 </span>                :            : </a>
-<a name="474"><span class="lineNum">     474 </span>                :            : /** @brief calculate width of a lane occupied region</a>
-<a name="475"><span class="lineNum">     475 </span>                :            :  *  scales the with at the center of the occupied region by the lateral extend of the region</a>
-<a name="476"><span class="lineNum">     476 </span>                :            :  */</a>
-<a name="477"><span class="lineNum">     477 </span>                :            : physics::Distance calcWidth(match::LaneOccupiedRegion const &amp;laneOccupiedRegion);</a>
-<a name="478"><span class="lineNum">     478 </span>                :            : </a>
-<a name="479"><span class="lineNum">     479 </span>                :            : /**</a>
-<a name="480"><span class="lineNum">     480 </span>                :            :  * @brief Struct to hold the altitude range of a lane</a>
+<a name="447"><span class="lineNum">     447 </span>                :            :  * @param[in]  position to be projected</a>
+<a name="448"><span class="lineNum">     448 </span>                :            :  * @param[in]  heading to be checked</a>
+<a name="449"><span class="lineNum">     449 </span>                :            :  * @param[out] projectedPosition is the projected position (can be position, if the lane is already in heading</a>
+<a name="450"><span class="lineNum">     450 </span>                :            :  *             direction)</a>
+<a name="451"><span class="lineNum">     451 </span>                :            :  *</a>
+<a name="452"><span class="lineNum">     452 </span>                :            :  * @return true if a valid projection was found, false otherwise</a>
+<a name="453"><span class="lineNum">     453 </span>                :            :  */</a>
+<a name="454"><span class="lineNum">     454 </span>                :            : bool projectPositionToLaneInHeadingDirection(point::ParaPoint const &amp;position,</a>
+<a name="455"><span class="lineNum">     455 </span>                :            :                                              point::ENUHeading const &amp;heading,</a>
+<a name="456"><span class="lineNum">     456 </span>                :            :                                              point::ParaPoint &amp;projectedPosition);</a>
+<a name="457"><span class="lineNum">     457 </span>                :            : </a>
+<a name="458"><span class="lineNum">     458 </span>                :            : /**</a>
+<a name="459"><span class="lineNum">     459 </span>                :            :  * @brief Finds point on the lane nearest to the given point.</a>
+<a name="460"><span class="lineNum">     460 </span>                :            :  * @param[in] lane the lane.</a>
+<a name="461"><span class="lineNum">     461 </span>                :            :  * @param[in] pt Given point.</a>
+<a name="462"><span class="lineNum">     462 </span>                :            :  * @param[out] mmpos Resulting map-matched position.</a>
+<a name="463"><span class="lineNum">     463 </span>                :            :  *   The resulting probability of the map matched position is derived from lateral_t value:</a>
+<a name="464"><span class="lineNum">     464 </span>                :            :  *     spans between [0.5; 1.0] for LANE_IN matches</a>
+<a name="465"><span class="lineNum">     465 </span>                :            :  *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches</a>
+<a name="466"><span class="lineNum">     466 </span>                :            :  *</a>
+<a name="467"><span class="lineNum">     467 </span>                :            :  * @returns true if successful.</a>
+<a name="468"><span class="lineNum">     468 </span>                :            :  */</a>
+<a name="469"><span class="lineNum">     469 </span>                :            : bool findNearestPointOnLane(Lane const &amp;lane, point::ECEFPoint const &amp;pt, match::MapMatchedPosition &amp;mmpos);</a>
+<a name="470"><span class="lineNum">     470 </span>                :            : </a>
+<a name="471"><span class="lineNum">     471 </span>                :            : /**</a>
+<a name="472"><span class="lineNum">     472 </span>                :            :  * @brief Finds point on the lane nearest to the given point considering only the x,y components of the ENUPoint</a>
+<a name="473"><span class="lineNum">     473 </span>                :            :  * @param[in] lane the lane.</a>
+<a name="474"><span class="lineNum">     474 </span>                :            :  * @param[in] pt Given point (z-coordinate is ignored on the operation).</a>
+<a name="475"><span class="lineNum">     475 </span>                :            :  * @param[out] mmpos Resulting map-matched position.</a>
+<a name="476"><span class="lineNum">     476 </span>                :            :  *   The resulting probability of the map matched position is derived from lateral_t value:</a>
+<a name="477"><span class="lineNum">     477 </span>                :            :  *     spans between [0.5; 1.0] for LANE_IN matches</a>
+<a name="478"><span class="lineNum">     478 </span>                :            :  *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches</a>
+<a name="479"><span class="lineNum">     479 </span>                :            :  *</a>
+<a name="480"><span class="lineNum">     480 </span>                :            :  * @returns true if successful.</a>
 <a name="481"><span class="lineNum">     481 </span>                :            :  */</a>
-<a name="482"><span class="lineNum">     482 </span>                :            : struct LaneAltitudeRange</a>
-<a name="483"><span class="lineNum">     483 </span>                :            : {</a>
-<a name="484"><span class="lineNum">     484 </span>                :            :   point::Altitude minimum;</a>
-<a name="485"><span class="lineNum">     485 </span>                :            :   point::Altitude maximum;</a>
-<a name="486"><span class="lineNum">     486 </span>                :            : };</a>
-<a name="487"><span class="lineNum">     487 </span>                :            : </a>
-<a name="488"><span class="lineNum">     488 </span>                :            : /**</a>
-<a name="489"><span class="lineNum">     489 </span>                :            :  * @brief Calculates the altitude range of a lane</a>
-<a name="490"><span class="lineNum">     490 </span>                :            :  *</a>
-<a name="491"><span class="lineNum">     491 </span>                :            :  * @returns The range of the lanes altitude</a>
-<a name="492"><span class="lineNum">     492 </span>                :            :  */</a>
-<a name="493"><span class="lineNum">     493 </span>                :            : LaneAltitudeRange calcLaneAltitudeRange(Lane const &amp;lane);</a>
-<a name="494"><span class="lineNum">     494 </span>                :            : </a>
-<a name="495"><span class="lineNum">     495 </span>                :            : /**</a>
-<a name="496"><span class="lineNum">     496 </span>                :            :  * @brief Checks if the laneId is relevant for expansion given the set of relevant lanes.</a>
-<a name="497"><span class="lineNum">     497 </span>                :            :  *</a>
-<a name="498"><span class="lineNum">     498 </span>                :            :  * @returns \c true if the \a relevantLanes set is empty, or if the laneId can be found in the set of \a relevantLanes.</a>
-<a name="499"><span class="lineNum">     499 </span>                :            :  */</a>
-<a name="500"><span class="lineNum">     500 </span>                :            : bool isLaneRelevantForExpansion(lane::LaneId const &amp;laneId, lane::LaneIdSet const &amp;relevantLanes);</a>
-<a name="501"><span class="lineNum">     501 </span>                :            : </a>
-<a name="502"><span class="lineNum">     502 </span>                :            : } // namespace lane</a>
-<a name="503"><span class="lineNum">     503 </span>                :            : } // namespace map</a>
-<a name="504"><span class="lineNum">     504 </span>                :            : } // namespace ad</a>
+<a name="482"><span class="lineNum">     482 </span>                :            : bool findNearestPointOnLaneIgnoreZ(Lane const &amp;lane, point::ENUPoint const &amp;pt, match::MapMatchedPosition &amp;mmpos);</a>
+<a name="483"><span class="lineNum">     483 </span>                :            : </a>
+<a name="484"><span class="lineNum">     484 </span>                :            : /**</a>
+<a name="485"><span class="lineNum">     485 </span>                :            :  * @brief Finds point on the lane interval nearest to the given point.</a>
+<a name="486"><span class="lineNum">     486 </span>                :            :  * @param[in] lane_interval the interval of the lane to be considered.</a>
+<a name="487"><span class="lineNum">     487 </span>                :            :  * @param[in] pt Given point.</a>
+<a name="488"><span class="lineNum">     488 </span>                :            :  * @param[out] mmpos Resulting map-matched position.</a>
+<a name="489"><span class="lineNum">     489 </span>                :            :  *   The resulting probability of the map matched position is derived from lateral_t value:</a>
+<a name="490"><span class="lineNum">     490 </span>                :            :  *     spans between [0.5; 1.0] for LANE_IN matches</a>
+<a name="491"><span class="lineNum">     491 </span>                :            :  *     spans between [0.1; 0.5] for LANE_RIGHT/LANE_LEFT matches</a>
+<a name="492"><span class="lineNum">     492 </span>                :            :  *</a>
+<a name="493"><span class="lineNum">     493 </span>                :            :  * @returns true if successful.</a>
+<a name="494"><span class="lineNum">     494 </span>                :            :  */</a>
+<a name="495"><span class="lineNum">     495 </span>                :            : bool findNearestPointOnLaneInterval(route::LaneInterval const &amp;lane_interval,</a>
+<a name="496"><span class="lineNum">     496 </span>                :            :                                     point::ECEFPoint const &amp;pt,</a>
+<a name="497"><span class="lineNum">     497 </span>                :            :                                     match::MapMatchedPosition &amp;mmpos);</a>
+<a name="498"><span class="lineNum">     498 </span>                :            : </a>
+<a name="499"><span class="lineNum">     499 </span>                :            : /**</a>
+<a name="500"><span class="lineNum">     500 </span>                :            :  * @brief get the ENU point of a lane</a>
+<a name="501"><span class="lineNum">     501 </span>                :            :  *</a>
+<a name="502"><span class="lineNum">     502 </span>                :            :  */</a>
+<a name="503"><span class="lineNum">     503 </span>                :            : point::ENUPoint getENULanePoint(point::ParaPoint const parametricPoint,</a>
+<a name="504"><span class="lineNum">     504 </span>                :            :                                 physics::ParametricValue const &amp;lateralOffset = physics::ParametricValue(0.5));</a>
+<a name="505"><span class="lineNum">     505 </span>                :            : </a>
+<a name="506"><span class="lineNum">     506 </span>                :            : /** @brief calculate length of a lane with a given id</a>
+<a name="507"><span class="lineNum">     507 </span>                :            :  */</a>
+<a name="508"><span class="lineNum">     508 </span>                :            : physics::Distance calcLength(LaneId const &amp;lane_id);</a>
+<a name="509"><span class="lineNum">     509 </span>                :            : </a>
+<a name="510"><span class="lineNum">     510 </span>                :            : /** @brief calculate length of a lane occupied region</a>
+<a name="511"><span class="lineNum">     511 </span>                :            :  */</a>
+<a name="512"><span class="lineNum">     512 </span>                :            : physics::Distance calcLength(match::LaneOccupiedRegion const &amp;laneOccupiedRegion);</a>
+<a name="513"><span class="lineNum">     513 </span>                :            : </a>
+<a name="514"><span class="lineNum">     514 </span>                :            : /** @brief calculate the width of the lane at the provided lane_point</a>
+<a name="515"><span class="lineNum">     515 </span>                :            :  */</a>
+<a name="516"><span class="lineNum">     516 </span>                :            : physics::Distance calcWidth(point::ParaPoint const &amp;para_point);</a>
+<a name="517"><span class="lineNum">     517 </span>                :            : </a>
+<a name="518"><span class="lineNum">     518 </span>                :            : /** @brief calculate the width of the provided lane at the provided longitudinal position</a>
+<a name="519"><span class="lineNum">     519 </span>                :            :  */</a>
+<a name="520"><span class="lineNum">     520 </span>                :            : physics::Distance calcWidth(LaneId const &amp;lane_id, physics::ParametricValue const &amp;longOffset);</a>
+<a name="521"><span class="lineNum">     521 </span>                :            : </a>
+<a name="522"><span class="lineNum">     522 </span>                :            : /**</a>
+<a name="523"><span class="lineNum">     523 </span>                :            :  * @brief calculate the width of a lane at the provided ENU position</a>
+<a name="524"><span class="lineNum">     524 </span>                :            :  *</a>
+<a name="525"><span class="lineNum">     525 </span>                :            :  * @return -1 in case the enuPoint could not be found on a lane</a>
+<a name="526"><span class="lineNum">     526 </span>                :            :  */</a>
+<a name="527"><span class="lineNum">     527 </span>                :            : physics::Distance calcWidth(point::ENUPoint const &amp;enuPoint);</a>
+<a name="528"><span class="lineNum">     528 </span>                :            : </a>
+<a name="529"><span class="lineNum">     529 </span>                :            : /** @brief calculate width of a lane occupied region</a>
+<a name="530"><span class="lineNum">     530 </span>                :            :  *  scales the with at the center of the occupied region by the lateral extend of the region</a>
+<a name="531"><span class="lineNum">     531 </span>                :            :  */</a>
+<a name="532"><span class="lineNum">     532 </span>                :            : physics::Distance calcWidth(match::LaneOccupiedRegion const &amp;laneOccupiedRegion);</a>
+<a name="533"><span class="lineNum">     533 </span>                :            : </a>
+<a name="534"><span class="lineNum">     534 </span>                :            : /**</a>
+<a name="535"><span class="lineNum">     535 </span>                :            :  * @brief Checks if the lane_id is relevant for expansion given the set of relevant lanes.</a>
+<a name="536"><span class="lineNum">     536 </span>                :            :  *</a>
+<a name="537"><span class="lineNum">     537 </span>                :            :  * @returns \c true if the \a relevantLanes set is empty, or if the lane_id can be found in the set of \a relevantLanes.</a>
+<a name="538"><span class="lineNum">     538 </span>                :            :  */</a>
+<a name="539"><span class="lineNum">     539 </span>                :            : bool isLaneRelevantForExpansion(lane::LaneId const &amp;lane_id, lane::LaneIdSet const &amp;relevantLanes);</a>
+<a name="540"><span class="lineNum">     540 </span>                :            : </a>
+<a name="541"><span class="lineNum">     541 </span>                :            : /**</a>
+<a name="542"><span class="lineNum">     542 </span>                :            :  * @brief Struct to hold the altitude range of a lane</a>
+<a name="543"><span class="lineNum">     543 </span>                :            :  */</a>
+<a name="544"><span class="lineNum">     544 </span>                :            : struct LaneAltitudeRange</a>
+<a name="545"><span class="lineNum">     545 </span>                :            : {</a>
+<a name="546"><span class="lineNum">     546 </span>                :            :   point::Altitude minimum;</a>
+<a name="547"><span class="lineNum">     547 </span>                :            :   point::Altitude maximum;</a>
+<a name="548"><span class="lineNum">     548 </span>                :            : };</a>
+<a name="549"><span class="lineNum">     549 </span>                :            : </a>
+<a name="550"><span class="lineNum">     550 </span>                :            : /**</a>
+<a name="551"><span class="lineNum">     551 </span>                :            :  * @brief Calculates the altitude range of a lane</a>
+<a name="552"><span class="lineNum">     552 </span>                :            :  *</a>
+<a name="553"><span class="lineNum">     553 </span>                :            :  * @returns The range of the lanes altitude</a>
+<a name="554"><span class="lineNum">     554 </span>                :            :  */</a>
+<a name="555"><span class="lineNum">     555 </span>                :            : LaneAltitudeRange calcLaneAltitudeRange(Lane const &amp;lane);</a>
+<a name="556"><span class="lineNum">     556 </span>                :            : </a>
+<a name="557"><span class="lineNum">     557 </span>                :            : } // namespace lane</a>
+<a name="558"><span class="lineNum">     558 </span>                :            : } // namespace map</a>
+<a name="559"><span class="lineNum">     559 </span>                :            : } // namespace ad</a>
 </pre>
       </td>
     </tr>

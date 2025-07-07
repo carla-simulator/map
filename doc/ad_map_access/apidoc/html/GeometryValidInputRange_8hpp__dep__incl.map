@@ -1,12 +1,13 @@
 <map id="generated/include/ad/map/point/GeometryValidInputRange.hpp" name="generated/include/ad/map/point/GeometryValidInputRange.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="135,5,362,61"/>
-<area shape="rect" id="node2" href="$LandmarkValidInputRange_8hpp.html" title=" " alt="" coords="5,109,228,165"/>
-<area shape="rect" id="node5" href="$LaneValidInputRange_8hpp.html" title=" " alt="" coords="253,117,509,158"/>
-<area shape="rect" id="node3" href="$LandmarkOperation_8hpp.html" title=" " alt="" coords="23,213,211,255"/>
-<area shape="rect" id="node4" href="$landmark_2Operation_8hpp.html" title=" " alt="" coords="23,303,211,344"/>
-<area shape="rect" id="node6" href="$LaneOperation_8hpp.html" title=" " alt="" coords="303,213,458,255"/>
-<area shape="rect" id="node7" href="$lane_2Operation_8hpp.html" title=" " alt="" coords="270,303,425,344"/>
-<area shape="rect" id="node8" href="$RouteExpander_8hpp.html" title=" " alt="" coords="449,303,609,344"/>
-<area shape="rect" id="node9" href="$RouteAStar_8hpp.html" title=" " alt="" coords="357,392,517,433"/>
-<area shape="rect" id="node10" href="$RoutePrediction_8hpp.html" title=" " alt="" coords="541,392,701,433"/>
+<area shape="rect" id="node1" title=" " alt="" coords="263,5,490,61"/>
+<area shape="rect" id="node2" href="$LandmarkValidInputRange_8hpp.html" title=" " alt="" coords="133,109,356,165"/>
+<area shape="rect" id="node6" href="$LaneValidInputRange_8hpp.html" title=" " alt="" coords="381,117,637,158"/>
+<area shape="rect" id="node3" href="$LandmarkOperation_8hpp.html" title=" " alt="" coords="151,213,339,255"/>
+<area shape="rect" id="node4" href="$PolygonOperation_8hpp.html" title=" " alt="" coords="218,303,407,344"/>
+<area shape="rect" id="node5" href="$landmark_2Operation_8hpp.html" title=" " alt="" coords="5,303,193,344"/>
+<area shape="rect" id="node7" href="$LaneOperation_8hpp.html" title=" " alt="" coords="431,213,586,255"/>
+<area shape="rect" id="node8" href="$lane_2Operation_8hpp.html" title=" " alt="" coords="431,303,586,344"/>
+<area shape="rect" id="node9" href="$RouteExpander_8hpp.html" title=" " alt="" coords="610,303,770,344"/>
+<area shape="rect" id="node10" href="$RouteAStar_8hpp.html" title=" " alt="" coords="518,392,678,433"/>
+<area shape="rect" id="node11" href="$RoutePrediction_8hpp.html" title=" " alt="" coords="702,392,862,433"/>
 </map>

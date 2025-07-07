@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:19</td>
+            <td class="headerValue">2025-07-07 13:29:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">30</td>
-            <td class="headerCovTableEntry">42</td>
-            <td class="headerCovTableEntryLo">71.4 %</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntry">46</td>
+            <td class="headerCovTableEntryLo">69.6 %</td>
           </tr>
           <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -72,7 +72,7 @@
 <a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
 <a name="2"><span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <a name="3"><span class="lineNum">       3 </span>                :            :  *</a>
-<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2020 Intel Corporation</a>
+<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2022 Intel Corporation</a>
 <a name="5"><span class="lineNum">       5 </span>                :            :  *</a>
 <a name="6"><span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT</a>
 <a name="7"><span class="lineNum">       7 </span>                :            :  *</a>
@@ -83,7 +83,7 @@
 <a name="12"><span class="lineNum">      12 </span>                :            :  * Generated file</a>
 <a name="13"><span class="lineNum">      13 </span>                :            :  * @file</a>
 <a name="14"><span class="lineNum">      14 </span>                :            :  *</a>
-<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997</a>
+<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-2046</a>
 <a name="16"><span class="lineNum">      16 </span>                :            :  */</a>
 <a name="17"><span class="lineNum">      17 </span>                :            : </a>
 <a name="18"><span class="lineNum">      18 </span>                :            : #pragma once</a>
@@ -129,7 +129,7 @@
 <a name="57"><span class="lineNum">      57 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :       spdlog::error(</span></a>
 <a name="58"><span class="lineNum">      58 </span>                :            :         &quot;withinValidInputRange(::ad::physics::MetricRange)&gt;&gt; {} element {} out of valid input range [{}, {}]&quot;,</a>
 <a name="59"><span class="lineNum">      59 </span>                :            :         input,</a>
-<a name="60"><span class="lineNum">      60 </span>                :<span class="lineCov">          1 :         input.minimum,</span></a>
+<a name="60"><span class="lineNum">      60 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :         input.minimum,</span></a>
 <a name="61"><span class="lineNum">      61 </span>                :<span class="lineCov">          1 :         ::ad::physics::Distance(0.),</span></a>
 <a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">          1 :         input.maximum); // LCOV_EXCL_BR_LINE</span></a>
 <a name="63"><span class="lineNum">      63 </span>                :            :     }</a>
@@ -145,7 +145,7 @@
 <a name="72"><span class="lineNum">      72 </span>                :            :         &quot;withinValidInputRange(::ad::physics::MetricRange)&gt;&gt; {} element {} out of valid input range [{}, {}]&quot;,</a>
 <a name="73"><span class="lineNum">      73 </span>                :            :         input,</a>
 <a name="74"><span class="lineNum">      74 </span>                :<span class="lineCov">          1 :         input.maximum,</span></a>
-<a name="75"><span class="lineNum">      75 </span>                :<span class="lineCov">          1 :         input.minimum,</span></a>
+<a name="75"><span class="lineNum">      75 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :         input.minimum,</span></a>
 <a name="76"><span class="lineNum">      76 </span>                :<span class="lineCov">          2 :         ::ad::physics::Distance(1e6)); // LCOV_EXCL_BR_LINE</span></a>
 <a name="77"><span class="lineNum">      77 </span>                :            :     }</a>
 <a name="78"><span class="lineNum">      78 </span>                :            :   }</a>

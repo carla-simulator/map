@@ -31,17 +31,17 @@
             <td class="headerValue">ad_map_access</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">114</td>
-            <td class="headerCovTableEntry">114</td>
+            <td class="headerCovTableEntry">118</td>
+            <td class="headerCovTableEntry">118</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">9</td>
-            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntry">12</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">75</td>
-            <td class="headerCovTableEntry">248</td>
-            <td class="headerCovTableEntryLo">30.2 %</td>
+            <td class="headerCovTableEntry">95</td>
+            <td class="headerCovTableEntry">288</td>
+            <td class="headerCovTableEntryLo">33.0 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -101,7 +101,7 @@
 <a name="30"><span class="lineNum">      30 </span>                :<span class="lineCov">          3 :   }</span></a>
 <a name="31"><span class="lineNum">      31 </span>                :            : };</a>
 <a name="32"><span class="lineNum">      32 </span>                :            : </a>
-<a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">          2 : TEST_F(GeoOperationTest, geoPointapproxAltitude)</span></a>
+<a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">          4 : TEST_F(GeoOperationTest, geoPointapproxAltitude)</span></a>
 <a name="34"><span class="lineNum">      34 </span>                :            : {</a>
 <a name="35"><span class="lineNum">      35 </span>                :<span class="lineCov">          1 :   Longitude ul_lon(10.123456);</span></a>
 <a name="36"><span class="lineNum">      36 </span>                :<span class="lineCov">          1 :   Longitude lr_lon(10.234567);</span></a>
@@ -112,7 +112,7 @@
 <a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">          1 :   Altitude ll_alt(300);</span></a>
 <a name="42"><span class="lineNum">      42 </span>                :<span class="lineCov">          1 :   Altitude lr_alt(400);</span></a>
 <a name="43"><span class="lineNum">      43 </span>                :            :   //</a>
-<a name="44"><span class="lineNum">      44 </span>                :<span class="lineCov">          1 :   GeoEdge pts;</span></a>
+<a name="44"><span class="lineNum">      44 </span>                :<span class="lineCov">          1 :   GeoPointList pts;</span></a>
 <a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">          1 :   GeoPoint pt_ul = createGeoPoint(ul_lon, ul_lat, ul_alt);</span></a>
 <a name="46"><span class="lineNum">      46 </span>                :<span class="lineCov">          1 :   GeoPoint pt_ur = createGeoPoint(ul_lon, lr_lat, ur_alt);</span></a>
 <a name="47"><span class="lineNum">      47 </span>                :<span class="lineCov">          1 :   GeoPoint pt_ll = createGeoPoint(lr_lon, ul_lat, ll_alt);</span></a>
@@ -127,28 +127,28 @@
 <a name="56"><span class="lineNum">      56 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     GeoPoint pt = approxAltitude(ptX, pts);</span></a>
 <a name="57"><span class="lineNum">      57 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :     ASSERT_EQ(pt, pt_ul);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="58"><span class="lineNum">      58 </span>                :            :   }</a>
 <a name="59"><span class="lineNum">      59 </span>                :            :   {</a>
 <a name="60"><span class="lineNum">      60 </span>                :<span class="lineCov">          1 :     GeoPoint ptX = createGeoPoint(ul_lon, lr_lat, AltitudeUnknown);</span></a>
 <a name="61"><span class="lineNum">      61 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     GeoPoint pt = approxAltitude(ptX, pts);</span></a>
 <a name="62"><span class="lineNum">      62 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :     ASSERT_EQ(pt, pt_ur);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="63"><span class="lineNum">      63 </span>                :            :   }</a>
 <a name="64"><span class="lineNum">      64 </span>                :            :   {</a>
 <a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">          1 :     GeoPoint ptX = createGeoPoint(lr_lon, ul_lat, AltitudeUnknown);</span></a>
 <a name="66"><span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     GeoPoint pt = approxAltitude(ptX, pts);</span></a>
 <a name="67"><span class="lineNum">      67 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :     ASSERT_EQ(pt, pt_ll);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="68"><span class="lineNum">      68 </span>                :            :   }</a>
 <a name="69"><span class="lineNum">      69 </span>                :            :   {</a>
 <a name="70"><span class="lineNum">      70 </span>                :<span class="lineCov">          1 :     GeoPoint ptX = createGeoPoint(lr_lon, lr_lat, AltitudeUnknown);</span></a>
 <a name="71"><span class="lineNum">      71 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     GeoPoint pt = approxAltitude(ptX, pts);</span></a>
 <a name="72"><span class="lineNum">      72 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :     ASSERT_EQ(pt, pt_lr);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="73"><span class="lineNum">      73 </span>                :            :   }</a>
 <a name="74"><span class="lineNum">      74 </span>                :            :   {</a>
 <a name="75"><span class="lineNum">      75 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     GeoPoint ptY = vectorInterpolate(pt_ul, pt_ur, physics::ParametricValue(0.3));</span></a>
@@ -156,7 +156,7 @@
 <a name="77"><span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     GeoPoint pt = approxAltitude(ptX, pts);</span></a>
 <a name="78"><span class="lineNum">      78 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :     ASSERT_EQ(pt, ptY);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="79"><span class="lineNum">      79 </span>                :            :   }</a>
 <a name="80"><span class="lineNum">      80 </span>                :            :   {</a>
 <a name="81"><span class="lineNum">      81 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     GeoPoint ptY = vectorInterpolate(pt_ur, pt_lr, physics::ParametricValue(0.7));</span></a>
@@ -164,7 +164,7 @@
 <a name="83"><span class="lineNum">      83 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     GeoPoint pt = approxAltitude(ptX, pts);</span></a>
 <a name="84"><span class="lineNum">      84 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :     ASSERT_EQ(pt, ptY);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
+<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
 <a name="85"><span class="lineNum">      85 </span>                :            :   }</a>
 <a name="86"><span class="lineNum">      86 </span>                :            :   {</a>
 <a name="87"><span class="lineNum">      87 </span>                :<span class="lineCov">          1 :     const Altitude h(123.456);  // Invented altitude.</span></a>
@@ -174,17 +174,18 @@
 <a name="91"><span class="lineNum">      91 </span>                :            :     // Position of San Jose Fire Department Station 29 + altitude difference</a>
 <a name="92"><span class="lineNum">      92 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     GeoPoint pt2_geo = createGeoPoint(Longitude(-121.933886), Latitude(37.401112), h + dh);</span></a>
 <a name="93"><span class="lineNum">      93 </span>                :            : </a>
-<a name="94"><span class="lineNum">      94 </span>                :<span class="lineCov">          1 :     GeoEdge edge1_geo;</span></a>
+<a name="94"><span class="lineNum">      94 </span>                :<span class="lineCov">          1 :     GeoPointList edge1_geo;</span></a>
 <a name="95"><span class="lineNum">      95 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     edge1_geo.push_back(pt2_geo);</span></a>
 <a name="96"><span class="lineNum">      96 </span>                :<span class="lineCov">          1 :     GeoPoint ret;</span></a>
 <a name="97"><span class="lineNum">      97 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     ret = approxAltitude(pt1_geo, edge1_geo);</span></a>
 <a name="98"><span class="lineNum">      98 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          1 :     ASSERT_EQ(createGeoPoint(Longitude(-121.935549), Latitude(37.401336), h + dh), ret);</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<a name="99"><span class="lineNum">      99 </span>                :            :   }</a>
-<a name="100"><span class="lineNum">     100 </span>                :            : }</a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<a name="99"><span class="lineNum">      99 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   }</span></a>
+<a name="100"><span class="lineNum">     100 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 : }</span></a>
 <a name="101"><span class="lineNum">     101 </span>                :            : </a>
-<a name="102"><span class="lineNum">     102 </span>                :<span class="lineCov">          2 : TEST_F(GeoOperationTest, Orientation)</span></a>
+<a name="102"><span class="lineNum">     102 </span>                :<span class="lineCov">          4 : TEST_F(GeoOperationTest, Orientation)</span></a>
 <a name="103"><span class="lineNum">     103 </span>                :            : {</a>
 <a name="104"><span class="lineNum">     104 </span>                :<span class="lineCov">          1 :   const Altitude h(123.456);  // Invented altitude.</span></a>
 <a name="105"><span class="lineNum">     105 </span>                :<span class="lineCov">          1 :   const Altitude dh(100.123); // Invented altitude difference.</span></a>
@@ -195,21 +196,22 @@
 <a name="110"><span class="lineNum">     110 </span>                :            :   // Position of San Jose Fire Department Station 29 + altitude difference</a>
 <a name="111"><span class="lineNum">     111 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   GeoPoint pt3_geo = createGeoPoint(Longitude(-121.933886), Latitude(37.401112), h + dh);</span></a>
 <a name="112"><span class="lineNum">     112 </span>                :            : </a>
-<a name="113"><span class="lineNum">     113 </span>                :<span class="lineCov">          1 :   GeoEdge edge2_geo;</span></a>
-<a name="114"><span class="lineNum">     114 </span>                :<span class="lineCov">          1 :   GeoEdge edge3_geo;</span></a>
+<a name="113"><span class="lineNum">     113 </span>                :<span class="lineCov">          1 :   GeoPointList edge2_geo;</span></a>
+<a name="114"><span class="lineNum">     114 </span>                :<span class="lineCov">          1 :   GeoPointList edge3_geo;</span></a>
 <a name="115"><span class="lineNum">     115 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge2_geo.push_back(pt1_geo);</span></a>
 <a name="116"><span class="lineNum">     116 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge2_geo.push_back(pt2_geo);</span></a>
 <a name="117"><span class="lineNum">     117 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge3_geo.push_back(pt1_geo);</span></a>
 <a name="118"><span class="lineNum">     118 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge3_geo.push_back(pt3_geo);</span></a>
 <a name="119"><span class="lineNum">     119 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_TRUE(haveSameOrientation(edge2_geo, edge3_geo));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<a name="120"><span class="lineNum">     120 </span>                :            : }</a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<a name="120"><span class="lineNum">     120 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 : }</span></a>
 <a name="121"><span class="lineNum">     121 </span>                :            : </a>
-<a name="122"><span class="lineNum">     122 </span>                :<span class="lineCov">          2 : TEST_F(GeoOperationTest, isOnTheLeft)</span></a>
+<a name="122"><span class="lineNum">     122 </span>                :<span class="lineCov">          4 : TEST_F(GeoOperationTest, isOnTheLeft)</span></a>
 <a name="123"><span class="lineNum">     123 </span>                :            : {</a>
-<a name="124"><span class="lineNum">     124 </span>                :<span class="lineCov">          1 :   GeoEdge edge2_geo;</span></a>
-<a name="125"><span class="lineNum">     125 </span>                :<span class="lineCov">          1 :   GeoEdge edge3_geo;</span></a>
+<a name="124"><span class="lineNum">     124 </span>                :<span class="lineCov">          1 :   GeoPointList edge2_geo;</span></a>
+<a name="125"><span class="lineNum">     125 </span>                :<span class="lineCov">          1 :   GeoPointList edge3_geo;</span></a>
 <a name="126"><span class="lineNum">     126 </span>                :<span class="lineCov">          1 :   const double diff = 3.534679;</span></a>
 <a name="127"><span class="lineNum">     127 </span>                :<span class="lineCov">          1 :   edge2_geo.clear();</span></a>
 <a name="128"><span class="lineNum">     128 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge2_geo.push_back(createGeoPoint(Longitude(-121.935549 - diff), Latitude(37.401336), Altitude(123.456)));</span></a>
@@ -219,7 +221,8 @@
 <a name="132"><span class="lineNum">     132 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge3_geo.push_back(createGeoPoint(Longitude(-121.935549), Latitude(37.401336 + diff), Altitude(123.456)));</span></a>
 <a name="133"><span class="lineNum">     133 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_TRUE(isOnTheLeft(edge2_geo, edge3_geo));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
 <a name="134"><span class="lineNum">     134 </span>                :            : </a>
 <a name="135"><span class="lineNum">     135 </span>                :<span class="lineCov">          1 :   edge2_geo.clear();</span></a>
 <a name="136"><span class="lineNum">     136 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge2_geo.push_back(createGeoPoint(Longitude(-121.935549 + diff), Latitude(37.401336), Altitude(123.456)));</span></a>
@@ -229,7 +232,8 @@
 <a name="140"><span class="lineNum">     140 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge3_geo.push_back(createGeoPoint(Longitude(-121.935549), Latitude(37.401336), Altitude(123.456)));</span></a>
 <a name="141"><span class="lineNum">     141 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_TRUE(isOnTheLeft(edge2_geo, edge3_geo));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
 <a name="142"><span class="lineNum">     142 </span>                :            : </a>
 <a name="143"><span class="lineNum">     143 </span>                :<span class="lineCov">          1 :   edge2_geo.clear();</span></a>
 <a name="144"><span class="lineNum">     144 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge2_geo.push_back(createGeoPoint(Longitude(-121.935549), Latitude(37.401336 - diff), Altitude(123.456)));</span></a>
@@ -239,7 +243,8 @@
 <a name="148"><span class="lineNum">     148 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge3_geo.push_back(createGeoPoint(Longitude(-121.935549 + diff), Latitude(37.401336), Altitude(123.456)));</span></a>
 <a name="149"><span class="lineNum">     149 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_FALSE(isOnTheLeft(edge2_geo, edge3_geo));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
 <a name="150"><span class="lineNum">     150 </span>                :            : </a>
 <a name="151"><span class="lineNum">     151 </span>                :<span class="lineCov">          1 :   edge2_geo.clear();</span></a>
 <a name="152"><span class="lineNum">     152 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge2_geo.push_back(createGeoPoint(Longitude(-121.935549), Latitude(37.401336 + diff), Altitude(123.456)));</span></a>
@@ -249,7 +254,8 @@
 <a name="156"><span class="lineNum">     156 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge3_geo.push_back(createGeoPoint(Longitude(-121.935549 + diff), Latitude(37.401336), Altitude(123.456)));</span></a>
 <a name="157"><span class="lineNum">     157 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_TRUE(isOnTheLeft(edge2_geo, edge3_geo));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
 <a name="158"><span class="lineNum">     158 </span>                :            : </a>
 <a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">          1 :   edge2_geo.clear();</span></a>
 <a name="160"><span class="lineNum">     160 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge2_geo.push_back(createGeoPoint(Longitude(-121.935549), Latitude(37.401336 + diff), Altitude(123.456)));</span></a>
@@ -259,7 +265,8 @@
 <a name="164"><span class="lineNum">     164 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge3_geo.push_back(createGeoPoint(Longitude(-121.935549 + diff), Latitude(37.401336 + diff), Altitude(123.456)));</span></a>
 <a name="165"><span class="lineNum">     165 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_TRUE(isOnTheLeft(edge2_geo, edge3_geo));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
 <a name="166"><span class="lineNum">     166 </span>                :            : </a>
 <a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">          1 :   edge2_geo.clear();</span></a>
 <a name="168"><span class="lineNum">     168 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge2_geo.push_back(createGeoPoint(Longitude(-121.935549), Latitude(37.401336 - diff), Altitude(123.456)));</span></a>
@@ -269,8 +276,9 @@
 <a name="172"><span class="lineNum">     172 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   edge3_geo.push_back(createGeoPoint(Longitude(-121.935549 + diff), Latitude(37.401336 + diff), Altitude(123.456)));</span></a>
 <a name="173"><span class="lineNum">     173 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          1 :   ASSERT_FALSE(isOnTheLeft(edge2_geo, edge3_geo));</span></a>
 <span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
-<span class="lineNum">         </span>      <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span>]
-<a name="174"><span class="lineNum">     174 </span>                :            : }</a>
+<span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span> 
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 13 was not taken"> - </span>]
+<a name="174"><span class="lineNum">     174 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 : }</span></a>
 </pre>
       </td>
     </tr>

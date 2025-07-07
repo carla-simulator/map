@@ -1,4 +1,13 @@
 <map id="generated/include/ad/physics/AngularAccelerationList.hpp" name="generated/include/ad/physics/AngularAccelerationList.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,216,61"/>
-<area shape="rect" id="node2" href="$AngularAccelerationListValidInputRange_8hpp.html" title=" " alt="" coords="5,109,216,165"/>
+<area shape="rect" id="node1" title=" " alt="" coords="186,5,397,61"/>
+<area shape="rect" id="node2" href="$AngularAccelerationListValidInputRange_8hpp.html" title=" " alt="" coords="86,109,297,165"/>
+<area shape="rect" id="node3" href="$physics_2Types_8hpp.html" title=" " alt="" coords="320,117,463,158"/>
+<area shape="rect" id="node4" href="$GeometryOperation_8hpp.html" title=" " alt="" coords="5,392,188,433"/>
+<area shape="rect" id="node5" href="$AngleOperation_8hpp.html" title=" " alt="" coords="134,213,289,255"/>
+<area shape="rect" id="node8" href="$Operation_8hpp.html" title=" " alt="" coords="387,303,529,344"/>
+<area shape="rect" id="node9" href="$ParametricOperation_8hpp.html" title=" " alt="" coords="364,213,552,255"/>
+<area shape="rect" id="node10" href="$PhysicsOperation_8hpp.html" title=" " alt="" coords="576,213,743,255"/>
+<area shape="rect" id="node11" href="$RatioOperation_8hpp.html" title=" " alt="" coords="767,213,919,255"/>
+<area shape="rect" id="node6" href="$geometry_2Types_8hpp.html" title=" " alt="" coords="135,303,291,344"/>
+<area shape="rect" id="node7" href="$DebugDrawing_8hpp.html" title=" " alt="" coords="212,392,368,433"/>
 </map>

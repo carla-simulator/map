@@ -1,0 +1,9 @@
+<map id="ad::geometry::DebugDrawing" name="ad::geometry::DebugDrawing">
+<area shape="rect" id="node1" title=" " alt="" coords="125,393,337,420"/>
+<area shape="rect" id="node2" title=" " alt="" coords="23,304,213,331"/>
+<area shape="rect" id="node3" href="$structad_1_1geometry_1_1DebugDrawing_1_1DebugLine.html" title=" " alt="" coords="5,200,217,241"/>
+<area shape="rect" id="node4" title=" " alt="" coords="185,96,272,123"/>
+<area shape="rect" id="node7" href="$structad_1_1geometry_1_1DebugDrawing_1_1DebugPolygon.html" title=" " alt="" coords="241,200,453,241"/>
+<area shape="rect" id="node5" title=" " alt="" coords="159,5,298,47"/>
+<area shape="rect" id="node6" title=" " alt="" coords="239,304,453,331"/>
+</map>

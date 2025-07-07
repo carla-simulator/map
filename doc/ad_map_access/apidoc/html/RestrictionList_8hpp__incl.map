@@ -1,14 +1,16 @@
 <map id="generated/include/ad/map/restriction/RestrictionList.hpp" name="generated/include/ad/map/restriction/RestrictionList.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="264,5,463,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="151,377,231,404"/>
-<area shape="rect" id="node3" title=" " alt="" coords="354,295,429,322"/>
-<area shape="rect" id="node4" title=" " alt="" coords="675,295,737,322"/>
-<area shape="rect" id="node5" href="$Restriction_8hpp.html" title=" " alt="" coords="239,109,381,151"/>
-<area shape="rect" id="node6" title=" " alt="" coords="221,206,279,233"/>
-<area shape="rect" id="node7" title=" " alt="" coords="362,377,439,404"/>
-<area shape="rect" id="node8" href="$PassengerCount_8hpp.html" title=" " alt="" coords="37,199,196,240"/>
-<area shape="rect" id="node10" href="$RoadUserTypeList_8hpp.html" title=" " alt="" coords="455,199,626,240"/>
-<area shape="rect" id="node9" title=" " alt="" coords="83,295,150,322"/>
-<area shape="rect" id="node11" href="$RoadUserType_8hpp.html" title=" " alt="" coords="503,288,650,329"/>
-<area shape="rect" id="node12" title=" " alt="" coords="547,377,606,404"/>
+<area shape="rect" id="node1" title=" " alt="" coords="378,5,577,61"/>
+<area shape="rect" id="node2" title=" " alt="" coords="560,377,640,404"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,295,80,322"/>
+<area shape="rect" id="node4" title=" " alt="" coords="638,295,701,322"/>
+<area shape="rect" id="node5" href="$Restriction_8hpp.html" title=" " alt="" coords="228,109,369,151"/>
+<area shape="rect" id="node6" title=" " alt="" coords="80,206,139,233"/>
+<area shape="rect" id="node7" title=" " alt="" coords="71,377,148,404"/>
+<area shape="rect" id="node8" href="$PassengerCount_8hpp.html" title=" " alt="" coords="409,199,567,240"/>
+<area shape="rect" id="node10" href="$RoadUserTypeList_8hpp.html" title=" " alt="" coords="213,199,384,240"/>
+<area shape="rect" id="node9" title=" " alt="" coords="455,295,521,322"/>
+<area shape="rect" id="node11" href="$RoadUserType_8hpp.html" title=" " alt="" coords="228,288,375,329"/>
+<area shape="rect" id="node12" title=" " alt="" coords="172,377,231,404"/>
+<area shape="rect" id="node13" title=" " alt="" coords="255,377,387,404"/>
+<area shape="rect" id="node14" title=" " alt="" coords="411,377,535,404"/>
 </map>

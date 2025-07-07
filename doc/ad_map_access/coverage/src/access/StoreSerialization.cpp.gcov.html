@@ -31,13 +31,13 @@
             <td class="headerValue">ad_map_access</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">76</td>
-            <td class="headerCovTableEntry">85</td>
-            <td class="headerCovTableEntryMed">89.4 %</td>
+            <td class="headerCovTableEntry">83</td>
+            <td class="headerCovTableEntry">92</td>
+            <td class="headerCovTableEntryHi">90.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">100</td>
-            <td class="headerCovTableEntry">168</td>
-            <td class="headerCovTableEntryLo">59.5 %</td>
+            <td class="headerCovTableEntry">106</td>
+            <td class="headerCovTableEntry">180</td>
+            <td class="headerCovTableEntryLo">58.9 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -111,18 +111,18 @@
 <a name="40"><span class="lineNum">      40 </span>                :<span class="lineCov">          1 :   return false;</span></a>
 <a name="41"><span class="lineNum">      41 </span>                :            : }</a>
 <a name="42"><span class="lineNum">      42 </span>                :            : </a>
-<a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">        157 : bool Store::load(serialize::ISerializer &amp;serializer)</span></a>
+<a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">        160 : bool Store::load(serialize::ISerializer &amp;serializer)</span></a>
 <a name="44"><span class="lineNum">      44 </span>                :            : {</a>
-<a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">        157 :   bool ok = false;</span></a>
-<a name="46"><span class="lineNum">      46 </span>        [<span class="branchCov" title="Branch 0 was taken 156 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        157 :   if (!serializer.isStoring())</span></a>
+<a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">        160 :   bool ok = false;</span></a>
+<a name="46"><span class="lineNum">      46 </span>        [<span class="branchCov" title="Branch 0 was taken 159 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        160 :   if (!serializer.isStoring())</span></a>
 <a name="47"><span class="lineNum">      47 </span>                :            :   {</a>
-<a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">        156 :     ok = serialize(serializer);</span></a>
+<a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">        159 :     ok = serialize(serializer);</span></a>
 <a name="49"><span class="lineNum">      49 </span>                :            :   }</a>
 <a name="50"><span class="lineNum">      50 </span>                :            :   else</a>
 <a name="51"><span class="lineNum">      51 </span>                :            :   {</a>
 <a name="52"><span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     access::getLogger()-&gt;error(&quot;Cannot load from to write-only serializer.&quot;);</span></a>
 <a name="53"><span class="lineNum">      53 </span>                :            :   }</a>
-<a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">        157 :   return ok;</span></a>
+<a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">        160 :   return ok;</span></a>
 <a name="55"><span class="lineNum">      55 </span>                :            : }</a>
 <a name="56"><span class="lineNum">      56 </span>                :            : </a>
 <a name="57"><span class="lineNum">      57 </span>                :            : ////////////////////////////////</a>
@@ -144,8 +144,8 @@
 <a name="71"><span class="lineNum">      71 </span>                :            :     {</a>
 <a name="72"><span class="lineNum">      72 </span>                :<span class="lineNoCov">          0 :       return false;</span></a>
 <a name="73"><span class="lineNum">      73 </span>                :            :     }</a>
-<a name="74"><span class="lineNum">      74 </span>                :            :   }</a>
-<a name="75"><span class="lineNum">      75 </span>  [<span class="branchCov" title="Branch 0 was taken 29 times"> + </span><span class="branchCov" title="Branch 1 was taken 29 times"> + </span><span class="branchCov" title="Branch 2 was taken 29 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         58 :   for (auto partition_id_and_ids : part_lane_map_)</span></a>
+<a name="74"><span class="lineNum">      74 </span>        [<span class="branchCov" title="Branch 0 was taken 49 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         49 :   }</span></a>
+<a name="75"><span class="lineNum">      75 </span>  [<span class="branchCov" title="Branch 0 was taken 29 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 29 times"> + </span><span class="branchCov" title="Branch 3 was taken 29 times"> + </span>]:<span class="lineCov">         58 :   for (auto partition_id_and_ids : part_lane_map_)</span></a>
 <a name="76"><span class="lineNum">      76 </span>                :            :   {</a>
 <a name="77"><span class="lineNum">      77 </span>                :<span class="lineCov">         29 :     const lane::LaneIdList &amp;lane_ids = partition_id_and_ids.second;</span></a>
 <a name="78"><span class="lineNum">      78 </span>        [<span class="branchCov" title="Branch 0 was taken 49 times"> + </span><span class="branchCov" title="Branch 1 was taken 29 times"> + </span>]:<span class="lineCov">         78 :     for (auto lane_id : lane_ids)</span></a>
@@ -155,8 +155,8 @@
 <a name="82"><span class="lineNum">      82 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="83"><span class="lineNum">      83 </span>                :            :       }</a>
 <a name="84"><span class="lineNum">      84 </span>                :            :     }</a>
-<a name="85"><span class="lineNum">      85 </span>                :            :   }</a>
-<a name="86"><span class="lineNum">      86 </span>  [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchCov" title="Branch 1 was taken 29 times"> + </span><span class="branchCov" title="Branch 2 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         41 :   for (auto partition_id_and_ids : part_landmark_map_)</span></a>
+<a name="85"><span class="lineNum">      85 </span>        [<span class="branchCov" title="Branch 0 was taken 29 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         29 :   }</span></a>
+<a name="86"><span class="lineNum">      86 </span>  [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 12 times"> + </span><span class="branchCov" title="Branch 3 was taken 29 times"> + </span>]:<span class="lineCov">         41 :   for (auto partition_id_and_ids : part_landmark_map_)</span></a>
 <a name="87"><span class="lineNum">      87 </span>                :            :   {</a>
 <a name="88"><span class="lineNum">      88 </span>                :<span class="lineCov">         12 :     const landmark::LandmarkIdList &amp;landmark_ids = partition_id_and_ids.second;</span></a>
 <a name="89"><span class="lineNum">      89 </span>        [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchCov" title="Branch 1 was taken 12 times"> + </span>]:<span class="lineCov">         24 :     for (auto landmark_id : landmark_ids)</span></a>
@@ -166,57 +166,57 @@
 <a name="93"><span class="lineNum">      93 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="94"><span class="lineNum">      94 </span>                :            :       }</a>
 <a name="95"><span class="lineNum">      95 </span>                :            :     }</a>
-<a name="96"><span class="lineNum">      96 </span>                :            :   }</a>
+<a name="96"><span class="lineNum">      96 </span>        [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         12 :   }</span></a>
 <a name="97"><span class="lineNum">      97 </span>                :<span class="lineCov">         29 :   return true;</span></a>
 <a name="98"><span class="lineNum">      98 </span>                :            : }</a>
 <a name="99"><span class="lineNum">      99 </span>                :            : </a>
-<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">        167 : bool Store::serialize(serialize::ISerializer &amp;serializer)</span></a>
+<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">        170 : bool Store::serialize(serialize::ISerializer &amp;serializer)</span></a>
 <a name="101"><span class="lineNum">     101 </span>                :            : {</a>
-<a name="102"><span class="lineNum">     102 </span>                :<span class="lineCov">        167 :   bool old_magic = serializer.setUseMagic(true);</span></a>
-<a name="103"><span class="lineNum">     103 </span>                :<span class="lineCov">        167 :   bool old_use_embedded_points = serializer.setUseEmbeddedPoints(true);</span></a>
+<a name="102"><span class="lineNum">     102 </span>                :<span class="lineCov">        170 :   bool old_magic = serializer.setUseMagic(true);</span></a>
+<a name="103"><span class="lineNum">     103 </span>                :<span class="lineCov">        170 :   bool old_use_embedded_points = serializer.setUseEmbeddedPoints(true);</span></a>
 <a name="104"><span class="lineNum">     104 </span>                :            : </a>
-<a name="105"><span class="lineNum">     105 </span>  [<span class="branchCov" title="Branch 0 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        334 :   bool ok = serializer.serialize(serialize::SerializeableMagic::Store) &amp;&amp; serializer.serialize(use_magic_)</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
-<a name="106"><span class="lineNum">     106 </span>  [<span class="branchCov" title="Branch 0 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        334 :     &amp;&amp; serializer.serialize(use_embedded_geometry_) &amp;&amp; serializer.serialize(use_geometry_store_);</span></a>
-<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 167 times"> + </span> 
+<a name="105"><span class="lineNum">     105 </span>  [<span class="branchCov" title="Branch 0 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        340 :   bool ok = serializer.serialize(serialize::SerializeableMagic::Store) &amp;&amp; serializer.serialize(use_magic_)</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="106"><span class="lineNum">     106 </span>  [<span class="branchCov" title="Branch 0 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        340 :     &amp;&amp; serializer.serialize(use_embedded_geometry_) &amp;&amp; serializer.serialize(use_geometry_store_);</span></a>
+<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 170 times"> + </span> 
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 9 was not taken"> - </span>]
 <a name="107"><span class="lineNum">     107 </span>                :            : </a>
 <a name="108"><span class="lineNum">     108 </span>                :            :   /*Todo the two lines below will be deleted after the map are generated again without use_zfp_*/</a>
-<a name="109"><span class="lineNum">     109 </span>                :<span class="lineCov">        167 :   bool use_zfp_ = false;</span></a>
-<a name="110"><span class="lineNum">     110 </span>  [<span class="branchCov" title="Branch 0 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        167 :   ok = ok &amp;&amp; serializer.serialize(use_zfp_);</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="109"><span class="lineNum">     109 </span>                :<span class="lineCov">        170 :   bool use_zfp_ = false;</span></a>
+<a name="110"><span class="lineNum">     110 </span>  [<span class="branchCov" title="Branch 0 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        170 :   ok = ok &amp;&amp; serializer.serialize(use_zfp_);</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
 <a name="111"><span class="lineNum">     111 </span>                :            : </a>
-<a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">        167 :   serializer.setUseMagic(use_magic_);</span></a>
-<a name="113"><span class="lineNum">     113 </span>                :<span class="lineCov">        167 :   serializer.setUseEmbeddedPoints(use_embedded_geometry_);</span></a>
-<a name="114"><span class="lineNum">     114 </span>  [<span class="branchCov" title="Branch 0 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        167 :   ok = ok &amp;&amp; doSerialize(serializer, meta_data_);</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
-<a name="115"><span class="lineNum">     115 </span>  [<span class="branchCov" title="Branch 0 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 167 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        167 :   ok = ok &amp;&amp; serializer.serializeObjectPtrMap(lane_map_);</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 166 times"> + </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]
-<a name="116"><span class="lineNum">     116 </span>  [<span class="branchCov" title="Branch 0 was taken 166 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 166 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        167 :   ok = ok &amp;&amp; serializer.serializeObjectPtrMap(landmark_map_);</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 166 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
-<a name="117"><span class="lineNum">     117 </span>        [<span class="branchCov" title="Branch 0 was taken 166 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        167 :   if (ok)</span></a>
+<a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">        170 :   serializer.setUseMagic(use_magic_);</span></a>
+<a name="113"><span class="lineNum">     113 </span>                :<span class="lineCov">        170 :   serializer.setUseEmbeddedPoints(use_embedded_geometry_);</span></a>
+<a name="114"><span class="lineNum">     114 </span>  [<span class="branchCov" title="Branch 0 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        170 :   ok = ok &amp;&amp; doSerialize(serializer, meta_data_);</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="115"><span class="lineNum">     115 </span>  [<span class="branchCov" title="Branch 0 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 170 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        170 :   ok = ok &amp;&amp; serializer.serializeObjectPtrMap(lane_map_);</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 169 times"> + </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span>]
+<a name="116"><span class="lineNum">     116 </span>  [<span class="branchCov" title="Branch 0 was taken 169 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 169 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        170 :   ok = ok &amp;&amp; serializer.serializeObjectPtrMap(landmark_map_);</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 169 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="117"><span class="lineNum">     117 </span>        [<span class="branchCov" title="Branch 0 was taken 169 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        170 :   if (ok)</span></a>
 <a name="118"><span class="lineNum">     118 </span>                :            :   {</a>
-<a name="119"><span class="lineNum">     119 </span>        [<span class="branchCov" title="Branch 0 was taken 166 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        166 :     ok = serializer.serializeObjectVecMap(part_lane_map_);</span></a>
-<a name="120"><span class="lineNum">     120 </span>        [<span class="branchCov" title="Branch 0 was taken 166 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        166 :     ok = serializer.serializeObjectVecMap(part_landmark_map_);</span></a>
+<a name="119"><span class="lineNum">     119 </span>        [<span class="branchCov" title="Branch 0 was taken 169 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        169 :     ok = serializer.serializeObjectVecMap(part_lane_map_);</span></a>
+<a name="120"><span class="lineNum">     120 </span>        [<span class="branchCov" title="Branch 0 was taken 169 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        169 :     ok = serializer.serializeObjectVecMap(part_landmark_map_);</span></a>
 <a name="121"><span class="lineNum">     121 </span>                :            :   }</a>
-<a name="122"><span class="lineNum">     122 </span>        [<span class="branchCov" title="Branch 0 was taken 166 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        167 :   if (ok) // Todo will delete this after preparing new map without connector</span></a>
+<a name="122"><span class="lineNum">     122 </span>        [<span class="branchCov" title="Branch 0 was taken 169 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        170 :   if (ok) // Todo will delete this after preparing new map without connector</span></a>
 <a name="123"><span class="lineNum">     123 </span>                :            :   {</a>
-<a name="124"><span class="lineNum">     124 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 155 times"> + </span>]:<span class="lineCov">        166 :     if (serializer.isStoring())</span></a>
+<a name="124"><span class="lineNum">     124 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 158 times"> + </span>]:<span class="lineCov">        169 :     if (serializer.isStoring())</span></a>
 <a name="125"><span class="lineNum">     125 </span>                :            :     {</a>
 <a name="126"><span class="lineNum">     126 </span>  [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 11 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">         11 :       ok = serializer.serializeEmptyObjectVec() &amp;&amp; serializer.serializeEmptyObjectVec();</span></a>
 <span class="lineNum">         </span>   <span class="branchCov" title="Branch 4 was taken 11 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 11 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
 <a name="127"><span class="lineNum">     127 </span>                :            :     }</a>
 <a name="128"><span class="lineNum">     128 </span>                :            :     else</a>
 <a name="129"><span class="lineNum">     129 </span>                :            :     {</a>
-<a name="130"><span class="lineNum">     130 </span>  [<span class="branchCov" title="Branch 0 was taken 155 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 155 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        155 :       ok = serializer.serializeEmptyObjectVec() &amp;&amp; serializer.serializeEmptyObjectVec();</span></a>
-<span class="lineNum">         </span>   <span class="branchCov" title="Branch 4 was taken 155 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 155 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
+<a name="130"><span class="lineNum">     130 </span>  [<span class="branchCov" title="Branch 0 was taken 158 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 158 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        158 :       ok = serializer.serializeEmptyObjectVec() &amp;&amp; serializer.serializeEmptyObjectVec();</span></a>
+<span class="lineNum">         </span>   <span class="branchCov" title="Branch 4 was taken 158 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 158 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
 <a name="131"><span class="lineNum">     131 </span>                :            :     }</a>
 <a name="132"><span class="lineNum">     132 </span>                :            :   }</a>
-<a name="133"><span class="lineNum">     133 </span>        [<span class="branchCov" title="Branch 0 was taken 166 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        167 :   if (ok)</span></a>
+<a name="133"><span class="lineNum">     133 </span>        [<span class="branchCov" title="Branch 0 was taken 169 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        170 :   if (ok)</span></a>
 <a name="134"><span class="lineNum">     134 </span>                :            :   {</a>
-<a name="135"><span class="lineNum">     135 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 162 times"> + </span>]:<span class="lineCov">        166 :     if (use_geometry_store_)</span></a>
+<a name="135"><span class="lineNum">     135 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 165 times"> + </span>]:<span class="lineCov">        169 :     if (use_geometry_store_)</span></a>
 <a name="136"><span class="lineNum">     136 </span>                :            :     {</a>
-<a name="137"><span class="lineNum">     137 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          8 :       GeometryStore gs;</span></a>
+<a name="137"><span class="lineNum">     137 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          4 :       GeometryStore gs;</span></a>
 <a name="138"><span class="lineNum">     138 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          4 :       if (serializer.isStoring())</span></a>
 <a name="139"><span class="lineNum">     139 </span>                :            :       {</a>
 <a name="140"><span class="lineNum">     140 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :         ok = storeGeometry(gs);</span></a>
@@ -237,11 +237,11 @@
 <a name="154"><span class="lineNum">     154 </span>                :            :           }</a>
 <a name="155"><span class="lineNum">     155 </span>                :            :         }</a>
 <a name="156"><span class="lineNum">     156 </span>                :            :       }</a>
-<a name="157"><span class="lineNum">     157 </span>                :            :     }</a>
+<a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">          4 :     }</span></a>
 <a name="158"><span class="lineNum">     158 </span>                :            :   }</a>
-<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">        167 :   serializer.setUseMagic(old_magic);</span></a>
-<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">        167 :   serializer.setUseEmbeddedPoints(old_use_embedded_points);</span></a>
-<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">        167 :   return ok;</span></a>
+<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">        170 :   serializer.setUseMagic(old_magic);</span></a>
+<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">        170 :   serializer.setUseEmbeddedPoints(old_use_embedded_points);</span></a>
+<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">        170 :   return ok;</span></a>
 <a name="162"><span class="lineNum">     162 </span>                :            : }</a>
 <a name="163"><span class="lineNum">     163 </span>                :            : </a>
 <a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">          2 : bool Store::storeGeometry(GeometryStore &amp;gs)</span></a>
@@ -253,7 +253,7 @@
 <a name="170"><span class="lineNum">     170 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       access::getLogger()-&gt;error(&quot;Store geometry failed for lane {}&quot;, lane.first);</span></a>
 <a name="171"><span class="lineNum">     171 </span>                :<span class="lineNoCov">          0 :       return false;</span></a>
 <a name="172"><span class="lineNum">     172 </span>                :            :     }</a>
-<a name="173"><span class="lineNum">     173 </span>                :            :   }</a>
+<a name="173"><span class="lineNum">     173 </span>        [<span class="branchCov" title="Branch 0 was taken 600 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        600 :   }</span></a>
 <a name="174"><span class="lineNum">     174 </span>                :<span class="lineCov">          2 :   return true;</span></a>
 <a name="175"><span class="lineNum">     175 </span>                :            : }</a>
 <a name="176"><span class="lineNum">     176 </span>                :            : </a>
@@ -266,7 +266,7 @@
 <a name="183"><span class="lineNum">     183 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       access::getLogger()-&gt;error(&quot;Restore geometry failed for lane {}&quot;, lane.first);</span></a>
 <a name="184"><span class="lineNum">     184 </span>                :<span class="lineNoCov">          0 :       return false;</span></a>
 <a name="185"><span class="lineNum">     185 </span>                :            :     }</a>
-<a name="186"><span class="lineNum">     186 </span>                :            :   }</a>
+<a name="186"><span class="lineNum">     186 </span>        [<span class="branchCov" title="Branch 0 was taken 300 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        300 :   }</span></a>
 <a name="187"><span class="lineNum">     187 </span>                :<span class="lineCov">          1 :   return true;</span></a>
 <a name="188"><span class="lineNum">     188 </span>                :            : }</a>
 <a name="189"><span class="lineNum">     189 </span>                :            : </a>
@@ -279,7 +279,7 @@
 <a name="196"><span class="lineNum">     196 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :       access::getLogger()-&gt;error(&quot;Redundant geometry check failed!&quot;);</span></a>
 <a name="197"><span class="lineNum">     197 </span>                :<span class="lineNoCov">          0 :       return false;</span></a>
 <a name="198"><span class="lineNum">     198 </span>                :            :     }</a>
-<a name="199"><span class="lineNum">     199 </span>                :            :   }</a>
+<a name="199"><span class="lineNum">     199 </span>        [<span class="branchCov" title="Branch 0 was taken 300 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        300 :   }</span></a>
 <a name="200"><span class="lineNum">     200 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   access::getLogger()-&gt;info(&quot;Redundant geometry check ok.&quot;);</span></a>
 <a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">          1 :   return true;</span></a>
 <a name="202"><span class="lineNum">     202 </span>                :            : }</a>

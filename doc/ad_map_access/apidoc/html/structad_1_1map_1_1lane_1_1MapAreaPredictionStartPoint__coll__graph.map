@@ -1,0 +1,6 @@
+<map id="ad::map::lane::MapAreaPredictionStartPoint" name="ad::map::lane::MapAreaPredictionStartPoint">
+<area shape="rect" id="node1" title="definition of a prediction start point including the required prediction parameters to be used for th..." alt="" coords="5,288,248,329"/>
+<area shape="rect" id="node2" href="$structad_1_1map_1_1route_1_1planning_1_1RoutingParaPoint.html" title="DataType RoutingParaPoint." alt="" coords="36,184,217,225"/>
+<area shape="rect" id="node3" href="$structad_1_1map_1_1point_1_1ParaPoint.html" title="DataType ParaPoint." alt="" coords="34,95,219,121"/>
+<area shape="rect" id="node4" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId." alt="" coords="45,5,208,32"/>
+</map>

@@ -1,10 +1,10 @@
 <map id="ad::map::route::RoadSegment" name="ad::map::route::RoadSegment">
-<area shape="rect" id="node1" title="DataType RoadSegment." alt="" coords="1359,77,1575,104"/>
-<area shape="rect" id="node2" href="$structad_1_1map_1_1point_1_1BoundingSphere.html" title="DataType BoundingSphere." alt="" coords="972,31,1157,73"/>
-<area shape="rect" id="node3" href="$structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint." alt="" coords="656,36,847,63"/>
+<area shape="rect" id="node1" title="DataType RoadSegment." alt="" coords="1373,77,1589,104"/>
+<area shape="rect" id="node2" href="$structad_1_1map_1_1point_1_1BoundingSphere.html" title="DataType BoundingSphere." alt="" coords="976,31,1161,73"/>
+<area shape="rect" id="node3" href="$structad_1_1map_1_1point_1_1ECEFPoint.html" title="DataType ECEFPoint." alt="" coords="660,36,851,63"/>
 <area shape="rect" id="node4" href="$classad_1_1map_1_1point_1_1ECEFCoordinate.html" title="DataType ECEFCoordinate." alt="" coords="281,35,509,61"/>
-<area shape="rect" id="node5" title=" " alt="" coords="977,102,1153,143"/>
-<area shape="rect" id="node6" href="$structad_1_1map_1_1route_1_1LaneSegment.html" title="DataType LaneSegment." alt="" coords="644,141,859,168"/>
+<area shape="rect" id="node5" title=" " alt="" coords="981,102,1157,143"/>
+<area shape="rect" id="node6" href="$structad_1_1map_1_1route_1_1LaneSegment.html" title="DataType LaneSegment." alt="" coords="648,141,863,168"/>
 <area shape="rect" id="node7" href="$structad_1_1map_1_1route_1_1LaneInterval.html" title="DataType LaneInterval." alt="" coords="292,163,499,189"/>
 <area shape="rect" id="node8" href="$classad_1_1map_1_1lane_1_1LaneId.html" title="DataType LaneId." alt="" coords="5,163,168,189"/>
 <area shape="rect" id="node9" title=" " alt="" coords="314,214,477,255"/>

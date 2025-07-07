@@ -31,17 +31,17 @@
             <td class="headerValue">ad_map_access</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">28</td>
-            <td class="headerCovTableEntry">28</td>
+            <td class="headerCovTableEntry">31</td>
+            <td class="headerCovTableEntry">31</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">5</td>
-            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -72,7 +72,7 @@
 <a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
 <a name="2"><span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <a name="3"><span class="lineNum">       3 </span>                :            :  *</a>
-<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2020 Intel Corporation</a>
+<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2022 Intel Corporation</a>
 <a name="5"><span class="lineNum">       5 </span>                :            :  *</a>
 <a name="6"><span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT</a>
 <a name="7"><span class="lineNum">       7 </span>                :            :  *</a>
@@ -83,7 +83,7 @@
 <a name="12"><span class="lineNum">      12 </span>                :            :  * Generated file</a>
 <a name="13"><span class="lineNum">      13 </span>                :            :  * @file</a>
 <a name="14"><span class="lineNum">      14 </span>                :            :  *</a>
-<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997</a>
+<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-2046</a>
 <a name="16"><span class="lineNum">      16 </span>                :            :  */</a>
 <a name="17"><span class="lineNum">      17 </span>                :            : </a>
 <a name="18"><span class="lineNum">      18 </span>                :            : #pragma once</a>
@@ -178,7 +178,7 @@
 <a name="107"><span class="lineNum">     107 </span>                :            :   {</a>
 <a name="108"><span class="lineNum">     108 </span>  [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchCov" title="Branch 2 was taken 10 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span> :<span class="lineCov">         30 :     return (id == other.id) &amp;&amp; (type == other.type) &amp;&amp; (position == other.position) &amp;&amp; (heading == other.heading)</span></a>
 <span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 8 times"> + </span><span class="branchCov" title="Branch 5 was taken 2 times"> + </span>]
-<a name="109"><span class="lineNum">     109 </span>  [<span class="branchCov" title="Branch 0 was taken 14 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchCov" title="Branch 2 was taken 6 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">         30 :       &amp;&amp; (trafficLightType == other.trafficLightType);</span></a>
+<a name="109"><span class="lineNum">     109 </span>  [<span class="branchCov" title="Branch 0 was taken 14 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchCov" title="Branch 2 was taken 6 times"> + </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">         30 :       &amp;&amp; (traffic_light_type == other.traffic_light_type);</span></a>
 <a name="110"><span class="lineNum">     110 </span>                :            :   }</a>
 <a name="111"><span class="lineNum">     111 </span>                :            : </a>
 <a name="112"><span class="lineNum">     112 </span>                :            :   /**</a>
@@ -212,7 +212,7 @@
 <a name="140"><span class="lineNum">     140 </span>                :            :    * Landmark 2D orientation regardind Z axis (A.K.A. yaw/heading) [rad]Directional heading of the landmark.</a>
 <a name="141"><span class="lineNum">     141 </span>                :            :    */</a>
 <a name="142"><span class="lineNum">     142 </span>                :            :   ::ad::map::point::ENUHeading heading;</a>
-<a name="143"><span class="lineNum">     143 </span>                :            :   ::ad::map::landmark::TrafficLightType trafficLightType{::ad::map::landmark::TrafficLightType::INVALID};</a>
+<a name="143"><span class="lineNum">     143 </span>                :            :   ::ad::map::landmark::TrafficLightType traffic_light_type{::ad::map::landmark::TrafficLightType::INVALID};</a>
 <a name="144"><span class="lineNum">     144 </span>                :            : };</a>
 <a name="145"><span class="lineNum">     145 </span>                :            : </a>
 <a name="146"><span class="lineNum">     146 </span>                :            : } // namespace landmark</a>
@@ -263,8 +263,8 @@
 <a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;heading:&quot;;</span></a>
 <a name="192"><span class="lineNum">     192 </span>                :<span class="lineCov">         14 :   os &lt;&lt; _value.heading;</span></a>
 <a name="193"><span class="lineNum">     193 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;,&quot;;</span></a>
-<a name="194"><span class="lineNum">     194 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;trafficLightType:&quot;;</span></a>
-<a name="195"><span class="lineNum">     195 </span>                :<span class="lineCov">         14 :   os &lt;&lt; _value.trafficLightType;</span></a>
+<a name="194"><span class="lineNum">     194 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;traffic_light_type:&quot;;</span></a>
+<a name="195"><span class="lineNum">     195 </span>                :<span class="lineCov">         14 :   os &lt;&lt; _value.traffic_light_type;</span></a>
 <a name="196"><span class="lineNum">     196 </span>                :<span class="lineCov">         14 :   os &lt;&lt; &quot;)&quot;;</span></a>
 <a name="197"><span class="lineNum">     197 </span>                :<span class="lineCov">         14 :   return os;</span></a>
 <a name="198"><span class="lineNum">     198 </span>                :            : }</a>
@@ -277,14 +277,26 @@
 <a name="205"><span class="lineNum">     205 </span>                :            : /*!</a>
 <a name="206"><span class="lineNum">     206 </span>                :            :  * \brief overload of the std::to_string for ENULandmark</a>
 <a name="207"><span class="lineNum">     207 </span>                :            :  */</a>
-<a name="208"><span class="lineNum">     208 </span>                :<span class="lineCov">          1 : inline std::string to_string(::ad::map::landmark::ENULandmark const &amp;value)</span></a>
+<a name="208"><span class="lineNum">     208 </span>                :<span class="lineCov">         12 : inline std::string to_string(::ad::map::landmark::ENULandmark const &amp;value)</span></a>
 <a name="209"><span class="lineNum">     209 </span>                :            : {</a>
-<a name="210"><span class="lineNum">     210 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :   stringstream sstream;</span></a>
-<a name="211"><span class="lineNum">     211 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :   sstream &lt;&lt; value;</span></a>
-<a name="212"><span class="lineNum">     212 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :   return sstream.str();</span></a>
-<a name="213"><span class="lineNum">     213 </span>                :            : }</a>
+<a name="210"><span class="lineNum">     210 </span>        [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         12 :   stringstream sstream;</span></a>
+<a name="211"><span class="lineNum">     211 </span>        [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         12 :   sstream &lt;&lt; value;</span></a>
+<a name="212"><span class="lineNum">     212 </span>        [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         24 :   return sstream.str();</span></a>
+<a name="213"><span class="lineNum">     213 </span>                :<span class="lineCov">         12 : }</span></a>
 <a name="214"><span class="lineNum">     214 </span>                :            : } // namespace std</a>
-<a name="215"><span class="lineNum">     215 </span>                :            : #endif // GEN_GUARD_AD_MAP_LANDMARK_ENULANDMARK</a>
+<a name="215"><span class="lineNum">     215 </span>                :            : </a>
+<a name="216"><span class="lineNum">     216 </span>                :            : /*!</a>
+<a name="217"><span class="lineNum">     217 </span>                :            :  * \brief overload of fmt::formatter calling std::to_string</a>
+<a name="218"><span class="lineNum">     218 </span>                :            :  */</a>
+<a name="219"><span class="lineNum">     219 </span>                :            : template &lt;&gt; struct fmt::formatter&lt;::ad::map::landmark::ENULandmark&gt; : formatter&lt;string_view&gt;</a>
+<a name="220"><span class="lineNum">     220 </span>                :            : {</a>
+<a name="221"><span class="lineNum">     221 </span>                :<span class="lineCov">         11 :   template &lt;typename FormatContext&gt; auto format(::ad::map::landmark::ENULandmark const &amp;value, FormatContext &amp;ctx)</span></a>
+<a name="222"><span class="lineNum">     222 </span>                :            :   {</a>
+<a name="223"><span class="lineNum">     223 </span>                :<span class="lineCov">         22 :     return formatter&lt;string_view&gt;::format(std::to_string(value), ctx);</span></a>
+<a name="224"><span class="lineNum">     224 </span>                :            :   }</a>
+<a name="225"><span class="lineNum">     225 </span>                :            : };</a>
+<a name="226"><span class="lineNum">     226 </span>                :            : </a>
+<a name="227"><span class="lineNum">     227 </span>                :            : #endif // GEN_GUARD_AD_MAP_LANDMARK_ENULANDMARK</a>
 </pre>
       </td>
     </tr>

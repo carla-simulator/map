@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -84,7 +84,7 @@
 <a name="13"><span class="lineNum">      13 </span>                :            : </a>
 <a name="14"><span class="lineNum">      14 </span>                :            : #include &lt;vector&gt;</a>
 <a name="15"><span class="lineNum">      15 </span>                :            : #include &quot;ad/map/config/MapEntry.hpp&quot;</a>
-<a name="16"><span class="lineNum">      16 </span>                :            : #include &quot;ad/map/config/PointOfInterest.hpp&quot;</a>
+<a name="16"><span class="lineNum">      16 </span>                :            : #include &quot;ad/map/config/PointOfInterestList.hpp&quot;</a>
 <a name="17"><span class="lineNum">      17 </span>                :            : #include &quot;ad/map/point/GeoPoint.hpp&quot;</a>
 <a name="18"><span class="lineNum">      18 </span>                :            : </a>
 <a name="19"><span class="lineNum">      19 </span>                :            : /** @brief namespace ad */</a>
@@ -107,8 +107,8 @@
 <a name="36"><span class="lineNum">      36 </span>                :            :  * ADMap specifies a map and optional parameters for loading. An entry is given with</a>
 <a name="37"><span class="lineNum">      37 </span>                :            :  * - map (mandatory): filename of the adm or OpenDrive map file, relative path below in the directory of the config file</a>
 <a name="38"><span class="lineNum">      38 </span>                :            :  * itself. The filename must not have blanks.</a>
-<a name="39"><span class="lineNum">      39 </span>                :            :  * - openDriveOverlapMargin (optional): OpenDrive Map reader margin for overlap calculation</a>
-<a name="40"><span class="lineNum">      40 </span>                :            :  * - openDriveDefaultIntersectionType (optional): OpenDrive Map default intersection type</a>
+<a name="39"><span class="lineNum">      39 </span>                :            :  * - open_drive_overlap_margin (optional): OpenDrive Map reader margin for overlap calculation</a>
+<a name="40"><span class="lineNum">      40 </span>                :            :  * - open_drive_default_intersection_type (optional): OpenDrive Map default intersection type</a>
 <a name="41"><span class="lineNum">      41 </span>                :            :  *</a>
 <a name="42"><span class="lineNum">      42 </span>                :            :  * The positions define the covered area of the file. Example:</a>
 <a name="43"><span class="lineNum">      43 </span>                :            :  * [ADMap]</a>
@@ -171,7 +171,7 @@
 <a name="100"><span class="lineNum">     100 </span>                :            :   MapEntry const &amp;adMapEntry() const;</a>
 <a name="101"><span class="lineNum">     101 </span>                :            : </a>
 <a name="102"><span class="lineNum">     102 </span>                :            :   //! @return list of POIs</a>
-<a name="103"><span class="lineNum">     103 </span>                :            :   std::vector&lt;PointOfInterest&gt; const &amp;pointsOfInterest() const;</a>
+<a name="103"><span class="lineNum">     103 </span>                :            :   PointOfInterestList const &amp;pointsOfInterest() const;</a>
 <a name="104"><span class="lineNum">     104 </span>                :            : </a>
 <a name="105"><span class="lineNum">     105 </span>                :            :   //! @return the default Enu reference point</a>
 <a name="106"><span class="lineNum">     106 </span>                :            :   point::GeoPoint defaultEnuReference() const;</a>
@@ -186,7 +186,7 @@
 <a name="115"><span class="lineNum">     115 </span>                :            :   std::string mBaseDir{};        //!&lt; name of directory where config file is located</a>
 <a name="116"><span class="lineNum">     116 </span>                :            : </a>
 <a name="117"><span class="lineNum">     117 </span>                :            :   MapEntry mAdMapEntry;</a>
-<a name="118"><span class="lineNum">     118 </span>                :            :   std::vector&lt;PointOfInterest&gt; mPointsOfInterest;</a>
+<a name="118"><span class="lineNum">     118 </span>                :            :   PointOfInterestList mPointsOfInterest;</a>
 <a name="119"><span class="lineNum">     119 </span>                :            :   point::GeoPoint mDefaultEnuReference;</a>
 <a name="120"><span class="lineNum">     120 </span>                :            : </a>
 <a name="121"><span class="lineNum">     121 </span>                :            :   void updateFilenameAndPath(std::string const &amp;configFileName);</a>

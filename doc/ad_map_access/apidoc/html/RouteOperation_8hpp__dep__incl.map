@@ -1,9 +1,12 @@
 <map id="include/ad/map/route/RouteOperation.hpp" name="include/ad/map/route/RouteOperation.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="191,5,351,47"/>
-<area shape="rect" id="node2" href="$CoreIntersection_8hpp.html" title=" " alt="" coords="5,95,208,136"/>
-<area shape="rect" id="node3" href="$Intersection_8hpp.html" title=" " alt="" coords="31,184,233,225"/>
-<area shape="rect" id="node6" href="$route_2Operation_8hpp.html" title=" " alt="" coords="308,184,468,225"/>
-<area shape="rect" id="node7" href="$Planning_8hpp.html" title=" " alt="" coords="333,95,493,136"/>
-<area shape="rect" id="node4" href="$intersection_2Types_8hpp.html" title=" " alt="" coords="31,273,233,315"/>
-<area shape="rect" id="node5" href="$AdMapFactory_8hpp.html" title=" " alt="" coords="37,363,227,404"/>
+<area shape="rect" id="node1" title=" " alt="" coords="379,5,539,47"/>
+<area shape="rect" id="node2" href="$PolygonOperation_8hpp.html" title=" " alt="" coords="5,95,195,136"/>
+<area shape="rect" id="node3" href="$CoreIntersection_8hpp.html" title=" " alt="" coords="219,95,421,136"/>
+<area shape="rect" id="node4" href="$Intersection_8hpp.html" title=" " alt="" coords="219,184,421,225"/>
+<area shape="rect" id="node8" href="$route_2Operation_8hpp.html" title=" " alt="" coords="445,184,605,225"/>
+<area shape="rect" id="node9" href="$Planning_8hpp.html" title=" " alt="" coords="547,95,707,136"/>
+<area shape="rect" id="node5" href="$intersection_2Types_8hpp.html" title=" " alt="" coords="219,273,421,315"/>
+<area shape="rect" id="node6" href="$Factory_8hpp.html" title=" " alt="" coords="235,363,405,404"/>
+<area shape="rect" id="node7" href="$AdMapFactory_8hpp.html" title=" " alt="" coords="225,452,415,493"/>
+<area shape="rect" id="node10" href="$MapAreaOperation_8hpp.html" title=" " alt="" coords="629,184,805,225"/>
 </map>

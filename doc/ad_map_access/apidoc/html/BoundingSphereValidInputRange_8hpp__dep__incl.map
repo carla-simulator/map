@@ -1,14 +1,17 @@
 <map id="generated/include/ad/map/point/BoundingSphereValidInputRange.hpp" name="generated/include/ad/map/point/BoundingSphereValidInputRange.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="272,5,507,61"/>
-<area shape="rect" id="node2" href="$LaneValidInputRange_8hpp.html" title=" " alt="" coords="131,117,387,158"/>
-<area shape="rect" id="node8" href="$RoadSegmentValidInputRange_8hpp.html" title=" " alt="" coords="411,109,631,165"/>
-<area shape="rect" id="node3" href="$LaneOperation_8hpp.html" title=" " alt="" coords="181,221,336,262"/>
-<area shape="rect" id="node4" href="$lane_2Operation_8hpp.html" title=" " alt="" coords="5,325,160,366"/>
-<area shape="rect" id="node5" href="$RouteExpander_8hpp.html" title=" " alt="" coords="184,325,344,366"/>
-<area shape="rect" id="node6" href="$RouteAStar_8hpp.html" title=" " alt="" coords="9,429,169,470"/>
-<area shape="rect" id="node7" href="$RoutePrediction_8hpp.html" title=" " alt="" coords="193,429,353,470"/>
-<area shape="rect" id="node9" href="$RoadSegmentListValidInputRange_8hpp.html" title=" " alt="" coords="400,213,643,269"/>
-<area shape="rect" id="node10" href="$FullRouteValidInputRange_8hpp.html" title=" " alt="" coords="410,317,633,373"/>
-<area shape="rect" id="node11" href="$ConnectingRouteValidInputRange_8hpp.html" title=" " alt="" coords="396,421,636,477"/>
-<area shape="rect" id="node12" href="$FullRouteListValidInputRange_8hpp.html" title=" " alt="" coords="660,421,873,477"/>
+<area shape="rect" id="node1" title=" " alt="" coords="282,5,517,61"/>
+<area shape="rect" id="node2" href="$LaneRegionsValidInputRange_8hpp.html" title=" " alt="" coords="5,109,247,165"/>
+<area shape="rect" id="node3" href="$LaneValidInputRange_8hpp.html" title=" " alt="" coords="271,117,527,158"/>
+<area shape="rect" id="node10" href="$RoadSegmentValidInputRange_8hpp.html" title=" " alt="" coords="588,109,808,165"/>
+<area shape="rect" id="node4" href="$LaneOperation_8hpp.html" title=" " alt="" coords="305,221,459,262"/>
+<area shape="rect" id="node5" href="$PolygonOperation_8hpp.html" title=" " alt="" coords="21,325,210,366"/>
+<area shape="rect" id="node6" href="$lane_2Operation_8hpp.html" title=" " alt="" coords="234,325,389,366"/>
+<area shape="rect" id="node7" href="$RouteExpander_8hpp.html" title=" " alt="" coords="413,325,573,366"/>
+<area shape="rect" id="node8" href="$RouteAStar_8hpp.html" title=" " alt="" coords="229,429,389,470"/>
+<area shape="rect" id="node9" href="$RoutePrediction_8hpp.html" title=" " alt="" coords="413,429,573,470"/>
+<area shape="rect" id="node11" href="$RoadSegmentListValidInputRange_8hpp.html" title=" " alt="" coords="586,213,829,269"/>
+<area shape="rect" id="node12" href="$FullRouteValidInputRange_8hpp.html" title=" " alt="" coords="605,317,828,373"/>
+<area shape="rect" id="node13" href="$ConnectingRouteValidInputRange_8hpp.html" title=" " alt="" coords="597,421,837,477"/>
+<area shape="rect" id="node15" href="$FullRouteListValidInputRange_8hpp.html" title=" " alt="" coords="861,421,1074,477"/>
+<area shape="rect" id="node14" href="$ConnectingRouteListValidInputRange_8hpp.html" title=" " alt="" coords="601,525,832,581"/>
 </map>

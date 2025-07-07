@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">8</td>
@@ -87,14 +87,14 @@
 <a name="16"><span class="lineNum">      16 </span>                :            : /////////////////////////</a>
 <a name="17"><span class="lineNum">      17 </span>                :            : // Constructor/Destructor</a>
 <a name="18"><span class="lineNum">      18 </span>                :            : </a>
-<a name="19"><span class="lineNum">      19 </span>                :<span class="lineCov">        169 : ChecksumCRC32::ChecksumCRC32()</span></a>
+<a name="19"><span class="lineNum">      19 </span>                :<span class="lineCov">        172 : ChecksumCRC32::ChecksumCRC32()</span></a>
 <a name="20"><span class="lineNum">      20 </span>                :            : {</a>
-<a name="21"><span class="lineNum">      21 </span>                :<span class="lineCov">        169 :   initChecksum();</span></a>
-<a name="22"><span class="lineNum">      22 </span>                :<span class="lineCov">        169 : }</span></a>
+<a name="21"><span class="lineNum">      21 </span>                :<span class="lineCov">        172 :   initChecksum();</span></a>
+<a name="22"><span class="lineNum">      22 </span>                :<span class="lineCov">        172 : }</span></a>
 <a name="23"><span class="lineNum">      23 </span>                :            : </a>
-<a name="24"><span class="lineNum">      24 </span>                :<span class="lineCov">        169 : ChecksumCRC32::~ChecksumCRC32()</span></a>
+<a name="24"><span class="lineNum">      24 </span>                :<span class="lineCov">        172 : ChecksumCRC32::~ChecksumCRC32()</span></a>
 <a name="25"><span class="lineNum">      25 </span>                :            : {</a>
-<a name="26"><span class="lineNum">      26 </span>                :<span class="lineCov">        169 : }</span></a>
+<a name="26"><span class="lineNum">      26 </span>                :<span class="lineCov">        172 : }</span></a>
 <a name="27"><span class="lineNum">      27 </span>                :            : </a>
 <a name="28"><span class="lineNum">      28 </span>                :            : //////////</a>
 <a name="29"><span class="lineNum">      29 </span>                :            : // Vectors</a>
@@ -130,17 +130,17 @@
 <a name="59"><span class="lineNum">      59 </span>                :            :      0x24b4a3a6, 0xbad03605, 0xcdd70693, 0x54de5729, 0x23d967bf, 0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94,</a>
 <a name="60"><span class="lineNum">      60 </span>                :            :      0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d};</a>
 <a name="61"><span class="lineNum">      61 </span>                :            : </a>
-<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">   10327100 : uint32_t updateCRC32Checksum(uint32_t crcIn, const void *x, size_t bytes)</span></a>
+<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">   10333434 : uint32_t updateCRC32Checksum(uint32_t crcIn, const void *x, size_t bytes)</span></a>
 <a name="63"><span class="lineNum">      63 </span>                :            : {</a>
-<a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">   10327100 :   const uint8_t *p = reinterpret_cast&lt;const uint8_t *&gt;(x);</span></a>
-<a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">   10327100 :   uint32_t crcOut = crcIn;</span></a>
-<a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">   10327100 :   crcOut ^= ~0U;</span></a>
-<a name="67"><span class="lineNum">      67 </span>        [<span class="branchCov" title="Branch 0 was taken 51752100 times"> + </span><span class="branchCov" title="Branch 1 was taken 10327100 times"> + </span>]:<span class="lineCov">   62079200 :   while (bytes--)</span></a>
+<a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">   10333434 :   const uint8_t *p = reinterpret_cast&lt;const uint8_t *&gt;(x);</span></a>
+<a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">   10333434 :   uint32_t crcOut = crcIn;</span></a>
+<a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">   10333434 :   crcOut ^= ~0U;</span></a>
+<a name="67"><span class="lineNum">      67 </span>        [<span class="branchCov" title="Branch 0 was taken 55177621 times"> + </span><span class="branchCov" title="Branch 1 was taken 10333434 times"> + </span>]:<span class="lineCov">   65511055 :   while (bytes--)</span></a>
 <a name="68"><span class="lineNum">      68 </span>                :            :   {</a>
-<a name="69"><span class="lineNum">      69 </span>                :<span class="lineCov">   51752100 :     crcOut = crc32_tab[(crcOut ^ *p++) &amp; 0xFF] ^ (crcOut &gt;&gt; 8);</span></a>
+<a name="69"><span class="lineNum">      69 </span>                :<span class="lineCov">   55177621 :     crcOut = crc32_tab[(crcOut ^ *p++) &amp; 0xFF] ^ (crcOut &gt;&gt; 8);</span></a>
 <a name="70"><span class="lineNum">      70 </span>                :            :   }</a>
-<a name="71"><span class="lineNum">      71 </span>                :<span class="lineCov">   10327100 :   crcOut ^= ~0U;</span></a>
-<a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">   10327100 :   return crcOut;</span></a>
+<a name="71"><span class="lineNum">      71 </span>                :<span class="lineCov">   10333434 :   crcOut ^= ~0U;</span></a>
+<a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">   10333434 :   return crcOut;</span></a>
 <a name="73"><span class="lineNum">      73 </span>                :            : }</a>
 <a name="74"><span class="lineNum">      74 </span>                :            : </a>
 <a name="75"><span class="lineNum">      75 </span>                :<span class="lineCov">          5 : uint32_t calculateCRC32Checksum(const void *x, size_t bytes)</span></a>
@@ -151,27 +151,27 @@
 <a name="80"><span class="lineNum">      80 </span>                :            : //////////////////////</a>
 <a name="81"><span class="lineNum">      81 </span>                :            : // Overriden IChecksum</a>
 <a name="82"><span class="lineNum">      82 </span>                :            : </a>
-<a name="83"><span class="lineNum">      83 </span>                :<span class="lineCov">        338 : void ChecksumCRC32::initChecksum()</span></a>
+<a name="83"><span class="lineNum">      83 </span>                :<span class="lineCov">        344 : void ChecksumCRC32::initChecksum()</span></a>
 <a name="84"><span class="lineNum">      84 </span>                :            : {</a>
-<a name="85"><span class="lineNum">      85 </span>                :<span class="lineCov">        338 :   mCrc = 0;</span></a>
-<a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">        338 : }</span></a>
+<a name="85"><span class="lineNum">      85 </span>                :<span class="lineCov">        344 :   mCrc = 0;</span></a>
+<a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">        344 : }</span></a>
 <a name="87"><span class="lineNum">      87 </span>                :            : </a>
-<a name="88"><span class="lineNum">      88 </span>                :<span class="lineCov">   10327100 : void ChecksumCRC32::updateChecksum(const void *x, size_t bytes)</span></a>
+<a name="88"><span class="lineNum">      88 </span>                :<span class="lineCov">   10333429 : void ChecksumCRC32::updateChecksum(const void *x, size_t bytes)</span></a>
 <a name="89"><span class="lineNum">      89 </span>                :            : {</a>
-<a name="90"><span class="lineNum">      90 </span>                :<span class="lineCov">   10327100 :   mCrc = updateCRC32Checksum(mCrc, x, bytes);</span></a>
-<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">   10327100 : }</span></a>
+<a name="90"><span class="lineNum">      90 </span>                :<span class="lineCov">   10333429 :   mCrc = updateCRC32Checksum(mCrc, x, bytes);</span></a>
+<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">   10333429 : }</span></a>
 <a name="92"><span class="lineNum">      92 </span>                :            : </a>
 <a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">         12 : bool ChecksumCRC32::writeChecksum()</span></a>
 <a name="94"><span class="lineNum">      94 </span>                :            : {</a>
 <a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">         12 :   return doWrite(&amp;mCrc, sizeof(mCrc));</span></a>
 <a name="96"><span class="lineNum">      96 </span>                :            : }</a>
 <a name="97"><span class="lineNum">      97 </span>                :            : </a>
-<a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">        156 : bool ChecksumCRC32::checksumOK()</span></a>
+<a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">        159 : bool ChecksumCRC32::checksumOK()</span></a>
 <a name="99"><span class="lineNum">      99 </span>                :            : {</a>
-<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">        156 :   uint32_t crc = 0;</span></a>
-<a name="101"><span class="lineNum">     101 </span>  [<span class="branchCov" title="Branch 0 was taken 156 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 155 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">        156 :   if (doRead(&amp;crc, sizeof(crc)))</span></a>
+<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">        159 :   uint32_t crc = 0;</span></a>
+<a name="101"><span class="lineNum">     101 </span>  [<span class="branchCov" title="Branch 0 was taken 159 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 158 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">        159 :   if (doRead(&amp;crc, sizeof(crc)))</span></a>
 <a name="102"><span class="lineNum">     102 </span>                :            :   {</a>
-<a name="103"><span class="lineNum">     103 </span>                :<span class="lineCov">        155 :     return crc == mCrc;</span></a>
+<a name="103"><span class="lineNum">     103 </span>                :<span class="lineCov">        158 :     return crc == mCrc;</span></a>
 <a name="104"><span class="lineNum">     104 </span>                :            :   }</a>
 <a name="105"><span class="lineNum">     105 </span>                :            :   else</a>
 <a name="106"><span class="lineNum">     106 </span>                :            :   {</a>

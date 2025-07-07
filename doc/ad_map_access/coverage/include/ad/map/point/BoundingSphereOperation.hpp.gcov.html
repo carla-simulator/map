@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -86,43 +86,56 @@
 <a name="15"><span class="lineNum">      15 </span>                :            : #include &quot;ad/map/point/ECEFOperation.hpp&quot;</a>
 <a name="16"><span class="lineNum">      16 </span>                :            : #include &quot;ad/map/point/Geometry.hpp&quot;</a>
 <a name="17"><span class="lineNum">      17 </span>                :            : </a>
-<a name="18"><span class="lineNum">      18 </span>                :            : /** @brief namespace ad */</a>
-<a name="19"><span class="lineNum">      19 </span>                :            : namespace ad {</a>
-<a name="20"><span class="lineNum">      20 </span>                :            : /** @brief namespace map */</a>
-<a name="21"><span class="lineNum">      21 </span>                :            : namespace map {</a>
-<a name="22"><span class="lineNum">      22 </span>                :            : /** @brief namespace point */</a>
-<a name="23"><span class="lineNum">      23 </span>                :            : namespace point {</a>
-<a name="24"><span class="lineNum">      24 </span>                :            : </a>
-<a name="25"><span class="lineNum">      25 </span>                :            : /**</a>
-<a name="26"><span class="lineNum">      26 </span>                :            :  * @brief Computes distance between BoundingSpheres.</a>
-<a name="27"><span class="lineNum">      27 </span>                :            :  * @returns Distance between two bounding spheres in meters.</a>
-<a name="28"><span class="lineNum">      28 </span>                :            :  */</a>
-<a name="29"><span class="lineNum">      29 </span>                :<span class="lineCov">     475992 : inline physics::Distance distance(BoundingSphere const &amp;left, BoundingSphere const &amp;right)</span></a>
-<a name="30"><span class="lineNum">      30 </span>                :            : {</a>
-<a name="31"><span class="lineNum">      31 </span>        [<span class="branchCov" title="Branch 0 was taken 475992 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">     475992 :   physics::Distance const distanceCenter = distance(left.center, right.center);</span></a>
-<a name="32"><span class="lineNum">      32 </span>  [<span class="branchCov" title="Branch 0 was taken 475992 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 475992 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     475992 :   return std::max(physics::Distance(0.), distanceCenter - left.radius - right.radius);</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 475992 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
-<a name="33"><span class="lineNum">      33 </span>                :            : }</a>
-<a name="34"><span class="lineNum">      34 </span>                :            : </a>
-<a name="35"><span class="lineNum">      35 </span>                :            : /**</a>
-<a name="36"><span class="lineNum">      36 </span>                :            :  * @brief calculate the bounding sphere of two edges</a>
-<a name="37"><span class="lineNum">      37 </span>                :            :  */</a>
-<a name="38"><span class="lineNum">      38 </span>                :            : BoundingSphere calcBoundingSphere(Geometry const &amp;edgeLeft, Geometry const &amp;edgeRight);</a>
-<a name="39"><span class="lineNum">      39 </span>                :            : </a>
-<a name="40"><span class="lineNum">      40 </span>                :            : } // namespace point</a>
-<a name="41"><span class="lineNum">      41 </span>                :            : } // namespace map</a>
-<a name="42"><span class="lineNum">      42 </span>                :            : } // namespace ad</a>
-<a name="43"><span class="lineNum">      43 </span>                :            : </a>
-<a name="44"><span class="lineNum">      44 </span>                :            : /**</a>
-<a name="45"><span class="lineNum">      45 </span>                :            :  * @brief calculate the union of two BoundingSpheres</a>
-<a name="46"><span class="lineNum">      46 </span>                :            :  *</a>
-<a name="47"><span class="lineNum">      47 </span>                :            :  * @param[in] a BoundingSphere a</a>
-<a name="48"><span class="lineNum">      48 </span>                :            :  * @param[in] b BoundingSphere b</a>
-<a name="49"><span class="lineNum">      49 </span>                :            :  *</a>
-<a name="50"><span class="lineNum">      50 </span>                :            :  * @returns union BoundingSpere containing both: a U b</a>
-<a name="51"><span class="lineNum">      51 </span>                :            :  */</a>
-<a name="52"><span class="lineNum">      52 </span>                :            : ::ad::map::point::BoundingSphere operator+(::ad::map::point::BoundingSphere const &amp;a,</a>
-<a name="53"><span class="lineNum">      53 </span>                :            :                                            ::ad::map::point::BoundingSphere const &amp;b);</a>
+<a name="18"><span class="lineNum">      18 </span>                :            : /**</a>
+<a name="19"><span class="lineNum">      19 </span>                :            :  * @brief calculate the union of two BoundingSpheres</a>
+<a name="20"><span class="lineNum">      20 </span>                :            :  *</a>
+<a name="21"><span class="lineNum">      21 </span>                :            :  * @param[in] a BoundingSphere a</a>
+<a name="22"><span class="lineNum">      22 </span>                :            :  * @param[in] b BoundingSphere b</a>
+<a name="23"><span class="lineNum">      23 </span>                :            :  *</a>
+<a name="24"><span class="lineNum">      24 </span>                :            :  * @returns union BoundingSpere containing both: a U b</a>
+<a name="25"><span class="lineNum">      25 </span>                :            :  */</a>
+<a name="26"><span class="lineNum">      26 </span>                :            : ::ad::map::point::BoundingSphere operator+(::ad::map::point::BoundingSphere const &amp;a,</a>
+<a name="27"><span class="lineNum">      27 </span>                :            :                                            ::ad::map::point::BoundingSphere const &amp;b);</a>
+<a name="28"><span class="lineNum">      28 </span>                :            : </a>
+<a name="29"><span class="lineNum">      29 </span>                :            : /** @brief namespace ad */</a>
+<a name="30"><span class="lineNum">      30 </span>                :            : namespace ad {</a>
+<a name="31"><span class="lineNum">      31 </span>                :            : /** @brief namespace map */</a>
+<a name="32"><span class="lineNum">      32 </span>                :            : namespace map {</a>
+<a name="33"><span class="lineNum">      33 </span>                :            : /** @brief namespace point */</a>
+<a name="34"><span class="lineNum">      34 </span>                :            : namespace point {</a>
+<a name="35"><span class="lineNum">      35 </span>                :            : </a>
+<a name="36"><span class="lineNum">      36 </span>                :            : /**</a>
+<a name="37"><span class="lineNum">      37 </span>                :            :  * @brief Computes distance between BoundingSpheres.</a>
+<a name="38"><span class="lineNum">      38 </span>                :            :  * @returns Distance between two bounding spheres in meters.</a>
+<a name="39"><span class="lineNum">      39 </span>                :            :  */</a>
+<a name="40"><span class="lineNum">      40 </span>                :<span class="lineCov">     476080 : inline physics::Distance distance(BoundingSphere const &amp;left, BoundingSphere const &amp;right)</span></a>
+<a name="41"><span class="lineNum">      41 </span>                :            : {</a>
+<a name="42"><span class="lineNum">      42 </span>        [<span class="branchCov" title="Branch 0 was taken 476080 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">     476080 :   physics::Distance const distanceCenter = distance(left.center, right.center);</span></a>
+<a name="43"><span class="lineNum">      43 </span>  [<span class="branchCov" title="Branch 0 was taken 476080 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 476080 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">     476080 :   return std::max(physics::Distance(0.), distanceCenter - left.radius - right.radius);</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 476080 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="44"><span class="lineNum">      44 </span>                :            : }</a>
+<a name="45"><span class="lineNum">      45 </span>                :            : </a>
+<a name="46"><span class="lineNum">      46 </span>                :            : /**</a>
+<a name="47"><span class="lineNum">      47 </span>                :            :  * @brief calculate the bounding sphere of two edges</a>
+<a name="48"><span class="lineNum">      48 </span>                :            :  */</a>
+<a name="49"><span class="lineNum">      49 </span>                :            : BoundingSphere calcBoundingSphere(Geometry const &amp;edge_left, Geometry const &amp;edge_right);</a>
+<a name="50"><span class="lineNum">      50 </span>                :            : </a>
+<a name="51"><span class="lineNum">      51 </span>                :            : /**</a>
+<a name="52"><span class="lineNum">      52 </span>                :            :  * @brief Computes union of BoundingSpheres.</a>
+<a name="53"><span class="lineNum">      53 </span>                :            :  *</a>
+<a name="54"><span class="lineNum">      54 </span>                :            :  * @param[in] a BoundingSphere a</a>
+<a name="55"><span class="lineNum">      55 </span>                :            :  * @param[in] b BoundingSphere b</a>
+<a name="56"><span class="lineNum">      56 </span>                :            :  *</a>
+<a name="57"><span class="lineNum">      57 </span>                :            :  * @returns union BoundingSpere containing both: a U b</a>
+<a name="58"><span class="lineNum">      58 </span>                :            :  */</a>
+<a name="59"><span class="lineNum">      59 </span>                :            : inline BoundingSphere getUnion(BoundingSphere const &amp;left, BoundingSphere const &amp;right)</a>
+<a name="60"><span class="lineNum">      60 </span>                :            : {</a>
+<a name="61"><span class="lineNum">      61 </span>                :            :   return left + right;</a>
+<a name="62"><span class="lineNum">      62 </span>                :            : }</a>
+<a name="63"><span class="lineNum">      63 </span>                :            : </a>
+<a name="64"><span class="lineNum">      64 </span>                :            : } // namespace point</a>
+<a name="65"><span class="lineNum">      65 </span>                :            : } // namespace map</a>
+<a name="66"><span class="lineNum">      66 </span>                :            : } // namespace ad</a>
 </pre>
       </td>
     </tr>

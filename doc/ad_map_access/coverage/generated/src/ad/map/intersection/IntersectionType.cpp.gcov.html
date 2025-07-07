@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -72,7 +72,7 @@
 <a name="1"><span class="lineNum">       1 </span>                :            : /*</a>
 <a name="2"><span class="lineNum">       2 </span>                :            :  * ----------------- BEGIN LICENSE BLOCK ---------------------------------</a>
 <a name="3"><span class="lineNum">       3 </span>                :            :  *</a>
-<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2020 Intel Corporation</a>
+<a name="4"><span class="lineNum">       4 </span>                :            :  * Copyright (C) 2018-2022 Intel Corporation</a>
 <a name="5"><span class="lineNum">       5 </span>                :            :  *</a>
 <a name="6"><span class="lineNum">       6 </span>                :            :  * SPDX-License-Identifier: MIT</a>
 <a name="7"><span class="lineNum">       7 </span>                :            :  *</a>
@@ -83,7 +83,7 @@
 <a name="12"><span class="lineNum">      12 </span>                :            :  * Generated file</a>
 <a name="13"><span class="lineNum">      13 </span>                :            :  * @file</a>
 <a name="14"><span class="lineNum">      14 </span>                :            :  *</a>
-<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-1997</a>
+<a name="15"><span class="lineNum">      15 </span>                :            :  * Generator Version : 11.0.0-2046</a>
 <a name="16"><span class="lineNum">      16 </span>                :            :  */</a>
 <a name="17"><span class="lineNum">      17 </span>                :            : </a>
 <a name="18"><span class="lineNum">      18 </span>                :            : #include &quot;ad/map/intersection/IntersectionType.hpp&quot;</a>
@@ -118,79 +118,79 @@
 <a name="45"><span class="lineNum">      45 </span>                :            :   }</a>
 <a name="46"><span class="lineNum">      46 </span>                :            : }</a>
 <a name="47"><span class="lineNum">      47 </span>                :            : </a>
-<a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">         51 : template &lt;&gt;::ad::map::intersection::IntersectionType fromString(std::string const &amp;str)</span></a>
+<a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">         52 : template &lt;&gt;::ad::map::intersection::IntersectionType fromString(std::string const &amp;str)</span></a>
 <a name="49"><span class="lineNum">      49 </span>                :            : {</a>
-<a name="50"><span class="lineNum">      50 </span>                :<span class="lineCov">         51 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::Unknown&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="50"><span class="lineNum">      50 </span>                :<span class="lineCov">         52 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::Unknown&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="51"><span class="lineNum">      51 </span>                :            :   {</a>
 <a name="52"><span class="lineNum">      52 </span>                :<span class="lineCov">          1 :     return ::ad::map::intersection::IntersectionType::Unknown;</span></a>
 <a name="53"><span class="lineNum">      53 </span>                :            :   }</a>
-<a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">         50 :   if (str == std::string(&quot;Unknown&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">         51 :   if (str == std::string(&quot;Unknown&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="55"><span class="lineNum">      55 </span>                :            :   {</a>
 <a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">          2 :     return ::ad::map::intersection::IntersectionType::Unknown;</span></a>
 <a name="57"><span class="lineNum">      57 </span>                :            :   }</a>
-<a name="58"><span class="lineNum">      58 </span>                :<span class="lineCov">         48 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::Yield&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="58"><span class="lineNum">      58 </span>                :<span class="lineCov">         49 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::Yield&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="59"><span class="lineNum">      59 </span>                :            :   {</a>
 <a name="60"><span class="lineNum">      60 </span>                :<span class="lineCov">          1 :     return ::ad::map::intersection::IntersectionType::Yield;</span></a>
 <a name="61"><span class="lineNum">      61 </span>                :            :   }</a>
-<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">         47 :   if (str == std::string(&quot;Yield&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">         48 :   if (str == std::string(&quot;Yield&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="63"><span class="lineNum">      63 </span>                :            :   {</a>
 <a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">          2 :     return ::ad::map::intersection::IntersectionType::Yield;</span></a>
 <a name="65"><span class="lineNum">      65 </span>                :            :   }</a>
-<a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">         45 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::Stop&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">         46 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::Stop&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="67"><span class="lineNum">      67 </span>                :            :   {</a>
 <a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">          1 :     return ::ad::map::intersection::IntersectionType::Stop;</span></a>
 <a name="69"><span class="lineNum">      69 </span>                :            :   }</a>
-<a name="70"><span class="lineNum">      70 </span>                :<span class="lineCov">         44 :   if (str == std::string(&quot;Stop&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="70"><span class="lineNum">      70 </span>                :<span class="lineCov">         45 :   if (str == std::string(&quot;Stop&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="71"><span class="lineNum">      71 </span>                :            :   {</a>
 <a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">          2 :     return ::ad::map::intersection::IntersectionType::Stop;</span></a>
 <a name="73"><span class="lineNum">      73 </span>                :            :   }</a>
-<a name="74"><span class="lineNum">      74 </span>                :<span class="lineCov">         42 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::AllWayStop&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="74"><span class="lineNum">      74 </span>                :<span class="lineCov">         43 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::AllWayStop&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="75"><span class="lineNum">      75 </span>                :            :   {</a>
 <a name="76"><span class="lineNum">      76 </span>                :<span class="lineCov">          1 :     return ::ad::map::intersection::IntersectionType::AllWayStop;</span></a>
 <a name="77"><span class="lineNum">      77 </span>                :            :   }</a>
-<a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">         41 :   if (str == std::string(&quot;AllWayStop&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">         42 :   if (str == std::string(&quot;AllWayStop&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="79"><span class="lineNum">      79 </span>                :            :   {</a>
 <a name="80"><span class="lineNum">      80 </span>                :<span class="lineCov">          2 :     return ::ad::map::intersection::IntersectionType::AllWayStop;</span></a>
 <a name="81"><span class="lineNum">      81 </span>                :            :   }</a>
-<a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">         39 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::HasWay&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">         40 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::HasWay&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="83"><span class="lineNum">      83 </span>                :            :   {</a>
 <a name="84"><span class="lineNum">      84 </span>                :<span class="lineCov">          1 :     return ::ad::map::intersection::IntersectionType::HasWay;</span></a>
 <a name="85"><span class="lineNum">      85 </span>                :            :   }</a>
-<a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">         38 :   if (str == std::string(&quot;HasWay&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">         39 :   if (str == std::string(&quot;HasWay&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="87"><span class="lineNum">      87 </span>                :            :   {</a>
 <a name="88"><span class="lineNum">      88 </span>                :<span class="lineCov">          2 :     return ::ad::map::intersection::IntersectionType::HasWay;</span></a>
 <a name="89"><span class="lineNum">      89 </span>                :            :   }</a>
-<a name="90"><span class="lineNum">      90 </span>                :<span class="lineCov">         36 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::Crosswalk&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="90"><span class="lineNum">      90 </span>                :<span class="lineCov">         37 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::Crosswalk&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="91"><span class="lineNum">      91 </span>                :            :   {</a>
 <a name="92"><span class="lineNum">      92 </span>                :<span class="lineCov">          1 :     return ::ad::map::intersection::IntersectionType::Crosswalk;</span></a>
 <a name="93"><span class="lineNum">      93 </span>                :            :   }</a>
-<a name="94"><span class="lineNum">      94 </span>                :<span class="lineCov">         35 :   if (str == std::string(&quot;Crosswalk&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="94"><span class="lineNum">      94 </span>                :<span class="lineCov">         36 :   if (str == std::string(&quot;Crosswalk&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="95"><span class="lineNum">      95 </span>                :            :   {</a>
 <a name="96"><span class="lineNum">      96 </span>                :<span class="lineCov">          2 :     return ::ad::map::intersection::IntersectionType::Crosswalk;</span></a>
 <a name="97"><span class="lineNum">      97 </span>                :            :   }</a>
-<a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">         33 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::PriorityToRight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">         34 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::PriorityToRight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="99"><span class="lineNum">      99 </span>                :            :   {</a>
 <a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">          1 :     return ::ad::map::intersection::IntersectionType::PriorityToRight;</span></a>
 <a name="101"><span class="lineNum">     101 </span>                :            :   }</a>
-<a name="102"><span class="lineNum">     102 </span>                :<span class="lineCov">         32 :   if (str == std::string(&quot;PriorityToRight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="102"><span class="lineNum">     102 </span>                :<span class="lineCov">         33 :   if (str == std::string(&quot;PriorityToRight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="103"><span class="lineNum">     103 </span>                :            :   {</a>
-<a name="104"><span class="lineNum">     104 </span>                :<span class="lineCov">          6 :     return ::ad::map::intersection::IntersectionType::PriorityToRight;</span></a>
+<a name="104"><span class="lineNum">     104 </span>                :<span class="lineCov">          5 :     return ::ad::map::intersection::IntersectionType::PriorityToRight;</span></a>
 <a name="105"><span class="lineNum">     105 </span>                :            :   }</a>
-<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">         26 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::PriorityToRightAndStraight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">         28 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::PriorityToRightAndStraight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="107"><span class="lineNum">     107 </span>                :            :   {</a>
 <a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">          1 :     return ::ad::map::intersection::IntersectionType::PriorityToRightAndStraight;</span></a>
 <a name="109"><span class="lineNum">     109 </span>                :            :   }</a>
-<a name="110"><span class="lineNum">     110 </span>                :<span class="lineCov">         25 :   if (str == std::string(&quot;PriorityToRightAndStraight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="110"><span class="lineNum">     110 </span>                :<span class="lineCov">         27 :   if (str == std::string(&quot;PriorityToRightAndStraight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="111"><span class="lineNum">     111 </span>                :            :   {</a>
 <a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">          2 :     return ::ad::map::intersection::IntersectionType::PriorityToRightAndStraight;</span></a>
 <a name="113"><span class="lineNum">     113 </span>                :            :   }</a>
-<a name="114"><span class="lineNum">     114 </span>                :<span class="lineCov">         23 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::TrafficLight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="114"><span class="lineNum">     114 </span>                :<span class="lineCov">         25 :   if (str == std::string(&quot;::ad::map::intersection::IntersectionType::TrafficLight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="115"><span class="lineNum">     115 </span>                :            :   {</a>
 <a name="116"><span class="lineNum">     116 </span>                :<span class="lineCov">          1 :     return ::ad::map::intersection::IntersectionType::TrafficLight;</span></a>
 <a name="117"><span class="lineNum">     117 </span>                :            :   }</a>
-<a name="118"><span class="lineNum">     118 </span>                :<span class="lineCov">         22 :   if (str == std::string(&quot;TrafficLight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
+<a name="118"><span class="lineNum">     118 </span>                :<span class="lineCov">         24 :   if (str == std::string(&quot;TrafficLight&quot;)) // LCOV_EXCL_BR_LINE</span></a>
 <a name="119"><span class="lineNum">     119 </span>                :            :   {</a>
-<a name="120"><span class="lineNum">     120 </span>                :<span class="lineCov">         20 :     return ::ad::map::intersection::IntersectionType::TrafficLight;</span></a>
+<a name="120"><span class="lineNum">     120 </span>                :<span class="lineCov">         22 :     return ::ad::map::intersection::IntersectionType::TrafficLight;</span></a>
 <a name="121"><span class="lineNum">     121 </span>                :            :   }</a>
 <a name="122"><span class="lineNum">     122 </span>                :<span class="lineCov">          2 :   throw std::out_of_range(&quot;Invalid enum literal&quot;); // LCOV_EXCL_BR_LINE</span></a>
 <a name="123"><span class="lineNum">     123 </span>                :            : }</a>

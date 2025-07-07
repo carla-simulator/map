@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -125,216 +125,216 @@
 <a name="54"><span class="lineNum">      54 </span>                :            :    */</a>
 <a name="55"><span class="lineNum">      55 </span>                :            :   bool setGeoProjection(std::string const &amp;geo_projection);</a>
 <a name="56"><span class="lineNum">      56 </span>                :            : </a>
-<a name="57"><span class="lineNum">      57 </span>                :            :   /**</a>
-<a name="58"><span class="lineNum">      58 </span>                :            :    * @brief Set the reference point for the ENU coordinate system.</a>
-<a name="59"><span class="lineNum">      59 </span>                :            :    *        Increases ENU reference point counter.</a>
-<a name="60"><span class="lineNum">      60 </span>                :            :    * @param[in] enu_ref_point ENU reference point.</a>
-<a name="61"><span class="lineNum">      61 </span>                :            :    */</a>
-<a name="62"><span class="lineNum">      62 </span>                :            :   void setENUReferencePoint(const GeoPoint &amp;enu_ref_point);</a>
-<a name="63"><span class="lineNum">      63 </span>                :            : </a>
-<a name="64"><span class="lineNum">      64 </span>                :            :   /**</a>
-<a name="65"><span class="lineNum">      65 </span>                :            :    * @return ENU Reference Point.</a>
-<a name="66"><span class="lineNum">      66 </span>                :            :    */</a>
-<a name="67"><span class="lineNum">      67 </span>                :            :   const GeoPoint &amp;getENUReferencePoint() const;</a>
-<a name="68"><span class="lineNum">      68 </span>                :            : </a>
-<a name="69"><span class="lineNum">      69 </span>                :            :   /**</a>
-<a name="70"><span class="lineNum">      70 </span>                :            :    * @returns true if ENU conversion is possible.</a>
-<a name="71"><span class="lineNum">      71 </span>                :            :    */</a>
-<a name="72"><span class="lineNum">      72 </span>                :            :   bool isENUValid() const;</a>
-<a name="73"><span class="lineNum">      73 </span>                :            : </a>
-<a name="74"><span class="lineNum">      74 </span>                :            :   /**</a>
-<a name="75"><span class="lineNum">      75 </span>                :            :    * @return ENU Reference Point counter.</a>
-<a name="76"><span class="lineNum">      76 </span>                :            :    *         To be used to mark what ENU system is used.</a>
-<a name="77"><span class="lineNum">      77 </span>                :            :    */</a>
-<a name="78"><span class="lineNum">      78 </span>                :            :   size_t getENURef() const;</a>
-<a name="79"><span class="lineNum">      79 </span>                :            : </a>
-<a name="80"><span class="lineNum">      80 </span>                :            : public: // ENU/Geo Conversions</a>
-<a name="81"><span class="lineNum">      81 </span>                :            :   /**</a>
-<a name="82"><span class="lineNum">      82 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="83"><span class="lineNum">      83 </span>                :            :    * @param[in] pt Source point.</a>
-<a name="84"><span class="lineNum">      84 </span>                :            :    * @returns Point in the target coordinate system.</a>
-<a name="85"><span class="lineNum">      85 </span>                :            :    * \note http://digext6.defence.gov.au/dspace/bitstream/1947/3538/1/DSTO-TN-0432.pdf</a>
-<a name="86"><span class="lineNum">      86 </span>                :            :    */</a>
-<a name="87"><span class="lineNum">      87 </span>                :            :   ENUPoint Geo2ENU(const GeoPoint &amp;pt) const;</a>
-<a name="88"><span class="lineNum">      88 </span>                :            : </a>
-<a name="89"><span class="lineNum">      89 </span>                :            :   /**</a>
-<a name="90"><span class="lineNum">      90 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="91"><span class="lineNum">      91 </span>                :            :    * @param[in] pt Source point.</a>
-<a name="92"><span class="lineNum">      92 </span>                :            :    * @returns Point in the target coordinate system.</a>
-<a name="93"><span class="lineNum">      93 </span>                :            :    * \note http://digext6.defence.gov.au/dspace/bitstream/1947/3538/1/DSTO-TN-0432.pdf</a>
-<a name="94"><span class="lineNum">      94 </span>                :            :    */</a>
-<a name="95"><span class="lineNum">      95 </span>                :            :   GeoPoint ENU2Geo(const ENUPoint &amp;pt) const;</a>
-<a name="96"><span class="lineNum">      96 </span>                :            : </a>
-<a name="97"><span class="lineNum">      97 </span>                :            : public: // ECEF/Geo Conversions</a>
-<a name="98"><span class="lineNum">      98 </span>                :            :         /**</a>
-<a name="99"><span class="lineNum">      99 </span>                :            :          * @brief Convert point between coordinate systems.</a>
-<a name="100"><span class="lineNum">     100 </span>                :            :          * @param[in] pt Source point.</a>
-<a name="101"><span class="lineNum">     101 </span>                :            :          * @returns Point in the target coordinate system.</a>
-<a name="102"><span class="lineNum">     102 </span>                :            :          * \note Olson, D. K. (1996):</a>
-<a name="103"><span class="lineNum">     103 </span>                :            :          *       Converting earth-Centered, Earth-Fixed Coordinates to Geodetic Coordinates,</a>
-<a name="104"><span class="lineNum">     104 </span>                :            :          *       IEEE Transactions on Aerospace and Electronic Systems, Vol. 32, No. 1, January 1996,</a>
-<a name="105"><span class="lineNum">     105 </span>                :            :          *       pp. 473-476.</a>
-<a name="106"><span class="lineNum">     106 </span>                :            :          */</a>
-<a name="107"><span class="lineNum">     107 </span>                :            :   ECEFPoint Geo2ECEF(const GeoPoint &amp;pt) const;</a>
-<a name="108"><span class="lineNum">     108 </span>                :            : </a>
-<a name="109"><span class="lineNum">     109 </span>                :            :   /**</a>
-<a name="110"><span class="lineNum">     110 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="111"><span class="lineNum">     111 </span>                :            :    * @param[in] pt Source point.</a>
-<a name="112"><span class="lineNum">     112 </span>                :            :    * @returns Point in the target coordinate system.</a>
-<a name="113"><span class="lineNum">     113 </span>                :            :    * \note Olson, D. K. (1996):</a>
-<a name="114"><span class="lineNum">     114 </span>                :            :    *       Converting earth-Centered, Earth-Fixed Coordinates to Geodetic Coordinates,</a>
-<a name="115"><span class="lineNum">     115 </span>                :            :    *       IEEE Transactions on Aerospace and Electronic Systems, Vol. 32, No. 1, January 1996,</a>
-<a name="116"><span class="lineNum">     116 </span>                :            :    *       pp. 473-476.</a>
-<a name="117"><span class="lineNum">     117 </span>                :            :    */</a>
-<a name="118"><span class="lineNum">     118 </span>                :            :   GeoPoint ECEF2Geo(const ECEFPoint &amp;pt) const;</a>
-<a name="119"><span class="lineNum">     119 </span>                :            : </a>
-<a name="120"><span class="lineNum">     120 </span>                :            : public: // ECEF/ENU Conversions</a>
-<a name="121"><span class="lineNum">     121 </span>                :            :         /**</a>
-<a name="122"><span class="lineNum">     122 </span>                :            :          * @brief Convert point between coordinate systems.</a>
-<a name="123"><span class="lineNum">     123 </span>                :            :          * @param[in] pt Source point.</a>
-<a name="124"><span class="lineNum">     124 </span>                :            :          * @returns Point in the target coordinate system.</a>
-<a name="125"><span class="lineNum">     125 </span>                :            :          * \note http://www.navipedia.net/index.php/Transformations_between_ECEF_and_ENU_coordinates</a>
-<a name="126"><span class="lineNum">     126 </span>                :            :          */</a>
-<a name="127"><span class="lineNum">     127 </span>                :            :   ECEFPoint ENU2ECEF(const ENUPoint &amp;pt) const;</a>
-<a name="128"><span class="lineNum">     128 </span>                :            : </a>
-<a name="129"><span class="lineNum">     129 </span>                :            :   /**</a>
-<a name="130"><span class="lineNum">     130 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="131"><span class="lineNum">     131 </span>                :            :    * @param[in] pt Source point.</a>
-<a name="132"><span class="lineNum">     132 </span>                :            :    * @returns Point in the target coordinate system.</a>
-<a name="133"><span class="lineNum">     133 </span>                :            :    * \note http://www.navipedia.net/index.php/Transformations_between_ECEF_and_ENU_coordinates</a>
-<a name="134"><span class="lineNum">     134 </span>                :            :    */</a>
-<a name="135"><span class="lineNum">     135 </span>                :            :   ENUPoint ECEF2ENU(const ECEFPoint &amp;pt) const;</a>
-<a name="136"><span class="lineNum">     136 </span>                :            : </a>
-<a name="137"><span class="lineNum">     137 </span>                :            : public: // Useful methods</a>
-<a name="138"><span class="lineNum">     138 </span>                :            :   /**</a>
-<a name="139"><span class="lineNum">     139 </span>                :            :    * @brief Calculates Earth Radius at specific latitude.</a>
-<a name="140"><span class="lineNum">     140 </span>                :            :    * @param[in] lat Latitude of the position.</a>
-<a name="141"><span class="lineNum">     141 </span>                :            :    * @returns Earth Radius at specific latitude.</a>
-<a name="142"><span class="lineNum">     142 </span>                :            :    * \note https://en.wikipedia.org/wiki/Earth_radius</a>
-<a name="143"><span class="lineNum">     143 </span>                :            :    */</a>
-<a name="144"><span class="lineNum">     144 </span>                :            :   static physics::Distance WGS84_R(const Latitude &amp;lat);</a>
-<a name="145"><span class="lineNum">     145 </span>                :            : </a>
-<a name="146"><span class="lineNum">     146 </span>                :            :   /**</a>
-<a name="147"><span class="lineNum">     147 </span>                :            :    * @brief Convert geodetic latitude to a geocentric latitude.</a>
-<a name="148"><span class="lineNum">     148 </span>                :            :    * @param[in] lat Geodetic latitude.</a>
-<a name="149"><span class="lineNum">     149 </span>                :            :    * @returns The angle measured from center of Earth between a point and the equator.</a>
-<a name="150"><span class="lineNum">     150 </span>                :            :    * \note https://en.wikipedia.org/wiki/Latitude#Geocentric_latitude</a>
-<a name="151"><span class="lineNum">     151 </span>                :            :    */</a>
-<a name="152"><span class="lineNum">     152 </span>                :            :   static double geocentricLatitude(const Latitude &amp;lat);</a>
-<a name="153"><span class="lineNum">     153 </span>                :            : </a>
-<a name="154"><span class="lineNum">     154 </span>                :            : public: // Conversions</a>
-<a name="155"><span class="lineNum">     155 </span>                :            :   /**</a>
-<a name="156"><span class="lineNum">     156 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="157"><span class="lineNum">     157 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
-<a name="158"><span class="lineNum">     158 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
-<a name="159"><span class="lineNum">     159 </span>                :            :    * @param[in] x Source point.</a>
-<a name="160"><span class="lineNum">     160 </span>                :            :    * @param[out] y Target point.</a>
-<a name="161"><span class="lineNum">     161 </span>                :            :    */</a>
-<a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">          6 :   void convert(const GeoPoint &amp;x, ENUPoint &amp;y) const</span></a>
-<a name="163"><span class="lineNum">     163 </span>                :            :   {</a>
-<a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">          6 :     y = Geo2ENU(x);</span></a>
-<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">          6 :   }</span></a>
-<a name="166"><span class="lineNum">     166 </span>                :            : </a>
-<a name="167"><span class="lineNum">     167 </span>                :            :   /**</a>
-<a name="168"><span class="lineNum">     168 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="169"><span class="lineNum">     169 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
-<a name="170"><span class="lineNum">     170 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
-<a name="171"><span class="lineNum">     171 </span>                :            :    * @param[in] x Source point.</a>
-<a name="172"><span class="lineNum">     172 </span>                :            :    * @param[out] y Target point.</a>
-<a name="173"><span class="lineNum">     173 </span>                :            :    */</a>
-<a name="174"><span class="lineNum">     174 </span>                :<span class="lineCov">          6 :   void convert(const ENUPoint &amp;x, GeoPoint &amp;y) const</span></a>
-<a name="175"><span class="lineNum">     175 </span>                :            :   {</a>
-<a name="176"><span class="lineNum">     176 </span>                :<span class="lineCov">          6 :     y = ENU2Geo(x);</span></a>
-<a name="177"><span class="lineNum">     177 </span>                :<span class="lineCov">          6 :   }</span></a>
-<a name="178"><span class="lineNum">     178 </span>                :            : </a>
-<a name="179"><span class="lineNum">     179 </span>                :            :   /**</a>
-<a name="180"><span class="lineNum">     180 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="181"><span class="lineNum">     181 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
-<a name="182"><span class="lineNum">     182 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
-<a name="183"><span class="lineNum">     183 </span>                :            :    * @param[in] x Source point.</a>
-<a name="184"><span class="lineNum">     184 </span>                :            :    * @param[out] y Target point.</a>
-<a name="185"><span class="lineNum">     185 </span>                :            :    */</a>
-<a name="186"><span class="lineNum">     186 </span>                :<span class="lineCov">         60 :   void convert(const GeoPoint &amp;x, ECEFPoint &amp;y) const</span></a>
-<a name="187"><span class="lineNum">     187 </span>                :            :   {</a>
-<a name="188"><span class="lineNum">     188 </span>                :<span class="lineCov">         60 :     y = Geo2ECEF(x);</span></a>
-<a name="189"><span class="lineNum">     189 </span>                :<span class="lineCov">         60 :   }</span></a>
-<a name="190"><span class="lineNum">     190 </span>                :            : </a>
-<a name="191"><span class="lineNum">     191 </span>                :            :   /**</a>
-<a name="192"><span class="lineNum">     192 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="193"><span class="lineNum">     193 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
-<a name="194"><span class="lineNum">     194 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
-<a name="195"><span class="lineNum">     195 </span>                :            :    * @param[in] x Source point.</a>
-<a name="196"><span class="lineNum">     196 </span>                :            :    * @param[out] y Target point.</a>
-<a name="197"><span class="lineNum">     197 </span>                :            :    */</a>
-<a name="198"><span class="lineNum">     198 </span>                :<span class="lineCov">         48 :   void convert(const ECEFPoint &amp;x, GeoPoint &amp;y) const</span></a>
-<a name="199"><span class="lineNum">     199 </span>                :            :   {</a>
-<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">         48 :     y = ECEF2Geo(x);</span></a>
-<a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">         48 :   }</span></a>
-<a name="202"><span class="lineNum">     202 </span>                :            : </a>
-<a name="203"><span class="lineNum">     203 </span>                :            :   /**</a>
-<a name="204"><span class="lineNum">     204 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="205"><span class="lineNum">     205 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
-<a name="206"><span class="lineNum">     206 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
-<a name="207"><span class="lineNum">     207 </span>                :            :    * @param[in] x Source point.</a>
-<a name="208"><span class="lineNum">     208 </span>                :            :    * @param[out] y Target point.</a>
-<a name="209"><span class="lineNum">     209 </span>                :            :    */</a>
-<a name="210"><span class="lineNum">     210 </span>                :<span class="lineCov">       2857 :   void convert(const ECEFPoint &amp;x, ENUPoint &amp;y) const</span></a>
-<a name="211"><span class="lineNum">     211 </span>                :            :   {</a>
-<a name="212"><span class="lineNum">     212 </span>                :<span class="lineCov">       2857 :     y = ECEF2ENU(x);</span></a>
-<a name="213"><span class="lineNum">     213 </span>                :<span class="lineCov">       2855 :   }</span></a>
-<a name="214"><span class="lineNum">     214 </span>                :            : </a>
-<a name="215"><span class="lineNum">     215 </span>                :            :   /**</a>
-<a name="216"><span class="lineNum">     216 </span>                :            :    * @brief Convert point between coordinate systems.</a>
-<a name="217"><span class="lineNum">     217 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
-<a name="218"><span class="lineNum">     218 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
-<a name="219"><span class="lineNum">     219 </span>                :            :    * @param[in] x Source point.</a>
-<a name="220"><span class="lineNum">     220 </span>                :            :    * @param[out] y Target point.</a>
-<a name="221"><span class="lineNum">     221 </span>                :            :    */</a>
-<a name="222"><span class="lineNum">     222 </span>                :<span class="lineCov">          6 :   void convert(const ENUPoint &amp;x, ECEFPoint &amp;y) const</span></a>
-<a name="223"><span class="lineNum">     223 </span>                :            :   {</a>
-<a name="224"><span class="lineNum">     224 </span>                :<span class="lineCov">          6 :     y = ENU2ECEF(x);</span></a>
-<a name="225"><span class="lineNum">     225 </span>                :<span class="lineCov">          6 :   }</span></a>
-<a name="226"><span class="lineNum">     226 </span>                :            : </a>
-<a name="227"><span class="lineNum">     227 </span>                :            :   /**</a>
-<a name="228"><span class="lineNum">     228 </span>                :            :    * @brief Convert points between coordinate systems.</a>
-<a name="229"><span class="lineNum">     229 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
-<a name="230"><span class="lineNum">     230 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
-<a name="231"><span class="lineNum">     231 </span>                :            :    * @param[in]  xs Source points.</a>
-<a name="232"><span class="lineNum">     232 </span>                :            :    * @param[out] ys Target points.</a>
-<a name="233"><span class="lineNum">     233 </span>                :            :    */</a>
-<a name="234"><span class="lineNum">     234 </span>                :            :   template &lt;typename SourceC, typename TargetC&gt;</a>
-<a name="235"><span class="lineNum">     235 </span>                :<span class="lineCov">         84 :   void convert(const std::vector&lt;SourceC&gt; &amp;xs, std::vector&lt;TargetC&gt; &amp;ys) const</span></a>
-<a name="236"><span class="lineNum">     236 </span>                :            :   {</a>
-<a name="237"><span class="lineNum">     237 </span>                :<span class="lineCov">         84 :     ys.clear();</span></a>
-<a name="238"><span class="lineNum">     238 </span>                :<span class="lineCov">         84 :     ys.reserve(xs.size());</span></a>
-<a name="239"><span class="lineNum">     239 </span>        [<span class="branchCov" title="Branch 0 was taken 2951 times"> + </span><span class="branchCov" title="Branch 1 was taken 82 times"> + </span>]:<span class="lineCov">       3033 :     for (auto x : xs)</span></a>
-<a name="240"><span class="lineNum">     240 </span>                :            :     {</a>
-<a name="241"><span class="lineNum">     241 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2951 :       TargetC y;</span></a>
-<a name="242"><span class="lineNum">     242 </span>        [<span class="branchCov" title="Branch 0 was taken 2949 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">       2951 :       convert(x, y);</span></a>
-<a name="243"><span class="lineNum">     243 </span>        [<span class="branchCov" title="Branch 0 was taken 2949 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2949 :       ys.push_back(y);</span></a>
-<a name="244"><span class="lineNum">     244 </span>                :            :     }</a>
-<a name="245"><span class="lineNum">     245 </span>                :<span class="lineCov">         82 :   }</span></a>
-<a name="246"><span class="lineNum">     246 </span>                :            : </a>
-<a name="247"><span class="lineNum">     247 </span>                :            : private:                     // ENU Conversion parameters</a>
-<a name="248"><span class="lineNum">     248 </span>                :            :   size_t enu_ref_;           ///&lt; ENU Reference System Counter.</a>
-<a name="249"><span class="lineNum">     249 </span>                :            :   GeoPoint enu_ref_point_;   ///&lt; ENU Reference Point.</a>
-<a name="250"><span class="lineNum">     250 </span>                :            :   ECEFPoint ecef_ref_point_; ///&lt; Equivalent ECEF Reference Point.</a>
-<a name="251"><span class="lineNum">     251 </span>                :            :   double enu_phi_;           ///&lt; ENU computation temp value.</a>
-<a name="252"><span class="lineNum">     252 </span>                :            :   double enu_lam_;           ///&lt; ENU computation temp value.</a>
-<a name="253"><span class="lineNum">     253 </span>                :            :   double enu_h_;             ///&lt; ENU computation temp value.</a>
-<a name="254"><span class="lineNum">     254 </span>                :            :   double enu_tmp1_;          ///&lt; ENU computation temp value.</a>
-<a name="255"><span class="lineNum">     255 </span>                :            :   double enu_tmp1_3_;        ///&lt; ENU computation temp value.</a>
-<a name="256"><span class="lineNum">     256 </span>                :            :   double enu_cp_;            ///&lt; ENU computation temp value.</a>
-<a name="257"><span class="lineNum">     257 </span>                :            :   double enu_sp_;            ///&lt; ENU computation temp value.</a>
-<a name="258"><span class="lineNum">     258 </span>                :            :   double enu_cp_2_;          ///&lt; ENU computation temp value.</a>
-<a name="259"><span class="lineNum">     259 </span>                :            :   double enu_sp_2_;          ///&lt; ENU computation temp value.</a>
-<a name="260"><span class="lineNum">     260 </span>                :            :   double ecef_enu_[9];       ///&lt; ENU/ECEF conversion matrix.</a>
-<a name="261"><span class="lineNum">     261 </span>                :            : </a>
-<a name="262"><span class="lineNum">     262 </span>                :            :   projPJ projPtr_; ///&lt; proj object to be used for ENU conversion. In case of OpenDrive import ENU conversions have to</a>
-<a name="263"><span class="lineNum">     263 </span>                :            :                    ///&lt; use the exact projection string provided with the map.</a>
+<a name="57"><span class="lineNum">      57 </span>                :            :   ///&lt; is ENU conversion configured via projection string</a>
+<a name="58"><span class="lineNum">      58 </span>                :            :   bool isGeoProjectionValid() const;</a>
+<a name="59"><span class="lineNum">      59 </span>                :            : </a>
+<a name="60"><span class="lineNum">      60 </span>                :            :   /**</a>
+<a name="61"><span class="lineNum">      61 </span>                :            :    * @brief Set the reference point for the ENU coordinate system.</a>
+<a name="62"><span class="lineNum">      62 </span>                :            :    *        Increases ENU reference point counter.</a>
+<a name="63"><span class="lineNum">      63 </span>                :            :    * @param[in] enu_ref_point ENU reference point.</a>
+<a name="64"><span class="lineNum">      64 </span>                :            :    */</a>
+<a name="65"><span class="lineNum">      65 </span>                :            :   void setENUReferencePoint(const GeoPoint &amp;enu_ref_point);</a>
+<a name="66"><span class="lineNum">      66 </span>                :            : </a>
+<a name="67"><span class="lineNum">      67 </span>                :            :   /**</a>
+<a name="68"><span class="lineNum">      68 </span>                :            :    * @return ENU Reference Point.</a>
+<a name="69"><span class="lineNum">      69 </span>                :            :    */</a>
+<a name="70"><span class="lineNum">      70 </span>                :            :   const GeoPoint &amp;getENUReferencePoint() const;</a>
+<a name="71"><span class="lineNum">      71 </span>                :            : </a>
+<a name="72"><span class="lineNum">      72 </span>                :            :   /**</a>
+<a name="73"><span class="lineNum">      73 </span>                :            :    * @returns true if ENU conversion is possible.</a>
+<a name="74"><span class="lineNum">      74 </span>                :            :    */</a>
+<a name="75"><span class="lineNum">      75 </span>                :            :   bool isENUValid() const;</a>
+<a name="76"><span class="lineNum">      76 </span>                :            : </a>
+<a name="77"><span class="lineNum">      77 </span>                :            :   /**</a>
+<a name="78"><span class="lineNum">      78 </span>                :            :    * @return ENU Reference Point counter.</a>
+<a name="79"><span class="lineNum">      79 </span>                :            :    *         To be used to mark what ENU system is used.</a>
+<a name="80"><span class="lineNum">      80 </span>                :            :    */</a>
+<a name="81"><span class="lineNum">      81 </span>                :            :   size_t getENURef() const;</a>
+<a name="82"><span class="lineNum">      82 </span>                :            : </a>
+<a name="83"><span class="lineNum">      83 </span>                :            : public: // ENU/Geo Conversions</a>
+<a name="84"><span class="lineNum">      84 </span>                :            :   /**</a>
+<a name="85"><span class="lineNum">      85 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="86"><span class="lineNum">      86 </span>                :            :    * @param[in] pt Source point.</a>
+<a name="87"><span class="lineNum">      87 </span>                :            :    * @returns Point in the target coordinate system.</a>
+<a name="88"><span class="lineNum">      88 </span>                :            :    * \note http://digext6.defence.gov.au/dspace/bitstream/1947/3538/1/DSTO-TN-0432.pdf</a>
+<a name="89"><span class="lineNum">      89 </span>                :            :    */</a>
+<a name="90"><span class="lineNum">      90 </span>                :            :   ENUPoint Geo2ENU(const GeoPoint &amp;pt) const;</a>
+<a name="91"><span class="lineNum">      91 </span>                :            : </a>
+<a name="92"><span class="lineNum">      92 </span>                :            :   /**</a>
+<a name="93"><span class="lineNum">      93 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="94"><span class="lineNum">      94 </span>                :            :    * @param[in] pt Source point.</a>
+<a name="95"><span class="lineNum">      95 </span>                :            :    * @returns Point in the target coordinate system.</a>
+<a name="96"><span class="lineNum">      96 </span>                :            :    * \note http://digext6.defence.gov.au/dspace/bitstream/1947/3538/1/DSTO-TN-0432.pdf</a>
+<a name="97"><span class="lineNum">      97 </span>                :            :    */</a>
+<a name="98"><span class="lineNum">      98 </span>                :            :   GeoPoint ENU2Geo(const ENUPoint &amp;pt) const;</a>
+<a name="99"><span class="lineNum">      99 </span>                :            : </a>
+<a name="100"><span class="lineNum">     100 </span>                :            : public: // ECEF/Geo Conversions</a>
+<a name="101"><span class="lineNum">     101 </span>                :            :         /**</a>
+<a name="102"><span class="lineNum">     102 </span>                :            :          * @brief Convert point between coordinate systems.</a>
+<a name="103"><span class="lineNum">     103 </span>                :            :          * @param[in] pt Source point.</a>
+<a name="104"><span class="lineNum">     104 </span>                :            :          * @returns Point in the target coordinate system.</a>
+<a name="105"><span class="lineNum">     105 </span>                :            :          * \note Olson, D. K. (1996):</a>
+<a name="106"><span class="lineNum">     106 </span>                :            :          *       Converting earth-Centered, Earth-Fixed Coordinates to Geodetic Coordinates,</a>
+<a name="107"><span class="lineNum">     107 </span>                :            :          *       IEEE Transactions on Aerospace and Electronic Systems, Vol. 32, No. 1, January 1996,</a>
+<a name="108"><span class="lineNum">     108 </span>                :            :          *       pp. 473-476.</a>
+<a name="109"><span class="lineNum">     109 </span>                :            :          */</a>
+<a name="110"><span class="lineNum">     110 </span>                :            :   ECEFPoint Geo2ECEF(const GeoPoint &amp;pt) const;</a>
+<a name="111"><span class="lineNum">     111 </span>                :            : </a>
+<a name="112"><span class="lineNum">     112 </span>                :            :   /**</a>
+<a name="113"><span class="lineNum">     113 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="114"><span class="lineNum">     114 </span>                :            :    * @param[in] pt Source point.</a>
+<a name="115"><span class="lineNum">     115 </span>                :            :    * @returns Point in the target coordinate system.</a>
+<a name="116"><span class="lineNum">     116 </span>                :            :    * \note Olson, D. K. (1996):</a>
+<a name="117"><span class="lineNum">     117 </span>                :            :    *       Converting earth-Centered, Earth-Fixed Coordinates to Geodetic Coordinates,</a>
+<a name="118"><span class="lineNum">     118 </span>                :            :    *       IEEE Transactions on Aerospace and Electronic Systems, Vol. 32, No. 1, January 1996,</a>
+<a name="119"><span class="lineNum">     119 </span>                :            :    *       pp. 473-476.</a>
+<a name="120"><span class="lineNum">     120 </span>                :            :    */</a>
+<a name="121"><span class="lineNum">     121 </span>                :            :   GeoPoint ECEF2Geo(const ECEFPoint &amp;pt) const;</a>
+<a name="122"><span class="lineNum">     122 </span>                :            : </a>
+<a name="123"><span class="lineNum">     123 </span>                :            : public: // ECEF/ENU Conversions</a>
+<a name="124"><span class="lineNum">     124 </span>                :            :         /**</a>
+<a name="125"><span class="lineNum">     125 </span>                :            :          * @brief Convert point between coordinate systems.</a>
+<a name="126"><span class="lineNum">     126 </span>                :            :          * @param[in] pt Source point.</a>
+<a name="127"><span class="lineNum">     127 </span>                :            :          * @returns Point in the target coordinate system.</a>
+<a name="128"><span class="lineNum">     128 </span>                :            :          * \note http://www.navipedia.net/index.php/Transformations_between_ECEF_and_ENU_coordinates</a>
+<a name="129"><span class="lineNum">     129 </span>                :            :          */</a>
+<a name="130"><span class="lineNum">     130 </span>                :            :   ECEFPoint ENU2ECEF(const ENUPoint &amp;pt) const;</a>
+<a name="131"><span class="lineNum">     131 </span>                :            : </a>
+<a name="132"><span class="lineNum">     132 </span>                :            :   /**</a>
+<a name="133"><span class="lineNum">     133 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="134"><span class="lineNum">     134 </span>                :            :    * @param[in] pt Source point.</a>
+<a name="135"><span class="lineNum">     135 </span>                :            :    * @returns Point in the target coordinate system.</a>
+<a name="136"><span class="lineNum">     136 </span>                :            :    * \note http://www.navipedia.net/index.php/Transformations_between_ECEF_and_ENU_coordinates</a>
+<a name="137"><span class="lineNum">     137 </span>                :            :    */</a>
+<a name="138"><span class="lineNum">     138 </span>                :            :   ENUPoint ECEF2ENU(const ECEFPoint &amp;pt) const;</a>
+<a name="139"><span class="lineNum">     139 </span>                :            : </a>
+<a name="140"><span class="lineNum">     140 </span>                :            : public: // Useful methods</a>
+<a name="141"><span class="lineNum">     141 </span>                :            :   /**</a>
+<a name="142"><span class="lineNum">     142 </span>                :            :    * @brief Calculates Earth Radius at specific latitude.</a>
+<a name="143"><span class="lineNum">     143 </span>                :            :    * @param[in] lat Latitude of the position.</a>
+<a name="144"><span class="lineNum">     144 </span>                :            :    * @returns Earth Radius at specific latitude.</a>
+<a name="145"><span class="lineNum">     145 </span>                :            :    * \note https://en.wikipedia.org/wiki/Earth_radius</a>
+<a name="146"><span class="lineNum">     146 </span>                :            :    */</a>
+<a name="147"><span class="lineNum">     147 </span>                :            :   static physics::Distance WGS84_R(const Latitude &amp;lat);</a>
+<a name="148"><span class="lineNum">     148 </span>                :            : </a>
+<a name="149"><span class="lineNum">     149 </span>                :            :   /**</a>
+<a name="150"><span class="lineNum">     150 </span>                :            :    * @brief Convert geodetic latitude to a geocentric latitude.</a>
+<a name="151"><span class="lineNum">     151 </span>                :            :    * @param[in] lat Geodetic latitude.</a>
+<a name="152"><span class="lineNum">     152 </span>                :            :    * @returns The angle measured from center of Earth between a point and the equator.</a>
+<a name="153"><span class="lineNum">     153 </span>                :            :    * \note https://en.wikipedia.org/wiki/Latitude#Geocentric_latitude</a>
+<a name="154"><span class="lineNum">     154 </span>                :            :    */</a>
+<a name="155"><span class="lineNum">     155 </span>                :            :   static double geocentricLatitude(const Latitude &amp;lat);</a>
+<a name="156"><span class="lineNum">     156 </span>                :            : </a>
+<a name="157"><span class="lineNum">     157 </span>                :            : public: // Conversions</a>
+<a name="158"><span class="lineNum">     158 </span>                :            :   /**</a>
+<a name="159"><span class="lineNum">     159 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="160"><span class="lineNum">     160 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
+<a name="161"><span class="lineNum">     161 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
+<a name="162"><span class="lineNum">     162 </span>                :            :    * @param[in] x Source point.</a>
+<a name="163"><span class="lineNum">     163 </span>                :            :    * @param[out] y Target point.</a>
+<a name="164"><span class="lineNum">     164 </span>                :            :    */</a>
+<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">          6 :   void convert(const GeoPoint &amp;x, ENUPoint &amp;y) const</span></a>
+<a name="166"><span class="lineNum">     166 </span>                :            :   {</a>
+<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">          6 :     y = Geo2ENU(x);</span></a>
+<a name="168"><span class="lineNum">     168 </span>                :<span class="lineCov">          6 :   }</span></a>
+<a name="169"><span class="lineNum">     169 </span>                :            : </a>
+<a name="170"><span class="lineNum">     170 </span>                :            :   /**</a>
+<a name="171"><span class="lineNum">     171 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="172"><span class="lineNum">     172 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
+<a name="173"><span class="lineNum">     173 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
+<a name="174"><span class="lineNum">     174 </span>                :            :    * @param[in] x Source point.</a>
+<a name="175"><span class="lineNum">     175 </span>                :            :    * @param[out] y Target point.</a>
+<a name="176"><span class="lineNum">     176 </span>                :            :    */</a>
+<a name="177"><span class="lineNum">     177 </span>                :<span class="lineCov">          6 :   void convert(const ENUPoint &amp;x, GeoPoint &amp;y) const</span></a>
+<a name="178"><span class="lineNum">     178 </span>                :            :   {</a>
+<a name="179"><span class="lineNum">     179 </span>                :<span class="lineCov">          6 :     y = ENU2Geo(x);</span></a>
+<a name="180"><span class="lineNum">     180 </span>                :<span class="lineCov">          6 :   }</span></a>
+<a name="181"><span class="lineNum">     181 </span>                :            : </a>
+<a name="182"><span class="lineNum">     182 </span>                :            :   /**</a>
+<a name="183"><span class="lineNum">     183 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="184"><span class="lineNum">     184 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
+<a name="185"><span class="lineNum">     185 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
+<a name="186"><span class="lineNum">     186 </span>                :            :    * @param[in] x Source point.</a>
+<a name="187"><span class="lineNum">     187 </span>                :            :    * @param[out] y Target point.</a>
+<a name="188"><span class="lineNum">     188 </span>                :            :    */</a>
+<a name="189"><span class="lineNum">     189 </span>                :<span class="lineCov">         60 :   void convert(const GeoPoint &amp;x, ECEFPoint &amp;y) const</span></a>
+<a name="190"><span class="lineNum">     190 </span>                :            :   {</a>
+<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">         60 :     y = Geo2ECEF(x);</span></a>
+<a name="192"><span class="lineNum">     192 </span>                :<span class="lineCov">         60 :   }</span></a>
+<a name="193"><span class="lineNum">     193 </span>                :            : </a>
+<a name="194"><span class="lineNum">     194 </span>                :            :   /**</a>
+<a name="195"><span class="lineNum">     195 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="196"><span class="lineNum">     196 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
+<a name="197"><span class="lineNum">     197 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
+<a name="198"><span class="lineNum">     198 </span>                :            :    * @param[in] x Source point.</a>
+<a name="199"><span class="lineNum">     199 </span>                :            :    * @param[out] y Target point.</a>
+<a name="200"><span class="lineNum">     200 </span>                :            :    */</a>
+<a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">         36 :   void convert(const ECEFPoint &amp;x, GeoPoint &amp;y) const</span></a>
+<a name="202"><span class="lineNum">     202 </span>                :            :   {</a>
+<a name="203"><span class="lineNum">     203 </span>                :<span class="lineCov">         36 :     y = ECEF2Geo(x);</span></a>
+<a name="204"><span class="lineNum">     204 </span>                :<span class="lineCov">         36 :   }</span></a>
+<a name="205"><span class="lineNum">     205 </span>                :            : </a>
+<a name="206"><span class="lineNum">     206 </span>                :            :   /**</a>
+<a name="207"><span class="lineNum">     207 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="208"><span class="lineNum">     208 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
+<a name="209"><span class="lineNum">     209 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
+<a name="210"><span class="lineNum">     210 </span>                :            :    * @param[in] x Source point.</a>
+<a name="211"><span class="lineNum">     211 </span>                :            :    * @param[out] y Target point.</a>
+<a name="212"><span class="lineNum">     212 </span>                :            :    */</a>
+<a name="213"><span class="lineNum">     213 </span>                :<span class="lineCov">      38431 :   void convert(const ECEFPoint &amp;x, ENUPoint &amp;y) const</span></a>
+<a name="214"><span class="lineNum">     214 </span>                :            :   {</a>
+<a name="215"><span class="lineNum">     215 </span>                :<span class="lineCov">      38431 :     y = ECEF2ENU(x);</span></a>
+<a name="216"><span class="lineNum">     216 </span>                :<span class="lineCov">      38429 :   }</span></a>
+<a name="217"><span class="lineNum">     217 </span>                :            : </a>
+<a name="218"><span class="lineNum">     218 </span>                :            :   /**</a>
+<a name="219"><span class="lineNum">     219 </span>                :            :    * @brief Convert point between coordinate systems.</a>
+<a name="220"><span class="lineNum">     220 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
+<a name="221"><span class="lineNum">     221 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
+<a name="222"><span class="lineNum">     222 </span>                :            :    * @param[in] x Source point.</a>
+<a name="223"><span class="lineNum">     223 </span>                :            :    * @param[out] y Target point.</a>
+<a name="224"><span class="lineNum">     224 </span>                :            :    */</a>
+<a name="225"><span class="lineNum">     225 </span>                :<span class="lineCov">          6 :   void convert(const ENUPoint &amp;x, ECEFPoint &amp;y) const</span></a>
+<a name="226"><span class="lineNum">     226 </span>                :            :   {</a>
+<a name="227"><span class="lineNum">     227 </span>                :<span class="lineCov">          6 :     y = ENU2ECEF(x);</span></a>
+<a name="228"><span class="lineNum">     228 </span>                :<span class="lineCov">          6 :   }</span></a>
+<a name="229"><span class="lineNum">     229 </span>                :            : </a>
+<a name="230"><span class="lineNum">     230 </span>                :            :   /**</a>
+<a name="231"><span class="lineNum">     231 </span>                :            :    * @brief Convert points between coordinate systems.</a>
+<a name="232"><span class="lineNum">     232 </span>                :            :    * \tparam SourceC Source coordinate system.</a>
+<a name="233"><span class="lineNum">     233 </span>                :            :    * \tparam TargetC Target coordinate system.</a>
+<a name="234"><span class="lineNum">     234 </span>                :            :    * @param[in]  xs Source points.</a>
+<a name="235"><span class="lineNum">     235 </span>                :            :    * @param[out] ys Target points.</a>
+<a name="236"><span class="lineNum">     236 </span>                :            :    */</a>
+<a name="237"><span class="lineNum">     237 </span>                :            :   template &lt;typename SourceC, typename TargetC&gt;</a>
+<a name="238"><span class="lineNum">     238 </span>                :<span class="lineCov">       3018 :   void convert(const std::vector&lt;SourceC&gt; &amp;xs, std::vector&lt;TargetC&gt; &amp;ys) const</span></a>
+<a name="239"><span class="lineNum">     239 </span>                :            :   {</a>
+<a name="240"><span class="lineNum">     240 </span>                :<span class="lineCov">       3018 :     ys.clear();</span></a>
+<a name="241"><span class="lineNum">     241 </span>                :<span class="lineCov">       3018 :     ys.reserve(xs.size());</span></a>
+<a name="242"><span class="lineNum">     242 </span>        [<span class="branchCov" title="Branch 0 was taken 38513 times"> + </span><span class="branchCov" title="Branch 1 was taken 3016 times"> + </span>]:<span class="lineCov">      41529 :     for (auto x : xs)</span></a>
+<a name="243"><span class="lineNum">     243 </span>                :            :     {</a>
+<a name="244"><span class="lineNum">     244 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      38513 :       TargetC y;</span></a>
+<a name="245"><span class="lineNum">     245 </span>        [<span class="branchCov" title="Branch 0 was taken 38511 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">      38513 :       convert(x, y);</span></a>
+<a name="246"><span class="lineNum">     246 </span>        [<span class="branchCov" title="Branch 0 was taken 38511 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      38511 :       ys.push_back(y);</span></a>
+<a name="247"><span class="lineNum">     247 </span>                :            :     }</a>
+<a name="248"><span class="lineNum">     248 </span>                :<span class="lineCov">       3016 :   }</span></a>
+<a name="249"><span class="lineNum">     249 </span>                :            : </a>
+<a name="250"><span class="lineNum">     250 </span>                :            : private:                     // ENU Conversion parameters</a>
+<a name="251"><span class="lineNum">     251 </span>                :            :   size_t enu_ref_;           ///&lt; ENU Reference System Counter.</a>
+<a name="252"><span class="lineNum">     252 </span>                :            :   GeoPoint enu_ref_point_;   ///&lt; ENU Reference Point.</a>
+<a name="253"><span class="lineNum">     253 </span>                :            :   ECEFPoint ecef_ref_point_; ///&lt; Equivalent ECEF Reference Point.</a>
+<a name="254"><span class="lineNum">     254 </span>                :            :   double enu_phi_;           ///&lt; ENU computation temp value.</a>
+<a name="255"><span class="lineNum">     255 </span>                :            :   double enu_lam_;           ///&lt; ENU computation temp value.</a>
+<a name="256"><span class="lineNum">     256 </span>                :            :   double enu_h_;             ///&lt; ENU computation temp value.</a>
+<a name="257"><span class="lineNum">     257 </span>                :            :   double enu_tmp1_;          ///&lt; ENU computation temp value.</a>
+<a name="258"><span class="lineNum">     258 </span>                :            :   double enu_tmp1_3_;        ///&lt; ENU computation temp value.</a>
+<a name="259"><span class="lineNum">     259 </span>                :            :   double enu_cp_;            ///&lt; ENU computation temp value.</a>
+<a name="260"><span class="lineNum">     260 </span>                :            :   double enu_sp_;            ///&lt; ENU computation temp value.</a>
+<a name="261"><span class="lineNum">     261 </span>                :            :   double enu_cp_2_;          ///&lt; ENU computation temp value.</a>
+<a name="262"><span class="lineNum">     262 </span>                :            :   double enu_sp_2_;          ///&lt; ENU computation temp value.</a>
+<a name="263"><span class="lineNum">     263 </span>                :            :   double ecef_enu_[9];       ///&lt; ENU/ECEF conversion matrix.</a>
 <a name="264"><span class="lineNum">     264 </span>                :            : </a>
-<a name="265"><span class="lineNum">     265 </span>                :            :   ///&lt; is ENU conversion configured via projection string</a>
-<a name="266"><span class="lineNum">     266 </span>                :            :   bool isGeoProjectionValid() const;</a>
+<a name="265"><span class="lineNum">     265 </span>                :            :   projPJ projPtr_; ///&lt; proj object to be used for ENU conversion. In case of OpenDrive import ENU conversions have to</a>
+<a name="266"><span class="lineNum">     266 </span>                :            :                    ///&lt; use the exact projection string provided with the map.</a>
 <a name="267"><span class="lineNum">     267 </span>                :            : </a>
 <a name="268"><span class="lineNum">     268 </span>                :            : private:                                              // Constants</a>
 <a name="269"><span class="lineNum">     269 </span>                :            :   static constexpr double PI = 3.141592654;           ///&lt; PI</a>

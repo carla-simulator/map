@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['metricrangelist_601',['MetricRangeList',['../namespacead_1_1physics.html#a08a3602bbe6ba5ebe199a5feeff27a1e',1,'ad::physics']]]
+  ['headingrangevector_827',['HeadingRangeVector',['../namespacead_1_1geometry.html#a9e58ee133c3a27407ace0edbb124e1bb',1,'ad::geometry']]]
 ];

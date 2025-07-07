@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 09:54:55</td>
+            <td class="headerValue">2025-07-07 13:36:20</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">8</td>
@@ -133,78 +133,78 @@
 <a name="62"><span class="lineNum">      62 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :   initLanePointer();</span></a>
 <a name="63"><span class="lineNum">      63 </span>                :<span class="lineNoCov">          0 : }</span></a>
 <a name="64"><span class="lineNum">      64 </span>                :            : </a>
-<a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">       2711 : RouteAstar::RouteAstar(const RoutingParaPoint &amp;start, const RoutingParaPoint &amp;dest, Type typ)</span></a>
-<a name="66"><span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 0 was taken 2711 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2711 :   : RouteExpander(start, dest, physics::Distance::getMax(), physics::Duration::getMax(), typ)</span></a>
+<a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">       2697 : RouteAstar::RouteAstar(const RoutingParaPoint &amp;start, const RoutingParaPoint &amp;dest, Type typ)</span></a>
+<a name="66"><span class="lineNum">      66 </span>        [<span class="branchCov" title="Branch 0 was taken 2697 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2697 :   : RouteExpander(start, dest, physics::Distance::getMax(), physics::Duration::getMax(), typ)</span></a>
 <a name="67"><span class="lineNum">      67 </span>                :            : {</a>
-<a name="68"><span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 0 was taken 2711 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2711 :   initLanePointer();</span></a>
-<a name="69"><span class="lineNum">      69 </span>                :<span class="lineCov">       2711 : }</span></a>
+<a name="68"><span class="lineNum">      68 </span>        [<span class="branchCov" title="Branch 0 was taken 2697 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2697 :   initLanePointer();</span></a>
+<a name="69"><span class="lineNum">      69 </span>                :<span class="lineCov">       2697 : }</span></a>
 <a name="70"><span class="lineNum">      70 </span>                :            : </a>
-<a name="71"><span class="lineNum">      71 </span>                :<span class="lineCov">       2723 : void RouteAstar::initLanePointer()</span></a>
+<a name="71"><span class="lineNum">      71 </span>                :<span class="lineCov">       2709 : void RouteAstar::initLanePointer()</span></a>
 <a name="72"><span class="lineNum">      72 </span>                :            : {</a>
-<a name="73"><span class="lineNum">      73 </span>                :<span class="lineCov">       2723 :   mDestLane = lane::getLanePtr(mDest.point.laneId);</span></a>
-<a name="74"><span class="lineNum">      74 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2723 times"> + </span>]:<span class="lineCov">       2723 :   if (!mDestLane)</span></a>
+<a name="73"><span class="lineNum">      73 </span>                :<span class="lineCov">       2709 :   mDestLane = lane::getLanePtr(mDest.point.lane_id);</span></a>
+<a name="74"><span class="lineNum">      74 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2709 times"> + </span>]:<span class="lineCov">       2709 :   if (!mDestLane)</span></a>
 <a name="75"><span class="lineNum">      75 </span>                :            :   {</a>
 <a name="76"><span class="lineNum">      76 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::runtime_error(&quot;Dest lane not found!&quot;);</span></a>
 <a name="77"><span class="lineNum">      77 </span>                :            :   }</a>
-<a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">       2723 :   mStartLane = lane::getLanePtr(mStart.point.laneId);</span></a>
-<a name="79"><span class="lineNum">      79 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2723 times"> + </span>]:<span class="lineCov">       2723 :   if (!mStartLane)</span></a>
+<a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">       2709 :   mStartLane = lane::getLanePtr(mStart.point.lane_id);</span></a>
+<a name="79"><span class="lineNum">      79 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2709 times"> + </span>]:<span class="lineCov">       2709 :   if (!mStartLane)</span></a>
 <a name="80"><span class="lineNum">      80 </span>                :            :   {</a>
 <a name="81"><span class="lineNum">      81 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     throw std::runtime_error(&quot;Start lane not found!&quot;);</span></a>
 <a name="82"><span class="lineNum">      82 </span>                :            :   }</a>
-<a name="83"><span class="lineNum">      83 </span>                :<span class="lineCov">       2723 : }</span></a>
+<a name="83"><span class="lineNum">      83 </span>                :<span class="lineCov">       2709 : }</span></a>
 <a name="84"><span class="lineNum">      84 </span>                :            : </a>
 <a name="85"><span class="lineNum">      85 </span>                :            : // https://en.wikipedia.org/wiki/A*_search_algorithm</a>
-<a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">       2723 : bool RouteAstar::calculate()</span></a>
+<a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">       2709 : bool RouteAstar::calculate()</span></a>
 <a name="87"><span class="lineNum">      87 </span>                :            : {</a>
-<a name="88"><span class="lineNum">      88 </span>                :<span class="lineCov">       2723 :   mProcessedPoints.clear();</span></a>
-<a name="89"><span class="lineNum">      89 </span>                :<span class="lineCov">       2723 :   mProcessingMap.clear();</span></a>
-<a name="90"><span class="lineNum">      90 </span>                :<span class="lineCov">       2723 :   mCameFrom.clear();</span></a>
-<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">       2723 :   mRawRoutes.clear();</span></a>
+<a name="88"><span class="lineNum">      88 </span>                :<span class="lineCov">       2709 :   mProcessedPoints.clear();</span></a>
+<a name="89"><span class="lineNum">      89 </span>                :<span class="lineCov">       2709 :   mProcessingMap.clear();</span></a>
+<a name="90"><span class="lineNum">      90 </span>                :<span class="lineCov">       2709 :   mCameFrom.clear();</span></a>
+<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">       2709 :   mRawRoutes.clear();</span></a>
 <a name="92"><span class="lineNum">      92 </span>                :            : </a>
 <a name="93"><span class="lineNum">      93 </span>                :            :   // A* working structures.</a>
 <a name="94"><span class="lineNum">      94 </span>                :            :   // Initial values.</a>
-<a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">       2723 :   RoutingCost cost;</span></a>
-<a name="96"><span class="lineNum">      96 </span>        [<span class="branchCov" title="Branch 0 was taken 2723 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2723 :   cost.costData.estimatedDistanceToTarget = costEstimate(mStartLane, mStart.point);</span></a>
-<a name="97"><span class="lineNum">      97 </span>        [<span class="branchCov" title="Branch 0 was taken 2711 times"> + </span><span class="branchCov" title="Branch 1 was taken 12 times"> + </span>]:<span class="lineCov">       2723 :   if (mStart.direction == RoutingDirection::DONT_CARE)</span></a>
+<a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">       2709 :   RoutingCost cost;</span></a>
+<a name="96"><span class="lineNum">      96 </span>        [<span class="branchCov" title="Branch 0 was taken 2709 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2709 :   cost.costData.estimatedDistanceToTarget = costEstimate(mStartLane, mStart.point);</span></a>
+<a name="97"><span class="lineNum">      97 </span>        [<span class="branchCov" title="Branch 0 was taken 2697 times"> + </span><span class="branchCov" title="Branch 1 was taken 12 times"> + </span>]:<span class="lineCov">       2709 :   if (mStart.direction == RoutingDirection::DONT_CARE)</span></a>
 <a name="98"><span class="lineNum">      98 </span>                :            :   {</a>
 <a name="99"><span class="lineNum">      99 </span>                :            :     // Don't care routing direction means the vehicle can drive forward or backward.</a>
 <a name="100"><span class="lineNum">     100 </span>                :            :     // Within the routing we have to replace this by concrete directions,</a>
 <a name="101"><span class="lineNum">     101 </span>                :            :     // otherwise the vehicle would be able to switch between forward/backward while driving on the route</a>
 <a name="102"><span class="lineNum">     102 </span>                :            :     // which especially is not meant by the don't care flag.</a>
-<a name="103"><span class="lineNum">     103 </span>                :<span class="lineCov">       2711 :     auto startPositive = mStart;</span></a>
-<a name="104"><span class="lineNum">     104 </span>                :<span class="lineCov">       2711 :     startPositive.direction = RoutingDirection::POSITIVE;</span></a>
-<a name="105"><span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 0 was taken 2711 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2711 :     mProcessingMap.insert({startPositive, cost});</span></a>
-<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">       2711 :     auto startNegative = mStart;</span></a>
-<a name="107"><span class="lineNum">     107 </span>                :<span class="lineCov">       2711 :     startNegative.direction = RoutingDirection::NEGATIVE;</span></a>
-<a name="108"><span class="lineNum">     108 </span>        [<span class="branchCov" title="Branch 0 was taken 2711 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2711 :     mProcessingMap.insert({startNegative, cost});</span></a>
+<a name="103"><span class="lineNum">     103 </span>                :<span class="lineCov">       2697 :     auto startPositive = mStart;</span></a>
+<a name="104"><span class="lineNum">     104 </span>                :<span class="lineCov">       2697 :     startPositive.direction = RoutingDirection::POSITIVE;</span></a>
+<a name="105"><span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 0 was taken 2697 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2697 :     mProcessingMap.insert({startPositive, cost});</span></a>
+<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">       2697 :     auto startNegative = mStart;</span></a>
+<a name="107"><span class="lineNum">     107 </span>                :<span class="lineCov">       2697 :     startNegative.direction = RoutingDirection::NEGATIVE;</span></a>
+<a name="108"><span class="lineNum">     108 </span>        [<span class="branchCov" title="Branch 0 was taken 2697 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2697 :     mProcessingMap.insert({startNegative, cost});</span></a>
 <a name="109"><span class="lineNum">     109 </span>                :            :   }</a>
 <a name="110"><span class="lineNum">     110 </span>                :            :   else</a>
 <a name="111"><span class="lineNum">     111 </span>                :            :   {</a>
 <a name="112"><span class="lineNum">     112 </span>        [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         12 :     mProcessingMap.insert({mStart, cost});</span></a>
 <a name="113"><span class="lineNum">     113 </span>                :            :   }</a>
 <a name="114"><span class="lineNum">     114 </span>                :            :   // Run</a>
-<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">       2723 :   bool pathFound = false;</span></a>
+<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">       2709 :   bool pathFound = false;</span></a>
 <a name="116"><span class="lineNum">     116 </span>                :            : #if DEBUG_OUTPUT</a>
 <a name="117"><span class="lineNum">     117 </span>                :            :   std::cout &lt;&lt; &quot;######### (typ:&quot; &lt;&lt; (int)mType &lt;&lt; &quot; #########&quot;</a>
 <a name="118"><span class="lineNum">     118 </span>                :            :             &lt;&lt; &quot; start: &quot; &lt;&lt; mStart.point &lt;&lt; &quot; dest: &quot; &lt;&lt; mDest.point &lt;&lt; std::endl;</a>
 <a name="119"><span class="lineNum">     119 </span>                :            : #endif</a>
-<a name="120"><span class="lineNum">     120 </span>        [<span class="branchCov" title="Branch 0 was taken 30542 times"> + </span><span class="branchCov" title="Branch 1 was taken 2723 times"> + </span>]:<span class="lineCov">      33265 :   while (!mProcessingMap.empty())</span></a>
+<a name="120"><span class="lineNum">     120 </span>        [<span class="branchCov" title="Branch 0 was taken 30432 times"> + </span><span class="branchCov" title="Branch 1 was taken 2709 times"> + </span>]:<span class="lineCov">      33141 :   while (!mProcessingMap.empty())</span></a>
 <a name="121"><span class="lineNum">     121 </span>                :            :   {</a>
 <a name="122"><span class="lineNum">     122 </span>                :            :     // sort the routing points by the smallest total cost</a>
 <a name="123"><span class="lineNum">     123 </span>                :            :     struct FScoreCompare</a>
 <a name="124"><span class="lineNum">     124 </span>                :            :     {</a>
-<a name="125"><span class="lineNum">     125 </span>                :<span class="lineCov">      75082 :       bool operator()(RoutingPoint const &amp;left, RoutingPoint const &amp;right) const</span></a>
+<a name="125"><span class="lineNum">     125 </span>                :<span class="lineCov">      74981 :       bool operator()(RoutingPoint const &amp;left, RoutingPoint const &amp;right) const</span></a>
 <a name="126"><span class="lineNum">     126 </span>                :            :       {</a>
-<a name="127"><span class="lineNum">     127 </span>                :<span class="lineCov">      75082 :         return left.second.costData.estimatedDistanceToTarget &lt; right.second.costData.estimatedDistanceToTarget;</span></a>
+<a name="127"><span class="lineNum">     127 </span>                :<span class="lineCov">      74981 :         return left.second.costData.estimatedDistanceToTarget &lt; right.second.costData.estimatedDistanceToTarget;</span></a>
 <a name="128"><span class="lineNum">     128 </span>                :            :       }</a>
 <a name="129"><span class="lineNum">     129 </span>                :            :     };</a>
-<a name="130"><span class="lineNum">     130 </span>        [<span class="branchCov" title="Branch 0 was taken 30542 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      30542 :     auto minimumCostIterator = std::min_element(mProcessingMap.begin(), mProcessingMap.end(), FScoreCompare());</span></a>
+<a name="130"><span class="lineNum">     130 </span>        [<span class="branchCov" title="Branch 0 was taken 30432 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      30432 :     auto minimumCostIterator = std::min_element(mProcessingMap.begin(), mProcessingMap.end(), FScoreCompare());</span></a>
 <a name="131"><span class="lineNum">     131 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :     if (((mDest.direction == RoutingDirection::DONT_CARE) || (mDest.direction == minimumCostIterator-&gt;first.direction))</span></a>
-<a name="132"><span class="lineNum">     132 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 30540 times"> + </span><span class="branchCov" title="Branch 2 was taken 30542 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">      30544 :         &amp;&amp; (minimumCostIterator-&gt;first.point == mDest.point))</span></a>
-<span class="lineNum">         </span>   <span class="branchCov" title="Branch 4 was taken 2709 times"> + </span><span class="branchCov" title="Branch 5 was taken 27833 times"> + </span><span class="branchCov" title="Branch 6 was taken 2709 times"> + </span><span class="branchCov" title="Branch 7 was taken 27833 times"> + </span>]
+<a name="132"><span class="lineNum">     132 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 30430 times"> + </span><span class="branchCov" title="Branch 2 was taken 30432 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">      30434 :         &amp;&amp; (minimumCostIterator-&gt;first.point == mDest.point))</span></a>
+<span class="lineNum">         </span>   <span class="branchCov" title="Branch 4 was taken 2694 times"> + </span><span class="branchCov" title="Branch 5 was taken 27738 times"> + </span><span class="branchCov" title="Branch 6 was taken 2694 times"> + </span><span class="branchCov" title="Branch 7 was taken 27738 times"> + </span>]
 <a name="133"><span class="lineNum">     133 </span>                :            :     {</a>
-<a name="134"><span class="lineNum">     134 </span>        [<span class="branchCov" title="Branch 0 was taken 2709 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2709 :       reconstructPath(*minimumCostIterator);</span></a>
-<a name="135"><span class="lineNum">     135 </span>                :<span class="lineCov">       2709 :       pathFound = true;</span></a>
+<a name="134"><span class="lineNum">     134 </span>        [<span class="branchCov" title="Branch 0 was taken 2694 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2694 :       reconstructPath(*minimumCostIterator);</span></a>
+<a name="135"><span class="lineNum">     135 </span>                :<span class="lineCov">       2694 :       pathFound = true;</span></a>
 <a name="136"><span class="lineNum">     136 </span>                :            : #if DEBUG_OUTPUT</a>
 <a name="137"><span class="lineNum">     137 </span>                :            :       std::cout &lt;&lt; &quot;Target reached &quot; &lt;&lt; *minimumCostIterator &lt;&lt; std::endl;</a>
 <a name="138"><span class="lineNum">     138 </span>                :            :       for (auto const &amp;point : getRawRoute().paraPointList)</a>
@@ -213,17 +213,17 @@
 <a name="141"><span class="lineNum">     141 </span>                :            :       }</a>
 <a name="142"><span class="lineNum">     142 </span>                :            :       std::cout &lt;&lt; &quot;#########&quot; &lt;&lt; std::endl;</a>
 <a name="143"><span class="lineNum">     143 </span>                :            : #endif</a>
-<a name="144"><span class="lineNum">     144 </span>                :<span class="lineCov">       2709 :       mProcessingMap.clear();</span></a>
+<a name="144"><span class="lineNum">     144 </span>                :<span class="lineCov">       2694 :       mProcessingMap.clear();</span></a>
 <a name="145"><span class="lineNum">     145 </span>                :            :     }</a>
 <a name="146"><span class="lineNum">     146 </span>                :            :     else</a>
 <a name="147"><span class="lineNum">     147 </span>                :            :     {</a>
-<a name="148"><span class="lineNum">     148 </span>                :<span class="lineCov">      27833 :       RoutingPoint const minimumValue = *minimumCostIterator;</span></a>
-<a name="149"><span class="lineNum">     149 </span>        [<span class="branchCov" title="Branch 0 was taken 27833 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      27833 :       mProcessingMap.erase(minimumCostIterator);</span></a>
-<a name="150"><span class="lineNum">     150 </span>        [<span class="branchCov" title="Branch 0 was taken 27833 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      27833 :       mProcessedPoints.insert(minimumValue.first);</span></a>
+<a name="148"><span class="lineNum">     148 </span>                :<span class="lineCov">      27738 :       RoutingPoint const minimumValue = *minimumCostIterator;</span></a>
+<a name="149"><span class="lineNum">     149 </span>        [<span class="branchCov" title="Branch 0 was taken 27738 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      27738 :       mProcessingMap.erase(minimumCostIterator);</span></a>
+<a name="150"><span class="lineNum">     150 </span>        [<span class="branchCov" title="Branch 0 was taken 27738 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      27738 :       mProcessedPoints.insert(minimumValue.first);</span></a>
 <a name="151"><span class="lineNum">     151 </span>                :            : #if DEBUG_OUTPUT</a>
 <a name="152"><span class="lineNum">     152 </span>                :            :       std::cout &lt;&lt; &quot;Expanding: &quot; &lt;&lt; minimumValue &lt;&lt; std::endl;</a>
 <a name="153"><span class="lineNum">     153 </span>                :            : #endif</a>
-<a name="154"><span class="lineNum">     154 </span>        [<span class="branchCov" title="Branch 0 was taken 27833 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      27833 :       expandNeighbors(minimumValue);</span></a>
+<a name="154"><span class="lineNum">     154 </span>        [<span class="branchCov" title="Branch 0 was taken 27738 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      27738 :       expandNeighbors(minimumValue);</span></a>
 <a name="155"><span class="lineNum">     155 </span>                :            : #if DEBUG_OUTPUT</a>
 <a name="156"><span class="lineNum">     156 </span>                :            :       std::cout &lt;&lt; &quot;Results in &quot; &lt;&lt; std::endl;</a>
 <a name="157"><span class="lineNum">     157 </span>                :            :       for (auto &amp;element : mProcessingMap)</a>
@@ -235,22 +235,22 @@
 <a name="163"><span class="lineNum">     163 </span>                :            :     }</a>
 <a name="164"><span class="lineNum">     164 </span>                :            :   }</a>
 <a name="165"><span class="lineNum">     165 </span>                :            : </a>
-<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">       2723 :   mProcessedPoints.clear();</span></a>
-<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">       2723 :   mProcessingMap.clear();</span></a>
-<a name="168"><span class="lineNum">     168 </span>                :<span class="lineCov">       2723 :   mCameFrom.clear();</span></a>
+<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">       2709 :   mProcessedPoints.clear();</span></a>
+<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">       2709 :   mProcessingMap.clear();</span></a>
+<a name="168"><span class="lineNum">     168 </span>                :<span class="lineCov">       2709 :   mCameFrom.clear();</span></a>
 <a name="169"><span class="lineNum">     169 </span>                :            : </a>
-<a name="170"><span class="lineNum">     170 </span>                :<span class="lineCov">       2723 :   return pathFound;</span></a>
+<a name="170"><span class="lineNum">     170 </span>                :<span class="lineCov">       2709 :   return pathFound;</span></a>
 <a name="171"><span class="lineNum">     171 </span>                :            : }</a>
 <a name="172"><span class="lineNum">     172 </span>                :            : </a>
-<a name="173"><span class="lineNum">     173 </span>                :<span class="lineCov">      38423 : physics::Distance RouteAstar::costEstimate(lane::Lane::ConstPtr neighborLane, point::ParaPoint const &amp;neighbor)</span></a>
+<a name="173"><span class="lineNum">     173 </span>                :<span class="lineCov">      38301 : physics::Distance RouteAstar::costEstimate(lane::Lane::ConstPtr neighborLane, point::ParaPoint const &amp;neighbor)</span></a>
 <a name="174"><span class="lineNum">     174 </span>                :            : {</a>
-<a name="175"><span class="lineNum">     175 </span>        [<span class="branchCov" title="Branch 0 was taken 38423 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      38423 :   point::ECEFPoint pt_a = getParametricPoint(*neighborLane, neighbor.parametricOffset, physics::ParametricValue(0.5));</span></a>
-<a name="176"><span class="lineNum">     176 </span>        [<span class="branchCov" title="Branch 0 was taken 38423 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      38423 :   point::ECEFPoint pt_b = getParametricPoint(*mDestLane, getDest().parametricOffset, physics::ParametricValue(0.5));</span></a>
-<a name="177"><span class="lineNum">     177 </span>        [<span class="branchCov" title="Branch 0 was taken 38423 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      38423 :   physics::Distance d = distance(pt_a, pt_b);</span></a>
-<a name="178"><span class="lineNum">     178 </span>                :<span class="lineCov">      38423 :   return d;</span></a>
+<a name="175"><span class="lineNum">     175 </span>        [<span class="branchCov" title="Branch 0 was taken 38301 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      38301 :   point::ECEFPoint pt_a = getParametricPoint(*neighborLane, neighbor.parametric_offset, physics::ParametricValue(0.5));</span></a>
+<a name="176"><span class="lineNum">     176 </span>        [<span class="branchCov" title="Branch 0 was taken 38301 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      38301 :   point::ECEFPoint pt_b = getParametricPoint(*mDestLane, getDest().parametric_offset, physics::ParametricValue(0.5));</span></a>
+<a name="177"><span class="lineNum">     177 </span>        [<span class="branchCov" title="Branch 0 was taken 38301 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      38301 :   physics::Distance d = distance(pt_a, pt_b);</span></a>
+<a name="178"><span class="lineNum">     178 </span>                :<span class="lineCov">      38301 :   return d;</span></a>
 <a name="179"><span class="lineNum">     179 </span>                :            : }</a>
 <a name="180"><span class="lineNum">     180 </span>                :            : </a>
-<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">      51273 : void RouteAstar::addNeighbor(lane::Lane::ConstPtr originLane,</span></a>
+<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">      51108 : void RouteAstar::addNeighbor(lane::Lane::ConstPtr originLane,</span></a>
 <a name="182"><span class="lineNum">     182 </span>                :            :                              RoutingPoint const &amp;origin,</a>
 <a name="183"><span class="lineNum">     183 </span>                :            :                              lane::Lane::ConstPtr neighborLane,</a>
 <a name="184"><span class="lineNum">     184 </span>                :            :                              RoutingPoint const &amp;neighbor,</a>
@@ -259,47 +259,47 @@
 <a name="187"><span class="lineNum">     187 </span>                :            :   (void)originLane;</a>
 <a name="188"><span class="lineNum">     188 </span>                :            :   (void)expandReason;</a>
 <a name="189"><span class="lineNum">     189 </span>                :            : </a>
-<a name="190"><span class="lineNum">     190 </span>  [<span class="branchCov" title="Branch 0 was taken 51273 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 47663 times"> + </span><span class="branchCov" title="Branch 3 was taken 3610 times"> + </span>]:<span class="lineCov">      51273 :   if (mProcessedPoints.find(neighbor.first) == mProcessedPoints.end())</span></a>
+<a name="190"><span class="lineNum">     190 </span>  [<span class="branchCov" title="Branch 0 was taken 51108 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 47496 times"> + </span><span class="branchCov" title="Branch 3 was taken 3612 times"> + </span>]:<span class="lineCov">      51108 :   if (mProcessedPoints.find(neighbor.first) == mProcessedPoints.end())</span></a>
 <a name="191"><span class="lineNum">     191 </span>                :            :   {</a>
-<a name="192"><span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 0 was taken 47663 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      47663 :     auto insertResult = mProcessingMap.insert(neighbor);</span></a>
-<a name="193"><span class="lineNum">     193 </span>                :<span class="lineCov">      47663 :     if ( // insertion succeeded</span></a>
-<a name="194"><span class="lineNum">     194 </span>  [<span class="branchCov" title="Branch 0 was taken 13051 times"> + </span><span class="branchCov" title="Branch 1 was taken 34612 times"> + </span><span class="branchCov" title="Branch 2 was taken 35700 times"> + </span><span class="branchCov" title="Branch 3 was taken 11963 times"> + </span>]:<span class="lineCov">      60714 :       insertResult.second ||</span></a>
+<a name="192"><span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 0 was taken 47496 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      47496 :     auto insertResult = mProcessingMap.insert(neighbor);</span></a>
+<a name="193"><span class="lineNum">     193 </span>                :<span class="lineCov">      47496 :     if ( // insertion succeeded</span></a>
+<a name="194"><span class="lineNum">     194 </span>  [<span class="branchCov" title="Branch 0 was taken 12993 times"> + </span><span class="branchCov" title="Branch 1 was taken 34503 times"> + </span><span class="branchCov" title="Branch 2 was taken 35592 times"> + </span><span class="branchCov" title="Branch 3 was taken 11904 times"> + </span>]:<span class="lineCov">      60489 :       insertResult.second ||</span></a>
 <a name="195"><span class="lineNum">     195 </span>                :            :       // actual distance of new neighbor is smaller than the found duplicate</a>
-<a name="196"><span class="lineNum">     196 </span>  [<span class="branchCov" title="Branch 0 was taken 13051 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1088 times"> + </span><span class="branchCov" title="Branch 3 was taken 11963 times"> + </span>]:<span class="lineCov">      13051 :       (neighbor.second.routeDistance &lt; insertResult.first-&gt;second.routeDistance))</span></a>
+<a name="196"><span class="lineNum">     196 </span>  [<span class="branchCov" title="Branch 0 was taken 12993 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1089 times"> + </span><span class="branchCov" title="Branch 3 was taken 11904 times"> + </span>]:<span class="lineCov">      12993 :       (neighbor.second.routeDistance &lt; insertResult.first-&gt;second.routeDistance))</span></a>
 <a name="197"><span class="lineNum">     197 </span>                :            :     {</a>
-<a name="198"><span class="lineNum">     198 </span>        [<span class="branchCov" title="Branch 0 was taken 35700 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      35700 :       auto const estimatedDestCost = costEstimate(neighborLane, neighbor.first.point);</span></a>
-<a name="199"><span class="lineNum">     199 </span>                :<span class="lineCov">      35700 :       insertResult.first-&gt;second.routeDistance = neighbor.second.routeDistance;</span></a>
-<a name="200"><span class="lineNum">     200 </span>        [<span class="branchCov" title="Branch 0 was taken 35700 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      35700 :       insertResult.first-&gt;second.costData.estimatedDistanceToTarget = neighbor.second.routeDistance + estimatedDestCost;</span></a>
-<a name="201"><span class="lineNum">     201 </span>        [<span class="branchCov" title="Branch 0 was taken 35700 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      35700 :       mCameFrom[neighbor.first] = origin.first;</span></a>
+<a name="198"><span class="lineNum">     198 </span>        [<span class="branchCov" title="Branch 0 was taken 35592 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      35592 :       auto const estimatedDestCost = costEstimate(neighborLane, neighbor.first.point);</span></a>
+<a name="199"><span class="lineNum">     199 </span>                :<span class="lineCov">      35592 :       insertResult.first-&gt;second.routeDistance = neighbor.second.routeDistance;</span></a>
+<a name="200"><span class="lineNum">     200 </span>        [<span class="branchCov" title="Branch 0 was taken 35592 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      35592 :       insertResult.first-&gt;second.costData.estimatedDistanceToTarget = neighbor.second.routeDistance + estimatedDestCost;</span></a>
+<a name="201"><span class="lineNum">     201 </span>        [<span class="branchCov" title="Branch 0 was taken 35592 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      35592 :       mCameFrom[neighbor.first] = origin.first;</span></a>
 <a name="202"><span class="lineNum">     202 </span>                :            : #if DEBUG_OUTPUT</a>
 <a name="203"><span class="lineNum">     203 </span>                :            :       std::cout &lt;&lt; &quot;Inserted: &quot; &lt;&lt; *insertResult.first &lt;&lt; std::endl;</a>
 <a name="204"><span class="lineNum">     204 </span>                :            : #endif</a>
 <a name="205"><span class="lineNum">     205 </span>                :            :     }</a>
 <a name="206"><span class="lineNum">     206 </span>                :            :   }</a>
-<a name="207"><span class="lineNum">     207 </span>                :<span class="lineCov">      51273 : }</span></a>
+<a name="207"><span class="lineNum">     207 </span>                :<span class="lineCov">      51108 : }</span></a>
 <a name="208"><span class="lineNum">     208 </span>                :            : </a>
-<a name="209"><span class="lineNum">     209 </span>                :<span class="lineCov">       2709 : void RouteAstar::reconstructPath(RoutingPoint const &amp;dest)</span></a>
+<a name="209"><span class="lineNum">     209 </span>                :<span class="lineCov">       2694 : void RouteAstar::reconstructPath(RoutingPoint const &amp;dest)</span></a>
 <a name="210"><span class="lineNum">     210 </span>                :            : {</a>
-<a name="211"><span class="lineNum">     211 </span>                :<span class="lineCov">       5418 :   RawRoute rawRoute;</span></a>
-<a name="212"><span class="lineNum">     212 </span>                :<span class="lineCov">       2709 :   rawRoute.routeDistance = dest.second.routeDistance;</span></a>
-<a name="213"><span class="lineNum">     213 </span>                :<span class="lineCov">       2709 :   rawRoute.routeDuration = dest.second.routeDuration;</span></a>
-<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">       2709 :   for (auto current = dest.first;;)</span></a>
+<a name="211"><span class="lineNum">     211 </span>                :<span class="lineCov">       2694 :   RawRoute rawRoute;</span></a>
+<a name="212"><span class="lineNum">     212 </span>                :<span class="lineCov">       2694 :   rawRoute.routeDistance = dest.second.routeDistance;</span></a>
+<a name="213"><span class="lineNum">     213 </span>                :<span class="lineCov">       2694 :   rawRoute.routeDuration = dest.second.routeDuration;</span></a>
+<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">       2694 :   for (auto current = dest.first;;)</span></a>
 <a name="215"><span class="lineNum">     215 </span>                :            :   {</a>
-<a name="216"><span class="lineNum">     216 </span>        [<span class="branchCov" title="Branch 0 was taken 18737 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      18737 :     rawRoute.paraPointList.insert(rawRoute.paraPointList.begin(), current.point);</span></a>
-<a name="217"><span class="lineNum">     217 </span>        [<span class="branchCov" title="Branch 0 was taken 18737 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      18737 :     auto it = mCameFrom.find(current);</span></a>
-<a name="218"><span class="lineNum">     218 </span>        [<span class="branchCov" title="Branch 0 was taken 2709 times"> + </span><span class="branchCov" title="Branch 1 was taken 16028 times"> + </span>]:<span class="lineCov">      18737 :     if (it == mCameFrom.end())</span></a>
+<a name="216"><span class="lineNum">     216 </span>        [<span class="branchCov" title="Branch 0 was taken 18649 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      18649 :     rawRoute.paraPointList.insert(rawRoute.paraPointList.begin(), current.point);</span></a>
+<a name="217"><span class="lineNum">     217 </span>        [<span class="branchCov" title="Branch 0 was taken 18649 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      18649 :     auto it = mCameFrom.find(current);</span></a>
+<a name="218"><span class="lineNum">     218 </span>        [<span class="branchCov" title="Branch 0 was taken 2694 times"> + </span><span class="branchCov" title="Branch 1 was taken 15955 times"> + </span>]:<span class="lineCov">      18649 :     if (it == mCameFrom.end())</span></a>
 <a name="219"><span class="lineNum">     219 </span>                :            :     {</a>
-<a name="220"><span class="lineNum">     220 </span>                :<span class="lineCov">       2709 :       break;</span></a>
+<a name="220"><span class="lineNum">     220 </span>                :<span class="lineCov">       2694 :       break;</span></a>
 <a name="221"><span class="lineNum">     221 </span>                :            :     }</a>
 <a name="222"><span class="lineNum">     222 </span>                :            :     else</a>
 <a name="223"><span class="lineNum">     223 </span>                :            :     {</a>
-<a name="224"><span class="lineNum">     224 </span>                :<span class="lineCov">      16028 :       current = it-&gt;second;</span></a>
+<a name="224"><span class="lineNum">     224 </span>                :<span class="lineCov">      15955 :       current = it-&gt;second;</span></a>
 <a name="225"><span class="lineNum">     225 </span>                :            :     }</a>
-<a name="226"><span class="lineNum">     226 </span>                :<span class="lineCov">      16028 :   }</span></a>
-<a name="227"><span class="lineNum">     227 </span>                :<span class="lineCov">       2709 :   mDest = dest.first;</span></a>
-<a name="228"><span class="lineNum">     228 </span>                :<span class="lineCov">       2709 :   mValid = true;</span></a>
-<a name="229"><span class="lineNum">     229 </span>        [<span class="branchCov" title="Branch 0 was taken 2709 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2709 :   mRawRoutes.push_back(rawRoute);</span></a>
-<a name="230"><span class="lineNum">     230 </span>                :<span class="lineCov">       2709 : }</span></a>
+<a name="226"><span class="lineNum">     226 </span>                :<span class="lineCov">      15955 :   }</span></a>
+<a name="227"><span class="lineNum">     227 </span>                :<span class="lineCov">       2694 :   mDest = dest.first;</span></a>
+<a name="228"><span class="lineNum">     228 </span>                :<span class="lineCov">       2694 :   mValid = true;</span></a>
+<a name="229"><span class="lineNum">     229 </span>        [<span class="branchCov" title="Branch 0 was taken 2694 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2694 :   mRawRoutes.push_back(rawRoute);</span></a>
+<a name="230"><span class="lineNum">     230 </span>                :<span class="lineCov">       2694 : }</span></a>
 <a name="231"><span class="lineNum">     231 </span>                :            : </a>
 <a name="232"><span class="lineNum">     232 </span>                :            : } // namespace planning</a>
 <a name="233"><span class="lineNum">     233 </span>                :            : } // namespace route</a>
