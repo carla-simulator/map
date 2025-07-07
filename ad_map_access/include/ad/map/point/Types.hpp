@@ -17,11 +17,12 @@
 #include <ad/physics/ParametricValue.hpp>
 
 #include "ad/map/point/BoundingSphere.hpp"
-#include "ad/map/point/ECEFEdge.hpp"
 #include "ad/map/point/ECEFHeading.hpp"
-#include "ad/map/point/ENUEdge.hpp"
+#include "ad/map/point/ECEFPointList.hpp"
 #include "ad/map/point/ENUHeading.hpp"
-#include "ad/map/point/GeoEdge.hpp"
+#include "ad/map/point/ENUPointList.hpp"
+#include "ad/map/point/ENUPointListVector.hpp"
+#include "ad/map/point/GeoPointList.hpp"
 #include "ad/map/point/Geometry.hpp"
 #include "ad/map/point/ParaPoint.hpp"
 #include "ad/map/point/ParaPointList.hpp"

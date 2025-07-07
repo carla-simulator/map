@@ -23,14 +23,14 @@ namespace point {
 /**
  * @brief create a ParaPoint
  *
- * @param[in] laneId  the lane id
- * @param[in] parametricOffset the parametric offset
+ * @param[in] lane_id  the lane id
+ * @param[in] parametric_offset the parametric offset
  */
-inline ParaPoint createParaPoint(lane::LaneId const &laneId, physics::ParametricValue const &parametricOffset)
+inline ParaPoint createParaPoint(lane::LaneId const &lane_id, physics::ParametricValue const &parametric_offset)
 {
   ParaPoint result;
-  result.laneId = laneId;
-  result.parametricOffset = parametricOffset;
+  result.lane_id = lane_id;
+  result.parametric_offset = parametric_offset;
   return result;
 }
 
@@ -44,13 +44,13 @@ inline ParaPoint createParaPoint(lane::LaneId const &laneId, physics::Parametric
  */
 inline bool operator<(const ::ad::map::point::ParaPoint &left, const ::ad::map::point::ParaPoint &right)
 {
-  if (left.laneId < right.laneId)
+  if (left.lane_id < right.lane_id)
   {
     return true;
   }
-  else if (left.laneId == right.laneId)
+  else if (left.lane_id == right.lane_id)
   {
-    return left.parametricOffset < right.parametricOffset;
+    return left.parametric_offset < right.parametric_offset;
   }
   else
   {
@@ -64,13 +64,13 @@ inline bool operator<(const ::ad::map::point::ParaPoint &left, const ::ad::map::
  */
 inline bool operator>(const ::ad::map::point::ParaPoint &left, const ::ad::map::point::ParaPoint &right)
 {
-  if (left.laneId > right.laneId)
+  if (left.lane_id > right.lane_id)
   {
     return true;
   }
-  else if (left.laneId == right.laneId)
+  else if (left.lane_id == right.lane_id)
   {
-    return left.parametricOffset > right.parametricOffset;
+    return left.parametric_offset > right.parametric_offset;
   }
   else
   {

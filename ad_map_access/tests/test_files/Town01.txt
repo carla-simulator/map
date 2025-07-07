@@ -1,8 +1,8 @@
 [ADMap]
 map=Town01.xodr
-openDriveOverlapMargin=0.2
-openDriveDefaultIntersectionType=TrafficLight
-openDriveDefaultTrafficLightType=LEFT_STRAIGHT_RED_YELLOW_GREEN
+open_drive_overlap_margin=0.2
+open_drive_default_intersection_type=TrafficLight
+open_drive_default_traffic_light_type=LEFT_STRAIGHT_RED_YELLOW_GREEN
 
 [POI]
 poi=T1 -0.00298986768 0.00193915337 0.

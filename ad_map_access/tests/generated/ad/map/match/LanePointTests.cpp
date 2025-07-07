@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,18 +28,18 @@ protected:
   {
     // valid initialization
     ::ad::map::match::LanePoint value;
-    ::ad::map::point::ParaPoint valueParaPoint;
-    ::ad::map::lane::LaneId valueParaPointLaneId(1);
-    valueParaPoint.laneId = valueParaPointLaneId;
-    ::ad::physics::ParametricValue valueParaPointParametricOffset(0.);
-    valueParaPoint.parametricOffset = valueParaPointParametricOffset;
-    value.paraPoint = valueParaPoint;
-    ::ad::physics::RatioValue valueLateralT(std::numeric_limits<::ad::physics::RatioValue>::lowest());
-    value.lateralT = valueLateralT;
-    ::ad::physics::Distance valueLaneLength(-1e9);
-    value.laneLength = valueLaneLength;
-    ::ad::physics::Distance valueLaneWidth(-1e9);
-    value.laneWidth = valueLaneWidth;
+    ::ad::map::point::ParaPoint valuePara_point;
+    ::ad::map::lane::LaneId valuePara_pointLane_id(1);
+    valuePara_point.lane_id = valuePara_pointLane_id;
+    ::ad::physics::ParametricValue valuePara_pointParametric_offset(0.);
+    valuePara_point.parametric_offset = valuePara_pointParametric_offset;
+    value.para_point = valuePara_point;
+    ::ad::physics::RatioValue valueLateral_t(std::numeric_limits<::ad::physics::RatioValue>::lowest());
+    value.lateral_t = valueLateral_t;
+    ::ad::physics::Distance valueLane_length(-1e9);
+    value.lane_length = valueLane_length;
+    ::ad::physics::Distance valueLane_width(-1e9);
+    value.lane_width = valueLane_width;
     mValue = value;
   }
 
@@ -92,48 +92,48 @@ TEST_F(LanePointTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(LanePointTests, comparisonOperatorParaPointDiffers)
+TEST_F(LanePointTests, comparisonOperatorPara_pointDiffers)
 {
   ::ad::map::match::LanePoint valueA = mValue;
-  ::ad::map::point::ParaPoint paraPoint;
-  ::ad::map::lane::LaneId paraPointLaneId(std::numeric_limits<::ad::map::lane::LaneId>::max());
-  paraPoint.laneId = paraPointLaneId;
-  ::ad::physics::ParametricValue paraPointParametricOffset(1.);
-  paraPoint.parametricOffset = paraPointParametricOffset;
-  valueA.paraPoint = paraPoint;
+  ::ad::map::point::ParaPoint para_point;
+  ::ad::map::lane::LaneId para_pointLane_id(std::numeric_limits<::ad::map::lane::LaneId>::max());
+  para_point.lane_id = para_pointLane_id;
+  ::ad::physics::ParametricValue para_pointParametric_offset(1.);
+  para_point.parametric_offset = para_pointParametric_offset;
+  valueA.para_point = para_point;
   ::ad::map::match::LanePoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LanePointTests, comparisonOperatorLateralTDiffers)
+TEST_F(LanePointTests, comparisonOperatorLateral_tDiffers)
 {
   ::ad::map::match::LanePoint valueA = mValue;
-  ::ad::physics::RatioValue lateralT(std::numeric_limits<::ad::physics::RatioValue>::max());
-  valueA.lateralT = lateralT;
+  ::ad::physics::RatioValue lateral_t(std::numeric_limits<::ad::physics::RatioValue>::max());
+  valueA.lateral_t = lateral_t;
   ::ad::map::match::LanePoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LanePointTests, comparisonOperatorLaneLengthDiffers)
+TEST_F(LanePointTests, comparisonOperatorLane_lengthDiffers)
 {
   ::ad::map::match::LanePoint valueA = mValue;
-  ::ad::physics::Distance laneLength(1e9);
-  valueA.laneLength = laneLength;
+  ::ad::physics::Distance lane_length(1e9);
+  valueA.lane_length = lane_length;
   ::ad::map::match::LanePoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(LanePointTests, comparisonOperatorLaneWidthDiffers)
+TEST_F(LanePointTests, comparisonOperatorLane_widthDiffers)
 {
   ::ad::map::match::LanePoint valueA = mValue;
-  ::ad::physics::Distance laneWidth(1e9);
-  valueA.laneWidth = laneWidth;
+  ::ad::physics::Distance lane_width(1e9);
+  valueA.lane_width = lane_width;
   ::ad::map::match::LanePoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

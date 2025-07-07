@@ -41,7 +41,7 @@ class LayerManagerLaneTopology(LayerManager):
         else:
             conns = ad.map.lane.getContactLanes(lane, ad.map.lane.ContactLocation.OVERLAP)
         for conn in conns:
-            to_lane_id = conn.toLane
+            to_lane_id = conn.to_lane
             to_lane = ad.map.lane.getLane(to_lane_id)
             if to_lane is not None:
                 key = (lane_id, to_lane_id)

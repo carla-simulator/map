@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -31,14 +31,14 @@ TEST(ENUCoordinateTests, minIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(-1e9, ::ad::map::point::ENUCoordinate::cMinValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue,
-                   static_cast<double>(::ad::map::point::ENUCoordinate::getMin()));
+                   ::ad::map::point::ENUCoordinate::getMin().mENUCoordinate);
 }
 
 TEST(ENUCoordinateTests, maxIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(1e9, ::ad::map::point::ENUCoordinate::cMaxValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMaxValue,
-                   static_cast<double>(::ad::map::point::ENUCoordinate::getMax()));
+                   ::ad::map::point::ENUCoordinate::getMax().mENUCoordinate);
 }
 
 TEST(ENUCoordinateTests, precisionIsDefinedAsExpected)
@@ -46,7 +46,7 @@ TEST(ENUCoordinateTests, precisionIsDefinedAsExpected)
   EXPECT_LT(0., ::ad::map::point::ENUCoordinate::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-3, ::ad::map::point::ENUCoordinate::cPrecisionValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cPrecisionValue,
-                   static_cast<double>(::ad::map::point::ENUCoordinate::getPrecision()));
+                   ::ad::map::point::ENUCoordinate::getPrecision().mENUCoordinate);
 }
 
 TEST(ENUCoordinateTests, minIsValid)
@@ -105,41 +105,41 @@ TEST(ENUCoordinateTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(ENUCoordinateTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUCoordinate::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUCoordinate>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::getMin().mENUCoordinate,
+                   std::numeric_limits<::ad::map::point::ENUCoordinate>::lowest().mENUCoordinate);
 }
 
 TEST(ENUCoordinateTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUCoordinate::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUCoordinate>::max()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::getMax().mENUCoordinate,
+                   std::numeric_limits<::ad::map::point::ENUCoordinate>::max().mENUCoordinate);
 }
 
 TEST(ENUCoordinateTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUCoordinate::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUCoordinate>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::getPrecision().mENUCoordinate,
+                   std::numeric_limits<::ad::map::point::ENUCoordinate>::epsilon().mENUCoordinate);
 }
 
 TEST(ENUCoordinateTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-1.))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::map::point::ENUCoordinate(-0.)).mENUCoordinate);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::map::point::ENUCoordinate(-1.)).mENUCoordinate);
   EXPECT_DOUBLE_EQ(
     ::ad::map::point::ENUCoordinate::cPrecisionValue,
-    static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cPrecisionValue))));
+    std::fabs(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cPrecisionValue).mENUCoordinate));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ENUCoordinate::cMinValue),
-    static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMinValue))));
+    std::fabs(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMinValue).mENUCoordinate));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ENUCoordinate::cMinValue),
-    static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-::ad::map::point::ENUCoordinate::cMinValue))));
+    std::fabs(::ad::map::point::ENUCoordinate(-::ad::map::point::ENUCoordinate::cMinValue).mENUCoordinate));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ENUCoordinate::cMaxValue),
-    static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMaxValue))));
+    std::fabs(::ad::map::point::ENUCoordinate(::ad::map::point::ENUCoordinate::cMaxValue).mENUCoordinate));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ENUCoordinate::cMaxValue),
-    static_cast<double>(std::fabs(::ad::map::point::ENUCoordinate(-::ad::map::point::ENUCoordinate::cMaxValue))));
+    std::fabs(::ad::map::point::ENUCoordinate(-::ad::map::point::ENUCoordinate::cMaxValue).mENUCoordinate));
 }
 
 TEST(ENUCoordinateTests, constructionFromValidFPValue)
@@ -147,7 +147,7 @@ TEST(ENUCoordinateTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::ENUCoordinate::cMinValue;
   ::ad::map::point::ENUCoordinate value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mENUCoordinate);
 }
 
 TEST(ENUCoordinateTests, copyConstructionFromValidValue)
@@ -155,7 +155,7 @@ TEST(ENUCoordinateTests, copyConstructionFromValidValue)
   ::ad::map::point::ENUCoordinate const validValue(::ad::map::point::ENUCoordinate::cMinValue);
   ::ad::map::point::ENUCoordinate value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mENUCoordinate, value.mENUCoordinate);
 }
 
 TEST(ENUCoordinateTests, moveConstructionFromValidValue)
@@ -163,7 +163,7 @@ TEST(ENUCoordinateTests, moveConstructionFromValidValue)
   ::ad::map::point::ENUCoordinate validValue(::ad::map::point::ENUCoordinate::cMinValue);
   ::ad::map::point::ENUCoordinate value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue, value.mENUCoordinate);
 }
 
 TEST(ENUCoordinateTests, assignmentFromValidValue)
@@ -172,7 +172,7 @@ TEST(ENUCoordinateTests, assignmentFromValidValue)
   ::ad::map::point::ENUCoordinate value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mENUCoordinate, value.mENUCoordinate);
 }
 
 TEST(ENUCoordinateTests, moveAssignmentFromValidValue)
@@ -181,7 +181,7 @@ TEST(ENUCoordinateTests, moveAssignmentFromValidValue)
   ::ad::map::point::ENUCoordinate value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUCoordinate::cMinValue, value.mENUCoordinate);
 }
 
 TEST(ENUCoordinateTests, constructionFromInvalidFPValue)
@@ -257,7 +257,7 @@ TEST(ENUCoordinateTests, arithmeticOperatorsThrowOnInvalid)
   //  operator+(::ad::map::point::ENUCoordinate)
   EXPECT_THROW(invalidValue + maximalValue, std::out_of_range);
   EXPECT_THROW(maximalValue + invalidValue, std::out_of_range);
-  EXPECT_THROW(maximalValue + maximalValue, std::out_of_range);
+  EXPECT_EQ(maximalValue + maximalValue, maximalValue);
 
   //  operator+=(::ad::map::point::ENUCoordinate)
   calculationValue = invalidValue;
@@ -265,12 +265,12 @@ TEST(ENUCoordinateTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = maximalValue;
   EXPECT_THROW(calculationValue += invalidValue, std::out_of_range);
   calculationValue = maximalValue;
-  EXPECT_THROW(calculationValue += maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue += maximalValue, maximalValue);
 
   //  operator-(::ad::map::point::ENUCoordinate)
   EXPECT_THROW(invalidValue - minimalValue, std::out_of_range);
   EXPECT_THROW(minimalValue - invalidValue, std::out_of_range);
-  EXPECT_THROW(minimalValue - maximalValue, std::out_of_range);
+  EXPECT_EQ(minimalValue - maximalValue, minimalValue);
 
   //  operator-=(::ad::map::point::ENUCoordinate)
   calculationValue = invalidValue;
@@ -278,17 +278,17 @@ TEST(ENUCoordinateTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = minimalValue;
   EXPECT_THROW(calculationValue -= invalidValue, std::out_of_range);
   calculationValue = minimalValue;
-  EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue -= maximalValue, minimalValue);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mENUCoordinate, std::out_of_range);
+  EXPECT_EQ(maximalValue * maximalValue.mENUCoordinate, maximalValue);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mENUCoordinate, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mENUCoordinate, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
-  EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
+  EXPECT_EQ(maximalValue / 0.5, maximalValue);
 
   //  operator/(::ad::map::point::ENUCoordinate)
   EXPECT_THROW(invalidValue / maximalValue, std::out_of_range);
@@ -297,13 +297,13 @@ TEST(ENUCoordinateTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mENUCoordinate) > std::fabs(minimalValue.mENUCoordinate))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mENUCoordinate) < std::fabs(minimalValue.mENUCoordinate))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -329,13 +329,13 @@ TEST(ENUCoordinateTests, comparisonOperatorsRespectPrecision)
     value = ::ad::map::point::ENUCoordinate(precisionValueTimesTen);
   }
   ::ad::map::point::ENUCoordinate const sameValue = value;
-  ::ad::map::point::ENUCoordinate const slightlyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::ENUCoordinate const slightlyBiggerValue(value.mENUCoordinate
                                                             + ::ad::map::point::ENUCoordinate::cPrecisionValue * 0.9);
-  ::ad::map::point::ENUCoordinate const slightlySmallerValue(static_cast<double>(value)
+  ::ad::map::point::ENUCoordinate const slightlySmallerValue(value.mENUCoordinate
                                                              - ::ad::map::point::ENUCoordinate::cPrecisionValue * 0.9);
-  ::ad::map::point::ENUCoordinate const actuallyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::ENUCoordinate const actuallyBiggerValue(value.mENUCoordinate
                                                             + ::ad::map::point::ENUCoordinate::cPrecisionValue * 1.1);
-  ::ad::map::point::ENUCoordinate const actuallySmallerValue(static_cast<double>(value)
+  ::ad::map::point::ENUCoordinate const actuallySmallerValue(value.mENUCoordinate
                                                              - ::ad::map::point::ENUCoordinate::cPrecisionValue * 1.1);
 
   // operator ==
@@ -399,41 +399,41 @@ TEST(ENUCoordinateTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::map::point::ENUCoordinate)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUCoordinate + value.mENUCoordinate, result.mENUCoordinate, cDoubleNear);
 
   //  operator+=(::ad::map::point::ENUCoordinate)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUCoordinate + value.mENUCoordinate, result.mENUCoordinate, cDoubleNear);
 
   //  operator-(::ad::map::point::ENUCoordinate)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUCoordinate - value.mENUCoordinate, result.mENUCoordinate, cDoubleNear);
 
   //  operator-=(::ad::map::point::ENUCoordinate)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUCoordinate - value.mENUCoordinate, result.mENUCoordinate, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUCoordinate * 5., result.mENUCoordinate, cDoubleNear);
 
   //  operator*(double, ::ad::map::point::ENUCoordinate)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUCoordinate * 5., result.mENUCoordinate, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mENUCoordinate;
+  EXPECT_NEAR(value.mENUCoordinate / value.mENUCoordinate, result.mENUCoordinate, cDoubleNear);
 
   //  operator/(::ad::map::point::ENUCoordinate)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mENUCoordinate / value.mENUCoordinate, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::map::point::ENUCoordinate::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::map::point::ENUCoordinate::cMaxValue))
+  if ((::ad::map::point::ENUCoordinate::cMinValue < -value.mENUCoordinate)
+      && (-value.mENUCoordinate < ::ad::map::point::ENUCoordinate::cMaxValue))
   {
     result = -value;
   }

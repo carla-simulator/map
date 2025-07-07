@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -21,8 +21,8 @@
 #include <limits>
 #include <memory>
 #include <sstream>
-#include "ad/map/point/ECEFEdge.hpp"
-#include "ad/map/point/ENUEdgeCache.hpp"
+#include "ad/map/point/ECEFPointList.hpp"
+#include "ad/map/point/ENUPointCache.hpp"
 #include "ad/physics/Distance.hpp"
 /*!
  * @brief namespace ad
@@ -101,8 +101,8 @@ struct Geometry
    */
   bool operator==(const Geometry &other) const
   {
-    return (isValid == other.isValid) && (isClosed == other.isClosed) && (ecefEdge == other.ecefEdge)
-      && (length == other.length) && (private_enuEdgeCache == other.private_enuEdgeCache);
+    return (is_valid == other.is_valid) && (is_closed == other.is_closed) && (ecef_points == other.ecef_points)
+      && (length == other.length) && (private_enu_points_cache == other.private_enu_points_cache);
   }
 
   /**
@@ -117,17 +117,17 @@ struct Geometry
     return !operator==(other);
   }
 
-  bool isValid{false};
-  bool isClosed{false};
-  ::ad::map::point::ECEFEdge ecefEdge;
+  bool is_valid{false};
+  bool is_closed{false};
+  ::ad::map::point::ECEFPointList ecef_points;
   ::ad::physics::Distance length;
 
   /*!
-   * Private member storing the ecefEdge as enuEdge.
+   * Private member storing the ecefPointList as enuPointList.
    * Access this member only through respective interface functions to ensure the cache
    * is updated when required.
    */
-  ::ad::map::point::ENUEdgeCache private_enuEdgeCache;
+  ::ad::map::point::ENUPointCache private_enu_points_cache;
 };
 
 } // namespace point
@@ -166,20 +166,20 @@ namespace point {
 inline std::ostream &operator<<(std::ostream &os, Geometry const &_value)
 {
   os << "Geometry(";
-  os << "isValid:";
-  os << _value.isValid;
+  os << "is_valid:";
+  os << _value.is_valid;
   os << ",";
-  os << "isClosed:";
-  os << _value.isClosed;
+  os << "is_closed:";
+  os << _value.is_closed;
   os << ",";
-  os << "ecefEdge:";
-  os << _value.ecefEdge;
+  os << "ecef_points:";
+  os << _value.ecef_points;
   os << ",";
   os << "length:";
   os << _value.length;
   os << ",";
-  os << "private_enuEdgeCache:";
-  os << _value.private_enuEdgeCache;
+  os << "private_enu_points_cache:";
+  os << _value.private_enu_points_cache;
   os << ")";
   return os;
 }
@@ -199,4 +199,16 @@ inline std::string to_string(::ad::map::point::Geometry const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::point::Geometry> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::point::Geometry const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_POINT_GEOMETRY

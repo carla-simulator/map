@@ -12,7 +12,7 @@
 #include <ad/map/point/Operation.hpp>
 #include <stdexcept>
 
-/* @brief namespace map_setup */
+/** @brief namespace map_setup */
 namespace map_setup {
 
 using namespace ::ad::map::point;

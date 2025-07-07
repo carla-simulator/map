@@ -30,22 +30,22 @@ ECEFHeading createECEFHeading(ECEFPoint const &start, ECEFPoint const &end)
   return result;
 }
 
-ECEFHeading createECEFHeading(ENUHeading const &yaw, GeoPoint const &enuReferencePoint)
+ECEFHeading createECEFHeading(ENUHeading const &yaw, GeoPoint const &enu_reference_point)
 {
-  ECEFPoint const start = toECEF(enuReferencePoint);
+  ECEFPoint const start = toECEF(enu_reference_point);
   ENUPoint const enuEndPoint = getDirectionalVectorZPlane(yaw);
-  ECEFPoint const end = toECEF(enuEndPoint, enuReferencePoint);
+  ECEFPoint const end = toECEF(enuEndPoint, enu_reference_point);
   return createECEFHeading(start, end);
 }
 
 ENUHeading normalizeENUHeading(ENUHeading const &heading)
 {
-  return createENUHeading(static_cast<double>(heading));
+  return createENUHeading(heading.mENUHeading);
 }
 
 ENUHeading createENUHeading(physics::Angle const &angle)
 {
-  return ENUHeading(static_cast<double>(physics::normalizeAngleSigned(angle)));
+  return ENUHeading(physics::normalizeAngleSigned(angle).mAngle);
 }
 
 ENUHeading createENUHeading(double yawAngleRadian)
@@ -58,16 +58,16 @@ ENUHeading createENUHeading(ECEFHeading const &ecefHeading)
   return createENUHeading(ecefHeading, access::getENUReferencePoint());
 }
 
-ENUHeading createENUHeading(ECEFHeading const &ecefHeading, ECEFPoint const &enuReferencePoint)
+ENUHeading createENUHeading(ECEFHeading const &ecefHeading, ECEFPoint const &enu_reference_point)
 {
-  return createENUHeading(ecefHeading, toGeo(enuReferencePoint));
+  return createENUHeading(ecefHeading, toGeo(enu_reference_point));
 }
 
-ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enuReferencePoint)
+ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enu_reference_point)
 {
-  ECEFPoint const enuZero = toECEF(enuReferencePoint);
-  ECEFPoint const enuEastAxis = toECEF(getEnuEastAxis(), enuReferencePoint);
-  ECEFPoint const enuUpAxis = toECEF(getEnuUpAxis(), enuReferencePoint);
+  ECEFPoint const enuZero = toECEF(enu_reference_point);
+  ECEFPoint const enuEastAxis = toECEF(getEnuEastAxis(), enu_reference_point);
+  ECEFPoint const enuUpAxis = toECEF(getEnuUpAxis(), enu_reference_point);
 
   ECEFHeading const toEast = createECEFHeading(enuZero, enuEastAxis);
   ECEFHeading const toUp = createECEFHeading(enuZero, enuUpAxis);
@@ -75,7 +75,7 @@ ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enuR
   double const cosHeading = vectorDotProduct(toEast, ecefHeading);
 
   ECEFHeading const crossProductVector(vectorCrossProduct(toEast, ecefHeading));
-  double const sinHeadingAbs = static_cast<double>(vectorLength(crossProductVector));
+  double const sinHeadingAbs = vectorLength(crossProductVector).mDistance;
 
   // determine the sign of sine
   ENUHeading result;
@@ -98,7 +98,7 @@ ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enuR
 ENUHeading createENUHeading(ENUPoint const &start, ENUPoint const &end)
 {
   ENUPoint const direction = end - start;
-  ENUHeading result{std::atan2(static_cast<double>(direction.y), static_cast<double>(direction.x))};
+  ENUHeading result{std::atan2(direction.y.mENUCoordinate, direction.x.mENUCoordinate)};
   // atan2 seems to allow -M_PI, so normalize that one
   if (result == ENUHeading(-M_PI))
   {

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -180,13 +180,13 @@ void MapDataStore::deleteRoad(MapDataId const id)
 {
   if (hasRoad(id))
   {
-    for (const auto &laneId : mRoads.at(id).mForwardLanes)
+    for (const auto &lane_id : mRoads.at(id).mForwardLanes)
     {
-      deleteLane(laneId);
+      deleteLane(lane_id);
     }
-    for (const auto &laneId : mRoads.at(id).mBackwardLanes)
+    for (const auto &lane_id : mRoads.at(id).mBackwardLanes)
     {
-      deleteLane(laneId);
+      deleteLane(lane_id);
     }
 
     mRoads.erase(id);

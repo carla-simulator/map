@@ -24,12 +24,20 @@ string (REPLACE ";" " " TARGET_LINK_FLAGS "${TARGET_LINK_OPTIONS}")
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
+set(ad_physics_TARGET_INCLUDE_DIRECTORIES)
+set(ad_physics_TARGET_LINK_LIBRARIES)
+
+find_package(Boost REQUIRED)
+list(APPEND ad_physics_TARGET_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIRS})
+list(APPEND ad_physics_TARGET_LINK_LIBRARIES ${Boost_LIBRARIES})
+
 find_package(spdlog REQUIRED CONFIG)
 
-include(generated/ad_physics.cmake)
+file(GLOB_RECURSE ad_physics_GENERATED_SOURCES "${CMAKE_CURRENT_LIST_DIR}/generated/*.cpp")
 
 add_library(${PROJECT_NAME}
   ${ad_physics_GENERATED_SOURCES}
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/GeometryOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/Operation.cpp
 )
 
@@ -44,10 +52,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/generated/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  ${ad_physics_TARGET_INCLUDE_DIRECTORIES}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
   spdlog::spdlog
+  PRIVATE
+  ${ad_physics_TARGET_LINK_LIBRARIES}
 )
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/

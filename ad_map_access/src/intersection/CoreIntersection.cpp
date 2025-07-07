@@ -17,45 +17,45 @@ namespace ad {
 namespace map {
 namespace intersection {
 
-point::ParaPoint CoreIntersection::getEntryParaPointOfExternalLane(lane::LaneId const &laneId) const
+point::ParaPoint CoreIntersection::getEntryParaPointOfExternalLane(lane::LaneId const &lane_id) const
 {
   point::ParaPoint p;
-  p.laneId = laneId;
-  p.parametricOffset
-    = (lane::isLaneDirectionNegative(laneId) ? physics::ParametricValue(0.) : physics::ParametricValue(1.));
+  p.lane_id = lane_id;
+  p.parametric_offset
+    = (lane::isLaneDirectionNegative(lane_id) ? physics::ParametricValue(0.) : physics::ParametricValue(1.));
   return p;
 }
 
-point::ParaPoint CoreIntersection::getExitParaPointOfExternalLane(lane::LaneId const &laneId) const
+point::ParaPoint CoreIntersection::getExitParaPointOfExternalLane(lane::LaneId const &lane_id) const
 {
   point::ParaPoint p;
-  p.laneId = laneId;
-  p.parametricOffset
-    = (lane::isLaneDirectionNegative(laneId) ? physics::ParametricValue(1.) : physics::ParametricValue(0.));
+  p.lane_id = lane_id;
+  p.parametric_offset
+    = (lane::isLaneDirectionNegative(lane_id) ? physics::ParametricValue(1.) : physics::ParametricValue(0.));
   return p;
 }
 
-point::ParaPoint CoreIntersection::getEntryParaPointOfInternalLane(lane::LaneId const &laneId) const
+point::ParaPoint CoreIntersection::getEntryParaPointOfInternalLane(lane::LaneId const &lane_id) const
 {
   // for internal lanes the para point logic is vice-versa to external lanes
-  return getExitParaPointOfExternalLane(laneId);
+  return getExitParaPointOfExternalLane(lane_id);
 }
 
-point::ParaPoint CoreIntersection::getExitParaPointOfInternalLane(lane::LaneId const &laneId) const
+point::ParaPoint CoreIntersection::getExitParaPointOfInternalLane(lane::LaneId const &lane_id) const
 {
   // for internal lanes the para point logic is vice-versa to external lanes
-  return getEntryParaPointOfExternalLane(laneId);
+  return getEntryParaPointOfExternalLane(lane_id);
 }
 
-bool CoreIntersection::isLanePartOfIntersection(lane::LaneId const laneId, SuccessorMode const successorMode) const
+bool CoreIntersection::isLanePartOfIntersection(lane::LaneId const lane_id, SuccessorMode const successorMode) const
 {
   if (successorMode == SuccessorMode::OwnIntersection)
   {
-    return isLanePartOfCoreIntersection(laneId);
+    return isLanePartOfCoreIntersection(lane_id);
   }
   else
   {
-    return isLanePartOfAnIntersection(laneId);
+    return isLanePartOfAnIntersection(lane_id);
   }
 }
 
@@ -69,9 +69,19 @@ lane::LaneIdSet const &CoreIntersection::entryLanes() const
   return mEntryLanes;
 }
 
+lane::LaneIdSet const &CoreIntersection::entryBorderLanes() const
+{
+  return mEntryBorderLanes;
+}
+
 point::ParaPointList const &CoreIntersection::entryParaPoints() const
 {
   return mEntryParaPoints;
+}
+
+point::ParaPointList const &CoreIntersection::entryBorderParaPoints() const
+{
+  return mEntryBorderParaPoints;
 }
 
 lane::LaneIdSet const &CoreIntersection::exitLanes() const
@@ -79,47 +89,57 @@ lane::LaneIdSet const &CoreIntersection::exitLanes() const
   return mExitLanes;
 }
 
+lane::LaneIdSet const &CoreIntersection::exitBorderLanes() const
+{
+  return mExitBorderLanes;
+}
+
 point::ParaPointList const &CoreIntersection::exitParaPoints() const
 {
   return mExitParaPoints;
 }
 
-bool CoreIntersection::isLanePartOfCoreIntersection(lane::LaneId const laneId) const
+point::ParaPointList const &CoreIntersection::exitBorderParaPoints() const
 {
-  return (mInternalLanes.find(laneId) != mInternalLanes.end());
+  return mExitBorderParaPoints;
 }
 
-void CoreIntersection::extractLanesOfCoreIntersection(lane::LaneId const laneId)
+bool CoreIntersection::isLanePartOfCoreIntersection(lane::LaneId const lane_id) const
 {
-  if (isLanePartOfCoreIntersection(laneId))
+  return (mInternalLanes.find(lane_id) != mInternalLanes.end());
+}
+
+void CoreIntersection::extractLanesOfCoreIntersection(lane::LaneId const lane_id)
+{
+  if (isLanePartOfCoreIntersection(lane_id))
   {
     return;
   }
-  auto lane = lane::getLane(laneId);
+  auto lane = lane::getLane(lane_id);
   if (!lane::isLanePartOfAnIntersection(lane))
   {
     // restrict ourselves to lanes inside the intersection
     return;
   }
-  mInternalLanes.insert(laneId);
+  mInternalLanes.insert(lane_id);
   if (mInternalLanes.size() == 1u)
   {
-    mInternalLanesBoundingSphere = lane.boundingSphere;
+    mInternalLanesBoundingSphere = lane.bounding_sphere;
   }
   else
   {
-    mInternalLanesBoundingSphere = mInternalLanesBoundingSphere + lane.boundingSphere;
+    mInternalLanesBoundingSphere = mInternalLanesBoundingSphere + lane.bounding_sphere;
   }
-  for (auto const &contact : lane.contactLanes)
+  for (auto const &contact : lane.contact_lanes)
   {
     processContactsForLane(lane, contact);
-    extractLanesOfCoreIntersection(contact.toLane);
+    extractLanesOfCoreIntersection(contact.to_lane);
   }
 }
 
 void CoreIntersection::processContactsForLane(lane::Lane const &lane, lane::ContactLane const &contact)
 {
-  auto const &toId = contact.toLane;
+  auto const &toId = contact.to_lane;
   switch (contact.location)
   {
     case lane::ContactLocation::OVERLAP:
@@ -129,24 +149,24 @@ void CoreIntersection::processContactsForLane(lane::Lane const &lane, lane::Cont
       if (isLaneDirectionPositive(lane))
       {
         mSuccessor[lane.id].insert(toId);
-        checkAndInsertExitLane(toId);
+        checkAndInsertExitLane(toId, lane.id);
       }
       else
       {
         mPredecessor[lane.id].insert(toId);
-        checkAndInsertEntryLane(toId);
+        checkAndInsertEntryLane(toId, lane.id);
       }
       break;
     case lane::ContactLocation::PREDECESSOR:
       if (isLaneDirectionNegative(lane))
       {
         mSuccessor[lane.id].insert(toId);
-        checkAndInsertExitLane(toId);
+        checkAndInsertExitLane(toId, lane.id);
       }
       else
       {
         mPredecessor[lane.id].insert(toId);
-        checkAndInsertEntryLane(toId);
+        checkAndInsertEntryLane(toId, lane.id);
       }
       break;
     default:
@@ -154,32 +174,41 @@ void CoreIntersection::processContactsForLane(lane::Lane const &lane, lane::Cont
   }
 }
 
-void CoreIntersection::checkAndInsertEntryLane(lane::LaneId const laneId)
+void CoreIntersection::checkAndInsertEntryLane(lane::LaneId const lane_id, lane::LaneId const tolaneId)
 {
-  if (!isLanePartOfAnIntersection(laneId))
+  if (!isLanePartOfAnIntersection(lane_id))
   {
-    if (mEntryLanes.insert(laneId).second)
+    if (mEntryLanes.insert(lane_id).second)
     {
-      mEntryParaPoints.push_back(getEntryParaPointOfExternalLane(laneId));
+      mEntryParaPoints.push_back(getEntryParaPointOfExternalLane(lane_id));
+    }
+    if (mEntryBorderLanes.insert(tolaneId).second)
+    {
+      mEntryBorderParaPoints.push_back(getEntryParaPointOfInternalLane(tolaneId));
     }
   }
 }
 
-void CoreIntersection::checkAndInsertExitLane(lane::LaneId const laneId)
+void CoreIntersection::checkAndInsertExitLane(lane::LaneId const lane_id, lane::LaneId const tolaneId)
 {
-  if (!isLanePartOfAnIntersection(laneId))
+  if (!isLanePartOfAnIntersection(lane_id))
   {
-    if (mExitLanes.insert(laneId).second)
+    if (mExitLanes.insert(lane_id).second)
     {
-      mExitParaPoints.push_back(getExitParaPointOfExternalLane(laneId));
+      mExitParaPoints.push_back(getExitParaPointOfExternalLane(lane_id));
+    }
+    if (mExitBorderLanes.insert(tolaneId).second)
+    {
+      mExitBorderParaPoints.push_back(getExitParaPointOfInternalLane(tolaneId));
     }
   }
 }
 
 std::pair<lane::LaneIdSet, lane::LaneIdSet>
-CoreIntersection::getDirectSuccessorsInLaneDirection(lane::LaneId const laneId, SuccessorMode const successorMode) const
+CoreIntersection::getDirectSuccessorsInLaneDirection(lane::LaneId const lane_id,
+                                                     SuccessorMode const successorMode) const
 {
-  auto lane = lane::getLane(laneId);
+  auto lane = lane::getLane(lane_id);
   auto location = lane::ContactLocation::SUCCESSOR;
   if (lane.direction == lane::LaneDirection::NEGATIVE)
   {
@@ -188,7 +217,7 @@ CoreIntersection::getDirectSuccessorsInLaneDirection(lane::LaneId const laneId, 
   std::pair<lane::LaneIdSet, lane::LaneIdSet> result;
   for (auto const &contact : lane::getContactLanes(lane, location))
   {
-    lane::LaneId const successorLane = contact.toLane;
+    lane::LaneId const successorLane = contact.to_lane;
     if (isLanePartOfIntersection(successorLane, successorMode))
     {
       // restrict first to within intersection
@@ -204,18 +233,18 @@ CoreIntersection::getDirectSuccessorsInLaneDirection(lane::LaneId const laneId, 
 }
 
 lane::LaneIdSet
-CoreIntersection::getDirectSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
+CoreIntersection::getDirectSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const lane_id,
                                                                        SuccessorMode const successorMode) const
 {
-  return getDirectSuccessorsInLaneDirection(laneId, successorMode).first;
+  return getDirectSuccessorsInLaneDirection(lane_id, successorMode).first;
 }
 
 lane::LaneIdSet
-CoreIntersection::getAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
+CoreIntersection::getAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const lane_id,
                                                                     SuccessorMode const successorMode) const
 {
   lane::LaneIdSet result;
-  auto directSuccessors = getDirectSuccessorsInLaneDirectionWithinIntersection(laneId, successorMode);
+  auto directSuccessors = getDirectSuccessorsInLaneDirectionWithinIntersection(lane_id, successorMode);
   for (auto directSuccessorId : directSuccessors)
   {
     auto directSuccessorRecursiveResult
@@ -227,22 +256,22 @@ CoreIntersection::getAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId
 }
 
 lane::LaneIdSet
-CoreIntersection::getLaneAndAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const laneId,
+CoreIntersection::getLaneAndAllSuccessorsInLaneDirectionWithinIntersection(lane::LaneId const lane_id,
                                                                            SuccessorMode const successorMode) const
 {
-  auto result = getAllSuccessorsInLaneDirectionWithinIntersection(laneId, successorMode);
-  if (isLanePartOfIntersection(laneId, successorMode))
+  auto result = getAllSuccessorsInLaneDirectionWithinIntersection(lane_id, successorMode);
+  if (isLanePartOfIntersection(lane_id, successorMode))
   {
-    result.insert(laneId);
+    result.insert(lane_id);
   }
   return result;
 }
 
-lane::LaneIdSet CoreIntersection::getAllReachableOutgoingLanes(lane::LaneId const laneId,
+lane::LaneIdSet CoreIntersection::getAllReachableOutgoingLanes(lane::LaneId const lane_id,
                                                                SuccessorMode const successorMode) const
 {
   lane::LaneIdSet result;
-  auto directSuccessors = getDirectSuccessorsInLaneDirection(laneId, successorMode);
+  auto directSuccessors = getDirectSuccessorsInLaneDirection(lane_id, successorMode);
   // recursive until end of intersection
   for (auto directSuccessorId : directSuccessors.first)
   {
@@ -254,11 +283,11 @@ lane::LaneIdSet CoreIntersection::getAllReachableOutgoingLanes(lane::LaneId cons
 }
 
 std::pair<lane::LaneIdSet, lane::LaneIdSet>
-CoreIntersection::getAllReachableInternalAndOutgoingLanes(lane::LaneId const laneId,
+CoreIntersection::getAllReachableInternalAndOutgoingLanes(lane::LaneId const lane_id,
                                                           SuccessorMode const successorMode) const
 {
   std::pair<lane::LaneIdSet, lane::LaneIdSet> result;
-  auto directSuccessors = getDirectSuccessorsInLaneDirection(laneId, successorMode);
+  auto directSuccessors = getDirectSuccessorsInLaneDirection(lane_id, successorMode);
   // recursive until end of intersection
   for (auto directSuccessorId : directSuccessors.first)
   {
@@ -271,19 +300,19 @@ CoreIntersection::getAllReachableInternalAndOutgoingLanes(lane::LaneId const lan
   return result;
 }
 
-bool CoreIntersection::isLanePartOfAnIntersection(lane::LaneId const laneId)
+bool CoreIntersection::isLanePartOfAnIntersection(lane::LaneId const lane_id)
 {
-  auto lane = lane::getLane(laneId);
+  auto lane = lane::getLane(lane_id);
   return lane::isLanePartOfAnIntersection(lane);
 }
 
 bool CoreIntersection::isRoutePartOfAnIntersection(route::FullRoute const &route)
 {
-  for (auto const &roadSegment : route.roadSegments)
+  for (auto const &roadSegment : route.road_segments)
   {
-    for (auto const &laneSegment : roadSegment.drivableLaneSegments)
+    for (auto const &laneSegment : roadSegment.drivable_lane_segments)
     {
-      if (isLanePartOfAnIntersection(laneSegment.laneInterval.laneId))
+      if (isLanePartOfAnIntersection(laneSegment.lane_interval.lane_id))
       {
         return true;
       }
@@ -301,15 +330,15 @@ bool laneEntersIntersection(lane::LaneId const &from, lane::LaneId const &to)
 bool CoreIntersection::isRoadSegmentEnteringIntersection(
   route::RouteIterator const &routeIterator, route::RoadSegmentList::const_iterator &routePreviousSegmentIter)
 {
-  if ((routeIterator.roadSegmentIterator != routeIterator.route.roadSegments.end())
-      && (routeIterator.roadSegmentIterator != routeIterator.route.roadSegments.begin()))
+  if ((routeIterator.roadSegmentIterator != routeIterator.route.road_segments.end())
+      && (routeIterator.roadSegmentIterator != routeIterator.route.road_segments.begin()))
   {
     auto previousSegmentIter = routeIterator.roadSegmentIterator;
     previousSegmentIter--;
     // only look at the first parapoint per index
-    auto const fromLane = previousSegmentIter->drivableLaneSegments.front().laneInterval.laneId;
-    auto const toLane = routeIterator.roadSegmentIterator->drivableLaneSegments.front().laneInterval.laneId;
-    if (laneEntersIntersection(fromLane, toLane))
+    auto const fromLane = previousSegmentIter->drivable_lane_segments.front().lane_interval.lane_id;
+    auto const to_lane = routeIterator.roadSegmentIterator->drivable_lane_segments.front().lane_interval.lane_id;
+    if (laneEntersIntersection(fromLane, to_lane))
     {
       routePreviousSegmentIter = previousSegmentIter;
       return true;
@@ -320,7 +349,7 @@ bool CoreIntersection::isRoadSegmentEnteringIntersection(
 
 bool CoreIntersection::isIntersectionOnRoute(route::FullRoute const &route)
 {
-  for (auto roadSegmentIter = route.roadSegments.begin(); roadSegmentIter != route.roadSegments.end();
+  for (auto roadSegmentIter = route.road_segments.begin(); roadSegmentIter != route.road_segments.end();
        roadSegmentIter++)
   {
     route::RoadSegmentList::const_iterator routePreviousSegmentIter;
@@ -335,9 +364,9 @@ bool CoreIntersection::isIntersectionOnRoute(route::FullRoute const &route)
 
 bool CoreIntersection::objectWithinIntersection(match::MapMatchedObjectBoundingBox const &object) const
 {
-  for (auto const &occupiedLane : object.laneOccupiedRegions)
+  for (auto const &occupiedLane : object.lane_occupied_regions)
   {
-    if (mInternalLanes.count(occupiedLane.laneId) > 0)
+    if (mInternalLanes.count(occupiedLane.lane_id) > 0)
     {
       return true;
     }
@@ -361,7 +390,7 @@ bool CoreIntersection::objectRouteCrossesIntersection(route::FullRoute const &ob
 physics::Distance CoreIntersection::objectDistanceToIntersection(match::Object const &object) const
 {
   physics::Distance minDistance = std::numeric_limits<physics::Distance>::max();
-  if (objectWithinIntersection(object.mapMatchedBoundingBox))
+  if (objectWithinIntersection(object.map_matched_bounding_box))
   {
     minDistance = physics::Distance(0.);
   }
@@ -375,17 +404,17 @@ physics::Distance CoreIntersection::objectDistanceToIntersection(match::Object c
   return minDistance;
 }
 
-CoreIntersection::CoreIntersection(lane::LaneId const &laneId)
+CoreIntersection::CoreIntersection(lane::LaneId const &lane_id)
 {
-  extractLanesOfCoreIntersection(laneId);
+  extractLanesOfCoreIntersection(lane_id);
 }
 
-CoreIntersectionPtr CoreIntersection::getCoreIntersectionFor(lane::LaneId const &laneId)
+CoreIntersectionPtr CoreIntersection::getCoreIntersectionFor(lane::LaneId const &lane_id)
 {
   CoreIntersectionPtr result;
-  if (isLanePartOfAnIntersection(laneId))
+  if (isLanePartOfAnIntersection(lane_id))
   {
-    result = CoreIntersectionPtr(new CoreIntersection(laneId));
+    result = CoreIntersectionPtr(new CoreIntersection(lane_id));
   }
   return result;
 }
@@ -394,15 +423,15 @@ template <typename CONTAINER>
 std::vector<CoreIntersectionPtr> CoreIntersection::getCoreIntersectionsForLaneIds(CONTAINER const &laneIds)
 {
   std::vector<CoreIntersectionPtr> result;
-  for (auto &laneId : laneIds)
+  for (auto &lane_id : laneIds)
   {
-    if (isLanePartOfAnIntersection(laneId))
+    if (isLanePartOfAnIntersection(lane_id))
     {
       bool createIntersection = true;
       for (auto const &intersection : result)
       {
         auto const internalLanes = intersection->internalLanes();
-        if (internalLanes.find(laneId) != internalLanes.end())
+        if (internalLanes.find(lane_id) != internalLanes.end())
         {
           createIntersection = false;
           break;
@@ -410,7 +439,7 @@ std::vector<CoreIntersectionPtr> CoreIntersection::getCoreIntersectionsForLaneId
       }
       if (createIntersection)
       {
-        result.push_back(CoreIntersectionPtr(new CoreIntersection(laneId)));
+        result.push_back(CoreIntersectionPtr(new CoreIntersection(lane_id)));
       }
     }
   }
@@ -429,7 +458,7 @@ std::vector<CoreIntersectionPtr> CoreIntersection::getCoreIntersectionsFor(lane:
 
 CoreIntersectionPtr CoreIntersection::getCoreIntersectionFor(match::MapMatchedPosition const &mapMatchedPosition)
 {
-  return CoreIntersection::getCoreIntersectionFor(mapMatchedPosition.lanePoint.paraPoint.laneId);
+  return CoreIntersection::getCoreIntersectionFor(mapMatchedPosition.lane_point.para_point.lane_id);
 }
 
 std::vector<CoreIntersectionPtr> CoreIntersection::getCoreIntersectionsForInLaneMatches(point::ENUPoint const &position)
@@ -447,7 +476,7 @@ std::vector<CoreIntersectionPtr> CoreIntersection::getCoreIntersectionsForInLane
   {
     if (mapMatchedPosition.type == match::MapMatchedPositionType::LANE_IN)
     {
-      inLaneMatches.insert(mapMatchedPosition.lanePoint.paraPoint.laneId);
+      inLaneMatches.insert(mapMatchedPosition.lane_point.para_point.lane_id);
     }
   }
 
@@ -458,9 +487,9 @@ std::vector<CoreIntersectionPtr>
 CoreIntersection::getCoreIntersectionsForInLaneMatches(match::MapMatchedObjectBoundingBox const &object)
 {
   lane::LaneIdSet inLaneMatches;
-  for (auto const &occupiedRegion : object.laneOccupiedRegions)
+  for (auto const &occupiedRegion : object.lane_occupied_regions)
   {
-    inLaneMatches.insert(occupiedRegion.laneId);
+    inLaneMatches.insert(occupiedRegion.lane_id);
   }
 
   return CoreIntersection::getCoreIntersectionsForLaneIds(inLaneMatches);

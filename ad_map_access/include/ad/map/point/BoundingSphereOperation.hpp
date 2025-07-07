@@ -15,6 +15,17 @@
 #include "ad/map/point/ECEFOperation.hpp"
 #include "ad/map/point/Geometry.hpp"
 
+/**
+ * @brief calculate the union of two BoundingSpheres
+ *
+ * @param[in] a BoundingSphere a
+ * @param[in] b BoundingSphere b
+ *
+ * @returns union BoundingSpere containing both: a U b
+ */
+::ad::map::point::BoundingSphere operator+(::ad::map::point::BoundingSphere const &a,
+                                           ::ad::map::point::BoundingSphere const &b);
+
 /** @brief namespace ad */
 namespace ad {
 /** @brief namespace map */
@@ -35,19 +46,21 @@ inline physics::Distance distance(BoundingSphere const &left, BoundingSphere con
 /**
  * @brief calculate the bounding sphere of two edges
  */
-BoundingSphere calcBoundingSphere(Geometry const &edgeLeft, Geometry const &edgeRight);
-
-} // namespace point
-} // namespace map
-} // namespace ad
+BoundingSphere calcBoundingSphere(Geometry const &edge_left, Geometry const &edge_right);
 
 /**
- * @brief calculate the union of two BoundingSpheres
+ * @brief Computes union of BoundingSpheres.
  *
  * @param[in] a BoundingSphere a
  * @param[in] b BoundingSphere b
  *
  * @returns union BoundingSpere containing both: a U b
  */
-::ad::map::point::BoundingSphere operator+(::ad::map::point::BoundingSphere const &a,
-                                           ::ad::map::point::BoundingSphere const &b);
+inline BoundingSphere getUnion(BoundingSphere const &left, BoundingSphere const &right)
+{
+  return left + right;
+}
+
+} // namespace point
+} // namespace map
+} // namespace ad

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -50,11 +50,13 @@ namespace landmark {
  * \brief Enable/Disable explicit conversion. Currently set to "only explicit conversion".
  */
 #define _AD_MAP_LANDMARK_LANDMARKID_EXPLICIT_CONVERSION_ explicit
+#define _AD_MAP_LANDMARK_LANDMARKID_OPERATOR_BASE_TYPE_ 0
 #else
 /*!
  * \brief Enable/Disable explicit conversion. Currently set to "implicit conversion allowed".
  */
 #define _AD_MAP_LANDMARK_LANDMARKID_EXPLICIT_CONVERSION_
+#define _AD_MAP_LANDMARK_LANDMARKID_OPERATOR_BASE_TYPE_ 1
 #endif
 
 /*!
@@ -229,8 +231,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    LandmarkId const result(mLandmarkId + other.mLandmarkId);
-    result.ensureValid();
+    LandmarkId result(mLandmarkId + other.mLandmarkId);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -249,7 +251,7 @@ public:
     ensureValid();
     other.ensureValid();
     mLandmarkId += other.mLandmarkId;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -267,8 +269,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    LandmarkId const result(mLandmarkId - other.mLandmarkId);
-    result.ensureValid();
+    LandmarkId result(mLandmarkId - other.mLandmarkId);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -287,7 +289,7 @@ public:
     ensureValid();
     other.ensureValid();
     mLandmarkId -= other.mLandmarkId;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -295,12 +297,35 @@ public:
    * \brief conversion to base type: uint64_t
    *
    * \note the conversion to the base type removes the physical unit.
-   *       \ref \_AD_MAP_LANDMARK_LANDMARKID_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.
    */
-  _AD_MAP_LANDMARK_LANDMARKID_EXPLICIT_CONVERSION_ operator uint64_t() const
+  uint64_t toBaseType() const
   {
     return mLandmarkId;
   }
+
+  /*!
+   * \returns \c true if the LandmarkId is a normal value
+   *
+   * An LandmarkId value is defined to be normal if:
+   * - It is normal or zero (see std::fpclassify())
+   */
+  bool isNormal() const
+  {
+    auto const valueClass = std::fpclassify(mLandmarkId);
+    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO));
+  }
+
+#if _AD_MAP_LANDMARK_LANDMARKID_OPERATOR_BASE_TYPE_
+  /*!
+   * \brief conversion to base type: uint64_t
+   *
+   * \note the conversion to the base type removes the physical unit.
+   */
+  operator uint64_t() const
+  {
+    return mLandmarkId;
+  }
+#endif
 
   /*!
    * \returns \c true if the LandmarkId in a valid range
@@ -311,9 +336,7 @@ public:
    */
   bool isValid() const
   {
-    auto const valueClass = std::fpclassify(mLandmarkId);
-    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) && (cMinValue <= mLandmarkId)
-      && (mLandmarkId <= cMaxValue);
+    return isNormal() && (cMinValue <= mLandmarkId) && (mLandmarkId <= cMaxValue);
   }
 
   /*!
@@ -326,7 +349,8 @@ public:
   {
     if (!isValid())
     {
-      spdlog::info("ensureValid(::ad::map::landmark::LandmarkId)>> {} value out of range", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::map::landmark::LandmarkId)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_MAP_LANDMARK_LANDMARKID_THROWS_EXCEPTION == 1)
       throw std::out_of_range("LandmarkId value out of range"); // LCOV_EXCL_BR_LINE
 #endif
@@ -344,9 +368,53 @@ public:
     ensureValid();
     if (operator==(LandmarkId(0))) // LCOV_EXCL_BR_LINE
     {
-      spdlog::info("ensureValid(::ad::map::landmark::LandmarkId)>> {} value is zero", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::map::landmark::LandmarkId)>> {} value is zero",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_MAP_LANDMARK_LANDMARKID_THROWS_EXCEPTION == 1)
       throw std::out_of_range("LandmarkId value is zero"); // LCOV_EXCL_BR_LINE
+#endif
+    }
+  }
+
+  /**
+   * @brief if possible restrict the LandmarkId to it's defined limits
+   *
+   * If the LandmarkId isNormal(), but exceeds the defined limits, it is restricted to its limits.
+   * If LandmarkId::isNormal() returns \c false an std::out_of_range() exception is thrown.
+   * - not isNormal(): std::out_of_range() exception is thrown
+   * - \ref cMinValue <= value <= \ref cMaxValue: nothing is done
+   * - value < \ref cMinValue: resulting value = cMinValue
+   * - value > \ref cMaxValue: resulting value = cMaxValue
+   */
+  void restrictToLimitsAndEnsureValid()
+  {
+    if (isNormal())
+    {
+      if (mLandmarkId < cMinValue)
+      {
+        // mitigate exceeding the minimum
+        spdlog::info("restrictToLimits(::ad::map::landmark::LandmarkId)>> {} value is smaller than allowed minimum {}. "
+                     "Restrict to minimum value.",
+                     *this,
+                     getMin()); // LCOV_EXCL_BR_LINE
+        mLandmarkId = cMinValue;
+      }
+      else if (mLandmarkId > cMaxValue)
+      {
+        // mitigate exceeding the maximum
+        spdlog::info("restrictToLimits(::ad::map::landmark::LandmarkId)>> {} value is larger than allowed maximum {}. "
+                     "Restrict to maximum value.",
+                     *this,
+                     getMax()); // LCOV_EXCL_BR_LINE
+        mLandmarkId = cMaxValue;
+      }
+    }
+    else
+    {
+      spdlog::info("restrictToLimits(::ad::map::landmark::LandmarkId)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
+#if (AD_MAP_LANDMARK_LANDMARKID_THROWS_EXCEPTION == 1)
+      throw std::out_of_range("LandmarkId value out of range"); // LCOV_EXCL_BR_LINE
 #endif
     }
   }
@@ -367,7 +435,6 @@ public:
     return LandmarkId(cMaxValue);
   }
 
-private:
   /*!
    * \brief the actual value of the type
    */
@@ -450,7 +517,7 @@ namespace landmark {
  */
 inline std::ostream &operator<<(std::ostream &os, LandmarkId const &_value)
 {
-  return os << uint64_t(_value);
+  return os << _value.mLandmarkId;
 }
 
 } // namespace landmark
@@ -463,7 +530,19 @@ namespace std {
  */
 inline std::string to_string(::ad::map::landmark::LandmarkId const &value)
 {
-  return to_string(static_cast<uint64_t>(value));
+  return to_string(value.mLandmarkId);
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::landmark::LandmarkId> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::landmark::LandmarkId const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_LANDMARK_LANDMARKID

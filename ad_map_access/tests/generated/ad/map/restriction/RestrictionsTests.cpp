@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -32,28 +32,28 @@ protected:
     ::ad::map::restriction::Restriction valueConjunctionsElement;
     bool valueConjunctionsElementNegated{true};
     valueConjunctionsElement.negated = valueConjunctionsElementNegated;
-    ::ad::map::restriction::RoadUserTypeList valueConjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::RoadUserType valueConjunctionsElementRoadUserTypesElement(
+    ::ad::map::restriction::RoadUserTypeList valueConjunctionsElementRoad_user_types;
+    ::ad::map::restriction::RoadUserType valueConjunctionsElementRoad_user_typesElement(
       ::ad::map::restriction::RoadUserType::INVALID);
-    valueConjunctionsElementRoadUserTypes.resize(1, valueConjunctionsElementRoadUserTypesElement);
-    valueConjunctionsElement.roadUserTypes = valueConjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::PassengerCount valueConjunctionsElementPassengersMin(
+    valueConjunctionsElementRoad_user_types.resize(1, valueConjunctionsElementRoad_user_typesElement);
+    valueConjunctionsElement.road_user_types = valueConjunctionsElementRoad_user_types;
+    ::ad::map::restriction::PassengerCount valueConjunctionsElementPassengers_min(
       std::numeric_limits<::ad::map::restriction::PassengerCount>::lowest());
-    valueConjunctionsElement.passengersMin = valueConjunctionsElementPassengersMin;
+    valueConjunctionsElement.passengers_min = valueConjunctionsElementPassengers_min;
     valueConjunctions.resize(1, valueConjunctionsElement);
     value.conjunctions = valueConjunctions;
     ::ad::map::restriction::RestrictionList valueDisjunctions;
     ::ad::map::restriction::Restriction valueDisjunctionsElement;
     bool valueDisjunctionsElementNegated{true};
     valueDisjunctionsElement.negated = valueDisjunctionsElementNegated;
-    ::ad::map::restriction::RoadUserTypeList valueDisjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::RoadUserType valueDisjunctionsElementRoadUserTypesElement(
+    ::ad::map::restriction::RoadUserTypeList valueDisjunctionsElementRoad_user_types;
+    ::ad::map::restriction::RoadUserType valueDisjunctionsElementRoad_user_typesElement(
       ::ad::map::restriction::RoadUserType::INVALID);
-    valueDisjunctionsElementRoadUserTypes.resize(1, valueDisjunctionsElementRoadUserTypesElement);
-    valueDisjunctionsElement.roadUserTypes = valueDisjunctionsElementRoadUserTypes;
-    ::ad::map::restriction::PassengerCount valueDisjunctionsElementPassengersMin(
+    valueDisjunctionsElementRoad_user_types.resize(1, valueDisjunctionsElementRoad_user_typesElement);
+    valueDisjunctionsElement.road_user_types = valueDisjunctionsElementRoad_user_types;
+    ::ad::map::restriction::PassengerCount valueDisjunctionsElementPassengers_min(
       std::numeric_limits<::ad::map::restriction::PassengerCount>::lowest());
-    valueDisjunctionsElement.passengersMin = valueDisjunctionsElementPassengersMin;
+    valueDisjunctionsElement.passengers_min = valueDisjunctionsElementPassengers_min;
     valueDisjunctions.resize(1, valueDisjunctionsElement);
     value.disjunctions = valueDisjunctions;
     mValue = value;
@@ -115,14 +115,14 @@ TEST_F(RestrictionsTests, comparisonOperatorConjunctionsDiffers)
   ::ad::map::restriction::Restriction conjunctionsElement;
   bool conjunctionsElementNegated{false};
   conjunctionsElement.negated = conjunctionsElementNegated;
-  ::ad::map::restriction::RoadUserTypeList conjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::RoadUserType conjunctionsElementRoadUserTypesElement(
+  ::ad::map::restriction::RoadUserTypeList conjunctionsElementRoad_user_types;
+  ::ad::map::restriction::RoadUserType conjunctionsElementRoad_user_typesElement(
     ::ad::map::restriction::RoadUserType::CAR_DIESEL);
-  conjunctionsElementRoadUserTypes.resize(2, conjunctionsElementRoadUserTypesElement);
-  conjunctionsElement.roadUserTypes = conjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::PassengerCount conjunctionsElementPassengersMin(
+  conjunctionsElementRoad_user_types.resize(2, conjunctionsElementRoad_user_typesElement);
+  conjunctionsElement.road_user_types = conjunctionsElementRoad_user_types;
+  ::ad::map::restriction::PassengerCount conjunctionsElementPassengers_min(
     std::numeric_limits<::ad::map::restriction::PassengerCount>::max());
-  conjunctionsElement.passengersMin = conjunctionsElementPassengersMin;
+  conjunctionsElement.passengers_min = conjunctionsElementPassengers_min;
   conjunctions.resize(2, conjunctionsElement);
   valueA.conjunctions = conjunctions;
   ::ad::map::restriction::Restrictions valueB = mValue;
@@ -138,14 +138,14 @@ TEST_F(RestrictionsTests, comparisonOperatorDisjunctionsDiffers)
   ::ad::map::restriction::Restriction disjunctionsElement;
   bool disjunctionsElementNegated{false};
   disjunctionsElement.negated = disjunctionsElementNegated;
-  ::ad::map::restriction::RoadUserTypeList disjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::RoadUserType disjunctionsElementRoadUserTypesElement(
+  ::ad::map::restriction::RoadUserTypeList disjunctionsElementRoad_user_types;
+  ::ad::map::restriction::RoadUserType disjunctionsElementRoad_user_typesElement(
     ::ad::map::restriction::RoadUserType::CAR_DIESEL);
-  disjunctionsElementRoadUserTypes.resize(2, disjunctionsElementRoadUserTypesElement);
-  disjunctionsElement.roadUserTypes = disjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::PassengerCount disjunctionsElementPassengersMin(
+  disjunctionsElementRoad_user_types.resize(2, disjunctionsElementRoad_user_typesElement);
+  disjunctionsElement.road_user_types = disjunctionsElementRoad_user_types;
+  ::ad::map::restriction::PassengerCount disjunctionsElementPassengers_min(
     std::numeric_limits<::ad::map::restriction::PassengerCount>::max());
-  disjunctionsElement.passengersMin = disjunctionsElementPassengersMin;
+  disjunctionsElement.passengers_min = disjunctionsElementPassengers_min;
   disjunctions.resize(2, disjunctionsElement);
   valueA.disjunctions = disjunctions;
   ::ad::map::restriction::Restrictions valueB = mValue;

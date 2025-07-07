@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,8 +28,8 @@ TEST(ContactLaneListValidInputRangeTests, testValidInputRangeElementValid)
 {
   ::ad::map::lane::ContactLaneList value;
   ::ad::map::lane::ContactLane element;
-  ::ad::map::lane::LaneId elementToLane(1);
-  element.toLane = elementToLane;
+  ::ad::map::lane::LaneId elementTo_lane(1);
+  element.to_lane = elementTo_lane;
   ::ad::map::lane::ContactLocation elementLocation(::ad::map::lane::ContactLocation::INVALID);
   element.location = elementLocation;
   ::ad::map::lane::ContactTypeList elementTypes;
@@ -41,35 +41,35 @@ TEST(ContactLaneListValidInputRangeTests, testValidInputRangeElementValid)
   ::ad::map::restriction::Restriction elementRestrictionsConjunctionsElement;
   bool elementRestrictionsConjunctionsElementNegated{true};
   elementRestrictionsConjunctionsElement.negated = elementRestrictionsConjunctionsElementNegated;
-  ::ad::map::restriction::RoadUserTypeList elementRestrictionsConjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::RoadUserType elementRestrictionsConjunctionsElementRoadUserTypesElement(
+  ::ad::map::restriction::RoadUserTypeList elementRestrictionsConjunctionsElementRoad_user_types;
+  ::ad::map::restriction::RoadUserType elementRestrictionsConjunctionsElementRoad_user_typesElement(
     ::ad::map::restriction::RoadUserType::INVALID);
-  elementRestrictionsConjunctionsElementRoadUserTypes.resize(
-    1, elementRestrictionsConjunctionsElementRoadUserTypesElement);
-  elementRestrictionsConjunctionsElement.roadUserTypes = elementRestrictionsConjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::PassengerCount elementRestrictionsConjunctionsElementPassengersMin(
+  elementRestrictionsConjunctionsElementRoad_user_types.resize(
+    1, elementRestrictionsConjunctionsElementRoad_user_typesElement);
+  elementRestrictionsConjunctionsElement.road_user_types = elementRestrictionsConjunctionsElementRoad_user_types;
+  ::ad::map::restriction::PassengerCount elementRestrictionsConjunctionsElementPassengers_min(
     std::numeric_limits<::ad::map::restriction::PassengerCount>::lowest());
-  elementRestrictionsConjunctionsElement.passengersMin = elementRestrictionsConjunctionsElementPassengersMin;
+  elementRestrictionsConjunctionsElement.passengers_min = elementRestrictionsConjunctionsElementPassengers_min;
   elementRestrictionsConjunctions.resize(1, elementRestrictionsConjunctionsElement);
   elementRestrictions.conjunctions = elementRestrictionsConjunctions;
   ::ad::map::restriction::RestrictionList elementRestrictionsDisjunctions;
   ::ad::map::restriction::Restriction elementRestrictionsDisjunctionsElement;
   bool elementRestrictionsDisjunctionsElementNegated{true};
   elementRestrictionsDisjunctionsElement.negated = elementRestrictionsDisjunctionsElementNegated;
-  ::ad::map::restriction::RoadUserTypeList elementRestrictionsDisjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::RoadUserType elementRestrictionsDisjunctionsElementRoadUserTypesElement(
+  ::ad::map::restriction::RoadUserTypeList elementRestrictionsDisjunctionsElementRoad_user_types;
+  ::ad::map::restriction::RoadUserType elementRestrictionsDisjunctionsElementRoad_user_typesElement(
     ::ad::map::restriction::RoadUserType::INVALID);
-  elementRestrictionsDisjunctionsElementRoadUserTypes.resize(
-    1, elementRestrictionsDisjunctionsElementRoadUserTypesElement);
-  elementRestrictionsDisjunctionsElement.roadUserTypes = elementRestrictionsDisjunctionsElementRoadUserTypes;
-  ::ad::map::restriction::PassengerCount elementRestrictionsDisjunctionsElementPassengersMin(
+  elementRestrictionsDisjunctionsElementRoad_user_types.resize(
+    1, elementRestrictionsDisjunctionsElementRoad_user_typesElement);
+  elementRestrictionsDisjunctionsElement.road_user_types = elementRestrictionsDisjunctionsElementRoad_user_types;
+  ::ad::map::restriction::PassengerCount elementRestrictionsDisjunctionsElementPassengers_min(
     std::numeric_limits<::ad::map::restriction::PassengerCount>::lowest());
-  elementRestrictionsDisjunctionsElement.passengersMin = elementRestrictionsDisjunctionsElementPassengersMin;
+  elementRestrictionsDisjunctionsElement.passengers_min = elementRestrictionsDisjunctionsElementPassengers_min;
   elementRestrictionsDisjunctions.resize(1, elementRestrictionsDisjunctionsElement);
   elementRestrictions.disjunctions = elementRestrictionsDisjunctions;
   element.restrictions = elementRestrictions;
-  ::ad::map::landmark::LandmarkId elementTrafficLightId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
-  element.trafficLightId = elementTrafficLightId;
+  ::ad::map::landmark::LandmarkId elementLandmark_id(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
+  element.landmark_id = elementLandmark_id;
   value.push_back(element);
   ASSERT_TRUE(withinValidInputRange(value));
 }

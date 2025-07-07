@@ -131,8 +131,10 @@ struct SyntheticIntersectionTestBase : test_support::ArtificialIntersectionTestB
    */
   void performBasicTrafficLightsChecks(std::vector<TrafficLightForTest> TrafficLightForTests);
 
-  TrafficLightForTest expectedTrafficLight(uint64_t landmarkId, landmark::TrafficLightType type) const;
-  TrafficLightForTest expectedTrafficLight(uint64_t landmarkId) const;
+  TrafficLightForTest expectedTrafficLight(landmark::LandmarkId landmark_id,
+                                           landmark::TrafficLightType type = landmark::TrafficLightType::UNKNOWN) const;
+  TrafficLightForTest expectedTrafficLight(uint64_t landmark_id,
+                                           landmark::TrafficLightType type = landmark::TrafficLightType::UNKNOWN) const;
 };
 
 } // namespace map

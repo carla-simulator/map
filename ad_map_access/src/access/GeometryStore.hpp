@@ -59,12 +59,12 @@ public: // Operations
 
 private: // Aux Methods
   /**
-   * @brief Stores vector of ECEFEdge to the store.
+   * @brief Stores vector of ECEFPointList to the store.
    * @param[in] ecef Vector to be stored.
    * @param[out] offset3d Offset where first point is stored.
    * @returns true if successful.
    */
-  bool store(const point::ECEFEdge &ecef, uint32_t &offset3d);
+  bool store(const point::ECEFPointList &ecef, uint32_t &offset3d);
 
   /**
    * @brief Stores the geometry, but first checks if geometry is already in a store.
@@ -76,13 +76,13 @@ private: // Aux Methods
   bool store(lane::Lane::ConstPtr lane, lane::ContactLocation location, uint32_t &offset3d, uint32_t &size);
 
   /**
-   * @brief Restores vector of ECEFEdge to the store.
+   * @brief Restores vector of ECEFPointList to the store.
    * @param[in] ecef Vector to be restored.
    * @param[in] offset3d Offset where first point is stored.
    * @param[in] points3d Number of 3d points to be retrieved.
    * @returns true if successful.
    */
-  bool restore(point::ECEFEdge &ecef, uint32_t offset3d, uint32_t points3d) const;
+  bool restore(point::ECEFPointList &ecef, uint32_t offset3d, uint32_t points3d) const;
 
   /**
    * @brief Destroys the store.

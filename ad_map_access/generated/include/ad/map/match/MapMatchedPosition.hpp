@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -105,9 +105,9 @@ struct MapMatchedPosition
    */
   bool operator==(const MapMatchedPosition &other) const
   {
-    return (lanePoint == other.lanePoint) && (type == other.type) && (matchedPoint == other.matchedPoint)
-      && (probability == other.probability) && (queryPoint == other.queryPoint)
-      && (matchedPointDistance == other.matchedPointDistance);
+    return (lane_point == other.lane_point) && (type == other.type) && (matched_point == other.matched_point)
+      && (probability == other.probability) && (query_point == other.query_point)
+      && (matched_point_distance == other.matched_point_distance);
   }
 
   /**
@@ -124,22 +124,22 @@ struct MapMatchedPosition
 
   /*!
    * matched point as LanePoint.
-   * parametricOffset
+   * parametric_offset
    */
-  ::ad::map::match::LanePoint lanePoint;
+  ::ad::map::match::LanePoint lane_point;
   ::ad::map::match::MapMatchedPositionType type{::ad::map::match::MapMatchedPositionType::INVALID};
-  ::ad::map::point::ECEFPoint matchedPoint;
+  ::ad::map::point::ECEFPoint matched_point;
   ::ad::physics::Probability probability;
 
   /*!
    * Point that is used for determining this matched pos.
    */
-  ::ad::map::point::ECEFPoint queryPoint;
+  ::ad::map::point::ECEFPoint query_point;
 
   /*!
-   * The distance between the matchedPoint and the queryPoint.
+   * The distance between the matched_point and the query_point.
    */
-  ::ad::physics::Distance matchedPointDistance;
+  ::ad::physics::Distance matched_point_distance;
 };
 
 } // namespace match
@@ -178,23 +178,23 @@ namespace match {
 inline std::ostream &operator<<(std::ostream &os, MapMatchedPosition const &_value)
 {
   os << "MapMatchedPosition(";
-  os << "lanePoint:";
-  os << _value.lanePoint;
+  os << "lane_point:";
+  os << _value.lane_point;
   os << ",";
   os << "type:";
   os << _value.type;
   os << ",";
-  os << "matchedPoint:";
-  os << _value.matchedPoint;
+  os << "matched_point:";
+  os << _value.matched_point;
   os << ",";
   os << "probability:";
   os << _value.probability;
   os << ",";
-  os << "queryPoint:";
-  os << _value.queryPoint;
+  os << "query_point:";
+  os << _value.query_point;
   os << ",";
-  os << "matchedPointDistance:";
-  os << _value.matchedPointDistance;
+  os << "matched_point_distance:";
+  os << _value.matched_point_distance;
   os << ")";
   return os;
 }
@@ -214,4 +214,16 @@ inline std::string to_string(::ad::map::match::MapMatchedPosition const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::match::MapMatchedPosition> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::match::MapMatchedPosition const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_MATCH_MAPMATCHEDPOSITION

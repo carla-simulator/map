@@ -15,31 +15,8 @@ from PyQt5 import QtCore
 class Runner(QtCore.QObject):
 
     "..."
+    progress = QtCore.pyqtSignal(int)
 
     def __init__(self):
         "..."
-        QtCore.QObject.__init__(self)
-
-    def progress(self, percent):
-        "..."
-
-    def debug(self, msg):
-        "..."
-        Globs.log.debug(msg)
-
-    def info(self, msg):
-        "..."
-        Globs.log.info(msg)
-
-    def warning(self, msg):
-        "..."
-        Globs.log.warning(msg)
-
-    def error(self, msg):
-        "..."
-        Globs.log.error(msg)
-
-    def exxception(self, msg):
-        "..."
-        self.error("Thread " + self.title + "raised exception! See message log for more info!")
-        QgsMessageLog.logMessage("Thread " + self.title + " exception: " + msg)
+        super(QtCore.QObject, self).__init__()

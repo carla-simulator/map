@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,10 +28,10 @@ protected:
   {
     // valid initialization
     ::ad::map::point::ParaPoint value;
-    ::ad::map::lane::LaneId valueLaneId(1);
-    value.laneId = valueLaneId;
-    ::ad::physics::ParametricValue valueParametricOffset(0.);
-    value.parametricOffset = valueParametricOffset;
+    ::ad::map::lane::LaneId valueLane_id(1);
+    value.lane_id = valueLane_id;
+    ::ad::physics::ParametricValue valueParametric_offset(0.);
+    value.parametric_offset = valueParametric_offset;
     mValue = value;
   }
 
@@ -84,22 +84,22 @@ TEST_F(ParaPointTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(ParaPointTests, comparisonOperatorLaneIdDiffers)
+TEST_F(ParaPointTests, comparisonOperatorLane_idDiffers)
 {
   ::ad::map::point::ParaPoint valueA = mValue;
-  ::ad::map::lane::LaneId laneId(std::numeric_limits<::ad::map::lane::LaneId>::max());
-  valueA.laneId = laneId;
+  ::ad::map::lane::LaneId lane_id(std::numeric_limits<::ad::map::lane::LaneId>::max());
+  valueA.lane_id = lane_id;
   ::ad::map::point::ParaPoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(ParaPointTests, comparisonOperatorParametricOffsetDiffers)
+TEST_F(ParaPointTests, comparisonOperatorParametric_offsetDiffers)
 {
   ::ad::map::point::ParaPoint valueA = mValue;
-  ::ad::physics::ParametricValue parametricOffset(1.);
-  valueA.parametricOffset = parametricOffset;
+  ::ad::physics::ParametricValue parametric_offset(1.);
+  valueA.parametric_offset = parametric_offset;
   ::ad::map::point::ParaPoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

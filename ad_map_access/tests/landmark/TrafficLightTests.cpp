@@ -46,12 +46,12 @@ TEST_F(TrafficLightTests, validate_trafficLights_access)
 
   auto const laneGeoPosition
     = point::createGeoPoint(point::Longitude(8.4365541), point::Latitude(49.0159383), point::Altitude(0.));
-  auto const laneId = lane::uniqueLaneId(laneGeoPosition);
+  auto const lane_id = lane::uniqueLaneId(laneGeoPosition);
   access::setENUReferencePoint(laneGeoPosition);
 
   EXPECT_THROW(landmark::getVisibleTrafficLights(lane::LaneId(1000)), std::invalid_argument);
 
-  auto const mapTrafficLights = landmark::getVisibleTrafficLights(laneId);
+  auto const mapTrafficLights = landmark::getVisibleTrafficLights(lane_id);
 
   std::vector<landmark::ENULandmark> expectedLandmarks{make_landmark(21, -21.4540, -40.1775, -1.1057),
                                                        make_landmark(22, -14.2869, -36.6020, -1.1057),
@@ -74,10 +74,10 @@ TEST_F(TrafficLightTests, validate_trafficLights_access)
     {
       // we cannot compare the traffic light id's since these may change in the map, but the positions
       // have to be constant
-      if ((std::fabs(static_cast<double>(expectedIter->position.x - mapTrafficLight.position.x)) <= maxError)
-          && (std::fabs(static_cast<double>(expectedIter->position.y - mapTrafficLight.position.y)) <= maxError)
-          && (std::fabs(static_cast<double>(expectedIter->position.z - mapTrafficLight.position.z)) <= maxError)
-          && (fmod(static_cast<double>(expectedIter->heading - mapTrafficLight.heading), 2 * M_PI) <= maxError))
+      if ((std::fabs((expectedIter->position.x - mapTrafficLight.position.x).mENUCoordinate) <= maxError)
+          && (std::fabs((expectedIter->position.y - mapTrafficLight.position.y).mENUCoordinate) <= maxError)
+          && (std::fabs((expectedIter->position.z - mapTrafficLight.position.z).mENUCoordinate) <= maxError)
+          && (fmod((expectedIter->heading - mapTrafficLight.heading).mENUHeading, 2 * M_PI) <= maxError))
       {
         break;
       }

@@ -47,6 +47,7 @@ class LayerManagerLaneDirection(LayerManager):
             feature_2 = self.layer.add_lla(pt1, pt0, attrs)
         LayerManager.add_new_feature(self, lane_id, feature_1, feature_2)
 
-    def change_attribute_value(self, lane_id, index, val):
+    def change_attribute_value(self, lane_id, index, val, attributes):
         "..."
         Globs.log.warning("Attribute change not supported")
+        return False

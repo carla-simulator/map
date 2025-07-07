@@ -7,7 +7,7 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 from PyQt5.QtWidgets import QDialog
-from PyQt5.Qt import QDialogButtonBox, QVBoxLayout, QStringListModel, QInputDialog,\
+from PyQt5.Qt import QDialogButtonBox, QVBoxLayout, QStringListModel, QInputDialog, \
     QWidget, QComboBox, QSize
 
 from PyQt5 import QtGui, uic, QtWidgets, QtCore
@@ -49,7 +49,7 @@ class MapPredictionTest(QgsMapToolEmitPoint):
         self.mode = None
         self.length = None
         self.duration = None
-        self.routes_edges = []
+        self.routes_borders = []
 
     def destroy(self):
         "..."
@@ -82,16 +82,20 @@ class MapPredictionTest(QgsMapToolEmitPoint):
         "..."
         super(MapPredictionTest, self).deactivate()
         self.action.setChecked(False)
-        self.layer_waypoints = None
-        self.routes_edges = None
-        self.layer_routes = None
+        self.routes_borders = None
+        if self.layer_waypoints is not None:
+            self.layer_waypoints.remove_all_features()
+        if self.layer_routes is not None:
+            for layer_route in self.layer_routes:
+                layer_route.remove_all_features()
+                layer_route.refresh()
         Globs.log.info("Map Prediction Test Deactivated")
 
     def canvasReleaseEvent(self, event):  # pylint: disable=invalid-name
         "..."
         raw_pt = self.toLayerCoordinates(self.layer_waypoints.layer, event.pos())
         mmpts = self.snapper.snap(raw_pt)
-        if mmpts is not None:
+        if mmpts is not None and mmpts[0] is not None:
             self.__set_start__(mmpts[0])
             self.__calculate_predictions__()
         else:
@@ -105,31 +109,31 @@ class MapPredictionTest(QgsMapToolEmitPoint):
         self.layer_waypoints.remove_all_features()
         for layer_route in self.layer_routes:
             layer_route.remove_all_features()
-        self.pt_start = mmpt.matchedPoint
-        attrs = ["Start", str(mmpt.lanePoint)]
+        self.pt_start = mmpt.matched_point
+        attrs = ["Start", str(mmpt.lane_point)]
         self.layer_waypoints.add_ecef(self.pt_start, attrs)
 
     def __calculate_predictions__(self):
         "..."
         routes = Predictions(self.pt_start, self.mode, self.length, self.duration)
         for each in routes:
-            edgeList = ad.map.route.getGeoBorderOfRoute(each)
+            borderList = ad.map.route.getGeoBorderOfRoute(each)
         if routes is not None:
-            self.routes_edges = []
+            self.routes_borders = []
             self.__resize_route_layers__(len(routes))
             for route in routes:
-                self.routes_edges.append([])
-                for edge in edgeList:
-                    self.__add_edge__(edge)
+                self.routes_borders.append([])
+                for border in borderList:
+                    self.__add_border__(border)
         else:
             Globs.log.error("Cannot predict route.")
 
-    def __add_edge__(self, new_edge):
+    def __add_border__(self, new_border):
         "..."
-        for edge in self.routes_edges:
-            current_prediction_index = len(self.routes_edges) - 1
-            self.layer_routes[current_prediction_index].add_lla2(new_edge.left, new_edge.right, [])
-            self.routes_edges[current_prediction_index].append(new_edge)
+        for border in self.routes_borders:
+            current_prediction_index = len(self.routes_borders) - 1
+            self.layer_routes[current_prediction_index].add_lla2(new_border.left.points, new_border.right.points, [])
+            self.routes_borders[current_prediction_index].append(new_border)
 
     def __resize_route_layers__(self, required_size):
         while len(self.layer_routes) < required_size:

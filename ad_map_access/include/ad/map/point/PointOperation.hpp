@@ -53,8 +53,8 @@ template <typename PointType> PointType vectorCrossProduct(PointType const &a, P
  */
 template <typename PointType> double vectorDotProduct(PointType const &a, PointType const &b)
 {
-  return static_cast<double>(a.x) * static_cast<double>(b.x) + static_cast<double>(a.y) * static_cast<double>(b.y)
-    + static_cast<double>(a.z) * static_cast<double>(b.z);
+  return a.x.toBaseType() * b.x.toBaseType() + a.y.toBaseType() * b.y.toBaseType()
+    + a.z.toBaseType() * b.z.toBaseType();
 }
 
 /**
@@ -78,7 +78,7 @@ template <typename PointType> PointType vectorMultiplyScalar(PointType const &a,
  */
 template <typename PointType> PointType vectorMultiplyScalar(PointType const &a, physics::Distance const &b)
 {
-  return vectorMultiplyScalar(a, static_cast<double>(b));
+  return vectorMultiplyScalar(a, b.mDistance);
 }
 
 /**
@@ -90,7 +90,7 @@ template <typename PointType> PointType vectorMultiplyScalar(PointType const &a,
  */
 template <typename PointType> physics::Distance vectorLength(PointType const &a)
 {
-  physics::Distance const length(std::sqrt(static_cast<double>(vectorDotProduct(a, a))));
+  physics::Distance const length(std::sqrt(vectorDotProduct(a, a)));
   return length;
 }
 
@@ -163,7 +163,29 @@ template <typename PointType> PointType vectorSub(PointType const &a, PointType 
 template <typename PointType>
 PointType vectorInterpolate(PointType const &a, PointType const &b, physics::ParametricValue const &tparam)
 {
-  return vectorExtrapolate(a, b, static_cast<double>(tparam));
+  return vectorExtrapolate(a, b, tparam.mParametricValue);
+}
+
+/**
+ * @brief Interpolates point between two points.
+ *
+ * @param[in] a vector a
+ * @param[in] b vector b
+ * @param[in] tratio Ratio value.
+ *
+ * @returns Point between point a and b if tratio is in interval [0., 1.].
+ *          with tratio==0, it will return point a;
+ *          with tratio==1, it will return point b.
+ *          Point before point a
+ *          with tratio<0.
+ *          Point after point b
+ *          with tratio<1.
+ *
+ */
+template <typename PointType>
+PointType vectorInterpolate(PointType const &a, PointType const &b, physics::RatioValue const &tratio)
+{
+  return vectorExtrapolate(a, b, tratio.mRatioValue);
 }
 
 /**
@@ -184,6 +206,15 @@ template <typename PointType> PointType vectorExtrapolate(PointType const &a, Po
   result.y = (1 - scalar) * a.y + scalar * b.y;
   result.z = (1 - scalar) * a.z + scalar * b.z;
   return result;
+}
+
+/**
+ * @brief Computes distance between two points.
+ * @returns Distance between two points in meters.
+ */
+template <typename PointType> physics::Distance distance(PointType const &point, PointType const &other)
+{
+  return vectorLength(vectorSub(point, other));
 }
 
 } // namespace point

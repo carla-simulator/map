@@ -92,7 +92,7 @@ void CoordinateTransform::setENUReferencePoint(const GeoPoint &enu_ref_point)
     double sin_phi = std::sin(enu_phi_);
     double cos_phi = std::cos(enu_phi_);
 
-    enu_h_ = static_cast<double>(enu_ref_point_.altitude);
+    enu_h_ = enu_ref_point_.altitude.mAltitude;
     enu_tmp1_ = std::sqrt(1 - E2 * sin_phi * sin_phi);
     enu_tmp1_3_ = enu_tmp1_ * enu_tmp1_ * enu_tmp1_;
     enu_cp_ = cos_phi;
@@ -148,13 +148,13 @@ ENUPoint CoordinateTransform::Geo2ENU(const GeoPoint &pt) const
         pjGeoPoint.v = toRadians(pt.latitude);
 
         auto pjEnuPoint = pj_fwd(pjGeoPoint, projPtr_);
-        return createENUPoint(pjEnuPoint.u, pjEnuPoint.v, static_cast<double>(pt.altitude));
+        return createENUPoint(pjEnuPoint.u, pjEnuPoint.v, pt.altitude.mAltitude);
       }
       else
       {
         double dphi = toRadians(pt.latitude) - enu_phi_;
         double dlam = toRadians(pt.longitude) - enu_lam_;
-        double dh = static_cast<double>(pt.altitude) - enu_h_;
+        double dh = pt.altitude.mAltitude - enu_h_;
         double dlam_2 = dlam * dlam;
         double dphi_2 = dphi * dphi;
         double de = (A / enu_tmp1_ + enu_h_) * enu_cp_ * dlam
@@ -188,13 +188,13 @@ GeoPoint CoordinateTransform::ENU2Geo(const ENUPoint &pt) const
       if (isGeoProjectionValid())
       {
         projXY pjEnuPoint;
-        pjEnuPoint.u = static_cast<double>(pt.x);
-        pjEnuPoint.v = static_cast<double>(pt.y);
+        pjEnuPoint.u = pt.x.mENUCoordinate;
+        pjEnuPoint.v = pt.y.mENUCoordinate;
 
         auto pjGeoPoint = pj_inv(pjEnuPoint, projPtr_);
         return createGeoPoint(Longitude(radians2degree(pjGeoPoint.u)),
                               Latitude(radians2degree(pjGeoPoint.v)),
-                              Altitude(static_cast<double>(pt.z)));
+                              Altitude(pt.z.mENUCoordinate));
       }
       else
       {
@@ -225,7 +225,7 @@ ECEFPoint CoordinateTransform::Geo2ECEF(const GeoPoint &pt) const
   {
     double lat = toRadians(pt.latitude);
     double lon = toRadians(pt.longitude);
-    double alt = static_cast<double>(pt.altitude);
+    double alt = pt.altitude.mAltitude;
     double sinlat = std::sin(lat);
     double coslat = std::cos(lat);
     double n = A / std::sqrt(1 - E2 * sinlat * sinlat);
@@ -245,9 +245,9 @@ GeoPoint CoordinateTransform::ECEF2Geo(const ECEFPoint &pt) const
 {
   if (isValid(pt))
   {
-    double x = static_cast<double>(pt.x);
-    double y = static_cast<double>(pt.y);
-    double z = static_cast<double>(pt.z);
+    double x = pt.x.mECEFCoordinate;
+    double y = pt.y.mECEFCoordinate;
+    double z = pt.z.mECEFCoordinate;
     double zp = std::abs(z);
     double w2 = x * x + y * y;
     double w = std::sqrt(w2);
@@ -315,9 +315,9 @@ ECEFPoint CoordinateTransform::ENU2ECEF(const ENUPoint &pt) const
       }
       else
       {
-        double x = static_cast<double>(pt.x);
-        double y = static_cast<double>(pt.y);
-        double z = static_cast<double>(pt.z);
+        double x = pt.x.mENUCoordinate;
+        double y = pt.y.mENUCoordinate;
+        double z = pt.z.mENUCoordinate;
         double ecef_x = ecef_enu_[0] * x + ecef_enu_[3] * y + ecef_enu_[6] * z;
         double ecef_y = ecef_enu_[1] * x + ecef_enu_[4] * y + ecef_enu_[7] * z;
         double ecef_z = ecef_enu_[5] * y + ecef_enu_[8] * z;
@@ -353,9 +353,9 @@ ENUPoint CoordinateTransform::ECEF2ENU(const ECEFPoint &pt) const
       else
       {
         auto const ecef_d = pt - ecef_ref_point_;
-        double x = static_cast<double>(ecef_d.x);
-        double y = static_cast<double>(ecef_d.y);
-        double z = static_cast<double>(ecef_d.z);
+        double x = ecef_d.x.mECEFCoordinate;
+        double y = ecef_d.y.mECEFCoordinate;
+        double z = ecef_d.z.mECEFCoordinate;
         double enu_x = ecef_enu_[0] * x + ecef_enu_[1] * y;
         double enu_y = ecef_enu_[3] * x + ecef_enu_[4] * y + ecef_enu_[5] * z;
         double enu_z = ecef_enu_[6] * x + ecef_enu_[7] * y + ecef_enu_[8] * z;

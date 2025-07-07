@@ -37,9 +37,9 @@ inline bool doSerialize(ISerializer &serializer, landmark::Landmark &landmark)
 {
   return serializer.serialize(SerializeableMagic::Landmark) && doSerialize(serializer, landmark.id)
     && serializer.serialize(landmark.type) && doSerialize(serializer, landmark.position)
-    && doSerialize(serializer, landmark.orientation) && doSerialize(serializer, landmark.boundingBox)
-    && doSerialize(serializer, landmark.supplementaryText) && serializer.serialize(landmark.trafficLightType)
-    && serializer.serialize(landmark.trafficSignType);
+    && doSerialize(serializer, landmark.orientation) && doSerialize(serializer, landmark.bounding_box)
+    && doSerialize(serializer, landmark.supplementary_text) && serializer.serialize(landmark.traffic_light_type)
+    && serializer.serialize(landmark.traffic_sign_type);
 }
 
 } // namespace serialize

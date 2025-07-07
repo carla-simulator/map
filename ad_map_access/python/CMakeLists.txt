@@ -11,7 +11,7 @@ project(ad_map_access_python VERSION ${CARLA-MAP_VERSION})
 include(GNUInstallDirs)
 
 set(CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 find_package(ad_map_opendrive_reader REQUIRED CONFIG)
 get_target_property(OPENDRIVE_READER_INCLUDES ad_map_opendrive_reader INTERFACE_INCLUDE_DIRECTORIES)
@@ -41,6 +41,7 @@ configure_file(AdMapAccessPython.cpp.in ${CMAKE_CURRENT_BINARY_DIR}/AdMapAccessP
 add_library(${target} SHARED
   ${CMAKE_CURRENT_BINARY_DIR}/AdMap-access-PythonWrapper.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/AdMap-config-PythonWrapper.cpp
+  ${CMAKE_CURRENT_BINARY_DIR}/AdMap-geometry-PythonWrapper.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/AdMap-intersection-PythonWrapper.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/AdMap-landmark-PythonWrapper.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/AdMap-lane-PythonWrapper.cpp
@@ -79,7 +80,7 @@ install(FILES
 
 install(CODE "\
   EXECUTE_PROCESS(\
-    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/setup.py egg_info --egg-base ${CMAKE_CURRENT_BINARY_DIR} build --build-base ${CMAKE_CURRENT_BINARY_DIR} install --prefix ${CMAKE_INSTALL_PREFIX} --record ${CMAKE_CURRENT_BINARY_DIR}/install.log --single-version-externally-managed bdist_wheel --dist-dir ${CMAKE_INSTALL_PREFIX}/dist ${CMAKE_CURRENT_BINARY_DIR}/${PYTHON_BINDING_NAME}\
+    COMMAND ${PYTHON_BINDING_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/setup.py egg_info --egg-base ${CMAKE_CURRENT_BINARY_DIR} build --build-base ${CMAKE_CURRENT_BINARY_DIR} install --prefix ${CMAKE_INSTALL_PREFIX} --record ${CMAKE_CURRENT_BINARY_DIR}/install.log --single-version-externally-managed bdist_wheel --dist-dir ${CMAKE_INSTALL_PREFIX}/dist ${CMAKE_CURRENT_BINARY_DIR}/${PYTHON_BINDING_NAME}\
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}\
   )"
 )
@@ -89,7 +90,7 @@ install(CODE "\
 #####################################################################
 if (BUILD_TESTING)
   add_test(NAME ${PROJECT_NAME}_test_${PYTHON_BINDING_NAME}
-    COMMAND ${PYTHON_EXECUTABLE} -m interface_test
+    COMMAND ${PYTHON_BINDING_EXECUTABLE} -m interface_test
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/tests
   )
   get_python_test_environment(ad_physics ad_map_opendrive_reader)

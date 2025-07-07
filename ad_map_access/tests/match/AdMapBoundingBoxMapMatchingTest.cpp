@@ -34,8 +34,8 @@ struct AdMapBoundingBoxMapMatchingTest : ::testing::Test
 
     config::PointOfInterest poi;
     ASSERT_TRUE(access::getPointOfInterest("T1", poi));
-    mObjectPosition.enuReferencePoint = access::getENUReferencePoint();
-    mObjectPosition.centerPoint = point::toENU(poi.geoPoint);
+    mObjectPosition.enu_reference_point = access::getENUReferencePoint();
+    mObjectPosition.center_point = point::toENU(poi.geo_point);
     mObjectPosition.heading = point::createENUHeading(M_PI_2);
     mObjectPosition.dimension.width = physics::Distance(0.7);
     mObjectPosition.dimension.length = physics::Distance(4.);
@@ -70,41 +70,41 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_within_single_lane)
 
   auto result = mapMatching.getMapMatchedBoundingBox(mObjectPosition, mSamplingDistance);
 
-  ASSERT_EQ(result.laneOccupiedRegions.size(), 1u);
+  ASSERT_EQ(result.lane_occupied_regions.size(), 1u);
   for (auto centerMatch : centerMapMatched)
   {
     if (centerMatch.type == match::MapMatchedPositionType::LANE_IN)
     {
-      ASSERT_EQ(centerMatch.lanePoint.paraPoint.laneId, result.laneOccupiedRegions.front().laneId);
-      ASSERT_LE(result.laneOccupiedRegions.front().lateralRange.minimum,
-                result.laneOccupiedRegions.front().lateralRange.maximum);
-      ASSERT_LE(result.laneOccupiedRegions.front().longitudinalRange.minimum,
-                result.laneOccupiedRegions.front().longitudinalRange.maximum);
+      ASSERT_EQ(centerMatch.lane_point.para_point.lane_id, result.lane_occupied_regions.front().lane_id);
+      ASSERT_LE(result.lane_occupied_regions.front().lateral_range.minimum,
+                result.lane_occupied_regions.front().lateral_range.maximum);
+      ASSERT_LE(result.lane_occupied_regions.front().longitudinal_range.minimum,
+                result.lane_occupied_regions.front().longitudinal_range.maximum);
     }
   }
 
   ASSERT_EQ(getObjectENUHeading(result), heading);
   match::MapMatchedObjectBoundingBox saveResult = result;
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::RearLeft)].clear();
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::RearRight)].clear();
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::FrontLeft)].clear();
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::FrontRight)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::RearLeft)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::RearRight)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontLeft)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontRight)].clear();
   EXPECT_THROW(getObjectENUHeading(result), std::runtime_error);
   result = saveResult;
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::RearRight)].clear();
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::FrontRight)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::RearRight)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontRight)].clear();
   ASSERT_EQ(getObjectENUHeading(result), heading);
   result = saveResult;
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::RearLeft)].clear();
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::FrontLeft)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::RearLeft)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontLeft)].clear();
   ASSERT_EQ(getObjectENUHeading(result), heading);
   result = saveResult;
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::RearLeft)].clear();
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::RearRight)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::RearLeft)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::RearRight)].clear();
   ASSERT_EQ(getObjectENUHeading(result), heading);
   result = saveResult;
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::FrontLeft)].clear();
-  result.referencePointPositions[int32_t(match::ObjectReferencePoints::FrontRight)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontLeft)].clear();
+  result.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontRight)].clear();
   ASSERT_EQ(getObjectENUHeading(result), heading);
   result = saveResult;
 
@@ -118,57 +118,57 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_within_single_lane)
   {
     if (centerMatch.type == match::MapMatchedPositionType::LANE_IN)
     {
-      x11 = centerMatch.lanePoint.paraPoint.laneId;
-      ASSERT_EQ(centerMatch.lanePoint.paraPoint.laneId, occRegion.front().laneId);
+      x11 = centerMatch.lane_point.para_point.lane_id;
+      ASSERT_EQ(centerMatch.lane_point.para_point.lane_id, occRegion.front().lane_id);
     }
   }
 
-  physics::Distance dis = signedDistanceToLane(occRegion.front().laneId, centerMapMatched);
+  physics::Distance dis = signedDistanceToLane(occRegion.front().lane_id, centerMapMatched);
   ASSERT_EQ(dis, physics::Distance(0));
 
   lane::LaneId x(100);
   MapMatchedPositionConfidenceList matchList;
   MapMatchedPosition matchPos;
-  matchPos.lanePoint.laneWidth = physics::Distance(1.0);
-  matchPos.lanePoint.paraPoint.laneId = x;
+  matchPos.lane_point.lane_width = physics::Distance(1.0);
+  matchPos.lane_point.para_point.lane_id = x;
 
   matchPos.type = match::MapMatchedPositionType::LANE_LEFT;
-  matchPos.lanePoint.lateralT = physics::RatioValue(1.0);
+  matchPos.lane_point.lateral_t = physics::RatioValue(1.0);
   matchList.clear();
   matchList.push_back(matchPos);
   EXPECT_THROW(signedDistanceToLane(x, matchList), std::runtime_error);
 
   matchPos.type = match::MapMatchedPositionType::LANE_LEFT;
-  matchPos.lanePoint.lateralT = physics::RatioValue(-1.0);
+  matchPos.lane_point.lateral_t = physics::RatioValue(-1.0);
   matchList.clear();
   matchList.push_back(matchPos);
   ASSERT_EQ(signedDistanceToLane(x, matchList), physics::Distance(-1.0));
 
   matchPos.type = match::MapMatchedPositionType::LANE_RIGHT;
-  matchPos.lanePoint.lateralT = physics::RatioValue(0.8);
+  matchPos.lane_point.lateral_t = physics::RatioValue(0.8);
   matchList.clear();
   matchList.push_back(matchPos);
   EXPECT_THROW(signedDistanceToLane(x, matchList), std::runtime_error);
 
   matchPos.type = match::MapMatchedPositionType::LANE_RIGHT;
-  matchPos.lanePoint.lateralT = physics::RatioValue(1.5);
+  matchPos.lane_point.lateral_t = physics::RatioValue(1.5);
   matchList.clear();
   matchList.push_back(matchPos);
   ASSERT_EQ(signedDistanceToLane(x, matchList), physics::Distance(0.5));
 
   matchPos.type = match::MapMatchedPositionType::INVALID;
-  matchPos.lanePoint.lateralT = physics::RatioValue(1.0);
+  matchPos.lane_point.lateral_t = physics::RatioValue(1.0);
   matchList.clear();
   matchList.push_back(matchPos);
   EXPECT_THROW(signedDistanceToLane(x, matchList), std::runtime_error);
 
   Object obj;
-  obj.enuPosition = mObjectPosition;
-  obj.mapMatchedBoundingBox = result;
+  obj.enu_position = mObjectPosition;
+  obj.map_matched_bounding_box = result;
   dis = getDistanceToLane(x11, obj);
   ASSERT_EQ(dis, physics::Distance(0));
-  dis = getDistanceToLane(para[0].laneId, obj);
-  ASSERT_NEAR((double)dis, 1.7429, 0.0001);
+  dis = getDistanceToLane(para[0].lane_id, obj);
+  ASSERT_NEAR(dis.mDistance, 1.7429, 0.0001);
 }
 
 TEST_F(AdMapBoundingBoxMapMatchingTest, rotated_box_within_two_lateral_lanes)
@@ -185,38 +185,38 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, rotated_box_within_two_lateral_lanes)
 
   auto result = mapMatching.getMapMatchedBoundingBox(mObjectPosition, mSamplingDistance);
 
-  ASSERT_EQ(result.laneOccupiedRegions.size(), 2u);
+  ASSERT_EQ(result.lane_occupied_regions.size(), 2u);
 
-  auto searchFront = std::find_if(result.laneOccupiedRegions.begin(),
-                                  result.laneOccupiedRegions.end(),
+  auto searchFront = std::find_if(result.lane_occupied_regions.begin(),
+                                  result.lane_occupied_regions.end(),
                                   [&centerMapMatched](match::LaneOccupiedRegion const &other) {
-                                    return other.laneId == centerMapMatched.front().lanePoint.paraPoint.laneId;
+                                    return other.lane_id == centerMapMatched.front().lane_point.para_point.lane_id;
                                   });
-  ASSERT_TRUE(searchFront != std::end(result.laneOccupiedRegions));
+  ASSERT_TRUE(searchFront != std::end(result.lane_occupied_regions));
 
-  auto searchBack = std::find_if(result.laneOccupiedRegions.begin(),
-                                 result.laneOccupiedRegions.end(),
+  auto searchBack = std::find_if(result.lane_occupied_regions.begin(),
+                                 result.lane_occupied_regions.end(),
                                  [&centerMapMatched](match::LaneOccupiedRegion const &other) {
-                                   return other.laneId == centerMapMatched.back().lanePoint.paraPoint.laneId;
+                                   return other.lane_id == centerMapMatched.back().lane_point.para_point.lane_id;
                                  });
-  ASSERT_TRUE(searchBack != std::end(result.laneOccupiedRegions));
+  ASSERT_TRUE(searchBack != std::end(result.lane_occupied_regions));
 
   // ensure the whole lane region up the the lane borders is covered
-  auto laneContactRelation = lane::getDirectNeighborhoodRelation(centerMapMatched.front().lanePoint.paraPoint.laneId,
-                                                                 centerMapMatched.back().lanePoint.paraPoint.laneId);
+  auto laneContactRelation = lane::getDirectNeighborhoodRelation(centerMapMatched.front().lane_point.para_point.lane_id,
+                                                                 centerMapMatched.back().lane_point.para_point.lane_id);
   if (laneContactRelation == lane::ContactLocation::LEFT)
   {
-    ASSERT_EQ(physics::ParametricValue(0.), searchFront->lateralRange.minimum);
-    ASSERT_LT(physics::ParametricValue(0.), searchFront->lateralRange.maximum);
-    ASSERT_EQ(physics::ParametricValue(1.), searchBack->lateralRange.maximum);
-    ASSERT_GT(physics::ParametricValue(1.), searchFront->lateralRange.minimum);
+    ASSERT_EQ(physics::ParametricValue(0.), searchFront->lateral_range.minimum);
+    ASSERT_LT(physics::ParametricValue(0.), searchFront->lateral_range.maximum);
+    ASSERT_EQ(physics::ParametricValue(1.), searchBack->lateral_range.maximum);
+    ASSERT_GT(physics::ParametricValue(1.), searchFront->lateral_range.minimum);
   }
   else if (laneContactRelation == lane::ContactLocation::RIGHT)
   {
-    ASSERT_EQ(physics::ParametricValue(0.), searchBack->lateralRange.minimum);
-    ASSERT_LT(physics::ParametricValue(0.), searchBack->lateralRange.maximum);
-    ASSERT_EQ(physics::ParametricValue(1.), searchFront->lateralRange.maximum);
-    ASSERT_LT(physics::ParametricValue(1.), searchFront->lateralRange.minimum);
+    ASSERT_EQ(physics::ParametricValue(0.), searchBack->lateral_range.minimum);
+    ASSERT_LT(physics::ParametricValue(0.), searchBack->lateral_range.maximum);
+    ASSERT_EQ(physics::ParametricValue(1.), searchFront->lateral_range.maximum);
+    ASSERT_LT(physics::ParametricValue(1.), searchFront->lateral_range.minimum);
   }
   else
   {
@@ -225,15 +225,15 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, rotated_box_within_two_lateral_lanes)
 
   // reconstruct length and width of vehicle
   physics::Distance vehicleWidth(0.);
-  for (auto const &occupiedRegion : result.laneOccupiedRegions)
+  for (auto const &occupiedRegion : result.lane_occupied_regions)
   {
-    auto const vehicleLength = lane::getLane(occupiedRegion.laneId).length
-      * (occupiedRegion.longitudinalRange.maximum - occupiedRegion.longitudinalRange.minimum);
+    auto const vehicleLength = lane::getLane(occupiedRegion.lane_id).length
+      * (occupiedRegion.longitudinal_range.maximum - occupiedRegion.longitudinal_range.minimum);
     ASSERT_LE(vehicleLength * 0.9, mObjectPosition.dimension.length);
     ASSERT_GE(vehicleLength * 1.1, mObjectPosition.dimension.length);
 
-    vehicleWidth += lane::getLane(occupiedRegion.laneId).width
-      * (occupiedRegion.lateralRange.maximum - occupiedRegion.lateralRange.minimum);
+    vehicleWidth += lane::getLane(occupiedRegion.lane_id).width
+      * (occupiedRegion.lateral_range.maximum - occupiedRegion.lateral_range.minimum);
   }
 
   ASSERT_LE(vehicleWidth * 0.9, mObjectPosition.dimension.width);
@@ -250,55 +250,55 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_covering_three_lanes_longitudinal)
 
   ASSERT_EQ(centerMapMatched.size(), 1u);
 
-  auto const centerLaneId = centerMapMatched.front().lanePoint.paraPoint.laneId;
+  auto const centerLaneId = centerMapMatched.front().lane_point.para_point.lane_id;
   auto objectPosition = mObjectPosition;
   auto heading = mapMatching.getLaneENUHeading(centerMapMatched.front());
 
-  objectPosition.heading = point::createENUHeading(static_cast<double>(heading));
-  objectPosition.centerPoint = objectCenter;
+  objectPosition.heading = heading;
+  objectPosition.center_point = objectCenter;
   objectPosition.dimension.width = physics::Distance(2.5);
   objectPosition.dimension.length = physics::Distance(6.);
 
   auto result = mapMatching.getMapMatchedBoundingBox(objectPosition, mSamplingDistance);
 
-  ASSERT_EQ(result.laneOccupiedRegions.size(), 3u);
+  ASSERT_EQ(result.lane_occupied_regions.size(), 3u);
 
   // reconstruct length and width of vehicle
   physics::Distance vehicleLength(0.);
-  for (auto const &occupiedRegion : result.laneOccupiedRegions)
+  for (auto const &occupiedRegion : result.lane_occupied_regions)
   {
     // longitudinal
-    if (occupiedRegion.laneId == centerLaneId)
+    if (occupiedRegion.lane_id == centerLaneId)
     {
       // center lane fully covered
-      ASSERT_EQ(physics::ParametricValue(0.), occupiedRegion.longitudinalRange.minimum);
-      ASSERT_EQ(physics::ParametricValue(1.), occupiedRegion.longitudinalRange.maximum);
+      ASSERT_EQ(physics::ParametricValue(0.), occupiedRegion.longitudinal_range.minimum);
+      ASSERT_EQ(physics::ParametricValue(1.), occupiedRegion.longitudinal_range.maximum);
     }
-    else if (occupiedRegion.longitudinalRange.minimum == physics::ParametricValue(0.))
+    else if (occupiedRegion.longitudinal_range.minimum == physics::ParametricValue(0.))
     {
       // other lane not fully covered, but definitely some parts of it
-      ASSERT_NE(physics::ParametricValue(0.), occupiedRegion.longitudinalRange.maximum);
-      ASSERT_NE(physics::ParametricValue(1.), occupiedRegion.longitudinalRange.maximum);
+      ASSERT_NE(physics::ParametricValue(0.), occupiedRegion.longitudinal_range.maximum);
+      ASSERT_NE(physics::ParametricValue(1.), occupiedRegion.longitudinal_range.maximum);
     }
     else
     {
       // other lane not fully covered, but definitely some parts of it
-      ASSERT_EQ(physics::ParametricValue(1.), occupiedRegion.longitudinalRange.maximum);
-      ASSERT_NE(physics::ParametricValue(0.), occupiedRegion.longitudinalRange.minimum);
-      ASSERT_NE(physics::ParametricValue(1.), occupiedRegion.longitudinalRange.minimum);
+      ASSERT_EQ(physics::ParametricValue(1.), occupiedRegion.longitudinal_range.maximum);
+      ASSERT_NE(physics::ParametricValue(0.), occupiedRegion.longitudinal_range.minimum);
+      ASSERT_NE(physics::ParametricValue(1.), occupiedRegion.longitudinal_range.minimum);
     }
 
-    vehicleLength += lane::getLane(occupiedRegion.laneId).length
-      * (occupiedRegion.longitudinalRange.maximum - occupiedRegion.longitudinalRange.minimum);
+    vehicleLength += lane::getLane(occupiedRegion.lane_id).length
+      * (occupiedRegion.longitudinal_range.maximum - occupiedRegion.longitudinal_range.minimum);
 
     // lateral always in between
-    ASSERT_NE(physics::ParametricValue(0.), occupiedRegion.lateralRange.minimum);
-    ASSERT_NE(physics::ParametricValue(1.), occupiedRegion.lateralRange.minimum);
-    ASSERT_NE(physics::ParametricValue(0.), occupiedRegion.lateralRange.maximum);
-    ASSERT_NE(physics::ParametricValue(1.), occupiedRegion.lateralRange.maximum);
+    ASSERT_NE(physics::ParametricValue(0.), occupiedRegion.lateral_range.minimum);
+    ASSERT_NE(physics::ParametricValue(1.), occupiedRegion.lateral_range.minimum);
+    ASSERT_NE(physics::ParametricValue(0.), occupiedRegion.lateral_range.maximum);
+    ASSERT_NE(physics::ParametricValue(1.), occupiedRegion.lateral_range.maximum);
 
-    auto const vehicleWidth = lane::getLane(occupiedRegion.laneId).width
-      * (occupiedRegion.lateralRange.maximum - occupiedRegion.lateralRange.minimum);
+    auto const vehicleWidth = lane::getLane(occupiedRegion.lane_id).width
+      * (occupiedRegion.lateral_range.maximum - occupiedRegion.lateral_range.minimum);
     ASSERT_LE(vehicleWidth * 0.9, objectPosition.dimension.width);
     ASSERT_GE(vehicleWidth * 1.1, objectPosition.dimension.width);
   }
@@ -319,11 +319,11 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_not_touching_second_lane_within_samp
 
   auto objectPosition = mObjectPosition;
   objectPosition.heading = mapMatching.getLaneENUHeading(centerMapMatched.front());
-  objectPosition.centerPoint = objectCenter;
+  objectPosition.center_point = objectCenter;
   objectPosition.dimension.width = physics::Distance(2.5);
   objectPosition.dimension.length = physics::Distance(6.);
 
   auto result = mapMatching.getMapMatchedBoundingBox(objectPosition, mSamplingDistance);
 
-  ASSERT_EQ(result.laneOccupiedRegions.size(), 1u);
+  ASSERT_EQ(result.lane_occupied_regions.size(), 1u);
 }

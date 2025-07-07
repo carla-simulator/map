@@ -28,8 +28,13 @@ configure_file(__init__.py.in ${PYTHON_BINDING_NAME}/ad_physics/__init__.py)
 
 set(target ad_physics_${PYTHON_BINDING_NAME})
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/AdPhysicsPython.cpp.in ${CMAKE_CURRENT_BINARY_DIR}/AdPhysicsPython-${PYTHON_BINDING_NAME}.cpp)
+
 add_library(${target} SHARED
+  ${CMAKE_CURRENT_BINARY_DIR}/Ad-geometry-PythonWrapper.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/Ad-physics-PythonWrapper.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/ChronoPythonWrapper.cpp
+  ${CMAKE_CURRENT_BINARY_DIR}/AdPhysicsPython-${PYTHON_BINDING_NAME}.cpp
 )
 target_compile_definitions(${target} PUBLIC ${TARGET_COMPILE_DEFINITIONS})
 target_compile_options(${target} PRIVATE ${TARGET_COMPILE_OPTIONS})
@@ -57,7 +62,7 @@ install(FILES
 
 install(CODE "\
   EXECUTE_PROCESS(\
-    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/setup.py egg_info --egg-base ${CMAKE_CURRENT_BINARY_DIR} build --build-base ${CMAKE_CURRENT_BINARY_DIR} install --prefix ${CMAKE_INSTALL_PREFIX} --record ${CMAKE_CURRENT_BINARY_DIR}/install.log --single-version-externally-managed bdist_wheel --dist-dir ${CMAKE_INSTALL_PREFIX}/dist ${CMAKE_CURRENT_BINARY_DIR}/${PYTHON_BINDING_NAME}\
+    COMMAND ${PYTHON_BINDING_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/setup.py egg_info --egg-base ${CMAKE_CURRENT_BINARY_DIR} build --build-base ${CMAKE_CURRENT_BINARY_DIR} install --prefix ${CMAKE_INSTALL_PREFIX} --record ${CMAKE_CURRENT_BINARY_DIR}/install.log --single-version-externally-managed bdist_wheel --dist-dir ${CMAKE_INSTALL_PREFIX}/dist ${CMAKE_CURRENT_BINARY_DIR}/${PYTHON_BINDING_NAME}\
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}\
   )"
 )
@@ -67,7 +72,7 @@ install(CODE "\
 #####################################################################
 if (BUILD_TESTING)
   add_test(NAME ${PROJECT_NAME}_test_${PYTHON_BINDING_NAME}
-    COMMAND ${PYTHON_EXECUTABLE} -m interface_test
+    COMMAND ${PYTHON_BINDING_EXECUTABLE} -m interface_test
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/tests
   )
   get_python_test_environment()

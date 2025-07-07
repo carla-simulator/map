@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -27,12 +27,24 @@ TEST(LongitudeTests, defaultConstructionIsInvalid)
   EXPECT_FALSE(value.isValid());
 }
 
+TEST(LongitudeTests, minIsDefinedAsExpected)
+{
+  EXPECT_DOUBLE_EQ(-180, ::ad::map::point::Longitude::cMinValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMinValue, ::ad::map::point::Longitude::getMin().mLongitude);
+}
+
+TEST(LongitudeTests, maxIsDefinedAsExpected)
+{
+  EXPECT_DOUBLE_EQ(180, ::ad::map::point::Longitude::cMaxValue);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMaxValue, ::ad::map::point::Longitude::getMax().mLongitude);
+}
+
 TEST(LongitudeTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::map::point::Longitude::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-8, ::ad::map::point::Longitude::cPrecisionValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cPrecisionValue,
-                   static_cast<double>(::ad::map::point::Longitude::getPrecision()));
+                   ::ad::map::point::Longitude::getPrecision().mLongitude);
 }
 
 TEST(LongitudeTests, minIsValid)
@@ -91,39 +103,36 @@ TEST(LongitudeTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(LongitudeTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Longitude::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::Longitude>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::getMin().mLongitude,
+                   std::numeric_limits<::ad::map::point::Longitude>::lowest().mLongitude);
 }
 
 TEST(LongitudeTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Longitude::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::Longitude>::max()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::getMax().mLongitude,
+                   std::numeric_limits<::ad::map::point::Longitude>::max().mLongitude);
 }
 
 TEST(LongitudeTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::Longitude::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::Longitude>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::getPrecision().mLongitude,
+                   std::numeric_limits<::ad::map::point::Longitude>::epsilon().mLongitude);
 }
 
 TEST(LongitudeTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::Longitude(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::Longitude(-1.))));
-  EXPECT_DOUBLE_EQ(
-    ::ad::map::point::Longitude::cPrecisionValue,
-    static_cast<double>(std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::map::point::Longitude(-0.)).mLongitude);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::map::point::Longitude(-1.)).mLongitude);
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cPrecisionValue,
+                   std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cPrecisionValue).mLongitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Longitude::cMinValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cMinValue))));
-  EXPECT_DOUBLE_EQ(
-    std::fabs(::ad::map::point::Longitude::cMinValue),
-    static_cast<double>(std::fabs(::ad::map::point::Longitude(-::ad::map::point::Longitude::cMinValue))));
+                   std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cMinValue).mLongitude));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Longitude::cMinValue),
+                   std::fabs(::ad::map::point::Longitude(-::ad::map::point::Longitude::cMinValue).mLongitude));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Longitude::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cMaxValue))));
-  EXPECT_DOUBLE_EQ(
-    std::fabs(::ad::map::point::Longitude::cMaxValue),
-    static_cast<double>(std::fabs(::ad::map::point::Longitude(-::ad::map::point::Longitude::cMaxValue))));
+                   std::fabs(::ad::map::point::Longitude(::ad::map::point::Longitude::cMaxValue).mLongitude));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::Longitude::cMaxValue),
+                   std::fabs(::ad::map::point::Longitude(-::ad::map::point::Longitude::cMaxValue).mLongitude));
 }
 
 TEST(LongitudeTests, constructionFromValidFPValue)
@@ -131,7 +140,7 @@ TEST(LongitudeTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::Longitude::cMinValue;
   ::ad::map::point::Longitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mLongitude);
 }
 
 TEST(LongitudeTests, copyConstructionFromValidValue)
@@ -139,7 +148,7 @@ TEST(LongitudeTests, copyConstructionFromValidValue)
   ::ad::map::point::Longitude const validValue(::ad::map::point::Longitude::cMinValue);
   ::ad::map::point::Longitude value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mLongitude, value.mLongitude);
 }
 
 TEST(LongitudeTests, moveConstructionFromValidValue)
@@ -147,7 +156,7 @@ TEST(LongitudeTests, moveConstructionFromValidValue)
   ::ad::map::point::Longitude validValue(::ad::map::point::Longitude::cMinValue);
   ::ad::map::point::Longitude value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMinValue, value.mLongitude);
 }
 
 TEST(LongitudeTests, assignmentFromValidValue)
@@ -156,7 +165,7 @@ TEST(LongitudeTests, assignmentFromValidValue)
   ::ad::map::point::Longitude value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mLongitude, value.mLongitude);
 }
 
 TEST(LongitudeTests, moveAssignmentFromValidValue)
@@ -165,7 +174,7 @@ TEST(LongitudeTests, moveAssignmentFromValidValue)
   ::ad::map::point::Longitude value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::Longitude::cMinValue, value.mLongitude);
 }
 
 TEST(LongitudeTests, constructionFromInvalidFPValue)
@@ -241,7 +250,7 @@ TEST(LongitudeTests, arithmeticOperatorsThrowOnInvalid)
   //  operator+(::ad::map::point::Longitude)
   EXPECT_THROW(invalidValue + maximalValue, std::out_of_range);
   EXPECT_THROW(maximalValue + invalidValue, std::out_of_range);
-  EXPECT_THROW(maximalValue + maximalValue, std::out_of_range);
+  EXPECT_EQ(maximalValue + maximalValue, maximalValue);
 
   //  operator+=(::ad::map::point::Longitude)
   calculationValue = invalidValue;
@@ -249,12 +258,12 @@ TEST(LongitudeTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = maximalValue;
   EXPECT_THROW(calculationValue += invalidValue, std::out_of_range);
   calculationValue = maximalValue;
-  EXPECT_THROW(calculationValue += maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue += maximalValue, maximalValue);
 
   //  operator-(::ad::map::point::Longitude)
   EXPECT_THROW(invalidValue - minimalValue, std::out_of_range);
   EXPECT_THROW(minimalValue - invalidValue, std::out_of_range);
-  EXPECT_THROW(minimalValue - maximalValue, std::out_of_range);
+  EXPECT_EQ(minimalValue - maximalValue, minimalValue);
 
   //  operator-=(::ad::map::point::Longitude)
   calculationValue = invalidValue;
@@ -262,17 +271,17 @@ TEST(LongitudeTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = minimalValue;
   EXPECT_THROW(calculationValue -= invalidValue, std::out_of_range);
   calculationValue = minimalValue;
-  EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue -= maximalValue, minimalValue);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mLongitude, std::out_of_range);
+  EXPECT_EQ(maximalValue * maximalValue.mLongitude, maximalValue);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mLongitude, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mLongitude, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
-  EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
+  EXPECT_EQ(maximalValue / 0.5, maximalValue);
 
   //  operator/(::ad::map::point::Longitude)
   EXPECT_THROW(invalidValue / maximalValue, std::out_of_range);
@@ -281,13 +290,13 @@ TEST(LongitudeTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mLongitude) > std::fabs(minimalValue.mLongitude))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mLongitude) < std::fabs(minimalValue.mLongitude))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -313,13 +322,13 @@ TEST(LongitudeTests, comparisonOperatorsRespectPrecision)
     value = ::ad::map::point::Longitude(precisionValueTimesTen);
   }
   ::ad::map::point::Longitude const sameValue = value;
-  ::ad::map::point::Longitude const slightlyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::Longitude const slightlyBiggerValue(value.mLongitude
                                                         + ::ad::map::point::Longitude::cPrecisionValue * 0.9);
-  ::ad::map::point::Longitude const slightlySmallerValue(static_cast<double>(value)
+  ::ad::map::point::Longitude const slightlySmallerValue(value.mLongitude
                                                          - ::ad::map::point::Longitude::cPrecisionValue * 0.9);
-  ::ad::map::point::Longitude const actuallyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::Longitude const actuallyBiggerValue(value.mLongitude
                                                         + ::ad::map::point::Longitude::cPrecisionValue * 1.1);
-  ::ad::map::point::Longitude const actuallySmallerValue(static_cast<double>(value)
+  ::ad::map::point::Longitude const actuallySmallerValue(value.mLongitude
                                                          - ::ad::map::point::Longitude::cPrecisionValue * 1.1);
 
   // operator ==
@@ -383,41 +392,41 @@ TEST(LongitudeTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::map::point::Longitude)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLongitude + value.mLongitude, result.mLongitude, cDoubleNear);
 
   //  operator+=(::ad::map::point::Longitude)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLongitude + value.mLongitude, result.mLongitude, cDoubleNear);
 
   //  operator-(::ad::map::point::Longitude)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLongitude - value.mLongitude, result.mLongitude, cDoubleNear);
 
   //  operator-=(::ad::map::point::Longitude)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLongitude - value.mLongitude, result.mLongitude, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLongitude * 5., result.mLongitude, cDoubleNear);
 
   //  operator*(double, ::ad::map::point::Longitude)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mLongitude * 5., result.mLongitude, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mLongitude;
+  EXPECT_NEAR(value.mLongitude / value.mLongitude, result.mLongitude, cDoubleNear);
 
   //  operator/(::ad::map::point::Longitude)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mLongitude / value.mLongitude, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::map::point::Longitude::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::map::point::Longitude::cMaxValue))
+  if ((::ad::map::point::Longitude::cMinValue < -value.mLongitude)
+      && (-value.mLongitude < ::ad::map::point::Longitude::cMaxValue))
   {
     result = -value;
   }

@@ -36,7 +36,7 @@ struct RoutePredictionTest : ::testing::Test
     // access::getLogger()->set_level(spdlog::level::trace);
 
     getPredictionStartParaPoint(predictionStart.point);
-    if (lane::isLaneDirectionPositive(lane::getLane(predictionStart.point.laneId)))
+    if (lane::isLaneDirectionPositive(lane::getLane(predictionStart.point.lane_id)))
     {
       predictionStart.direction = route::planning::RoutingDirection::POSITIVE;
     }
@@ -53,7 +53,7 @@ struct RoutePredictionTest : ::testing::Test
 
   virtual std::string getTestMap() = 0;
 
-  virtual void getPredictionStartParaPoint(point::ParaPoint &predictionStartResult)
+  virtual void getPredictionStartParaPoint(point::ParaPoint &predictionStartParaPoint)
   {
     auto predictionStartGeo = getPredictionStartGeo();
     ASSERT_TRUE(withinValidInputRange(predictionStartGeo));
@@ -62,7 +62,7 @@ struct RoutePredictionTest : ::testing::Test
       = mapMatching.getMapMatchedPositions(predictionStartGeo, physics::Distance(1.), physics::Probability(0.8));
 
     ASSERT_GE(mapMatchingResults.size(), 1u);
-    predictionStartResult = mapMatchingResults.front().lanePoint.paraPoint;
+    predictionStartParaPoint = mapMatchingResults.front().lane_point.para_point;
   }
 
   virtual point::GeoPoint getPredictionStartGeo()
@@ -71,7 +71,7 @@ struct RoutePredictionTest : ::testing::Test
     auto pois = access::getPointsOfInterest();
     if (pois.size() > 0u)
     {
-      resultPoint = pois.front().geoPoint;
+      resultPoint = pois.front().geo_point;
     }
     return resultPoint;
   }
@@ -100,10 +100,10 @@ TEST_F(RoutePredictionTestTown01, route_prediction_positive)
   // remain in the same lane
   auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(10.));
   ASSERT_EQ(routePredictions.size(), 1u);
-  ASSERT_EQ(1u, routePredictions[0].roadSegments.size());
+  ASSERT_EQ(1u, routePredictions[0].road_segments.size());
   point::ParaPoint expectedRouteEnd;
-  expectedRouteEnd.laneId = predictionStart.point.laneId;
-  expectedRouteEnd.parametricOffset = physics::ParametricValue(1.);
+  expectedRouteEnd.lane_id = predictionStart.point.lane_id;
+  expectedRouteEnd.parametric_offset = physics::ParametricValue(1.);
   auto findWaypointResult = route::findNearestWaypoint({expectedRouteEnd}, routePredictions[0]);
   EXPECT_TRUE(findWaypointResult.isValid());
 
@@ -130,10 +130,10 @@ TEST_F(RoutePredictionTestTown01, route_prediction_dont_care)
   predictionStart.direction = route::planning::RoutingDirection::DONT_CARE;
   auto routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(10.));
   ASSERT_EQ(routePredictions.size(), 1u);
-  ASSERT_EQ(1u, routePredictions[0].roadSegments.size());
+  ASSERT_EQ(1u, routePredictions[0].road_segments.size());
   point::ParaPoint expectedRouteEnd;
-  expectedRouteEnd.laneId = predictionStart.point.laneId;
-  expectedRouteEnd.parametricOffset = physics::ParametricValue(1.);
+  expectedRouteEnd.lane_id = predictionStart.point.lane_id;
+  expectedRouteEnd.parametric_offset = physics::ParametricValue(1.);
   auto findWaypointResult = route::findNearestWaypoint({expectedRouteEnd}, routePredictions[0]);
   EXPECT_TRUE(findWaypointResult.isValid());
 
@@ -149,14 +149,14 @@ TEST_F(RoutePredictionTestTown01, route_prediction_directionless)
   auto routePredictions = route::planning::predictRoutesDirectionless(
     predictionStart.point, physics::Distance(10.), physics::Duration(100.));
   ASSERT_EQ(routePredictions.size(), 2u);
-  ASSERT_EQ(1u, routePredictions[0].roadSegments.size());
+  ASSERT_EQ(1u, routePredictions[0].road_segments.size());
   point::ParaPoint expectedRouteEnd;
-  expectedRouteEnd.laneId = predictionStart.point.laneId;
-  expectedRouteEnd.parametricOffset = physics::ParametricValue(1.);
+  expectedRouteEnd.lane_id = predictionStart.point.lane_id;
+  expectedRouteEnd.parametric_offset = physics::ParametricValue(1.);
   auto findWaypointResult0 = route::findNearestWaypoint({expectedRouteEnd}, routePredictions[0]);
   EXPECT_TRUE(findWaypointResult0.isValid());
-  ASSERT_EQ(1u, routePredictions[1].roadSegments.size());
-  expectedRouteEnd.parametricOffset = physics::ParametricValue(0.);
+  ASSERT_EQ(1u, routePredictions[1].road_segments.size());
+  expectedRouteEnd.parametric_offset = physics::ParametricValue(0.);
   auto findWaypointResult1 = route::findNearestWaypoint({expectedRouteEnd}, routePredictions[1]);
   EXPECT_TRUE(findWaypointResult1.isValid());
 
@@ -173,8 +173,8 @@ TEST_F(RoutePredictionTestTown01, route_prediction_relevant_lanes)
   ASSERT_EQ(routePredictions.size(), 3u);
 
   // now we restrict the prediction to the lanes of and around the first intersection
-  ASSERT_GE(routePredictions[0].roadSegments.size(), 2u);
-  auto intersectionLaneId = routePredictions[0].roadSegments[1].drivableLaneSegments[0].laneInterval.laneId;
+  ASSERT_GE(routePredictions[0].road_segments.size(), 2u);
+  auto intersectionLaneId = routePredictions[0].road_segments[1].drivable_lane_segments[0].lane_interval.lane_id;
   auto coreIntersection = intersection::CoreIntersection::getCoreIntersectionFor(intersectionLaneId);
   ASSERT_NE(coreIntersection, nullptr);
   auto relevantLanes = coreIntersection->internalLanes();
@@ -291,10 +291,10 @@ TEST_F(RoutePredictionTestRoundabout, route_prediction)
 
 struct RoutePredictionTestTown04 : public RoutePredictionTest
 {
-  void getPredictionStartParaPoint(point::ParaPoint &predictionStartResult) override
+  void getPredictionStartParaPoint(point::ParaPoint &predictionStartParaPoint) override
   {
-    predictionStartResult.laneId = lane::LaneId(490148);
-    predictionStartResult.parametricOffset = physics::ParametricValue(0.1);
+    predictionStartParaPoint.lane_id = lane::LaneId(490148);
+    predictionStartParaPoint.parametric_offset = physics::ParametricValue(0.1);
   }
 
   std::string getTestMap() override

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #include "ad/map/point/Latitude.hpp"
@@ -32,9 +32,9 @@ namespace map {
  */
 namespace point {
 
-const double Latitude::cMinValue = std::numeric_limits<double>::lowest();
+const double Latitude::cMinValue = -90;
 
-const double Latitude::cMaxValue = std::numeric_limits<double>::max();
+const double Latitude::cMaxValue = 90;
 
 const double Latitude::cPrecisionValue = 1e-8;
 

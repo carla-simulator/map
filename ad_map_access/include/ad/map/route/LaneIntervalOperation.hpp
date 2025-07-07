@@ -12,6 +12,7 @@
 #pragma once
 
 #include "ad/map/access/Types.hpp"
+#include "ad/map/lane/BorderOperation.hpp"
 #include "ad/map/lane/Types.hpp"
 #include "ad/map/route/Types.hpp"
 
@@ -37,53 +38,53 @@ namespace route {
 /**
  * @brief get interval start as ParaPoint
  */
-inline point::ParaPoint getIntervalStart(LaneInterval const &laneInterval)
+inline point::ParaPoint getIntervalStart(LaneInterval const &lane_interval)
 {
   point::ParaPoint result;
-  result.laneId = laneInterval.laneId;
-  result.parametricOffset = laneInterval.start;
+  result.lane_id = lane_interval.lane_id;
+  result.parametric_offset = lane_interval.start;
   return result;
 }
 
 /**
- * @brief get interval start as ParaPoint for a given laneId and a given route
+ * @brief get interval start as ParaPoint for a given lane_id and a given route
  *
- * throws if laneId not found in route
+ * throws if lane_id not found in route
  */
-point::ParaPoint getIntervalStart(FullRoute const &route, lane::LaneId const &laneId);
+point::ParaPoint getIntervalStart(FullRoute const &route, lane::LaneId const &lane_id);
 
 /**
  * @brief get interval end as ParaPoint
  */
-inline point::ParaPoint getIntervalEnd(LaneInterval const &laneInterval)
+inline point::ParaPoint getIntervalEnd(LaneInterval const &lane_interval)
 {
   point::ParaPoint result;
-  result.laneId = laneInterval.laneId;
-  result.parametricOffset = laneInterval.end;
+  result.lane_id = lane_interval.lane_id;
+  result.parametric_offset = lane_interval.end;
   return result;
 }
 
 /**
  * @brief convert lane interval to ParametricRange
  */
-inline physics::ParametricRange toParametricRange(route::LaneInterval const &laneInterval)
+inline physics::ParametricRange toParametricRange(route::LaneInterval const &lane_interval)
 {
   physics::ParametricRange range;
-  if (laneInterval.start <= laneInterval.end)
+  if (lane_interval.start <= lane_interval.end)
   {
-    range.minimum = laneInterval.start;
-    range.maximum = laneInterval.end;
+    range.minimum = lane_interval.start;
+    range.maximum = lane_interval.end;
   }
   else
   {
-    range.minimum = laneInterval.end;
-    range.maximum = laneInterval.start;
+    range.minimum = lane_interval.end;
+    range.maximum = lane_interval.start;
   }
   return range;
 }
 
 /**
- * @brief get the signed parametric physics::Distance between two parametric points respecting the laneInterval's
+ * @brief get the signed parametric physics::Distance between two parametric points respecting the lane_interval's
  * direction
  *
  * @retval > 0, if the \c first point is before the \c second point within the interval
@@ -93,16 +94,16 @@ inline physics::ParametricRange toParametricRange(route::LaneInterval const &lan
  * @throws std::invalid_argument if the parametric points are not referring to the landId
  */
 physics::ParametricValue
-getSignedDistance(LaneInterval const &laneInterval, point::ParaPoint const &first, point::ParaPoint const &second);
+getSignedDistance(LaneInterval const &lane_interval, point::ParaPoint const &first, point::ParaPoint const &second);
 
 /**
  * @brief get the unsigned parametric physics::Distance between two parametric points
  *
- * @retval | \c first.parametricOffset - \c second.parametricOffset |
+ * @retval | \c first.parametric_offset - \c second.parametric_offset |
  * @throws std::invalid_argument if the parametric points are not referring to the landId
  */
 physics::ParametricValue
-getUnsignedDistance(LaneInterval const &laneInterval, point::ParaPoint const &first, point::ParaPoint const &second);
+getUnsignedDistance(LaneInterval const &lane_interval, point::ParaPoint const &first, point::ParaPoint const &second);
 
 /**
  * @brief checks if the point marks the start of the interval
@@ -111,9 +112,9 @@ getUnsignedDistance(LaneInterval const &laneInterval, point::ParaPoint const &fi
  *
  * @returns @c true if LaneId and TParam at start of this matches the given @c point
  */
-inline bool isStartOfInterval(LaneInterval const &laneInterval, point::ParaPoint const &point)
+inline bool isStartOfInterval(LaneInterval const &lane_interval, point::ParaPoint const &point)
 {
-  return (point.laneId == laneInterval.laneId) && (point.parametricOffset == laneInterval.start);
+  return (point.lane_id == lane_interval.lane_id) && (point.parametric_offset == lane_interval.start);
 }
 
 /**
@@ -123,52 +124,53 @@ inline bool isStartOfInterval(LaneInterval const &laneInterval, point::ParaPoint
  *
  * @returns @c true if LaneId and TParam at end of this matches the given @c point
  */
-inline bool isEndOfInterval(LaneInterval const &laneInterval, point::ParaPoint const &point)
+inline bool isEndOfInterval(LaneInterval const &lane_interval, point::ParaPoint const &point)
 {
-  return (point.laneId == laneInterval.laneId) && (point.parametricOffset == laneInterval.end);
+  return (point.lane_id == lane_interval.lane_id) && (point.parametric_offset == lane_interval.end);
 }
 
 /**
  * @brief checks if the direction of this route interval is positive in respect to the lane geometry
  *
  * @returns @c true if the parametric points follow: start < end
- * @returns @c lane::isLaneDirectionPositive(laneInterval.laneId) ^ wrongWay if start == end  (degenerated interval uses
+ * @returns @c lane::isLaneDirectionPositive(lane_interval.lane_id) ^ wrong_way if start == end  (degenerated interval
+ * uses
  * wrong way flag to determine
  *  the route direction)
  */
-bool isRouteDirectionPositive(LaneInterval const &laneInterval);
+bool isRouteDirectionPositive(LaneInterval const &lane_interval);
 
 /**
  * @brief checks if the direction of this route interval is negative in respect to the lane geometry
  *
  * @returns !isRouteDirectionPositive()
  */
-inline bool isRouteDirectionNegative(LaneInterval const &laneInterval)
+inline bool isRouteDirectionNegative(LaneInterval const &lane_interval)
 {
-  return !isRouteDirectionPositive(laneInterval);
+  return !isRouteDirectionPositive(lane_interval);
 }
 
 /**
  * @brief checks if the route direction is aligned with the nominal driving direction of the lane
  */
-bool isRouteDirectionAlignedWithDrivingDirection(LaneInterval const &laneInterval);
+bool isRouteDirectionAlignedWithDrivingDirection(LaneInterval const &lane_interval);
 
 /**
  * @brief checks if the parametric offset is within the interval
  *
- * @param[in] parametricOffset parametric offset to be checked against the route interval
+ * @param[in] parametric_offset parametric offset to be checked against the route interval
  *
  * @returns @c true if parametric offset  is within the interval
  */
-inline bool isWithinInterval(LaneInterval const &laneInterval, physics::ParametricValue const &parametricOffset)
+inline bool isWithinInterval(LaneInterval const &lane_interval, physics::ParametricValue const &parametric_offset)
 {
-  if (isRouteDirectionPositive(laneInterval))
+  if (isRouteDirectionPositive(lane_interval))
   {
-    return (laneInterval.start <= parametricOffset) && (parametricOffset <= laneInterval.end);
+    return (lane_interval.start <= parametric_offset) && (parametric_offset <= lane_interval.end);
   }
   else
   {
-    return (laneInterval.end <= parametricOffset) && (parametricOffset <= laneInterval.start);
+    return (lane_interval.end <= parametric_offset) && (parametric_offset <= lane_interval.start);
   }
 }
 
@@ -179,9 +181,9 @@ inline bool isWithinInterval(LaneInterval const &laneInterval, physics::Parametr
  *
  * @returns @c true if LaneId matches and TParam of the given @c point is within the interval
  */
-inline bool isWithinInterval(LaneInterval const &laneInterval, point::ParaPoint const &point)
+inline bool isWithinInterval(LaneInterval const &lane_interval, point::ParaPoint const &point)
 {
-  return (point.laneId == laneInterval.laneId) && isWithinInterval(laneInterval, point.parametricOffset);
+  return (point.lane_id == lane_interval.lane_id) && isWithinInterval(lane_interval, point.parametric_offset);
 }
 
 /**
@@ -192,28 +194,28 @@ inline bool isWithinInterval(LaneInterval const &laneInterval, point::ParaPoint 
  *
  * @returns @c true if the interval is degenerated: start == end
  */
-inline bool isDegenerated(LaneInterval const &laneInterval)
+inline bool isDegenerated(LaneInterval const &lane_interval)
 {
-  return (laneInterval.start == laneInterval.end);
+  return (lane_interval.start == lane_interval.end);
 }
 
 /**
  * @brief checks if the  parametric offset is after the interval
  *
- * @param[in] parametricOffset parametric offset to be checked against the route interval
+ * @param[in] parametric_offset parametric offset to be checked against the route interval
  *
  * @returns @c true if given parametric offset is after the interval
  * Be aware: if the route interval is degenerated isAfterInterval() and isBeforeInterval() return the same value
  */
-inline bool isAfterInterval(LaneInterval const &laneInterval, physics::ParametricValue const parametricOffset)
+inline bool isAfterInterval(LaneInterval const &lane_interval, physics::ParametricValue const parametric_offset)
 {
-  if (isRouteDirectionPositive(laneInterval))
+  if (isRouteDirectionPositive(lane_interval))
   {
-    return (parametricOffset > laneInterval.end);
+    return (parametric_offset > lane_interval.end);
   }
   else
   {
-    return (parametricOffset < laneInterval.end);
+    return (parametric_offset < lane_interval.end);
   }
 }
 
@@ -226,11 +228,11 @@ inline bool isAfterInterval(LaneInterval const &laneInterval, physics::Parametri
  * Be aware: if the route interval is degenerated isAfterInterval() and isBeforeInterval() return the same value
  * ( point != end )
  */
-inline bool isAfterInterval(LaneInterval const &laneInterval, point::ParaPoint const &point)
+inline bool isAfterInterval(LaneInterval const &lane_interval, point::ParaPoint const &point)
 {
-  if (point.laneId == laneInterval.laneId)
+  if (point.lane_id == lane_interval.lane_id)
   {
-    return isAfterInterval(laneInterval, point.parametricOffset);
+    return isAfterInterval(lane_interval, point.parametric_offset);
   }
   return false;
 }
@@ -238,20 +240,20 @@ inline bool isAfterInterval(LaneInterval const &laneInterval, point::ParaPoint c
 /**
  * @brief checks if the parametric offset is before the interval
  *
- * @param[in] parametricOffset parametric offset to be checked against the route interval
+ * @param[in] parametric_offset parametric offset to be checked against the route interval
  *
  * @returns @c true if parametric offset is before the interval
  * Be aware: if the route interval is degenerated isAfterInterval() and isBeforeInterval() return the same value
  */
-inline bool isBeforeInterval(LaneInterval const &laneInterval, physics::ParametricValue const parametricOffset)
+inline bool isBeforeInterval(LaneInterval const &lane_interval, physics::ParametricValue const parametric_offset)
 {
-  if (isRouteDirectionPositive(laneInterval))
+  if (isRouteDirectionPositive(lane_interval))
   {
-    return (parametricOffset < laneInterval.start);
+    return (parametric_offset < lane_interval.start);
   }
   else
   {
-    return (parametricOffset > laneInterval.start);
+    return (parametric_offset > lane_interval.start);
   }
 }
 
@@ -264,11 +266,11 @@ inline bool isBeforeInterval(LaneInterval const &laneInterval, physics::Parametr
  * Be aware: if the route interval is degenerated isAfterInterval() and isBeforeInterval() return the same value
  * ( point != start )
  */
-inline bool isBeforeInterval(LaneInterval const &laneInterval, point::ParaPoint const &point)
+inline bool isBeforeInterval(LaneInterval const &lane_interval, point::ParaPoint const &point)
 {
-  if (point.laneId == laneInterval.laneId)
+  if (point.lane_id == lane_interval.lane_id)
   {
-    return isBeforeInterval(laneInterval, point.parametricOffset);
+    return isBeforeInterval(lane_interval, point.parametric_offset);
   }
   return false;
 }
@@ -280,11 +282,27 @@ inline bool isBeforeInterval(LaneInterval const &laneInterval, point::ParaPoint 
  *
  * @returns @c true if range overlaps with the interval
  */
-inline bool overlapsInterval(LaneInterval const &laneInterval, physics::ParametricRange const &range)
+inline bool overlapsInterval(LaneInterval const &lane_interval, physics::ParametricRange const &range)
 {
-  bool rangeIsOutside = (isBeforeInterval(laneInterval, range.minimum) && isBeforeInterval(laneInterval, range.maximum))
-    || (isAfterInterval(laneInterval, range.minimum) && isAfterInterval(laneInterval, range.maximum));
+  bool rangeIsOutside
+    = (isBeforeInterval(lane_interval, range.minimum) && isBeforeInterval(lane_interval, range.maximum))
+    || (isAfterInterval(lane_interval, range.minimum) && isAfterInterval(lane_interval, range.maximum));
   return !rangeIsOutside;
+}
+
+/**
+ * @brief checks if the two lane intervals overlap with each other
+ *
+ * @param[in] other LaneInterval to be checked against this lane interval
+ *
+ * @returns @c true if intervals overlap
+ */
+inline bool overlapsInterval(LaneInterval const &lane_interval, LaneInterval const &other)
+{
+  bool otherIsOutside = (lane_interval.lane_id != other.lane_id)
+    || (isBeforeInterval(lane_interval, other.start) && isBeforeInterval(lane_interval, other.end))
+    || (isAfterInterval(lane_interval, other.start) && isAfterInterval(lane_interval, other.end));
+  return !otherIsOutside;
 }
 
 /**
@@ -293,7 +311,7 @@ inline bool overlapsInterval(LaneInterval const &laneInterval, physics::Parametr
  *
  * @param[in] currentInterval is the current lane
  * @param[in] neighborInterval is the neighbor lane
- * @param[in] parametricOffset is the current position that should be projected to the neighbor lane
+ * @param[in] parametric_offset is the current position that should be projected to the neighbor lane
  *
  * Note: If the given neighborInterval is not a neighbor of the currentInterval the function will throw
  *
@@ -301,28 +319,25 @@ inline bool overlapsInterval(LaneInterval const &laneInterval, physics::Parametr
  */
 physics::ParametricValue getProjectedParametricOffsetOnNeighborLane(LaneInterval const &currentInterval,
                                                                     LaneInterval const &neighborInterval,
-                                                                    physics::ParametricValue const &parametricOffset);
+                                                                    physics::ParametricValue const &parametric_offset);
 
 /**
  * @brief calculate the length of the provided lane interval as parametric value
  */
-inline physics::ParametricValue calcParametricLength(LaneInterval const &laneInterval)
-{
-  return std::fabs(laneInterval.start - laneInterval.end);
-}
+physics::ParametricValue calcParametricLength(LaneInterval const &lane_interval);
 
 /** @brief calculate the length of the provided lane interval as physics::Distance value
  *
  * For length calculation the parametric length of the interval (calcParametricLength())
  * is multiplied by the lane's length.
  */
-physics::Distance calcLength(LaneInterval const &laneInterval);
+physics::Distance calcLength(LaneInterval const &lane_interval);
 
 /** @brief calculate the Duration of the provided lane interval as duration value
  *
  * For Duration calculations maximum allowed speed combined with the length is taken into account
  */
-physics::Duration calcDuration(LaneInterval const &laneInterval);
+physics::Duration calcDuration(LaneInterval const &lane_interval);
 
 /**
  * @brief get right edge of the lane interval as ENUEdge
@@ -332,7 +347,7 @@ physics::Duration calcDuration(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getRightEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
+void getRightEdge(LaneInterval const &lane_interval, lane::ENUEdge &enuEdge);
 
 /**
  * @brief get right edge of the lane interval as ECEFEdge
@@ -342,7 +357,7 @@ void getRightEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getRightEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
+void getRightEdge(LaneInterval const &lane_interval, lane::ECEFEdge &ecefEdge);
 
 /**
  * @brief get right edge of the lane interval as GeoEdge
@@ -352,7 +367,7 @@ void getRightEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getRightEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
+void getRightEdge(LaneInterval const &lane_interval, lane::GeoEdge &geoEdge);
 
 /**
  * @brief get right edge of the lane interval as ENUEdge
@@ -362,7 +377,7 @@ void getRightEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::ENUEdge getRightENUEdge(LaneInterval const &laneInterval);
+lane::ENUEdge getRightENUEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get right edge of the lane interval as ECEFEdge
@@ -372,7 +387,7 @@ point::ENUEdge getRightENUEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::ECEFEdge getRightECEFEdge(LaneInterval const &laneInterval);
+lane::ECEFEdge getRightECEFEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get right edge of the lane interval as GeoEdge
@@ -382,7 +397,7 @@ point::ECEFEdge getRightECEFEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::GeoEdge getRightGeoEdge(LaneInterval const &laneInterval);
+lane::GeoEdge getRightGeoEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get right edge of the lane interval as ENUEdge using projection to find the start of the edge
@@ -392,7 +407,7 @@ point::GeoEdge getRightGeoEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getRightProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
+void getRightProjectedEdge(LaneInterval const &lane_interval, lane::ENUEdge &enuEdge);
 
 /**
  * @brief get right edge of the lane interval as ECEFEdge using projection to find the start of the edge
@@ -402,7 +417,7 @@ void getRightProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enu
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getRightProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
+void getRightProjectedEdge(LaneInterval const &lane_interval, lane::ECEFEdge &ecefEdge);
 
 /**
  * @brief get right edge of the lane interval as GeoEdge using projection to find the start of the edge
@@ -412,7 +427,7 @@ void getRightProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ec
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getRightProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
+void getRightProjectedEdge(LaneInterval const &lane_interval, lane::GeoEdge &geoEdge);
 
 /**
  * @brief get right edge of the lane interval as ENUEdge using projection to find the start of the edge
@@ -422,7 +437,7 @@ void getRightProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geo
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::ENUEdge getRightProjectedENUEdge(LaneInterval const &laneInterval);
+lane::ENUEdge getRightProjectedENUEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get right edge of the lane interval as ECEFEdge using projection to find the start of the edge
@@ -432,7 +447,7 @@ point::ENUEdge getRightProjectedENUEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::ECEFEdge getRightProjectedECEFEdge(LaneInterval const &laneInterval);
+lane::ECEFEdge getRightProjectedECEFEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get right edge of the lane interval as GeoEdge using projection to find the start of the edge
@@ -442,7 +457,7 @@ point::ECEFEdge getRightProjectedECEFEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::GeoEdge getRightProjectedGeoEdge(LaneInterval const &laneInterval);
+lane::GeoEdge getRightProjectedGeoEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get Left edge of the lane interval as ENUEdge
@@ -452,7 +467,7 @@ point::GeoEdge getRightProjectedGeoEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getLeftEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
+void getLeftEdge(LaneInterval const &lane_interval, lane::ENUEdge &enuEdge);
 
 /**
  * @brief get Left edge of the lane interval as ECEFEdge
@@ -462,7 +477,7 @@ void getLeftEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getLeftEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
+void getLeftEdge(LaneInterval const &lane_interval, lane::ECEFEdge &ecefEdge);
 
 /**
  * @brief get Left edge of the lane interval as GeoEdge
@@ -472,7 +487,7 @@ void getLeftEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getLeftEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
+void getLeftEdge(LaneInterval const &lane_interval, lane::GeoEdge &geoEdge);
 
 /**
  * @brief get left edge of the lane interval as ENUEdge
@@ -482,7 +497,7 @@ void getLeftEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::ENUEdge getLeftENUEdge(LaneInterval const &laneInterval);
+lane::ENUEdge getLeftENUEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get left edge of the lane interval as ECEFEdge
@@ -492,7 +507,7 @@ point::ENUEdge getLeftENUEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::ECEFEdge getLeftECEFEdge(LaneInterval const &laneInterval);
+lane::ECEFEdge getLeftECEFEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get left edge of the lane interval as GeoEdge
@@ -502,7 +517,7 @@ point::ECEFEdge getLeftECEFEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::GeoEdge getLeftGeoEdge(LaneInterval const &laneInterval);
+lane::GeoEdge getLeftGeoEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get Left edge of the lane interval as ENUEdge using projection to find the start of the edge
@@ -512,7 +527,7 @@ point::GeoEdge getLeftGeoEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enuEdge);
+void getLeftProjectedEdge(LaneInterval const &lane_interval, lane::ENUEdge &enuEdge);
 
 /**
  * @brief get Left edge of the lane interval as ECEFEdge using projection to find the start of the edge
@@ -522,7 +537,7 @@ void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ENUEdge &enuE
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ecefEdge);
+void getLeftProjectedEdge(LaneInterval const &lane_interval, lane::ECEFEdge &ecefEdge);
 
 /**
  * @brief get Left edge of the lane interval as GeoEdge using projection to find the start of the edge
@@ -532,7 +547,7 @@ void getLeftProjectedEdge(LaneInterval const &laneInterval, point::ECEFEdge &ece
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-void getLeftProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geoEdge);
+void getLeftProjectedEdge(LaneInterval const &lane_interval, lane::GeoEdge &geoEdge);
 
 /**
  * @brief get left edge of the lane interval as ENUEdge using projection to find the start of the edge
@@ -542,7 +557,7 @@ void getLeftProjectedEdge(LaneInterval const &laneInterval, point::GeoEdge &geoE
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::ENUEdge getLeftProjectedENUEdge(LaneInterval const &laneInterval);
+lane::ENUEdge getLeftProjectedENUEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get left edge of the lane interval as ECEFEdge using projection to find the start of the edge
@@ -552,7 +567,7 @@ point::ENUEdge getLeftProjectedENUEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::ECEFEdge getLeftProjectedECEFEdge(LaneInterval const &laneInterval);
+lane::ECEFEdge getLeftProjectedECEFEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get left edge of the lane interval as GeoEdge using projection to find the start of the edge
@@ -562,35 +577,35 @@ point::ECEFEdge getLeftProjectedECEFEdge(LaneInterval const &laneInterval);
  *    Furthermore, the points are ordered in the logical lane interval direction:
  *    the first point is at lane interval start and the last one at lane interval end.
  */
-point::GeoEdge getLeftProjectedGeoEdge(LaneInterval const &laneInterval);
+lane::GeoEdge getLeftProjectedGeoEdge(LaneInterval const &lane_interval);
 
 /**
  * @brief get the geo borders of this lane
  */
-lane::GeoBorder getGeoBorder(LaneInterval const &laneInterval);
+lane::GeoBorder getGeoBorder(LaneInterval const &lane_interval);
 
 /**
  * @brief get the ecef borders of this lane
  */
-lane::ECEFBorder getECEFBorder(LaneInterval const &laneInterval);
+lane::ECEFBorder getECEFBorder(LaneInterval const &lane_interval);
 
 /**
  * @brief get the enu borders of this lane
  *
  * Note: The border (left/right edge) will start with the parametric offset
- * given by the laneInterval.
+ * given by the lane_interval.
  */
-lane::ENUBorder getENUBorder(LaneInterval const &laneInterval);
+lane::ENUBorder getENUBorder(LaneInterval const &lane_interval);
 
 /**
  * @brief get the enu borders of this lane
  *
  * Note: The border (left/right edge) does not necessarily start/end with the
- * parametric offset given by the laneInterval. Instead this offset is used
+ * parametric offset given by the lane_interval. Instead this offset is used
  * for the center line and the resulting point is orthogonally projected on
  * the edges to obtain the border
  */
-lane::ENUBorder getENUProjectedBorder(LaneInterval const &laneInterval);
+lane::ENUBorder getENUProjectedBorder(LaneInterval const &lane_interval);
 
 /**
  * @brief shorten the LaneInterval about a given physics::Distance.
@@ -604,13 +619,13 @@ lane::ENUBorder getENUProjectedBorder(LaneInterval const &laneInterval);
  * If physics::Distance is bigger then the length of the interval. Resulting length will be zero. LaneInterval.start =
  * LaneInterval.end
  */
-LaneInterval shortenIntervalFromBegin(LaneInterval const &laneInterval, physics::Distance const &distance);
+LaneInterval shortenIntervalFromBegin(LaneInterval const &lane_interval, physics::Distance const &distance);
 
 /**
  * @brief shorten the LaneInterval about a given physics::Distance.
  * Will remove at the end of the LaneInterval
  *
- * @param[in] laneInterval the LaneInterval that should be shortened
+ * @param[in] lane_interval the LaneInterval that should be shortened
  * @param[in] physics::Distance the LaneInterval should be shortened
  *
  * @returns resulting shortened LaneInterval
@@ -618,19 +633,19 @@ LaneInterval shortenIntervalFromBegin(LaneInterval const &laneInterval, physics:
  * If physics::Distance is bigger then the length of the interval. Resulting length will be zero. LaneInterval.end =
  * LaneInterval.start
  */
-LaneInterval shortenIntervalFromEnd(LaneInterval const &laneInterval, physics::Distance const &distance);
+LaneInterval shortenIntervalFromEnd(LaneInterval const &lane_interval, physics::Distance const &distance);
 
 /**
  * @brief Restrict length of the LaneInterval to a given physics::Distance from start.
  *
- * @param[in] laneInterval the LaneInterval that should be restricted
+ * @param[in] lane_interval the LaneInterval that should be restricted
  * @param[in] physics::Distance the LaneInterval should be restricted to
  *
  * @returns resulting shortened LaneInterval
  *
  * If physics::Distance is bigger then the length of the interval. Resulting LaneInterval is the input Interval.
  */
-LaneInterval restrictIntervalFromBegin(LaneInterval const &laneInterval, physics::Distance const &distance);
+LaneInterval restrictIntervalFromBegin(LaneInterval const &lane_interval, physics::Distance const &distance);
 
 /**
  * @brief extend the lane interval until the end of the lane reached
@@ -638,11 +653,11 @@ LaneInterval restrictIntervalFromBegin(LaneInterval const &laneInterval, physics
  * The end is set to the lane's maximal value (depending on the route direction to 0. or 1.).
  * If the lane interval is degenerated nothing is done.
  *
- * @param[in] laneInterval the LaneInterval that should be extended
+ * @param[in] lane_interval the LaneInterval that should be extended
  *
  * @returns resulting extended LaneInterval
  */
-LaneInterval extendIntervalUntilEnd(LaneInterval const &laneInterval);
+LaneInterval extendIntervalUntilEnd(LaneInterval const &lane_interval);
 
 /**
  * @brief cut the LaneInterval at a given parametric point.
@@ -655,7 +670,7 @@ LaneInterval extendIntervalUntilEnd(LaneInterval const &laneInterval);
  *
  * If the parametric offset is outside of the interval, the original lane interval is returned.
  */
-LaneInterval cutIntervalAtStart(LaneInterval const &laneInterval, physics::ParametricValue const &newIntervalStart);
+LaneInterval cutIntervalAtStart(LaneInterval const &lane_interval, physics::ParametricValue const &newIntervalStart);
 
 /**
  * @brief extend the lane interval until the start of the lane reached
@@ -663,35 +678,35 @@ LaneInterval cutIntervalAtStart(LaneInterval const &laneInterval, physics::Param
  * The start is set to the lane's minimal value (depending on the route direction to 1. or 0.).
  * If the lane interval is degenerated nothing is done.
  *
- * @param[in] laneInterval the LaneInterval that should be extended
+ * @param[in] lane_interval the LaneInterval that should be extended
  *
  * @returns resulting extended LaneInterval
  */
-LaneInterval extendIntervalUntilStart(LaneInterval const &laneInterval);
+LaneInterval extendIntervalUntilStart(LaneInterval const &lane_interval);
 
 /**
  * @brief extend the lane interval by moving its start position by physics::Distance
  *
  * If the lane interval is degenerated nothing is done.
  *
- * @param[in] laneInterval the LaneInterval that should be extended
+ * @param[in] lane_interval the LaneInterval that should be extended
  * @param[in] physics::Distance by which the LaneInterval should be extended
  *
  * @returns resulting extended LaneInterval
  */
-LaneInterval extendIntervalFromStart(LaneInterval const &laneInterval, physics::Distance const &distance);
+LaneInterval extendIntervalFromStart(LaneInterval const &lane_interval, physics::Distance const &distance);
 
 /**
  * @brief extend the lane interval by moving its end position by physics::Distance
  *
  * If the lane interval is degenerated nothing is done.
  *
- * @param[in] laneInterval the LaneInterval that should be extended
+ * @param[in] lane_interval the LaneInterval that should be extended
  * @param[in] physics::Distance by which the LaneInterval should be extended
  *
  * @returns resulting extended LaneInterval
  */
-LaneInterval extendIntervalFromEnd(LaneInterval const &laneInterval, physics::Distance const &distance);
+LaneInterval extendIntervalFromEnd(LaneInterval const &lane_interval, physics::Distance const &distance);
 
 /**
  * @brief cut the LaneInterval at a given parametric point.
@@ -704,19 +719,19 @@ LaneInterval extendIntervalFromEnd(LaneInterval const &laneInterval, physics::Di
  *
  * If the parametric offset is outside of the interval, the original lane interval is returned.
  */
-LaneInterval cutIntervalAtEnd(LaneInterval const &laneInterval, physics::ParametricValue const &newIntervalEnd);
+LaneInterval cutIntervalAtEnd(LaneInterval const &lane_interval, physics::ParametricValue const &newIntervalEnd);
 
 /**
  * @brief get the speed limits of the lane interval
  */
-restriction::SpeedLimitList getSpeedLimits(LaneInterval const &laneInterval);
+restriction::SpeedLimitList getSpeedLimits(LaneInterval const &lane_interval);
 
 /**
  * @brief get the metric ranges of the lane interval
  */
-void getMetricRanges(LaneInterval const &laneInterval,
-                     physics::MetricRange &lengthRange,
-                     physics::MetricRange &widthRange);
+void getMetricRanges(LaneInterval const &lane_interval,
+                     physics::MetricRange &length_range,
+                     physics::MetricRange &width_range);
 
 } // namespace route
 } // namespace map

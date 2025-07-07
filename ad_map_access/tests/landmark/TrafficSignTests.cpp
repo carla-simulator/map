@@ -21,27 +21,27 @@ TEST_F(TrafficSignTests, generate_traffic_signs)
 
   for (std::size_t signIndex = 0u; signIndex < landmark::knownTrafficSigns.size(); ++signIndex)
   {
-    landmark::LandmarkId landmarkId(100 + signIndex);
+    landmark::LandmarkId landmark_id(100 + signIndex);
     ECEFPoint position
       = createECEFPoint(8.44 + static_cast<double>(signIndex) * 0.000002, 49.000002, 115.); // approx. every 2 meter
     ECEFPoint orientation = createECEFPoint(8.4399 + static_cast<double>(signIndex) * 0.000002, 49.000002, 115.);
-    ECEFEdge boundingBoxGeometry{position, orientation};
+    ECEFPointList boundingBoxGeometry{position, orientation};
     Geometry bounding_box = createGeometry(boundingBoxGeometry, true);
     EXPECT_TRUE(factory.addTrafficSign(mPartitionId,
-                                       landmarkId,
+                                       landmark_id,
                                        landmark::knownTrafficSigns[signIndex],
                                        position,
                                        orientation,
                                        bounding_box,
                                        std::to_string(signIndex)));
-    EXPECT_TRUE(factory.add(mLaneId, landmarkId));
+    EXPECT_TRUE(factory.add(mLaneId, landmark_id));
   }
 
   EXPECT_EQ(landmark::getLandmarks().size(), landmark::knownTrafficSigns.size());
   EXPECT_EQ(lane::getLanes().front(), mLaneId);
   auto lane = lane::getLane(mLaneId);
-  EXPECT_EQ(lane.visibleLandmarks.size(), 73u);
-  EXPECT_EQ(lane.visibleLandmarks.front(), landmark::LandmarkId(100));
+  EXPECT_EQ(lane.visible_landmarks.size(), 73u);
+  EXPECT_EQ(lane.visible_landmarks.front(), landmark::LandmarkId(100));
 
   // write the map
   size_t version_major = 0;

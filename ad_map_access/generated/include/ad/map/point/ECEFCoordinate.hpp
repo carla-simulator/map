@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -49,11 +49,13 @@ namespace point {
  * \brief Enable/Disable explicit conversion. Currently set to "only explicit conversion".
  */
 #define _AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION_ explicit
+#define _AD_MAP_POINT_ECEFCOORDINATE_OPERATOR_BASE_TYPE_ 0
 #else
 /*!
  * \brief Enable/Disable explicit conversion. Currently set to "implicit conversion allowed".
  */
 #define _AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION_
+#define _AD_MAP_POINT_ECEFCOORDINATE_OPERATOR_BASE_TYPE_ 1
 #endif
 
 /*!
@@ -237,8 +239,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    ECEFCoordinate const result(mECEFCoordinate + other.mECEFCoordinate);
-    result.ensureValid();
+    ECEFCoordinate result(mECEFCoordinate + other.mECEFCoordinate);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -257,7 +259,7 @@ public:
     ensureValid();
     other.ensureValid();
     mECEFCoordinate += other.mECEFCoordinate;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -275,8 +277,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    ECEFCoordinate const result(mECEFCoordinate - other.mECEFCoordinate);
-    result.ensureValid();
+    ECEFCoordinate result(mECEFCoordinate - other.mECEFCoordinate);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -295,7 +297,7 @@ public:
     ensureValid();
     other.ensureValid();
     mECEFCoordinate -= other.mECEFCoordinate;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -312,8 +314,8 @@ public:
   ECEFCoordinate operator*(const double &scalar) const
   {
     ensureValid();
-    ECEFCoordinate const result(mECEFCoordinate * scalar);
-    result.ensureValid();
+    ECEFCoordinate result(mECEFCoordinate * scalar);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -330,8 +332,8 @@ public:
   ECEFCoordinate operator/(const double &scalar) const
   {
     ECEFCoordinate const scalarECEFCoordinate(scalar);
-    ECEFCoordinate const result(operator/(scalarECEFCoordinate));
-    result.ensureValid();
+    ECEFCoordinate result(operator/(scalarECEFCoordinate));
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -365,8 +367,8 @@ public:
   ECEFCoordinate operator-() const
   {
     ensureValid();
-    ECEFCoordinate const result(-mECEFCoordinate);
-    result.ensureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
+    ECEFCoordinate result(-mECEFCoordinate);
+    result.restrictToLimitsAndEnsureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
     return result;
   }
 
@@ -374,12 +376,35 @@ public:
    * \brief conversion to base type: double
    *
    * \note the conversion to the base type removes the physical unit.
-   *       \ref \_AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.
    */
-  _AD_MAP_POINT_ECEFCOORDINATE_EXPLICIT_CONVERSION_ operator double() const
+  double toBaseType() const
   {
     return mECEFCoordinate;
   }
+
+  /*!
+   * \returns \c true if the ECEFCoordinate is a normal value
+   *
+   * An ECEFCoordinate value is defined to be normal if:
+   * - It is normal or zero (see std::fpclassify())
+   */
+  bool isNormal() const
+  {
+    auto const valueClass = std::fpclassify(mECEFCoordinate);
+    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO));
+  }
+
+#if _AD_MAP_POINT_ECEFCOORDINATE_OPERATOR_BASE_TYPE_
+  /*!
+   * \brief conversion to base type: double
+   *
+   * \note the conversion to the base type removes the physical unit.
+   */
+  operator double() const
+  {
+    return mECEFCoordinate;
+  }
+#endif
 
   /*!
    * \returns \c true if the ECEFCoordinate in a valid range
@@ -390,9 +415,7 @@ public:
    */
   bool isValid() const
   {
-    auto const valueClass = std::fpclassify(mECEFCoordinate);
-    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) && (cMinValue <= mECEFCoordinate)
-      && (mECEFCoordinate <= cMaxValue);
+    return isNormal() && (cMinValue <= mECEFCoordinate) && (mECEFCoordinate <= cMaxValue);
   }
 
   /*!
@@ -405,7 +428,8 @@ public:
   {
     if (!isValid())
     {
-      spdlog::info("ensureValid(::ad::map::point::ECEFCoordinate)>> {} value out of range", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::map::point::ECEFCoordinate)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_MAP_POINT_ECEFCOORDINATE_THROWS_EXCEPTION == 1)
       throw std::out_of_range("ECEFCoordinate value out of range"); // LCOV_EXCL_BR_LINE
 #endif
@@ -423,9 +447,53 @@ public:
     ensureValid();
     if (operator==(ECEFCoordinate(0.))) // LCOV_EXCL_BR_LINE
     {
-      spdlog::info("ensureValid(::ad::map::point::ECEFCoordinate)>> {} value is zero", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::map::point::ECEFCoordinate)>> {} value is zero",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_MAP_POINT_ECEFCOORDINATE_THROWS_EXCEPTION == 1)
       throw std::out_of_range("ECEFCoordinate value is zero"); // LCOV_EXCL_BR_LINE
+#endif
+    }
+  }
+
+  /**
+   * @brief if possible restrict the ECEFCoordinate to it's defined limits
+   *
+   * If the ECEFCoordinate isNormal(), but exceeds the defined limits, it is restricted to its limits.
+   * If ECEFCoordinate::isNormal() returns \c false an std::out_of_range() exception is thrown.
+   * - not isNormal(): std::out_of_range() exception is thrown
+   * - \ref cMinValue <= value <= \ref cMaxValue: nothing is done
+   * - value < \ref cMinValue: resulting value = cMinValue
+   * - value > \ref cMaxValue: resulting value = cMaxValue
+   */
+  void restrictToLimitsAndEnsureValid()
+  {
+    if (isNormal())
+    {
+      if (mECEFCoordinate < cMinValue)
+      {
+        // mitigate exceeding the minimum
+        spdlog::info("restrictToLimits(::ad::map::point::ECEFCoordinate)>> {} value is smaller than allowed minimum "
+                     "{}. Restrict to minimum value.",
+                     *this,
+                     getMin()); // LCOV_EXCL_BR_LINE
+        mECEFCoordinate = cMinValue;
+      }
+      else if (mECEFCoordinate > cMaxValue)
+      {
+        // mitigate exceeding the maximum
+        spdlog::info("restrictToLimits(::ad::map::point::ECEFCoordinate)>> {} value is larger than allowed maximum {}. "
+                     "Restrict to maximum value.",
+                     *this,
+                     getMax()); // LCOV_EXCL_BR_LINE
+        mECEFCoordinate = cMaxValue;
+      }
+    }
+    else
+    {
+      spdlog::info("restrictToLimits(::ad::map::point::ECEFCoordinate)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
+#if (AD_MAP_POINT_ECEFCOORDINATE_THROWS_EXCEPTION == 1)
+      throw std::out_of_range("ECEFCoordinate value out of range"); // LCOV_EXCL_BR_LINE
 #endif
     }
   }
@@ -454,7 +522,6 @@ public:
     return ECEFCoordinate(cPrecisionValue);
   }
 
-private:
   /*!
    * \brief the actual value of the type
    */
@@ -490,7 +557,7 @@ namespace std {
  */
 inline ::ad::map::point::ECEFCoordinate fabs(const ::ad::map::point::ECEFCoordinate other)
 {
-  ::ad::map::point::ECEFCoordinate const result(std::fabs(static_cast<double>(other)));
+  ::ad::map::point::ECEFCoordinate const result(std::fabs(other.mECEFCoordinate));
   return result;
 }
 
@@ -562,7 +629,7 @@ namespace point {
  */
 inline std::ostream &operator<<(std::ostream &os, ECEFCoordinate const &_value)
 {
-  return os << double(_value);
+  return os << _value.mECEFCoordinate;
 }
 
 } // namespace point
@@ -575,7 +642,19 @@ namespace std {
  */
 inline std::string to_string(::ad::map::point::ECEFCoordinate const &value)
 {
-  return to_string(static_cast<double>(value));
+  return to_string(value.mECEFCoordinate);
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::point::ECEFCoordinate> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::point::ECEFCoordinate const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_POINT_ECEFCOORDINATE

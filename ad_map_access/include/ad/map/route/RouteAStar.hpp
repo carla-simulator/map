@@ -132,7 +132,7 @@ private:
   /**
    *  @brief typedef for a set of RoutingParaPoint
    */
-  typedef std::set<RoutingParaPoint> RoutingParaPointSet;
+  typedef std::set<RoutingParaPoint, RoutingParaPointCompare> RoutingParaPointSet;
 
   /**
    * @brief the already processed points (only process a point once)
@@ -142,13 +142,13 @@ private:
   /**
    * @brief map holding the elements beeing processed
    */
-  typedef std::map<RoutingParaPoint, RoutingCost> RoutingParaPointCostMap;
+  typedef std::map<RoutingParaPoint, RoutingCost, RoutingParaPointCompare> RoutingParaPointCostMap;
   RoutingParaPointCostMap mProcessingMap;
 
   /**
    * @brief map a point to its predecessor having least cost
    */
-  typedef std::map<RoutingParaPoint, RoutingParaPoint> RoutingChainMap;
+  typedef std::map<RoutingParaPoint, RoutingParaPoint, RoutingParaPointCompare> RoutingChainMap;
   RoutingChainMap mCameFrom;
 };
 

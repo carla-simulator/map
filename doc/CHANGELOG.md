@@ -1,7 +1,18 @@
 ## Latest changes
+## Release 3.0.0
+#### :rocket: New Features
+* Renamed datatype members from CamelCase to under_score_case
+* Added basic ad::geometry namespace containing basic geometry functions to ad_physics library
+* Added MapAreaOperation functions to extract map areas from map to be used with map-matching or planning functions
+* Add overload of ad::map::lane::getLateralAlignementEdge() for physics::RatioValue to support aligned edges beyond the valid ParametricValue [0.; 1.] interval
+* Add ad::map::geometry::restrictPolygonToAreaClostestToReferencePoint()
+
 #### :ghost: Maintenance
-* Disable Ubuntu 18.04 builds
-* Enable newer boost versions
+* Fix route creation in RouteCreationMode::SameDrivingDirection mode (only append routable lanes)
+* Fix ad::map::route::findWaypoint(Distance, FullRoute) and by that ad::map::route::shortenRoute(Distance, FullRoute, ShortenRouteMode)
+* Use spdlog from ubuntu to remain comaptible with the provided versions under ubuntu.
+* Disabled older Ubuntu systems
+* Enabled Ubuntu 24.04
 
 ## Release 2.6.3
 #### :ghost: Maintenance

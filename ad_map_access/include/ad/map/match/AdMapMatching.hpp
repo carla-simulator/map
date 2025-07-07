@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2021 Intel Corporation
+// Copyright (C) 2020-2021 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -14,6 +14,7 @@
 #include <list>
 
 #include "ad/map/match/Types.hpp"
+#include "ad/map/point/ECEFPoint.hpp"
 #include "ad/map/point/Operation.hpp"
 #include "ad/map/route/Types.hpp"
 
@@ -102,11 +103,11 @@ public:
    * This increases the map matching probabilities for lanes with respective direction.
    *
    * @param[in] yaw the yaw of the object/vehicle to consider
-   * @param[in] enuReferencePoint the reference point of the corresponding ENUCoordinate system
+   * @param[in] enu_reference_point the reference point of the corresponding ENUCoordinate system
    */
-  void addHeadingHint(point::ENUHeading const &yaw, point::GeoPoint const &enuReferencePoint)
+  void addHeadingHint(point::ENUHeading const &yaw, point::GeoPoint const &enu_reference_point)
   {
-    mHeadingHints.push_back(point::createECEFHeading(yaw, enuReferencePoint));
+    mHeadingHints.push_back(point::createECEFHeading(yaw, enu_reference_point));
   }
 
   /**
@@ -169,11 +170,11 @@ public:
    *
    * Calculate the map matched positions and return these.
    *
-   * @param[in] geoPoint position to match against the map
-   * @param[in] distance search radius around geoPoint to select a lane as a match
+   * @param[in] geo_point position to match against the map
+   * @param[in] distance search radius around geo_point to select a lane as a match
    * @param[in] minProbabilty A probability threshold to be considered for the results.
    */
-  MapMatchedPositionConfidenceList getMapMatchedPositions(point::GeoPoint const &geoPoint,
+  MapMatchedPositionConfidenceList getMapMatchedPositions(point::GeoPoint const &geo_point,
                                                           physics::Distance const &distance,
                                                           physics::Probability const &minProbability) const;
 
@@ -183,12 +184,12 @@ public:
    * Calculate the map matched positions and return these.
    *
    * @param[in] enuPoint position to match against the map in ENU coordinate frame
-   * @param[in] enuReferencePoint the enu reference point
-   * @param[in] distance search radius around geoPoint to select a lane as a match
+   * @param[in] enu_reference_point the enu reference point
+   * @param[in] distance search radius around geo_point to select a lane as a match
    * @param[in] minProbabilty A probability threshold to be considered for the results.
    */
   MapMatchedPositionConfidenceList getMapMatchedPositions(point::ENUPoint const &enuPoint,
-                                                          point::GeoPoint const &enuReferencePoint,
+                                                          point::GeoPoint const &enu_reference_point,
                                                           physics::Distance const &distance,
                                                           physics::Probability const &minProbability) const;
 
@@ -198,7 +199,7 @@ public:
    * Calculate the map matched positions and return these.
    *
    * @param[in] enuPoint position to match against the map in ENU coordinate frame
-   * @param[in] distance search radius around geoPoint to select a lane as a match
+   * @param[in] distance search radius around geo_point to select a lane as a match
    * @param[in] minProbabilty A probability threshold to be considered for the results.
    *
    * This function makes use of the globally set ENUReferencePoint
@@ -215,7 +216,7 @@ public:
    *
    * @param[in] enuObjectPosition object position, orientation, dimensions and ENRReferencePoint
    *  to match against the map in ENU coordinate frame
-   * @param[in] distance search radius around geoPoint to select a lane as a match
+   * @param[in] distance search radius around geo_point to select a lane as a match
    * @param[in] minProbabilty A probability threshold to be considered for the results.
    *
    * The orientation of the ENUObjectPosition is set as heading hint before matching and cleared afterwards
@@ -232,20 +233,25 @@ public:
    * Calculate the map matched bounding box.
    * This will calculate the map matched positions of all the corner points and the center point
    * In addition it will calculate all lane regions that are covered by the bounding box by sampling
-   * the objects geometry in between with the provided \c samplingDistance
+   * the objects geometry in between with the provided \c sampling_distance
    *
    * @param[in] enuObjectPosition object position, orientation, dimensions and ENRReferencePoint
    *  to match against the map in ENU coordinate frame
-   * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
+   * @param[in] sampling_distance The step size to be used to perform map matching in between the vehicle boundaries
    *   This parameter is heavily influencing the performance of this function:
-   *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
+   *   A sampling_distance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
    * matching.
+   * @param[in] allowedObjectDistanceToLane The allowed distance of the object to the lanes to still be considered. Per
+   * default this is zero. If the object is completely outside of the lanes, the MapMatchedObjectBoundingBox might be
+   * empty. If this is > 0., there are at least some map matching results of the reference points expected to be present
+   * in the result, even when the lane_occupied_regions are empty.
    *
    * @returns the map matched bounding box of the object
    */
-  MapMatchedObjectBoundingBox getMapMatchedBoundingBox(ENUObjectPosition const &enuObjectPosition,
-                                                       physics::Distance const &samplingDistance
-                                                       = physics::Distance(1.)) const;
+  MapMatchedObjectBoundingBox
+  getMapMatchedBoundingBox(ENUObjectPosition const &enuObjectPosition,
+                           physics::Distance const &sampling_distance = physics::Distance(1.),
+                           physics::Distance const &allowedObjectDistanceToLane = physics::Distance(0.)) const;
 
   /**
    * @brief get the lane occupied regions from a list of ENUObjectPositionList
@@ -256,14 +262,14 @@ public:
    * only works as expected if the the provided enuObjectPositionList covers the whole object.
    *
    * @param[in] enuObjectPositionList list of ENUObjectPosition entries
-   * @param[in] samplingDistance The step size to be used to perform map matching in between the vehicle boundaries
-   *   A samplingDistance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
+   * @param[in] sampling_distance The step size to be used to perform map matching in between the vehicle boundaries
+   *   A sampling_distance of 0.1 at a car (3x5m) means 1500x map matching. With a distance of 1.0 we get only 15x map
    * matching.
    *
    * @returns the map matched bounding box of the object
    */
   LaneOccupiedRegionList getLaneOccupiedRegions(ENUObjectPositionList enuObjectPositionList,
-                                                physics::Distance const &samplingDistance
+                                                physics::Distance const &sampling_distance
                                                 = physics::Distance(1.)) const;
 
   /**
@@ -292,7 +298,7 @@ public:
    * @brief Spatial Lane Search.
    *        Returns all Lanes where any part of surface is less than specified physics::Distance
    *        from given point.
-   * @param[in] geoPoint Point that is used as base for the search.
+   * @param[in] geo_point Point that is used as base for the search.
    * @param[in] distance Search radius.
    * @param[in] relevantLanes if not empty, the function restricts the search to the given set of lanes
    *
@@ -300,7 +306,7 @@ public:
    *
    * @returns Map matching results that satisfy search criteria. The individual matching result probabilities are equal.
    */
-  static MapMatchedPositionConfidenceList findLanes(point::GeoPoint const &geoPoint,
+  static MapMatchedPositionConfidenceList findLanes(point::GeoPoint const &geo_point,
                                                     physics::Distance const &distance,
                                                     ::ad::map::lane::LaneIdSet const &relevantLanes
                                                     = ::ad::map::lane::LaneIdSet());
@@ -313,11 +319,20 @@ public:
    *
    * This static function doesn't make use of any matching hints.
    *
-   * @returns The individual matching result probabilities are relative to the actual distance of the matchedPoint to
-   * the queryPoint.
+   * @returns The individual matching result probabilities are relative to the actual distance of the matched_point to
+   * the query_point.
    */
   static MapMatchedPositionConfidenceList findRouteLanes(point::ECEFPoint const &ecefPoint,
                                                          route::FullRoute const &route);
+
+  /**
+   * @brief extract the mapMatchedPositions and write them into a map of occuppied regions
+   *
+   * @param[in,out] lane_occupied_regions vector containing the occupied regions
+   * @param[in] mapMatchedPositions
+   */
+  static void addLaneRegions(LaneOccupiedRegionList &lane_occupied_regions,
+                             MapMatchedPositionConfidenceList const &mapMatchedPositions);
 
 private:
   // Copy operators and constructors are deleted to avoid accidental copies
@@ -335,36 +350,24 @@ private:
                         point::ECEFPoint const &ecefPoint,
                         physics::Distance const &distance);
 
-  static std::vector<lane::Lane::ConstPtr> getRelevantLanesInputChecked(point::ECEFPoint const &ecefPoint,
-                                                                        physics::Distance const &distance);
-  static void normalizeResults(match::MapMatchedPositionConfidenceList &mapMatchingResults,
-                               physics::Probability const &probabilitySum);
-
-  static match::MapMatchedPositionConfidenceList
-  findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geoPoint,
-                                       physics::Distance const &distance,
-                                       ::ad::map::lane::LaneIdSet const &relevantLanes);
-
   static std::vector<lane::Lane::ConstPtr>
   getRelevantLanesInputChecked(point::ECEFPoint const &ecefPoint,
                                physics::Distance const &distance,
                                ::ad::map::lane::LaneIdSet const &relevantLanes);
+  static void normalizeResults(match::MapMatchedPositionConfidenceList &mapMatchingResults,
+                               physics::Probability const &probabilitySum);
 
-  /**
-   * @brief extract the mapMatchedPositions and write them into a map of occuppied regions
-   *
-   * @param[in,out] laneOccupiedRegions vector containing the occupied regions
-   * @param[in] mapMatchedPositions
-   */
+  static match::MapMatchedPositionConfidenceList
+  findLanesInputCheckedAltitudeUnknown(point::GeoPoint const &geo_point,
+                                       physics::Distance const &distance,
+                                       ::ad::map::lane::LaneIdSet const &relevant_lane_set);
 
-  void addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
-                      MapMatchedPositionConfidenceList const &mapMatchedPositions) const;
-  void addLaneRegions(LaneOccupiedRegionList &laneOccupiedRegions,
+  void addLaneRegions(LaneOccupiedRegionList &lane_occupied_regions,
                       LaneOccupiedRegionList const &otherLaneOccupiedRegions) const;
 
   MapMatchedPositionConfidenceList considerMapMatchingHints(MapMatchedPositionConfidenceList const &mapMatchedPositions,
                                                             physics::Probability const &minProbability) const;
-  bool isLanePartOfRouteHints(lane::LaneId const &laneId) const;
+  bool isLanePartOfRouteHints(lane::LaneId const &lane_id) const;
   double getHeadingFactor(MapMatchedPosition const &matchedPosition) const;
 
   std::list<point::ECEFHeading> mHeadingHints;

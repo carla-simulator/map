@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,24 +28,24 @@ protected:
   {
     // valid initialization
     ::ad::map::match::ENUObjectPosition value;
-    ::ad::map::point::ENUPoint valueCenterPoint;
-    ::ad::map::point::ENUCoordinate valueCenterPointX(-16384);
-    valueCenterPoint.x = valueCenterPointX;
-    ::ad::map::point::ENUCoordinate valueCenterPointY(-16384);
-    valueCenterPoint.y = valueCenterPointY;
-    ::ad::map::point::ENUCoordinate valueCenterPointZ(-16384);
-    valueCenterPoint.z = valueCenterPointZ;
-    value.centerPoint = valueCenterPoint;
+    ::ad::map::point::ENUPoint valueCenter_point;
+    ::ad::map::point::ENUCoordinate valueCenter_pointX(-1e8);
+    valueCenter_point.x = valueCenter_pointX;
+    ::ad::map::point::ENUCoordinate valueCenter_pointY(-1e8);
+    valueCenter_point.y = valueCenter_pointY;
+    ::ad::map::point::ENUCoordinate valueCenter_pointZ(-1e8);
+    valueCenter_point.z = valueCenter_pointZ;
+    value.center_point = valueCenter_point;
     ::ad::map::point::ENUHeading valueHeading(-3.141592655);
     value.heading = valueHeading;
-    ::ad::map::point::GeoPoint valueEnuReferencePoint;
-    ::ad::map::point::Longitude valueEnuReferencePointLongitude(-180);
-    valueEnuReferencePoint.longitude = valueEnuReferencePointLongitude;
-    ::ad::map::point::Latitude valueEnuReferencePointLatitude(-90);
-    valueEnuReferencePoint.latitude = valueEnuReferencePointLatitude;
-    ::ad::map::point::Altitude valueEnuReferencePointAltitude(-11000);
-    valueEnuReferencePoint.altitude = valueEnuReferencePointAltitude;
-    value.enuReferencePoint = valueEnuReferencePoint;
+    ::ad::map::point::GeoPoint valueEnu_reference_point;
+    ::ad::map::point::Longitude valueEnu_reference_pointLongitude(-180);
+    valueEnu_reference_point.longitude = valueEnu_reference_pointLongitude;
+    ::ad::map::point::Latitude valueEnu_reference_pointLatitude(-90);
+    valueEnu_reference_point.latitude = valueEnu_reference_pointLatitude;
+    ::ad::map::point::Altitude valueEnu_reference_pointAltitude(-11000);
+    valueEnu_reference_point.altitude = valueEnu_reference_pointAltitude;
+    value.enu_reference_point = valueEnu_reference_point;
     ::ad::physics::Dimension3D valueDimension;
     ::ad::physics::Distance valueDimensionLength(-1e9);
     valueDimension.length = valueDimensionLength;
@@ -106,17 +106,17 @@ TEST_F(ENUObjectPositionTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(ENUObjectPositionTests, comparisonOperatorCenterPointDiffers)
+TEST_F(ENUObjectPositionTests, comparisonOperatorCenter_pointDiffers)
 {
   ::ad::map::match::ENUObjectPosition valueA = mValue;
-  ::ad::map::point::ENUPoint centerPoint;
-  ::ad::map::point::ENUCoordinate centerPointX(16384);
-  centerPoint.x = centerPointX;
-  ::ad::map::point::ENUCoordinate centerPointY(16384);
-  centerPoint.y = centerPointY;
-  ::ad::map::point::ENUCoordinate centerPointZ(16384);
-  centerPoint.z = centerPointZ;
-  valueA.centerPoint = centerPoint;
+  ::ad::map::point::ENUPoint center_point;
+  ::ad::map::point::ENUCoordinate center_pointX(1e8);
+  center_point.x = center_pointX;
+  ::ad::map::point::ENUCoordinate center_pointY(1e8);
+  center_point.y = center_pointY;
+  ::ad::map::point::ENUCoordinate center_pointZ(1e8);
+  center_point.z = center_pointZ;
+  valueA.center_point = center_point;
   ::ad::map::match::ENUObjectPosition valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
@@ -134,17 +134,17 @@ TEST_F(ENUObjectPositionTests, comparisonOperatorHeadingDiffers)
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(ENUObjectPositionTests, comparisonOperatorEnuReferencePointDiffers)
+TEST_F(ENUObjectPositionTests, comparisonOperatorEnu_reference_pointDiffers)
 {
   ::ad::map::match::ENUObjectPosition valueA = mValue;
-  ::ad::map::point::GeoPoint enuReferencePoint;
-  ::ad::map::point::Longitude enuReferencePointLongitude(180);
-  enuReferencePoint.longitude = enuReferencePointLongitude;
-  ::ad::map::point::Latitude enuReferencePointLatitude(90);
-  enuReferencePoint.latitude = enuReferencePointLatitude;
-  ::ad::map::point::Altitude enuReferencePointAltitude(9000);
-  enuReferencePoint.altitude = enuReferencePointAltitude;
-  valueA.enuReferencePoint = enuReferencePoint;
+  ::ad::map::point::GeoPoint enu_reference_point;
+  ::ad::map::point::Longitude enu_reference_pointLongitude(180);
+  enu_reference_point.longitude = enu_reference_pointLongitude;
+  ::ad::map::point::Latitude enu_reference_pointLatitude(90);
+  enu_reference_point.latitude = enu_reference_pointLatitude;
+  ::ad::map::point::Altitude enu_reference_pointAltitude(9000);
+  enu_reference_point.altitude = enu_reference_pointAltitude;
+  valueA.enu_reference_point = enu_reference_point;
   ::ad::map::match::ENUObjectPosition valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -100,8 +100,8 @@ struct Restriction
    */
   bool operator==(const Restriction &other) const
   {
-    return (negated == other.negated) && (roadUserTypes == other.roadUserTypes)
-      && (passengersMin == other.passengersMin);
+    return (negated == other.negated) && (road_user_types == other.road_user_types)
+      && (passengers_min == other.passengers_min);
   }
 
   /**
@@ -117,8 +117,8 @@ struct Restriction
   }
 
   bool negated{false};
-  ::ad::map::restriction::RoadUserTypeList roadUserTypes;
-  ::ad::map::restriction::PassengerCount passengersMin{0};
+  ::ad::map::restriction::RoadUserTypeList road_user_types;
+  ::ad::map::restriction::PassengerCount passengers_min{0};
 };
 
 } // namespace restriction
@@ -160,11 +160,11 @@ inline std::ostream &operator<<(std::ostream &os, Restriction const &_value)
   os << "negated:";
   os << _value.negated;
   os << ",";
-  os << "roadUserTypes:";
-  os << _value.roadUserTypes;
+  os << "road_user_types:";
+  os << _value.road_user_types;
   os << ",";
-  os << "passengersMin:";
-  os << _value.passengersMin;
+  os << "passengers_min:";
+  os << _value.passengers_min;
   os << ")";
   return os;
 }
@@ -184,4 +184,16 @@ inline std::string to_string(::ad::map::restriction::Restriction const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::restriction::Restriction> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::restriction::Restriction const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_RESTRICTION_RESTRICTION

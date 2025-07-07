@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     {
       auto const startOfProcessing = std::chrono::system_clock::now();
       ::osm_converter::OsmConverter converter(
-        appConfig.config, osmConverterConfig.config, mapGenerationConfig.config, "osm_to_lanelet");
+        appConfig.config, osmConverterConfig.config, mapGenerationConfig.config, "osm_to_adm");
 
       // @todo do we need to dereference?
       converter.dataStore.transformToGCS(*converter.osmProcessor.coordinateTransform());

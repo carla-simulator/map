@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -59,14 +59,12 @@ TEST(LaneIdTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(LaneIdTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<uint64_t>(::ad::map::lane::LaneId::getMin()),
-            static_cast<uint64_t>(std::numeric_limits<::ad::map::lane::LaneId>::lowest()));
+  EXPECT_EQ(::ad::map::lane::LaneId::getMin().mLaneId, std::numeric_limits<::ad::map::lane::LaneId>::lowest().mLaneId);
 }
 
 TEST(LaneIdTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<uint64_t>(::ad::map::lane::LaneId::getMax()),
-            static_cast<uint64_t>(std::numeric_limits<::ad::map::lane::LaneId>::max()));
+  EXPECT_EQ(::ad::map::lane::LaneId::getMax().mLaneId, std::numeric_limits<::ad::map::lane::LaneId>::max().mLaneId);
 }
 
 TEST(LaneIdTests, copyConstructionFromValidValue)
@@ -74,7 +72,7 @@ TEST(LaneIdTests, copyConstructionFromValidValue)
   ::ad::map::lane::LaneId const validValue(::ad::map::lane::LaneId::cMinValue);
   ::ad::map::lane::LaneId value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<uint64_t>(validValue), static_cast<uint64_t>(value));
+  EXPECT_EQ(validValue.mLaneId, value.mLaneId);
 }
 
 TEST(LaneIdTests, moveConstructionFromValidValue)
@@ -82,7 +80,7 @@ TEST(LaneIdTests, moveConstructionFromValidValue)
   ::ad::map::lane::LaneId validValue(::ad::map::lane::LaneId::cMinValue);
   ::ad::map::lane::LaneId value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::lane::LaneId::cMinValue, static_cast<uint64_t>(value));
+  EXPECT_EQ(::ad::map::lane::LaneId::cMinValue, value.mLaneId);
 }
 
 TEST(LaneIdTests, assignmentFromValidValue)
@@ -91,7 +89,7 @@ TEST(LaneIdTests, assignmentFromValidValue)
   ::ad::map::lane::LaneId value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<uint64_t>(validValue), static_cast<uint64_t>(value));
+  EXPECT_EQ(validValue.mLaneId, value.mLaneId);
 }
 
 TEST(LaneIdTests, moveAssignmentFromValidValue)
@@ -100,7 +98,7 @@ TEST(LaneIdTests, moveAssignmentFromValidValue)
   ::ad::map::lane::LaneId value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::lane::LaneId::cMinValue, static_cast<uint64_t>(value));
+  EXPECT_EQ(::ad::map::lane::LaneId::cMinValue, value.mLaneId);
 }
 
 TEST(LaneIdTests, selfAssignment)
@@ -138,16 +136,14 @@ TEST(LaneIdTests, arithmeticOperators)
   ::ad::map::lane::LaneId maxValue(::ad::map::lane::LaneId::cMaxValue);
   ::ad::map::lane::LaneId result;
 
-  ASSERT_EQ(static_cast<uint64_t>(minValue + minValue),
-            ::ad::map::lane::LaneId::cMinValue + ::ad::map::lane::LaneId::cMinValue);
+  ASSERT_EQ((minValue + minValue).mLaneId, ::ad::map::lane::LaneId::cMinValue + ::ad::map::lane::LaneId::cMinValue);
   result = minValue;
   result += minValue;
-  ASSERT_EQ(static_cast<uint64_t>(result), ::ad::map::lane::LaneId::cMinValue + ::ad::map::lane::LaneId::cMinValue);
-  ASSERT_EQ(static_cast<uint64_t>(maxValue - minValue),
-            ::ad::map::lane::LaneId::cMaxValue - ::ad::map::lane::LaneId::cMinValue);
+  ASSERT_EQ(result.mLaneId, ::ad::map::lane::LaneId::cMinValue + ::ad::map::lane::LaneId::cMinValue);
+  ASSERT_EQ((maxValue - minValue).mLaneId, ::ad::map::lane::LaneId::cMaxValue - ::ad::map::lane::LaneId::cMinValue);
   result = maxValue;
   result -= minValue;
-  ASSERT_EQ(static_cast<uint64_t>(result), ::ad::map::lane::LaneId::cMaxValue - ::ad::map::lane::LaneId::cMinValue);
+  ASSERT_EQ(result.mLaneId, ::ad::map::lane::LaneId::cMaxValue - ::ad::map::lane::LaneId::cMinValue);
 }
 
 #if defined(__clang__) && (__clang_major__ >= 7)

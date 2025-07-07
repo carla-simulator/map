@@ -22,7 +22,7 @@ class LaneRunnerSpeed(LaneRunner):
 
     def work_lane(self, lane):
         "..."
-        for speed_limit in lane.speedLimits:
-            limit = speed_limit.speedLimit
+        for speed_limit in lane.speed_limits:
+            limit = speed_limit.speed_limit
             layer_manager = self.admap_qgis.layers.speed_layer_manager(limit)
             layer_manager.add_speed_limit(lane, speed_limit)

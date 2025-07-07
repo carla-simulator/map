@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,14 +28,14 @@ protected:
   {
     // valid initialization
     ::ad::map::route::RouteParaPoint value;
-    ::ad::map::route::RoutePlanningCounter valueRoutePlanningCounter(
+    ::ad::map::route::RoutePlanningCounter valueRoute_planning_counter(
       std::numeric_limits<::ad::map::route::RoutePlanningCounter>::lowest());
-    value.routePlanningCounter = valueRoutePlanningCounter;
-    ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
+    value.route_planning_counter = valueRoute_planning_counter;
+    ::ad::map::route::SegmentCounter valueSegment_count_from_destination(
       std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
-    value.segmentCountFromDestination = valueSegmentCountFromDestination;
-    ::ad::physics::ParametricValue valueParametricOffset(0.);
-    value.parametricOffset = valueParametricOffset;
+    value.segment_count_from_destination = valueSegment_count_from_destination;
+    ::ad::physics::ParametricValue valueParametric_offset(0.);
+    value.parametric_offset = valueParametric_offset;
     mValue = value;
   }
 
@@ -88,35 +88,35 @@ TEST_F(RouteParaPointTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(RouteParaPointTests, comparisonOperatorRoutePlanningCounterDiffers)
+TEST_F(RouteParaPointTests, comparisonOperatorRoute_planning_counterDiffers)
 {
   ::ad::map::route::RouteParaPoint valueA = mValue;
-  ::ad::map::route::RoutePlanningCounter routePlanningCounter(
+  ::ad::map::route::RoutePlanningCounter route_planning_counter(
     std::numeric_limits<::ad::map::route::RoutePlanningCounter>::max());
-  valueA.routePlanningCounter = routePlanningCounter;
+  valueA.route_planning_counter = route_planning_counter;
   ::ad::map::route::RouteParaPoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(RouteParaPointTests, comparisonOperatorSegmentCountFromDestinationDiffers)
+TEST_F(RouteParaPointTests, comparisonOperatorSegment_count_from_destinationDiffers)
 {
   ::ad::map::route::RouteParaPoint valueA = mValue;
-  ::ad::map::route::SegmentCounter segmentCountFromDestination(
+  ::ad::map::route::SegmentCounter segment_count_from_destination(
     std::numeric_limits<::ad::map::route::SegmentCounter>::max());
-  valueA.segmentCountFromDestination = segmentCountFromDestination;
+  valueA.segment_count_from_destination = segment_count_from_destination;
   ::ad::map::route::RouteParaPoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(RouteParaPointTests, comparisonOperatorParametricOffsetDiffers)
+TEST_F(RouteParaPointTests, comparisonOperatorParametric_offsetDiffers)
 {
   ::ad::map::route::RouteParaPoint valueA = mValue;
-  ::ad::physics::ParametricValue parametricOffset(1.);
-  valueA.parametricOffset = parametricOffset;
+  ::ad::physics::ParametricValue parametric_offset(1.);
+  valueA.parametric_offset = parametric_offset;
   ::ad::map::route::RouteParaPoint valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

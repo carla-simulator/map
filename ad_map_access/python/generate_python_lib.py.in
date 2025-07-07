@@ -30,27 +30,38 @@ def main():
 
     declarations={"toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
 
-    additional_replacements = {
+    additional_replacements = [
         # types used as default without full namespace in code
-        ("physics::Distance(", "ad::physics::Distance("),
-        ("physics::ParametricValue(", "ad::physics::ParametricValue("),
-        ("std::vector<route::FullRoute>(", "std::vector<ad::map::route::FullRoute>("),
+        ("=physics::Distance(", "=ad::physics::Distance("),
+        ("=physics::ParametricValue(", "=ad::physics::ParametricValue("),
+        ("=route::FullRouteList(", "=ad::map::route::FullRouteList("),
+        ("=lane::LaneIdSet(", "=ad::map::lane::LaneIdSet("),
         ("nullptr", "0"),
         # some renaming for set data types
         ("\"vector_less__ad_scope_map_scope_route_scope_FullRoute__greater_\"", "\"FullRouteList\""),
+        ("\"vector_less_ad_scope_map_scope_route_scope_FullRoute_greater_\"", "\"FullRouteList\""),
         ("\"vector_less__ad_scope_map_scope_lane_scope_ENUBorder__greater_\"", "\"ENUBorderList\""),
+        ("\"vector_less_ad_scope_map_scope_lane_scope_ENUBorder_greater_\"", "\"ENUBorderList\""),
         ("\"vector_less__ad_scope_map_scope_lane_scope_ECEFBorder__greater_\"", "\"ECEFBorderList\""),
+        ("\"vector_less_ad_scope_map_scope_lane_scope_ECEFBorder_greater_\"", "\"ECEFBorderList\""),
         ("\"vector_less__ad_scope_map_scope_lane_scope_GeoBorder__greater_\"", "\"GeoBorderList\""),
+        ("\"vector_less_ad_scope_map_scope_lane_scope_GeoBorder_greater_\"", "\"GeoBorderList\""),
         ("\"vector_less__ad_scope_map_scope_lane_scope_LaneId__greater_\"", "\"LaneIdList\""),
+        ("\"vector_less_ad_scope_map_scope_lane_scope_LaneId_greater_\"", "\"LaneIdList\""),
         ("\"set_less__ad_scope_map_scope_lane_scope_LaneId__greater_\"", "\"LaneIdSet\""),
+        ("\"set_less_ad_scope_map_scope_lane_scope_LaneId_greater_\"", "\"LaneIdSet\""),
         ("\"set_less__ad_scope_map_scope_landmark_scope_LandmarkId__greater_\"", "\"LandmarkIdSet\""),
+        ("\"set_less_ad_scope_map_scope_landmark_scope_LandmarkId_greater_\"", "\"LandmarkIdSet\""),
         ("\"vector_less__ad_scope_map_scope_route_scope_ConnectingInterval__greater_\"", "\"ConnectingSegment\""),
-        ("\"vector_less__ad_scope_map_scope_match_scope_MapMatchedPosition__greater_\"",
-         "\"MapMatchedPositionConfidenceList\"")
-    }
+        ("\"vector_less_ad_scope_map_scope_route_scope_ConnectingInterval_greater_\"", "\"ConnectingSegment\""),
+        ("\"vector_less__ad_scope_map_scope_match_scope_MapMatchedPosition__greater_\"", "\"MapMatchedPositionConfidenceList\""),
+        ("\"vector_less_ad_scope_map_scope_match_scope_MapMatchedPosition_greater_\"", "\"MapMatchedPositionConfidenceList\""),
+        ("\"vector_less__ad_scope_map_scope_point_scope_ENUPoint__greater_\"", "\"ENUPointList\""),
+        ("\"vector_less_ad_scope_map_scope_point_scope_ENUPoint_greater_\"", "\"ENUPointList\"")
+    ]
 
     # leave out opendrive and serialize completely
-    for component in ["access", "config", "intersection", "landmark", "lane", "match", "point", "restriction", "route"]:
+    for component in ["access", "config", "geometry", "intersection", "landmark", "lane", "match", "point", "restriction", "route"]:
         main_namespace="ad::map::{}".format(component)
 
         declarations_component=declarations.copy()
@@ -72,8 +83,14 @@ def main():
                 "access/Store.hpp"
             }
             ignore_declarations={"Store", "getStore"}
-            # cope with forward declarations
-            additional_includes={"ad/map/point/CoordinateTransform.hpp"}
+            additional_includes={
+                # cope with forward declarations
+                "ad/map/point/CoordinateTransform.hpp",
+                # enable spdlog enum declarations
+                "@SPDLOG_INCLUDES@/spdlog/common.h"
+            }
+            # enable spdlog enum declarations
+            declarations_component.add("spdlog::level::level_enum")
         elif component == "route":
             ignore_files={
                 # issue: virtual calculate() function
@@ -81,9 +98,15 @@ def main():
                 "route/RouteAStar.hpp",
                 "route/RouteExpander.hpp",
                 "route/RoutePrediction.hpp"
-                }
+            }
             # cope with forward declarations
             additional_includes={"ad/map/intersection/Intersection.hpp"}
+            ignore_declarations={
+                # cope with overload problems of calcLength(FullRoute) not working
+                # therefore disable the overload being the cause for the problem
+                # actual root-cause not yet known...
+                "ad::map::route::calcLength(ad::map::route::FindWaypointResult"
+            }
 
         generate_python_wrapper(library_name=component,
                                 cpp_filename="AdMap-{}-PythonWrapper.cpp.in".format(component),
@@ -95,16 +118,31 @@ def main():
                                 ignore_files=ignore_files)
 
         additional_replacements_component = additional_replacements.copy()
-        additional_replacements_component.add(
+        additional_replacements_component.append(
                 ("BOOST_PYTHON_MODULE({}){{".format(component),
                  "void export_ad_map_{}(){{\n\n".format(component) +
                  "  bp::object ad_map_{}_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"{}\"))));\n".format(component, component) +
                  "  bp::scope().attr(\"{}\") = ad_map_{}_module;\n".format(component, component) +
                  "  bp::scope submodule_scope = ad_map_{}_module;\n\n".format(component) +
-                 "  bp::scope().attr(\"__doc__\") = \"Python binding of ad_map_access ad::map::{} namespace C++ code for @binding_string@\";".format(component) +
+                 "  bp::scope().attr(\"__doc__\") = \"Python binding of ad_map_access ad::map::{} namespace C++ code for @PYTHON_BINDING_NAME@\";".format(component) +
                  "  bp::scope().attr(\"__copyright__\") = \"Copyright (C) 2020-2021 Intel Corporation\";" +
                  "  bp::scope().attr(\"__license__\") = \"MIT\";"
                 ))
+        if component == "geometry":
+            # somehow code for the class ad::geometry::PolygonVector is generated, but we cannot ignore it above since we want the functions to be present
+            additional_replacements_component.append(
+                ("bp::class_< std::vector< boost::geometry::model::polygon<boost::geometry::model::d2::point_xy<double, boost::geometry::cs::cartesian>, false, true, std::vector, std::vector, std::allocator, std::allocator> >, boost::noncopyable >( \"PolygonVector\" )", "// generate_python_lib.py: PolygonVector manually removed here")
+            )
+            additional_replacements_component.append(
+                ("bp::class_< std::vector<boost::geometry::model::polygon<boost::geometry::model::d2::point_xy<double>, false, true>>, boost::noncopyable >( \"PolygonVector\" )", "// generate_python_lib.py: PolygonVector manually removed here")
+            )
+            additional_replacements_component.append(
+                (".def( bp::indexing::vector_suite< std::vector< boost::geometry::model::polygon<boost::geometry::model::d2::point_xy<double, boost::geometry::cs::cartesian>, false, true, std::vector, std::vector, std::allocator, std::allocator> > >() );", "// generate_python_lib.py: PolygonVector manually removed here")
+            )
+            additional_replacements_component.append(
+                (".def( bp::indexing::vector_suite< std::vector<boost::geometry::model::polygon<boost::geometry::model::d2::point_xy<double>, false, true>> >() );", "// generate_python_lib.py: PolygonVector manually removed here")
+            )
+
         post_process_python_wrapper(header_directories=header_dirs,
                                     cpp_filename_in="AdMap-{}-PythonWrapper.cpp.in".format(component),
                                     cpp_filename_out="AdMap-{}-PythonWrapper.cpp".format(component),

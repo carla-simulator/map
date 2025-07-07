@@ -32,6 +32,8 @@ class LayerManagerLandmark(LayerManager):
         landmark_id = landmark.id
         pt0 = ad.map.point.toGeo(landmark.position)
         typ = landmark.type
+        trafficlighttype = landmark.traffic_light_type
+        trafficsigntype = landmark.traffic_sign_type
 
         if pt0 is None:
             return
@@ -39,7 +41,7 @@ class LayerManagerLandmark(LayerManager):
             return
 
         heading = ad.map.landmark.getENUHeading(landmark)
-        orientation = round(float(heading), 5)
-        attrs = [str(landmark_id), str(typ), orientation]
+        orientation = round(heading.mENUHeading, 5)
+        attrs = [str(landmark_id), str(typ), orientation, str(trafficlighttype), str(trafficsigntype)]
         feature_1 = self.layer.add_lla(pt0, attrs)
         LayerManager.add_new_feature(self, landmark_id, feature_1)

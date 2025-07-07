@@ -21,10 +21,8 @@ def GetLaneParamPoint(lane_id, pt1, pt2):
 
 def GetLaneEdge(lane_id, tf):
     lane_t = ad.map.lane.getLane(lane_id)
-    geom = lane_t.edgeLeft if tf else lane_t.edgeRight
-    geos = ad.map.point.GeoEdge()
-    mCoordinateTransform = ad.map.point.CoordinateTransform()
-    mCoordinateTransform.convert(geom.ecefEdge, geos)
+    geom = lane_t.edge_left if tf else lane_t.edge_right
+    geos = ad.map.point.toGeo(geom.ecef_points)
     return geos
 
 
@@ -35,8 +33,8 @@ def GetLaneSubEdge(lane_id, tstart, tend, tf):
     trange = ad.physics.ParametricRange()
     trange.minimum = start
     trange.maximum = end
-    ecefs = ad.map.point.ECEFEdge()
-    geom = lane.edgeLeft if tf else lane.edgeRight
+    ecefs = ad.map.point.ECEFPointList()
+    geom = lane.edge_left if tf else lane.edge_right
     ad.map.point.getParametricRange(geom, trange, ecefs)
     geos = ad.map.point.toGeo(ecefs)
     return geos
@@ -68,7 +66,7 @@ def Predictions(pt, createMode, length, duration):
         entryMode = ad.map.route.RouteCreationMode.SameDrivingDirection
     elif createMode == "All Routable Lanes":
         entryMode = ad.map.route.RouteCreationMode.AllRoutableLanes
-    elif createMode == "All Routable Lanes":
+    elif createMode == "All Neighbor Lanes":
         entryMode = ad.map.route.RouteCreationMode.AllNeighborLanes
     else:
         entryMode = ad.map.route.RouteCreationMode.Undefined
@@ -79,7 +77,7 @@ def Predictions(pt, createMode, length, duration):
     default_prediction_length = ad.physics.Distance(length)
     default_prediction_duration = ad.physics.Duration(duration)
 
-    para_start = ad.map.route.createRoutingPoint(mmpts_start[0].lanePoint.paraPoint)
+    para_start = ad.map.route.createRoutingPoint(mmpts_start[0].lane_point.para_point)
     routeResult = ad.map.route.predictRoutes(
         para_start, default_prediction_length, default_prediction_duration, entryMode)
     return routeResult
@@ -90,7 +88,7 @@ def Route(start_pt, end_pt, createMode):
         entryMode = ad.map.route.RouteCreationMode.SameDrivingDirection
     elif createMode == "All Routable Lanes":
         entryMode = ad.map.route.RouteCreationMode.AllRoutableLanes
-    elif createMode == "All Routable Lanes":
+    elif createMode == "All Neighbor Lanes":
         entryMode = ad.map.route.RouteCreationMode.AllNeighborLanes
     else:
         entryMode = ad.map.route.RouteCreationMode.Undefined
@@ -98,8 +96,8 @@ def Route(start_pt, end_pt, createMode):
     default_radius = ad.physics.Distance(2.)
     mmpts_start = ad.map.match.AdMapMatching.findLanes(start_pt, default_radius)
     mmpts_dest = ad.map.match.AdMapMatching.findLanes(end_pt, default_radius)
-    para_start = ad.map.route.createRoutingPoint(mmpts_start[0].lanePoint.paraPoint)
-    para_dest = ad.map.route.createRoutingPoint(mmpts_dest[0].lanePoint.paraPoint)
+    para_start = ad.map.route.createRoutingPoint(mmpts_start[0].lane_point.para_point)
+    para_dest = ad.map.route.createRoutingPoint(mmpts_dest[0].lane_point.para_point)
     routeResult = ad.map.route.planRoute(para_start, para_dest, entryMode)
 
     return routeResult

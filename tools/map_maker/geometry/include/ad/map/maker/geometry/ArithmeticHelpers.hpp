@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -205,7 +205,7 @@ void move(vec2d const &offset, Point &pt);
  * \brief Generates a vector that is perpendicular to straight line going through given points with given length and
  * rotated to given side.
  */
-vec2d rotated90OffsetVector(Point const &first, Point const &second, double const laneWidth, Side const side);
+vec2d rotated90OffsetVector(Point const &first, Point const &second, double const lane_width, Side const side);
 
 /*!
  * \brief Returns coefficients of a straight going through given two points.
@@ -215,7 +215,7 @@ straight2d lineCoefs(Point const &first, Point const &second);
 /*!
  * \brief Returns coefficients of a straight going through given two points shifted to a give side by a given offset
  */
-straight2d parallelShiftedLineCoefs(Point first, Point second, double const laneWidth, Side const side);
+straight2d parallelShiftedLineCoefs(Point first, Point second, double const lane_width, Side const side);
 
 /*!
  * \brief Moves a straight line by a given vector

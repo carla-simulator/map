@@ -23,13 +23,14 @@ using namespace ::ad::map;
 struct FactoryTest : ::testing::Test
 {
   FactoryTest();
+  virtual ~FactoryTest() = default;
   virtual void SetUp();
   virtual void TearDown();
 
   bool Fill();
 
   void Check(const lane::LaneId &id, lane::LaneType type, lane::LaneDirection direction);
-  void Check(const lane::LaneId &id, point::Geometry const &edgeLeft, point::Geometry const &edgeRight);
+  void Check(const lane::LaneId &id, point::Geometry const &edge_left, point::Geometry const &edge_right);
   void Check(const lane::LaneId &id_from,
              const lane::LaneId &id_to,
              lane::ContactLocation location,

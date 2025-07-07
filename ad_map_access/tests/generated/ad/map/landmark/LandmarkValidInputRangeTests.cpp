@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -21,6 +21,8 @@
 TEST(LandmarkValidInputRangeTests, testValidInputRange)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -41,50 +43,56 @@ TEST(LandmarkValidInputRangeTests, testValidInputRange)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
 TEST(LandmarkValidInputRangeTests, testValidInputRangeTypeTooSmall)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -105,44 +113,48 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTypeTooSmall)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value below input range minimum
   ::ad::map::landmark::LandmarkType invalidInitializedMember(static_cast<::ad::map::landmark::LandmarkType>(-1));
@@ -153,6 +165,8 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTypeTooSmall)
 TEST(LandmarkValidInputRangeTests, testValidInputRangeTypeTooBig)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -173,44 +187,48 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTypeTooBig)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value above input range maximum
   ::ad::map::landmark::LandmarkType invalidInitializedMember(static_cast<::ad::map::landmark::LandmarkType>(-1));
@@ -221,6 +239,8 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTypeTooBig)
 TEST(LandmarkValidInputRangeTests, testValidInputRangePositionTooSmall)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -241,44 +261,48 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangePositionTooSmall)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value below input range minimum
   ::ad::map::point::ECEFPoint invalidInitializedMember;
@@ -291,6 +315,8 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangePositionTooSmall)
 TEST(LandmarkValidInputRangeTests, testValidInputRangePositionTooBig)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -311,44 +337,48 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangePositionTooBig)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value above input range maximum
   ::ad::map::point::ECEFPoint invalidInitializedMember;
@@ -361,6 +391,8 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangePositionTooBig)
 TEST(LandmarkValidInputRangeTests, testValidInputRangeOrientationTooSmall)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -381,44 +413,48 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeOrientationTooSmall)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value below input range minimum
   ::ad::map::point::ECEFPoint invalidInitializedMember;
@@ -431,6 +467,8 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeOrientationTooSmall)
 TEST(LandmarkValidInputRangeTests, testValidInputRangeOrientationTooBig)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -451,44 +489,48 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeOrientationTooBig)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value above input range maximum
   ::ad::map::point::ECEFPoint invalidInitializedMember;
@@ -498,9 +540,11 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeOrientationTooBig)
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(LandmarkValidInputRangeTests, testValidInputRangeBoundingBoxTooSmall)
+TEST(LandmarkValidInputRangeTests, testValidInputRangeBounding_boxTooSmall)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -521,56 +565,62 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeBoundingBoxTooSmall)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value below input range minimum
   ::ad::map::point::Geometry invalidInitializedMember;
   ::ad::physics::Distance invalidInitializedMemberLength(-1e9 * 1.1);
   invalidInitializedMember.length = invalidInitializedMemberLength;
-  value.boundingBox = invalidInitializedMember;
+  value.bounding_box = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(LandmarkValidInputRangeTests, testValidInputRangeBoundingBoxTooBig)
+TEST(LandmarkValidInputRangeTests, testValidInputRangeBounding_boxTooBig)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -591,56 +641,62 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeBoundingBoxTooBig)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value above input range maximum
   ::ad::map::point::Geometry invalidInitializedMember;
   ::ad::physics::Distance invalidInitializedMemberLength(1e9 * 1.1);
   invalidInitializedMember.length = invalidInitializedMemberLength;
-  value.boundingBox = invalidInitializedMember;
+  value.bounding_box = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooSmall)
+TEST(LandmarkValidInputRangeTests, testValidInputRangeTraffic_light_typeTooSmall)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -661,55 +717,61 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooSmall)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value below input range minimum
   ::ad::map::landmark::TrafficLightType invalidInitializedMember(
     static_cast<::ad::map::landmark::TrafficLightType>(-1));
-  value.trafficLightType = invalidInitializedMember;
+  value.traffic_light_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooBig)
+TEST(LandmarkValidInputRangeTests, testValidInputRangeTraffic_light_typeTooBig)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -730,55 +792,61 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficLightTypeTooBig)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value above input range maximum
   ::ad::map::landmark::TrafficLightType invalidInitializedMember(
     static_cast<::ad::map::landmark::TrafficLightType>(-1));
-  value.trafficLightType = invalidInitializedMember;
+  value.traffic_light_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficSignTypeTooSmall)
+TEST(LandmarkValidInputRangeTests, testValidInputRangeTraffic_sign_typeTooSmall)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -799,54 +867,60 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficSignTypeTooSmall)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value below input range minimum
   ::ad::map::landmark::TrafficSignType invalidInitializedMember(static_cast<::ad::map::landmark::TrafficSignType>(-1));
-  value.trafficSignType = invalidInitializedMember;
+  value.traffic_sign_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficSignTypeTooBig)
+TEST(LandmarkValidInputRangeTests, testValidInputRangeTraffic_sign_typeTooBig)
 {
   ::ad::map::landmark::Landmark value;
+  std::string valueName{"min"};
+  value.name = valueName;
   ::ad::map::landmark::LandmarkId valueId(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest());
   value.id = valueId;
   ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
@@ -867,47 +941,51 @@ TEST(LandmarkValidInputRangeTests, testValidInputRangeTrafficSignTypeTooBig)
   ::ad::map::point::ECEFCoordinate valueOrientationZ(-6400000);
   valueOrientation.z = valueOrientationZ;
   value.orientation = valueOrientation;
-  ::ad::map::point::Geometry valueBoundingBox;
-  bool valueBoundingBoxIsValid{true};
-  valueBoundingBox.isValid = valueBoundingBoxIsValid;
-  bool valueBoundingBoxIsClosed{true};
-  valueBoundingBox.isClosed = valueBoundingBoxIsClosed;
-  ::ad::map::point::ECEFEdge valueBoundingBoxEcefEdge;
-  ::ad::map::point::ECEFPoint valueBoundingBoxEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementX(-6400000);
-  valueBoundingBoxEcefEdgeElement.x = valueBoundingBoxEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementY(-6400000);
-  valueBoundingBoxEcefEdgeElement.y = valueBoundingBoxEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueBoundingBoxEcefEdgeElementZ(-6400000);
-  valueBoundingBoxEcefEdgeElement.z = valueBoundingBoxEcefEdgeElementZ;
-  valueBoundingBoxEcefEdge.resize(1, valueBoundingBoxEcefEdgeElement);
-  valueBoundingBox.ecefEdge = valueBoundingBoxEcefEdge;
-  ::ad::physics::Distance valueBoundingBoxLength(-1e9);
-  valueBoundingBox.length = valueBoundingBoxLength;
-  ::ad::map::point::ENUEdgeCache valueBoundingBoxPrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.x = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.y = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement.z = valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElementZ;
-  valueBoundingBoxPrivate_enuEdgeCacheEnuEdge.resize(1, valueBoundingBoxPrivate_enuEdgeCacheEnuEdgeElement);
-  valueBoundingBoxPrivate_enuEdgeCache.enuEdge = valueBoundingBoxPrivate_enuEdgeCacheEnuEdge;
-  uint64_t valueBoundingBoxPrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valueBoundingBoxPrivate_enuEdgeCache.enuVersion = valueBoundingBoxPrivate_enuEdgeCacheEnuVersion;
-  valueBoundingBox.private_enuEdgeCache = valueBoundingBoxPrivate_enuEdgeCache;
-  value.boundingBox = valueBoundingBox;
-  std::string valueSupplementaryText{"min"};
-  value.supplementaryText = valueSupplementaryText;
-  ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  value.trafficLightType = valueTrafficLightType;
-  ::ad::map::landmark::TrafficSignType valueTrafficSignType(::ad::map::landmark::TrafficSignType::INVALID);
-  value.trafficSignType = valueTrafficSignType;
+  ::ad::map::point::Geometry valueBounding_box;
+  bool valueBounding_boxIs_valid{true};
+  valueBounding_box.is_valid = valueBounding_boxIs_valid;
+  bool valueBounding_boxIs_closed{true};
+  valueBounding_box.is_closed = valueBounding_boxIs_closed;
+  ::ad::map::point::ECEFPointList valueBounding_boxEcef_points;
+  ::ad::map::point::ECEFPoint valueBounding_boxEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementX(-6400000);
+  valueBounding_boxEcef_pointsElement.x = valueBounding_boxEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementY(-6400000);
+  valueBounding_boxEcef_pointsElement.y = valueBounding_boxEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueBounding_boxEcef_pointsElementZ(-6400000);
+  valueBounding_boxEcef_pointsElement.z = valueBounding_boxEcef_pointsElementZ;
+  valueBounding_boxEcef_points.resize(1, valueBounding_boxEcef_pointsElement);
+  valueBounding_box.ecef_points = valueBounding_boxEcef_points;
+  ::ad::physics::Distance valueBounding_boxLength(-1e9);
+  valueBounding_box.length = valueBounding_boxLength;
+  ::ad::map::point::ENUPointCache valueBounding_boxPrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.x
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.y
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement.z
+    = valueBounding_boxPrivate_enu_points_cacheEnu_pointsElementZ;
+  valueBounding_boxPrivate_enu_points_cacheEnu_points.resize(
+    1, valueBounding_boxPrivate_enu_points_cacheEnu_pointsElement);
+  valueBounding_boxPrivate_enu_points_cache.enu_points = valueBounding_boxPrivate_enu_points_cacheEnu_points;
+  uint64_t valueBounding_boxPrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valueBounding_boxPrivate_enu_points_cache.enu_version = valueBounding_boxPrivate_enu_points_cacheEnu_version;
+  valueBounding_box.private_enu_points_cache = valueBounding_boxPrivate_enu_points_cache;
+  value.bounding_box = valueBounding_box;
+  std::string valueSupplementary_text{"min"};
+  value.supplementary_text = valueSupplementary_text;
+  ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  value.traffic_light_type = valueTraffic_light_type;
+  ::ad::map::landmark::TrafficSignType valueTraffic_sign_type(::ad::map::landmark::TrafficSignType::INVALID);
+  value.traffic_sign_type = valueTraffic_sign_type;
 
   // override member with data type value above input range maximum
   ::ad::map::landmark::TrafficSignType invalidInitializedMember(static_cast<::ad::map::landmark::TrafficSignType>(-1));
-  value.trafficSignType = invalidInitializedMember;
+  value.traffic_sign_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }

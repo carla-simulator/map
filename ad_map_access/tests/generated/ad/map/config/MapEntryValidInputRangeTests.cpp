@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -23,145 +23,145 @@ TEST(MapEntryValidInputRangeTests, testValidInputRange)
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
-  value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
-  ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
+  ::ad::physics::Distance valueOpen_drive_overlap_margin(-1e9);
+  value.open_drive_overlap_margin = valueOpen_drive_overlap_margin;
+  ::ad::map::intersection::IntersectionType valueOpen_drive_default_intersection_type(
     ::ad::map::intersection::IntersectionType::Unknown);
-  value.openDriveDefaultIntersectionType = valueOpenDriveDefaultIntersectionType;
-  ::ad::map::landmark::TrafficLightType valueOpenDriveDefaultTrafficLightType(
+  value.open_drive_default_intersection_type = valueOpen_drive_default_intersection_type;
+  ::ad::map::landmark::TrafficLightType valueOpen_drive_default_traffic_light_type(
     ::ad::map::landmark::TrafficLightType::INVALID);
-  value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
+  value.open_drive_default_traffic_light_type = valueOpen_drive_default_traffic_light_type;
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
-TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveOverlapMarginTooSmall)
+TEST(MapEntryValidInputRangeTests, testValidInputRangeOpen_drive_overlap_marginTooSmall)
 {
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
-  value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
-  ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
+  ::ad::physics::Distance valueOpen_drive_overlap_margin(-1e9);
+  value.open_drive_overlap_margin = valueOpen_drive_overlap_margin;
+  ::ad::map::intersection::IntersectionType valueOpen_drive_default_intersection_type(
     ::ad::map::intersection::IntersectionType::Unknown);
-  value.openDriveDefaultIntersectionType = valueOpenDriveDefaultIntersectionType;
-  ::ad::map::landmark::TrafficLightType valueOpenDriveDefaultTrafficLightType(
+  value.open_drive_default_intersection_type = valueOpen_drive_default_intersection_type;
+  ::ad::map::landmark::TrafficLightType valueOpen_drive_default_traffic_light_type(
     ::ad::map::landmark::TrafficLightType::INVALID);
-  value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
+  value.open_drive_default_traffic_light_type = valueOpen_drive_default_traffic_light_type;
 
   // override member with data type value below input range minimum
   ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
-  value.openDriveOverlapMargin = invalidInitializedMember;
+  value.open_drive_overlap_margin = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveOverlapMarginTooBig)
+TEST(MapEntryValidInputRangeTests, testValidInputRangeOpen_drive_overlap_marginTooBig)
 {
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
-  value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
-  ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
+  ::ad::physics::Distance valueOpen_drive_overlap_margin(-1e9);
+  value.open_drive_overlap_margin = valueOpen_drive_overlap_margin;
+  ::ad::map::intersection::IntersectionType valueOpen_drive_default_intersection_type(
     ::ad::map::intersection::IntersectionType::Unknown);
-  value.openDriveDefaultIntersectionType = valueOpenDriveDefaultIntersectionType;
-  ::ad::map::landmark::TrafficLightType valueOpenDriveDefaultTrafficLightType(
+  value.open_drive_default_intersection_type = valueOpen_drive_default_intersection_type;
+  ::ad::map::landmark::TrafficLightType valueOpen_drive_default_traffic_light_type(
     ::ad::map::landmark::TrafficLightType::INVALID);
-  value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
+  value.open_drive_default_traffic_light_type = valueOpen_drive_default_traffic_light_type;
 
   // override member with data type value above input range maximum
   ::ad::physics::Distance invalidInitializedMember(1e9 * 1.1);
-  value.openDriveOverlapMargin = invalidInitializedMember;
+  value.open_drive_overlap_margin = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(MapEntryValidInputRangeTests, testValidInputRangeopenDriveOverlapMarginDefault)
+TEST(MapEntryValidInputRangeTests, testValidInputRangeopen_drive_overlap_marginDefault)
 {
   ::ad::map::config::MapEntry value;
   ::ad::physics::Distance valueDefault;
-  value.openDriveOverlapMargin = valueDefault;
+  value.open_drive_overlap_margin = valueDefault;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveDefaultIntersectionTypeTooSmall)
+TEST(MapEntryValidInputRangeTests, testValidInputRangeOpen_drive_default_intersection_typeTooSmall)
 {
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
-  value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
-  ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
+  ::ad::physics::Distance valueOpen_drive_overlap_margin(-1e9);
+  value.open_drive_overlap_margin = valueOpen_drive_overlap_margin;
+  ::ad::map::intersection::IntersectionType valueOpen_drive_default_intersection_type(
     ::ad::map::intersection::IntersectionType::Unknown);
-  value.openDriveDefaultIntersectionType = valueOpenDriveDefaultIntersectionType;
-  ::ad::map::landmark::TrafficLightType valueOpenDriveDefaultTrafficLightType(
+  value.open_drive_default_intersection_type = valueOpen_drive_default_intersection_type;
+  ::ad::map::landmark::TrafficLightType valueOpen_drive_default_traffic_light_type(
     ::ad::map::landmark::TrafficLightType::INVALID);
-  value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
+  value.open_drive_default_traffic_light_type = valueOpen_drive_default_traffic_light_type;
 
   // override member with data type value below input range minimum
   ::ad::map::intersection::IntersectionType invalidInitializedMember(
     static_cast<::ad::map::intersection::IntersectionType>(-1));
-  value.openDriveDefaultIntersectionType = invalidInitializedMember;
+  value.open_drive_default_intersection_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveDefaultIntersectionTypeTooBig)
+TEST(MapEntryValidInputRangeTests, testValidInputRangeOpen_drive_default_intersection_typeTooBig)
 {
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
-  value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
-  ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
+  ::ad::physics::Distance valueOpen_drive_overlap_margin(-1e9);
+  value.open_drive_overlap_margin = valueOpen_drive_overlap_margin;
+  ::ad::map::intersection::IntersectionType valueOpen_drive_default_intersection_type(
     ::ad::map::intersection::IntersectionType::Unknown);
-  value.openDriveDefaultIntersectionType = valueOpenDriveDefaultIntersectionType;
-  ::ad::map::landmark::TrafficLightType valueOpenDriveDefaultTrafficLightType(
+  value.open_drive_default_intersection_type = valueOpen_drive_default_intersection_type;
+  ::ad::map::landmark::TrafficLightType valueOpen_drive_default_traffic_light_type(
     ::ad::map::landmark::TrafficLightType::INVALID);
-  value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
+  value.open_drive_default_traffic_light_type = valueOpen_drive_default_traffic_light_type;
 
   // override member with data type value above input range maximum
   ::ad::map::intersection::IntersectionType invalidInitializedMember(
     static_cast<::ad::map::intersection::IntersectionType>(-1));
-  value.openDriveDefaultIntersectionType = invalidInitializedMember;
+  value.open_drive_default_intersection_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveDefaultTrafficLightTypeTooSmall)
+TEST(MapEntryValidInputRangeTests, testValidInputRangeOpen_drive_default_traffic_light_typeTooSmall)
 {
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
-  value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
-  ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
+  ::ad::physics::Distance valueOpen_drive_overlap_margin(-1e9);
+  value.open_drive_overlap_margin = valueOpen_drive_overlap_margin;
+  ::ad::map::intersection::IntersectionType valueOpen_drive_default_intersection_type(
     ::ad::map::intersection::IntersectionType::Unknown);
-  value.openDriveDefaultIntersectionType = valueOpenDriveDefaultIntersectionType;
-  ::ad::map::landmark::TrafficLightType valueOpenDriveDefaultTrafficLightType(
+  value.open_drive_default_intersection_type = valueOpen_drive_default_intersection_type;
+  ::ad::map::landmark::TrafficLightType valueOpen_drive_default_traffic_light_type(
     ::ad::map::landmark::TrafficLightType::INVALID);
-  value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
+  value.open_drive_default_traffic_light_type = valueOpen_drive_default_traffic_light_type;
 
   // override member with data type value below input range minimum
   ::ad::map::landmark::TrafficLightType invalidInitializedMember(
     static_cast<::ad::map::landmark::TrafficLightType>(-1));
-  value.openDriveDefaultTrafficLightType = invalidInitializedMember;
+  value.open_drive_default_traffic_light_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(MapEntryValidInputRangeTests, testValidInputRangeOpenDriveDefaultTrafficLightTypeTooBig)
+TEST(MapEntryValidInputRangeTests, testValidInputRangeOpen_drive_default_traffic_light_typeTooBig)
 {
   ::ad::map::config::MapEntry value;
   std::string valueFilename{"min"};
   value.filename = valueFilename;
-  ::ad::physics::Distance valueOpenDriveOverlapMargin(-1e9);
-  value.openDriveOverlapMargin = valueOpenDriveOverlapMargin;
-  ::ad::map::intersection::IntersectionType valueOpenDriveDefaultIntersectionType(
+  ::ad::physics::Distance valueOpen_drive_overlap_margin(-1e9);
+  value.open_drive_overlap_margin = valueOpen_drive_overlap_margin;
+  ::ad::map::intersection::IntersectionType valueOpen_drive_default_intersection_type(
     ::ad::map::intersection::IntersectionType::Unknown);
-  value.openDriveDefaultIntersectionType = valueOpenDriveDefaultIntersectionType;
-  ::ad::map::landmark::TrafficLightType valueOpenDriveDefaultTrafficLightType(
+  value.open_drive_default_intersection_type = valueOpen_drive_default_intersection_type;
+  ::ad::map::landmark::TrafficLightType valueOpen_drive_default_traffic_light_type(
     ::ad::map::landmark::TrafficLightType::INVALID);
-  value.openDriveDefaultTrafficLightType = valueOpenDriveDefaultTrafficLightType;
+  value.open_drive_default_traffic_light_type = valueOpen_drive_default_traffic_light_type;
 
   // override member with data type value above input range maximum
   ::ad::map::landmark::TrafficLightType invalidInitializedMember(
     static_cast<::ad::map::landmark::TrafficLightType>(-1));
-  value.openDriveDefaultTrafficLightType = invalidInitializedMember;
+  value.open_drive_default_traffic_light_type = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }

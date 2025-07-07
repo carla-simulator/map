@@ -62,7 +62,7 @@ endif()
 #odrSpiral
 find_library(ODRSPIRAL_LIBRARIES
   NAMES odrSpiral
-  HINTS 
+  HINTS
     ${CMAKE_CURRENT_BINARY_DIR}/../../dependencies/odrSpiral/lib
     ${CMAKE_CURRENT_SOURCE_DIR}/../dependencies/odrSpiral/lib
 )

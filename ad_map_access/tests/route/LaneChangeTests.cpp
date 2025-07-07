@@ -61,7 +61,7 @@ struct LaneChangeTest : ::testing::Test
 
   void loadTestFile();
 
-  lane::ContactLaneList getSuccessorsAndPredecessorsForLaneId(lane::LaneId const &laneId) const;
+  lane::ContactLaneList getSuccessorsAndPredecessorsForLaneId(lane::LaneId const &lane_id) const;
 
   void testsLaneChangeEnd(route::FindLaneChangeResult const &findLaneChangeResult, int expectedEndIndex) const;
 
@@ -97,7 +97,7 @@ match::MapMatchedPosition LaneChangeTest::getPOIMapMatchedPosition(std::string c
 
   ad::map::match::AdMapMatching mapMatching;
   match::MapMatchedPositionConfidenceList mapMatchingResult
-    = mapMatching.getMapMatchedPositions(foundPoi->geoPoint, ::ad::physics::Distance(0.2), physics::Probability(.8));
+    = mapMatching.getMapMatchedPositions(foundPoi->geo_point, ::ad::physics::Distance(0.2), physics::Probability(.8));
   EXPECT_EQ(1u, mapMatchingResult.size()) << " requested POI: " << poiName;
   if (1u != mapMatchingResult.size())
   {
@@ -113,22 +113,22 @@ void LaneChangeTest::testsLaneChangeEnd(route::FindLaneChangeResult const &findL
   ASSERT_TRUE(findLaneChangeResult.isValid());
 
   ASSERT_EQ(expectedEndIndex,
-            std::distance(std::begin(findLaneChangeResult.queryRoute.roadSegments),
+            std::distance(std::begin(findLaneChangeResult.queryRoute.road_segments),
                           findLaneChangeResult.laneChangeEndRouteIterator));
 
   // The end of the lane change cannot be the end of the route, otherwise we would not have a "next" lane to change to
   ASSERT_NE(findLaneChangeResult.laneChangeEndRouteIterator,
-            std::prev(findLaneChangeResult.queryRoute.roadSegments.end()));
+            std::prev(findLaneChangeResult.queryRoute.road_segments.end()));
 }
 
 void LaneChangeTest::testsLaneChangeStart(route::FindLaneChangeResult const &findLaneChangeResult,
                                           int expectedStartIndex) const
 {
   // The lane change start is never at the end
-  ASSERT_NE(findLaneChangeResult.laneChangeStartRouteIterator, std::end(findLaneChangeResult.queryRoute.roadSegments));
+  ASSERT_NE(findLaneChangeResult.laneChangeStartRouteIterator, std::end(findLaneChangeResult.queryRoute.road_segments));
 
   ASSERT_EQ(expectedStartIndex,
-            std::distance(std::begin(findLaneChangeResult.queryRoute.roadSegments),
+            std::distance(std::begin(findLaneChangeResult.queryRoute.road_segments),
                           findLaneChangeResult.laneChangeStartRouteIterator));
 }
 
@@ -143,8 +143,8 @@ TEST_F(LaneChangeTest, current_position_not_on_route)
   auto currentPosition = getPOIMapMatchedPosition("F");
   // ASSERT_NE(match::MapMatchedPosition(), currentPosition);
 
-  auto route = route::planning::planRoute(mapMatchedPositionStart.lanePoint.paraPoint,
-                                          mapMatchedPositionEnd.lanePoint.paraPoint);
+  auto route = route::planning::planRoute(mapMatchedPositionStart.lane_point.para_point,
+                                          mapMatchedPositionEnd.lane_point.para_point);
 
   // This function needs to be tested:
   auto findLaneChangeResult = route::findFirstLaneChange(currentPosition, route);
@@ -152,8 +152,8 @@ TEST_F(LaneChangeTest, current_position_not_on_route)
   // F is not on the route - the result is invalid
   ASSERT_FALSE(findLaneChangeResult.isValid());
   ASSERT_EQ(&findLaneChangeResult.queryRoute, &route);
-  ASSERT_EQ(findLaneChangeResult.laneChangeStartRouteIterator, std::end(route.roadSegments));
-  ASSERT_EQ(findLaneChangeResult.laneChangeEndRouteIterator, std::end(route.roadSegments));
+  ASSERT_EQ(findLaneChangeResult.laneChangeStartRouteIterator, std::end(route.road_segments));
+  ASSERT_EQ(findLaneChangeResult.laneChangeEndRouteIterator, std::end(route.road_segments));
   ASSERT_EQ(findLaneChangeResult.laneChangeDirection, route::LaneChangeDirection::Invalid);
 }
 
@@ -165,8 +165,8 @@ TEST_F(LaneChangeTest, find_lane_change_A_to_H_start_at_A)
   auto mapMatchedPositionEnd = getPOIMapMatchedPosition("H");
   // ASSERT_NE(match::MapMatchedPosition(), mapMatchedPositionEnd);
 
-  auto route = route::planning::planRoute(mapMatchedPositionStart.lanePoint.paraPoint,
-                                          mapMatchedPositionEnd.lanePoint.paraPoint);
+  auto route = route::planning::planRoute(mapMatchedPositionStart.lane_point.para_point,
+                                          mapMatchedPositionEnd.lane_point.para_point);
 
   // We assume our car is on the start point A
   auto currentPosition = mapMatchedPositionStart;
@@ -198,8 +198,8 @@ TEST_F(LaneChangeTest, find_lane_change_A_to_F_start_at_A)
   auto mapMatchedPositionEnd = getPOIMapMatchedPosition("F");
   // ASSERT_NE(match::MapMatchedPosition(), mapMatchedPositionEnd);
 
-  auto route = route::planning::planRoute(mapMatchedPositionStart.lanePoint.paraPoint,
-                                          mapMatchedPositionEnd.lanePoint.paraPoint);
+  auto route = route::planning::planRoute(mapMatchedPositionStart.lane_point.para_point,
+                                          mapMatchedPositionEnd.lane_point.para_point);
 
   // Set our car on the start of the route
   auto currentPosition = mapMatchedPositionStart;
@@ -213,11 +213,11 @@ TEST_F(LaneChangeTest, find_lane_change_A_to_F_start_at_A)
   // There is no lane change on the route, so the boost optional is not set
   ASSERT_FALSE(findLaneChangeResult.isValid());
 
-  // The start of the lane change set to invalid (std::end(route.roadSegments))
-  ASSERT_EQ(findLaneChangeResult.laneChangeStartRouteIterator, std::end(route.roadSegments));
+  // The start of the lane change set to invalid (std::end(route.road_segments))
+  ASSERT_EQ(findLaneChangeResult.laneChangeStartRouteIterator, std::end(route.road_segments));
 
-  // The end of the lane change is set to invalid (std::end(route.roadSegments))
-  ASSERT_EQ(findLaneChangeResult.laneChangeEndRouteIterator, std::end(route.roadSegments));
+  // The end of the lane change is set to invalid (std::end(route.road_segments))
+  ASSERT_EQ(findLaneChangeResult.laneChangeEndRouteIterator, std::end(route.road_segments));
 
   ASSERT_EQ(findLaneChangeResult.laneChangeDirection, route::LaneChangeDirection::Invalid);
 }
@@ -232,8 +232,8 @@ TEST_F(LaneChangeTest, find_lane_change_A_to_F_start_at_BL)
 
   auto currentPosition = getPOIMapMatchedPosition("BL");
 
-  auto route = route::planning::planRoute(mapMatchedPositionStart.lanePoint.paraPoint,
-                                          mapMatchedPositionEnd.lanePoint.paraPoint);
+  auto route = route::planning::planRoute(mapMatchedPositionStart.lane_point.para_point,
+                                          mapMatchedPositionEnd.lane_point.para_point);
 
   // This function needs to be tested:
   auto findLaneChangeResult = route::findFirstLaneChange(currentPosition, route);
@@ -243,8 +243,8 @@ TEST_F(LaneChangeTest, find_lane_change_A_to_F_start_at_BL)
 
   // There is no lane change on the route
   ASSERT_FALSE(findLaneChangeResult.isValid());
-  ASSERT_EQ(findLaneChangeResult.laneChangeStartRouteIterator, std::end(route.roadSegments));
-  ASSERT_EQ(findLaneChangeResult.laneChangeEndRouteIterator, std::end(route.roadSegments));
+  ASSERT_EQ(findLaneChangeResult.laneChangeStartRouteIterator, std::end(route.road_segments));
+  ASSERT_EQ(findLaneChangeResult.laneChangeEndRouteIterator, std::end(route.road_segments));
   ASSERT_EQ(findLaneChangeResult.laneChangeDirection, route::LaneChangeDirection::Invalid);
 }
 
@@ -257,8 +257,8 @@ TEST_F(LaneChangeTest, find_lane_change_BL_to_F_start_at_BR)
   auto currentPosition = getPOIMapMatchedPosition("BR");
   // ASSERT_NE(match::MapMatchedPosition(), currentPosition);
 
-  auto route = route::planning::planRoute(mapMatchedPositionStart.lanePoint.paraPoint,
-                                          mapMatchedPositionEnd.lanePoint.paraPoint);
+  auto route = route::planning::planRoute(mapMatchedPositionStart.lane_point.para_point,
+                                          mapMatchedPositionEnd.lane_point.para_point);
 
   // This function needs to be tested:
   auto findLaneChangeResult = route::findFirstLaneChange(currentPosition, route);
@@ -278,5 +278,5 @@ TEST_F(LaneChangeTest, find_lane_change_BL_to_F_start_at_BR)
 
   physics::Distance dis;
   dis = findLaneChangeResult.calcZoneLength();
-  ASSERT_NEAR((double)dis, 8.2828, 0.0001);
+  ASSERT_NEAR(dis.mDistance, 8.2812, 0.0001);
 }

@@ -25,7 +25,7 @@ class LayerManagerLaneSurface(LayerManager):
     def add(self, lane):
         "..."
         lane_id = lane.id
-        lane_id_int = int(str(lane_id))
+        lane_id_int = lane_id.mLaneId
         LayerManager.remove_old_feature(self, lane_id)
         lla_left = GetLaneEdgeLeft(lane_id)
         lla_right = GetLaneEdgeRight(lane_id)
@@ -36,10 +36,11 @@ class LayerManagerLaneSurface(LayerManager):
         if lane_id_int > 10000:
             attrs.append(int(lane_id_int / 10000))
             attrs.append(int((lane_id_int % 10000) / 100))
-            attrs.append((lane_id_int % 10000) % 100)
+            attrs.append((lane_id_int % 10000) % 100 - 50)
         feature = self.layer.add_lla2(lla_left, lla_right, attrs)
         LayerManager.add_new_feature(self, lane_id, feature)
 
-    def change_attribute_value(self, lane_id, index, val):
+    def change_attribute_value(self, lane_id, index, val, attributes):
         "..."
         Globs.log.warning("Attribute Change not supported")
+        return False

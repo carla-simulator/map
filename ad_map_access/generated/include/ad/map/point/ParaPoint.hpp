@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -104,7 +104,7 @@ struct ParaPoint
    */
   bool operator==(const ParaPoint &other) const
   {
-    return (laneId == other.laneId) && (parametricOffset == other.parametricOffset);
+    return (lane_id == other.lane_id) && (parametric_offset == other.parametric_offset);
   }
 
   /**
@@ -122,7 +122,7 @@ struct ParaPoint
   /*!
    * The id of the lane this parametric point belongs to.
    */
-  ::ad::map::lane::LaneId laneId{0};
+  ::ad::map::lane::LaneId lane_id{0};
 
   /*!
    * The parametric offset in the range of [0;1] within the lane's geometry as defined
@@ -133,7 +133,7 @@ struct ParaPoint
    * Be aware: Depending on the route direction on the lane either the parametric offset
    * 0.0 or 1.0 can define the start point of that route on that lane.
    */
-  ::ad::physics::ParametricValue parametricOffset;
+  ::ad::physics::ParametricValue parametric_offset;
 };
 
 } // namespace point
@@ -172,11 +172,11 @@ namespace point {
 inline std::ostream &operator<<(std::ostream &os, ParaPoint const &_value)
 {
   os << "ParaPoint(";
-  os << "laneId:";
-  os << _value.laneId;
+  os << "lane_id:";
+  os << _value.lane_id;
   os << ",";
-  os << "parametricOffset:";
-  os << _value.parametricOffset;
+  os << "parametric_offset:";
+  os << _value.parametric_offset;
   os << ")";
   return os;
 }
@@ -196,4 +196,16 @@ inline std::string to_string(::ad::map::point::ParaPoint const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::point::ParaPoint> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::point::ParaPoint const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_POINT_PARAPOINT

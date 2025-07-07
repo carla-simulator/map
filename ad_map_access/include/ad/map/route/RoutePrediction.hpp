@@ -88,6 +88,11 @@ public:
                   Type typ = Route::Type::SHORTEST);
 
   /**
+   * @brief destructor
+   */
+  ~RoutePrediction() = default;
+
+  /**
    * @brief Calculates the route predictions using breadth search algorithm.
    */
   bool calculate() override;
@@ -119,17 +124,18 @@ private:
     {
     }
 
+    ~RouteTreeElement() = default;
+
     //! comparing route tree elements by their actual route-point to ensure children are unique
     struct RouteTreeElementCompare
     {
-      bool operator()(const std::shared_ptr<RouteTreeElement> &left,
-                      const std::shared_ptr<RouteTreeElement> &right) const
+      bool operator()(const RouteTreeElement *left, const RouteTreeElement *right) const
       {
         return left->routingPoint.first < right->routingPoint.first;
       }
     };
 
-    typedef std::set<std::shared_ptr<RouteTreeElement>, RouteTreeElementCompare> RouteTreeElementUniqueRoutePointSet;
+    typedef std::set<RouteTreeElement *, RouteTreeElementCompare> RouteTreeElementUniqueRoutePointSet;
 
     //! the routing point represented by this tree element
     RoutingPoint routingPoint;
@@ -145,15 +151,19 @@ private:
   void reconstructPaths();
 
   //! the tree root element
-  std::shared_ptr<RouteTreeElement> mRouteTreeRoot;
+  RouteTreeElement *mRouteTreeRoot{nullptr};
 
   /**
    * @brief the already processed transitions from -> {to} (only process a transition once)
    */
-  std::map<RoutingParaPoint, RouteTreeElement::RouteTreeElementUniqueRoutePointSet> mProcessedTransitions;
+  std::map<RoutingParaPoint, RouteTreeElement::RouteTreeElementUniqueRoutePointSet, RoutingParaPointCompare>
+    mProcessedTransitions;
 
   //! the list of elements to be processed
-  std::deque<std::shared_ptr<RouteTreeElement>> mElementsToProcess;
+  std::deque<RouteTreeElement *> mElementsToProcess;
+
+  //! the list of all elements created
+  std::deque<RouteTreeElement *> mElementsCreated;
 };
 
 } // namespace planning

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -42,7 +42,8 @@ inline bool withinValidInputRange(::ad::physics::Velocity const &input, bool con
     && withinValidInputRange(input.z, logErrors);
   if (!inValidInputRange && logErrors)
   {
-    spdlog::error("withinValidInputRange(::ad::physics::Velocity)>> {} has invalid member", input); // LCOV_EXCL_BR_LINE
+    spdlog::error("withinValidInputRange(::ad::physics::Velocity)>> {} has invalid member",
+                  input); // LCOV_EXCL_BR_LINE
   }
 
   return inValidInputRange;

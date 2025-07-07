@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,11 +28,11 @@ protected:
   {
     // valid initialization
     ::ad::map::point::ENUPoint value;
-    ::ad::map::point::ENUCoordinate valueX(-16384);
+    ::ad::map::point::ENUCoordinate valueX(-1e8);
     value.x = valueX;
-    ::ad::map::point::ENUCoordinate valueY(-16384);
+    ::ad::map::point::ENUCoordinate valueY(-1e8);
     value.y = valueY;
-    ::ad::map::point::ENUCoordinate valueZ(-16384);
+    ::ad::map::point::ENUCoordinate valueZ(-1e8);
     value.z = valueZ;
     mValue = value;
   }
@@ -89,7 +89,7 @@ TEST_F(ENUPointTests, stringConversionTest)
 TEST_F(ENUPointTests, comparisonOperatorXDiffers)
 {
   ::ad::map::point::ENUPoint valueA = mValue;
-  ::ad::map::point::ENUCoordinate x(16384);
+  ::ad::map::point::ENUCoordinate x(1e8);
   valueA.x = x;
   ::ad::map::point::ENUPoint valueB = mValue;
 
@@ -100,7 +100,7 @@ TEST_F(ENUPointTests, comparisonOperatorXDiffers)
 TEST_F(ENUPointTests, comparisonOperatorYDiffers)
 {
   ::ad::map::point::ENUPoint valueA = mValue;
-  ::ad::map::point::ENUCoordinate y(16384);
+  ::ad::map::point::ENUCoordinate y(1e8);
   valueA.y = y;
   ::ad::map::point::ENUPoint valueB = mValue;
 
@@ -111,7 +111,7 @@ TEST_F(ENUPointTests, comparisonOperatorYDiffers)
 TEST_F(ENUPointTests, comparisonOperatorZDiffers)
 {
   ::ad::map::point::ENUPoint valueA = mValue;
-  ::ad::map::point::ENUCoordinate z(16384);
+  ::ad::map::point::ENUCoordinate z(1e8);
   valueA.z = z;
   ::ad::map::point::ENUPoint valueB = mValue;
 

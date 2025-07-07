@@ -16,6 +16,7 @@
 #include "ad/map/access/Store.hpp"
 #include "ad/map/config/PointOfInterest.hpp"
 #include "ad/map/intersection/IntersectionType.hpp"
+#include "ad/map/landmark/TrafficLightType.hpp"
 #include "ad/map/lane/Types.hpp"
 #include "ad/map/route/Types.hpp"
 
@@ -38,7 +39,8 @@ namespace access {
  */
 inline bool isValid(MapMetaData const &metaData, bool const logErrors = true)
 {
-  bool isValidInputRange = withinValidInputRange(metaData, logErrors) && (metaData.trafficType != TrafficType::INVALID);
+  bool isValidInputRange
+    = withinValidInputRange(metaData, logErrors) && (metaData.traffic_type != TrafficType::INVALID);
   if (!isValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::access::MapMetaData)>> {} not valid", metaData);
@@ -54,7 +56,9 @@ std::shared_ptr<point::CoordinateTransform> getCoordinateTransform();
 /**
  * @brief initialize singleton with given configuration file
  *
- * The configuration file specifies all available maps, see ConfigFileHandler for details of the semantics
+ * @param[in] configFileName The configuration file specifies all available maps, see ConfigFileHandler for details of
+ * the semantics
+ *
  * @return true if initialization was successful (i.e. config file exists or singleton was already initialized)
  * @return false if config file doesn't exist or the singleton was already initialized with a different config file
  */
@@ -63,14 +67,21 @@ bool init(std::string const &configFileName);
 /**
  * @brief initialize singleton with OpenDRIVE content
  *
+ * @param[in] openDriveContent the open drive content extracted from the opendrive file
+ * @param[in] overlapMargin margin the lanes are narrowed when calculating overlaps.
+ * @param[in] defaultIntersectionType the default intersection type, set to Unknown if no value is passed by the caller.
+ * @param[in] defaultTrafficLightType the default traffic light type, set to UNKNOWN if no value is passed by the
+ * caller.
+ *
  * @return true if initialization was successful (i.e. map content was valid or singleton was already initialized)
  * @return false if map content was invalid or the singleton was already initialized with a different config file
  */
 bool initFromOpenDriveContent(std::string const &openDriveContent,
                               double const overlapMargin,
-                              intersection::IntersectionType const defaultIntersectionType,
+                              intersection::IntersectionType const defaultIntersectionType
+                              = intersection::IntersectionType::Unknown,
                               landmark::TrafficLightType const defaultTrafficLightType
-                              = landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN);
+                              = landmark::TrafficLightType::UNKNOWN);
 /**
  * @brief initialize singleton with given store
  *
@@ -103,14 +114,14 @@ point::GeoPoint getENUReferencePoint();
 bool isENUReferencePointSet();
 
 /**
- * @brief get points of interest in the surrounding of a given geoPoint
+ * @brief get points of interest in the surrounding of a given geo_point
  *
- * @param[in] geoPoint GeoPoint to be used to query the POIs
+ * @param[in] geo_point GeoPoint to be used to query the POIs
  * @param[in] radius radius to be use for the query
  *
  * @returns the list with the PointOfInterest within the queried region.
  */
-std::vector<config::PointOfInterest> getPointsOfInterest(point::GeoPoint const &geoPoint,
+std::vector<config::PointOfInterest> getPointsOfInterest(point::GeoPoint const &geo_point,
                                                          physics::Distance const &radius);
 
 /**
@@ -146,6 +157,17 @@ bool isRightHandedTraffic();
  * @returns reference to the map store object
  */
 Store &getStore();
+
+/**
+ * @brief save the current map content in binary adm format
+ *
+ * @param[in] admFileName The file name to store the map data in binary format (suggest to use file ending '.adm')
+ * @param[in] writeConfigFile Flag to note if a configuration file (admFileName + '.txt') containing the geo reference
+ * position of the map should be written
+ *
+ * @returns \¢ true if the operation succeeded
+ */
+bool saveAsAdm(std::string const &admFileName, bool writeConfigFile = true);
 
 } // namespace access
 } // namespace map

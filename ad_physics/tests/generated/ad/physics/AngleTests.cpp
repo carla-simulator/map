@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -31,7 +31,7 @@ TEST(AngleTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::Angle::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-3, ::ad::physics::Angle::cPrecisionValue);
-  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cPrecisionValue, static_cast<double>(::ad::physics::Angle::getPrecision()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cPrecisionValue, ::ad::physics::Angle::getPrecision().mAngle);
 }
 
 TEST(AngleTests, minIsValid)
@@ -90,36 +90,34 @@ TEST(AngleTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(AngleTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Angle::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::Angle>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::getMin().mAngle, std::numeric_limits<::ad::physics::Angle>::lowest().mAngle);
 }
 
 TEST(AngleTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Angle::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::Angle>::max()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::getMax().mAngle, std::numeric_limits<::ad::physics::Angle>::max().mAngle);
 }
 
 TEST(AngleTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Angle::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::Angle>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::getPrecision().mAngle,
+                   std::numeric_limits<::ad::physics::Angle>::epsilon().mAngle);
 }
 
 TEST(AngleTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::Angle(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::Angle(-1.))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::physics::Angle(-0.)).mAngle);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::physics::Angle(-1.)).mAngle);
   EXPECT_DOUBLE_EQ(::ad::physics::Angle::cPrecisionValue,
-                   static_cast<double>(std::fabs(::ad::physics::Angle(::ad::physics::Angle::cPrecisionValue))));
+                   std::fabs(::ad::physics::Angle(::ad::physics::Angle::cPrecisionValue).mAngle));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Angle::cMinValue),
-                   static_cast<double>(std::fabs(::ad::physics::Angle(::ad::physics::Angle::cMinValue))));
+                   std::fabs(::ad::physics::Angle(::ad::physics::Angle::cMinValue).mAngle));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Angle::cMinValue),
-                   static_cast<double>(std::fabs(::ad::physics::Angle(-::ad::physics::Angle::cMinValue))));
+                   std::fabs(::ad::physics::Angle(-::ad::physics::Angle::cMinValue).mAngle));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Angle::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::physics::Angle(::ad::physics::Angle::cMaxValue))));
+                   std::fabs(::ad::physics::Angle(::ad::physics::Angle::cMaxValue).mAngle));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Angle::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::physics::Angle(-::ad::physics::Angle::cMaxValue))));
+                   std::fabs(::ad::physics::Angle(-::ad::physics::Angle::cMaxValue).mAngle));
 }
 
 TEST(AngleTests, constructionFromValidFPValue)
@@ -127,7 +125,7 @@ TEST(AngleTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::Angle::cMinValue;
   ::ad::physics::Angle value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mAngle);
 }
 
 TEST(AngleTests, copyConstructionFromValidValue)
@@ -135,7 +133,7 @@ TEST(AngleTests, copyConstructionFromValidValue)
   ::ad::physics::Angle const validValue(::ad::physics::Angle::cMinValue);
   ::ad::physics::Angle value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mAngle, value.mAngle);
 }
 
 TEST(AngleTests, moveConstructionFromValidValue)
@@ -143,7 +141,7 @@ TEST(AngleTests, moveConstructionFromValidValue)
   ::ad::physics::Angle validValue(::ad::physics::Angle::cMinValue);
   ::ad::physics::Angle value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cMinValue, value.mAngle);
 }
 
 TEST(AngleTests, assignmentFromValidValue)
@@ -152,7 +150,7 @@ TEST(AngleTests, assignmentFromValidValue)
   ::ad::physics::Angle value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mAngle, value.mAngle);
 }
 
 TEST(AngleTests, moveAssignmentFromValidValue)
@@ -161,7 +159,7 @@ TEST(AngleTests, moveAssignmentFromValidValue)
   ::ad::physics::Angle value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Angle::cMinValue, value.mAngle);
 }
 
 TEST(AngleTests, constructionFromInvalidFPValue)
@@ -261,12 +259,12 @@ TEST(AngleTests, arithmeticOperatorsThrowOnInvalid)
   EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mAngle, std::out_of_range);
+  EXPECT_THROW(maximalValue * maximalValue.mAngle, std::out_of_range);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mAngle, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mAngle, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
 
@@ -277,13 +275,13 @@ TEST(AngleTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mAngle) > std::fabs(minimalValue.mAngle))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mAngle) < std::fabs(minimalValue.mAngle))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -309,14 +307,10 @@ TEST(AngleTests, comparisonOperatorsRespectPrecision)
     value = ::ad::physics::Angle(precisionValueTimesTen);
   }
   ::ad::physics::Angle const sameValue = value;
-  ::ad::physics::Angle const slightlyBiggerValue(static_cast<double>(value)
-                                                 + ::ad::physics::Angle::cPrecisionValue * 0.9);
-  ::ad::physics::Angle const slightlySmallerValue(static_cast<double>(value)
-                                                  - ::ad::physics::Angle::cPrecisionValue * 0.9);
-  ::ad::physics::Angle const actuallyBiggerValue(static_cast<double>(value)
-                                                 + ::ad::physics::Angle::cPrecisionValue * 1.1);
-  ::ad::physics::Angle const actuallySmallerValue(static_cast<double>(value)
-                                                  - ::ad::physics::Angle::cPrecisionValue * 1.1);
+  ::ad::physics::Angle const slightlyBiggerValue(value.mAngle + ::ad::physics::Angle::cPrecisionValue * 0.9);
+  ::ad::physics::Angle const slightlySmallerValue(value.mAngle - ::ad::physics::Angle::cPrecisionValue * 0.9);
+  ::ad::physics::Angle const actuallyBiggerValue(value.mAngle + ::ad::physics::Angle::cPrecisionValue * 1.1);
+  ::ad::physics::Angle const actuallySmallerValue(value.mAngle - ::ad::physics::Angle::cPrecisionValue * 1.1);
 
   // operator ==
   EXPECT_TRUE(value == sameValue);
@@ -379,41 +373,40 @@ TEST(AngleTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::physics::Angle)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngle + value.mAngle, result.mAngle, cDoubleNear);
 
   //  operator+=(::ad::physics::Angle)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngle + value.mAngle, result.mAngle, cDoubleNear);
 
   //  operator-(::ad::physics::Angle)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngle - value.mAngle, result.mAngle, cDoubleNear);
 
   //  operator-=(::ad::physics::Angle)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngle - value.mAngle, result.mAngle, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngle * 5., result.mAngle, cDoubleNear);
 
   //  operator*(double, ::ad::physics::Angle)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mAngle * 5., result.mAngle, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mAngle;
+  EXPECT_NEAR(value.mAngle / value.mAngle, result.mAngle, cDoubleNear);
 
   //  operator/(::ad::physics::Angle)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mAngle / value.mAngle, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::physics::Angle::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::physics::Angle::cMaxValue))
+  if ((::ad::physics::Angle::cMinValue < -value.mAngle) && (-value.mAngle < ::ad::physics::Angle::cMaxValue))
   {
     result = -value;
   }

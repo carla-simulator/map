@@ -8,7 +8,7 @@
 
 "..."
 from PyQt5.QtWidgets import QDialog
-from PyQt5.Qt import QDialogButtonBox, QVBoxLayout, QStringListModel, QInputDialog,\
+from PyQt5.Qt import QDialogButtonBox, QVBoxLayout, QStringListModel, QInputDialog, \
     QWidget
 
 
@@ -53,7 +53,7 @@ class MapRoutingTest(QgsMapToolEmitPoint):
         self.pt_start = None
         self.pt_dest = None
         self.mode = None
-        self.route_edges = []
+        self.route_borders = []
 
     def destroy(self):
         "..."
@@ -91,6 +91,12 @@ class MapRoutingTest(QgsMapToolEmitPoint):
         "..."
         super(MapRoutingTest, self).deactivate()
         self.action.setChecked(False)
+        if self.layer_route is not None:
+            self.layer_route.remove_all_features()
+            self.layer_route.refresh()
+        if self.layer_waypoints is not None:
+            self.layer_waypoints.remove_all_features()
+            self.layer_waypoints.refresh()
         Globs.log.info("Map Routing Test Deactivated")
 
     def canvasReleaseEvent(self, event):  # pylint: disable=invalid-name
@@ -98,7 +104,7 @@ class MapRoutingTest(QgsMapToolEmitPoint):
         raw_pt = self.toLayerCoordinates(self.layer_waypoints.layer, event.pos())
         mmpts = self.snapper.snap(raw_pt)
 
-        if mmpts is not None:
+        if mmpts is not None and mmpts[0] is not None:
             if self.state == self.START_SELECTION:
                 self.__set_start__(mmpts[0])
             elif self.state == self.DESTINATION_SELECTION:
@@ -115,34 +121,34 @@ class MapRoutingTest(QgsMapToolEmitPoint):
         "..."
         self.layer_waypoints.remove_all_features()
         self.layer_route.remove_all_features()
-        self.pt_start = mmpt.matchedPoint
-        attrs = ["Start", str(mmpt.lanePoint)]
+        self.pt_start = mmpt.matched_point
+        attrs = ["Start", str(mmpt.lane_point)]
         self.layer_waypoints.add_ecef(self.pt_start, attrs)
         self.state = self.DESTINATION_SELECTION
 
     def __set_destination__(self, mmpt):
         "..."
-        self.pt_dest = mmpt.matchedPoint
-        attrs = ["Destination", str(mmpt.lanePoint)]
+        self.pt_dest = mmpt.matched_point
+        attrs = ["Destination", str(mmpt.lane_point)]
         self.layer_waypoints.add_ecef(self.pt_dest, attrs)
         self.state = self.START_SELECTION
 
     def __calculate_route__(self):
         "..."
         route = Route(self.pt_start, self.pt_dest, self.mode)
-        edgeList = ad.map.route.getGeoBorderOfRoute(route)
+        borderList = ad.map.route.getGeoBorderOfRoute(route)
 
         if route is not None:
-            self.route_edges = []
-            for edge in edgeList:
-                self.__add_edge__(edge)
+            self.route_borders = []
+            for border in borderList:
+                self.__add_border__(border)
         else:
             Globs.log.error("Cannot calculate route.")
 
-    def __add_edge__(self, new_edge):
+    def __add_border__(self, new_border):
         "..."
-        self.layer_route.add_lla2(new_edge.left, new_edge.right, [])
-        self.route_edges.append(new_edge)
+        self.layer_route.add_lla2(new_border.left.points, new_border.right.points, [])
+        self.route_borders.append(new_border)
 
     def __create_layers__(self):
         "..."

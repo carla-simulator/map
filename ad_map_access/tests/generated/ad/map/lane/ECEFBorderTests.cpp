@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,25 +28,37 @@ protected:
   {
     // valid initialization
     ::ad::map::lane::ECEFBorder value;
-    ::ad::map::point::ECEFEdge valueLeft;
-    ::ad::map::point::ECEFPoint valueLeftElement;
-    ::ad::map::point::ECEFCoordinate valueLeftElementX(-6400000);
-    valueLeftElement.x = valueLeftElementX;
-    ::ad::map::point::ECEFCoordinate valueLeftElementY(-6400000);
-    valueLeftElement.y = valueLeftElementY;
-    ::ad::map::point::ECEFCoordinate valueLeftElementZ(-6400000);
-    valueLeftElement.z = valueLeftElementZ;
-    valueLeft.resize(1, valueLeftElement);
+    ::ad::map::lane::ECEFEdge valueLeft;
+    ::ad::map::point::ECEFPointList valueLeftPoints;
+    ::ad::map::point::ECEFPoint valueLeftPointsElement;
+    ::ad::map::point::ECEFCoordinate valueLeftPointsElementX(-6400000);
+    valueLeftPointsElement.x = valueLeftPointsElementX;
+    ::ad::map::point::ECEFCoordinate valueLeftPointsElementY(-6400000);
+    valueLeftPointsElement.y = valueLeftPointsElementY;
+    ::ad::map::point::ECEFCoordinate valueLeftPointsElementZ(-6400000);
+    valueLeftPointsElement.z = valueLeftPointsElementZ;
+    valueLeftPoints.resize(1, valueLeftPointsElement);
+    valueLeft.points = valueLeftPoints;
+    ::ad::map::lane::EdgeType valueLeftEdge_type(::ad::map::lane::EdgeType::UNKNOWN);
+    valueLeft.edge_type = valueLeftEdge_type;
+    ::ad::physics::ParametricValue valueLeftLateral_alignment(0.);
+    valueLeft.lateral_alignment = valueLeftLateral_alignment;
     value.left = valueLeft;
-    ::ad::map::point::ECEFEdge valueRight;
-    ::ad::map::point::ECEFPoint valueRightElement;
-    ::ad::map::point::ECEFCoordinate valueRightElementX(-6400000);
-    valueRightElement.x = valueRightElementX;
-    ::ad::map::point::ECEFCoordinate valueRightElementY(-6400000);
-    valueRightElement.y = valueRightElementY;
-    ::ad::map::point::ECEFCoordinate valueRightElementZ(-6400000);
-    valueRightElement.z = valueRightElementZ;
-    valueRight.resize(1, valueRightElement);
+    ::ad::map::lane::ECEFEdge valueRight;
+    ::ad::map::point::ECEFPointList valueRightPoints;
+    ::ad::map::point::ECEFPoint valueRightPointsElement;
+    ::ad::map::point::ECEFCoordinate valueRightPointsElementX(-6400000);
+    valueRightPointsElement.x = valueRightPointsElementX;
+    ::ad::map::point::ECEFCoordinate valueRightPointsElementY(-6400000);
+    valueRightPointsElement.y = valueRightPointsElementY;
+    ::ad::map::point::ECEFCoordinate valueRightPointsElementZ(-6400000);
+    valueRightPointsElement.z = valueRightPointsElementZ;
+    valueRightPoints.resize(1, valueRightPointsElement);
+    valueRight.points = valueRightPoints;
+    ::ad::map::lane::EdgeType valueRightEdge_type(::ad::map::lane::EdgeType::UNKNOWN);
+    valueRight.edge_type = valueRightEdge_type;
+    ::ad::physics::ParametricValue valueRightLateral_alignment(0.);
+    valueRight.lateral_alignment = valueRightLateral_alignment;
     value.right = valueRight;
     mValue = value;
   }
@@ -103,15 +115,21 @@ TEST_F(ECEFBorderTests, stringConversionTest)
 TEST_F(ECEFBorderTests, comparisonOperatorLeftDiffers)
 {
   ::ad::map::lane::ECEFBorder valueA = mValue;
-  ::ad::map::point::ECEFEdge left;
-  ::ad::map::point::ECEFPoint leftElement;
-  ::ad::map::point::ECEFCoordinate leftElementX(6400000);
-  leftElement.x = leftElementX;
-  ::ad::map::point::ECEFCoordinate leftElementY(6400000);
-  leftElement.y = leftElementY;
-  ::ad::map::point::ECEFCoordinate leftElementZ(6400000);
-  leftElement.z = leftElementZ;
-  left.resize(2, leftElement);
+  ::ad::map::lane::ECEFEdge left;
+  ::ad::map::point::ECEFPointList leftPoints;
+  ::ad::map::point::ECEFPoint leftPointsElement;
+  ::ad::map::point::ECEFCoordinate leftPointsElementX(6400000);
+  leftPointsElement.x = leftPointsElementX;
+  ::ad::map::point::ECEFCoordinate leftPointsElementY(6400000);
+  leftPointsElement.y = leftPointsElementY;
+  ::ad::map::point::ECEFCoordinate leftPointsElementZ(6400000);
+  leftPointsElement.z = leftPointsElementZ;
+  leftPoints.resize(2, leftPointsElement);
+  left.points = leftPoints;
+  ::ad::map::lane::EdgeType leftEdge_type(::ad::map::lane::EdgeType::RIGHT);
+  left.edge_type = leftEdge_type;
+  ::ad::physics::ParametricValue leftLateral_alignment(1.);
+  left.lateral_alignment = leftLateral_alignment;
   valueA.left = left;
   ::ad::map::lane::ECEFBorder valueB = mValue;
 
@@ -122,15 +140,21 @@ TEST_F(ECEFBorderTests, comparisonOperatorLeftDiffers)
 TEST_F(ECEFBorderTests, comparisonOperatorRightDiffers)
 {
   ::ad::map::lane::ECEFBorder valueA = mValue;
-  ::ad::map::point::ECEFEdge right;
-  ::ad::map::point::ECEFPoint rightElement;
-  ::ad::map::point::ECEFCoordinate rightElementX(6400000);
-  rightElement.x = rightElementX;
-  ::ad::map::point::ECEFCoordinate rightElementY(6400000);
-  rightElement.y = rightElementY;
-  ::ad::map::point::ECEFCoordinate rightElementZ(6400000);
-  rightElement.z = rightElementZ;
-  right.resize(2, rightElement);
+  ::ad::map::lane::ECEFEdge right;
+  ::ad::map::point::ECEFPointList rightPoints;
+  ::ad::map::point::ECEFPoint rightPointsElement;
+  ::ad::map::point::ECEFCoordinate rightPointsElementX(6400000);
+  rightPointsElement.x = rightPointsElementX;
+  ::ad::map::point::ECEFCoordinate rightPointsElementY(6400000);
+  rightPointsElement.y = rightPointsElementY;
+  ::ad::map::point::ECEFCoordinate rightPointsElementZ(6400000);
+  rightPointsElement.z = rightPointsElementZ;
+  rightPoints.resize(2, rightPointsElement);
+  right.points = rightPoints;
+  ::ad::map::lane::EdgeType rightEdge_type(::ad::map::lane::EdgeType::RIGHT);
+  right.edge_type = rightEdge_type;
+  ::ad::physics::ParametricValue rightLateral_alignment(1.);
+  right.lateral_alignment = rightLateral_alignment;
   valueA.right = right;
   ::ad::map::lane::ECEFBorder valueB = mValue;
 

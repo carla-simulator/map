@@ -112,12 +112,12 @@ struct IntersectionBasicTrafficLightSolidWestToSouthTest : IntersectionTrafficLi
 
 TEST_F(IntersectionBasicTrafficLightSolidWestToSouthTest, basic_checks)
 {
-  point::GeoPoint geoPoint;
-  geoPoint = point::createGeoPoint(point::Longitude(8.4372417), point::Latitude(49.01864298), point::Altitude(3.));
+  point::GeoPoint geo_point;
+  geo_point = point::createGeoPoint(point::Longitude(8.4372417), point::Latitude(49.01864298), point::Altitude(3.));
   landmark::LandmarkId id;
-  id = landmark::uniqueLandmarkId(geoPoint);
+  id = landmark::uniqueLandmarkId(geo_point);
   performBasicTrafficLightsChecks(
-    {expectedTrafficLight((uint64_t)id, landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN)});
+    {expectedTrafficLight(id.mLandmarkId, landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN)});
 }
 
 struct IntersectionBasicTrafficLightSolidWestToNorthTest : IntersectionTrafficLightWestToNorthTest
@@ -179,12 +179,11 @@ struct IntersectionBasicTrafficLightSolidWestToNorthTest : IntersectionTrafficLi
 
 TEST_F(IntersectionBasicTrafficLightSolidWestToNorthTest, basic_checks)
 {
-  point::GeoPoint geoPoint;
-  geoPoint = point::createGeoPoint(point::Longitude(8.4372417), point::Latitude(49.01864298), point::Altitude(3.));
+  point::GeoPoint geo_point;
+  geo_point = point::createGeoPoint(point::Longitude(8.4372417), point::Latitude(49.01864298), point::Altitude(3.));
   landmark::LandmarkId id;
-  id = landmark::uniqueLandmarkId(geoPoint);
-  performBasicTrafficLightsChecks(
-    {expectedTrafficLight((uint64_t)id, landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN)});
+  id = landmark::uniqueLandmarkId(geo_point);
+  performBasicTrafficLightsChecks({expectedTrafficLight(id, landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN)});
 }
 
 struct IntersectionBasicTrafficLightSolidSouthToWestTest : IntersectionTrafficLightSouthToWestTest
@@ -246,12 +245,11 @@ struct IntersectionBasicTrafficLightSolidSouthToWestTest : IntersectionTrafficLi
 
 TEST_F(IntersectionBasicTrafficLightSolidSouthToWestTest, basic_checks)
 {
-  point::GeoPoint geoPoint;
-  geoPoint = point::createGeoPoint(point::Longitude(8.437514892), point::Latitude(49.01854345), point::Altitude(3.));
+  point::GeoPoint geo_point;
+  geo_point = point::createGeoPoint(point::Longitude(8.437514892), point::Latitude(49.01854345), point::Altitude(3.));
   landmark::LandmarkId id;
-  id = landmark::uniqueLandmarkId(geoPoint);
-  performBasicTrafficLightsChecks(
-    {expectedTrafficLight((uint64_t)id, landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN)});
+  id = landmark::uniqueLandmarkId(geo_point);
+  performBasicTrafficLightsChecks({expectedTrafficLight(id, landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN)});
 }
 
 struct IntersectionBasicTrafficLightSolidNorthToSouthTest : IntersectionTrafficLightNorthToSouthTest
@@ -304,12 +302,11 @@ struct IntersectionBasicTrafficLightSolidNorthToSouthTest : IntersectionTrafficL
 
 TEST_F(IntersectionBasicTrafficLightSolidNorthToSouthTest, basic_checks)
 {
-  point::GeoPoint geoPoint;
-  geoPoint = point::createGeoPoint(point::Longitude(8.437399821), point::Latitude(49.0188076), point::Altitude(3.));
+  point::GeoPoint geo_point;
+  geo_point = point::createGeoPoint(point::Longitude(8.437399821), point::Latitude(49.0188076), point::Altitude(3.));
   landmark::LandmarkId id;
-  id = landmark::uniqueLandmarkId(geoPoint);
-  performBasicTrafficLightsChecks(
-    {expectedTrafficLight((uint64_t)id, landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN)});
+  id = landmark::uniqueLandmarkId(geo_point);
+  performBasicTrafficLightsChecks({expectedTrafficLight(id, landmark::TrafficLightType::SOLID_RED_YELLOW_GREEN)});
 }
 
 } // namespace map

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -31,7 +31,7 @@ TEST(WeightTests, precisionIsDefinedAsExpected)
 {
   EXPECT_LT(0., ::ad::physics::Weight::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-3, ::ad::physics::Weight::cPrecisionValue);
-  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cPrecisionValue, static_cast<double>(::ad::physics::Weight::getPrecision()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cPrecisionValue, ::ad::physics::Weight::getPrecision().mWeight);
 }
 
 TEST(WeightTests, minIsValid)
@@ -90,36 +90,35 @@ TEST(WeightTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(WeightTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Weight::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::Weight>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::getMin().mWeight,
+                   std::numeric_limits<::ad::physics::Weight>::lowest().mWeight);
 }
 
 TEST(WeightTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Weight::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::Weight>::max()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::getMax().mWeight, std::numeric_limits<::ad::physics::Weight>::max().mWeight);
 }
 
 TEST(WeightTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::Weight::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::Weight>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::getPrecision().mWeight,
+                   std::numeric_limits<::ad::physics::Weight>::epsilon().mWeight);
 }
 
 TEST(WeightTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::Weight(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::Weight(-1.))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::physics::Weight(-0.)).mWeight);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::physics::Weight(-1.)).mWeight);
   EXPECT_DOUBLE_EQ(::ad::physics::Weight::cPrecisionValue,
-                   static_cast<double>(std::fabs(::ad::physics::Weight(::ad::physics::Weight::cPrecisionValue))));
+                   std::fabs(::ad::physics::Weight(::ad::physics::Weight::cPrecisionValue).mWeight));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Weight::cMinValue),
-                   static_cast<double>(std::fabs(::ad::physics::Weight(::ad::physics::Weight::cMinValue))));
+                   std::fabs(::ad::physics::Weight(::ad::physics::Weight::cMinValue).mWeight));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Weight::cMinValue),
-                   static_cast<double>(std::fabs(::ad::physics::Weight(-::ad::physics::Weight::cMinValue))));
+                   std::fabs(::ad::physics::Weight(-::ad::physics::Weight::cMinValue).mWeight));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Weight::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::physics::Weight(::ad::physics::Weight::cMaxValue))));
+                   std::fabs(::ad::physics::Weight(::ad::physics::Weight::cMaxValue).mWeight));
   EXPECT_DOUBLE_EQ(std::fabs(::ad::physics::Weight::cMaxValue),
-                   static_cast<double>(std::fabs(::ad::physics::Weight(-::ad::physics::Weight::cMaxValue))));
+                   std::fabs(::ad::physics::Weight(-::ad::physics::Weight::cMaxValue).mWeight));
 }
 
 TEST(WeightTests, constructionFromValidFPValue)
@@ -127,7 +126,7 @@ TEST(WeightTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::Weight::cMinValue;
   ::ad::physics::Weight value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mWeight);
 }
 
 TEST(WeightTests, copyConstructionFromValidValue)
@@ -135,7 +134,7 @@ TEST(WeightTests, copyConstructionFromValidValue)
   ::ad::physics::Weight const validValue(::ad::physics::Weight::cMinValue);
   ::ad::physics::Weight value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mWeight, value.mWeight);
 }
 
 TEST(WeightTests, moveConstructionFromValidValue)
@@ -143,7 +142,7 @@ TEST(WeightTests, moveConstructionFromValidValue)
   ::ad::physics::Weight validValue(::ad::physics::Weight::cMinValue);
   ::ad::physics::Weight value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cMinValue, value.mWeight);
 }
 
 TEST(WeightTests, assignmentFromValidValue)
@@ -152,7 +151,7 @@ TEST(WeightTests, assignmentFromValidValue)
   ::ad::physics::Weight value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mWeight, value.mWeight);
 }
 
 TEST(WeightTests, moveAssignmentFromValidValue)
@@ -161,7 +160,7 @@ TEST(WeightTests, moveAssignmentFromValidValue)
   ::ad::physics::Weight value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::Weight::cMinValue, value.mWeight);
 }
 
 TEST(WeightTests, constructionFromInvalidFPValue)
@@ -261,12 +260,12 @@ TEST(WeightTests, arithmeticOperatorsThrowOnInvalid)
   EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mWeight, std::out_of_range);
+  EXPECT_THROW(maximalValue * maximalValue.mWeight, std::out_of_range);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mWeight, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mWeight, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
 
@@ -277,13 +276,13 @@ TEST(WeightTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mWeight) > std::fabs(minimalValue.mWeight))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mWeight) < std::fabs(minimalValue.mWeight))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -309,14 +308,10 @@ TEST(WeightTests, comparisonOperatorsRespectPrecision)
     value = ::ad::physics::Weight(precisionValueTimesTen);
   }
   ::ad::physics::Weight const sameValue = value;
-  ::ad::physics::Weight const slightlyBiggerValue(static_cast<double>(value)
-                                                  + ::ad::physics::Weight::cPrecisionValue * 0.9);
-  ::ad::physics::Weight const slightlySmallerValue(static_cast<double>(value)
-                                                   - ::ad::physics::Weight::cPrecisionValue * 0.9);
-  ::ad::physics::Weight const actuallyBiggerValue(static_cast<double>(value)
-                                                  + ::ad::physics::Weight::cPrecisionValue * 1.1);
-  ::ad::physics::Weight const actuallySmallerValue(static_cast<double>(value)
-                                                   - ::ad::physics::Weight::cPrecisionValue * 1.1);
+  ::ad::physics::Weight const slightlyBiggerValue(value.mWeight + ::ad::physics::Weight::cPrecisionValue * 0.9);
+  ::ad::physics::Weight const slightlySmallerValue(value.mWeight - ::ad::physics::Weight::cPrecisionValue * 0.9);
+  ::ad::physics::Weight const actuallyBiggerValue(value.mWeight + ::ad::physics::Weight::cPrecisionValue * 1.1);
+  ::ad::physics::Weight const actuallySmallerValue(value.mWeight - ::ad::physics::Weight::cPrecisionValue * 1.1);
 
   // operator ==
   EXPECT_TRUE(value == sameValue);
@@ -379,41 +374,40 @@ TEST(WeightTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::physics::Weight)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mWeight + value.mWeight, result.mWeight, cDoubleNear);
 
   //  operator+=(::ad::physics::Weight)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mWeight + value.mWeight, result.mWeight, cDoubleNear);
 
   //  operator-(::ad::physics::Weight)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mWeight - value.mWeight, result.mWeight, cDoubleNear);
 
   //  operator-=(::ad::physics::Weight)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mWeight - value.mWeight, result.mWeight, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mWeight * 5., result.mWeight, cDoubleNear);
 
   //  operator*(double, ::ad::physics::Weight)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mWeight * 5., result.mWeight, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mWeight;
+  EXPECT_NEAR(value.mWeight / value.mWeight, result.mWeight, cDoubleNear);
 
   //  operator/(::ad::physics::Weight)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mWeight / value.mWeight, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::physics::Weight::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::physics::Weight::cMaxValue))
+  if ((::ad::physics::Weight::cMinValue < -value.mWeight) && (-value.mWeight < ::ad::physics::Weight::cMaxValue))
   {
     result = -value;
   }

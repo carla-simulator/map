@@ -41,7 +41,7 @@ TEST_F(GeoOperationTest, geoPointapproxAltitude)
   Altitude ll_alt(300);
   Altitude lr_alt(400);
   //
-  GeoEdge pts;
+  GeoPointList pts;
   GeoPoint pt_ul = createGeoPoint(ul_lon, ul_lat, ul_alt);
   GeoPoint pt_ur = createGeoPoint(ul_lon, lr_lat, ur_alt);
   GeoPoint pt_ll = createGeoPoint(lr_lon, ul_lat, ll_alt);
@@ -91,7 +91,7 @@ TEST_F(GeoOperationTest, geoPointapproxAltitude)
     // Position of San Jose Fire Department Station 29 + altitude difference
     GeoPoint pt2_geo = createGeoPoint(Longitude(-121.933886), Latitude(37.401112), h + dh);
 
-    GeoEdge edge1_geo;
+    GeoPointList edge1_geo;
     edge1_geo.push_back(pt2_geo);
     GeoPoint ret;
     ret = approxAltitude(pt1_geo, edge1_geo);
@@ -110,8 +110,8 @@ TEST_F(GeoOperationTest, Orientation)
   // Position of San Jose Fire Department Station 29 + altitude difference
   GeoPoint pt3_geo = createGeoPoint(Longitude(-121.933886), Latitude(37.401112), h + dh);
 
-  GeoEdge edge2_geo;
-  GeoEdge edge3_geo;
+  GeoPointList edge2_geo;
+  GeoPointList edge3_geo;
   edge2_geo.push_back(pt1_geo);
   edge2_geo.push_back(pt2_geo);
   edge3_geo.push_back(pt1_geo);
@@ -121,8 +121,8 @@ TEST_F(GeoOperationTest, Orientation)
 
 TEST_F(GeoOperationTest, isOnTheLeft)
 {
-  GeoEdge edge2_geo;
-  GeoEdge edge3_geo;
+  GeoPointList edge2_geo;
+  GeoPointList edge3_geo;
   const double diff = 3.534679;
   edge2_geo.clear();
   edge2_geo.push_back(createGeoPoint(Longitude(-121.935549 - diff), Latitude(37.401336), Altitude(123.456)));

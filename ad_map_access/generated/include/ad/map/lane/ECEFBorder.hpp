@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -20,7 +20,7 @@
 #include <iostream>
 #include <memory>
 #include <sstream>
-#include "ad/map/point/ECEFEdge.hpp"
+#include "ad/map/lane/ECEFEdge.hpp"
 /*!
  * @brief namespace ad
  */
@@ -39,7 +39,7 @@ namespace lane {
 /*!
  * \brief DataType ECEFBorder
  *
- * Border in ECEF(earth centered, earth fixed) coordinate system
+ * Lane/Segment/Route interval borders in ECEF(earth centered, earth fixed) coordinate system
  */
 struct ECEFBorder
 {
@@ -118,12 +118,12 @@ struct ECEFBorder
   /*!
    * Left edge of the border
    */
-  ::ad::map::point::ECEFEdge left;
+  ::ad::map::lane::ECEFEdge left;
 
   /*!
    * Right edge of the border
    */
-  ::ad::map::point::ECEFEdge right;
+  ::ad::map::lane::ECEFEdge right;
 };
 
 } // namespace lane
@@ -186,4 +186,16 @@ inline std::string to_string(::ad::map::lane::ECEFBorder const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::lane::ECEFBorder> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::lane::ECEFBorder const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_LANE_ECEFBORDER

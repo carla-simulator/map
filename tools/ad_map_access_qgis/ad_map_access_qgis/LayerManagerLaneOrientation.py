@@ -24,6 +24,7 @@ class LayerManagerLaneOrientation(LayerManager):
     def add(self, lane):
         "..."
         lane_id = lane.id
+
         LayerManager.remove_old_feature(self, lane_id)
         pt0 = GetLaneParamPoint(lane_id, 0.20, 0.5)
         pt1 = GetLaneParamPoint(lane_id, 0.35, 0.5)

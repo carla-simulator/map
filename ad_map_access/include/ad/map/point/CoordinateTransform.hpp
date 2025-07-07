@@ -54,6 +54,9 @@ public: // ENU Reference Point Managment
    */
   bool setGeoProjection(std::string const &geo_projection);
 
+  ///< is ENU conversion configured via projection string
+  bool isGeoProjectionValid() const;
+
   /**
    * @brief Set the reference point for the ENU coordinate system.
    *        Increases ENU reference point counter.
@@ -261,9 +264,6 @@ private:                     // ENU Conversion parameters
 
   projPJ projPtr_; ///< proj object to be used for ENU conversion. In case of OpenDrive import ENU conversions have to
                    ///< use the exact projection string provided with the map.
-
-  ///< is ENU conversion configured via projection string
-  bool isGeoProjectionValid() const;
 
 private:                                              // Constants
   static constexpr double PI = 3.141592654;           ///< PI

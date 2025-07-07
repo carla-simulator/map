@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -40,7 +40,8 @@ inline bool withinValidInputRange(::ad::map::lane::LaneType const &input, bool c
     || (input == ::ad::map::lane::LaneType::INTERSECTION) || (input == ::ad::map::lane::LaneType::SHOULDER)
     || (input == ::ad::map::lane::LaneType::EMERGENCY) || (input == ::ad::map::lane::LaneType::MULTI)
     || (input == ::ad::map::lane::LaneType::PEDESTRIAN) || (input == ::ad::map::lane::LaneType::OVERTAKING)
-    || (input == ::ad::map::lane::LaneType::TURN) || (input == ::ad::map::lane::LaneType::BIKE);
+    || (input == ::ad::map::lane::LaneType::TURN) || (input == ::ad::map::lane::LaneType::BIKE)
+    || (input == ::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::lane::LaneType)>> {}, raw value: {} ",

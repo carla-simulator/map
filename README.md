@@ -66,16 +66,21 @@ To download the library, you may run:
 ```
 
 #### Supported systems <a name="systems"></a>
-Development system is Ubuntu 22.04
+Development systems are Ubuntu 22.04 and 24.04 
 Following compiler and Python combinations are [tested continously](.github/workflows/build_test.yml):
 
-|                 | Ubuntu 22.04 |
-|:---------------:|:------------:|
-|   GCC 11        |       x      |
-|  Clang 14       |       x      |
-|  Python 3.10    |       x      |
+|                 | Ubuntu 22.04 | Ubuntu 24.04 |
+|:---------------:|:------------:|:------------:|
+|   GCC 11        |       x      |              |
+|   GCC 13        |              |       x      |
+|  Clang 14       |       x      |              |
+|  Clang 18       |              |       x      |
+|  Python 3.10    |       x      |              |
+|  Python 3.11    |       x      |              |
+|  Python 3.12    |              |       x      |
+|  Python 3.13    |              |       x      |
 
-Important: cmake is required to be at least version 3.5!
+Important: cmake is required to be at least version 3.10!
 
 ## Building the library <a name="building"></a>
 See the detailed [Build instructions](https://ad-map-access.readthedocs.io/en/latest/BUILDING/index.html).

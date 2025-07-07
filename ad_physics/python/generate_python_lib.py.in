@@ -2,7 +2,7 @@
 
 # ----------------- BEGIN LICENSE BLOCK ---------------------------------
 #
-# Copyright (c) 2020-2021 Intel Corporation
+# Copyright (c) 2020-2022 Intel Corporation
 #
 # SPDX-License-Identifier: MIT
 #
@@ -23,37 +23,86 @@ def main():
     """
     Main function to generate Python-C++ binding code
     """
-    header_dirs = {
-        "@CMAKE_CURRENT_LIST_DIR@/../generated/include/",
-        "@CMAKE_CURRENT_LIST_DIR@/../include/"
-    }
     include_dirs = {
-        "@GENPY_INCLUDE_DIRS@"
+        "@GENPY_INCLUDE_DIRS@",
+        "@CMAKE_CURRENT_LIST_DIR@/../generated/include",
+        "@CMAKE_CURRENT_LIST_DIR@/../include"
     }
 
-    generate_python_wrapper(library_name="physics",
-                            cpp_filename="Ad-physics-PythonWrapper.cpp.in",
-                            header_directories=header_dirs,
-                            include_paths=include_dirs,
-                            main_namespace="ad::physics",
-                            declarations={
-                                "ad::physics", "toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
-    )
+    declarations={"toString", "fromString", "std::to_string", "std::sqrt", "std::fabs", "std::numeric_limits"}
 
-    additional_replacements = {("BOOST_PYTHON_MODULE(physics){",
-                                "BOOST_PYTHON_MODULE(ad_physics_@PYTHON_BINDING_NAME@){\n" +
-         "  bp::object ad_physics_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"physics\"))));\n" +
-         "  bp::scope().attr(\"physics\") = ad_physics_module;\n" +
-         "  bp::scope submodule_scope = ad_physics_module;\n\n" +
-         "  bp::scope().attr(\"__doc__\") = \"Python binding of ad_physics ad::physics namespace C++ code for @binding_string@\";\n" +
-         "  bp::scope().attr(\"__copyright__\") = \"Copyright (C) 2020-2021 Intel Corporation\";\n" +
-         "  bp::scope().attr(\"__license__\") = \"MIT\";\n"
-         )
+    for component in ["physics", "geometry"]:
+
+        main_namespace="ad::{}".format(component)
+
+        declarations_component=declarations.copy()
+        declarations_component.add(main_namespace)
+
+        additional_replacements = [
+         ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less__double_comma__boost_scope_geometry_scope_cs_scope_cartesian__greater__comma__false_comma__true_comma__std_scope_vector_comma__std_scope_vector_comma__std_scope_allocator_comma__std_scope_allocator__greater_", "Polygon"),
+         ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less__double__greater__comma__false_comma__true__greater_", "Polygon"),
+         ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less__double__greater__comma__false__greater_", "Polygon"),
+         ("polygon_less_boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less_double_greater__comma__false_greater_", "Polygon"),
+
+         ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_Point_comma__false_comma__true_comma__std_scope_vector_comma__std_scope_vector_comma__std_scope_allocator_comma__std_scope_allocator__greater_", "Polygon"),
+         ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_Point_comma__false_comma__true__greater_", "Polygon"),
+         ("polygon_less__boost_scope_geometry_scope_model_scope_d2_scope_Point_comma__false__greater_", "Polygon"),
+         ("polygon_less_boost_scope_geometry_scope_model_scope_d2_scope_Point_comma__false_greater_", "Polygon"),
+
+         ("vector_less__boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less_double_comma__boost_scope_geometry_scope_cs_scope_cartesian_greater___greater_", "PointVector"),
+         ("vector_less_boost_scope_geometry_scope_model_scope_d2_scope_point_xy_less_double_greater__greater_", "PointVector"),
+         ("vector_less_boost_scope_geometry_scope_model_scope_d2_scope_Point_greater_", "PointVector"),
+
+         ("point_xy_less__double_comma__boost_scope_geometry_scope_cs_scope_cartesian__greater_", "Point"),
+         ("point_xy_less__double__greater_", "Point"),
+         ("point_xy_less_double_greater_", "Point"),
+        ]
+
+        header_dirs = {
+            "@CMAKE_CURRENT_LIST_DIR@/../include/ad/{}".format(component),
+            "@CMAKE_CURRENT_LIST_DIR@/../generated/include/ad/{}".format(component)
         }
-    post_process_python_wrapper(header_directories=header_dirs,
-                                cpp_filename_in="Ad-physics-PythonWrapper.cpp.in",
-                                cpp_filename_out="Ad-physics-PythonWrapper.cpp",
-                                additional_replacements=additional_replacements)
+
+        ignore_files={}
+        ignore_declarations={}
+        additional_includes={}
+        add_declarations={}
+        ignore_declarations={}
+        if component == "physics":
+            pass
+        elif component == "geometry":
+            add_declarations={"boost::geometry::model::d2::point_xy", "boost::geometry::model::multi_point", "boost::geometry::model::polygon"}
+            ignore_declarations={"boost::geometry::model::ring"}
+
+        generate_python_wrapper(library_name=component,
+                                cpp_filename="Ad-{}-PythonWrapper.cpp.in".format(component),
+                                header_directories=header_dirs,
+                                include_paths=include_dirs,
+                                main_namespace=main_namespace,
+                                declarations=declarations_component,
+                                add_declarations=add_declarations,
+                                ignore_declarations=ignore_declarations,
+                                ignore_files=ignore_files)
+
+        additional_replacements_component = additional_replacements.copy()
+        additional_replacements_component.append(
+                ("BOOST_PYTHON_MODULE({}){{".format(component),
+                 "void export_ad_{}(){{\n\n".format(component) +
+                 "  bp::object ad_{}_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"{}\"))));\n".format(component, component) +
+                 "  bp::scope().attr(\"{}\") = ad_{}_module;\n".format(component, component) +
+                 "  bp::scope submodule_scope = ad_{}_module;\n\n".format(component) +
+                 "  bp::scope().attr(\"__doc__\") = \"Python binding of ad_physics ad::{} namespace C++ code for @PYTHON_BINDING_NAME@\";".format(component) +
+                 "  bp::scope().attr(\"__copyright__\") = \"Copyright (C) 2020-2022 Intel Corporation\";" +
+                 "  bp::scope().attr(\"__license__\") = \"MIT\";"
+                ))
+
+        post_process_python_wrapper(header_directories=header_dirs,
+                                    cpp_filename_in="Ad-{}-PythonWrapper.cpp.in".format(component),
+                                    cpp_filename_out="Ad-{}-PythonWrapper.cpp".format(component),
+                                    additional_replacements=additional_replacements_component,
+                                    additional_includes=additional_includes
+        )
+
 
 if __name__ == '__main__':
     main()

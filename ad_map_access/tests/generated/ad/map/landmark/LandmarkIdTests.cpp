@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -59,14 +59,14 @@ TEST(LandmarkIdTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(LandmarkIdTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<uint64_t>(::ad::map::landmark::LandmarkId::getMin()),
-            static_cast<uint64_t>(std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest()));
+  EXPECT_EQ(::ad::map::landmark::LandmarkId::getMin().mLandmarkId,
+            std::numeric_limits<::ad::map::landmark::LandmarkId>::lowest().mLandmarkId);
 }
 
 TEST(LandmarkIdTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<uint64_t>(::ad::map::landmark::LandmarkId::getMax()),
-            static_cast<uint64_t>(std::numeric_limits<::ad::map::landmark::LandmarkId>::max()));
+  EXPECT_EQ(::ad::map::landmark::LandmarkId::getMax().mLandmarkId,
+            std::numeric_limits<::ad::map::landmark::LandmarkId>::max().mLandmarkId);
 }
 
 TEST(LandmarkIdTests, copyConstructionFromValidValue)
@@ -74,7 +74,7 @@ TEST(LandmarkIdTests, copyConstructionFromValidValue)
   ::ad::map::landmark::LandmarkId const validValue(::ad::map::landmark::LandmarkId::cMinValue);
   ::ad::map::landmark::LandmarkId value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<uint64_t>(validValue), static_cast<uint64_t>(value));
+  EXPECT_EQ(validValue.mLandmarkId, value.mLandmarkId);
 }
 
 TEST(LandmarkIdTests, moveConstructionFromValidValue)
@@ -82,7 +82,7 @@ TEST(LandmarkIdTests, moveConstructionFromValidValue)
   ::ad::map::landmark::LandmarkId validValue(::ad::map::landmark::LandmarkId::cMinValue);
   ::ad::map::landmark::LandmarkId value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::landmark::LandmarkId::cMinValue, static_cast<uint64_t>(value));
+  EXPECT_EQ(::ad::map::landmark::LandmarkId::cMinValue, value.mLandmarkId);
 }
 
 TEST(LandmarkIdTests, assignmentFromValidValue)
@@ -91,7 +91,7 @@ TEST(LandmarkIdTests, assignmentFromValidValue)
   ::ad::map::landmark::LandmarkId value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<uint64_t>(validValue), static_cast<uint64_t>(value));
+  EXPECT_EQ(validValue.mLandmarkId, value.mLandmarkId);
 }
 
 TEST(LandmarkIdTests, moveAssignmentFromValidValue)
@@ -100,7 +100,7 @@ TEST(LandmarkIdTests, moveAssignmentFromValidValue)
   ::ad::map::landmark::LandmarkId value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::landmark::LandmarkId::cMinValue, static_cast<uint64_t>(value));
+  EXPECT_EQ(::ad::map::landmark::LandmarkId::cMinValue, value.mLandmarkId);
 }
 
 TEST(LandmarkIdTests, selfAssignment)
@@ -138,17 +138,17 @@ TEST(LandmarkIdTests, arithmeticOperators)
   ::ad::map::landmark::LandmarkId maxValue(::ad::map::landmark::LandmarkId::cMaxValue);
   ::ad::map::landmark::LandmarkId result;
 
-  ASSERT_EQ(static_cast<uint64_t>(minValue + minValue),
+  ASSERT_EQ((minValue + minValue).mLandmarkId,
             ::ad::map::landmark::LandmarkId::cMinValue + ::ad::map::landmark::LandmarkId::cMinValue);
   result = minValue;
   result += minValue;
-  ASSERT_EQ(static_cast<uint64_t>(result),
+  ASSERT_EQ(result.mLandmarkId,
             ::ad::map::landmark::LandmarkId::cMinValue + ::ad::map::landmark::LandmarkId::cMinValue);
-  ASSERT_EQ(static_cast<uint64_t>(maxValue - minValue),
+  ASSERT_EQ((maxValue - minValue).mLandmarkId,
             ::ad::map::landmark::LandmarkId::cMaxValue - ::ad::map::landmark::LandmarkId::cMinValue);
   result = maxValue;
   result -= minValue;
-  ASSERT_EQ(static_cast<uint64_t>(result),
+  ASSERT_EQ(result.mLandmarkId,
             ::ad::map::landmark::LandmarkId::cMaxValue - ::ad::map::landmark::LandmarkId::cMinValue);
 }
 

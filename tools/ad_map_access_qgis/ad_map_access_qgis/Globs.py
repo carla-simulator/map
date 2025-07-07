@@ -7,13 +7,13 @@
 # ----------------- END LICENSE BLOCK -----------------------------------
 "..."
 
+
 # pylint: disable=C0103
 map_dirty = False
 dirty_lanes = []
 dirty_landmarks = []
 removed_lanes = []
 removed_landmarks = []
-removed_partitions = []
 log = None
 iface = None
 main = None

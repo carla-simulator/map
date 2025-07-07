@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -21,100 +21,100 @@
 TEST(RoadSegmentValidInputRangeTests, testValidInputRange)
 {
   ::ad::map::route::RoadSegment value;
-  ::ad::map::route::LaneSegmentList valueDrivableLaneSegments;
-  ::ad::map::route::LaneSegment valueDrivableLaneSegmentsElement;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementLeftNeighbor(1);
-  valueDrivableLaneSegmentsElement.leftNeighbor = valueDrivableLaneSegmentsElementLeftNeighbor;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementRightNeighbor(1);
-  valueDrivableLaneSegmentsElement.rightNeighbor = valueDrivableLaneSegmentsElementRightNeighbor;
-  ::ad::map::lane::LaneIdList valueDrivableLaneSegmentsElementPredecessors;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementPredecessorsElement(1);
-  valueDrivableLaneSegmentsElementPredecessors.resize(1, valueDrivableLaneSegmentsElementPredecessorsElement);
-  valueDrivableLaneSegmentsElement.predecessors = valueDrivableLaneSegmentsElementPredecessors;
-  ::ad::map::lane::LaneIdList valueDrivableLaneSegmentsElementSuccessors;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementSuccessorsElement(1);
-  valueDrivableLaneSegmentsElementSuccessors.resize(1, valueDrivableLaneSegmentsElementSuccessorsElement);
-  valueDrivableLaneSegmentsElement.successors = valueDrivableLaneSegmentsElementSuccessors;
-  ::ad::map::route::LaneInterval valueDrivableLaneSegmentsElementLaneInterval;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementLaneIntervalLaneId(1);
-  valueDrivableLaneSegmentsElementLaneInterval.laneId = valueDrivableLaneSegmentsElementLaneIntervalLaneId;
-  ::ad::physics::ParametricValue valueDrivableLaneSegmentsElementLaneIntervalStart(0.);
-  valueDrivableLaneSegmentsElementLaneInterval.start = valueDrivableLaneSegmentsElementLaneIntervalStart;
-  ::ad::physics::ParametricValue valueDrivableLaneSegmentsElementLaneIntervalEnd(0.);
-  valueDrivableLaneSegmentsElementLaneInterval.end = valueDrivableLaneSegmentsElementLaneIntervalEnd;
-  bool valueDrivableLaneSegmentsElementLaneIntervalWrongWay{true};
-  valueDrivableLaneSegmentsElementLaneInterval.wrongWay = valueDrivableLaneSegmentsElementLaneIntervalWrongWay;
-  valueDrivableLaneSegmentsElement.laneInterval = valueDrivableLaneSegmentsElementLaneInterval;
-  ::ad::map::route::RouteLaneOffset valueDrivableLaneSegmentsElementRouteLaneOffset(
+  ::ad::map::route::LaneSegmentList valueDrivable_lane_segments;
+  ::ad::map::route::LaneSegment valueDrivable_lane_segmentsElement;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementLeft_neighbor(1);
+  valueDrivable_lane_segmentsElement.left_neighbor = valueDrivable_lane_segmentsElementLeft_neighbor;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementRight_neighbor(1);
+  valueDrivable_lane_segmentsElement.right_neighbor = valueDrivable_lane_segmentsElementRight_neighbor;
+  ::ad::map::lane::LaneIdList valueDrivable_lane_segmentsElementPredecessors;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementPredecessorsElement(1);
+  valueDrivable_lane_segmentsElementPredecessors.resize(1, valueDrivable_lane_segmentsElementPredecessorsElement);
+  valueDrivable_lane_segmentsElement.predecessors = valueDrivable_lane_segmentsElementPredecessors;
+  ::ad::map::lane::LaneIdList valueDrivable_lane_segmentsElementSuccessors;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementSuccessorsElement(1);
+  valueDrivable_lane_segmentsElementSuccessors.resize(1, valueDrivable_lane_segmentsElementSuccessorsElement);
+  valueDrivable_lane_segmentsElement.successors = valueDrivable_lane_segmentsElementSuccessors;
+  ::ad::map::route::LaneInterval valueDrivable_lane_segmentsElementLane_interval;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementLane_intervalLane_id(1);
+  valueDrivable_lane_segmentsElementLane_interval.lane_id = valueDrivable_lane_segmentsElementLane_intervalLane_id;
+  ::ad::physics::ParametricValue valueDrivable_lane_segmentsElementLane_intervalStart(0.);
+  valueDrivable_lane_segmentsElementLane_interval.start = valueDrivable_lane_segmentsElementLane_intervalStart;
+  ::ad::physics::ParametricValue valueDrivable_lane_segmentsElementLane_intervalEnd(0.);
+  valueDrivable_lane_segmentsElementLane_interval.end = valueDrivable_lane_segmentsElementLane_intervalEnd;
+  bool valueDrivable_lane_segmentsElementLane_intervalWrong_way{true};
+  valueDrivable_lane_segmentsElementLane_interval.wrong_way = valueDrivable_lane_segmentsElementLane_intervalWrong_way;
+  valueDrivable_lane_segmentsElement.lane_interval = valueDrivable_lane_segmentsElementLane_interval;
+  ::ad::map::route::RouteLaneOffset valueDrivable_lane_segmentsElementRoute_lane_offset(
     std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
-  valueDrivableLaneSegmentsElement.routeLaneOffset = valueDrivableLaneSegmentsElementRouteLaneOffset;
-  valueDrivableLaneSegments.resize(1, valueDrivableLaneSegmentsElement);
-  value.drivableLaneSegments = valueDrivableLaneSegments;
-  ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
+  valueDrivable_lane_segmentsElement.route_lane_offset = valueDrivable_lane_segmentsElementRoute_lane_offset;
+  valueDrivable_lane_segments.resize(1, valueDrivable_lane_segmentsElement);
+  value.drivable_lane_segments = valueDrivable_lane_segments;
+  ::ad::map::route::SegmentCounter valueSegment_count_from_destination(
     std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
-  value.segmentCountFromDestination = valueSegmentCountFromDestination;
-  ::ad::map::point::BoundingSphere valueBoundingSphere;
-  ::ad::map::point::ECEFPoint valueBoundingSphereCenter;
-  ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterX(-6400000);
-  valueBoundingSphereCenter.x = valueBoundingSphereCenterX;
-  ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterY(-6400000);
-  valueBoundingSphereCenter.y = valueBoundingSphereCenterY;
-  ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
-  valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
-  valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
-  valueBoundingSphere.radius = valueBoundingSphereRadius;
-  value.boundingSphere = valueBoundingSphere;
+  value.segment_count_from_destination = valueSegment_count_from_destination;
+  ::ad::map::point::BoundingSphere valueBounding_sphere;
+  ::ad::map::point::ECEFPoint valueBounding_sphereCenter;
+  ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterX(-6400000);
+  valueBounding_sphereCenter.x = valueBounding_sphereCenterX;
+  ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterY(-6400000);
+  valueBounding_sphereCenter.y = valueBounding_sphereCenterY;
+  ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterZ(-6400000);
+  valueBounding_sphereCenter.z = valueBounding_sphereCenterZ;
+  valueBounding_sphere.center = valueBounding_sphereCenter;
+  ::ad::physics::Distance valueBounding_sphereRadius(-1e9);
+  valueBounding_sphere.radius = valueBounding_sphereRadius;
+  value.bounding_sphere = valueBounding_sphere;
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
-TEST(RoadSegmentValidInputRangeTests, testValidInputRangeBoundingSphereTooSmall)
+TEST(RoadSegmentValidInputRangeTests, testValidInputRangeBounding_sphereTooSmall)
 {
   ::ad::map::route::RoadSegment value;
-  ::ad::map::route::LaneSegmentList valueDrivableLaneSegments;
-  ::ad::map::route::LaneSegment valueDrivableLaneSegmentsElement;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementLeftNeighbor(1);
-  valueDrivableLaneSegmentsElement.leftNeighbor = valueDrivableLaneSegmentsElementLeftNeighbor;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementRightNeighbor(1);
-  valueDrivableLaneSegmentsElement.rightNeighbor = valueDrivableLaneSegmentsElementRightNeighbor;
-  ::ad::map::lane::LaneIdList valueDrivableLaneSegmentsElementPredecessors;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementPredecessorsElement(1);
-  valueDrivableLaneSegmentsElementPredecessors.resize(1, valueDrivableLaneSegmentsElementPredecessorsElement);
-  valueDrivableLaneSegmentsElement.predecessors = valueDrivableLaneSegmentsElementPredecessors;
-  ::ad::map::lane::LaneIdList valueDrivableLaneSegmentsElementSuccessors;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementSuccessorsElement(1);
-  valueDrivableLaneSegmentsElementSuccessors.resize(1, valueDrivableLaneSegmentsElementSuccessorsElement);
-  valueDrivableLaneSegmentsElement.successors = valueDrivableLaneSegmentsElementSuccessors;
-  ::ad::map::route::LaneInterval valueDrivableLaneSegmentsElementLaneInterval;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementLaneIntervalLaneId(1);
-  valueDrivableLaneSegmentsElementLaneInterval.laneId = valueDrivableLaneSegmentsElementLaneIntervalLaneId;
-  ::ad::physics::ParametricValue valueDrivableLaneSegmentsElementLaneIntervalStart(0.);
-  valueDrivableLaneSegmentsElementLaneInterval.start = valueDrivableLaneSegmentsElementLaneIntervalStart;
-  ::ad::physics::ParametricValue valueDrivableLaneSegmentsElementLaneIntervalEnd(0.);
-  valueDrivableLaneSegmentsElementLaneInterval.end = valueDrivableLaneSegmentsElementLaneIntervalEnd;
-  bool valueDrivableLaneSegmentsElementLaneIntervalWrongWay{true};
-  valueDrivableLaneSegmentsElementLaneInterval.wrongWay = valueDrivableLaneSegmentsElementLaneIntervalWrongWay;
-  valueDrivableLaneSegmentsElement.laneInterval = valueDrivableLaneSegmentsElementLaneInterval;
-  ::ad::map::route::RouteLaneOffset valueDrivableLaneSegmentsElementRouteLaneOffset(
+  ::ad::map::route::LaneSegmentList valueDrivable_lane_segments;
+  ::ad::map::route::LaneSegment valueDrivable_lane_segmentsElement;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementLeft_neighbor(1);
+  valueDrivable_lane_segmentsElement.left_neighbor = valueDrivable_lane_segmentsElementLeft_neighbor;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementRight_neighbor(1);
+  valueDrivable_lane_segmentsElement.right_neighbor = valueDrivable_lane_segmentsElementRight_neighbor;
+  ::ad::map::lane::LaneIdList valueDrivable_lane_segmentsElementPredecessors;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementPredecessorsElement(1);
+  valueDrivable_lane_segmentsElementPredecessors.resize(1, valueDrivable_lane_segmentsElementPredecessorsElement);
+  valueDrivable_lane_segmentsElement.predecessors = valueDrivable_lane_segmentsElementPredecessors;
+  ::ad::map::lane::LaneIdList valueDrivable_lane_segmentsElementSuccessors;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementSuccessorsElement(1);
+  valueDrivable_lane_segmentsElementSuccessors.resize(1, valueDrivable_lane_segmentsElementSuccessorsElement);
+  valueDrivable_lane_segmentsElement.successors = valueDrivable_lane_segmentsElementSuccessors;
+  ::ad::map::route::LaneInterval valueDrivable_lane_segmentsElementLane_interval;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementLane_intervalLane_id(1);
+  valueDrivable_lane_segmentsElementLane_interval.lane_id = valueDrivable_lane_segmentsElementLane_intervalLane_id;
+  ::ad::physics::ParametricValue valueDrivable_lane_segmentsElementLane_intervalStart(0.);
+  valueDrivable_lane_segmentsElementLane_interval.start = valueDrivable_lane_segmentsElementLane_intervalStart;
+  ::ad::physics::ParametricValue valueDrivable_lane_segmentsElementLane_intervalEnd(0.);
+  valueDrivable_lane_segmentsElementLane_interval.end = valueDrivable_lane_segmentsElementLane_intervalEnd;
+  bool valueDrivable_lane_segmentsElementLane_intervalWrong_way{true};
+  valueDrivable_lane_segmentsElementLane_interval.wrong_way = valueDrivable_lane_segmentsElementLane_intervalWrong_way;
+  valueDrivable_lane_segmentsElement.lane_interval = valueDrivable_lane_segmentsElementLane_interval;
+  ::ad::map::route::RouteLaneOffset valueDrivable_lane_segmentsElementRoute_lane_offset(
     std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
-  valueDrivableLaneSegmentsElement.routeLaneOffset = valueDrivableLaneSegmentsElementRouteLaneOffset;
-  valueDrivableLaneSegments.resize(1, valueDrivableLaneSegmentsElement);
-  value.drivableLaneSegments = valueDrivableLaneSegments;
-  ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
+  valueDrivable_lane_segmentsElement.route_lane_offset = valueDrivable_lane_segmentsElementRoute_lane_offset;
+  valueDrivable_lane_segments.resize(1, valueDrivable_lane_segmentsElement);
+  value.drivable_lane_segments = valueDrivable_lane_segments;
+  ::ad::map::route::SegmentCounter valueSegment_count_from_destination(
     std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
-  value.segmentCountFromDestination = valueSegmentCountFromDestination;
-  ::ad::map::point::BoundingSphere valueBoundingSphere;
-  ::ad::map::point::ECEFPoint valueBoundingSphereCenter;
-  ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterX(-6400000);
-  valueBoundingSphereCenter.x = valueBoundingSphereCenterX;
-  ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterY(-6400000);
-  valueBoundingSphereCenter.y = valueBoundingSphereCenterY;
-  ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
-  valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
-  valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
-  valueBoundingSphere.radius = valueBoundingSphereRadius;
-  value.boundingSphere = valueBoundingSphere;
+  value.segment_count_from_destination = valueSegment_count_from_destination;
+  ::ad::map::point::BoundingSphere valueBounding_sphere;
+  ::ad::map::point::ECEFPoint valueBounding_sphereCenter;
+  ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterX(-6400000);
+  valueBounding_sphereCenter.x = valueBounding_sphereCenterX;
+  ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterY(-6400000);
+  valueBounding_sphereCenter.y = valueBounding_sphereCenterY;
+  ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterZ(-6400000);
+  valueBounding_sphereCenter.z = valueBounding_sphereCenterZ;
+  valueBounding_sphere.center = valueBounding_sphereCenter;
+  ::ad::physics::Distance valueBounding_sphereRadius(-1e9);
+  valueBounding_sphere.radius = valueBounding_sphereRadius;
+  value.bounding_sphere = valueBounding_sphere;
 
   // override member with data type value below input range minimum
   ::ad::map::point::BoundingSphere invalidInitializedMember;
@@ -122,57 +122,57 @@ TEST(RoadSegmentValidInputRangeTests, testValidInputRangeBoundingSphereTooSmall)
   ::ad::map::point::ECEFCoordinate invalidInitializedMemberCenterX(-6400000 * 1.1);
   invalidInitializedMemberCenter.x = invalidInitializedMemberCenterX;
   invalidInitializedMember.center = invalidInitializedMemberCenter;
-  value.boundingSphere = invalidInitializedMember;
+  value.bounding_sphere = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }
 
-TEST(RoadSegmentValidInputRangeTests, testValidInputRangeBoundingSphereTooBig)
+TEST(RoadSegmentValidInputRangeTests, testValidInputRangeBounding_sphereTooBig)
 {
   ::ad::map::route::RoadSegment value;
-  ::ad::map::route::LaneSegmentList valueDrivableLaneSegments;
-  ::ad::map::route::LaneSegment valueDrivableLaneSegmentsElement;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementLeftNeighbor(1);
-  valueDrivableLaneSegmentsElement.leftNeighbor = valueDrivableLaneSegmentsElementLeftNeighbor;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementRightNeighbor(1);
-  valueDrivableLaneSegmentsElement.rightNeighbor = valueDrivableLaneSegmentsElementRightNeighbor;
-  ::ad::map::lane::LaneIdList valueDrivableLaneSegmentsElementPredecessors;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementPredecessorsElement(1);
-  valueDrivableLaneSegmentsElementPredecessors.resize(1, valueDrivableLaneSegmentsElementPredecessorsElement);
-  valueDrivableLaneSegmentsElement.predecessors = valueDrivableLaneSegmentsElementPredecessors;
-  ::ad::map::lane::LaneIdList valueDrivableLaneSegmentsElementSuccessors;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementSuccessorsElement(1);
-  valueDrivableLaneSegmentsElementSuccessors.resize(1, valueDrivableLaneSegmentsElementSuccessorsElement);
-  valueDrivableLaneSegmentsElement.successors = valueDrivableLaneSegmentsElementSuccessors;
-  ::ad::map::route::LaneInterval valueDrivableLaneSegmentsElementLaneInterval;
-  ::ad::map::lane::LaneId valueDrivableLaneSegmentsElementLaneIntervalLaneId(1);
-  valueDrivableLaneSegmentsElementLaneInterval.laneId = valueDrivableLaneSegmentsElementLaneIntervalLaneId;
-  ::ad::physics::ParametricValue valueDrivableLaneSegmentsElementLaneIntervalStart(0.);
-  valueDrivableLaneSegmentsElementLaneInterval.start = valueDrivableLaneSegmentsElementLaneIntervalStart;
-  ::ad::physics::ParametricValue valueDrivableLaneSegmentsElementLaneIntervalEnd(0.);
-  valueDrivableLaneSegmentsElementLaneInterval.end = valueDrivableLaneSegmentsElementLaneIntervalEnd;
-  bool valueDrivableLaneSegmentsElementLaneIntervalWrongWay{true};
-  valueDrivableLaneSegmentsElementLaneInterval.wrongWay = valueDrivableLaneSegmentsElementLaneIntervalWrongWay;
-  valueDrivableLaneSegmentsElement.laneInterval = valueDrivableLaneSegmentsElementLaneInterval;
-  ::ad::map::route::RouteLaneOffset valueDrivableLaneSegmentsElementRouteLaneOffset(
+  ::ad::map::route::LaneSegmentList valueDrivable_lane_segments;
+  ::ad::map::route::LaneSegment valueDrivable_lane_segmentsElement;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementLeft_neighbor(1);
+  valueDrivable_lane_segmentsElement.left_neighbor = valueDrivable_lane_segmentsElementLeft_neighbor;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementRight_neighbor(1);
+  valueDrivable_lane_segmentsElement.right_neighbor = valueDrivable_lane_segmentsElementRight_neighbor;
+  ::ad::map::lane::LaneIdList valueDrivable_lane_segmentsElementPredecessors;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementPredecessorsElement(1);
+  valueDrivable_lane_segmentsElementPredecessors.resize(1, valueDrivable_lane_segmentsElementPredecessorsElement);
+  valueDrivable_lane_segmentsElement.predecessors = valueDrivable_lane_segmentsElementPredecessors;
+  ::ad::map::lane::LaneIdList valueDrivable_lane_segmentsElementSuccessors;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementSuccessorsElement(1);
+  valueDrivable_lane_segmentsElementSuccessors.resize(1, valueDrivable_lane_segmentsElementSuccessorsElement);
+  valueDrivable_lane_segmentsElement.successors = valueDrivable_lane_segmentsElementSuccessors;
+  ::ad::map::route::LaneInterval valueDrivable_lane_segmentsElementLane_interval;
+  ::ad::map::lane::LaneId valueDrivable_lane_segmentsElementLane_intervalLane_id(1);
+  valueDrivable_lane_segmentsElementLane_interval.lane_id = valueDrivable_lane_segmentsElementLane_intervalLane_id;
+  ::ad::physics::ParametricValue valueDrivable_lane_segmentsElementLane_intervalStart(0.);
+  valueDrivable_lane_segmentsElementLane_interval.start = valueDrivable_lane_segmentsElementLane_intervalStart;
+  ::ad::physics::ParametricValue valueDrivable_lane_segmentsElementLane_intervalEnd(0.);
+  valueDrivable_lane_segmentsElementLane_interval.end = valueDrivable_lane_segmentsElementLane_intervalEnd;
+  bool valueDrivable_lane_segmentsElementLane_intervalWrong_way{true};
+  valueDrivable_lane_segmentsElementLane_interval.wrong_way = valueDrivable_lane_segmentsElementLane_intervalWrong_way;
+  valueDrivable_lane_segmentsElement.lane_interval = valueDrivable_lane_segmentsElementLane_interval;
+  ::ad::map::route::RouteLaneOffset valueDrivable_lane_segmentsElementRoute_lane_offset(
     std::numeric_limits<::ad::map::route::RouteLaneOffset>::lowest());
-  valueDrivableLaneSegmentsElement.routeLaneOffset = valueDrivableLaneSegmentsElementRouteLaneOffset;
-  valueDrivableLaneSegments.resize(1, valueDrivableLaneSegmentsElement);
-  value.drivableLaneSegments = valueDrivableLaneSegments;
-  ::ad::map::route::SegmentCounter valueSegmentCountFromDestination(
+  valueDrivable_lane_segmentsElement.route_lane_offset = valueDrivable_lane_segmentsElementRoute_lane_offset;
+  valueDrivable_lane_segments.resize(1, valueDrivable_lane_segmentsElement);
+  value.drivable_lane_segments = valueDrivable_lane_segments;
+  ::ad::map::route::SegmentCounter valueSegment_count_from_destination(
     std::numeric_limits<::ad::map::route::SegmentCounter>::lowest());
-  value.segmentCountFromDestination = valueSegmentCountFromDestination;
-  ::ad::map::point::BoundingSphere valueBoundingSphere;
-  ::ad::map::point::ECEFPoint valueBoundingSphereCenter;
-  ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterX(-6400000);
-  valueBoundingSphereCenter.x = valueBoundingSphereCenterX;
-  ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterY(-6400000);
-  valueBoundingSphereCenter.y = valueBoundingSphereCenterY;
-  ::ad::map::point::ECEFCoordinate valueBoundingSphereCenterZ(-6400000);
-  valueBoundingSphereCenter.z = valueBoundingSphereCenterZ;
-  valueBoundingSphere.center = valueBoundingSphereCenter;
-  ::ad::physics::Distance valueBoundingSphereRadius(-1e9);
-  valueBoundingSphere.radius = valueBoundingSphereRadius;
-  value.boundingSphere = valueBoundingSphere;
+  value.segment_count_from_destination = valueSegment_count_from_destination;
+  ::ad::map::point::BoundingSphere valueBounding_sphere;
+  ::ad::map::point::ECEFPoint valueBounding_sphereCenter;
+  ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterX(-6400000);
+  valueBounding_sphereCenter.x = valueBounding_sphereCenterX;
+  ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterY(-6400000);
+  valueBounding_sphereCenter.y = valueBounding_sphereCenterY;
+  ::ad::map::point::ECEFCoordinate valueBounding_sphereCenterZ(-6400000);
+  valueBounding_sphereCenter.z = valueBounding_sphereCenterZ;
+  valueBounding_sphere.center = valueBounding_sphereCenter;
+  ::ad::physics::Distance valueBounding_sphereRadius(-1e9);
+  valueBounding_sphere.radius = valueBounding_sphereRadius;
+  value.bounding_sphere = valueBounding_sphere;
 
   // override member with data type value above input range maximum
   ::ad::map::point::BoundingSphere invalidInitializedMember;
@@ -180,6 +180,6 @@ TEST(RoadSegmentValidInputRangeTests, testValidInputRangeBoundingSphereTooBig)
   ::ad::map::point::ECEFCoordinate invalidInitializedMemberCenterX(6400000 * 1.1);
   invalidInitializedMemberCenter.x = invalidInitializedMemberCenterX;
   invalidInitializedMember.center = invalidInitializedMemberCenter;
-  value.boundingSphere = invalidInitializedMember;
+  value.bounding_sphere = invalidInitializedMember;
   ASSERT_FALSE(withinValidInputRange(value));
 }

@@ -24,16 +24,16 @@
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Acceleration.
  */
 inline ad::physics::Acceleration operator*(ad::physics::Acceleration const &value,
                                            ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::Acceleration const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::Acceleration result(p.mParametricValue * value.mAcceleration);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -45,13 +45,17 @@ inline ad::physics::Acceleration operator*(ad::physics::Acceleration const &valu
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Acceleration.
  */
 inline ad::physics::Acceleration operator*(ad::physics::ParametricValue const &p,
                                            ad::physics::Acceleration const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::Acceleration result(p.mParametricValue * value.mAcceleration);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -62,16 +66,16 @@ inline ad::physics::Acceleration operator*(ad::physics::ParametricValue const &p
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Acceleration.
  */
 inline ad::physics::Acceleration operator/(ad::physics::Acceleration const &value,
                                            ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::Acceleration const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::Acceleration result(value.mAcceleration / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -85,15 +89,15 @@ inline ad::physics::Acceleration operator/(ad::physics::Acceleration const &valu
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Angle.
  */
 inline ad::physics::Angle operator*(ad::physics::Angle const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::Angle const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::Angle result(p.mParametricValue * value.mAngle);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -105,12 +109,16 @@ inline ad::physics::Angle operator*(ad::physics::Angle const &value, ad::physics
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Angle.
  */
 inline ad::physics::Angle operator*(ad::physics::ParametricValue const &p, ad::physics::Angle const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::Angle result(p.mParametricValue * value.mAngle);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -121,15 +129,15 @@ inline ad::physics::Angle operator*(ad::physics::ParametricValue const &p, ad::p
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Angle.
  */
 inline ad::physics::Angle operator/(ad::physics::Angle const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::Angle const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::Angle result(value.mAngle / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -143,16 +151,16 @@ inline ad::physics::Angle operator/(ad::physics::Angle const &value, ad::physics
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::AngularAcceleration.
  */
 inline ad::physics::AngularAcceleration operator*(ad::physics::AngularAcceleration const &value,
                                                   ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::AngularAcceleration const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::AngularAcceleration result(p.mParametricValue * value.mAngularAcceleration);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -164,13 +172,17 @@ inline ad::physics::AngularAcceleration operator*(ad::physics::AngularAccelerati
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::AngularAcceleration.
  */
 inline ad::physics::AngularAcceleration operator*(ad::physics::ParametricValue const &p,
                                                   ad::physics::AngularAcceleration const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::AngularAcceleration result(p.mParametricValue * value.mAngularAcceleration);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -181,16 +193,16 @@ inline ad::physics::AngularAcceleration operator*(ad::physics::ParametricValue c
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::AngularAcceleration.
  */
 inline ad::physics::AngularAcceleration operator/(ad::physics::AngularAcceleration const &value,
                                                   ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::AngularAcceleration const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::AngularAcceleration result(value.mAngularAcceleration / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -204,16 +216,16 @@ inline ad::physics::AngularAcceleration operator/(ad::physics::AngularAccelerati
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::AngularVelocity.
  */
 inline ad::physics::AngularVelocity operator*(ad::physics::AngularVelocity const &value,
                                               ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::AngularVelocity const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::AngularVelocity result(p.mParametricValue * value.mAngularVelocity);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -225,13 +237,17 @@ inline ad::physics::AngularVelocity operator*(ad::physics::AngularVelocity const
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::AngularVelocity.
  */
 inline ad::physics::AngularVelocity operator*(ad::physics::ParametricValue const &p,
                                               ad::physics::AngularVelocity const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::AngularVelocity result(p.mParametricValue * value.mAngularVelocity);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -242,16 +258,16 @@ inline ad::physics::AngularVelocity operator*(ad::physics::ParametricValue const
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::AngularVelocity.
  */
 inline ad::physics::AngularVelocity operator/(ad::physics::AngularVelocity const &value,
                                               ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::AngularVelocity const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::AngularVelocity result(value.mAngularVelocity / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -265,15 +281,15 @@ inline ad::physics::AngularVelocity operator/(ad::physics::AngularVelocity const
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Distance.
  */
 inline ad::physics::Distance operator*(ad::physics::Distance const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::Distance const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::Distance result(p.mParametricValue * value.mDistance);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -285,12 +301,16 @@ inline ad::physics::Distance operator*(ad::physics::Distance const &value, ad::p
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Distance.
  */
 inline ad::physics::Distance operator*(ad::physics::ParametricValue const &p, ad::physics::Distance const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::Distance result(p.mParametricValue * value.mDistance);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -301,15 +321,15 @@ inline ad::physics::Distance operator*(ad::physics::ParametricValue const &p, ad
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Distance.
  */
 inline ad::physics::Distance operator/(ad::physics::Distance const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::Distance const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::Distance result(value.mDistance / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -323,16 +343,16 @@ inline ad::physics::Distance operator/(ad::physics::Distance const &value, ad::p
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::DistanceSquared.
  */
 inline ad::physics::DistanceSquared operator*(ad::physics::DistanceSquared const &value,
                                               ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::DistanceSquared const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::DistanceSquared result(p.mParametricValue * value.mDistanceSquared);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -344,13 +364,17 @@ inline ad::physics::DistanceSquared operator*(ad::physics::DistanceSquared const
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::DistanceSquared.
  */
 inline ad::physics::DistanceSquared operator*(ad::physics::ParametricValue const &p,
                                               ad::physics::DistanceSquared const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::DistanceSquared result(p.mParametricValue * value.mDistanceSquared);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -361,16 +385,16 @@ inline ad::physics::DistanceSquared operator*(ad::physics::ParametricValue const
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::DistanceSquared.
  */
 inline ad::physics::DistanceSquared operator/(ad::physics::DistanceSquared const &value,
                                               ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::DistanceSquared const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::DistanceSquared result(value.mDistanceSquared / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -384,15 +408,15 @@ inline ad::physics::DistanceSquared operator/(ad::physics::DistanceSquared const
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Duration.
  */
 inline ad::physics::Duration operator*(ad::physics::Duration const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::Duration const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::Duration result(p.mParametricValue * value.mDuration);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -404,12 +428,16 @@ inline ad::physics::Duration operator*(ad::physics::Duration const &value, ad::p
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Duration.
  */
 inline ad::physics::Duration operator*(ad::physics::ParametricValue const &p, ad::physics::Duration const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::Duration result(p.mParametricValue * value.mDuration);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -420,15 +448,15 @@ inline ad::physics::Duration operator*(ad::physics::ParametricValue const &p, ad
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Duration.
  */
 inline ad::physics::Duration operator/(ad::physics::Duration const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::Duration const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::Duration result(value.mDuration / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -442,16 +470,16 @@ inline ad::physics::Duration operator/(ad::physics::Duration const &value, ad::p
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::DurationSquared.
  */
 inline ad::physics::DurationSquared operator*(ad::physics::DurationSquared const &value,
                                               ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::DurationSquared const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::DurationSquared result(p.mParametricValue * value.mDurationSquared);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -463,13 +491,17 @@ inline ad::physics::DurationSquared operator*(ad::physics::DurationSquared const
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::DurationSquared.
  */
 inline ad::physics::DurationSquared operator*(ad::physics::ParametricValue const &p,
                                               ad::physics::DurationSquared const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::DurationSquared result(p.mParametricValue * value.mDurationSquared);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -480,16 +512,16 @@ inline ad::physics::DurationSquared operator*(ad::physics::ParametricValue const
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::DurationSquared.
  */
 inline ad::physics::DurationSquared operator/(ad::physics::DurationSquared const &value,
                                               ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::DurationSquared const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::DurationSquared result(value.mDurationSquared / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -503,16 +535,16 @@ inline ad::physics::DurationSquared operator/(ad::physics::DurationSquared const
  *
  * @returns parametric = p1 * p2
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::ParametricValue.
  */
 inline ad::physics::ParametricValue operator*(ad::physics::ParametricValue const &p1,
                                               ad::physics::ParametricValue const &p2)
 {
   p1.ensureValid();
   p2.ensureValid();
-  ad::physics::ParametricValue const result(static_cast<double>(p1) * static_cast<double>(p2));
-  result.ensureValid();
+  ad::physics::ParametricValue result(p1.mParametricValue * p2.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -526,15 +558,15 @@ inline ad::physics::ParametricValue operator*(ad::physics::ParametricValue const
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Probability.
  */
 inline ad::physics::Probability operator*(ad::physics::Probability const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::Probability const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::Probability result(p.mParametricValue * value.mProbability);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -546,12 +578,16 @@ inline ad::physics::Probability operator*(ad::physics::Probability const &value,
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Probability.
  */
 inline ad::physics::Probability operator*(ad::physics::ParametricValue const &p, ad::physics::Probability const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::Probability result(p.mParametricValue * value.mProbability);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -562,15 +598,15 @@ inline ad::physics::Probability operator*(ad::physics::ParametricValue const &p,
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Probability.
  */
 inline ad::physics::Probability operator/(ad::physics::Probability const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::Probability const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::Probability result(value.mProbability / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -584,15 +620,15 @@ inline ad::physics::Probability operator/(ad::physics::Probability const &value,
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::RatioValue.
  */
 inline ad::physics::RatioValue operator*(ad::physics::RatioValue const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::RatioValue const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::RatioValue result(p.mParametricValue * value.mRatioValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -604,15 +640,15 @@ inline ad::physics::RatioValue operator*(ad::physics::RatioValue const &value, a
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::RatioValue.
  */
 inline ad::physics::RatioValue operator/(ad::physics::RatioValue const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::RatioValue const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::RatioValue result(value.mRatioValue / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -626,15 +662,15 @@ inline ad::physics::RatioValue operator/(ad::physics::RatioValue const &value, a
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Speed.
  */
 inline ad::physics::Speed operator*(ad::physics::Speed const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::Speed const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::Speed result(p.mParametricValue * value.mSpeed);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -646,12 +682,16 @@ inline ad::physics::Speed operator*(ad::physics::Speed const &value, ad::physics
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Speed.
  */
 inline ad::physics::Speed operator*(ad::physics::ParametricValue const &p, ad::physics::Speed const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::Speed result(p.mParametricValue * value.mSpeed);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -662,15 +702,15 @@ inline ad::physics::Speed operator*(ad::physics::ParametricValue const &p, ad::p
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Speed.
  */
 inline ad::physics::Speed operator/(ad::physics::Speed const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::Speed const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::Speed result(value.mSpeed / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -684,16 +724,16 @@ inline ad::physics::Speed operator/(ad::physics::Speed const &value, ad::physics
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::SpeedSquared.
  */
 inline ad::physics::SpeedSquared operator*(ad::physics::SpeedSquared const &value,
                                            ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::SpeedSquared const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::SpeedSquared result(p.mParametricValue * value.mSpeedSquared);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -705,13 +745,17 @@ inline ad::physics::SpeedSquared operator*(ad::physics::SpeedSquared const &valu
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::SpeedSquared.
  */
 inline ad::physics::SpeedSquared operator*(ad::physics::ParametricValue const &p,
                                            ad::physics::SpeedSquared const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::SpeedSquared result(p.mParametricValue * value.mSpeedSquared);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -722,16 +766,16 @@ inline ad::physics::SpeedSquared operator*(ad::physics::ParametricValue const &p
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::SpeedSquared.
  */
 inline ad::physics::SpeedSquared operator/(ad::physics::SpeedSquared const &value,
                                            ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::SpeedSquared const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::SpeedSquared result(value.mSpeedSquared / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -745,15 +789,15 @@ inline ad::physics::SpeedSquared operator/(ad::physics::SpeedSquared const &valu
  *
  * @returns value = value * p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Weight.
  */
 inline ad::physics::Weight operator*(ad::physics::Weight const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValid();
   value.ensureValid();
-  ad::physics::Weight const result(static_cast<double>(p) * static_cast<double>(value));
-  result.ensureValid();
+  ad::physics::Weight result(p.mParametricValue * value.mWeight);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 
@@ -765,12 +809,16 @@ inline ad::physics::Weight operator*(ad::physics::Weight const &value, ad::physi
  *
  * @returns value = p * value
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid
+ * \note throws a std::out_of_range exception if one of the two operands is not valid.
+ * \note The result is restricted to the limits of ad::physics::Weight.
  */
 inline ad::physics::Weight operator*(ad::physics::ParametricValue const &p, ad::physics::Weight const &value)
 {
-  return operator*(value, p);
+  p.ensureValid();
+  value.ensureValid();
+  ad::physics::Weight result(p.mParametricValue * value.mWeight);
+  result.restrictToLimitsAndEnsureValid();
+  return result;
 }
 
 /*!
@@ -781,14 +829,14 @@ inline ad::physics::Weight operator*(ad::physics::ParametricValue const &p, ad::
  *
  * @returns value = value / p
  *
- * \note throws a std::out_of_range exception if one of the two operands or the result of
- *   the operation is not valid or if the divisor is zero
+ * \note throws a std::out_of_range exception if one of the two operands is not valid or if the divisor is zero
+ * \note The result is restricted to the limits of ad::physics::Weight.
  */
 inline ad::physics::Weight operator/(ad::physics::Weight const &value, ad::physics::ParametricValue const &p)
 {
   p.ensureValidNonZero();
   value.ensureValid();
-  ad::physics::Weight const result(static_cast<double>(value) / static_cast<double>(p));
-  result.ensureValid();
+  ad::physics::Weight result(value.mWeight / p.mParametricValue);
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }

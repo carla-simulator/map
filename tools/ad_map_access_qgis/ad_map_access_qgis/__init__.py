@@ -5,11 +5,24 @@
 # SPDX-License-Identifier: MIT
 #
 # ----------------- END LICENSE BLOCK -----------------------------------
-"Entry point for QGIS plug-ins."
 
-import sys
-import os.path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import sys  # noqa
+import os.path  # noqa
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # noqa
+
+import Globs
+import Logger
+from .ADMapQgs import ADMapQgs
+from .MapRoutingTest import MapRoutingTest
+from .MapPredictionTest import MapPredictionTest
+from .MapSnapper import MapSnapper
+from .MapSnappingTest import MapSnappingTest
+from .LaneCorrectionTool import LaneCorrectionTool
+from .LaneViewer import LaneViewer
+from .PolygonOperation import PolygonOperation
+from .QGISUI import QGISUI
+from utility import *
+import ad_map_access as ad
 import qgis.utils
 from qgis.gui import QgsMessageBar
 from qgis.core import QgsMessageLog
@@ -18,17 +31,8 @@ from PyQt5.QtWidgets import QAction, QFileDialog
 from qgis.PyQt.QtGui import *
 from qgis.PyQt.QtWidgets import *
 
-import ad_map_access as ad
-import Globs
-import Logger
-from .ADMapQgs import ADMapQgs
-from .MapRoutingTest import MapRoutingTest
-from .MapPredictionTest import MapPredictionTest
-from .MapSnapper import MapSnapper
-from .MapSnappingTest import MapSnappingTest
-from .LaneViewer import LaneViewer
-from .QGISUI import QGISUI
-from utility import *
+
+"Entry point for QGIS plug-ins."
 
 
 def classFactory(iface):  # pylint: disable=invalid-name
@@ -46,15 +50,17 @@ class Main(object):
 
     "..."
 
-    NEW_MAP = "&New map"
     LOAD = "&Load..."
     UNLOAD = "&Unload"
+    EXPORT_MAP = "&Export"
     SET_ALT = "Set snap altitude"
     SNAP = "Snapping test"
     ROUTE = "Routing test"
     RROUTE = "Routing restart"
     PREDICT = "Prediction test"
     ENABLE_ALL_LANE_IDS = "ID"
+    SELECT_POLYGON = "Create polygon"
+    LANE_CORRECTION = "Lane Correction"
 
     def __init__(self):
         "..."
@@ -71,13 +77,17 @@ class Main(object):
         self.ui.add_separator()
         self.__add_action__(self.LOAD, self.__map_load__, False)
         self.__add_action__(self.UNLOAD, self.__map_unload__)
-        self.__add_action__(self.SET_ALT, self.__set_alt__)
+        self.__add_action__(self.EXPORT_MAP, self.__map_export__)
         self.__add_action__(self.SNAP, self.__map_snapping__)
         self.__add_action__(self.ROUTE, self.__map_routing__)
         self.__add_action__(self.RROUTE, self.__map_rrouting__)
         self.__add_action__(self.PREDICT, self.__map_predition__)
         self.ui.add_separator()
-        self.__add_action__(self.ENABLE_ALL_LANE_IDS, self.__enable_all__)
+        self.__add_action__(self.SET_ALT, self.__set_alt__)
+        self.__add_action__(self.ENABLE_ALL_LANE_IDS, self.__enable_all_lane_ids__)
+        self.ui.add_separator()
+        self.__add_action__(self.SELECT_POLYGON, self.__create_polygon__)
+        self.__add_action__(self.LANE_CORRECTION, self.__lane_correction__)
         self.ui.add_separator()
         self.update_ui()
         Globs.log.info("CARLA ad_map_access Plug-in loaded.")
@@ -89,14 +99,14 @@ class Main(object):
         Globs.log.info("CARLA ad_map_access Plug-in removed.")
 
     def __open_map__(self, file_name):
-        "..."
+
         init_map_succeeded = False
         if file_name.endswith('.xodr'):
             open_drive_file = open(file_name, 'r')
             open_drive_content = open_drive_file.read()
             open_drive_file.close()
             init_map_succeeded = ad.map.access.initFromOpenDriveContent(
-                open_drive_content, 0.2, ad.map.intersection.IntersectionType.Unknown, ad.map.landmark.TrafficLightType.UNKNOWN)
+                open_drive_content, 0.2, ad.map.intersection.IntersectionType.PriorityToRight, ad.map.landmark.TrafficLightType.UNKNOWN)
             if init_map_succeeded and not ad.map.access.isENUReferencePointSet():
                 ad.map.access.setENUReferencePoint(ad.map.point.createGeoPoint(ad.map.point.Longitude(
                     8.4421163), ad.map.point.Latitude(49.0192671), ad.map.point.Altitude(0.)))
@@ -115,7 +125,13 @@ class Main(object):
         else:
             Globs.log.error("Failed to init ad_map_access with map file '{}'".format(file_name))
 
-        return False
+    def __export_map__(self, file_name):
+
+        export_map_succeeded = ad.map.access.saveAsAdm(file_name)
+        if export_map_succeeded:
+            Globs.log.info("Saved map to file '{}'.".format(file_name))
+        else:
+            Globs.log.error("Failed to save map to file '{}'.".format(file_name))
 
     def __select_file_name__(self):
         "..."
@@ -143,6 +159,15 @@ class Main(object):
         self.update_ui()
         Globs.log.info("Map cleared.")
 
+    def __map_export__(self):
+        "..."
+        title = "Store CARLA ad_map_access binary file..."
+        default_name = os.path.splitext(self.file_name[0])[0] + ".adm"
+        file_name = QFileDialog.getSaveFileName(None, title, default_name, "ad_map_access binary file (*.adm)")
+        if file_name:
+            Globs.log.info("Exporting data to " + file_name[0] + " ...")
+            self.__export_map__(file_name[0])
+
     def __map_routing__(self):
         "..."
         self.__toggle_tool__(self.ROUTE)
@@ -156,17 +181,28 @@ class Main(object):
         "..."
         self.__toggle_tool__(self.PREDICT)
 
+    def __lane_correction__(self):
+        "..."
+        self.__toggle_tool__(self.LANE_CORRECTION)
+
     def __map_snapping__(self):
         "..."
         self.__toggle_tool__(self.SNAP)
 
-    def __enable_all__(self):
+    def __enable_all_lane_ids__(self):
         "..."
-        self.__toggle_tool__(self.ENABLE_ALL_LANE_IDS)
+        self.action_tool[self.ENABLE_ALL_LANE_IDS][1].toggle()
+
+    def __create_polygon__(self):
+        "..."
+        self.__toggle_tool__(self.SELECT_POLYGON)
 
     def __set_alt__(self):
         "..."
-        self.__toggle_tool__(self.SET_ALT)
+        tool = self.action_tool[self.SET_ALT][1]
+        tool.toggle()
+        if tool.action.isChecked():
+            self.__toggle_tool__(self.SET_ALT)
 
     def __toggle_tool__(self, action_name, force=False):
         "..."
@@ -187,8 +223,6 @@ class Main(object):
         Globs.dirty_lanes = []
         self.admap.remove_lanes(Globs.removed_lanes)
         Globs.removed_lanes = []
-        self.admap.remove_partitions(Globs.removed_partitions)
-        Globs.removed_partitions = []
         self.update_ui()
 
     def lane_topo_refresh(self, lane_id):
@@ -203,14 +237,14 @@ class Main(object):
             action.setChecked(False)
         for action in self.actions_map_loaded:
             action.setEnabled(map_loaded)
-            action.setChecked(False)
         active_map_tool = Globs.iface.mapCanvas().mapTool()
         for action_name in self.action_tool:
-            action = self.action_tool[action_name][0]
-            if self.action_tool[action_name][1] == active_map_tool:
-                action.setChecked(True)
-            else:
-                action.setChecked(False)
+            if (action_name != self.ENABLE_ALL_LANE_IDS) and (action_name != self.SET_ALT):
+                action = self.action_tool[action_name][0]
+                if self.action_tool[action_name][1] == active_map_tool:
+                    action.setChecked(True)
+                else:
+                    action.setChecked(False)
         self.action_tool[self.RROUTE][0].setChecked(False)
 
     def __add_action__(self, text, callback, when_map_loaded=True):
@@ -236,15 +270,19 @@ class Main(object):
 
     def __create_map_tools__(self):
         "..."
+        Globs.log.info("Creating map tools...")
         snapper = self.__create_map_tool__(self.SET_ALT, MapSnapper)
         routing_test = self.__create_map_tool__(self.ROUTE, MapRoutingTest, snapper)
         prediction_test = self.__create_map_tool__(self.PREDICT, MapPredictionTest, snapper)
         snapping_test = self.__create_map_tool__(self.SNAP, MapSnappingTest, snapper)
         view_test = self.__create_map_tool__(self.ENABLE_ALL_LANE_IDS, LaneViewer)
+        lane_correction = self.__create_map_tool__(self.LANE_CORRECTION, LaneCorrectionTool)
+        create_polygon = self.__create_map_tool__(self.SELECT_POLYGON, PolygonOperation, snapper)
 
         routing_test.layer_group = self.admap.layers.layer_group_misc()
         prediction_test.layer_group = self.admap.layers.layer_group_misc()
         snapping_test.layer_group = self.admap.layers.layer_group_misc()
+        Globs.log.info("Map tools created.")
 
     def __destroy_map_tools__(self):
         "..."

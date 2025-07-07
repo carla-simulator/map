@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -24,7 +24,7 @@
 TEST(PartitionIdTests, minIsDefinedAsExpected)
 {
   EXPECT_EQ(0u, ::ad::map::access::PartitionId::cMinValue);
-  EXPECT_EQ(::ad::map::access::PartitionId::cMinValue, static_cast<uint64_t>(::ad::map::access::PartitionId::getMin()));
+  EXPECT_EQ(::ad::map::access::PartitionId::cMinValue, ::ad::map::access::PartitionId::getMin().mPartitionId);
 }
 
 TEST(PartitionIdTests, minIsValid)
@@ -65,14 +65,14 @@ TEST(PartitionIdTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(PartitionIdTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_EQ(static_cast<uint64_t>(::ad::map::access::PartitionId::getMin()),
-            static_cast<uint64_t>(std::numeric_limits<::ad::map::access::PartitionId>::lowest()));
+  EXPECT_EQ(::ad::map::access::PartitionId::getMin().mPartitionId,
+            std::numeric_limits<::ad::map::access::PartitionId>::lowest().mPartitionId);
 }
 
 TEST(PartitionIdTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_EQ(static_cast<uint64_t>(::ad::map::access::PartitionId::getMax()),
-            static_cast<uint64_t>(std::numeric_limits<::ad::map::access::PartitionId>::max()));
+  EXPECT_EQ(::ad::map::access::PartitionId::getMax().mPartitionId,
+            std::numeric_limits<::ad::map::access::PartitionId>::max().mPartitionId);
 }
 
 TEST(PartitionIdTests, copyConstructionFromValidValue)
@@ -80,7 +80,7 @@ TEST(PartitionIdTests, copyConstructionFromValidValue)
   ::ad::map::access::PartitionId const validValue(::ad::map::access::PartitionId::cMinValue);
   ::ad::map::access::PartitionId value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<uint64_t>(validValue), static_cast<uint64_t>(value));
+  EXPECT_EQ(validValue.mPartitionId, value.mPartitionId);
 }
 
 TEST(PartitionIdTests, moveConstructionFromValidValue)
@@ -88,7 +88,7 @@ TEST(PartitionIdTests, moveConstructionFromValidValue)
   ::ad::map::access::PartitionId validValue(::ad::map::access::PartitionId::cMinValue);
   ::ad::map::access::PartitionId value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::access::PartitionId::cMinValue, static_cast<uint64_t>(value));
+  EXPECT_EQ(::ad::map::access::PartitionId::cMinValue, value.mPartitionId);
 }
 
 TEST(PartitionIdTests, assignmentFromValidValue)
@@ -97,7 +97,7 @@ TEST(PartitionIdTests, assignmentFromValidValue)
   ::ad::map::access::PartitionId value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(static_cast<uint64_t>(validValue), static_cast<uint64_t>(value));
+  EXPECT_EQ(validValue.mPartitionId, value.mPartitionId);
 }
 
 TEST(PartitionIdTests, moveAssignmentFromValidValue)
@@ -106,7 +106,7 @@ TEST(PartitionIdTests, moveAssignmentFromValidValue)
   ::ad::map::access::PartitionId value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_EQ(::ad::map::access::PartitionId::cMinValue, static_cast<uint64_t>(value));
+  EXPECT_EQ(::ad::map::access::PartitionId::cMinValue, value.mPartitionId);
 }
 
 TEST(PartitionIdTests, selfAssignment)
@@ -144,18 +144,16 @@ TEST(PartitionIdTests, arithmeticOperators)
   ::ad::map::access::PartitionId maxValue(::ad::map::access::PartitionId::cMaxValue);
   ::ad::map::access::PartitionId result;
 
-  ASSERT_EQ(static_cast<uint64_t>(minValue + minValue),
+  ASSERT_EQ((minValue + minValue).mPartitionId,
             ::ad::map::access::PartitionId::cMinValue + ::ad::map::access::PartitionId::cMinValue);
   result = minValue;
   result += minValue;
-  ASSERT_EQ(static_cast<uint64_t>(result),
-            ::ad::map::access::PartitionId::cMinValue + ::ad::map::access::PartitionId::cMinValue);
-  ASSERT_EQ(static_cast<uint64_t>(maxValue - minValue),
+  ASSERT_EQ(result.mPartitionId, ::ad::map::access::PartitionId::cMinValue + ::ad::map::access::PartitionId::cMinValue);
+  ASSERT_EQ((maxValue - minValue).mPartitionId,
             ::ad::map::access::PartitionId::cMaxValue - ::ad::map::access::PartitionId::cMinValue);
   result = maxValue;
   result -= minValue;
-  ASSERT_EQ(static_cast<uint64_t>(result),
-            ::ad::map::access::PartitionId::cMaxValue - ::ad::map::access::PartitionId::cMinValue);
+  ASSERT_EQ(result.mPartitionId, ::ad::map::access::PartitionId::cMaxValue - ::ad::map::access::PartitionId::cMinValue);
 }
 
 #if defined(__clang__) && (__clang_major__ >= 7)

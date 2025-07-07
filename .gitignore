@@ -3,3 +3,5 @@
 /log/
 __pycache__/
 *\.pyc
+ad_map_access/tests/test_files/Town01.adm.txt
+map-build-venv/

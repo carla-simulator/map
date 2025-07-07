@@ -39,7 +39,7 @@ find_package(ad_map_opendrive_reader ${CARLA-MAP_VERSION} EXACT REQUIRED CONFIG)
 find_package(ad_physics ${CARLA-MAP_VERSION} EXACT REQUIRED CONFIG)
 find_package(spdlog REQUIRED CONFIG)
 
-include(generated/ad_map_access.cmake)
+file(GLOB_RECURSE ad_map_access_GENERATED_SOURCES "${CMAKE_CURRENT_LIST_DIR}/generated/*.cpp")
 
 add_library(${PROJECT_NAME}
   ${ad_map_access_GENERATED_SOURCES}
@@ -51,19 +51,19 @@ add_library(${PROJECT_NAME}
   ${CMAKE_CURRENT_SOURCE_DIR}/src/access/Store.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/access/StoreSerialization.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/config/MapConfigFileHandler.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/geometry/PolygonOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/intersection/CoreIntersection.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/intersection/Intersection.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/landmark/LandmarkOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/lane/BorderOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/lane/LaneOperation.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/lane/MapAreaOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/match/AdMapMatching.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/match/MapMatchedOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/opendrive/AdMapFactory.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/opendrive/DataTypeConversion.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/point/BoundingSphereOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/point/CoordinateTransform.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/point/ECEFOperation.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/point/ENUOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/point/GeometryOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/point/GeoOperation.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/point/HeadingOperation.cpp
@@ -149,6 +149,7 @@ install(FILES
 # Tests
 #####################################################################
 if (BUILD_TESTING)
+  add_subdirectory(test_support)
   add_subdirectory(tests)
 endif()
 

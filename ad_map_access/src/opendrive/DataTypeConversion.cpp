@@ -345,13 +345,13 @@ point::ECEFPoint toECEF(::opendrive::Point const &point)
 
 point::Geometry toGeometry(std::vector<::opendrive::Point> edgePoints)
 {
-  point::ECEFEdge ecefEdge;
+  point::ECEFPointList ecef_points;
   for (auto const &point : edgePoints)
   {
-    ecefEdge.push_back(toECEF(point));
+    ecef_points.push_back(toECEF(point));
   }
 
-  return point::createGeometry(ecefEdge, false);
+  return point::createGeometry(ecef_points, false);
 }
 
 } // namespace opendrive

@@ -273,6 +273,15 @@ public:
    */
   bool onlySolidTrafficLightsOnRoute();
 
+  /**
+   * @brief checks the contact type within the contact type list.
+   *
+   * @param[in] types the list of the contact types.
+   *
+   * @return IntersectionType the type of the intersection based on the contact
+   */
+  static IntersectionType intersectionTypeFromContactTypes(lane::ContactTypeList const &types);
+
 private:
   /**
    * @brief checks if is an solid traffic light.
@@ -388,7 +397,7 @@ private:
   //! the speed limit of this intersection
   physics::Speed mSpeedLimit;
 
-  void extractRightOfWayAndCollectTrafficLights(route::LaneInterval const &laneInterval,
+  void extractRightOfWayAndCollectTrafficLights(route::LaneInterval const &lane_interval,
                                                 lane::LaneIdSet const &successors,
                                                 lane::LaneId &toLaneId);
 
@@ -531,7 +540,7 @@ private:
   bool turnDirectionCrossesStraightTraffic() const;
 
   /** @brief gather all traffic lights that apply when going from fromLaneId to toLaneId */
-  void collectTrafficLights(lane::LaneId fromLaneId, lane::LaneId toLaneId, bool useSuccessor);
+  void collectTrafficLights(lane::LaneId fromLaneId, lane::LaneId toLaneId);
 
   lane::LaneIdSet successorsOnRouteLeavingIntersection(route::FullRoute const &route,
                                                        route::RoadSegmentList::const_iterator const &roadSegmentIt,
@@ -539,7 +548,7 @@ private:
 
   bool segmentLeavesIntersectionOnRoute(route::FullRoute const &route,
                                         route::RoadSegmentList::const_iterator const &roadSegmentIt,
-                                        lane::LaneId laneId);
+                                        lane::LaneId lane_id);
 
   lane::LaneIdSet successorsOnRouteLeavingIntersection(route::LaneSegment const &laneSegment);
 
@@ -549,7 +558,7 @@ private:
    * @brief Add the lane and all successor of it within the intersection to the
    * list of lanes with higher priority.
    *
-   * @param laneId LaneId
+   * @param lane_id LaneId
    * @param restrictToOutgoingIntersectionArm if not set to Unknown, the lanes to be added are restricted
    *  in addition to lanes which leave the intersection at the respective intersection arm
    */
@@ -573,7 +582,7 @@ private:
    * @brief Add the lane and all successor of it within the intersection to the
    * list of lanes with higher priority in case the lane is crossing with the route.
    *
-   * @param laneId LaneId
+   * @param lane_id LaneId
    * @param restrictToOutgoingIntersectionArm if not set to Unknown, the lanes to be added are restricted
    *  in addition to lanes which leave the intersection at the respective intersection arm
    */
@@ -594,12 +603,12 @@ private:
   /**
    * @brief Check if from a lane one is able to leave the intersection at the respective intersection arm
    *
-   * @param laneId LaneId of lane to check
+   * @param lane_id LaneId of lane to check
    * @param outgoingIntersectionArm the outgoind intersection arm index to consider
    *
    * @returns \c true if the lane belongs to a path that can exit the intersection at the given intersection arm
    */
-  bool outgoingIntersectionArmCanBeReached(lane::LaneId const laneId, TurnDirection const outgoingIntersectionArm);
+  bool outgoingIntersectionArmCanBeReached(lane::LaneId const lane_id, TurnDirection const outgoingIntersectionArm);
 };
 
 } // namespace intersection
@@ -629,3 +638,14 @@ static inline std::string to_string(::ad::map::intersection::Intersection const 
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::intersection::Intersection> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::intersection::Intersection const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};

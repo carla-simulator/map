@@ -15,6 +15,7 @@
 #include <string>
 
 #include "ad/map/access/Types.hpp"
+#include "ad/map/intersection/Types.hpp"
 #include "ad/map/landmark/Types.hpp"
 #include "ad/map/lane/Types.hpp"
 #include "ad/map/point/Types.hpp"
@@ -70,7 +71,7 @@ public: // Atomic Operations -- Main
    * @returns New lane identifier. It will be invalid if not successful.
    * \note Lane Type will be set to NORMAL and Lane Direction to POSITIVE.
    */
-  lane::LaneId add(PartitionId part_id, const point::GeoEdge &left_geo, const point::GeoEdge &right_geo);
+  lane::LaneId add(PartitionId part_id, const point::GeoPointList &left_geo, const point::GeoPointList &right_geo);
 
   /**
    * @brief Add new intersection lane to the store.
@@ -84,8 +85,8 @@ public: // Atomic Operations -- Main
    *            SUCCESSOR/PREDECESSOR contacts will be added to involved lanes.
    */
   lane::LaneId add(PartitionId part_id,
-                   const point::ECEFEdge &left_ecef,
-                   const point::ECEFEdge &right_ecef,
+                   const point::ECEFPointList &left_ecef,
+                   const point::ECEFPointList &right_ecef,
                    const lane::LaneId &lane_id_0,
                    const lane::LaneId &lane_id_1);
 
@@ -329,6 +330,23 @@ public: // Atomic operations -- remove things
    */
   bool deleteLandmark(landmark::LandmarkId id);
 
+public: // change things
+  /**
+   * @brief Method to be called to change a secific contact type of a lane.
+   *     All contact occurences of the given old_contact type are replaced by
+   *     the given new_contact type
+   * @param[in] id_from   From-Lane Identifier.
+   * @param[in] id_to     Identifier of object to which connection is leading.
+   * @param[in] old_contact The original contact type to be replaced.
+   * @param[in] new_contact The new contact type to be set.
+   *
+   * @returns true if the operation succeeeded.
+   */
+  bool changeLaneContact(const lane::LaneId &id_from,
+                         const lane::LaneId &id_to,
+                         const lane::ContactType &old_contact,
+                         const lane::ContactType &new_contact);
+
 public: // Other methods
   /**
    * @brief Creates missing topological contacts from one lane to another.
@@ -339,14 +357,48 @@ public: // Other methods
    */
   bool autoConnect(lane::LaneId from_lane_id, lane::LaneId to_lane_id);
 
+  /**
+   * @brief Correct lane border.
+   * @param[in] from_lane_id First lane identifer. That lane's border to be corrected.
+   * @param[in] to_lane_id Second lane identifier. The reference lane try to connect to by shortening/enlarging the
+   * other lane.
+   * @returns True if correction was perfomred.
+   * \note Method is limited to small adaptions of the borders below one meter!
+   */
+  bool correctLaneBorder(lane::LaneId from_lane_id, lane::LaneId to_lane_id);
+
+  /**
+   * @brief Sets the default Intersection type.
+   * @param[in] defaultIntersectionType The type of intersection to be set as default.
+   */
+  void setDefaultIntersectionType(intersection::IntersectionType const defaultIntersectionType);
+
+  /**
+   * @brief Sets the default Traffic Light type.
+   * @param[in] defaultTrafficLightType The type of traffic light to be set as default.
+   */
+  void setDefaultTrafficLightType(landmark::TrafficLightType const defaultTrafficLightType);
+
+  /**
+   * @brief Adds default contacts to lanes at intersection entries if no contact information has been added yet.
+   */
+  void addDefaultIntersectionContacts();
+
 private: // Aux Methods
          /**
           * @returns Next available lane identifer.
           */
   lane::LaneId getNextLaneId() const;
 
-protected:       // Data Members
+protected:
+  /**
+   * @brief Creates default access restrictions, i.e. all vehicles are allowed.
+   */
+  restriction::Restrictions createRoadRestrictions() const;
+
   Store &mStore; ///< Store on which this Factory operates.
+  intersection::IntersectionType mDefaultIntersectionType{intersection::IntersectionType::Unknown};
+  landmark::TrafficLightType mDefaultTrafficLightType{landmark::TrafficLightType::INVALID};
 };
 
 } // namespace access

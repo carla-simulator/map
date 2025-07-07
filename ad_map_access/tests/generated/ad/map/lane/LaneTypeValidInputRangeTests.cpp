@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -31,6 +31,7 @@ TEST(LaneTypeValidInputRangeTests, testValidInputRangeValid)
   ASSERT_TRUE(withinValidInputRange(::ad::map::lane::LaneType::OVERTAKING));
   ASSERT_TRUE(withinValidInputRange(::ad::map::lane::LaneType::TURN));
   ASSERT_TRUE(withinValidInputRange(::ad::map::lane::LaneType::BIKE));
+  ASSERT_TRUE(withinValidInputRange(::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE));
 }
 
 TEST(LaneTypeValidInputRangeTests, testValidInputRangeInvalid)
@@ -48,6 +49,7 @@ TEST(LaneTypeValidInputRangeTests, testValidInputRangeInvalid)
   minValue = std::min(minValue, static_cast<int32_t>(::ad::map::lane::LaneType::OVERTAKING));
   minValue = std::min(minValue, static_cast<int32_t>(::ad::map::lane::LaneType::TURN));
   minValue = std::min(minValue, static_cast<int32_t>(::ad::map::lane::LaneType::BIKE));
+  minValue = std::min(minValue, static_cast<int32_t>(::ad::map::lane::LaneType::OPENDRIVE_REFERENCE_LINE));
 
   ASSERT_FALSE(withinValidInputRange(static_cast<::ad::map::lane::LaneType>(minValue - 1)));
 }

@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -228,9 +228,9 @@ void Road::invertRoadDirection()
 {
   std::set<MapDataId> polylineIds;
 
-  for (auto &laneId : mCreatedLanes)
+  for (auto &lane_id : mCreatedLanes)
   {
-    auto &lane = mStore.lane(laneId);
+    auto &lane = mStore.lane(lane_id);
     lane.invertLaneDirection(mStore, false);
     polylineIds.insert(lane.rightBorder);
     polylineIds.insert(lane.leftBorder);
@@ -254,9 +254,9 @@ void Road::invertRoadDirection()
 
 void Road::convertToLeftHandTraffic()
 {
-  for (auto &laneId : mCreatedLanes)
+  for (auto &lane_id : mCreatedLanes)
   {
-    auto &lane = mStore.lane(laneId);
+    auto &lane = mStore.lane(lane_id);
     if (lane.drivingDirection == DrivingDirection::Forward)
     {
       lane.drivingDirection = DrivingDirection::Backward;
@@ -296,9 +296,9 @@ void Road::addForwardLane(MapDataId rightBorderId)
     leftBorderId = mStore.lane(mForwardLanes.back()).rightBorder;
   }
   Lane lane(mId, leftBorderId, rightBorderId, calculateDrivingDirection(DrivingDirection::Forward));
-  MapDataId laneId = mStore.addLane(lane);
-  mForwardLanes.push_back(laneId);
-  mCreatedLanes.push_back(laneId);
+  MapDataId lane_id = mStore.addLane(lane);
+  mForwardLanes.push_back(lane_id);
+  mCreatedLanes.push_back(lane_id);
 }
 
 void Road::addBackwardLane(MapDataId leftBorderId)
@@ -309,9 +309,9 @@ void Road::addBackwardLane(MapDataId leftBorderId)
     rightBorderId = mStore.lane(mBackwardLanes.back()).leftBorder;
   }
   Lane lane(mId, leftBorderId, rightBorderId, calculateDrivingDirection(DrivingDirection::Backward));
-  MapDataId laneId = mStore.addLane(lane);
-  mBackwardLanes.push_back(laneId);
-  mCreatedLanes.insert(mCreatedLanes.begin(), laneId);
+  MapDataId lane_id = mStore.addLane(lane);
+  mBackwardLanes.push_back(lane_id);
+  mCreatedLanes.insert(mCreatedLanes.begin(), lane_id);
 }
 
 void Road::assignLeftRightLaneNeighbors() const
@@ -320,8 +320,8 @@ void Road::assignLeftRightLaneNeighbors() const
   {
     auto leftId = mCreatedLanes[k - 1];
     auto rightId = mCreatedLanes[k];
-    mStore.lane(leftId).rightNeighbor = rightId;
-    mStore.lane(rightId).leftNeighbor = leftId;
+    mStore.lane(leftId).right_neighbor = rightId;
+    mStore.lane(rightId).left_neighbor = leftId;
   }
 }
 
@@ -523,10 +523,10 @@ void Road::assignSuccPredLaneNeighbors() const
 // Intersects all the polylines contained in this road
 bool Road::fullyIntersects(geometry::Line2d const &line) const
 {
-  for (auto const &laneId : mCreatedLanes)
+  for (auto const &lane_id : mCreatedLanes)
   {
-    auto const &leftBorder = mStore.polyLine(mStore.lane(laneId).leftBorder);
-    auto const &rightBorder = mStore.polyLine(mStore.lane(laneId).rightBorder);
+    auto const &leftBorder = mStore.polyLine(mStore.lane(lane_id).leftBorder);
+    auto const &rightBorder = mStore.polyLine(mStore.lane(lane_id).rightBorder);
     geometry::Polyline2d leftBorderGeometry = polylineToGeometry(mStore, leftBorder);
     geometry::Polyline2d rightBorderGeometry = polylineToGeometry(mStore, rightBorder);
 
@@ -572,10 +572,10 @@ bool Road::crop(geometry::Line2d const &line, bool reverse)
 
   // The upcoming operations are done directly on the store to avoid issues.
 
-  for (auto const &laneId : mCreatedLanes)
+  for (auto const &lane_id : mCreatedLanes)
   {
-    auto const &leftBorder = mStore.polyLine(mStore.lane(laneId).leftBorder);
-    auto const &rightBorder = mStore.polyLine(mStore.lane(laneId).rightBorder);
+    auto const &leftBorder = mStore.polyLine(mStore.lane(lane_id).leftBorder);
+    auto const &rightBorder = mStore.polyLine(mStore.lane(lane_id).rightBorder);
     geometry::Polyline2d leftBorderGeometry = polylineToGeometry(mStore, leftBorder);
     geometry::Polyline2d rightBorderGeometry = polylineToGeometry(mStore, rightBorder);
 
@@ -600,8 +600,8 @@ bool Road::crop(geometry::Line2d const &line, bool reverse)
     auto newLeftBorderId = mStore.addPolyLine(newLeftBorder);
     auto newRightBorderId = mStore.addPolyLine(newRightBorder);
 
-    mStore.lane(laneId).leftBorder = newLeftBorderId;
-    mStore.lane(laneId).rightBorder = newRightBorderId;
+    mStore.lane(lane_id).leftBorder = newLeftBorderId;
+    mStore.lane(lane_id).rightBorder = newRightBorderId;
   }
 
   return true;
@@ -648,10 +648,10 @@ MapDataId Road::split(geometry::Line2d const &line, bool reverse)
   // weird ability of the method to edit other lanes but not itself, so to guarantee
   // the edition is better to edit it via the store
 
-  for (auto const &laneId : mCreatedLanes)
+  for (auto const &lane_id : mCreatedLanes)
   {
-    auto const &leftBorder = mStore.polyLine(mStore.lane(laneId).leftBorder);
-    auto const &rightBorder = mStore.polyLine(mStore.lane(laneId).rightBorder);
+    auto const &leftBorder = mStore.polyLine(mStore.lane(lane_id).leftBorder);
+    auto const &rightBorder = mStore.polyLine(mStore.lane(lane_id).rightBorder);
     geometry::Polyline2d leftBorderGeometry = polylineToGeometry(mStore, leftBorder);
     geometry::Polyline2d rightBorderGeometry = polylineToGeometry(mStore, rightBorder);
 
@@ -676,8 +676,8 @@ MapDataId Road::split(geometry::Line2d const &line, bool reverse)
     auto newLeftBorderId = mStore.addPolyLine(newLeftBorder);
     auto newRightBorderId = mStore.addPolyLine(newRightBorder);
 
-    mStore.lane(laneId).leftBorder = newLeftBorderId;
-    mStore.lane(laneId).rightBorder = newRightBorderId;
+    mStore.lane(lane_id).leftBorder = newLeftBorderId;
+    mStore.lane(lane_id).rightBorder = newRightBorderId;
   }
 
   return newRoadId;

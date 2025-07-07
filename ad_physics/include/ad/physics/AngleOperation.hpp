@@ -30,8 +30,8 @@ inline ad::physics::Angle operator*(ad::physics::AngularVelocity const &v, ad::p
 {
   v.ensureValid();
   t.ensureValid();
-  ad::physics::Angle const s(static_cast<double>(v) * static_cast<double>(t));
-  s.ensureValid();
+  ad::physics::Angle s(v.mAngularVelocity * t.mDuration);
+  s.restrictToLimitsAndEnsureValid();
   return s;
 }
 
@@ -48,7 +48,11 @@ inline ad::physics::Angle operator*(ad::physics::AngularVelocity const &v, ad::p
  */
 inline ad::physics::Angle operator*(ad::physics::Duration const &t, ad::physics::AngularVelocity const &v)
 {
-  return operator*(v, t);
+  t.ensureValid();
+  v.ensureValid();
+  ad::physics::Angle s(v.mAngularVelocity * t.mDuration);
+  s.restrictToLimitsAndEnsureValid();
+  return s;
 }
 
 /*!
@@ -66,8 +70,8 @@ inline ad::physics::AngularVelocity operator*(ad::physics::AngularAcceleration c
 {
   a.ensureValid();
   t.ensureValid();
-  ad::physics::AngularVelocity const v(static_cast<double>(a) * static_cast<double>(t));
-  v.ensureValid();
+  ad::physics::AngularVelocity v(a.mAngularAcceleration * t.mDuration);
+  v.restrictToLimitsAndEnsureValid();
   return v;
 }
 
@@ -84,7 +88,11 @@ inline ad::physics::AngularVelocity operator*(ad::physics::AngularAcceleration c
  */
 inline ad::physics::AngularVelocity operator*(ad::physics::Duration const &t, ad::physics::AngularAcceleration const &a)
 {
-  return operator*(a, t);
+  t.ensureValid();
+  a.ensureValid();
+  ad::physics::AngularVelocity v(a.mAngularAcceleration * t.mDuration);
+  v.restrictToLimitsAndEnsureValid();
+  return v;
 }
 
 /*!
@@ -119,7 +127,7 @@ static const Angle cPI_2(M_PI_2);
 inline Angle normalizeAngle(Angle const &angle)
 {
   angle.ensureValid();
-  double normalizedAngle = std::fmod(static_cast<double>(angle), 2. * M_PI);
+  double normalizedAngle = std::fmod(angle.mAngle, 2. * M_PI);
   if (normalizedAngle < 0.)
   {
     normalizedAngle += 2. * M_PI;
@@ -135,7 +143,7 @@ inline Angle normalizeAngle(Angle const &angle)
 inline Angle normalizeAngleSigned(Angle const &angle)
 {
   angle.ensureValid();
-  double normalizedAngle = std::fmod(static_cast<double>(angle) + M_PI, 2. * M_PI);
+  double normalizedAngle = std::fmod(angle.mAngle + M_PI, 2. * M_PI);
   if (normalizedAngle <= 0.)
   {
     normalizedAngle += M_PI;
@@ -160,7 +168,7 @@ namespace std {
 inline double sin(ad::physics::Angle const &angle)
 {
   angle.ensureValid();
-  return sin(static_cast<double>(angle));
+  return sin(angle.mAngle);
 }
 
 /*!
@@ -171,7 +179,7 @@ inline double sin(ad::physics::Angle const &angle)
 inline double cos(ad::physics::Angle const &angle)
 {
   angle.ensureValid();
-  return cos(static_cast<double>(angle));
+  return cos(angle.mAngle);
 }
 
 /*!
@@ -182,7 +190,7 @@ inline double cos(ad::physics::Angle const &angle)
 inline double tan(ad::physics::Angle const &angle)
 {
   angle.ensureValid();
-  return tan(static_cast<double>(angle));
+  return tan(angle.mAngle);
 }
 
 } // namespace std

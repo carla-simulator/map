@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -20,6 +20,9 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include "spdlog/fmt/ostr.h"
+#include "spdlog/spdlog.h"
+
 /*!
  * @brief namespace ad
  */
@@ -43,33 +46,33 @@ namespace route {
 enum class ConnectingRouteType : int32_t
 {
   /*!
-   * There exists no connecting route (according to the search length/distance restrictions): both routeA and routeB are
-   * empty
+   * There exists no connecting route (according to the search length/distance restrictions): both route_a and route_b
+   * are empty
    */
   Invalid = 0,
 
   /*!
    * A and B are driving in same direction: one is able to reach the other by driving
    * forward, but not vice versa
-   * If A is in front of B: routeA is empty, routeB contains the route part from B towards
-   * A
-   * If B is in front of A: routeB is empty, routeA contains the route part from A towards
-   * B
+   * If A is in front of B: route_a is empty, route_b contains the route part from B
+   * towards A
+   * If B is in front of A: route_b is empty, route_a contains the route part from A
+   * towards B
    */
   Following = 1,
 
   /*!
    * A and B driving in opposite direction: both are able to reach each other by driving
    * forward:
-   * routeA contains the route part from A towards B and routeB the inverted route part
-   * from B towards A.
+   * route_a contains the route part from A towards B and route_b the inverted route
+   * part from B towards A.
    */
   Opposing = 2,
 
   /*!
    * A and B can reach each other directly, but their routes merge at some point:
-   * routeA contains the route part from A towards the merge point
-   * routeB contains the route part from B towards the merge point
+   * route_a contains the route part from A towards the merge point
+   * route_b contains the route part from B towards the merge point
    */
   Merging = 3
 };
@@ -169,4 +172,16 @@ inline std::string to_string(::ad::map::route::ConnectingRouteType const &value)
   return ::toString(value);
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::route::ConnectingRouteType> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::route::ConnectingRouteType const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_ROUTE_CONNECTINGROUTETYPE

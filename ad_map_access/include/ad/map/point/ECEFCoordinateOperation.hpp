@@ -22,7 +22,7 @@
 inline ::ad::map::point::ECEFCoordinate operator*(::ad::map::point::ECEFCoordinate const &a,
                                                   ::ad::physics::Distance const &b)
 {
-  return ::ad::map::point::ECEFCoordinate(static_cast<double>(a) * static_cast<double>(b));
+  return a * b.mDistance;
 }
 
 /**
@@ -33,7 +33,7 @@ inline ::ad::map::point::ECEFCoordinate operator*(::ad::map::point::ECEFCoordina
 inline ::ad::map::point::ECEFCoordinate operator*(::ad::physics::Distance const &b,
                                                   ::ad::map::point::ECEFCoordinate const &a)
 {
-  return ::ad::map::point::ECEFCoordinate(static_cast<double>(a) * static_cast<double>(b));
+  return a * b.mDistance;
 }
 
 /**
@@ -44,7 +44,7 @@ inline ::ad::map::point::ECEFCoordinate operator*(::ad::physics::Distance const 
 inline ::ad::map::point::ECEFCoordinate operator/(::ad::map::point::ECEFCoordinate const &a,
                                                   ::ad::physics::Distance const &b)
 {
-  return a / static_cast<double>(b);
+  return a / b.mDistance;
 }
 
 /**
@@ -55,5 +55,5 @@ inline ::ad::map::point::ECEFCoordinate operator/(::ad::map::point::ECEFCoordina
 inline ::ad::map::point::ECEFCoordinate operator*(::ad::map::point::ECEFCoordinate const &a,
                                                   ::ad::map::point::ECEFCoordinate const &b)
 {
-  return ::ad::map::point::ECEFCoordinate(static_cast<double>(a) * static_cast<double>(b));
+  return a * b.mECEFCoordinate;
 }

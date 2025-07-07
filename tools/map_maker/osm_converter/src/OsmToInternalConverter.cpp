@@ -318,11 +318,11 @@ geometry::Point2d OsmToInternalConverter::successorPoint(RoadGeometry const &roa
   auto const successorOffset = (mAdjustLateralOffsetOfRoads ? startOffset(successorRoad) : 0.);
 
   auto const &previousPoint = geometryPoints[geometryPoints.size() - 2];
-  auto const &centerPoint = geometryPoints[geometryPoints.size() - 1];
+  auto const &center_point = geometryPoints[geometryPoints.size() - 1];
   auto const &nextPoint = successorGeometryPoints[1];
 
   auto const totalOffset = 0.5 * offsetAtEnd + 0.5 * successorOffset;
-  auto const contactPoint = geometry::threePointShift(previousPoint, centerPoint, nextPoint, totalOffset);
+  auto const contactPoint = geometry::threePointShift(previousPoint, center_point, nextPoint, totalOffset);
   return contactPoint;
 }
 
@@ -338,11 +338,11 @@ geometry::Point2d OsmToInternalConverter::predecessorPoint(RoadGeometry const &r
   auto const predecessorOffset = (mAdjustLateralOffsetOfRoads ? endOffset(predecessorRoad) : 0.);
 
   auto const &previousPoint = predecessorGeometryPoints[predecessorGeometryPoints.size() - 2];
-  auto const &centerPoint = geometryPoints[0];
+  auto const &center_point = geometryPoints[0];
   auto const &nextPoint = geometryPoints[1];
 
   auto const totalOffset = 0.5 * offsetAtStart + 0.5 * predecessorOffset;
-  auto const contactPoint = geometry::threePointShift(previousPoint, centerPoint, nextPoint, totalOffset);
+  auto const contactPoint = geometry::threePointShift(previousPoint, center_point, nextPoint, totalOffset);
   return contactPoint;
 }
 
@@ -645,9 +645,9 @@ void OsmToInternalConverter::convertPois()
       mark.type = fromPoiType(poiType);
       mark.location = pointId;
       mark.orientation = M_PI_2;
-      auto landmarkId = mMapDataStore.addLandmark(mark);
-      mMapDataStore.landmark(landmarkId).index = landmarkId;
-      mLog(common::LogLevel::Verbose) << " Map node (landmark) " << landmarkId << " with nodeId " << nodeId << " to "
+      auto landmark_id = mMapDataStore.addLandmark(mark);
+      mMapDataStore.landmark(landmark_id).index = landmark_id;
+      mLog(common::LogLevel::Verbose) << " Map node (landmark) " << landmark_id << " with nodeId " << nodeId << " to "
                                       << pointId << "\n";
     }
   }
@@ -778,9 +778,9 @@ void OsmToInternalConverter::generateTrafficLight(LandmarkOnCenterLine const &da
       }
     }
 
-    const auto landmarkId = mMapDataStore.addLandmark(mark);
-    road.mTrafficLights.push_back(landmarkId);
-    mLog(common::LogLevel::Verbose) << " Adding traffic light with " << landmarkId << " and nodeId " << data.nodeId
+    const auto landmark_id = mMapDataStore.addLandmark(mark);
+    road.mTrafficLights.push_back(landmark_id);
+    mLog(common::LogLevel::Verbose) << " Adding traffic light with " << landmark_id << " and nodeId " << data.nodeId
                                     << " and position " << geoPlacements[i] << " " << mark.location << "\n";
   }
 
@@ -950,10 +950,10 @@ void OsmToInternalConverter::generateTrafficSign(LandmarkOnCenterLine const &dat
     }
     mark.heightOverGround = cTrafficLightDistanceToGround;
 
-    const auto landmarkId = mMapDataStore.addLandmark(mark);
-    mMapDataStore.landmark(landmarkId).index = landmarkId;
-    road.mTrafficSigns.push_back(landmarkId);
-    mLog(common::LogLevel::Verbose) << " Adding traffic sign with " << landmarkId << " and nodeId " << data.nodeId
+    const auto landmark_id = mMapDataStore.addLandmark(mark);
+    mMapDataStore.landmark(landmark_id).index = landmark_id;
+    road.mTrafficSigns.push_back(landmark_id);
+    mLog(common::LogLevel::Verbose) << " Adding traffic sign with " << landmark_id << " and nodeId " << data.nodeId
                                     << " and position " << mark.location << "\n";
   }
 }

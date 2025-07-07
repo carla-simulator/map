@@ -41,31 +41,31 @@ struct LandmarkTestBase : public ::testing::Test
   {
     static lane::LaneId currentLaneId(10);
     currentLaneId = currentLaneId + lane::LaneId(1);
-    lane::LaneId laneId = currentLaneId;
+    lane::LaneId lane_id = currentLaneId;
 
     // create lane
-    auto laneAddResult = mFactory->add(mPartitionId, laneId, lane::LaneType::NORMAL, lane::LaneDirection::POSITIVE);
+    auto laneAddResult = mFactory->add(mPartitionId, lane_id, lane::LaneType::NORMAL, lane::LaneDirection::POSITIVE);
     if (laneAddResult)
     {
       // left border
-      GeoEdge leftBorderPoints;
+      GeoPointList leftBorderPoints;
       leftBorderPoints.push_back(createGeoPoint(Longitude(8.3), Latitude(49.2), Altitude(115.)));
       leftBorderPoints.push_back(createGeoPoint(Longitude(8.5), Latitude(49.2), Altitude(115.)));
       // right border
-      GeoEdge rightBorderPoints;
+      GeoPointList rightBorderPoints;
       rightBorderPoints.push_back(createGeoPoint(Longitude(8.3), Latitude(49.), Altitude(115.)));
       rightBorderPoints.push_back(createGeoPoint(Longitude(8.5), Latitude(49.), Altitude(115.)));
 
       laneAddResult = mFactory->set(
-        laneId, createGeometry(toECEF(leftBorderPoints), false), createGeometry(toECEF(rightBorderPoints), false));
+        lane_id, createGeometry(toECEF(leftBorderPoints), false), createGeometry(toECEF(rightBorderPoints), false));
     }
 
     if (!laneAddResult)
     {
-      laneId = lane::LaneId();
+      lane_id = lane::LaneId();
     }
 
-    return laneId;
+    return lane_id;
   }
 
   void reinitFromWrittenMap(std::string const &fileName)

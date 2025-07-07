@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2021 Intel Corporation
+// Copyright (C) 2018-2022 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -16,6 +16,7 @@
 #include "ad/map/point/ENUOperation.hpp"
 #include "ad/map/point/GeoOperation.hpp"
 #include "ad/map/point/HeadingOperation.hpp"
+#include "ad/map/point/Transform.hpp"
 
 /** @brief namespace ad */
 namespace ad {
@@ -25,16 +26,44 @@ namespace map {
 namespace lane {
 
 /**
- * @brief Get the ENUEdge between the given border with corresponding lateralAlignment
+ * @brief lateral_alignment constant for the left edge
+ */
+const physics::ParametricValue cLateralAlignmentLeft{1.};
+
+/**
+ * @brief lateral_alignment constant for the right edge
+ */
+const physics::ParametricValue cLateralAlignmentRight{0.};
+
+/**
+ * @brief lateral_alignment constant for the center between left and right edge
+ */
+const physics::ParametricValue cLateralAlignmentCenter{0.5};
+
+/**
+ * @brief Get the ENUEdge between the given border with corresponding lateral_alignment
  *
  * @param[in] border the ENU border, the edge is calculated from
- * @param[in] lateralAlignment the lateral alignment as TParam [0.;1.] used to calculate the resulting edge.
- *   The lateral alignment is relative to the left edge. If lateralAlignment is 1., the left edge is returned,
- *   if lateralAlignment is 0., the right edge is returned
+ * @param[in] lateral_alignment the lateral alignment as TParam [0.;1.] used to calculate the resulting edge.
+ *   The lateral alignment is relative to the left edge. If lateral_alignment is 1., the left edge is returned (see also
+ * \a cLateralAlignmentLeftEdge),
+ *   if lateral_alignment is 0., the right edge is returned (see also \a cLateralAlignmentRightEdge)
  *
- * @throws std::invalid_argument if the lateralAlignment parameter is smaller than 0. or larger than 1.
+ * @throws std::invalid_argument if the lateral_alignment parameter is smaller than 0. or larger than 1.
  */
-point::ENUEdge getLateralAlignmentEdge(ENUBorder const &border, physics::ParametricValue const lateralAlignment);
+ENUEdge getLateralAlignmentEdge(ENUBorder const &border, physics::ParametricValue const lateral_alignment);
+
+/**
+ * @brief Get the ENUEdge between the given border with corresponding lateral_alignment
+ *
+ * @param[in] border the ENU border, the edge is calculated from
+ * @param[in] lateral_alignment the lateral alignment as RatioValue used to calculate the resulting edge.
+ *   The lateral alignment is relative to the left edge. If lateral_alignment is 1., the left edge is returned (see also
+ * \a cLateralAlignmentLeftEdge),
+ *   if lateral_alignment is 0., the right edge is returned (see also \a cLateralAlignmentRightEdge)
+ *   If lateral_alignment is smaller than 0. or larger than 1., the egde is actually outside of the border
+ */
+ENUEdge getLateralAlignmentEdge(ENUBorder const &border, physics::RatioValue const lateral_alignment);
 
 /**
  * @brief Get the distance between an ENU point and the lateral alignment edge
@@ -45,7 +74,7 @@ point::ENUEdge getLateralAlignmentEdge(ENUBorder const &border, physics::Paramet
  * @return calculated Distance
  */
 physics::Distance getDistanceEnuPointToLateralAlignmentEdge(point::ENUPoint const &enuPoint,
-                                                            point::ENUEdge const &lateralAlignmentEdge);
+                                                            ENUEdge const &lateralAlignmentEdge);
 
 /**
  * @brief normalizes the border
@@ -75,7 +104,7 @@ void normalizeBorder(ENUBorder &border, ENUBorder const *previousBorder = nullpt
  * @param[in] first the first edge (is untouched by the algorithm)
  * @param[in] second the second edge to be adapted if required to make the transition continuous
  */
-void makeTransitionToSecondEdgeContinuous(point::ENUEdge const &first, point::ENUEdge &second);
+void makeTransitionToSecondEdgeContinuous(ENUEdge const &first, ENUEdge &second);
 
 /**
  * @brief operation to make the transition between two borders continuous
@@ -101,7 +130,7 @@ void makeTransitionToSecondBorderContinuous(ENUBorder const &first, ENUBorder &s
  * @param[in] first the first edge to be adapted if required to make the transition continuous
  * @param[in] second the second edge (is untouched by the algorithm)
  */
-void makeTransitionFromFirstEdgeContinuous(point::ENUEdge &first, point::ENUEdge const &second);
+void makeTransitionFromFirstEdgeContinuous(ENUEdge &first, ENUEdge const &second);
 
 /**
  * @brief operation to make the transition between two borders continuous
@@ -114,34 +143,44 @@ void makeTransitionFromFirstEdgeContinuous(point::ENUEdge &first, point::ENUEdge
  */
 void makeTransitionFromFirstBorderContinuous(ENUBorder &first, ENUBorder const &second);
 
+/** @brief calculate the length of the provided edge as distance value
+ *
+ * Length calculation is performed within Cartesian ENU coordinate frame.
+ */
+physics::Distance calcLength(ENUEdge const &edge);
+
+/** @brief calculate the length of the provided border as distance value
+ *
+ * Length calculation is performed within Cartesian ECEF coordinate frame.
+ */
+physics::Distance calcLength(ECEFEdge const &edge);
+
+/** @brief calculate the length of the provided border as distance value
+ *
+ * Length calculation is performed within Cartesian ECEF coordinate frame.
+ */
+physics::Distance calcLength(GeoEdge const &edge);
+
 /** @brief calculate the length of the provided border as distance value
  *
  * For length calculation the average between left and right edge of the border is returned.
  * Length calculation is performed within Cartesian ENU coordinate frame.
  */
-inline physics::Distance calcLength(ENUBorder const &border)
-{
-  return (calcLength(border.left) + calcLength(border.right)) / 2.;
-}
-/** @brief calculate the length of the provided border as distance value
- *
- * For length calculation the average between left and right edge of the border is returned.
- * Length calculation is performed within Cartesian ECEF coordinate frame.
- */
-inline physics::Distance calcLength(ECEFBorder const &border)
-{
-  return (calcLength(border.left) + calcLength(border.right)) / 2.;
-}
+physics::Distance calcLength(ENUBorder const &border);
 
 /** @brief calculate the length of the provided border as distance value
  *
  * For length calculation the average between left and right edge of the border is returned.
  * Length calculation is performed within Cartesian ECEF coordinate frame.
  */
-inline physics::Distance calcLength(GeoBorder const &border)
-{
-  return (calcLength(border.left) + calcLength(border.right)) / 2.;
-}
+physics::Distance calcLength(ECEFBorder const &border);
+
+/** @brief calculate the length of the provided border as distance value
+ *
+ * For length calculation the average between left and right edge of the border is returned.
+ * Length calculation is performed within Cartesian ECEF coordinate frame.
+ */
+physics::Distance calcLength(GeoBorder const &border);
 
 /** @brief calculate the length out of the provided ENU border List as distance value
  *
@@ -166,11 +205,103 @@ physics::Distance calcLength(GeoBorderList const &borderList);
 
 /** @brief calculate the ENUHeading of the vector<ENUBorder> at the given ENUPoint
  *
+ * @param[in] borderList the border list to search within
+ * @param[in] enuPoint the enuPoint to search
+ * @param[in] toleranceDistanceOutsideBorder allow a certain tolerance distance for the ENUPoint
+     to be allowed directly in front of the borders and directly after the borders. This can be
+     used if the enuPoint belongs to an object center that is directly standing in front/after the border,
+     but only touching with the front/back and the center beeing outside
+ *
  *  If the given ENUPoint is not within the given borders,
  *  an ENUHeading(2*M_PI) is returned.
  */
-point::ENUHeading getENUHeading(ENUBorderList const &borderList, point::ENUPoint const &enuPoint);
+point::ENUHeading getENUHeading(ENUBorderList const &borderList,
+                                point::ENUPoint const &enuPoint,
+                                physics::Distance const &toleranceDistanceOutsideBorder = physics::Distance(0.01));
 
+/**
+ * @brief perform coordinate transformation from ECEFEdge to GeoEdge
+ */
+inline GeoEdge toGeo(ECEFEdge const &edge)
+{
+  GeoEdge resultEdge;
+  resultEdge.edge_type = edge.edge_type;
+  resultEdge.lateral_alignment = edge.lateral_alignment;
+  resultEdge.points = toGeo(edge.points);
+  return resultEdge;
+}
+
+/**
+ * @brief perform coordinate transformation from ENUEdge to GeoEdge
+ *
+ * The transformation into ENU coordinate frame makes use of the globally set ENUReferencePoint
+ * (see AdMapAccess::setENUReferencePoint())
+ */
+inline GeoEdge toGeo(ENUEdge const &edge)
+{
+  GeoEdge resultEdge;
+  resultEdge.edge_type = edge.edge_type;
+  resultEdge.lateral_alignment = edge.lateral_alignment;
+  resultEdge.points = toGeo(edge.points);
+  return resultEdge;
+}
+
+/**
+ * @brief perform coordinate transformation from ECEFEdge to ENUEdge
+ *
+ * The transformation into ENU coordinate frame makes use of the globally set ENUReferencePoint
+ * (see AdMapAccess::setENUReferencePoint())
+ */
+inline ENUEdge toENU(ECEFEdge const &edge)
+{
+  ENUEdge resultEdge;
+  resultEdge.edge_type = edge.edge_type;
+  resultEdge.lateral_alignment = edge.lateral_alignment;
+  resultEdge.points = toENU(edge.points);
+  return resultEdge;
+}
+
+/**
+ * @brief perform coordinate transformation from GeoEdge to ENUEdge
+ *
+ * The transformation into ENU coordinate frame makes use of the globally set ENUReferencePoint
+ * (see AdMapAccess::setENUReferencePoint())
+ */
+inline ENUEdge toENU(GeoEdge const &edge)
+{
+  ENUEdge resultEdge;
+  resultEdge.edge_type = edge.edge_type;
+  resultEdge.lateral_alignment = edge.lateral_alignment;
+  resultEdge.points = toENU(edge.points);
+  return resultEdge;
+}
+
+/**
+ * @brief perform coordinate transformation from GeoEdge to ECEFEdge
+ */
+inline ECEFEdge toECEF(GeoEdge const &edge)
+{
+  ECEFEdge resultEdge;
+  resultEdge.edge_type = edge.edge_type;
+  resultEdge.lateral_alignment = edge.lateral_alignment;
+  resultEdge.points = toECEF(edge.points);
+  return resultEdge;
+}
+
+/**
+ * @brief perform coordinate transformation from ENUEdge to ECEFEdge
+ *
+ * The transformation into ENU coordinate frame makes use of the globally set ENUReferencePoint
+ * (see AdMapAccess::setENUReferencePoint())
+ */
+inline ECEFEdge toECEF(ENUEdge const &edge)
+{
+  ECEFEdge resultEdge;
+  resultEdge.edge_type = edge.edge_type;
+  resultEdge.lateral_alignment = edge.lateral_alignment;
+  resultEdge.points = toECEF(edge.points);
+  return resultEdge;
+}
 } // namespace lane
 } // namespace map
 } // namespace ad

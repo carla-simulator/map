@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -21,6 +21,30 @@
 TEST(AltitudeValidInputRangeTests, testValidInputRangeUninitialized)
 {
   ::ad::map::point::Altitude value;
+  ASSERT_FALSE(withinValidInputRange(value));
+}
+
+TEST(AltitudeValidInputRangeTests, testValidInputRangeMinOk)
+{
+  ::ad::map::point::Altitude value(-11000);
+  ASSERT_TRUE(withinValidInputRange(value));
+}
+
+TEST(AltitudeValidInputRangeTests, testValidInputRangeMaxOk)
+{
+  ::ad::map::point::Altitude value(9000);
+  ASSERT_TRUE(withinValidInputRange(value));
+}
+
+TEST(AltitudeValidInputRangeTests, testValidInputRangeBelowMin)
+{
+  ::ad::map::point::Altitude value(::ad::map::point::Altitude::cMinValue * 1.1);
+  ASSERT_FALSE(withinValidInputRange(value));
+}
+
+TEST(AltitudeValidInputRangeTests, testValidInputRangeExceedsMax)
+{
+  ::ad::map::point::Altitude value(::ad::map::point::Altitude::cMaxValue * 1.1);
   ASSERT_FALSE(withinValidInputRange(value));
 }
 

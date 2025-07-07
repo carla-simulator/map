@@ -114,7 +114,7 @@ private:
   //! holds all generated landmarks
   std::vector<LandmarkEntry> mGeneratedLandmarks;
   void addVisibleLandmarksToLanes();
-  void storeGeneratedLandmark(map_data::MapDataId const landmarkId, geometry::Point2d const &location);
+  void storeGeneratedLandmark(map_data::MapDataId const landmark_id, geometry::Point2d const &location);
   std::vector<geometry::Point2d> transformPolyline(map_data::MapDataId const borderId) const;
 
   //! Convert internal driving direction to admap driving direction

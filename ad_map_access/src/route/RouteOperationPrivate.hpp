@@ -15,7 +15,7 @@ namespace ad {
 namespace map {
 namespace route {
 
-void updateRouteLaneOffset(bool const rightNeighbor, RouteLaneOffset &routeLaneOffset, FullRoute &route);
+void updateRouteLaneOffset(bool const right_neighbor, RouteLaneOffset &route_lane_offset, FullRoute &route);
 void alignRouteStartingPoints(point::ParaPoint const &alignmentParaPoint, route::FullRoute &route);
 void alignRouteEndingPoints(point::ParaPoint const &alignmentParaPoint, route::FullRoute &route);
 

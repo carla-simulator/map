@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -33,8 +33,7 @@
  *
  * \note the specified input range is defined by
  *       std::numeric_limits<::ad::physics::Speed>::lowest() <= \c input <=
- * std::numeric_limits<::ad::physics::Speed>::max()
- *       -100. <= \c input <= 100.
+ * std::numeric_limits<::ad::physics::Speed>::max() -100. <= \c input <= 100.
  */
 inline bool withinValidInputRange(::ad::physics::Speed const &input, bool const logErrors = true)
 {

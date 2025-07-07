@@ -598,7 +598,7 @@ void OsmWayProcessor::configureDefaultLaneWidths(std::string const &laneWidthsCo
   }
 }
 
-bool getSpeedLimit(std::string attribute, double &speedLimit)
+bool getSpeedLimit(std::string attribute, double &speed_limit)
 {
   auto unitPosition = attribute.find(" mph"); // use ChandlerCampusCrosswalk.osm for testing
   double valueToKilometerPerHour{1.};
@@ -608,11 +608,11 @@ bool getSpeedLimit(std::string attribute, double &speedLimit)
     // convert from miles per hour into kilometer per hour
     valueToKilometerPerHour = OsmWayProcessor::mphToKmh;
   }
-  if (!common::doubleFromString(attribute.c_str(), speedLimit))
+  if (!common::doubleFromString(attribute.c_str(), speed_limit))
   {
     return false;
   }
-  speedLimit *= valueToKilometerPerHour;
+  speed_limit *= valueToKilometerPerHour;
   return true;
 }
 

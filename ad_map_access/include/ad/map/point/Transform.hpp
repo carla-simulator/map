@@ -44,9 +44,9 @@ inline ECEFPoint toECEF(ENUPoint const &point)
 /**
  * @brief perform coordinate transformation from ENUPoint to ECEFPoint
  *
- * The transformation into ENU coordinate frame makes use of the provided enuReferencePoint
+ * The transformation into ENU coordinate frame makes use of the provided enu_reference_point
  */
-ECEFPoint toECEF(ENUPoint const &point, GeoPoint const &enuReferencePoint);
+ECEFPoint toECEF(ENUPoint const &point, GeoPoint const &enu_reference_point);
 
 /**
  * @brief perform coordinate transformation from ECEFPoint to GeoPoint
@@ -70,9 +70,9 @@ inline GeoPoint toGeo(ENUPoint const &point)
 /**
  * @brief perform coordinate transformation from ENUPoint to GeoPoint
  *
- * The transformation into ENU coordinate frame makes use of the provided enuReferencePoint
+ * The transformation into ENU coordinate frame makes use of the provided enu_reference_point
  */
-GeoPoint toGeo(ENUPoint const &point, GeoPoint const &enuReferencePoint);
+GeoPoint toGeo(ENUPoint const &point, GeoPoint const &enu_reference_point);
 
 /**
  * @brief perform coordinate transformation from ECEFPoint to ENUPoint
@@ -99,116 +99,116 @@ inline ENUPoint toENU(GeoPoint const &point)
 /**
  * @brief perform coordinate transformation from ECEFPoint to ENUPoint
  *
- * The transformation into ENU coordinate frame makes use of the provided enuReferencePoint
+ * The transformation into ENU coordinate frame makes use of the provided enu_reference_point
  */
-ENUPoint toENU(ECEFPoint const &point, GeoPoint const &enuReferencePoint);
+ENUPoint toENU(ECEFPoint const &point, GeoPoint const &enu_reference_point);
 
 /**
  * @brief perform coordinate transformation from GeoPoint to ENUPoint
  *
- * The transformation into ENU coordinate frame makes use of the provided enuReferencePoint
+ * The transformation into ENU coordinate frame makes use of the provided enu_reference_point
  */
-ENUPoint toENU(GeoPoint const &point, GeoPoint const &enuReferencePoint);
+ENUPoint toENU(GeoPoint const &point, GeoPoint const &enu_reference_point);
 
 /**
- * @brief perform coordinate transformation from GeoEdge to ECEFEdge
+ * @brief perform coordinate transformation from GeoPointList to ECEFPointList
  */
-inline ECEFEdge toECEF(GeoEdge const &edge)
+inline ECEFPointList toECEF(GeoPointList const &pts)
 {
-  ECEFEdge resultEdge;
-  access::getCoordinateTransform()->convert(edge, resultEdge);
-  return resultEdge;
+  ECEFPointList resultPointList;
+  access::getCoordinateTransform()->convert(pts, resultPointList);
+  return resultPointList;
 }
 
 /**
- * @brief perform coordinate transformation from ENUEdge to ECEFEdge
+ * @brief perform coordinate transformation from ENUPointList to ECEFPointList
  *
  * The transformation into ENU coordinate frame makes use of the globally set ENUReferencePoint
  * (see AdMapAccess::setENUReferencePoint())
  */
-inline ECEFEdge toECEF(ENUEdge const &edge)
+inline ECEFPointList toECEF(ENUPointList const &pts)
 {
-  ECEFEdge resultEdge;
-  access::getCoordinateTransform()->convert(edge, resultEdge);
-  return resultEdge;
+  ECEFPointList resultPointList;
+  access::getCoordinateTransform()->convert(pts, resultPointList);
+  return resultPointList;
 }
 
 /**
- * @brief perform coordinate transformation from ENUEdge to ECEFEdge
+ * @brief perform coordinate transformation from ENUPointList to ECEFPointList
  *
  * The transformation into ENU coordinate frame makes use of the provided ENUReferencePoint
  */
-ECEFEdge toECEF(ENUEdge const &edge, GeoPoint const &enuReferencePoint);
+ECEFPointList toECEF(ENUPointList const &pts, GeoPoint const &enu_reference_point);
 
 /**
- * @brief perform coordinate transformation from ECEFEdge to GeoEdge
+ * @brief perform coordinate transformation from ECEFPointList to GeoPointList
  */
-inline GeoEdge toGeo(ECEFEdge const &edge)
+inline GeoPointList toGeo(ECEFPointList const &pts)
 {
-  GeoEdge resultEdge;
-  access::getCoordinateTransform()->convert(edge, resultEdge);
-  return resultEdge;
+  GeoPointList resultPointList;
+  access::getCoordinateTransform()->convert(pts, resultPointList);
+  return resultPointList;
 }
 
 /**
- * @brief perform coordinate transformation from ENUEdge to GeoEdge
+ * @brief perform coordinate transformation from ENUPointList to GeoPointList
  *
  * The transformation into ENU coordinate frame makes use of the globally set ENUReferencePoint
  * (see AdMapAccess::setENUReferencePoint())
  */
-inline GeoEdge toGeo(ENUEdge const &edge)
+inline GeoPointList toGeo(ENUPointList const &pts)
 {
-  GeoEdge resultEdge;
-  access::getCoordinateTransform()->convert(edge, resultEdge);
-  return resultEdge;
+  GeoPointList resultPointList;
+  access::getCoordinateTransform()->convert(pts, resultPointList);
+  return resultPointList;
 }
 
 /**
- * @brief perform coordinate transformation from ENUEdge to GeoEdge
+ * @brief perform coordinate transformation from ENUPointList to GeoPointList
  *
  * The transformation into ENU coordinate frame makes use of the provided ENUReferencePoint
  */
-GeoEdge toGeo(ENUEdge const &edge, GeoPoint const &enuReferencePoint);
+GeoPointList toGeo(ENUPointList const &pts, GeoPoint const &enu_reference_point);
 
 /**
- * @brief perform coordinate transformation from ECEFEdge to ENUEdge
+ * @brief perform coordinate transformation from ECEFPointList to ENUPointList
  *
  * The transformation into ENU coordinate frame makes use of the globally set ENUReferencePoint
  * (see AdMapAccess::setENUReferencePoint())
  */
-inline ENUEdge toENU(ECEFEdge const &edge)
+inline ENUPointList toENU(ECEFPointList const &pts)
 {
-  ENUEdge resultEdge;
-  access::getCoordinateTransform()->convert(edge, resultEdge);
-  return resultEdge;
+  ENUPointList resultPointList;
+  access::getCoordinateTransform()->convert(pts, resultPointList);
+  return resultPointList;
 }
 
 /**
- * @brief perform coordinate transformation from GeoEdge to ENUEdge
+ * @brief perform coordinate transformation from GeoPointList to ENUPointList
  *
  * The transformation into ENU coordinate frame makes use of the globally set ENUReferencePoint
  * (see AdMapAccess::setENUReferencePoint())
  */
-inline ENUEdge toENU(GeoEdge const &edge)
+inline ENUPointList toENU(GeoPointList const &pts)
 {
-  ENUEdge resultEdge;
-  access::getCoordinateTransform()->convert(edge, resultEdge);
-  return resultEdge;
+  ENUPointList resultPointList;
+  access::getCoordinateTransform()->convert(pts, resultPointList);
+  return resultPointList;
 }
 
 /**
- * @brief perform coordinate transformation from ECEFEdge to ENUEdge
+ * @brief perform coordinate transformation from ECEFPointList to ENUPointList
  *
  * The transformation into ENU coordinate frame makes use of the provided ENUReferencePoint
  */
-ENUEdge toENU(ECEFEdge const &edge, GeoPoint const &enuReferencePoint);
+ENUPointList toENU(ECEFPointList const &pts, GeoPoint const &enu_reference_point);
 
 /**
- * @brief perform coordinate transformation from GeoEdge to ENUEdge
+ * @brief perform coordinate transformation from GeoPointList to ENUPointList
  *
  * The transformation into ENU coordinate frame makes use of the provided ENUReferencePoint
  */
-ENUEdge toENU(GeoEdge const &edge, GeoPoint const &enuReferencePoint);
+ENUPointList toENU(GeoPointList const &pts, GeoPoint const &enu_reference_point);
 
 } // namespace point
 } // namespace map

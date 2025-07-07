@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -40,9 +40,9 @@ inline bool withinValidInputRange(::ad::map::config::MapEntry const &input, bool
 {
   // check for generic member input ranges
   bool inValidInputRange = true;
-  inValidInputRange = withinValidInputRange(input.openDriveOverlapMargin, logErrors)
-    && withinValidInputRange(input.openDriveDefaultIntersectionType, logErrors)
-    && withinValidInputRange(input.openDriveDefaultTrafficLightType, logErrors);
+  inValidInputRange = withinValidInputRange(input.open_drive_overlap_margin, logErrors)
+    && withinValidInputRange(input.open_drive_default_intersection_type, logErrors)
+    && withinValidInputRange(input.open_drive_default_traffic_light_type, logErrors);
   if (!inValidInputRange && logErrors)
   {
     spdlog::error("withinValidInputRange(::ad::map::config::MapEntry)>> {} has invalid member",

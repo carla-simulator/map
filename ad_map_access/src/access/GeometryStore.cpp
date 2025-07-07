@@ -48,10 +48,10 @@ bool GeometryStore::store(lane::Lane::ConstPtr lane)
         if (store(lane, lane::ContactLocation::RIGHT, offset_right, size_right))
         {
           GeometryStoreItem item;
-          item.leftEdgeOffset = offset_left;
-          item.leftEdgePoints = size_left;
-          item.rightEdgeOffset = offset_right;
-          item.rightEdgePoints = size_right;
+          item.left_edge_offset = offset_left;
+          item.left_edge_points = size_left;
+          item.right_edge_offset = offset_right;
+          item.right_edge_points = size_right;
           lane_items_[id] = item;
           return true;
         }
@@ -79,14 +79,14 @@ bool GeometryStore::restore(lane::Lane::Ptr lane) const
     if (it != lane_items_.end())
     {
       const GeometryStoreItem &item = it->second;
-      point::ECEFEdge left;
-      if (restore(left, item.leftEdgeOffset, item.leftEdgePoints))
+      point::ECEFPointList left;
+      if (restore(left, item.left_edge_offset, item.left_edge_points))
       {
-        point::ECEFEdge right;
-        if (restore(right, item.rightEdgeOffset, item.rightEdgePoints))
+        point::ECEFPointList right;
+        if (restore(right, item.right_edge_offset, item.right_edge_points))
         {
-          lane->edgeLeft = point::createGeometry(left, false);
-          lane->edgeRight = point::createGeometry(right, false);
+          lane->edge_left = point::createGeometry(left, false);
+          lane->edge_right = point::createGeometry(right, false);
           return true;
         }
         else
@@ -120,13 +120,13 @@ bool GeometryStore::check(lane::Lane::ConstPtr lane) const
     if (it != lane_items_.end())
     {
       const GeometryStoreItem &item = it->second;
-      point::ECEFEdge left;
-      if (restore(left, item.leftEdgeOffset, item.leftEdgePoints))
+      point::ECEFPointList left;
+      if (restore(left, item.left_edge_offset, item.left_edge_points))
       {
-        point::ECEFEdge right;
-        if (restore(right, item.rightEdgeOffset, item.rightEdgePoints))
+        point::ECEFPointList right;
+        if (restore(right, item.right_edge_offset, item.right_edge_points))
         {
-          if (lane->edgeLeft.ecefEdge == left && lane->edgeRight.ecefEdge == right)
+          if (lane->edge_left.ecef_points == left && lane->edge_right.ecef_points == right)
           {
             return true;
           }
@@ -166,24 +166,25 @@ bool GeometryStore::store(lane::Lane::ConstPtr lane, lane::ContactLocation locat
   {
     throw std::runtime_error("Location must be LEFT or RIGHT");
   }
-  const point::ECEFEdge &ecef
-    = (location == lane::ContactLocation::LEFT) ? lane->edgeLeft.ecefEdge : lane->edgeRight.ecefEdge;
+  const point::ECEFPointList &ecef
+    = (location == lane::ContactLocation::LEFT) ? lane->edge_left.ecef_points : lane->edge_right.ecef_points;
   size = static_cast<uint32_t>(ecef.size());
   lane::ContactLaneList contact_lanes = lane::getContactLanes(*lane, location);
   for (auto contact_lane : contact_lanes)
   {
-    lane::LaneId contact_lane_id = contact_lane.toLane;
+    lane::LaneId contact_lane_id = contact_lane.to_lane;
     auto it = lane_items_.find(contact_lane_id);
     if (it != lane_items_.end())
     {
       lane::Lane::ConstPtr clane = lane::getLanePtr(contact_lane_id);
       if (clane)
       {
-        const point::ECEFEdge &ecef1
-          = (location == lane::ContactLocation::LEFT) ? clane->edgeRight.ecefEdge : clane->edgeLeft.ecefEdge;
+        const point::ECEFPointList &ecef1
+          = (location == lane::ContactLocation::LEFT) ? clane->edge_right.ecef_points : clane->edge_left.ecef_points;
         if (ecef == ecef1)
         {
-          offs3d = (location == lane::ContactLocation::LEFT) ? it->second.rightEdgeOffset : it->second.leftEdgeOffset;
+          offs3d
+            = (location == lane::ContactLocation::LEFT) ? it->second.right_edge_offset : it->second.left_edge_offset;
           return true;
         }
       }
@@ -192,7 +193,7 @@ bool GeometryStore::store(lane::Lane::ConstPtr lane, lane::ContactLocation locat
   return store(ecef, offs3d);
 }
 
-bool GeometryStore::store(const point::ECEFEdge &ecef, uint32_t &offset3d)
+bool GeometryStore::store(const point::ECEFPointList &ecef, uint32_t &offset3d)
 {
   while (points3d_ + ecef.size() >= capacity3d_)
   {
@@ -205,14 +206,14 @@ bool GeometryStore::store(const point::ECEFEdge &ecef, uint32_t &offset3d)
   for (auto pt : ecef)
   {
     uint32_t index = (points3d_++) * 3;
-    store_[index++] = static_cast<double>(pt.x);
-    store_[index++] = static_cast<double>(pt.y);
-    store_[index++] = static_cast<double>(pt.z);
+    store_[index++] = pt.x.mECEFCoordinate;
+    store_[index++] = pt.y.mECEFCoordinate;
+    store_[index++] = pt.z.mECEFCoordinate;
   }
   return true;
 }
 
-bool GeometryStore::restore(point::ECEFEdge &ecef, uint32_t offset3d, uint32_t points3d) const
+bool GeometryStore::restore(point::ECEFPointList &ecef, uint32_t offset3d, uint32_t points3d) const
 {
   if (!ecef.empty())
   {

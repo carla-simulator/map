@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -105,8 +105,8 @@ struct LanePoint
    */
   bool operator==(const LanePoint &other) const
   {
-    return (paraPoint == other.paraPoint) && (lateralT == other.lateralT) && (laneLength == other.laneLength)
-      && (laneWidth == other.laneWidth);
+    return (para_point == other.para_point) && (lateral_t == other.lateral_t) && (lane_length == other.lane_length)
+      && (lane_width == other.lane_width);
   }
 
   /**
@@ -121,18 +121,18 @@ struct LanePoint
     return !operator==(other);
   }
 
-  ::ad::map::point::ParaPoint paraPoint;
-  ::ad::physics::RatioValue lateralT;
+  ::ad::map::point::ParaPoint para_point;
+  ::ad::physics::RatioValue lateral_t;
 
   /*!
    * Length of lane
    */
-  ::ad::physics::Distance laneLength;
+  ::ad::physics::Distance lane_length;
 
   /*!
    * Width of lane
    */
-  ::ad::physics::Distance laneWidth;
+  ::ad::physics::Distance lane_width;
 };
 
 } // namespace match
@@ -171,17 +171,17 @@ namespace match {
 inline std::ostream &operator<<(std::ostream &os, LanePoint const &_value)
 {
   os << "LanePoint(";
-  os << "paraPoint:";
-  os << _value.paraPoint;
+  os << "para_point:";
+  os << _value.para_point;
   os << ",";
-  os << "lateralT:";
-  os << _value.lateralT;
+  os << "lateral_t:";
+  os << _value.lateral_t;
   os << ",";
-  os << "laneLength:";
-  os << _value.laneLength;
+  os << "lane_length:";
+  os << _value.lane_length;
   os << ",";
-  os << "laneWidth:";
-  os << _value.laneWidth;
+  os << "lane_width:";
+  os << _value.lane_width;
   os << ")";
   return os;
 }
@@ -201,4 +201,16 @@ inline std::string to_string(::ad::map::match::LanePoint const &value)
   return sstream.str();
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::map::match::LanePoint> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::map::match::LanePoint const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_MAP_MATCH_LANEPOINT

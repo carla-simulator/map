@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2021 Intel Corporation
+// Copyright (C) 2018-2022 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -16,25 +16,28 @@
 #include "ad/physics/MetricRangeValidInputRange.hpp"
 #include "ad/physics/ParametricRangeValidInputRange.hpp"
 #include "ad/physics/SpeedRangeValidInputRange.hpp"
+#include "spdlog/spdlog.h"
 
 namespace ad {
 namespace physics {
 /**
  * @param[in] range range object.
+ * \param[in] logErrors enables error logging
  * @return true if Range is valid.
  */
-template <typename RangeType> bool isRangeValid(RangeType const &range)
+template <typename RangeType> bool isRangeValid(RangeType const &range, bool const logErrors = true)
 {
-  return withinValidInputRange(range);
+  return withinValidInputRange(range, logErrors);
 }
 
 /**
  * @param[in] range range object.
+ * \param[in] logErrors enables error logging
  * @return true if Range is valid but empty.
  */
-template <typename RangeType> bool isRangeEmpty(RangeType const &range)
+template <typename RangeType> bool isRangeEmpty(RangeType const &range, bool const logErrors = true)
 {
-  return isRangeValid(range) && (range.minimum == range.maximum);
+  return isRangeValid(range, logErrors) && (range.minimum == range.maximum);
 }
 
 /**
@@ -213,6 +216,54 @@ template <typename RangeType> bool intersectRangeWith(RangeType &left, RangeType
 {
   left = getIntersectionRange(left, right);
   return isRangeValid(left);
+}
+
+/**
+ * @brief Subtract the subtrahend range from the minuend range
+ * @param[in] minuend range object.
+ * @param[in] subtrahend range object.
+ * @returns The subtracted (non-empty) range.
+ * @retval If the ranges do not overlap or \c subtrahend is empty, \c minuend is returned (if non-empty)
+ * @retval If the ranges overlap and \c subtrahend touches one of the borders of \c minuend,
+ *   \c minuend reduced by the intersection of \c minuend and \c subtrahend is returned (if non-empty)
+ * @retval If the ranges overlap and \c subtrahend is actually inside of \c minuend,
+ *    the two remaining parts of \c minuend are returned (if non-empty).
+ */
+template <typename RangeType> std::vector<RangeType> subtract(RangeType &minuend, RangeType const &subtrahend)
+{
+  std::vector<RangeType> resultList;
+  if (!isRangeEmpty(subtrahend) && doRangesOverlap(minuend, subtrahend))
+  {
+    auto intersectingRange = getIntersectionRange(minuend, subtrahend);
+    if ((intersectingRange.maximum == minuend.maximum) || (intersectingRange.minimum != minuend.minimum))
+    {
+      RangeType result;
+      result.minimum = minuend.minimum;
+      result.maximum = intersectingRange.minimum;
+      if (!isRangeEmpty(result))
+      {
+        resultList.push_back(result);
+      }
+    }
+    if ((intersectingRange.minimum == minuend.minimum) || (intersectingRange.maximum != minuend.maximum))
+    {
+      RangeType result;
+      result.minimum = intersectingRange.maximum;
+      result.maximum = minuend.maximum;
+      if (!isRangeEmpty(result))
+      {
+        resultList.push_back(result);
+      }
+    }
+  }
+  else
+  {
+    if (!isRangeEmpty(minuend))
+    {
+      resultList.push_back(minuend);
+    }
+  }
+  return resultList;
 }
 
 } // namespace physics

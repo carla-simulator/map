@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #include "ad/map/point/Longitude.hpp"
@@ -32,9 +32,9 @@ namespace map {
  */
 namespace point {
 
-const double Longitude::cMinValue = std::numeric_limits<double>::lowest();
+const double Longitude::cMinValue = -180;
 
-const double Longitude::cMaxValue = std::numeric_limits<double>::max();
+const double Longitude::cMaxValue = 180;
 
 const double Longitude::cPrecisionValue = 1e-8;
 

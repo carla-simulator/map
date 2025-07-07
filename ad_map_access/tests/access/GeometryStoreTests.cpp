@@ -53,8 +53,8 @@ TEST_F(GeometryStoreTest, GeometryStore)
   oneLane.reset(new lane::Lane());
   oneLane->id = lanes[0];
   ASSERT_TRUE(geoStore.restore(oneLane));
-  ASSERT_EQ(oneLane->edgeLeft.ecefEdge, lanePtr->edgeLeft.ecefEdge);
-  ASSERT_EQ(oneLane->edgeRight.ecefEdge, lanePtr->edgeRight.ecefEdge);
+  ASSERT_EQ(oneLane->edge_left.ecef_points, lanePtr->edge_left.ecef_points);
+  ASSERT_EQ(oneLane->edge_right.ecef_points, lanePtr->edge_right.ecef_points);
 }
 
 TEST_F(GeometryStoreTest, StoreSerialization)

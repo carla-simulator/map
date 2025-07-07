@@ -18,6 +18,7 @@ from .LayerManagerLaneEdge import LayerManagerLaneEdge
 from .LayerManagerLaneSurface import LayerManagerLaneSurface
 from .LayerManagerLaneDirection import LayerManagerLaneDirection
 from .LayerManagerLaneOrientation import LayerManagerLaneOrientation
+from .LayerManagerTrafficLight import LayerManagerTrafficLight
 from .LayerManagerLaneSpeed import LayerManagerLaneSpeed
 from .LayerManagerLaneTopology import LayerManagerLaneTopology
 from .LayerManagerLaneContactType import LayerManagerLaneContactType
@@ -43,6 +44,8 @@ class ADMapQgsLayers(object):
     LANE_DIRECTION = "Lane Direction"
     LANE_ORIENTATION = "Lane Orientation"
     CONTACT_TYPE = "Contact Type"
+
+    CONTACT_TRAFFIC_LIGHT = "Contact Traffic_Light"
     #
     LANE_EDGE_COLOR = "255, 0, 0"
     LANE_EDGE_WIDTH = "1.0"
@@ -62,9 +65,11 @@ class ADMapQgsLayers(object):
     LANE_SURFACE_COLOR_HOV = "255, 128, 192, 33"
     #
     LANE_SURFACE_COLOR = {
-        "UNKNOWN":      "255, 128,   0, 50",
-        "NORMAL":       "  0,   0, 192, 50",
         "INTERSECTION": " 64, 160,  64, 33",
+        "NORMAL":       "  0,   0, 192, 50",
+        "SHOULDER": " 150, 150,  0, 50",
+        "PEDESTRIAN":      "255, 128,   0, 50",
+        "BIKE":      "255, 64,   0, 50",
         "OTHER":        "  0,   0,   0, 50"}
     #
     LANE_SPEED_COLOR = {
@@ -86,6 +91,7 @@ class ADMapQgsLayers(object):
         "CROSSWALK":          "crosswalk.svg",
         "PRIO_TO_RIGHT":      "prio_to_right.svg",
         "RIGHT_OF_WAY":       "right_of_way.svg",
+        "FREE":               "free.svg",
         "PRIO_TO_RIGHT_AND_STRAIGHT":      "prio_to_right_and_straight.svg"}
     LANDMARK_TYPE = {
         "LANDMARK": "map_marker.svg",
@@ -178,8 +184,10 @@ class ADMapQgsLayers(object):
     def create_all(self):
         "..."
         if not self.layer:
+            Globs.log.info("Creating layers...")
             self.__create_layer_groups__()
             self.__create_layers__()
+            Globs.log.info("Layers created")
 
     def remove_all(self):
         "..."
@@ -212,6 +220,7 @@ class ADMapQgsLayers(object):
         "..."
         self.__add_lane_dir_layer__()
         self.__add_lane_orientation_layer__()
+        self.__add_contact_to_trafficLight_layer__()
         for contact_type in self.LANE_CONTACT_TYPE:
             self.__add_lane_contact_type_layer__(contact_type)
         for topo in self.LANE_TOPO:
@@ -224,7 +233,6 @@ class ADMapQgsLayers(object):
         self.__add_lane_edge_layer__()
         for landmark_type in sorted(self.LANDMARK_TYPE):
             self.__add_landmark_layer__(landmark_type)
-        self.__create_new_lane_layer__()
 
     def __add_landmark_layer__(self, landmark_type):
         "..."
@@ -233,7 +241,9 @@ class ADMapQgsLayers(object):
         group = self.layer_groups[self.LANDMARK]
         svg_size = '8'
         attrs = [QgsField("Id", QVariant.LongLong), QgsField(
-            "Type", QVariant.String), QgsField("Orientation", QVariant.Double)]
+            "Type", QVariant.String), QgsField("Orientation", QVariant.Double),
+            QgsField("Traffic Light Type", QVariant.String),
+            QgsField("Traffic Sign Type", QVariant.String)]
         layer = WGS84SVGPointLayer(Globs.iface, title, svg_size, attrs, svg_resource, group)
         layer_manager = LayerManagerLandmark(layer, landmark_type)
         self.layer[title] = layer
@@ -261,7 +271,7 @@ class ADMapQgsLayers(object):
         lane_list = ad.map.lane.getLanes()
         for lane_id in lane_list:
             lane = ad.map.lane.getLane(lane_id)
-            if(ad.map.lane.satisfiesFilter(lane, typ, hov)):
+            if (ad.map.lane.satisfiesFilter(lane, typ, hov)):
                 lane_ids.append(lane_id)
 
         attr_keys = []
@@ -357,16 +367,18 @@ class ADMapQgsLayers(object):
         self.layer[title] = layer
         self.layer_managers[title] = layer_manager
 
-    def __create_new_lane_layer__(self):
+    def __add_contact_to_trafficLight_layer__(self):
         "..."
-        title = "New Lane Edges"
-        layer = WGS84PolylineLayer(Globs.iface, title,
-                                   ADMapQgsLayers.NEW_LANE_EDGE_COLOR,
-                                   ADMapQgsLayers.NEW_LANE_EDGE_WIDTH,
-                                   ADMapQgsLayers.NEW_LANE_EDGE_MARKER_QCOLOR,
-                                   [], self.layer_group_misc())
+        title = self.CONTACT_TRAFFIC_LIGHT
+        attrs = [QgsField("Lane Id", QVariant.LongLong)]
+        color = ADMapQgsLayers.QCOLOR_ORIENTATION
+        width = ADMapQgsLayers.ORIENTATION_ARROW_WIDTH
+        group = self.layer_groups[self.GEOM]
+        visible = False
+        layer = WGS84ArrowLayer(Globs.iface, title, color, width, attrs, group, visible)
+        layer_manager = LayerManagerTrafficLight(layer)
         self.layer[title] = layer
-        self.layer_new_lane = layer
+        self.layer_managers[title] = layer_manager
 
     def __remove_lane_from__(self, lane_id, layer_managers):
         "..."
@@ -416,7 +428,7 @@ class ADMapQgsLayers(object):
 
     def update_lane_main_layers(self, lane_id):
         "..."
-        layer_names = [self.LANE_EDGE, self.LANE_DIRECTION, self.LANE_ORIENTATION]
+        layer_names = [self.LANE_EDGE, self.LANE_DIRECTION, self.LANE_ORIENTATION, self.CONTACT_TRAFFIC_LIGHT]
         return self.update_lane_on_layers(lane_id, layer_names)
 
     def update_lane_topo_layers(self, lane_id, remove_only=False):
@@ -434,12 +446,11 @@ class ADMapQgsLayers(object):
         "..."
         lane = ad.map.lane.getLane(lane_id)
         to_refresh = self.__remove_lane_from__(lane_id, self.layer_managers_speed)
-        if "SpeedLimit" in lane.keys():
-            for speed_limit in lane.speedLimits:
-                limit = speed_limit.speedLimit
-                layer_manager = self.speed_layer_manager(limit)
-                layer_manager.add_speed_limit(lane, speed_limit)
-                to_refresh.append(layer_manager)
+        for speed_limit in lane.speed_limits:
+            limit = speed_limit.speed_limit
+            layer_manager = self.speed_layer_manager(limit)
+            layer_manager.add_speed_limit(lane, speed_limit)
+            to_refresh.append(layer_manager)
         return to_refresh
 
     def update_lane_surface_layers(self, lane_id):
@@ -447,7 +458,7 @@ class ADMapQgsLayers(object):
         lane = ad.map.lane.getLane(lane_id)
         to_refresh = self.__remove_lane_from__(lane_id, self.layer_managers_surface)
         typ = lane.type
-        hov = ad.map.lane.getHOV() > 1
+        hov = ad.map.lane.getHOV(lane) > 1
         layer_manager_name = self.lane_surface_layer_name(typ, hov)
         layer_manager = self.layer_managers[layer_manager_name]
         layer_manager.add(lane)
@@ -500,10 +511,9 @@ class ADMapQgsLayers(object):
 
     def speed_layer_manager(self, mpers):
         "..."
-        mph = mpers * 2.23694
-        index = "Set"
-        if mph < 0.5:
-            index = "Not set"
+        index = "Not set"
+        if mpers.mSpeed > 0.5 and mpers.mSpeed < ad.physics.Speed.cMaxValue:
+            index = "Set"
         return self.layer_managers[index]
 
     def layer_group_misc(self):

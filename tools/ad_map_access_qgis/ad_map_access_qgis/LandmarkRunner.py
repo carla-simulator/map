@@ -28,7 +28,7 @@ class LandmarkRunner(Runner):
             if landmark is not None:
                 self.work_landmark(landmark)
             else:
-                self.error.emit("Failed to GetLandmark(" + str(landmark_id) + ")")
+                Globs.log.error("Failed to GetLandmark(" + str(landmark_id) + ")")
                 return None
         return len(self.landmark_ids)
 

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -28,8 +28,8 @@ protected:
   {
     // valid initialization
     ::ad::map::access::MapMetaData value;
-    ::ad::map::access::TrafficType valueTrafficType(::ad::map::access::TrafficType::INVALID);
-    value.trafficType = valueTrafficType;
+    ::ad::map::access::TrafficType valueTraffic_type(::ad::map::access::TrafficType::INVALID);
+    value.traffic_type = valueTraffic_type;
     mValue = value;
   }
 
@@ -82,11 +82,11 @@ TEST_F(MapMetaDataTests, stringConversionTest)
   ASSERT_EQ(ostreamStr, toStr);
 }
 
-TEST_F(MapMetaDataTests, comparisonOperatorTrafficTypeDiffers)
+TEST_F(MapMetaDataTests, comparisonOperatorTraffic_typeDiffers)
 {
   ::ad::map::access::MapMetaData valueA = mValue;
-  ::ad::map::access::TrafficType trafficType(::ad::map::access::TrafficType::RIGHT_HAND_TRAFFIC);
-  valueA.trafficType = trafficType;
+  ::ad::map::access::TrafficType traffic_type(::ad::map::access::TrafficType::RIGHT_HAND_TRAFFIC);
+  valueA.traffic_type = traffic_type;
   ::ad::map::access::MapMetaData valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

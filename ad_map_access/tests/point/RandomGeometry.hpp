@@ -28,7 +28,7 @@ inline point::ECEFPoint randECEFPoint()
 
 inline point::Geometry randGeometry(const point::ECEFPoint &pt0, size_t points, uint32_t seed)
 {
-  point::ECEFEdge pts;
+  point::ECEFPointList pts;
   std::srand(seed);
   point::ECEFPoint pt = pt0;
   pts.push_back(pt);

@@ -1,3 +1,3 @@
 [ADMap]
 map=Town04.xodr
-openDriveOverlapMargin=0.2
+open_drive_overlap_margin=0.2

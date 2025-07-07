@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -32,7 +32,7 @@ TEST(ENUHeadingTests, precisionIsDefinedAsExpected)
   EXPECT_LT(0., ::ad::map::point::ENUHeading::cPrecisionValue);
   EXPECT_DOUBLE_EQ(0.0001, ::ad::map::point::ENUHeading::cPrecisionValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cPrecisionValue,
-                   static_cast<double>(::ad::map::point::ENUHeading::getPrecision()));
+                   ::ad::map::point::ENUHeading::getPrecision().mENUHeading);
 }
 
 TEST(ENUHeadingTests, minIsValid)
@@ -91,41 +91,36 @@ TEST(ENUHeadingTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(ENUHeadingTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUHeading::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUHeading>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::getMin().mENUHeading,
+                   std::numeric_limits<::ad::map::point::ENUHeading>::lowest().mENUHeading);
 }
 
 TEST(ENUHeadingTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUHeading::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUHeading>::max()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::getMax().mENUHeading,
+                   std::numeric_limits<::ad::map::point::ENUHeading>::max().mENUHeading);
 }
 
 TEST(ENUHeadingTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ENUHeading::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::ENUHeading>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::getPrecision().mENUHeading,
+                   std::numeric_limits<::ad::map::point::ENUHeading>::epsilon().mENUHeading);
 }
 
 TEST(ENUHeadingTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-1.))));
-  EXPECT_DOUBLE_EQ(
-    ::ad::map::point::ENUHeading::cPrecisionValue,
-    static_cast<double>(std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cPrecisionValue))));
-  EXPECT_DOUBLE_EQ(
-    std::fabs(::ad::map::point::ENUHeading::cMinValue),
-    static_cast<double>(std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMinValue))));
-  EXPECT_DOUBLE_EQ(
-    std::fabs(::ad::map::point::ENUHeading::cMinValue),
-    static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-::ad::map::point::ENUHeading::cMinValue))));
-  EXPECT_DOUBLE_EQ(
-    std::fabs(::ad::map::point::ENUHeading::cMaxValue),
-    static_cast<double>(std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMaxValue))));
-  EXPECT_DOUBLE_EQ(
-    std::fabs(::ad::map::point::ENUHeading::cMaxValue),
-    static_cast<double>(std::fabs(::ad::map::point::ENUHeading(-::ad::map::point::ENUHeading::cMaxValue))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::map::point::ENUHeading(-0.)).mENUHeading);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::map::point::ENUHeading(-1.)).mENUHeading);
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cPrecisionValue,
+                   std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cPrecisionValue).mENUHeading));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::ENUHeading::cMinValue),
+                   std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMinValue).mENUHeading));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::ENUHeading::cMinValue),
+                   std::fabs(::ad::map::point::ENUHeading(-::ad::map::point::ENUHeading::cMinValue).mENUHeading));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::ENUHeading::cMaxValue),
+                   std::fabs(::ad::map::point::ENUHeading(::ad::map::point::ENUHeading::cMaxValue).mENUHeading));
+  EXPECT_DOUBLE_EQ(std::fabs(::ad::map::point::ENUHeading::cMaxValue),
+                   std::fabs(::ad::map::point::ENUHeading(-::ad::map::point::ENUHeading::cMaxValue).mENUHeading));
 }
 
 TEST(ENUHeadingTests, constructionFromValidFPValue)
@@ -133,7 +128,7 @@ TEST(ENUHeadingTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::ENUHeading::cMinValue;
   ::ad::map::point::ENUHeading value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mENUHeading);
 }
 
 TEST(ENUHeadingTests, copyConstructionFromValidValue)
@@ -141,7 +136,7 @@ TEST(ENUHeadingTests, copyConstructionFromValidValue)
   ::ad::map::point::ENUHeading const validValue(::ad::map::point::ENUHeading::cMinValue);
   ::ad::map::point::ENUHeading value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mENUHeading, value.mENUHeading);
 }
 
 TEST(ENUHeadingTests, moveConstructionFromValidValue)
@@ -149,7 +144,7 @@ TEST(ENUHeadingTests, moveConstructionFromValidValue)
   ::ad::map::point::ENUHeading validValue(::ad::map::point::ENUHeading::cMinValue);
   ::ad::map::point::ENUHeading value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cMinValue, value.mENUHeading);
 }
 
 TEST(ENUHeadingTests, assignmentFromValidValue)
@@ -158,7 +153,7 @@ TEST(ENUHeadingTests, assignmentFromValidValue)
   ::ad::map::point::ENUHeading value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mENUHeading, value.mENUHeading);
 }
 
 TEST(ENUHeadingTests, moveAssignmentFromValidValue)
@@ -167,7 +162,7 @@ TEST(ENUHeadingTests, moveAssignmentFromValidValue)
   ::ad::map::point::ENUHeading value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ENUHeading::cMinValue, value.mENUHeading);
 }
 
 TEST(ENUHeadingTests, constructionFromInvalidFPValue)
@@ -267,12 +262,12 @@ TEST(ENUHeadingTests, arithmeticOperatorsThrowOnInvalid)
   EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mENUHeading, std::out_of_range);
+  EXPECT_THROW(maximalValue * maximalValue.mENUHeading, std::out_of_range);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mENUHeading, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mENUHeading, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
 
@@ -283,13 +278,13 @@ TEST(ENUHeadingTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mENUHeading) > std::fabs(minimalValue.mENUHeading))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mENUHeading) < std::fabs(minimalValue.mENUHeading))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -315,13 +310,13 @@ TEST(ENUHeadingTests, comparisonOperatorsRespectPrecision)
     value = ::ad::map::point::ENUHeading(precisionValueTimesTen);
   }
   ::ad::map::point::ENUHeading const sameValue = value;
-  ::ad::map::point::ENUHeading const slightlyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::ENUHeading const slightlyBiggerValue(value.mENUHeading
                                                          + ::ad::map::point::ENUHeading::cPrecisionValue * 0.9);
-  ::ad::map::point::ENUHeading const slightlySmallerValue(static_cast<double>(value)
+  ::ad::map::point::ENUHeading const slightlySmallerValue(value.mENUHeading
                                                           - ::ad::map::point::ENUHeading::cPrecisionValue * 0.9);
-  ::ad::map::point::ENUHeading const actuallyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::ENUHeading const actuallyBiggerValue(value.mENUHeading
                                                          + ::ad::map::point::ENUHeading::cPrecisionValue * 1.1);
-  ::ad::map::point::ENUHeading const actuallySmallerValue(static_cast<double>(value)
+  ::ad::map::point::ENUHeading const actuallySmallerValue(value.mENUHeading
                                                           - ::ad::map::point::ENUHeading::cPrecisionValue * 1.1);
 
   // operator ==
@@ -385,41 +380,41 @@ TEST(ENUHeadingTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::map::point::ENUHeading)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUHeading + value.mENUHeading, result.mENUHeading, cDoubleNear);
 
   //  operator+=(::ad::map::point::ENUHeading)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUHeading + value.mENUHeading, result.mENUHeading, cDoubleNear);
 
   //  operator-(::ad::map::point::ENUHeading)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUHeading - value.mENUHeading, result.mENUHeading, cDoubleNear);
 
   //  operator-=(::ad::map::point::ENUHeading)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUHeading - value.mENUHeading, result.mENUHeading, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUHeading * 5., result.mENUHeading, cDoubleNear);
 
   //  operator*(double, ::ad::map::point::ENUHeading)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mENUHeading * 5., result.mENUHeading, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mENUHeading;
+  EXPECT_NEAR(value.mENUHeading / value.mENUHeading, result.mENUHeading, cDoubleNear);
 
   //  operator/(::ad::map::point::ENUHeading)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mENUHeading / value.mENUHeading, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::map::point::ENUHeading::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::map::point::ENUHeading::cMaxValue))
+  if ((::ad::map::point::ENUHeading::cMinValue < -value.mENUHeading)
+      && (-value.mENUHeading < ::ad::map::point::ENUHeading::cMaxValue))
   {
     result = -value;
   }

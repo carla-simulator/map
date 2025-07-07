@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -31,14 +31,14 @@ TEST(ECEFCoordinateTests, minIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(-1e9, ::ad::map::point::ECEFCoordinate::cMinValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMinValue,
-                   static_cast<double>(::ad::map::point::ECEFCoordinate::getMin()));
+                   ::ad::map::point::ECEFCoordinate::getMin().mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTests, maxIsDefinedAsExpected)
 {
   EXPECT_DOUBLE_EQ(1e9, ::ad::map::point::ECEFCoordinate::cMaxValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMaxValue,
-                   static_cast<double>(::ad::map::point::ECEFCoordinate::getMax()));
+                   ::ad::map::point::ECEFCoordinate::getMax().mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTests, precisionIsDefinedAsExpected)
@@ -46,7 +46,7 @@ TEST(ECEFCoordinateTests, precisionIsDefinedAsExpected)
   EXPECT_LT(0., ::ad::map::point::ECEFCoordinate::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-3, ::ad::map::point::ECEFCoordinate::cPrecisionValue);
   EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cPrecisionValue,
-                   static_cast<double>(::ad::map::point::ECEFCoordinate::getPrecision()));
+                   ::ad::map::point::ECEFCoordinate::getPrecision().mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTests, minIsValid)
@@ -105,41 +105,41 @@ TEST(ECEFCoordinateTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(ECEFCoordinateTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ECEFCoordinate::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::ECEFCoordinate>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::getMin().mECEFCoordinate,
+                   std::numeric_limits<::ad::map::point::ECEFCoordinate>::lowest().mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ECEFCoordinate::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::ECEFCoordinate>::max()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::getMax().mECEFCoordinate,
+                   std::numeric_limits<::ad::map::point::ECEFCoordinate>::max().mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::map::point::ECEFCoordinate::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::map::point::ECEFCoordinate>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::getPrecision().mECEFCoordinate,
+                   std::numeric_limits<::ad::map::point::ECEFCoordinate>::epsilon().mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-1.))));
-  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cPrecisionValue,
-                   static_cast<double>(
-                     std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cPrecisionValue))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::map::point::ECEFCoordinate(-0.)).mECEFCoordinate);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::map::point::ECEFCoordinate(-1.)).mECEFCoordinate);
+  EXPECT_DOUBLE_EQ(
+    ::ad::map::point::ECEFCoordinate::cPrecisionValue,
+    std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cPrecisionValue).mECEFCoordinate));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ECEFCoordinate::cMinValue),
-    static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cMinValue))));
+    std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cMinValue).mECEFCoordinate));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ECEFCoordinate::cMinValue),
-    static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-::ad::map::point::ECEFCoordinate::cMinValue))));
+    std::fabs(::ad::map::point::ECEFCoordinate(-::ad::map::point::ECEFCoordinate::cMinValue).mECEFCoordinate));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ECEFCoordinate::cMaxValue),
-    static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cMaxValue))));
+    std::fabs(::ad::map::point::ECEFCoordinate(::ad::map::point::ECEFCoordinate::cMaxValue).mECEFCoordinate));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::map::point::ECEFCoordinate::cMaxValue),
-    static_cast<double>(std::fabs(::ad::map::point::ECEFCoordinate(-::ad::map::point::ECEFCoordinate::cMaxValue))));
+    std::fabs(::ad::map::point::ECEFCoordinate(-::ad::map::point::ECEFCoordinate::cMaxValue).mECEFCoordinate));
 }
 
 TEST(ECEFCoordinateTests, constructionFromValidFPValue)
@@ -147,7 +147,7 @@ TEST(ECEFCoordinateTests, constructionFromValidFPValue)
   double const validValue = ::ad::map::point::ECEFCoordinate::cMinValue;
   ::ad::map::point::ECEFCoordinate value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTests, copyConstructionFromValidValue)
@@ -155,7 +155,7 @@ TEST(ECEFCoordinateTests, copyConstructionFromValidValue)
   ::ad::map::point::ECEFCoordinate const validValue(::ad::map::point::ECEFCoordinate::cMinValue);
   ::ad::map::point::ECEFCoordinate value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mECEFCoordinate, value.mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTests, moveConstructionFromValidValue)
@@ -163,7 +163,7 @@ TEST(ECEFCoordinateTests, moveConstructionFromValidValue)
   ::ad::map::point::ECEFCoordinate validValue(::ad::map::point::ECEFCoordinate::cMinValue);
   ::ad::map::point::ECEFCoordinate value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMinValue, value.mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTests, assignmentFromValidValue)
@@ -172,7 +172,7 @@ TEST(ECEFCoordinateTests, assignmentFromValidValue)
   ::ad::map::point::ECEFCoordinate value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mECEFCoordinate, value.mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTests, moveAssignmentFromValidValue)
@@ -181,7 +181,7 @@ TEST(ECEFCoordinateTests, moveAssignmentFromValidValue)
   ::ad::map::point::ECEFCoordinate value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::map::point::ECEFCoordinate::cMinValue, value.mECEFCoordinate);
 }
 
 TEST(ECEFCoordinateTests, constructionFromInvalidFPValue)
@@ -257,7 +257,7 @@ TEST(ECEFCoordinateTests, arithmeticOperatorsThrowOnInvalid)
   //  operator+(::ad::map::point::ECEFCoordinate)
   EXPECT_THROW(invalidValue + maximalValue, std::out_of_range);
   EXPECT_THROW(maximalValue + invalidValue, std::out_of_range);
-  EXPECT_THROW(maximalValue + maximalValue, std::out_of_range);
+  EXPECT_EQ(maximalValue + maximalValue, maximalValue);
 
   //  operator+=(::ad::map::point::ECEFCoordinate)
   calculationValue = invalidValue;
@@ -265,12 +265,12 @@ TEST(ECEFCoordinateTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = maximalValue;
   EXPECT_THROW(calculationValue += invalidValue, std::out_of_range);
   calculationValue = maximalValue;
-  EXPECT_THROW(calculationValue += maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue += maximalValue, maximalValue);
 
   //  operator-(::ad::map::point::ECEFCoordinate)
   EXPECT_THROW(invalidValue - minimalValue, std::out_of_range);
   EXPECT_THROW(minimalValue - invalidValue, std::out_of_range);
-  EXPECT_THROW(minimalValue - maximalValue, std::out_of_range);
+  EXPECT_EQ(minimalValue - maximalValue, minimalValue);
 
   //  operator-=(::ad::map::point::ECEFCoordinate)
   calculationValue = invalidValue;
@@ -278,17 +278,17 @@ TEST(ECEFCoordinateTests, arithmeticOperatorsThrowOnInvalid)
   calculationValue = minimalValue;
   EXPECT_THROW(calculationValue -= invalidValue, std::out_of_range);
   calculationValue = minimalValue;
-  EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
+  EXPECT_EQ(calculationValue -= maximalValue, minimalValue);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mECEFCoordinate, std::out_of_range);
+  EXPECT_EQ(maximalValue * maximalValue.mECEFCoordinate, maximalValue);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mECEFCoordinate, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mECEFCoordinate, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
-  EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
+  EXPECT_EQ(maximalValue / 0.5, maximalValue);
 
   //  operator/(::ad::map::point::ECEFCoordinate)
   EXPECT_THROW(invalidValue / maximalValue, std::out_of_range);
@@ -297,13 +297,13 @@ TEST(ECEFCoordinateTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mECEFCoordinate) > std::fabs(minimalValue.mECEFCoordinate))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mECEFCoordinate) < std::fabs(minimalValue.mECEFCoordinate))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -329,14 +329,14 @@ TEST(ECEFCoordinateTests, comparisonOperatorsRespectPrecision)
     value = ::ad::map::point::ECEFCoordinate(precisionValueTimesTen);
   }
   ::ad::map::point::ECEFCoordinate const sameValue = value;
-  ::ad::map::point::ECEFCoordinate const slightlyBiggerValue(static_cast<double>(value)
+  ::ad::map::point::ECEFCoordinate const slightlyBiggerValue(value.mECEFCoordinate
                                                              + ::ad::map::point::ECEFCoordinate::cPrecisionValue * 0.9);
   ::ad::map::point::ECEFCoordinate const slightlySmallerValue(
-    static_cast<double>(value) - ::ad::map::point::ECEFCoordinate::cPrecisionValue * 0.9);
-  ::ad::map::point::ECEFCoordinate const actuallyBiggerValue(static_cast<double>(value)
+    value.mECEFCoordinate - ::ad::map::point::ECEFCoordinate::cPrecisionValue * 0.9);
+  ::ad::map::point::ECEFCoordinate const actuallyBiggerValue(value.mECEFCoordinate
                                                              + ::ad::map::point::ECEFCoordinate::cPrecisionValue * 1.1);
   ::ad::map::point::ECEFCoordinate const actuallySmallerValue(
-    static_cast<double>(value) - ::ad::map::point::ECEFCoordinate::cPrecisionValue * 1.1);
+    value.mECEFCoordinate - ::ad::map::point::ECEFCoordinate::cPrecisionValue * 1.1);
 
   // operator ==
   EXPECT_TRUE(value == sameValue);
@@ -399,41 +399,41 @@ TEST(ECEFCoordinateTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::map::point::ECEFCoordinate)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mECEFCoordinate + value.mECEFCoordinate, result.mECEFCoordinate, cDoubleNear);
 
   //  operator+=(::ad::map::point::ECEFCoordinate)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mECEFCoordinate + value.mECEFCoordinate, result.mECEFCoordinate, cDoubleNear);
 
   //  operator-(::ad::map::point::ECEFCoordinate)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mECEFCoordinate - value.mECEFCoordinate, result.mECEFCoordinate, cDoubleNear);
 
   //  operator-=(::ad::map::point::ECEFCoordinate)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mECEFCoordinate - value.mECEFCoordinate, result.mECEFCoordinate, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mECEFCoordinate * 5., result.mECEFCoordinate, cDoubleNear);
 
   //  operator*(double, ::ad::map::point::ECEFCoordinate)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mECEFCoordinate * 5., result.mECEFCoordinate, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mECEFCoordinate;
+  EXPECT_NEAR(value.mECEFCoordinate / value.mECEFCoordinate, result.mECEFCoordinate, cDoubleNear);
 
   //  operator/(::ad::map::point::ECEFCoordinate)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mECEFCoordinate / value.mECEFCoordinate, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::map::point::ECEFCoordinate::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::map::point::ECEFCoordinate::cMaxValue))
+  if ((::ad::map::point::ECEFCoordinate::cMinValue < -value.mECEFCoordinate)
+      && (-value.mECEFCoordinate < ::ad::map::point::ECEFCoordinate::cMaxValue))
   {
     result = -value;
   }

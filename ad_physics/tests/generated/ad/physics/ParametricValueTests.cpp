@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -32,7 +32,7 @@ TEST(ParametricValueTests, precisionIsDefinedAsExpected)
   EXPECT_LT(0., ::ad::physics::ParametricValue::cPrecisionValue);
   EXPECT_DOUBLE_EQ(1e-6, ::ad::physics::ParametricValue::cPrecisionValue);
   EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cPrecisionValue,
-                   static_cast<double>(::ad::physics::ParametricValue::getPrecision()));
+                   ::ad::physics::ParametricValue::getPrecision().mParametricValue);
 }
 
 TEST(ParametricValueTests, minIsValid)
@@ -91,41 +91,41 @@ TEST(ParametricValueTests, ensureValidNonZeroThrowsOnZero)
 
 TEST(ParametricValueTestsStd, numericLimitsLowestIsMin)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::ParametricValue::getMin()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::ParametricValue>::lowest()));
+  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::getMin().mParametricValue,
+                   std::numeric_limits<::ad::physics::ParametricValue>::lowest().mParametricValue);
 }
 
 TEST(ParametricValueTestsStd, numericLimitsMaxIsMax)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::ParametricValue::getMax()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::ParametricValue>::max()));
+  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::getMax().mParametricValue,
+                   std::numeric_limits<::ad::physics::ParametricValue>::max().mParametricValue);
 }
 
 TEST(ParametricValueTestsStd, numericLimitsEpsilonIsPrecision)
 {
-  EXPECT_DOUBLE_EQ(static_cast<double>(::ad::physics::ParametricValue::getPrecision()),
-                   static_cast<double>(std::numeric_limits<::ad::physics::ParametricValue>::epsilon()));
+  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::getPrecision().mParametricValue,
+                   std::numeric_limits<::ad::physics::ParametricValue>::epsilon().mParametricValue);
 }
 
 TEST(ParametricValueTestsStd, fabsIsWorkingCorrectly)
 {
-  EXPECT_DOUBLE_EQ(0., static_cast<double>(std::fabs(::ad::physics::ParametricValue(-0.))));
-  EXPECT_DOUBLE_EQ(1., static_cast<double>(std::fabs(::ad::physics::ParametricValue(-1.))));
+  EXPECT_DOUBLE_EQ(0., std::fabs(::ad::physics::ParametricValue(-0.)).mParametricValue);
+  EXPECT_DOUBLE_EQ(1., std::fabs(::ad::physics::ParametricValue(-1.)).mParametricValue);
   EXPECT_DOUBLE_EQ(
     ::ad::physics::ParametricValue::cPrecisionValue,
-    static_cast<double>(std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cPrecisionValue))));
+    std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cPrecisionValue).mParametricValue));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::physics::ParametricValue::cMinValue),
-    static_cast<double>(std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMinValue))));
+    std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMinValue).mParametricValue));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::physics::ParametricValue::cMinValue),
-    static_cast<double>(std::fabs(::ad::physics::ParametricValue(-::ad::physics::ParametricValue::cMinValue))));
+    std::fabs(::ad::physics::ParametricValue(-::ad::physics::ParametricValue::cMinValue).mParametricValue));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::physics::ParametricValue::cMaxValue),
-    static_cast<double>(std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMaxValue))));
+    std::fabs(::ad::physics::ParametricValue(::ad::physics::ParametricValue::cMaxValue).mParametricValue));
   EXPECT_DOUBLE_EQ(
     std::fabs(::ad::physics::ParametricValue::cMaxValue),
-    static_cast<double>(std::fabs(::ad::physics::ParametricValue(-::ad::physics::ParametricValue::cMaxValue))));
+    std::fabs(::ad::physics::ParametricValue(-::ad::physics::ParametricValue::cMaxValue).mParametricValue));
 }
 
 TEST(ParametricValueTests, constructionFromValidFPValue)
@@ -133,7 +133,7 @@ TEST(ParametricValueTests, constructionFromValidFPValue)
   double const validValue = ::ad::physics::ParametricValue::cMinValue;
   ::ad::physics::ParametricValue value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(validValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue, value.mParametricValue);
 }
 
 TEST(ParametricValueTests, copyConstructionFromValidValue)
@@ -141,7 +141,7 @@ TEST(ParametricValueTests, copyConstructionFromValidValue)
   ::ad::physics::ParametricValue const validValue(::ad::physics::ParametricValue::cMinValue);
   ::ad::physics::ParametricValue value(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mParametricValue, value.mParametricValue);
 }
 
 TEST(ParametricValueTests, moveConstructionFromValidValue)
@@ -149,7 +149,7 @@ TEST(ParametricValueTests, moveConstructionFromValidValue)
   ::ad::physics::ParametricValue validValue(::ad::physics::ParametricValue::cMinValue);
   ::ad::physics::ParametricValue value(std::move(validValue));
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cMinValue, value.mParametricValue);
 }
 
 TEST(ParametricValueTests, assignmentFromValidValue)
@@ -158,7 +158,7 @@ TEST(ParametricValueTests, assignmentFromValidValue)
   ::ad::physics::ParametricValue value;
   value = validValue;
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(static_cast<double>(validValue), static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(validValue.mParametricValue, value.mParametricValue);
 }
 
 TEST(ParametricValueTests, moveAssignmentFromValidValue)
@@ -167,7 +167,7 @@ TEST(ParametricValueTests, moveAssignmentFromValidValue)
   ::ad::physics::ParametricValue value;
   value = std::move(validValue);
   EXPECT_TRUE(value.isValid());
-  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cMinValue, static_cast<double>(value));
+  EXPECT_DOUBLE_EQ(::ad::physics::ParametricValue::cMinValue, value.mParametricValue);
 }
 
 TEST(ParametricValueTests, constructionFromInvalidFPValue)
@@ -267,12 +267,12 @@ TEST(ParametricValueTests, arithmeticOperatorsThrowOnInvalid)
   EXPECT_THROW(calculationValue -= maximalValue, std::out_of_range);
 
   //  operator*(double)
-  EXPECT_THROW(invalidValue * static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue * static_cast<double>(maximalValue), std::out_of_range);
+  EXPECT_THROW(invalidValue * maximalValue.mParametricValue, std::out_of_range);
+  EXPECT_THROW(maximalValue * maximalValue.mParametricValue, std::out_of_range);
 
   //  operator/(double)
-  EXPECT_THROW(invalidValue / static_cast<double>(maximalValue), std::out_of_range);
-  EXPECT_THROW(maximalValue / static_cast<double>(invalidValue), std::out_of_range);
+  EXPECT_THROW(invalidValue / maximalValue.mParametricValue, std::out_of_range);
+  EXPECT_THROW(maximalValue / invalidValue.mParametricValue, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.0, std::out_of_range);
   EXPECT_THROW(maximalValue / 0.5, std::out_of_range);
 
@@ -283,13 +283,13 @@ TEST(ParametricValueTests, arithmeticOperatorsThrowOnInvalid)
 
   //  operator-()
   EXPECT_THROW(-invalidValue, std::out_of_range);
-  if (std::fabs(static_cast<double>(maximalValue)) > std::fabs(static_cast<double>(minimalValue)))
+  if (std::fabs(maximalValue.mParametricValue) > std::fabs(minimalValue.mParametricValue))
   {
-    EXPECT_THROW(-maximalValue, std::out_of_range);
+    EXPECT_EQ(-maximalValue, minimalValue);
   }
-  else if (std::fabs(static_cast<double>(maximalValue)) < std::fabs(static_cast<double>(minimalValue)))
+  else if (std::fabs(maximalValue.mParametricValue) < std::fabs(minimalValue.mParametricValue))
   {
-    EXPECT_THROW(-minimalValue, std::out_of_range);
+    EXPECT_EQ(-minimalValue, maximalValue);
   }
   else
   {
@@ -315,13 +315,13 @@ TEST(ParametricValueTests, comparisonOperatorsRespectPrecision)
     value = ::ad::physics::ParametricValue(precisionValueTimesTen);
   }
   ::ad::physics::ParametricValue const sameValue = value;
-  ::ad::physics::ParametricValue const slightlyBiggerValue(static_cast<double>(value)
+  ::ad::physics::ParametricValue const slightlyBiggerValue(value.mParametricValue
                                                            + ::ad::physics::ParametricValue::cPrecisionValue * 0.9);
-  ::ad::physics::ParametricValue const slightlySmallerValue(static_cast<double>(value)
+  ::ad::physics::ParametricValue const slightlySmallerValue(value.mParametricValue
                                                             - ::ad::physics::ParametricValue::cPrecisionValue * 0.9);
-  ::ad::physics::ParametricValue const actuallyBiggerValue(static_cast<double>(value)
+  ::ad::physics::ParametricValue const actuallyBiggerValue(value.mParametricValue
                                                            + ::ad::physics::ParametricValue::cPrecisionValue * 1.1);
-  ::ad::physics::ParametricValue const actuallySmallerValue(static_cast<double>(value)
+  ::ad::physics::ParametricValue const actuallySmallerValue(value.mParametricValue
                                                             - ::ad::physics::ParametricValue::cPrecisionValue * 1.1);
 
   // operator ==
@@ -385,41 +385,41 @@ TEST(ParametricValueTests, arithmeticOperatorsComputeCorrectly)
 
   //  operator+(::ad::physics::ParametricValue)
   result = value + value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mParametricValue + value.mParametricValue, result.mParametricValue, cDoubleNear);
 
   //  operator+=(::ad::physics::ParametricValue)
   result = value;
   result += value;
-  EXPECT_NEAR(static_cast<double>(value) + static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mParametricValue + value.mParametricValue, result.mParametricValue, cDoubleNear);
 
   //  operator-(::ad::physics::ParametricValue)
   result = value - value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mParametricValue - value.mParametricValue, result.mParametricValue, cDoubleNear);
 
   //  operator-=(::ad::physics::ParametricValue)
   result = value;
   result -= value;
-  EXPECT_NEAR(static_cast<double>(value) - static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mParametricValue - value.mParametricValue, result.mParametricValue, cDoubleNear);
 
   //  operator*(double)
   result = value * 5.;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mParametricValue * 5., result.mParametricValue, cDoubleNear);
 
   //  operator*(double, ::ad::physics::ParametricValue)
   result = 5. * value;
-  EXPECT_NEAR(static_cast<double>(value) * 5., static_cast<double>(result), cDoubleNear);
+  EXPECT_NEAR(value.mParametricValue * 5., result.mParametricValue, cDoubleNear);
 
   //  operator/(double)
-  result = value / static_cast<double>(value);
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), static_cast<double>(result), cDoubleNear);
+  result = value / value.mParametricValue;
+  EXPECT_NEAR(value.mParametricValue / value.mParametricValue, result.mParametricValue, cDoubleNear);
 
   //  operator/(::ad::physics::ParametricValue)
   double const doubleResult = value / value;
-  EXPECT_NEAR(static_cast<double>(value) / static_cast<double>(value), doubleResult, cDoubleNear);
+  EXPECT_NEAR(value.mParametricValue / value.mParametricValue, doubleResult, cDoubleNear);
 
   //  operator-()
-  if ((::ad::physics::ParametricValue::cMinValue < -static_cast<double>(value))
-      && (-static_cast<double>(value) < ::ad::physics::ParametricValue::cMaxValue))
+  if ((::ad::physics::ParametricValue::cMinValue < -value.mParametricValue)
+      && (-value.mParametricValue < ::ad::physics::ParametricValue::cMaxValue))
   {
     result = -value;
   }

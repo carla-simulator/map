@@ -1,6 +1,6 @@
 // ----------------- BEGIN LICENSE BLOCK ---------------------------------
 //
-// Copyright (C) 2018-2019 Intel Corporation
+// Copyright (C) 2018-2020 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
 //
@@ -50,13 +50,13 @@ void AdMapGenerator::addLanesOfIntersectionToSet(map_data::MapDataId const inter
 {
   for (auto const roadId : mDataStore.intersection(intersectionId).mRoads)
   {
-    for (auto laneId : mDataStore.road(roadId).mForwardLanes)
+    for (auto lane_id : mDataStore.road(roadId).mForwardLanes)
     {
-      lanes.insert(laneId);
+      lanes.insert(lane_id);
     }
-    for (auto laneId : mDataStore.road(roadId).mBackwardLanes)
+    for (auto lane_id : mDataStore.road(roadId).mBackwardLanes)
     {
-      lanes.insert(laneId);
+      lanes.insert(lane_id);
     }
   }
 }
@@ -105,15 +105,15 @@ void AdMapGenerator::generateADMap()
   }
 
   // First add all the lane's basic data to the MapStore
-  for (auto const &laneId : mDataStore.listOfLaneIds())
+  for (auto const &lane_id : mDataStore.listOfLaneIds())
   {
     ::ad::map::lane::LaneType type{::ad::map::lane::LaneType::NORMAL};
-    ::ad::map::lane::LaneDirection direction = drivingDirection(mDataStore.lane(laneId));
-    if (intersectionLanes.count(laneId) > 0)
+    ::ad::map::lane::LaneDirection direction = drivingDirection(mDataStore.lane(lane_id));
+    if (intersectionLanes.count(lane_id) > 0)
     {
       type = ::ad::map::lane::LaneType::INTERSECTION;
     }
-    mFactory.add(access::PartitionId(0), toLaneId(laneId), type, direction);
+    mFactory.add(access::PartitionId(0), toLaneId(lane_id), type, direction);
   }
 
   addLandmarks();
@@ -223,11 +223,11 @@ void AdMapGenerator::processIntersectionArms()
         forwardTrafficLanes = &mDataStore.road(arm.connectedRoad).mForwardLanes;
 
         auto const &lanes = *forwardTrafficLanes;
-        for (auto const &laneId : lanes)
+        for (auto const &lane_id : lanes)
         {
-          for (auto const &succId : mDataStore.lane(laneId).successors)
+          for (auto const &succId : mDataStore.lane(lane_id).successors)
           {
-            mFactory.add(toLaneId(laneId), toLaneId(succId), Location::SUCCESSOR, {row}, restriction::Restrictions());
+            mFactory.add(toLaneId(lane_id), toLaneId(succId), Location::SUCCESSOR, {row}, restriction::Restrictions());
           }
         }
       }
@@ -237,11 +237,12 @@ void AdMapGenerator::processIntersectionArms()
         backwardTrafficLanes = &mDataStore.road(arm.connectedRoad).mBackwardLanes;
 
         auto const &lanes = *backwardTrafficLanes;
-        for (auto const &laneId : lanes)
+        for (auto const &lane_id : lanes)
         {
-          for (auto const &predId : mDataStore.lane(laneId).predecessors)
+          for (auto const &predId : mDataStore.lane(lane_id).predecessors)
           {
-            mFactory.add(toLaneId(laneId), toLaneId(predId), Location::PREDECESSOR, {row}, restriction::Restrictions());
+            mFactory.add(
+              toLaneId(lane_id), toLaneId(predId), Location::PREDECESSOR, {row}, restriction::Restrictions());
           }
         }
       }
@@ -252,7 +253,7 @@ void AdMapGenerator::processIntersectionArms()
 restriction::Restrictions createRoadRestrictions()
 {
   restriction::Restriction roadRestriction;
-  roadRestriction.roadUserTypes = restriction::RoadUserTypeList(
+  roadRestriction.road_user_types = restriction::RoadUserTypeList(
     {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK});
   restriction::Restrictions roadRestrictions;
   roadRestrictions.conjunctions = {roadRestriction};
@@ -261,35 +262,35 @@ restriction::Restrictions createRoadRestrictions()
 
 point::Geometry convertPolyLineToGeometry(map_data::MapDataStore const &store, map_data::MapDataId polyLine)
 {
-  point::ECEFEdge ecefPoints;
+  point::ECEFPointList ecef_points;
   for (auto const &pointId : store.polyLine(polyLine).mNodes)
   {
     auto &mapPoint = store.point(pointId);
     point::Longitude lon(mapPoint.x);
     point::Latitude lat(mapPoint.y);
     point::Altitude alt(0.0);
-    auto geoPoint = point::createGeoPoint(lon, lat, alt);
-    auto ecefPoint = point::toECEF(geoPoint);
-    ecefPoints.push_back(ecefPoint);
+    auto geo_point = point::createGeoPoint(lon, lat, alt);
+    auto ecefPoint = point::toECEF(geo_point);
+    ecef_points.push_back(ecefPoint);
   }
-  return point::createGeometry(ecefPoints, false);
+  return point::createGeometry(ecef_points, false);
 }
 
 void AdMapGenerator::setupLaneGeometry(map_data::MapDataId internalLaneId)
 {
-  lane::LaneId laneId(internalLaneId);
+  lane::LaneId lane_id(internalLaneId);
   auto const &lane = mDataStore.lane(internalLaneId);
   point::Geometry leftBorderGeometry = convertPolyLineToGeometry(mDataStore, lane.leftBorder);
   point::Geometry rightBorderGeometry = convertPolyLineToGeometry(mDataStore, lane.rightBorder);
-  mFactory.set(laneId, leftBorderGeometry, rightBorderGeometry);
+  mFactory.set(lane_id, leftBorderGeometry, rightBorderGeometry);
 }
 
 void AdMapGenerator::setupLaneContacts(map_data::MapDataId internalLaneId)
 {
-  lane::LaneId laneId(internalLaneId);
+  lane::LaneId lane_id(internalLaneId);
   // set lane predecessors, successors, left and right neighbors
-  auto leftNeighborId = mDataStore.lane(internalLaneId).leftNeighbor;
-  auto rightNeighborId = mDataStore.lane(internalLaneId).rightNeighbor;
+  auto leftNeighborId = mDataStore.lane(internalLaneId).left_neighbor;
+  auto rightNeighborId = mDataStore.lane(internalLaneId).right_neighbor;
 
   lane::ContactTypeList const laneContinuation({lane::ContactType::LANE_CONTINUATION});
   lane::ContactTypeList const laneChange({lane::ContactType::LANE_CHANGE});
@@ -302,26 +303,26 @@ void AdMapGenerator::setupLaneContacts(map_data::MapDataId internalLaneId)
 
   if (leftNeighborId != map_data::InvalidId)
   {
-    mFactory.add(laneId, toLaneId(leftNeighborId), left, laneChange, roadRestrictions);
+    mFactory.add(lane_id, toLaneId(leftNeighborId), left, laneChange, roadRestrictions);
   }
   if (rightNeighborId != map_data::InvalidId)
   {
-    mFactory.add(laneId, toLaneId(rightNeighborId), right, laneChange, roadRestrictions);
+    mFactory.add(lane_id, toLaneId(rightNeighborId), right, laneChange, roadRestrictions);
   }
 
   for (auto const &successorId : mDataStore.lane(internalLaneId).successors)
   {
-    mFactory.add(laneId, toLaneId(successorId), succ, laneContinuation, roadRestrictions);
+    mFactory.add(lane_id, toLaneId(successorId), succ, laneContinuation, roadRestrictions);
   }
   for (auto const &predecessorId : mDataStore.lane(internalLaneId).predecessors)
   {
-    mFactory.add(laneId, toLaneId(predecessorId), pred, laneContinuation, roadRestrictions);
+    mFactory.add(lane_id, toLaneId(predecessorId), pred, laneContinuation, roadRestrictions);
   }
 }
 
 void AdMapGenerator::setupLaneSpeedLimit(map_data::MapDataId internalLaneId, bool const forward)
 {
-  lane::LaneId laneId(internalLaneId);
+  lane::LaneId lane_id(internalLaneId);
   auto const &lane = mDataStore.lane(internalLaneId);
   if (!mDataStore.hasRoad(lane.parentRoadId))
   {
@@ -353,7 +354,7 @@ void AdMapGenerator::processLane(map_data::MapDataId const &internalLaneId, bool
   setupLaneSpeedLimit(internalLaneId, forward);
 }
 
-void AdMapGenerator::addTrafficLightContactToLane(map_data::MapDataId const &laneId,
+void AdMapGenerator::addTrafficLightContactToLane(map_data::MapDataId const &lane_id,
                                                   map_data::MapDataId const &internalTrafficLightId,
                                                   bool isForward)
 {
@@ -367,25 +368,25 @@ void AdMapGenerator::addTrafficLightContactToLane(map_data::MapDataId const &lan
   lane::ContactLocation const succ(lane::ContactLocation::SUCCESSOR);
   lane::ContactLocation const pred(lane::ContactLocation::PREDECESSOR);
 
-  for (auto const &successorId : mDataStore.lane(laneId).successors)
+  for (auto const &successorId : mDataStore.lane(lane_id).successors)
   {
-    mLog(common::LogLevel::Verbose) << "Adding traffic light " << id << " to contacts between Lane " << laneId
+    mLog(common::LogLevel::Verbose) << "Adding traffic light " << id << " to contacts between Lane " << lane_id
                                     << " and " << successorId << " with direction " << directionString << "\n";
     // make sure that the successor is of type INTERSECTION to allow processing easily
-    auto changeToIntersectionId = (isForward ? successorId : laneId);
+    auto changeToIntersectionId = (isForward ? successorId : lane_id);
     (void)mFactory.add(access::PartitionId(0),
                        toLaneId(changeToIntersectionId),
                        ::ad::map::lane::LaneType::INTERSECTION,
                        drivingDirection(mDataStore.lane(changeToIntersectionId)));
-    if (!mFactory.add(toLaneId(laneId), toLaneId(successorId), succ, laneContinuation, restrictions, trafficLightId))
+    if (!mFactory.add(toLaneId(lane_id), toLaneId(successorId), succ, laneContinuation, restrictions, trafficLightId))
     {
-      mLog(common::LogLevel::Error) << "Cannot add traffic light " << id << " to contact from Lane " << laneId << " to "
-                                    << successorId << "\n";
+      mLog(common::LogLevel::Error) << "Cannot add traffic light " << id << " to contact from Lane " << lane_id
+                                    << " to " << successorId << "\n";
     }
-    if (!mFactory.add(toLaneId(successorId), toLaneId(laneId), pred, laneContinuation, restrictions, trafficLightId))
+    if (!mFactory.add(toLaneId(successorId), toLaneId(lane_id), pred, laneContinuation, restrictions, trafficLightId))
     {
       mLog(common::LogLevel::Error) << "Cannot add traffic light " << id << " to contact from Lane " << successorId
-                                    << " to " << laneId << "\n";
+                                    << " to " << lane_id << "\n";
     }
   }
 }
@@ -445,33 +446,33 @@ void AdMapGenerator::setupOverlappingLanes()
 
 void AdMapGenerator::setupOverlappingLanesForIntersection(std::unordered_set<map_data::MapDataId> const &lanes)
 {
-  for (auto laneId : lanes)
+  for (auto lane_id : lanes)
   {
-    auto const &fromLane = mDataStore.lane(laneId);
+    auto const &fromLane = mDataStore.lane(lane_id);
     for (auto otherLaneId : lanes)
     {
-      if (laneId != otherLaneId)
+      if (lane_id != otherLaneId)
       {
-        auto const &toLane = mDataStore.lane(otherLaneId);
-        if (fromLane.overlapsWithLane(mDataStore, toLane))
+        auto const &to_lane = mDataStore.lane(otherLaneId);
+        if (fromLane.overlapsWithLane(mDataStore, to_lane))
         {
-          mFactory.add(toLaneId(laneId),
+          mFactory.add(toLaneId(lane_id),
                        toLaneId(otherLaneId),
                        lane::ContactLocation::OVERLAP,
                        {lane::ContactType::UNKNOWN},
                        restriction::Restrictions());
 
-          if (fromLane.hasRightContactWithLane(mDataStore, toLane))
+          if (fromLane.hasRightContactWithLane(mDataStore, to_lane))
           {
-            mFactory.add(toLaneId(laneId),
+            mFactory.add(toLaneId(lane_id),
                          toLaneId(otherLaneId),
                          lane::ContactLocation::RIGHT,
                          {lane::ContactType::UNKNOWN},
                          restriction::Restrictions());
           }
-          else if (fromLane.hasLeftContactWithLane(mDataStore, toLane))
+          else if (fromLane.hasLeftContactWithLane(mDataStore, to_lane))
           {
-            mFactory.add(toLaneId(laneId),
+            mFactory.add(toLaneId(lane_id),
                          toLaneId(otherLaneId),
                          lane::ContactLocation::LEFT,
                          {lane::ContactType::UNKNOWN},
@@ -537,8 +538,8 @@ void AdMapGenerator::fillLandmarkData(map_data::Landmark const &landmark, Landma
   point::Longitude lon(mapPoint.x);
   point::Latitude lat(mapPoint.y);
   point::Altitude alt(0.0 + landmark.heightOverGround);
-  auto geoPoint = point::createGeoPoint(lon, lat, alt);
-  data.position = point::toECEF(geoPoint);
+  auto geo_point = point::createGeoPoint(lon, lat, alt);
+  data.position = point::toECEF(geo_point);
   auto orientationAsPoint = geometry::Direction2d(landmark.orientation + M_PI).orientationAsPoint();
   // all coordinates are lat/lon. To calculate the orientation, we have to transform position back
   // to a metric position
@@ -551,10 +552,10 @@ void AdMapGenerator::fillLandmarkData(map_data::Landmark const &landmark, Landma
     = point::toECEF(point::createGeoPoint(point::Longitude(orientationLon), point::Latitude(orientationLat), alt));
 }
 
-void AdMapGenerator::storeGeneratedLandmark(map_data::MapDataId const landmarkId, geometry::Point2d const &location)
+void AdMapGenerator::storeGeneratedLandmark(map_data::MapDataId const landmark_id, geometry::Point2d const &location)
 {
   LandmarkEntry entry;
-  entry.id = landmarkId;
+  entry.id = landmark_id;
   mCoordinateTransform.gcsToMetric(location.y, location.x, entry.location.x, entry.location.y);
   mGeneratedLandmarks.push_back(entry);
 }
@@ -570,26 +571,27 @@ void AdMapGenerator::generateLandmark(map_data::Landmark const &landmark)
   LandmarkData data;
   fillLandmarkData(landmark, data);
   point::Geometry bounding_box; // @todo fill with meaningful data, do we need this info?
-  landmark::LandmarkId landmarkId(landmark.index);
+  landmark::LandmarkId landmark_id(landmark.index);
   access::PartitionId part(0);
   if (landmark.type == map_data::LandmarkType::TrafficLight)
   {
     landmark::TrafficLightType type = toAdmTrafficLight(landmark);
-    if (mFactory.addTrafficLight(part, landmarkId, type, data.position, data.orientation, bounding_box))
+    if (mFactory.addTrafficLight(part, landmark_id, type, data.position, data.orientation, bounding_box))
     {
-      mLog(common::LogLevel::Verbose) << "Adding traffic light with id " << static_cast<uint64_t>(landmarkId) << "\n";
-      storeGeneratedLandmark(static_cast<uint64_t>(landmarkId), mDataStore.point(landmark.location));
+      mLog(common::LogLevel::Verbose) << "Adding traffic light with id " << static_cast<uint64_t>(landmark_id) << "\n";
+      storeGeneratedLandmark(static_cast<uint64_t>(landmark_id), mDataStore.point(landmark.location));
     }
     else
     {
-      mLog(common::LogLevel::Warning) << "Unable to add traffic light " << static_cast<uint64_t>(landmarkId)
+      mLog(common::LogLevel::Warning) << "Unable to add traffic light " << static_cast<uint64_t>(landmark_id)
                                       << " to store!\n";
     }
   }
   else
   {
-    auto trafficSignType = trafficSignToAdMap(landmark.type);
-    if (trafficSignType != landmark::TrafficSignType::UNKNOWN)
+    auto traffic_sign_type = trafficSignToAdMap(landmark.type);
+
+    if (traffic_sign_type != landmark::TrafficSignType::UNKNOWN)
     {
       std::string supplement("None");
       if (!landmark.supplement.empty())
@@ -597,14 +599,14 @@ void AdMapGenerator::generateLandmark(map_data::Landmark const &landmark)
         supplement = landmark.supplement;
       }
       if (mFactory.addTrafficSign(
-            part, landmarkId, trafficSignType, data.position, data.orientation, bounding_box, supplement))
+            part, landmark_id, traffic_sign_type, data.position, data.orientation, bounding_box, supplement))
       {
-        mLog(common::LogLevel::Verbose) << "Adding traffic sign with id " << static_cast<uint64_t>(landmarkId) << "\n";
-        storeGeneratedLandmark(static_cast<uint64_t>(landmarkId), mDataStore.point(landmark.location));
+        mLog(common::LogLevel::Verbose) << "Adding traffic sign with id " << static_cast<uint64_t>(landmark_id) << "\n";
+        storeGeneratedLandmark(static_cast<uint64_t>(landmark_id), mDataStore.point(landmark.location));
       }
       else
       {
-        mLog(common::LogLevel::Warning) << "Unable to add traffic sign " << static_cast<uint64_t>(landmarkId)
+        mLog(common::LogLevel::Warning) << "Unable to add traffic sign " << static_cast<uint64_t>(landmark_id)
                                         << " to store!\n";
       }
     }
@@ -612,16 +614,16 @@ void AdMapGenerator::generateLandmark(map_data::Landmark const &landmark)
     {
       // a "normal" landmark
       auto landmarkType = landmarkTypeToAdMap(landmark.type);
-      if (mFactory.addLandmark(part, landmarkId, landmarkType, data.position, data.orientation, bounding_box))
+      if (mFactory.addLandmark(part, landmark_id, landmarkType, data.position, data.orientation, bounding_box))
       {
-        mLog(common::LogLevel::Verbose) << "Adding generic landmark with id " << static_cast<uint64_t>(landmarkId)
+        mLog(common::LogLevel::Verbose) << "Adding generic landmark with id " << static_cast<uint64_t>(landmark_id)
                                         << "\n";
 
-        storeGeneratedLandmark(static_cast<uint64_t>(landmarkId), mDataStore.point(landmark.location));
+        storeGeneratedLandmark(static_cast<uint64_t>(landmark_id), mDataStore.point(landmark.location));
       }
       else
       {
-        mLog(common::LogLevel::Warning) << "Unable to add landmark " << static_cast<uint64_t>(landmarkId)
+        mLog(common::LogLevel::Warning) << "Unable to add landmark " << static_cast<uint64_t>(landmark_id)
                                         << " to store!\n";
       }
     }
@@ -630,9 +632,9 @@ void AdMapGenerator::generateLandmark(map_data::Landmark const &landmark)
 
 void AdMapGenerator::addLandmarks()
 {
-  for (auto landmarkId : mDataStore.listOfLandmarkIds())
+  for (auto landmark_id : mDataStore.listOfLandmarkIds())
   {
-    auto const &landmark = mDataStore.landmark(landmarkId);
+    auto const &landmark = mDataStore.landmark(landmark_id);
     generateLandmark(landmark);
   }
 }
@@ -653,9 +655,9 @@ std::vector<geometry::Point2d> AdMapGenerator::transformPolyline(map_data::MapDa
 
 void AdMapGenerator::addVisibleLandmarksToLanes()
 {
-  for (auto laneId : mDataStore.listOfLaneIds())
+  for (auto lane_id : mDataStore.listOfLaneIds())
   {
-    auto const &lane = mDataStore.lane(laneId);
+    auto const &lane = mDataStore.lane(lane_id);
     auto leftBorder = transformPolyline(lane.leftBorder);
     auto rightBorder = transformPolyline(lane.rightBorder);
     for (auto const &landmarkEntry : mGeneratedLandmarks)
@@ -663,7 +665,7 @@ void AdMapGenerator::addVisibleLandmarksToLanes()
       if (isPointCloseToBorder(landmarkEntry.location, leftBorder)
           || isPointCloseToBorder(landmarkEntry.location, rightBorder))
       {
-        mFactory.add(lane::LaneId(laneId), landmark::LandmarkId(landmarkEntry.id));
+        mFactory.add(lane::LaneId(lane_id), landmark::LandmarkId(landmarkEntry.id));
       }
     }
   }

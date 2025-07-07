@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #pragma once
@@ -43,11 +43,13 @@ namespace physics {
  * \brief Enable/Disable explicit conversion. Currently set to "only explicit conversion".
  */
 #define _AD_PHYSICS_ANGULARVELOCITY_EXPLICIT_CONVERSION_ explicit
+#define _AD_PHYSICS_ANGULARVELOCITY_OPERATOR_BASE_TYPE_ 0
 #else
 /*!
  * \brief Enable/Disable explicit conversion. Currently set to "implicit conversion allowed".
  */
 #define _AD_PHYSICS_ANGULARVELOCITY_EXPLICIT_CONVERSION_
+#define _AD_PHYSICS_ANGULARVELOCITY_OPERATOR_BASE_TYPE_ 1
 #endif
 
 /*!
@@ -228,8 +230,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    AngularVelocity const result(mAngularVelocity + other.mAngularVelocity);
-    result.ensureValid();
+    AngularVelocity result(mAngularVelocity + other.mAngularVelocity);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -248,7 +250,7 @@ public:
     ensureValid();
     other.ensureValid();
     mAngularVelocity += other.mAngularVelocity;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -266,8 +268,8 @@ public:
   {
     ensureValid();
     other.ensureValid();
-    AngularVelocity const result(mAngularVelocity - other.mAngularVelocity);
-    result.ensureValid();
+    AngularVelocity result(mAngularVelocity - other.mAngularVelocity);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -286,7 +288,7 @@ public:
     ensureValid();
     other.ensureValid();
     mAngularVelocity -= other.mAngularVelocity;
-    ensureValid();
+    restrictToLimitsAndEnsureValid();
     return *this;
   }
 
@@ -303,8 +305,8 @@ public:
   AngularVelocity operator*(const double &scalar) const
   {
     ensureValid();
-    AngularVelocity const result(mAngularVelocity * scalar);
-    result.ensureValid();
+    AngularVelocity result(mAngularVelocity * scalar);
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -321,8 +323,8 @@ public:
   AngularVelocity operator/(const double &scalar) const
   {
     AngularVelocity const scalarAngularVelocity(scalar);
-    AngularVelocity const result(operator/(scalarAngularVelocity));
-    result.ensureValid();
+    AngularVelocity result(operator/(scalarAngularVelocity));
+    result.restrictToLimitsAndEnsureValid();
     return result;
   }
 
@@ -356,8 +358,8 @@ public:
   AngularVelocity operator-() const
   {
     ensureValid();
-    AngularVelocity const result(-mAngularVelocity);
-    result.ensureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
+    AngularVelocity result(-mAngularVelocity);
+    result.restrictToLimitsAndEnsureValid(); // LCOV_EXCL_BR_LINE Some types do not throw an exception
     return result;
   }
 
@@ -365,12 +367,35 @@ public:
    * \brief conversion to base type: double
    *
    * \note the conversion to the base type removes the physical unit.
-   *       \ref \_AD_PHYSICS_ANGULARVELOCITY_EXPLICIT_CONVERSION\_ defines, if only explicit calls are allowed.
    */
-  _AD_PHYSICS_ANGULARVELOCITY_EXPLICIT_CONVERSION_ operator double() const
+  double toBaseType() const
   {
     return mAngularVelocity;
   }
+
+  /*!
+   * \returns \c true if the AngularVelocity is a normal value
+   *
+   * An AngularVelocity value is defined to be normal if:
+   * - It is normal or zero (see std::fpclassify())
+   */
+  bool isNormal() const
+  {
+    auto const valueClass = std::fpclassify(mAngularVelocity);
+    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO));
+  }
+
+#if _AD_PHYSICS_ANGULARVELOCITY_OPERATOR_BASE_TYPE_
+  /*!
+   * \brief conversion to base type: double
+   *
+   * \note the conversion to the base type removes the physical unit.
+   */
+  operator double() const
+  {
+    return mAngularVelocity;
+  }
+#endif
 
   /*!
    * \returns \c true if the AngularVelocity in a valid range
@@ -381,9 +406,7 @@ public:
    */
   bool isValid() const
   {
-    auto const valueClass = std::fpclassify(mAngularVelocity);
-    return ((valueClass == FP_NORMAL) || (valueClass == FP_ZERO)) && (cMinValue <= mAngularVelocity)
-      && (mAngularVelocity <= cMaxValue);
+    return isNormal() && (cMinValue <= mAngularVelocity) && (mAngularVelocity <= cMaxValue);
   }
 
   /*!
@@ -396,7 +419,8 @@ public:
   {
     if (!isValid())
     {
-      spdlog::info("ensureValid(::ad::physics::AngularVelocity)>> {} value out of range", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::physics::AngularVelocity)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_PHYSICS_ANGULARVELOCITY_THROWS_EXCEPTION == 1)
       throw std::out_of_range("AngularVelocity value out of range"); // LCOV_EXCL_BR_LINE
 #endif
@@ -414,9 +438,53 @@ public:
     ensureValid();
     if (operator==(AngularVelocity(0.))) // LCOV_EXCL_BR_LINE
     {
-      spdlog::info("ensureValid(::ad::physics::AngularVelocity)>> {} value is zero", *this); // LCOV_EXCL_BR_LINE
+      spdlog::info("ensureValid(::ad::physics::AngularVelocity)>> {} value is zero",
+                   *this); // LCOV_EXCL_BR_LINE
 #if (AD_PHYSICS_ANGULARVELOCITY_THROWS_EXCEPTION == 1)
       throw std::out_of_range("AngularVelocity value is zero"); // LCOV_EXCL_BR_LINE
+#endif
+    }
+  }
+
+  /**
+   * @brief if possible restrict the AngularVelocity to it's defined limits
+   *
+   * If the AngularVelocity isNormal(), but exceeds the defined limits, it is restricted to its limits.
+   * If AngularVelocity::isNormal() returns \c false an std::out_of_range() exception is thrown.
+   * - not isNormal(): std::out_of_range() exception is thrown
+   * - \ref cMinValue <= value <= \ref cMaxValue: nothing is done
+   * - value < \ref cMinValue: resulting value = cMinValue
+   * - value > \ref cMaxValue: resulting value = cMaxValue
+   */
+  void restrictToLimitsAndEnsureValid()
+  {
+    if (isNormal())
+    {
+      if (mAngularVelocity < cMinValue)
+      {
+        // mitigate exceeding the minimum
+        spdlog::info("restrictToLimits(::ad::physics::AngularVelocity)>> {} value is smaller than allowed minimum {}. "
+                     "Restrict to minimum value.",
+                     *this,
+                     getMin()); // LCOV_EXCL_BR_LINE
+        mAngularVelocity = cMinValue;
+      }
+      else if (mAngularVelocity > cMaxValue)
+      {
+        // mitigate exceeding the maximum
+        spdlog::info("restrictToLimits(::ad::physics::AngularVelocity)>> {} value is larger than allowed maximum {}. "
+                     "Restrict to maximum value.",
+                     *this,
+                     getMax()); // LCOV_EXCL_BR_LINE
+        mAngularVelocity = cMaxValue;
+      }
+    }
+    else
+    {
+      spdlog::info("restrictToLimits(::ad::physics::AngularVelocity)>> {} value out of range",
+                   *this); // LCOV_EXCL_BR_LINE
+#if (AD_PHYSICS_ANGULARVELOCITY_THROWS_EXCEPTION == 1)
+      throw std::out_of_range("AngularVelocity value out of range"); // LCOV_EXCL_BR_LINE
 #endif
     }
   }
@@ -445,7 +513,6 @@ public:
     return AngularVelocity(cPrecisionValue);
   }
 
-private:
   /*!
    * \brief the actual value of the type
    */
@@ -480,7 +547,7 @@ namespace std {
  */
 inline ::ad::physics::AngularVelocity fabs(const ::ad::physics::AngularVelocity other)
 {
-  ::ad::physics::AngularVelocity const result(std::fabs(static_cast<double>(other)));
+  ::ad::physics::AngularVelocity const result(std::fabs(other.mAngularVelocity));
   return result;
 }
 
@@ -546,7 +613,7 @@ namespace physics {
  */
 inline std::ostream &operator<<(std::ostream &os, AngularVelocity const &_value)
 {
-  return os << double(_value);
+  return os << _value.mAngularVelocity;
 }
 
 } // namespace physics
@@ -558,7 +625,19 @@ namespace std {
  */
 inline std::string to_string(::ad::physics::AngularVelocity const &value)
 {
-  return to_string(static_cast<double>(value));
+  return to_string(value.mAngularVelocity);
 }
 } // namespace std
+
+/*!
+ * \brief overload of fmt::formatter calling std::to_string
+ */
+template <> struct fmt::formatter<::ad::physics::AngularVelocity> : formatter<string_view>
+{
+  template <typename FormatContext> auto format(::ad::physics::AngularVelocity const &value, FormatContext &ctx)
+  {
+    return formatter<string_view>::format(std::to_string(value), ctx);
+  }
+};
+
 #endif // GEN_GUARD_AD_PHYSICS_ANGULARVELOCITY

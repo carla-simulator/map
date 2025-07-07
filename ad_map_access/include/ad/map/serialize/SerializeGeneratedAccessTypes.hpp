@@ -34,9 +34,9 @@ inline bool doSerialize(ISerializer &serializer, access::PartitionId &x)
  */
 inline bool doSerialize(ISerializer &serializer, access::GeometryStoreItem &item)
 {
-  return serializer.serialize(SerializeableMagic::GeometryStoreItem) && serializer.serialize(item.leftEdgeOffset)
-    && serializer.serialize(item.leftEdgePoints) && serializer.serialize(item.rightEdgeOffset)
-    && serializer.serialize(item.rightEdgePoints);
+  return serializer.serialize(SerializeableMagic::GeometryStoreItem) && serializer.serialize(item.left_edge_offset)
+    && serializer.serialize(item.left_edge_points) && serializer.serialize(item.right_edge_offset)
+    && serializer.serialize(item.right_edge_points);
 }
 
 /**
@@ -44,7 +44,7 @@ inline bool doSerialize(ISerializer &serializer, access::GeometryStoreItem &item
  */
 inline bool doSerialize(ISerializer &serializer, access::MapMetaData &metaData)
 {
-  return serializer.serialize(SerializeableMagic::MapMetaData) && serializer.serialize(metaData.trafficType);
+  return serializer.serialize(SerializeableMagic::MapMetaData) && serializer.serialize(metaData.traffic_type);
 }
 
 } // namespace serialize

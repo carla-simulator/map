@@ -43,8 +43,8 @@ physics::Distance const cEdgePointBorderDistance{0.1};
 template <typename PointType>
 physics::RatioValue findNearestPointOnEdge(PointType const &a, const PointType &pt0, const PointType &pt1)
 {
-  PointType line = pt1 - pt0;
-  PointType pt02a = a - pt0;
+  PointType line = vectorSub(pt1, pt0);
+  PointType pt02a = vectorSub(a, pt0);
   auto const divisor = vectorDotProduct(line, line);
   if (physics::Distance(divisor) > physics::Distance(0))
   {
@@ -81,7 +81,7 @@ physics::ParametricValue findNearestPointOnSegment(PointType const &a, const Poi
   }
   else
   {
-    return physics::ParametricValue(static_cast<double>(t));
+    return physics::ParametricValue(t.mRatioValue);
   }
 }
 
@@ -105,24 +105,23 @@ template <typename PointType> physics::Distance calculateEdgeLength(std::vector<
  * @param[in] edge The input edge to operate on.
  * @return Vector of parametric values on the edge.
  */
-template <typename PointType>
-std::vector<physics::ParametricValue> getParametricEdgePoints(std::vector<PointType> const &edge)
+template <typename PointType> physics::ParametricValueList getParametricEdgePoints(std::vector<PointType> const &edge)
 {
-  std::vector<physics::ParametricValue> resultPoints;
+  physics::ParametricValueList resultPoints;
   resultPoints.reserve(edge.size());
   resultPoints.push_back(physics::ParametricValue(0.));
   physics::Distance length(0.);
   for (auto i = 1u; i < edge.size(); ++i)
   {
     length += distance(edge[i - 1u], edge[i]);
-    resultPoints.push_back(physics::ParametricValue(static_cast<double>(length)));
+    resultPoints.push_back(physics::ParametricValue(length.mDistance));
   }
 
   for (auto i = 1u; i < edge.size(); ++i)
   {
     if (length > physics::Distance(0.))
     {
-      resultPoints[i] = resultPoints[i] / static_cast<double>(length);
+      resultPoints[i] = resultPoints[i] / length.mDistance;
     }
   }
   return resultPoints;
@@ -220,6 +219,7 @@ std::vector<PointType> getParametricRange(std::vector<PointType> const &edge,
         {
           pts.push_back(pt1);
         }
+        // ensure i++ is not executed in this case
         break;
       }
       else
@@ -227,39 +227,43 @@ std::vector<PointType> getParametricRange(std::vector<PointType> const &edge,
         length = length_1;
       }
     }
-    if (!pts.empty())
+    if (pts.empty())
     {
-      physics::Distance length_t_end = edgeLength * trange.maximum;
-      for (; i < edge.size() - 1; i++)
+      // this can happen if the length was measured e.g. in ECEF and the cumulated
+      // length of the ENU cached lane coordinates are slightly smaller
+      // and the range is near to the end of the lane
+      pts.push_back(edge.back());
+    }
+    physics::Distance length_t_end = edgeLength * trange.maximum;
+    for (; i < edge.size() - 1; i++)
+    {
+      const PointType &pt0 = edge[i];
+      const PointType &pt1 = edge[i + 1];
+      physics::Distance d = distance(pt0, pt1);
+      physics::Distance length_1 = length + d;
+      if (length_1 >= length_t_end)
       {
-        const PointType &pt0 = edge[i];
-        const PointType &pt1 = edge[i + 1];
-        physics::Distance d = distance(pt0, pt1);
-        physics::Distance length_1 = length + d;
-        if (length_1 >= length_t_end)
+        if (d != physics::Distance(0))
         {
-          if (d != physics::Distance(0))
-          {
-            physics::Distance d_t = length_t_end - length;
-            physics::ParametricValue tt(d_t / d);
-            PointType pt_end = vectorInterpolate(pt0, pt1, tt);
-            pts.push_back(pt_end);
-          }
-          else
-          {
-            pts.push_back(pt1);
-          }
-          return pts;
+          physics::Distance d_t = length_t_end - length;
+          physics::ParametricValue tt(d_t / d);
+          PointType pt_end = vectorInterpolate(pt0, pt1, tt);
+          pts.push_back(pt_end);
         }
         else
         {
           pts.push_back(pt1);
-          length = length_1;
         }
+        return pts;
       }
-      pts.push_back(edge.back());
-      return pts;
+      else
+      {
+        pts.push_back(pt1);
+        length = length_1;
+      }
     }
+    pts.push_back(edge.back());
+    return pts;
   }
   return EdgeType();
 }
@@ -351,52 +355,51 @@ physics::ParametricValue findNearestPointOnEdge(std::vector<PointType> const &ed
  * @returns pair containing the range of the width and the average width between the two input edges.
  */
 template <typename PointType>
-std::pair<physics::MetricRange, physics::Distance> calculateWidthRange(std::vector<PointType> const &edgeLeft,
+std::pair<physics::MetricRange, physics::Distance> calculateWidthRange(std::vector<PointType> const &edge_left,
                                                                        physics::Distance const &edgeLeftLength,
-                                                                       std::vector<PointType> const &edgeRight,
+                                                                       std::vector<PointType> const &edge_right,
                                                                        physics::Distance const &edgeRightLength)
 {
-  physics::MetricRange widthRange;
-  widthRange.minimum = std::numeric_limits<physics::Distance>::max();
-  widthRange.maximum = physics::Distance(0.);
+  physics::MetricRange width_range;
+  width_range.minimum = std::numeric_limits<physics::Distance>::max();
+  width_range.maximum = physics::Distance(0.);
   physics::Distance widthSum(0.);
   size_t widthSumCount(0u);
   physics::ParametricValue parametricStepsize(0.5);
   auto length = (edgeLeftLength + edgeRightLength) * 0.5;
   if (length > physics::Distance(1.))
   {
-    parametricStepsize
-      = std::max(physics::ParametricValue(0.01), physics::ParametricValue(1. / static_cast<double>(length)));
+    parametricStepsize = std::max(physics::ParametricValue(0.01), physics::ParametricValue(1. / length.mDistance));
   }
   physics::ParametricValue longitudinalOffset(0.);
   bool endReached = false;
   do
   {
-    auto const pt0 = getParametricPoint(edgeLeft, edgeLeftLength, longitudinalOffset);
-    auto const pt1 = getParametricPoint(edgeRight, edgeRightLength, longitudinalOffset);
+    auto const pt0 = getParametricPoint(edge_left, edgeLeftLength, longitudinalOffset);
+    auto const pt1 = getParametricPoint(edge_right, edgeRightLength, longitudinalOffset);
     if (!isValid(pt1) || !isValid(pt1))
     {
       return std::make_pair(physics::MetricRange(), physics::Distance());
     }
-    auto const centerPoint = point::vectorInterpolate(pt0, pt1, physics::ParametricValue(0.5));
-    if (!isValid(centerPoint))
+    auto const center_point = point::vectorInterpolate(pt0, pt1, physics::ParametricValue(0.5));
+    if (!isValid(center_point))
     {
       return std::make_pair(physics::MetricRange(), physics::Distance());
     }
-    auto const longTLeft = findNearestPointOnEdge(edgeLeft, edgeLeftLength, centerPoint);
-    auto const longTRight = findNearestPointOnEdge(edgeRight, edgeRightLength, centerPoint);
+    auto const longTLeft = findNearestPointOnEdge(edge_left, edgeLeftLength, center_point);
+    auto const longTRight = findNearestPointOnEdge(edge_right, edgeRightLength, center_point);
     if (!isRangeValid(longTLeft) || !isRangeValid(longTRight))
     {
       return std::make_pair(physics::MetricRange(), physics::Distance());
     }
-    auto const pointOnLeftEdge = getParametricPoint(edgeLeft, edgeLeftLength, longTLeft);
-    auto const pointOnRightEdge = getParametricPoint(edgeRight, edgeRightLength, longTRight);
+    auto const pointOnLeftEdge = getParametricPoint(edge_left, edgeLeftLength, longTLeft);
+    auto const pointOnRightEdge = getParametricPoint(edge_right, edgeRightLength, longTRight);
     if (!isValid(pointOnLeftEdge) || !isValid(pointOnRightEdge))
     {
       return std::make_pair(physics::MetricRange(), physics::Distance());
     }
     physics::Distance const width = distance(pointOnLeftEdge, pointOnRightEdge);
-    unionRangeWith(widthRange, width);
+    unionRangeWith(width_range, width);
     widthSum += width;
     widthSumCount++;
     if (longitudinalOffset < physics::ParametricValue(1.))
@@ -415,11 +418,11 @@ std::pair<physics::MetricRange, physics::Distance> calculateWidthRange(std::vect
 
   auto averageWidth = (widthSum / static_cast<double>(widthSumCount));
 
-  return std::make_pair(widthRange, averageWidth);
+  return std::make_pair(width_range, averageWidth);
 }
 
 /**
- * @brief Get an edge between the two given border edges with corresponding lateralAlignment
+ * @brief Get an edge between the two given border edges with corresponding lateral_alignment
  *
  * The left and right edges are usually the borders of some road section.
  * This function then calculates a new edge in between two other edges providing e.g. the center edge
@@ -430,39 +433,33 @@ std::pair<physics::MetricRange, physics::Distance> calculateWidthRange(std::vect
  * @param[in] leftEdgeLength the length of the left-hand border edge
  * @param[in] rightEdge the right-hand border edge as basis for the calculation
  * @param[in] rightEdgeLength the length of the left-hand border edge
- * @param[in] lateralAlignment the lateral alignment as TParam [0.;1.] used to calculate the resulting edge.
- *   The lateral alignment is relative to the left edge. If lateralAlignment is 1., the left edge is returned,
- *   if lateralAlignment is 0., the right edge is returned
- *
- * @throws std::invalid_argument if the lateralAlignment parameter is smaller than 0. or larger than 1.
+ * @param[in] lateral_alignment the lateral alignment as RatioValue used to calculate the resulting edge.
+ *   The lateral alignment is relative to the left edge. If lateral_alignment is 1., the left edge is returned,
+ *   if lateral_alignment is 0., the right edge is returned.
+ *   If lateral_alignment < 0. an edge left of the left edge is returned.
+ *   If lateral_alignment > 1. an edge right of the right edge is returned.
  */
 template <typename PointType>
 std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &leftEdge,
                                                physics::Distance const &leftEdgeLength,
                                                std::vector<PointType> const &rightEdge,
                                                physics::Distance const &rightEdgeLength,
-                                               physics::ParametricValue const lateralAlignment)
+                                               physics::RatioValue const lateral_alignment)
 {
   typedef std::vector<PointType> EdgeType;
-
-  if (!withinValidInputRange(lateralAlignment))
-  {
-    throw std::invalid_argument("ad::map::point::getLateralAlignmentEdge()"
-                                " the given lateralAlignment is out of range");
-  }
 
   EdgeType const *primary;
   EdgeType const *secondary;
   physics::Distance primaryLength;
   physics::Distance secondaryLength;
-  physics::ParametricValue lateralOffset = lateralAlignment;
+  physics::RatioValue lateralOffset = lateral_alignment;
   if (leftEdge.size() > rightEdge.size())
   {
     primary = &leftEdge;
     primaryLength = leftEdgeLength;
     secondary = &rightEdge;
     secondaryLength = rightEdgeLength;
-    lateralOffset = physics::ParametricValue(1.) - lateralAlignment;
+    lateralOffset = physics::RatioValue(1.) - lateral_alignment;
   }
   else
   {
@@ -472,7 +469,7 @@ std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &lef
     secondaryLength = leftEdgeLength;
   }
 
-  std::vector<physics::ParametricValue> const primaryParametric = getParametricEdgePoints(*primary);
+  physics::ParametricValueList const primaryParametric = getParametricEdgePoints(*primary);
   EdgeType alignmentEdge;
   alignmentEdge.reserve(primaryParametric.size());
   for (size_t i = 0; i < primaryParametric.size(); i++)
@@ -486,7 +483,42 @@ std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &lef
 }
 
 /**
- * @brief Get an edge between the two given border edges with corresponding lateralAlignment
+ * @brief Get an edge between the two given border edges with corresponding lateral_alignment
+ *
+ * The left and right edges are usually the borders of some road section.
+ * This function then calculates a new edge in between two other edges providing e.g. the center edge
+ * (lateralAlgignment=0.5)
+ * or edge with other lateral shift.
+ *
+ * @param[in] leftEdge the left-hand border edge as basis for the calculation
+ * @param[in] leftEdgeLength the length of the left-hand border edge
+ * @param[in] rightEdge the right-hand border edge as basis for the calculation
+ * @param[in] rightEdgeLength the length of the left-hand border edge
+ * @param[in] lateral_alignment the lateral alignment as TParam [0.;1.] used to calculate the resulting edge.
+ *   The lateral alignment is relative to the left edge. If lateral_alignment is 1., the left edge is returned,
+ *   if lateral_alignment is 0., the right edge is returned
+ *
+ * @throws std::invalid_argument if the lateral_alignment parameter is smaller than 0. or larger than 1.
+ */
+template <typename PointType>
+std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &leftEdge,
+                                               physics::Distance const &leftEdgeLength,
+                                               std::vector<PointType> const &rightEdge,
+                                               physics::Distance const &rightEdgeLength,
+                                               physics::ParametricValue const lateral_alignment)
+{
+  if (!withinValidInputRange(lateral_alignment))
+  {
+    throw std::invalid_argument("ad::map::point::getLateralAlignmentEdge()"
+                                " the given lateral_alignment is out of range");
+  }
+
+  physics::RatioValue lateral_alignment_ratio(lateral_alignment.mParametricValue);
+  return getLateralAlignmentEdge(leftEdge, leftEdgeLength, rightEdge, rightEdgeLength, lateral_alignment_ratio);
+}
+
+/**
+ * @brief Get an edge between the two given border edges with corresponding lateral_alignment
  *
  * The left and right edges are usually the borders of some road section.
  * This function then calculates a new edge in between two other edges providing e.g. the center edge
@@ -497,19 +529,46 @@ std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &lef
  *
  * @param[in] leftEdge the left-hand border edge as basis for the calculation
  * @param[in] rightEdge the right-hand border edge as basis for the calculation
- * @param[in] lateralAlignment the lateral alignment as TParam [0.;1.] used to calculate the resulting edge.
- *   The lateral alignment is relative to the left edge. If lateralAlignment is 1., the left edge is returned,
- *   if lateralAlignment is 0., the right edge is returned
+ * @param[in] lateral_alignment the lateral alignment as TParam [0.;1.] used to calculate the resulting edge.
+ *   The lateral alignment is relative to the left edge. If lateral_alignment is 1., the left edge is returned,
+ *   if lateral_alignment is 0., the right edge is returned
  *
- * @throws std::invalid_argument if the lateralAlignment parameter is smaller than 0. or larger than 1.
+ * @throws std::invalid_argument if the lateral_alignment parameter is smaller than 0. or larger than 1.
  */
 template <typename PointType>
 std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &leftEdge,
                                                std::vector<PointType> const &rightEdge,
-                                               physics::ParametricValue const lateralAlignment)
+                                               physics::ParametricValue const lateral_alignment)
 {
   return getLateralAlignmentEdge(
-    leftEdge, calculateEdgeLength(leftEdge), rightEdge, calculateEdgeLength(rightEdge), lateralAlignment);
+    leftEdge, calculateEdgeLength(leftEdge), rightEdge, calculateEdgeLength(rightEdge), lateral_alignment);
+}
+
+/**
+ * @brief Get an edge between the two given border edges with corresponding lateral_alignment
+ *
+ * The left and right edges are usually the borders of some road section.
+ * This function then calculates a new edge in between two other edges providing e.g. the center edge
+ * (lateralAlgignment=0.5)
+ * or edge with other lateral shift.
+ *
+ * Note: if the length of the edges are already know, the overloaded getLateralAlignmentEdge() function can be called.
+ *
+ * @param[in] leftEdge the left-hand border edge as basis for the calculation
+ * @param[in] rightEdge the right-hand border edge as basis for the calculation
+ * @param[in] lateral_alignment the lateral alignment as RatioValue used to calculate the resulting edge.
+ *   The lateral alignment is relative to the left edge. If lateral_alignment is 1., the left edge is returned,
+ *   if lateral_alignment is 0., the right edge is returned.
+ *   If lateral_alignment < 0. an edge left of the left edge is returned.
+ *   If lateral_alignment > 1. an edge right of the right edge is returned.
+ */
+template <typename PointType>
+std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &leftEdge,
+                                               std::vector<PointType> const &rightEdge,
+                                               physics::RatioValue const lateral_alignment)
+{
+  return getLateralAlignmentEdge(
+    leftEdge, calculateEdgeLength(leftEdge), rightEdge, calculateEdgeLength(rightEdge), lateral_alignment);
 }
 
 /**
@@ -526,11 +585,11 @@ template <typename PointType> PointType getEdgeStartDirectionalVector(std::vecto
     return PointType();
   }
 
-  auto edgeStartVec = edge[1u] - edge[0u];
+  auto edgeStartVec = vectorSub(edge[1u], edge[0u]);
   // in case the end points are too near to each other we take another point into account if possible
   if ((vectorLength(edgeStartVec) < cEdgePointBorderDistance) && (edge.size() > 2u))
   {
-    edgeStartVec = edge[2u] - edge[0u];
+    edgeStartVec = vectorSub(edge[2u], edge[0u]);
   }
   return vectorNorm(edgeStartVec);
 }
@@ -549,11 +608,11 @@ template <typename PointType> PointType getEdgeEndDirectionalVector(std::vector<
     return PointType();
   }
 
-  auto edgeEndVec = edge[edge.size() - 1u] - edge[edge.size() - 2u];
+  auto edgeEndVec = vectorSub(edge[edge.size() - 1u], edge[edge.size() - 2u]);
   // in case the end points are too near to each other we take another point into account if possible
   if ((vectorLength(edgeEndVec) < cEdgePointBorderDistance) && (edge.size() > 2u))
   {
-    edgeEndVec = edge[edge.size() - 1u] - edge[edge.size() - 3u];
+    edgeEndVec = vectorSub(edge[edge.size() - 1u], edge[edge.size() - 3u]);
   }
   return vectorNorm(edgeEndVec);
 }

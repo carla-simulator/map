@@ -13,7 +13,7 @@
 
 #include <vector>
 #include "ad/map/config/MapEntry.hpp"
-#include "ad/map/config/PointOfInterest.hpp"
+#include "ad/map/config/PointOfInterestList.hpp"
 #include "ad/map/point/GeoPoint.hpp"
 
 /** @brief namespace ad */
@@ -36,8 +36,8 @@ namespace config {
  * ADMap specifies a map and optional parameters for loading. An entry is given with
  * - map (mandatory): filename of the adm or OpenDrive map file, relative path below in the directory of the config file
  * itself. The filename must not have blanks.
- * - openDriveOverlapMargin (optional): OpenDrive Map reader margin for overlap calculation
- * - openDriveDefaultIntersectionType (optional): OpenDrive Map default intersection type
+ * - open_drive_overlap_margin (optional): OpenDrive Map reader margin for overlap calculation
+ * - open_drive_default_intersection_type (optional): OpenDrive Map default intersection type
  *
  * The positions define the covered area of the file. Example:
  * [ADMap]
@@ -100,7 +100,7 @@ public:
   MapEntry const &adMapEntry() const;
 
   //! @return list of POIs
-  std::vector<PointOfInterest> const &pointsOfInterest() const;
+  PointOfInterestList const &pointsOfInterest() const;
 
   //! @return the default Enu reference point
   point::GeoPoint defaultEnuReference() const;
@@ -115,7 +115,7 @@ private:
   std::string mBaseDir{};        //!< name of directory where config file is located
 
   MapEntry mAdMapEntry;
-  std::vector<PointOfInterest> mPointsOfInterest;
+  PointOfInterestList mPointsOfInterest;
   point::GeoPoint mDefaultEnuReference;
 
   void updateFilenameAndPath(std::string const &configFileName);

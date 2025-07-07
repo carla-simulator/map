@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #include "ad/map/point/Altitude.hpp"
@@ -32,9 +32,9 @@ namespace map {
  */
 namespace point {
 
-const double Altitude::cMinValue = std::numeric_limits<double>::lowest();
+const double Altitude::cMinValue = -11000;
 
-const double Altitude::cMaxValue = std::numeric_limits<double>::max();
+const double Altitude::cMaxValue = 9000;
 
 const double Altitude::cPrecisionValue = 1e-3;
 

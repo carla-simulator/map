@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -12,7 +12,7 @@
  * Generated file
  * @file
  *
- * Generator Version : 11.0.0-1997
+ * Generator Version : 11.0.0-2046
  */
 
 #include "ad/physics/DurationSquared.hpp"
@@ -39,8 +39,8 @@ namespace std {
 
 ::ad::physics::Duration sqrt(::ad::physics::DurationSquared const other)
 {
-  ::ad::physics::Duration result(std::sqrt(static_cast<double>(other)));
-  result.ensureValid();
+  ::ad::physics::Duration result(std::sqrt(other.mDurationSquared));
+  result.restrictToLimitsAndEnsureValid();
   return result;
 }
 

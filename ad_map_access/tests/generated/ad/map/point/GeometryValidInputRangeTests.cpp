@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -21,72 +21,72 @@
 TEST(GeometryValidInputRangeTests, testValidInputRange)
 {
   ::ad::map::point::Geometry value;
-  bool valueIsValid{true};
-  value.isValid = valueIsValid;
-  bool valueIsClosed{true};
-  value.isClosed = valueIsClosed;
-  ::ad::map::point::ECEFEdge valueEcefEdge;
-  ::ad::map::point::ECEFPoint valueEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueEcefEdgeElementX(-6400000);
-  valueEcefEdgeElement.x = valueEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueEcefEdgeElementY(-6400000);
-  valueEcefEdgeElement.y = valueEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueEcefEdgeElementZ(-6400000);
-  valueEcefEdgeElement.z = valueEcefEdgeElementZ;
-  valueEcefEdge.resize(1, valueEcefEdgeElement);
-  value.ecefEdge = valueEcefEdge;
+  bool valueIs_valid{true};
+  value.is_valid = valueIs_valid;
+  bool valueIs_closed{true};
+  value.is_closed = valueIs_closed;
+  ::ad::map::point::ECEFPointList valueEcef_points;
+  ::ad::map::point::ECEFPoint valueEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueEcef_pointsElementX(-6400000);
+  valueEcef_pointsElement.x = valueEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueEcef_pointsElementY(-6400000);
+  valueEcef_pointsElement.y = valueEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueEcef_pointsElementZ(-6400000);
+  valueEcef_pointsElement.z = valueEcef_pointsElementZ;
+  valueEcef_points.resize(1, valueEcef_pointsElement);
+  value.ecef_points = valueEcef_points;
   ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
-  ::ad::map::point::ENUEdgeCache valuePrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valuePrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valuePrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valuePrivate_enuEdgeCacheEnuEdgeElement.x = valuePrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valuePrivate_enuEdgeCacheEnuEdgeElement.y = valuePrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valuePrivate_enuEdgeCacheEnuEdgeElement.z = valuePrivate_enuEdgeCacheEnuEdgeElementZ;
-  valuePrivate_enuEdgeCacheEnuEdge.resize(1, valuePrivate_enuEdgeCacheEnuEdgeElement);
-  valuePrivate_enuEdgeCache.enuEdge = valuePrivate_enuEdgeCacheEnuEdge;
-  uint64_t valuePrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valuePrivate_enuEdgeCache.enuVersion = valuePrivate_enuEdgeCacheEnuVersion;
-  value.private_enuEdgeCache = valuePrivate_enuEdgeCache;
+  ::ad::map::point::ENUPointCache valuePrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valuePrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valuePrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valuePrivate_enu_points_cacheEnu_pointsElement.x = valuePrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valuePrivate_enu_points_cacheEnu_pointsElement.y = valuePrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valuePrivate_enu_points_cacheEnu_pointsElement.z = valuePrivate_enu_points_cacheEnu_pointsElementZ;
+  valuePrivate_enu_points_cacheEnu_points.resize(1, valuePrivate_enu_points_cacheEnu_pointsElement);
+  valuePrivate_enu_points_cache.enu_points = valuePrivate_enu_points_cacheEnu_points;
+  uint64_t valuePrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valuePrivate_enu_points_cache.enu_version = valuePrivate_enu_points_cacheEnu_version;
+  value.private_enu_points_cache = valuePrivate_enu_points_cache;
   ASSERT_TRUE(withinValidInputRange(value));
 }
 
 TEST(GeometryValidInputRangeTests, testValidInputRangeLengthTooSmall)
 {
   ::ad::map::point::Geometry value;
-  bool valueIsValid{true};
-  value.isValid = valueIsValid;
-  bool valueIsClosed{true};
-  value.isClosed = valueIsClosed;
-  ::ad::map::point::ECEFEdge valueEcefEdge;
-  ::ad::map::point::ECEFPoint valueEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueEcefEdgeElementX(-6400000);
-  valueEcefEdgeElement.x = valueEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueEcefEdgeElementY(-6400000);
-  valueEcefEdgeElement.y = valueEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueEcefEdgeElementZ(-6400000);
-  valueEcefEdgeElement.z = valueEcefEdgeElementZ;
-  valueEcefEdge.resize(1, valueEcefEdgeElement);
-  value.ecefEdge = valueEcefEdge;
+  bool valueIs_valid{true};
+  value.is_valid = valueIs_valid;
+  bool valueIs_closed{true};
+  value.is_closed = valueIs_closed;
+  ::ad::map::point::ECEFPointList valueEcef_points;
+  ::ad::map::point::ECEFPoint valueEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueEcef_pointsElementX(-6400000);
+  valueEcef_pointsElement.x = valueEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueEcef_pointsElementY(-6400000);
+  valueEcef_pointsElement.y = valueEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueEcef_pointsElementZ(-6400000);
+  valueEcef_pointsElement.z = valueEcef_pointsElementZ;
+  valueEcef_points.resize(1, valueEcef_pointsElement);
+  value.ecef_points = valueEcef_points;
   ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
-  ::ad::map::point::ENUEdgeCache valuePrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valuePrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valuePrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valuePrivate_enuEdgeCacheEnuEdgeElement.x = valuePrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valuePrivate_enuEdgeCacheEnuEdgeElement.y = valuePrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valuePrivate_enuEdgeCacheEnuEdgeElement.z = valuePrivate_enuEdgeCacheEnuEdgeElementZ;
-  valuePrivate_enuEdgeCacheEnuEdge.resize(1, valuePrivate_enuEdgeCacheEnuEdgeElement);
-  valuePrivate_enuEdgeCache.enuEdge = valuePrivate_enuEdgeCacheEnuEdge;
-  uint64_t valuePrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valuePrivate_enuEdgeCache.enuVersion = valuePrivate_enuEdgeCacheEnuVersion;
-  value.private_enuEdgeCache = valuePrivate_enuEdgeCache;
+  ::ad::map::point::ENUPointCache valuePrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valuePrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valuePrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valuePrivate_enu_points_cacheEnu_pointsElement.x = valuePrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valuePrivate_enu_points_cacheEnu_pointsElement.y = valuePrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valuePrivate_enu_points_cacheEnu_pointsElement.z = valuePrivate_enu_points_cacheEnu_pointsElementZ;
+  valuePrivate_enu_points_cacheEnu_points.resize(1, valuePrivate_enu_points_cacheEnu_pointsElement);
+  valuePrivate_enu_points_cache.enu_points = valuePrivate_enu_points_cacheEnu_points;
+  uint64_t valuePrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valuePrivate_enu_points_cache.enu_version = valuePrivate_enu_points_cacheEnu_version;
+  value.private_enu_points_cache = valuePrivate_enu_points_cache;
 
   // override member with data type value below input range minimum
   ::ad::physics::Distance invalidInitializedMember(-1e9 * 1.1);
@@ -97,36 +97,36 @@ TEST(GeometryValidInputRangeTests, testValidInputRangeLengthTooSmall)
 TEST(GeometryValidInputRangeTests, testValidInputRangeLengthTooBig)
 {
   ::ad::map::point::Geometry value;
-  bool valueIsValid{true};
-  value.isValid = valueIsValid;
-  bool valueIsClosed{true};
-  value.isClosed = valueIsClosed;
-  ::ad::map::point::ECEFEdge valueEcefEdge;
-  ::ad::map::point::ECEFPoint valueEcefEdgeElement;
-  ::ad::map::point::ECEFCoordinate valueEcefEdgeElementX(-6400000);
-  valueEcefEdgeElement.x = valueEcefEdgeElementX;
-  ::ad::map::point::ECEFCoordinate valueEcefEdgeElementY(-6400000);
-  valueEcefEdgeElement.y = valueEcefEdgeElementY;
-  ::ad::map::point::ECEFCoordinate valueEcefEdgeElementZ(-6400000);
-  valueEcefEdgeElement.z = valueEcefEdgeElementZ;
-  valueEcefEdge.resize(1, valueEcefEdgeElement);
-  value.ecefEdge = valueEcefEdge;
+  bool valueIs_valid{true};
+  value.is_valid = valueIs_valid;
+  bool valueIs_closed{true};
+  value.is_closed = valueIs_closed;
+  ::ad::map::point::ECEFPointList valueEcef_points;
+  ::ad::map::point::ECEFPoint valueEcef_pointsElement;
+  ::ad::map::point::ECEFCoordinate valueEcef_pointsElementX(-6400000);
+  valueEcef_pointsElement.x = valueEcef_pointsElementX;
+  ::ad::map::point::ECEFCoordinate valueEcef_pointsElementY(-6400000);
+  valueEcef_pointsElement.y = valueEcef_pointsElementY;
+  ::ad::map::point::ECEFCoordinate valueEcef_pointsElementZ(-6400000);
+  valueEcef_pointsElement.z = valueEcef_pointsElementZ;
+  valueEcef_points.resize(1, valueEcef_pointsElement);
+  value.ecef_points = valueEcef_points;
   ::ad::physics::Distance valueLength(-1e9);
   value.length = valueLength;
-  ::ad::map::point::ENUEdgeCache valuePrivate_enuEdgeCache;
-  ::ad::map::point::ENUEdge valuePrivate_enuEdgeCacheEnuEdge;
-  ::ad::map::point::ENUPoint valuePrivate_enuEdgeCacheEnuEdgeElement;
-  ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementX(-16384);
-  valuePrivate_enuEdgeCacheEnuEdgeElement.x = valuePrivate_enuEdgeCacheEnuEdgeElementX;
-  ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementY(-16384);
-  valuePrivate_enuEdgeCacheEnuEdgeElement.y = valuePrivate_enuEdgeCacheEnuEdgeElementY;
-  ::ad::map::point::ENUCoordinate valuePrivate_enuEdgeCacheEnuEdgeElementZ(-16384);
-  valuePrivate_enuEdgeCacheEnuEdgeElement.z = valuePrivate_enuEdgeCacheEnuEdgeElementZ;
-  valuePrivate_enuEdgeCacheEnuEdge.resize(1, valuePrivate_enuEdgeCacheEnuEdgeElement);
-  valuePrivate_enuEdgeCache.enuEdge = valuePrivate_enuEdgeCacheEnuEdge;
-  uint64_t valuePrivate_enuEdgeCacheEnuVersion{std::numeric_limits<uint64_t>::min()};
-  valuePrivate_enuEdgeCache.enuVersion = valuePrivate_enuEdgeCacheEnuVersion;
-  value.private_enuEdgeCache = valuePrivate_enuEdgeCache;
+  ::ad::map::point::ENUPointCache valuePrivate_enu_points_cache;
+  ::ad::map::point::ENUPointList valuePrivate_enu_points_cacheEnu_points;
+  ::ad::map::point::ENUPoint valuePrivate_enu_points_cacheEnu_pointsElement;
+  ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementX(-1e8);
+  valuePrivate_enu_points_cacheEnu_pointsElement.x = valuePrivate_enu_points_cacheEnu_pointsElementX;
+  ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementY(-1e8);
+  valuePrivate_enu_points_cacheEnu_pointsElement.y = valuePrivate_enu_points_cacheEnu_pointsElementY;
+  ::ad::map::point::ENUCoordinate valuePrivate_enu_points_cacheEnu_pointsElementZ(-1e8);
+  valuePrivate_enu_points_cacheEnu_pointsElement.z = valuePrivate_enu_points_cacheEnu_pointsElementZ;
+  valuePrivate_enu_points_cacheEnu_points.resize(1, valuePrivate_enu_points_cacheEnu_pointsElement);
+  valuePrivate_enu_points_cache.enu_points = valuePrivate_enu_points_cacheEnu_points;
+  uint64_t valuePrivate_enu_points_cacheEnu_version{std::numeric_limits<uint64_t>::min()};
+  valuePrivate_enu_points_cache.enu_version = valuePrivate_enu_points_cacheEnu_version;
+  value.private_enu_points_cache = valuePrivate_enu_points_cache;
 
   // override member with data type value above input range maximum
   ::ad::physics::Distance invalidInitializedMember(1e9 * 1.1);

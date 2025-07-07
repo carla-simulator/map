@@ -26,13 +26,13 @@ struct SerializationTest : public FactoryTest
       bool equal = (left.getMetaData() == right.getMetaData()) && (left.getPartitions() == right.getPartitions())
         && (left.getLanes() == right.getLanes()) && (left.getLandmarks() == right.getLandmarks());
 
-      for (auto laneId : left.getLanes())
+      for (auto lane_id : left.getLanes())
       {
-        equal = equal && *left.getLanePtr(laneId) == *right.getLanePtr(laneId);
+        equal = equal && *left.getLanePtr(lane_id) == *right.getLanePtr(lane_id);
       }
-      for (auto landmarkId : left.getLandmarks())
+      for (auto landmark_id : left.getLandmarks())
       {
-        equal = equal && *left.getLandmarkPtr(landmarkId) == *right.getLandmarkPtr(landmarkId);
+        equal = equal && *left.getLandmarkPtr(landmark_id) == *right.getLandmarkPtr(landmark_id);
       }
       return equal;
     }

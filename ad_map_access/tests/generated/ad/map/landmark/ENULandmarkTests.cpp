@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -33,17 +33,17 @@ protected:
     ::ad::map::landmark::LandmarkType valueType(::ad::map::landmark::LandmarkType::INVALID);
     value.type = valueType;
     ::ad::map::point::ENUPoint valuePosition;
-    ::ad::map::point::ENUCoordinate valuePositionX(-16384);
+    ::ad::map::point::ENUCoordinate valuePositionX(-1e8);
     valuePosition.x = valuePositionX;
-    ::ad::map::point::ENUCoordinate valuePositionY(-16384);
+    ::ad::map::point::ENUCoordinate valuePositionY(-1e8);
     valuePosition.y = valuePositionY;
-    ::ad::map::point::ENUCoordinate valuePositionZ(-16384);
+    ::ad::map::point::ENUCoordinate valuePositionZ(-1e8);
     valuePosition.z = valuePositionZ;
     value.position = valuePosition;
     ::ad::map::point::ENUHeading valueHeading(-3.141592655);
     value.heading = valueHeading;
-    ::ad::map::landmark::TrafficLightType valueTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-    value.trafficLightType = valueTrafficLightType;
+    ::ad::map::landmark::TrafficLightType valueTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+    value.traffic_light_type = valueTraffic_light_type;
     mValue = value;
   }
 
@@ -122,11 +122,11 @@ TEST_F(ENULandmarkTests, comparisonOperatorPositionDiffers)
 {
   ::ad::map::landmark::ENULandmark valueA = mValue;
   ::ad::map::point::ENUPoint position;
-  ::ad::map::point::ENUCoordinate positionX(16384);
+  ::ad::map::point::ENUCoordinate positionX(1e8);
   position.x = positionX;
-  ::ad::map::point::ENUCoordinate positionY(16384);
+  ::ad::map::point::ENUCoordinate positionY(1e8);
   position.y = positionY;
-  ::ad::map::point::ENUCoordinate positionZ(16384);
+  ::ad::map::point::ENUCoordinate positionZ(1e8);
   position.z = positionZ;
   valueA.position = position;
   ::ad::map::landmark::ENULandmark valueB = mValue;
@@ -146,12 +146,12 @@ TEST_F(ENULandmarkTests, comparisonOperatorHeadingDiffers)
   EXPECT_TRUE(valueA != valueB);
 }
 
-TEST_F(ENULandmarkTests, comparisonOperatorTrafficLightTypeDiffers)
+TEST_F(ENULandmarkTests, comparisonOperatorTraffic_light_typeDiffers)
 {
   ::ad::map::landmark::ENULandmark valueA = mValue;
-  ::ad::map::landmark::TrafficLightType trafficLightType(
+  ::ad::map::landmark::TrafficLightType traffic_light_type(
     ::ad::map::landmark::TrafficLightType::BIKE_PEDESTRIAN_RED_YELLOW_GREEN);
-  valueA.trafficLightType = trafficLightType;
+  valueA.traffic_light_type = traffic_light_type;
   ::ad::map::landmark::ENULandmark valueB = mValue;
 
   EXPECT_FALSE(valueA == valueB);

@@ -1,7 +1,7 @@
 /*
  * ----------------- BEGIN LICENSE BLOCK ---------------------------------
  *
- * Copyright (C) 2018-2021 Intel Corporation
+ * Copyright (C) 2018-2022 Intel Corporation
  *
  * SPDX-License-Identifier: MIT
  *
@@ -33,17 +33,17 @@ TEST(ENULandmarkListValidInputRangeTests, testValidInputRangeElementValid)
   ::ad::map::landmark::LandmarkType elementType(::ad::map::landmark::LandmarkType::INVALID);
   element.type = elementType;
   ::ad::map::point::ENUPoint elementPosition;
-  ::ad::map::point::ENUCoordinate elementPositionX(-16384);
+  ::ad::map::point::ENUCoordinate elementPositionX(-1e8);
   elementPosition.x = elementPositionX;
-  ::ad::map::point::ENUCoordinate elementPositionY(-16384);
+  ::ad::map::point::ENUCoordinate elementPositionY(-1e8);
   elementPosition.y = elementPositionY;
-  ::ad::map::point::ENUCoordinate elementPositionZ(-16384);
+  ::ad::map::point::ENUCoordinate elementPositionZ(-1e8);
   elementPosition.z = elementPositionZ;
   element.position = elementPosition;
   ::ad::map::point::ENUHeading elementHeading(-3.141592655);
   element.heading = elementHeading;
-  ::ad::map::landmark::TrafficLightType elementTrafficLightType(::ad::map::landmark::TrafficLightType::INVALID);
-  element.trafficLightType = elementTrafficLightType;
+  ::ad::map::landmark::TrafficLightType elementTraffic_light_type(::ad::map::landmark::TrafficLightType::INVALID);
+  element.traffic_light_type = elementTraffic_light_type;
   value.push_back(element);
   ASSERT_TRUE(withinValidInputRange(value));
 }

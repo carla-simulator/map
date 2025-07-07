@@ -12,8 +12,7 @@
 #pragma once
 
 #include "ad/map/point/Types.hpp"
-#include "ad/map/route/ConnectingRoute.hpp"
-#include "ad/map/route/FullRoute.hpp"
+#include "ad/map/route/ConnectingRouteList.hpp"
 #include "ad/map/route/FullRouteList.hpp"
 #include "ad/map/route/LaneChangeDirection.hpp"
 #include "ad/map/route/LaneInterval.hpp"
