@@ -9,6 +9,7 @@
 
 # prepare
 mv doc/ doctmp/ && mv README.md README.md.tmp && mv mkdocs.yml mkdocs.yml.tmp
+rm -rf dependencies
 git checkout origin/doc
 if [ $? -ne 0 ]; then echo "GIT checkout failure"; exit 1; fi
 git checkout -b doc
@@ -40,6 +41,7 @@ git config user.name "Github Action"
 git commit -m "Updated documentation" --no-edit
 
 if [ "$1" = true ]; then
+  echo "Deploy documentation"
   git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/carla-simulator/map
   git push origin doc
 else
