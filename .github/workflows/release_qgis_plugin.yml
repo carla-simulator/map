@@ -29,7 +29,8 @@ jobs:
 
     - name: Build Libraries
       run: |
-        source map-build-venv/bin/activate && colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --packages-up-to ad_map_access_qgis
+        source map-build-venv/bin/activate
+        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --packages-up-to ad_map_access_qgis
 
     - name: Build Package
       run: |
