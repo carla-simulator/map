@@ -29,7 +29,8 @@ jobs:
 
     - name: Build Libraries
       run: |
-        source map-build-venv/bin/activate && colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --packages-up-to ad_map_access_qgis
+        source map-build-venv/bin/activate
+        colcon build --event-handlers console_direct+ --executor sequential --metas colcon_python.meta --packages-up-to ad_map_access_qgis
 
     - name: Build Package
       run: |
@@ -41,6 +42,6 @@ jobs:
       uses: svenstaro/upload-release-action@5e35e583720436a2cc5f9682b6f55657101c1ea1 # v2
       if: ${{ github.event_name == 'release'}}
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.BUILD_DOCU_TOKEN }}
         file: ad_map_access_qgis.zip
         tag: ${{ github.ref }}
