@@ -83,7 +83,7 @@ The different features provided by the plugin are:
 - The map is loaded using the load map icon on the CARLA ad_map_access toolbar.
   Currently, it is possible to directly load a txt configuration file and xodr files from ad_map_access.
   In addition it is possible to use the txt configuration file to specify some configuration values.
-  Linking an example [file](https://github.com/carla-simulator/map/blob/master/ad_map_access/impl/tests/test_files/Town01.txt).
+  Linking an example [file](https://github.com/carla-simulator/map/blob/main/ad_map_access/tests/test_files/Town01.txt).
   Also please refer to the [configuration structure](https://ad-map-access.readthedocs.io/en/latest/ad_map_access/apidoc/html/        classad_1_1map_1_1config_1_1MapConfigFileHandler.html).
  ![Loading the desired map](images/Load_file.png "Select the map from the file system")
       *Select the map from the file system*

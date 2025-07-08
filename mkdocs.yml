@@ -1,7 +1,7 @@
 site_name: ad_map_access
 repo_url: https://github.com/carla-simulator/map
 docs_dir: doc
-edit_uri: 'edit/master/doc/'
+edit_uri: 'edit/main/doc/'
 theme: readthedocs
 
 nav:
