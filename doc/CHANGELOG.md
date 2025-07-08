@@ -1,6 +1,7 @@
 ## Latest changes
 ## Release 3.0.0
 #### :rocket: New Features
+* Renamed branch: master -> main
 * Renamed datatype members from CamelCase to under_score_case
 * Added basic ad::geometry namespace containing basic geometry functions to ad_physics library
 * Added MapAreaOperation functions to extract map areas from map to be used with map-matching or planning functions
