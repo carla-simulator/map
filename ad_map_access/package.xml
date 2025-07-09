@@ -4,7 +4,7 @@
   <name>ad_map_access</name>
   <version>3.0.0</version>
   <description>ad_map_access</description>
-  <maintainer email="carla.simulator@gmail.com">CARLA Simulator Team</maintainer>
+  <maintainer email="bernd.gassmann@intel.com">Intel Corporation</maintainer>
   <license>MIT</license>
 
   <depend>ad_physics</depend>

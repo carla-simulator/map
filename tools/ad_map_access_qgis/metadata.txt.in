@@ -12,8 +12,8 @@ qgisMinimumVersion=3.10
 qgisMaximumVersion=3.99
 description=CARLA ad_map_access
 version= version @CARLA-MAP_VERSION@
-author=CARLA Simulator Team
-email=carla.simulator@gmail.com
+author=Intel Corporation
+email=bernd.gassmann@intel.com
 
 about=CARLA ad_map_access
 

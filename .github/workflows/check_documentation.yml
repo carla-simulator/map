@@ -7,10 +7,12 @@ on:
     branches: main
 
 permissions:
-  contents: write
-
+  contents: read
+  
 jobs:
   documentationjob:
+    permissions:
+      contents: write
 
     name: Build and Test Documentation
     runs-on: ubuntu-22.04
@@ -55,7 +57,5 @@ jobs:
         overwrite: true
 
     - name: Documentation Deployment (Test)
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if [ ${{ github.event_name }} != 'pull_request' ]; then bash .github/workflows/deploy_documentation.sh true; else bash .github/workflows/deploy_documentation.sh false; fi
