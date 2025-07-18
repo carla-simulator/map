@@ -74,4 +74,6 @@ jobs:
         uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # release/v1
         if: ${{ github.event_name == 'release'}}
         with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
           packages-dir: wheelhouse/ad-map-access
