@@ -76,4 +76,4 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
-          packages-dir: wheelhouse/ad-map-access
+          packages-dir: wheelhouse/ad_map_access
