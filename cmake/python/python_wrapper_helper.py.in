@@ -7,14 +7,13 @@
 
 import os
 import re
-import sys
 
 from pygccxml import parser
 from pygccxml import utils
 from pyplusplus import module_builder, decl_wrappers
 
 import fileinput
-
+import subprocess
 import warnings
 
 
@@ -40,6 +39,20 @@ def get_list_of_files(directory, ignore_files):
 
     return all_files
 
+def get_compiler_include_dirs(compiler_path):
+    # 1. Get the multiarch triplet (e.g., x86_64-linux-gnu)
+    triplet = subprocess.check_output([compiler_path, "-dumpmachine"]).decode().strip()
+    
+    # 2. Get the GCC version (e.g., 13)
+    version = subprocess.check_output([compiler_path, "-dumpfullversion"]).decode().strip().split('.')[0]
+    
+    # 3. Construct the standard paths
+    # Usually: /usr/include/c++/13
+    base_dir = f"/usr/include/c++/{version}"
+    # Usually: /usr/include/x86_64-linux-gnu/c++/13
+    arch_dir = f"/usr/include/{triplet}/c++/{version}"
+    
+    return [base_dir, arch_dir]
 
 def generate_python_wrapper(header_directories, include_paths, library_name, cpp_filename, declarations, main_namespace="", ignore_declarations={}, ignore_files={}, add_declarations={}):
     """
@@ -71,7 +84,7 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
 
     # Find out the xml generator (gccxml or castxml)
     generator_path, generator_name = utils.find_xml_generator()
-    compiler = "@CXX@"
+    compiler = "@CMAKE_CXX_COMPILER@"
 
     # Create configuration for CastXML
     xml_generator_config = parser.xml_generator_configuration_t(
@@ -85,6 +98,10 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
     xml_generator_config.append_cflags("-Wno-error=invalid-constexpr")
     xml_generator_config.append_cflags("-DSAFE_DATATYPES_EXPLICIT_CONVERSION=1")
     xml_generator_config.append_cflags("-fsized-deallocation")
+    for folder in get_compiler_include_dirs(compiler):
+        if os.path.exists(folder):
+            xml_generator_config.append_cflags(f"-isystem {folder}")
+
 
     for inc_dir in include_paths:
         xml_generator_config.include_paths.append(inc_dir)

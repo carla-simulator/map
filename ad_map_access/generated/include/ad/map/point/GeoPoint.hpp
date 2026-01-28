@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <iomanip>
 #include <iostream>
 #include <limits>
 #include <memory>
@@ -171,6 +172,7 @@ inline std::ostream &operator<<(std::ostream &os, GeoPoint const &_value)
 {
   os << "GeoPoint(";
   os << "longitude:";
+  os << std::setprecision(9);
   os << _value.longitude;
   os << ",";
   os << "latitude:";
