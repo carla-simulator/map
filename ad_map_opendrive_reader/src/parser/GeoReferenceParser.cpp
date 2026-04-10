@@ -24,7 +24,20 @@
 namespace opendrive {
 namespace parser {
 
-::opendrive::geom::GeoLocation GeoReferenceParser::Parse(const std::string &geo_reference_string)
+double GetAttributeOrDefault(const pugi::xml_node &node, const std::string& attribute, double const defaultValue)
+{
+  auto attr = node.attribute(attribute.c_str());
+  if (attr.empty())
+  {
+    return defaultValue;
+  }
+  else
+  { 
+    return attr.as_double();
+  }
+}
+
+::opendrive::geom::GeoLocation GeoReferenceParser::Parse(const std::string &geo_reference_string, const pugi::xml_node &geo_offset)
 {
   ::opendrive::geom::GeoLocation result{
     std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), 0.0, ""};
@@ -64,6 +77,14 @@ namespace parser {
       }
     }
   }
+
+  // parse optional offset
+  result.offset_x = GetAttributeOrDefault(geo_offset, "x", 0.0);
+  result.offset_y = GetAttributeOrDefault(geo_offset, "y", 0.0);
+  result.offset_z = GetAttributeOrDefault(geo_offset, "z", 0.0);
+  auto offset_hdg = GetAttributeOrDefault(geo_offset, "hdg", 0.0);
+  result.offset_hdg_sin = std::sin(offset_hdg);
+  result.offset_hdg_cos = std::cos(offset_hdg);
 
   return result;
 }
