@@ -39,20 +39,46 @@ def get_list_of_files(directory, ignore_files):
 
     return all_files
 
-def get_compiler_include_dirs(compiler_path):
-    # 1. Get the multiarch triplet (e.g., x86_64-linux-gnu)
-    triplet = subprocess.check_output([compiler_path, "-dumpmachine"]).decode().strip()
+def get_safe_compiler_include_dirs(compiler_path, language="c++"):
+    """
+    Gets system includes to fix <cmath> errors, but filters out 
+    internal compiler intrinsics to prevent CastXML __builtin errors.
+    """
+    cmd = [compiler_path, "-E", "-x", language, "-", "-v"]
+    try:
+        result = subprocess.run(cmd, input=b'', capture_output=True, check=True)
+    except subprocess.CalledProcessError:
+        print(f"\n[!] ERROR extracting paths: {e.stderr.decode('utf-8', errors='ignore')}\n")
+        return []
+
+    stderr_output = result.stderr.decode('utf-8', errors='ignore')
+    include_dirs = []
+    in_search_list = False
     
-    # 2. Get the GCC version (e.g., 13)
-    version = subprocess.check_output([compiler_path, "-dumpfullversion"]).decode().strip().split('.')[0]
-    
-    # 3. Construct the standard paths
-    # Usually: /usr/include/c++/13
-    base_dir = f"/usr/include/c++/{version}"
-    # Usually: /usr/include/x86_64-linux-gnu/c++/13
-    arch_dir = f"/usr/include/{triplet}/c++/{version}"
-    
-    return [base_dir, arch_dir]
+    for line in stderr_output.splitlines():
+        if line.startswith("#include <...> search starts here:"):
+            in_search_list = True
+            continue
+        elif line.startswith("End of search list."):
+            break
+        
+        if in_search_list:
+            raw_path = line.strip().replace(" (framework directory)", "")
+            normalized_path = os.path.normpath(raw_path)
+            
+            # --- THE CRITICAL FILTER ---
+            # Exclude compiler-internal intrinsic headers
+            if "include-fixed" in normalized_path:
+                continue
+            if "/usr/lib/gcc" in normalized_path and "include" in normalized_path:
+                continue
+            if "/lib/clang/" in normalized_path:
+                continue
+            
+            if os.path.isdir(normalized_path):
+                include_dirs.append(normalized_path)
+    print(f"Detected safe compiler include directories: {include_dirs}")
+    return include_dirs
 
 def generate_python_wrapper(header_directories, include_paths, library_name, cpp_filename, declarations, main_namespace="", ignore_declarations={}, ignore_files={}, add_declarations={}):
     """
@@ -86,11 +112,15 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
     generator_path, generator_name = utils.find_xml_generator()
     compiler = "@CMAKE_CXX_COMPILER@"
 
+    # Fetch the safe system include directories
+    safe_includes = get_safe_compiler_include_dirs(compiler)
+
     # Create configuration for CastXML
     xml_generator_config = parser.xml_generator_configuration_t(
         xml_generator_path=generator_path,
         xml_generator=generator_name,
         compiler=compiler,
+        include_paths=safe_includes,
         start_with_declarations=declarations)
 
     # Set include dirs and cflags to avoid warnings and errors
@@ -98,10 +128,6 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
     xml_generator_config.append_cflags("-Wno-error=invalid-constexpr")
     xml_generator_config.append_cflags("-DSAFE_DATATYPES_EXPLICIT_CONVERSION=1")
     xml_generator_config.append_cflags("-fsized-deallocation")
-    for folder in get_compiler_include_dirs(compiler):
-        if os.path.exists(folder):
-            xml_generator_config.append_cflags(f"-isystem {folder}")
-
 
     for inc_dir in include_paths:
         xml_generator_config.include_paths.append(inc_dir)

@@ -9,5 +9,8 @@
         "ad_map_access": {
             "dependencies": ["ad_map_opendrive_reader"]
         },
+        "ad_map_access_qgis": {
+            "dependencies": ["ad_map_access"]
+        },
     }
 }
