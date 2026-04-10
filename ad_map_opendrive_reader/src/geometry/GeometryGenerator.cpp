@@ -965,15 +965,22 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
     }
   }
 
-  auto convertENUToGeo = [&projPtr](Point &point) {
+  auto convertENUToGeo = [&projPtr, &mapData](Point &point) {
     if (!point.isValid())
     {
       spdlog::error("ConvertENUToGeo: Input point invalid {}, {}", point.x, point.y);
     }
     point.ensureValid();
+
+    double tx = point.x + mapData.geoReference.offset_x;
+    double ty = point.y + mapData.geoReference.offset_y;
+
+    double x_rot = (tx * mapData.geoReference.offset_hdg_cos) - (ty * mapData.geoReference.offset_hdg_sin);
+    double y_rot = (tx * mapData.geoReference.offset_hdg_sin) + (ty * mapData.geoReference.offset_hdg_cos);
+
     projXY enuPoint;
-    enuPoint.u = point.x;
-    enuPoint.v = point.y;
+    enuPoint.u = x_rot;
+    enuPoint.v = y_rot;
 
     auto geoPoint = pj_inv(enuPoint, projPtr);
     point.x = geoPoint.u * RAD_TO_DEG;

@@ -135,7 +135,8 @@ bool OpenDriveParser::Parse(const char *xml,
   }
 
   out_open_drive_data.geoReference
-    = odp::GeoReferenceParser::Parse(xmlDoc.child("OpenDRIVE").child("header").child_value("geoReference"));
+    = odp::GeoReferenceParser::Parse(xmlDoc.child("OpenDRIVE").child("header").child_value("geoReference"),
+    xmlDoc.child("OpenDRIVE").child("header").child("offset"));
 
   auto userData = xmlDoc.child("OpenDRIVE").child("header").child("userData");
   if (!userData.empty())
