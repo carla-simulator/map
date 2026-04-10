@@ -137,6 +137,9 @@ def main():
                 ("bp::class_< std::vector<boost::geometry::model::polygon<boost::geometry::model::d2::point_xy<double>, false, true>>, boost::noncopyable >( \"PolygonVector\" )", "// generate_python_lib.py: PolygonVector manually removed here")
             )
             additional_replacements_component.append(
+                ("bp::class_<std::vector<boost::geometry::model::polygon<boost::geometry::model::d2::point_xy<double>, false, true>>, boost::noncopyable>( \"PolygonVector\" )", "// generate_python_lib.py: PolygonVector manually removed here")
+            )
+            additional_replacements_component.append(
                 (".def( bp::indexing::vector_suite< std::vector< boost::geometry::model::polygon<boost::geometry::model::d2::point_xy<double, boost::geometry::cs::cartesian>, false, true, std::vector, std::vector, std::allocator, std::allocator> > >() );", "// generate_python_lib.py: PolygonVector manually removed here")
             )
             additional_replacements_component.append(

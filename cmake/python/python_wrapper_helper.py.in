@@ -7,14 +7,13 @@
 
 import os
 import re
-import sys
 
 from pygccxml import parser
 from pygccxml import utils
 from pyplusplus import module_builder, decl_wrappers
 
 import fileinput
-
+import subprocess
 import warnings
 
 
@@ -40,6 +39,46 @@ def get_list_of_files(directory, ignore_files):
 
     return all_files
 
+def get_safe_compiler_include_dirs(compiler_path, language="c++"):
+    """
+    Gets system includes to fix <cmath> errors, but filters out 
+    internal compiler intrinsics to prevent CastXML __builtin errors.
+    """
+    cmd = [compiler_path, "-E", "-x", language, "-", "-v"]
+    try:
+        result = subprocess.run(cmd, input=b'', capture_output=True, check=True)
+    except subprocess.CalledProcessError:
+        print(f"\n[!] ERROR extracting paths: {e.stderr.decode('utf-8', errors='ignore')}\n")
+        return []
+
+    stderr_output = result.stderr.decode('utf-8', errors='ignore')
+    include_dirs = []
+    in_search_list = False
+    
+    for line in stderr_output.splitlines():
+        if line.startswith("#include <...> search starts here:"):
+            in_search_list = True
+            continue
+        elif line.startswith("End of search list."):
+            break
+        
+        if in_search_list:
+            raw_path = line.strip().replace(" (framework directory)", "")
+            normalized_path = os.path.normpath(raw_path)
+            
+            # --- THE CRITICAL FILTER ---
+            # Exclude compiler-internal intrinsic headers
+            if "include-fixed" in normalized_path:
+                continue
+            if "/usr/lib/gcc" in normalized_path and "include" in normalized_path:
+                continue
+            if "/lib/clang/" in normalized_path:
+                continue
+            
+            if os.path.isdir(normalized_path):
+                include_dirs.append(normalized_path)
+    print(f"Detected safe compiler include directories: {include_dirs}")
+    return include_dirs
 
 def generate_python_wrapper(header_directories, include_paths, library_name, cpp_filename, declarations, main_namespace="", ignore_declarations={}, ignore_files={}, add_declarations={}):
     """
@@ -71,13 +110,17 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
 
     # Find out the xml generator (gccxml or castxml)
     generator_path, generator_name = utils.find_xml_generator()
-    compiler = "@CXX@"
+    compiler = "@CMAKE_CXX_COMPILER@"
+
+    # Fetch the safe system include directories
+    safe_includes = get_safe_compiler_include_dirs(compiler)
 
     # Create configuration for CastXML
     xml_generator_config = parser.xml_generator_configuration_t(
         xml_generator_path=generator_path,
         xml_generator=generator_name,
         compiler=compiler,
+        include_paths=safe_includes,
         start_with_declarations=declarations)
 
     # Set include dirs and cflags to avoid warnings and errors
