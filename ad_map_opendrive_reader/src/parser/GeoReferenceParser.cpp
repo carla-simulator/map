@@ -24,7 +24,7 @@
 namespace opendrive {
 namespace parser {
 
-double GetAttributeOrDefault(const pugi::xml_node &node, const std::string& attribute, double const defaultValue)
+double GetAttributeOrDefault(const pugi::xml_node &node, const std::string &attribute, double const defaultValue)
 {
   auto attr = node.attribute(attribute.c_str());
   if (attr.empty())
@@ -32,12 +32,13 @@ double GetAttributeOrDefault(const pugi::xml_node &node, const std::string& attr
     return defaultValue;
   }
   else
-  { 
+  {
     return attr.as_double();
   }
 }
 
-::opendrive::geom::GeoLocation GeoReferenceParser::Parse(const std::string &geo_reference_string, const pugi::xml_node &geo_offset)
+::opendrive::geom::GeoLocation GeoReferenceParser::Parse(const std::string &geo_reference_string,
+                                                         const pugi::xml_node &geo_offset)
 {
   ::opendrive::geom::GeoLocation result{
     std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), 0.0, ""};
