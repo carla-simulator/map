@@ -1,4 +1,7 @@
 ## Latest changes
+#### :rocket: New Features
+* Add support for OpenDRIVE offset-tag in header
+  
 ## Release 3.0.0
 #### :rocket: New Features
 * Renamed branch: master -> main
