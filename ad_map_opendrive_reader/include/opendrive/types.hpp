@@ -736,6 +736,11 @@ struct GeoLocation
   double altitude{0.};
   std::string projection{""};
   std::string projectionSetAfterLoad{""};
+  double offset_x{0.0};
+  double offset_y{0.0};
+  double offset_z{0.0};
+  double offset_hdg_sin{0.0};
+  double offset_hdg_cos{1.0};
 };
 } // namespace geom
 
