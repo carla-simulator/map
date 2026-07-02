@@ -1,16 +1,20 @@
 version: 2
 updates:
-  - package-ecosystem: github-actions
-    directory: /
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: daily
+      interval: "weekly"
+    groups:
+      codeql:
+        patterns:
+          - "github/codeql-action/*"
 
   - package-ecosystem: docker
     directory: /.github/workflows/wheels/docker
     schedule:
-      interval: daily
+      interval: weekly
 
   - package-ecosystem: pip
     directory: /doc
     schedule:
-      interval: daily
+      interval: weekly
