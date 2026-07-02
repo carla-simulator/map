@@ -98,7 +98,7 @@ jobs:
           colcon build --event-handlers console_direct+ --executor sequential --packages-up-to ad_map_access --cmake-args -DBUILD_HARDENING=ON -DBUILD_TESTING=ON -DBUILD_PYTHON_BINDING=ON
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@e296a935590eb16afc0c0108289f68c87e2a89a5 # v4.30.7
+        uses: github/codeql-action/analyze@54f647b7e1bb85c95cddabcd46b0c578ec92bc1a # v4.36.3
         with:
           upload: false # disable the upload here - we will upload in a different action
           category: "/language:${{matrix.language}}"
