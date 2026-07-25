@@ -8,7 +8,7 @@ pygccxml==2.6.0
 Pygments==2.20.0
 pymdown-extensions==10.21.3
 pyplusplus==1.8.5
-setuptools==80.8.0
+setuptools==83.0.0
 six==1.16.0
 testresources==2.0.1
 typeguard==4.4.4
