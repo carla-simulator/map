@@ -8,6 +8,9 @@
 
 #include "ad/map/route/RoutePrediction.hpp"
 
+#include <algorithm>
+#include <utility>
+
 // need to make RouteTreeElement public if debug output is required!
 #define DEBUG_OUTPUT 0
 
@@ -61,6 +64,8 @@ bool RoutePrediction::calculate()
 {
   mProcessedTransitions.clear();
   mElementsToProcess.clear();
+  mElementsCreated.clear();
+  mRouteTreeRoot = nullptr;
   mRawRoutes.clear();
 
   RoutingPoint start;
@@ -75,16 +80,18 @@ bool RoutePrediction::calculate()
     // which especially is not meant by the don't care flag.
     start.first.direction = RoutingDirection::POSITIVE;
   }
-  mRouteTreeRoot = new RouteTreeElement(nullptr, start);
-  mElementsCreated.push_back(mRouteTreeRoot);
+  mElementsCreated.emplace_back(nullptr, start);
+  mRouteTreeRoot = &mElementsCreated.back();
   mElementsToProcess.push_back(mRouteTreeRoot);
 
   if (getRoutingStart().direction == RoutingDirection::DONT_CARE)
   {
-    // add the negative concrete start of prediction option by changing direction without cost
+    // Add the negative concrete start direction as an independent root rather than a child transition,
+    // so an unexpandable reverse direction on a one-way lane does not emit a bogus 0-length leaf route.
     auto startOtherDirection = start;
     startOtherDirection.first.direction = RoutingDirection::NEGATIVE;
-    insertNeighbor(start, startOtherDirection);
+    mElementsCreated.emplace_back(nullptr, startOtherDirection);
+    mElementsToProcess.push_back(&mElementsCreated.back());
   }
 
   while (!mElementsToProcess.empty())
@@ -96,12 +103,7 @@ bool RoutePrediction::calculate()
   reconstructPaths();
   mProcessedTransitions.clear();
   mRouteTreeRoot = nullptr;
-
-  while (!mElementsCreated.empty())
-  {
-    delete mElementsCreated.front();
-    mElementsCreated.pop_front();
-  }
+  mElementsCreated.clear();
 
   return isValid();
 }
@@ -126,25 +128,25 @@ void RoutePrediction::addNeighbor(lane::Lane::ConstPtr originLane,
 void RoutePrediction::insertNeighbor(RoutingPoint const &origin, RoutingPoint const &neighbor)
 {
   auto currentTreeElement = mElementsToProcess.front();
+  auto &transitionSet = mProcessedTransitions[origin.first];
 
-  auto newChildElement = new RouteTreeElement(currentTreeElement, neighbor);
-  auto insertProcessedResult = mProcessedTransitions[origin.first].insert(newChildElement);
-  if (insertProcessedResult.second)
+  RouteTreeElement probe(currentTreeElement, neighbor);
+  auto const existingIt = transitionSet.find(&probe);
+  if (existingIt != transitionSet.end())
   {
-    mElementsCreated.push_back(newChildElement);
-    auto insertToProcessResult = currentTreeElement->children.insert(newChildElement);
-    if (!insertToProcessResult.second)
-    {
-      // this child is already in the current element, nothing to be done
-      return;
-    }
-  }
-  else
-  {
-    delete newChildElement;
-    // a similar child (a twin) was already already expanded, take that one as our child
-    currentTreeElement->children.insert(*insertProcessedResult.first);
+    // a similar child (a twin) was already expanded, take that one as our child
+    currentTreeElement->children.insert(*existingIt);
     // nothing further to be done since already processed
+    return;
+  }
+
+  mElementsCreated.emplace_back(currentTreeElement, neighbor);
+  RouteTreeElement *newChildElement = &mElementsCreated.back();
+  transitionSet.insert(newChildElement);
+  auto insertToProcessResult = currentTreeElement->children.insert(newChildElement);
+  if (!insertToProcessResult.second)
+  {
+    // this child is already in the current element, nothing to be done
     return;
   }
 
@@ -175,13 +177,14 @@ void RoutePrediction::reconstructPaths()
           RouteTreeElement const *parent = element;
           while (parent != nullptr)
           {
-            rawRoute.paraPointList.insert(rawRoute.paraPointList.begin(), parent->routingPoint.first.point);
+            rawRoute.paraPointList.push_back(parent->routingPoint.first.point);
             parent = parent->theParent;
           }
-          mRawRoutes.push_back(rawRoute);
+          std::reverse(rawRoute.paraPointList.begin(), rawRoute.paraPointList.end());
+          mRawRoutes.push_back(std::move(rawRoute));
 #if DEBUG_OUTPUT
           std::cout << "Added path [" << mRawRoutes.size() << "]" << std::endl;
-          for (auto &point : rawRoute.paraPointList)
+          for (auto &point : mRawRoutes.back().paraPointList)
           {
             std::cout << " " << point << std::endl;
           }

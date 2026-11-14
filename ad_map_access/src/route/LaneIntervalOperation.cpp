@@ -111,8 +111,8 @@ physics::ParametricValue getProjectedParametricOffsetOnNeighborLane(LaneInterval
   }
 
   // real neighbors
-  auto currentLane = lane::getLane(currentInterval.lane_id);
-  auto neighborLane = lane::getLane(neighborInterval.lane_id);
+  auto const &currentLane = lane::getLane(currentInterval.lane_id);
+  auto const &neighborLane = lane::getLane(neighborInterval.lane_id);
   auto leftNeighbors = lane::getContactLanes(currentLane, lane::ContactLocation::LEFT);
   auto rightNeighbors = lane::getContactLanes(currentLane, lane::ContactLocation::RIGHT);
 
@@ -143,21 +143,21 @@ physics::ParametricValue getProjectedParametricOffsetOnNeighborLane(LaneInterval
 
 physics::Distance calcLength(LaneInterval const &lane_interval)
 {
-  auto currentLane = lane::getLane(lane_interval.lane_id);
+  auto const &currentLane = lane::getLane(lane_interval.lane_id);
   auto const resultDistance = currentLane.length * calcParametricLength(lane_interval);
   return resultDistance;
 }
 
 physics::Duration calcDuration(LaneInterval const &lane_interval)
 {
-  auto currentLane = lane::getLane(lane_interval.lane_id);
+  auto const &currentLane = lane::getLane(lane_interval.lane_id);
   return lane::getDuration(currentLane, toParametricRange(lane_interval));
 }
 
 template <typename LaneEdge>
 void getEdge(LaneInterval const &lane_interval, lane::EdgeType edge_type, LaneEdge &outputEdge)
 {
-  auto currentLane = lane::getLane(lane_interval.lane_id);
+  auto const &currentLane = lane::getLane(lane_interval.lane_id);
 
   outputEdge.lateral_alignment = physics::ParametricValue();
   auto projectedInterval = lane_interval;
@@ -421,7 +421,16 @@ lane::ENUBorder getENUProjectedBorder(LaneInterval const &lane_interval)
 LaneInterval shortenIntervalFromBegin(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
   LaneInterval result = lane_interval;
-  physics::ParametricValue delta(distance / lane::calcLength(lane_interval.lane_id));
+  auto const laneLength = lane::calcLength(lane_interval.lane_id);
+  if (laneLength <= physics::Distance(0.))
+  {
+    if (distance > physics::Distance(0.))
+    {
+      result.start = result.end;
+    }
+    return result;
+  }
+  physics::ParametricValue const delta(distance / laneLength);
   if (isRouteDirectionPositive(lane_interval))
   {
     result.start = std::min(lane_interval.start + delta, lane_interval.end);
@@ -436,14 +445,24 @@ LaneInterval shortenIntervalFromBegin(LaneInterval const &lane_interval, physics
 LaneInterval restrictIntervalFromBegin(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
   LaneInterval result = lane_interval;
-  physics::ParametricValue delta(distance / lane::calcLength(lane_interval.lane_id));
+  if (distance <= physics::Distance(0.))
+  {
+    result.end = result.start;
+    return result;
+  }
+  auto const laneLength = lane::calcLength(lane_interval.lane_id);
+  if (laneLength <= physics::Distance(0.))
+  {
+    return result;
+  }
+  physics::ParametricValue const delta(distance / laneLength);
   if (isRouteDirectionNegative(lane_interval))
   {
-    result.end = std::max(physics::ParametricValue(0.), lane_interval.start - delta);
+    result.end = std::max(lane_interval.end, lane_interval.start - delta);
   }
   else
   {
-    result.end = std::min(physics::ParametricValue(1.), lane_interval.start + delta);
+    result.end = std::min(lane_interval.end, lane_interval.start + delta);
   }
 
   return result;
@@ -470,7 +489,16 @@ LaneInterval extendIntervalUntilEnd(LaneInterval const &lane_interval)
 LaneInterval shortenIntervalFromEnd(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
   LaneInterval result = lane_interval;
-  physics::ParametricValue delta(distance / lane::calcLength(lane_interval.lane_id));
+  auto const laneLength = lane::calcLength(lane_interval.lane_id);
+  if (laneLength <= physics::Distance(0.))
+  {
+    if (distance > physics::Distance(0.))
+    {
+      result.end = result.start;
+    }
+    return result;
+  }
+  physics::ParametricValue const delta(distance / laneLength);
   if (isRouteDirectionPositive(lane_interval))
   {
     result.end = std::max(lane_interval.end - delta, lane_interval.start);
@@ -484,13 +512,19 @@ LaneInterval shortenIntervalFromEnd(LaneInterval const &lane_interval, physics::
 
 LaneInterval extendIntervalFromStart(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
-  if (isDegenerated(lane_interval))
+  if (isDegenerated(lane_interval) || (distance <= physics::Distance(0.)))
   {
     return lane_interval;
   }
 
+  auto const laneLength = lane::calcLength(lane_interval.lane_id);
+  if (laneLength <= physics::Distance(0.))
+  {
+    return extendIntervalUntilStart(lane_interval);
+  }
+
   LaneInterval resultInterval = lane_interval;
-  physics::ParametricValue offset(distance / lane::calcLength(lane_interval.lane_id));
+  physics::ParametricValue const offset(distance / laneLength);
 
   if (isRouteDirectionPositive(resultInterval))
   {
@@ -505,13 +539,19 @@ LaneInterval extendIntervalFromStart(LaneInterval const &lane_interval, physics:
 
 LaneInterval extendIntervalFromEnd(LaneInterval const &lane_interval, physics::Distance const &distance)
 {
-  if (isDegenerated(lane_interval))
+  if (isDegenerated(lane_interval) || (distance <= physics::Distance(0.)))
   {
     return lane_interval;
   }
 
+  auto const laneLength = lane::calcLength(lane_interval.lane_id);
+  if (laneLength <= physics::Distance(0.))
+  {
+    return extendIntervalUntilEnd(lane_interval);
+  }
+
   LaneInterval resultInterval = lane_interval;
-  physics::ParametricValue offset(distance / lane::calcLength(lane_interval.lane_id));
+  physics::ParametricValue const offset(distance / laneLength);
 
   if (isRouteDirectionPositive(resultInterval))
   {
@@ -564,25 +604,26 @@ LaneInterval cutIntervalAtEnd(LaneInterval const &lane_interval, physics::Parame
 
 restriction::SpeedLimitList getSpeedLimits(LaneInterval const &lane_interval)
 {
-  auto lanePtr = lane::getLanePtr(lane_interval.lane_id);
-  return getSpeedLimits(*lanePtr, toParametricRange(lane_interval));
+  auto const &lane = lane::getLane(lane_interval.lane_id);
+  return getSpeedLimits(lane, toParametricRange(lane_interval));
 }
 
 void getMetricRanges(LaneInterval const &lane_interval,
                      physics::MetricRange &length_range,
                      physics::MetricRange &width_range)
 {
-  auto lanePtr = lane::getLanePtr(lane_interval.lane_id);
-  if (std::fabs(lane_interval.end - lane_interval.start) == physics::ParametricValue(1.0))
+  auto const &lane = lane::getLane(lane_interval.lane_id);
+  auto const paramLength = calcParametricLength(lane_interval);
+  if (paramLength == physics::ParametricValue(1.0))
   {
-    length_range = lanePtr->length_range;
-    width_range = lanePtr->width_range;
+    length_range = lane.length_range;
+    width_range = lane.width_range;
   }
-  else if (std::fabs(lane_interval.end - lane_interval.start) == physics::ParametricValue(0.0))
+  else if (paramLength == physics::ParametricValue(0.0))
   {
     length_range.minimum = physics::Distance(0.0);
     length_range.maximum = physics::Distance(0.0);
-    width_range = lanePtr->width_range;
+    width_range = lane.width_range;
   }
   else
   {
@@ -592,8 +633,8 @@ void getMetricRanges(LaneInterval const &lane_interval,
     length_range.minimum = std::min(leftLength, rightLength);
     length_range.maximum = std::max(leftLength, rightLength);
 
-    width_range = lanePtr->width_range;
-    if ((lanePtr->width_range.maximum - lanePtr->width_range.minimum) > physics::Distance(.1))
+    width_range = lane.width_range;
+    if ((lane.width_range.maximum - lane.width_range.minimum) > physics::Distance(.1))
     {
       // take the effort on with range calculation only if there is significant difference within the lane
       auto const widthRangeResult

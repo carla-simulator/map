@@ -12,6 +12,8 @@
 #pragma once
 
 #include <map>
+#include <queue>
+#include <vector>
 
 #include "ad/map/route/RouteExpander.hpp"
 
@@ -125,6 +127,10 @@ private:
    */
   lane::Lane::ConstPtr mDestLane;
   /**
+   * @brief cached parametric center point of the destination
+   */
+  point::ECEFPoint mDestPoint;
+  /**
    * @brief the start lane
    */
   lane::Lane::ConstPtr mStartLane;
@@ -144,6 +150,27 @@ private:
    */
   typedef std::map<RoutingParaPoint, RoutingCost, RoutingParaPointCompare> RoutingParaPointCostMap;
   RoutingParaPointCostMap mProcessingMap;
+
+  struct OpenQueueEntry
+  {
+    physics::Distance estimatedDistanceToTarget{0.};
+    RoutingParaPoint point{};
+  };
+
+  struct OpenQueueCompare
+  {
+    bool operator()(OpenQueueEntry const &left, OpenQueueEntry const &right) const
+    {
+      if (left.estimatedDistanceToTarget != right.estimatedDistanceToTarget)
+      {
+        return left.estimatedDistanceToTarget > right.estimatedDistanceToTarget;
+      }
+      return RoutingParaPointCompare()(right.point, left.point);
+    }
+  };
+
+  typedef std::priority_queue<OpenQueueEntry, std::vector<OpenQueueEntry>, OpenQueueCompare> OpenPriorityQueue;
+  OpenPriorityQueue mOpenQueue;
 
   /**
    * @brief map a point to its predecessor having least cost

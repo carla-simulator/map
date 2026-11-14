@@ -519,3 +519,69 @@ TEST_F(LaneIntervalOperationTest, RouteInterval)
   para.parametric_offset = ::ad::physics::ParametricValue(0.3);
   ASSERT_TRUE(isAfterInterval(laneSegment.lane_interval, para));
 }
+
+TEST_F(LaneIntervalOperationTest, RestrictIntervalClampAndZeroLengthLane)
+{
+  setupSingleLongLaneV1();
+
+  LaneInterval posInterval;
+  posInterval.lane_id = lane_id;
+  posInterval.start = ::ad::physics::ParametricValue(0.3);
+  posInterval.end = ::ad::physics::ParametricValue(0.5);
+  auto restrictedPos = restrictIntervalFromBegin(posInterval, physics::Distance(1000.));
+  EXPECT_EQ(restrictedPos.start, posInterval.start);
+  EXPECT_EQ(restrictedPos.end, posInterval.end);
+  auto zeroRestrictedPos = restrictIntervalFromBegin(posInterval, physics::Distance(0.));
+  EXPECT_EQ(zeroRestrictedPos.start, posInterval.start);
+  EXPECT_EQ(zeroRestrictedPos.end, posInterval.start);
+
+  LaneInterval negInterval;
+  negInterval.lane_id = lane_id;
+  negInterval.start = ::ad::physics::ParametricValue(0.5);
+  negInterval.end = ::ad::physics::ParametricValue(0.3);
+  auto restrictedNeg = restrictIntervalFromBegin(negInterval, physics::Distance(1000.));
+  EXPECT_EQ(restrictedNeg.start, negInterval.start);
+  EXPECT_EQ(restrictedNeg.end, negInterval.end);
+  auto zeroRestrictedNeg = restrictIntervalFromBegin(negInterval, physics::Distance(0.));
+  EXPECT_EQ(zeroRestrictedNeg.start, negInterval.start);
+  EXPECT_EQ(zeroRestrictedNeg.end, negInterval.start);
+
+  // Negative-direction intervals in getMetricRanges must not throw out_of_range on ParametricValue subtraction
+  access::setENUReferencePoint(
+    point::createGeoPoint(point::Longitude(8.05), point::Latitude(49.008), point::Altitude(0.)));
+  physics::MetricRange lengthRange;
+  physics::MetricRange widthRange;
+  EXPECT_NO_THROW(getMetricRanges(negInterval, lengthRange, widthRange));
+  EXPECT_GT(lengthRange.maximum, physics::Distance(0.));
+  LaneInterval fullNegInterval = negInterval;
+  fullNegInterval.start = ::ad::physics::ParametricValue(1.0);
+  fullNegInterval.end = ::ad::physics::ParametricValue(0.0);
+  EXPECT_NO_THROW(getMetricRanges(fullNegInterval, lengthRange, widthRange));
+  EXPECT_GT(lengthRange.maximum, physics::Distance(0.));
+
+  // Zero-length lane guard against division by zero / NaN
+  lane::LaneId zeroLaneId{9999};
+  ECEFPoint const pt = createECEFPoint(4000000., 500000., 4800000.);
+  ECEFPointList const zeroEdgePts{pt, pt};
+  auto const zeroEdge = createGeometry(zeroEdgePts, false);
+  pFactory->add(p, zeroLaneId, lane::LaneType::NORMAL, lane::LaneDirection::POSITIVE);
+  pFactory->set(zeroLaneId, zeroEdge, zeroEdge);
+
+  LaneInterval zeroInterval;
+  zeroInterval.lane_id = zeroLaneId;
+  zeroInterval.start = ::ad::physics::ParametricValue(0.2);
+  zeroInterval.end = ::ad::physics::ParametricValue(0.8);
+
+  EXPECT_NO_THROW({
+    auto const sBegin = shortenIntervalFromBegin(zeroInterval, physics::Distance(5.));
+    EXPECT_EQ(sBegin.start, zeroInterval.end);
+    auto const sEnd = shortenIntervalFromEnd(zeroInterval, physics::Distance(5.));
+    EXPECT_EQ(sEnd.end, zeroInterval.start);
+    auto const rBegin = restrictIntervalFromBegin(zeroInterval, physics::Distance(5.));
+    EXPECT_EQ(rBegin.end, zeroInterval.end);
+    auto const eStart = extendIntervalFromStart(zeroInterval, physics::Distance(5.));
+    EXPECT_EQ(eStart.start, ::ad::physics::ParametricValue(0.));
+    auto const eEnd = extendIntervalFromEnd(zeroInterval, physics::Distance(5.));
+    EXPECT_EQ(eEnd.end, ::ad::physics::ParametricValue(1.));
+  });
+}

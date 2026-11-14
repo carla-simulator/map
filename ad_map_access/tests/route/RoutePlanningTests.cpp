@@ -1011,9 +1011,11 @@ TEST_F(RoutePlanningTest, route_para_point)
   RouteParaPoint routeParaPoint1, routeParaPoint2;
   ASSERT_TRUE(getRouteParaPointFromParaPoint(paraPoint1, routeLeft, routeParaPoint1));
   ASSERT_TRUE(getRouteParaPointFromParaPoint(paraPoint2, routeLeft, routeParaPoint2));
+  ASSERT_DOUBLE_EQ(routeParaPoint1.parametric_offset.mParametricValue, 0.0);
+  ASSERT_DOUBLE_EQ(routeParaPoint2.parametric_offset.mParametricValue, 1.0);
 
   dis = ad::map::route::calcLength(routeParaPoint1, routeParaPoint2, routeLeft);
-  ASSERT_NEAR(dis.mDistance, 22.1776, 0.0001);
+  ASSERT_NEAR(dis.mDistance, 27.7613, 0.0001);
 
   FindWaypointResult findWaypointResult = route::findWaypoint(paraPoint2, routeLeft);
   ASSERT_TRUE(findWaypointResult.isValid());
@@ -1055,15 +1057,17 @@ TEST_F(RoutePlanningTest, route_para_point)
 
   route::FullRoute bypassingRoute;
   ASSERT_TRUE(calculateBypassingRoute(routeLeft, bypassingRoute));
+  ASSERT_GT(bypassingRoute.route_planning_counter, 0u);
+  ASSERT_EQ(bypassingRoute.full_route_segment_count, bypassingRoute.road_segments.size());
   duration = calcDuration(bypassingRoute);
   ASSERT_NEAR(duration.mDuration, 3.3136, 0.0001);
   validateRouteConnections(bypassingRoute);
 
   RouteParaPoint resultingPoint;
   ASSERT_FALSE(
-    calculateRouteParaPointAtDistance(routeEmpty, routeParaPoint1, physics::Distance(22.1776), resultingPoint));
+    calculateRouteParaPointAtDistance(routeEmpty, routeParaPoint1, physics::Distance(27.7613), resultingPoint));
   ASSERT_TRUE(
-    calculateRouteParaPointAtDistance(routeLeft, routeParaPoint1, physics::Distance(22.1776), resultingPoint));
+    calculateRouteParaPointAtDistance(routeLeft, routeParaPoint1, physics::Distance(27.7613), resultingPoint));
   ASSERT_EQ(routeParaPoint2.route_planning_counter, resultingPoint.route_planning_counter);
   ASSERT_EQ(routeParaPoint2.segment_count_from_destination, resultingPoint.segment_count_from_destination);
   ASSERT_NEAR(
@@ -1072,12 +1076,12 @@ TEST_F(RoutePlanningTest, route_para_point)
   route::FullRoute expandedRoute;
   expandedRoute = getRouteExpandedToAllNeighborLanes(routeLeft);
   dis = ad::map::route::calcLength(routeParaPoint1, routeParaPoint2, routeLeft);
-  ASSERT_NEAR(dis.mDistance, 22.1776, 0.0001);
+  ASSERT_NEAR(dis.mDistance, 27.7613, 0.0001);
   validateRouteConnections(expandedRoute, RouteIsBroadening);
 
   shortenRouteToDistance(routeLeft, physics::Distance(19.1776));
   dis = ad::map::route::calcLength(routeParaPoint1, routeParaPoint2, routeLeft);
-  ASSERT_NEAR(dis.mDistance, 18.0002, 0.0001);
+  ASSERT_NEAR(dis.mDistance, 19.4066, 0.0001);
   validateRouteConnections(routeLeft, RouteIsBroadening);
 
   dis = addOpposingLaneSegmentToRoadSegment(paraPoint1, physics::Distance(1.), routeLeft.road_segments[0], routeLeft);
@@ -1458,4 +1462,69 @@ TEST_F(RoutePlanningTest, connecting_route)
       validateRouteParaPoints(connRoute.route_b);
     }
   }
+}
+
+TEST_F(RoutePlanningTest, bugfix_regressions)
+{
+  ASSERT_TRUE(access::init(mTestFile));
+
+  startLaneId = lane::uniqueLaneId(createGeoPoint(Longitude(8.4396445), Latitude(49.0186033), Altitude(0.)));
+  auto const rightLaneId = lane::uniqueLaneId(createGeoPoint(Longitude(8.4394605), Latitude(49.0183941), Altitude(0.)));
+  auto const leftLaneId = lane::uniqueLaneId(createGeoPoint(Longitude(8.439489), Latitude(49.0183852), Altitude(0.)));
+
+  auto const routeLeft = route::planning::planRoute(createParaPoint(startLaneId, physics::ParametricValue(0.2)),
+                                                    createParaPoint(leftLaneId, physics::ParametricValue(0.5)));
+  validateRouteConnections(routeLeft, RouteIsBroadening);
+
+  // SingleLane getRouteSection across a broadening split preserves right-to-left neighbor ordering
+  auto const section = route::getRouteSection(createParaPoint(startLaneId, physics::ParametricValue(0.2)),
+                                              physics::Distance(100.),
+                                              physics::Distance(100.),
+                                              routeLeft,
+                                              RouteSectionCreationMode::SingleLane);
+  validateRouteConnections(section, RouteIsBroadening);
+
+  auto const wpRight = route::findWaypoint(rightLaneId, section);
+  ASSERT_TRUE(wpRight.isValid());
+  EXPECT_FALSE(wpRight.getRightLane().isValid());
+  auto const wpLeftFromRight = wpRight.getLeftLane();
+  ASSERT_TRUE(wpLeftFromRight.isValid());
+  EXPECT_EQ(wpLeftFromRight.queryPosition.lane_id, leftLaneId);
+
+  auto const wpLeft = route::findWaypoint(leftLaneId, section);
+  ASSERT_TRUE(wpLeft.isValid());
+  EXPECT_FALSE(wpLeft.getLeftLane().isValid());
+  auto const wpRightFromLeft = wpLeft.getRightLane();
+  ASSERT_TRUE(wpRightFromLeft.isValid());
+  EXPECT_EQ(wpRightFromLeft.queryPosition.lane_id, rightLaneId);
+
+  // getSpeedLimits(ConnectingRoute) includes speed limits from route_b
+  ConnectingRoute connectingRoute;
+  connectingRoute.type = ConnectingRouteType::Following;
+  connectingRoute.route_b = routeLeft;
+  auto const connectingLimits = getSpeedLimits(connectingRoute);
+  EXPECT_EQ(connectingLimits.size(), getSpeedLimits(routeLeft).size());
+  EXPECT_GT(connectingLimits.size(), 0u);
+
+  // Empty RoadSegment and reversed RouteIterators return 0 / empty safely without hanging
+  RoadSegment emptySegment;
+  EXPECT_EQ(calcLength(emptySegment), physics::Distance(0.));
+  EXPECT_EQ(calcDuration(emptySegment), physics::Duration(0.));
+  FullRoute routeWithEmptySegment;
+  routeWithEmptySegment.road_segments.push_back(emptySegment);
+  EXPECT_FALSE(findWaypoint(physics::Distance(0.), routeWithEmptySegment).isValid());
+
+  ASSERT_GE(routeLeft.road_segments.size(), 2u);
+  RouteIterator const firstIter(routeLeft, routeLeft.road_segments.begin());
+  RouteIterator const secondIter(routeLeft, routeLeft.road_segments.begin() + 1);
+  EXPECT_EQ(calcLength(secondIter, firstIter), physics::Distance(0.));
+  EXPECT_TRUE(getSpeedLimits(secondIter, firstIter).empty());
+
+  // Illegal opposite-direction arrival on a unidirectional positive lane is rejected
+  auto const positiveLaneId
+    = lane::uniqueLaneId(createGeoPoint(Longitude(8.4404755), Latitude(49.0195732), Altitude(0.)));
+  auto const invalidOppositeArrival = route::planning::planRoute(
+    createRoutingPoint(positiveLaneId, physics::ParametricValue(0.2), RoutingDirection::POSITIVE),
+    createRoutingPoint(positiveLaneId, physics::ParametricValue(0.7), RoutingDirection::NEGATIVE));
+  EXPECT_TRUE(invalidOppositeArrival.road_segments.empty());
 }

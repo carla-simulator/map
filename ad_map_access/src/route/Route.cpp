@@ -7,6 +7,9 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "ad/map/route/Route.hpp"
+
+#include <algorithm>
+#include <utility>
 #include "ad/map/lane/LaneOperation.hpp"
 
 namespace ad {
@@ -56,8 +59,9 @@ const Route::RawRoute &Route::getRawRoute(size_t const routeIndex) const
 
 Route::BasicRoute Route::getBasicRoute(size_t const routeIndex) const
 {
-  auto rawRoute = getRawRoute(routeIndex);
+  auto const &rawRoute = getRawRoute(routeIndex);
   BasicRoute fr;
+  fr.reserve(rawRoute.paraPointList.size());
   for (size_t i = 0; i < rawRoute.paraPointList.size(); i++)
   {
     const point::ParaPoint &para_point = rawRoute.paraPointList[i];
@@ -70,7 +74,7 @@ Route::BasicRoute Route::getBasicRoute(size_t const routeIndex) const
         lane::LaneDirection const direction = lane->direction;
         lane::ContactLaneList const cl = getContactLanes(*lane, contactLocation);
         lane = nullptr;
-        for (auto contact : cl)
+        for (auto const &contact : cl)
         {
           lane::LaneId otherLaneId = contact.to_lane;
           bool isPrev = false;
@@ -83,10 +87,14 @@ Route::BasicRoute Route::getBasicRoute(size_t const routeIndex) const
           {
             isNext = otherLaneId == rawRoute.paraPointList[i + 1].lane_id;
           }
-          if (!isNext && !isPrev)
+          bool const alreadyAdded
+            = std::find_if(
+                pps.begin(), pps.end(), [&otherLaneId](point::ParaPoint const &p) { return p.lane_id == otherLaneId; })
+            != pps.end();
+          if (!isNext && !isPrev && !alreadyAdded)
           {
             lane::Lane::ConstPtr other_lane = lane::getLanePtr(otherLaneId);
-            if ((direction == other_lane->direction) || laneDirectionIsIgnored())
+            if (other_lane && ((direction == other_lane->direction) || laneDirectionIsIgnored()))
             {
               point::ParaPoint ppt;
               ppt.lane_id = otherLaneId;
@@ -98,7 +106,7 @@ Route::BasicRoute Route::getBasicRoute(size_t const routeIndex) const
         }
       }
     }
-    fr.push_back(pps);
+    fr.push_back(std::move(pps));
   }
   return fr;
 }

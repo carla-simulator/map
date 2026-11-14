@@ -9,6 +9,7 @@
 #include "ad/map/route/RouteAStar.hpp"
 
 #include <algorithm>
+#include <utility>
 #include "ad/map/access/Logging.hpp"
 
 #define DEBUG_OUTPUT 0
@@ -75,6 +76,7 @@ void RouteAstar::initLanePointer()
   {
     throw std::runtime_error("Dest lane not found!");
   }
+  mDestPoint = getParametricPoint(*mDestLane, getDest().parametric_offset, physics::ParametricValue(0.5));
   mStartLane = lane::getLanePtr(mStart.point.lane_id);
   if (!mStartLane)
   {
@@ -87,6 +89,7 @@ bool RouteAstar::calculate()
 {
   mProcessedPoints.clear();
   mProcessingMap.clear();
+  mOpenQueue = OpenPriorityQueue();
   mCameFrom.clear();
   mRawRoutes.clear();
 
@@ -103,13 +106,16 @@ bool RouteAstar::calculate()
     auto startPositive = mStart;
     startPositive.direction = RoutingDirection::POSITIVE;
     mProcessingMap.insert({startPositive, cost});
+    mOpenQueue.push({cost.costData.estimatedDistanceToTarget, startPositive});
     auto startNegative = mStart;
     startNegative.direction = RoutingDirection::NEGATIVE;
     mProcessingMap.insert({startNegative, cost});
+    mOpenQueue.push({cost.costData.estimatedDistanceToTarget, startNegative});
   }
   else
   {
     mProcessingMap.insert({mStart, cost});
+    mOpenQueue.push({cost.costData.estimatedDistanceToTarget, mStart});
   }
   // Run
   bool pathFound = false;
@@ -117,17 +123,17 @@ bool RouteAstar::calculate()
   std::cout << "######### (typ:" << (int)mType << " #########"
             << " start: " << mStart.point << " dest: " << mDest.point << std::endl;
 #endif
-  while (!mProcessingMap.empty())
+  while (!mOpenQueue.empty() && !mProcessingMap.empty())
   {
-    // sort the routing points by the smallest total cost
-    struct FScoreCompare
+    auto const topEntry = mOpenQueue.top();
+    mOpenQueue.pop();
+    auto minimumCostIterator = mProcessingMap.find(topEntry.point);
+    if ((minimumCostIterator == mProcessingMap.end())
+        || (minimumCostIterator->second.costData.estimatedDistanceToTarget != topEntry.estimatedDistanceToTarget))
     {
-      bool operator()(RoutingPoint const &left, RoutingPoint const &right) const
-      {
-        return left.second.costData.estimatedDistanceToTarget < right.second.costData.estimatedDistanceToTarget;
-      }
-    };
-    auto minimumCostIterator = std::min_element(mProcessingMap.begin(), mProcessingMap.end(), FScoreCompare());
+      continue;
+    }
+
     if (((mDest.direction == RoutingDirection::DONT_CARE) || (mDest.direction == minimumCostIterator->first.direction))
         && (minimumCostIterator->first.point == mDest.point))
     {
@@ -142,6 +148,7 @@ bool RouteAstar::calculate()
       std::cout << "#########" << std::endl;
 #endif
       mProcessingMap.clear();
+      mOpenQueue = OpenPriorityQueue();
     }
     else
     {
@@ -165,6 +172,7 @@ bool RouteAstar::calculate()
 
   mProcessedPoints.clear();
   mProcessingMap.clear();
+  mOpenQueue = OpenPriorityQueue();
   mCameFrom.clear();
 
   return pathFound;
@@ -172,10 +180,9 @@ bool RouteAstar::calculate()
 
 physics::Distance RouteAstar::costEstimate(lane::Lane::ConstPtr neighborLane, point::ParaPoint const &neighbor)
 {
-  point::ECEFPoint pt_a = getParametricPoint(*neighborLane, neighbor.parametric_offset, physics::ParametricValue(0.5));
-  point::ECEFPoint pt_b = getParametricPoint(*mDestLane, getDest().parametric_offset, physics::ParametricValue(0.5));
-  physics::Distance d = distance(pt_a, pt_b);
-  return d;
+  point::ECEFPoint const pt_a
+    = getParametricPoint(*neighborLane, neighbor.parametric_offset, physics::ParametricValue(0.5));
+  return distance(pt_a, mDestPoint);
 }
 
 void RouteAstar::addNeighbor(lane::Lane::ConstPtr originLane,
@@ -196,8 +203,11 @@ void RouteAstar::addNeighbor(lane::Lane::ConstPtr originLane,
       (neighbor.second.routeDistance < insertResult.first->second.routeDistance))
     {
       auto const estimatedDestCost = costEstimate(neighborLane, neighbor.first.point);
+      auto const totalEstimatedCost = neighbor.second.routeDistance + estimatedDestCost;
       insertResult.first->second.routeDistance = neighbor.second.routeDistance;
-      insertResult.first->second.costData.estimatedDistanceToTarget = neighbor.second.routeDistance + estimatedDestCost;
+      insertResult.first->second.routeDuration = neighbor.second.routeDuration;
+      insertResult.first->second.costData.estimatedDistanceToTarget = totalEstimatedCost;
+      mOpenQueue.push({totalEstimatedCost, neighbor.first});
       mCameFrom[neighbor.first] = origin.first;
 #if DEBUG_OUTPUT
       std::cout << "Inserted: " << *insertResult.first << std::endl;
@@ -213,7 +223,7 @@ void RouteAstar::reconstructPath(RoutingPoint const &dest)
   rawRoute.routeDuration = dest.second.routeDuration;
   for (auto current = dest.first;;)
   {
-    rawRoute.paraPointList.insert(rawRoute.paraPointList.begin(), current.point);
+    rawRoute.paraPointList.push_back(current.point);
     auto it = mCameFrom.find(current);
     if (it == mCameFrom.end())
     {
@@ -224,9 +234,10 @@ void RouteAstar::reconstructPath(RoutingPoint const &dest)
       current = it->second;
     }
   }
+  std::reverse(rawRoute.paraPointList.begin(), rawRoute.paraPointList.end());
   mDest = dest.first;
   mValid = true;
-  mRawRoutes.push_back(rawRoute);
+  mRawRoutes.push_back(std::move(rawRoute));
 }
 
 } // namespace planning

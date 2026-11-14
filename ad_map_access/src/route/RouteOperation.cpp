@@ -9,8 +9,10 @@
 #include "ad/map/route/RouteOperation.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <map>
 #include <set>
+#include <utility>
 
 #include "RouteOperationPrivate.hpp"
 #include "ad/map/access/Logging.hpp"
@@ -88,7 +90,8 @@ point::ParaPointList getLaneParaPoints(route::RouteParaPoint const &routePositio
   auto routeIter = getRouteIterator(routePosition, route);
   if (routeIter.isValid())
   {
-    for (auto &laneSegment : routeIter.roadSegmentIterator->drivable_lane_segments)
+    resultPoints.reserve(routeIter.roadSegmentIterator->drivable_lane_segments.size());
+    for (auto const &laneSegment : routeIter.roadSegmentIterator->drivable_lane_segments)
     {
       resultPoints.push_back(getLaneParaPoint(routePosition.parametric_offset, laneSegment.lane_interval));
     }
@@ -130,6 +133,10 @@ physics::Distance calcLength(FullRoute const &fullRoute)
 
 physics::Distance calcLength(RoadSegment const &roadSegment)
 {
+  if (roadSegment.drivable_lane_segments.empty())
+  {
+    return physics::Distance(0.);
+  }
   physics::Distance result = std::numeric_limits<physics::Distance>::max();
   for (auto const &laneSegment : roadSegment.drivable_lane_segments)
   {
@@ -168,8 +175,8 @@ physics::Distance calcLength(ConnectingRoute const &connectingRoute)
 physics::Distance calcLength(RouteIterator const &startIterator, RouteIterator const &endIterator)
 {
   physics::Distance distance(0.);
-  if (startIterator.isValid() && endIterator.isValid()
-      && (std::distance(startIterator.roadSegmentIterator, endIterator.roadSegmentIterator) >= 0u))
+  if ((&startIterator.route == &endIterator.route) && startIterator.isValid() && endIterator.isValid()
+      && (startIterator.roadSegmentIterator <= endIterator.roadSegmentIterator))
   {
     for (auto roadSegmentIter = startIterator.roadSegmentIterator; roadSegmentIter < endIterator.roadSegmentIterator;
          roadSegmentIter++)
@@ -190,19 +197,27 @@ calcLength(RouteParaPoint const &startRouteParaPoint, RouteParaPoint const &endR
   const auto laneParaPointsStart = getLaneParaPoints(startRouteParaPoint, route);
   const auto laneParaPointsEnd = getLaneParaPoints(endRouteParaPoint, route);
 
-  for (auto startLaneParaPoint : laneParaPointsStart)
+  std::vector<physics::Distance> endDistances;
+  endDistances.reserve(laneParaPointsEnd.size());
+  for (auto const &endLaneParaPoint : laneParaPointsEnd)
   {
-    auto startWaypoint = findWaypoint(startLaneParaPoint, route);
-    if (startWaypoint.isValid())
+    auto const endWaypoint = findWaypoint(endLaneParaPoint, route);
+    if (endWaypoint.isValid())
     {
-      for (auto endLaneParaPoint : laneParaPointsEnd)
-      {
-        auto endWaypoint = findWaypoint(endLaneParaPoint, route);
-        if (endWaypoint.isValid())
-        {
-          physics::Distance startDistance = calcLength(startWaypoint);
-          physics::Distance endDistance = calcLength(endWaypoint);
+      endDistances.push_back(calcLength(endWaypoint));
+    }
+  }
 
+  if (!endDistances.empty())
+  {
+    for (auto const &startLaneParaPoint : laneParaPointsStart)
+    {
+      auto const startWaypoint = findWaypoint(startLaneParaPoint, route);
+      if (startWaypoint.isValid())
+      {
+        physics::Distance const startDistance = calcLength(startWaypoint);
+        for (auto const &endDistance : endDistances)
+        {
           distance = std::min(std::fabs(startDistance - endDistance), distance);
         }
       }
@@ -230,6 +245,10 @@ physics::Duration calcDuration(FullRoute const &fullRoute)
 
 physics::Duration calcDuration(RoadSegment const &roadSegment)
 {
+  if (roadSegment.drivable_lane_segments.empty())
+  {
+    return physics::Duration(0.);
+  }
   physics::Duration result = std::numeric_limits<physics::Duration>::max();
   for (auto const &laneSegment : roadSegment.drivable_lane_segments)
   {
@@ -267,8 +286,8 @@ restriction::SpeedLimitList getSpeedLimits(LaneSegment const &laneSegment)
 restriction::SpeedLimitList getSpeedLimits(RouteIterator const &startIterator, RouteIterator const &endIterator)
 {
   restriction::SpeedLimitList resultLimits;
-  if (startIterator.isValid() && endIterator.isValid()
-      && (std::distance(startIterator.roadSegmentIterator, endIterator.roadSegmentIterator) >= 0u))
+  if ((&startIterator.route == &endIterator.route) && startIterator.isValid() && endIterator.isValid()
+      && (startIterator.roadSegmentIterator <= endIterator.roadSegmentIterator))
   {
     for (auto roadSegmentIter = startIterator.roadSegmentIterator; roadSegmentIter < endIterator.roadSegmentIterator;
          roadSegmentIter++)
@@ -294,7 +313,7 @@ restriction::SpeedLimitList getSpeedLimits(FullRoute const &fullRoute)
 restriction::SpeedLimitList getSpeedLimits(ConnectingRoute const &connectingRoute)
 {
   restriction::SpeedLimitList resultLimits = getSpeedLimits(connectingRoute.route_a);
-  auto const speedLimitsB = getSpeedLimits(connectingRoute.route_a);
+  auto const speedLimitsB = getSpeedLimits(connectingRoute.route_b);
   resultLimits.insert(resultLimits.end(), speedLimitsB.begin(), speedLimitsB.end());
   return resultLimits;
 }
@@ -335,20 +354,31 @@ void updateLaneSegmentNeighbors(RoadSegment &roadSegment)
     return;
   }
 
-  roadSegment.drivable_lane_segments.front().left_neighbor = lane::LaneId();
-  roadSegment.drivable_lane_segments.back().right_neighbor = lane::LaneId();
+  // drivable_lane_segments are ordered from right (front) to left (back)
+  roadSegment.drivable_lane_segments.front().right_neighbor = lane::LaneId();
+  roadSegment.drivable_lane_segments.back().left_neighbor = lane::LaneId();
 
-  auto leftLaneSegmentIter = roadSegment.drivable_lane_segments.begin();
-  auto rightLaneSegmentIter = leftLaneSegmentIter;
-  rightLaneSegmentIter++;
+  auto rightLaneSegmentIter = roadSegment.drivable_lane_segments.begin();
+  auto leftLaneSegmentIter = rightLaneSegmentIter;
+  ++leftLaneSegmentIter;
 
-  while (rightLaneSegmentIter != std::end(roadSegment.drivable_lane_segments))
+  while (leftLaneSegmentIter != std::end(roadSegment.drivable_lane_segments))
   {
-    leftLaneSegmentIter->right_neighbor = rightLaneSegmentIter->lane_interval.lane_id;
-    rightLaneSegmentIter->left_neighbor = leftLaneSegmentIter->lane_interval.lane_id;
+    auto const rightId = rightLaneSegmentIter->lane_interval.lane_id;
+    auto const leftId = leftLaneSegmentIter->lane_interval.lane_id;
+    if ((rightId != leftId) && lane::isSameOrDirectNeighbor(rightId, leftId))
+    {
+      rightLaneSegmentIter->left_neighbor = leftId;
+      leftLaneSegmentIter->right_neighbor = rightId;
+    }
+    else
+    {
+      rightLaneSegmentIter->left_neighbor = lane::LaneId();
+      leftLaneSegmentIter->right_neighbor = lane::LaneId();
+    }
 
-    leftLaneSegmentIter = rightLaneSegmentIter;
-    rightLaneSegmentIter++;
+    rightLaneSegmentIter = leftLaneSegmentIter;
+    ++leftLaneSegmentIter;
   }
 }
 
@@ -394,6 +424,8 @@ void updateLaneConnections(FullRoute &fullRoute)
 {
   if (fullRoute.road_segments.empty())
   {
+    fullRoute.min_lane_offset = 0;
+    fullRoute.max_lane_offset = 0;
     return;
   }
 
@@ -413,6 +445,30 @@ void updateLaneConnections(FullRoute &fullRoute)
 
     previousSegment = nextSegment;
     nextSegment++;
+  }
+
+  bool offsetInitialized = false;
+  for (auto const &roadSegment : fullRoute.road_segments)
+  {
+    for (auto const &laneSegment : roadSegment.drivable_lane_segments)
+    {
+      if (!offsetInitialized)
+      {
+        fullRoute.min_lane_offset = laneSegment.route_lane_offset;
+        fullRoute.max_lane_offset = laneSegment.route_lane_offset;
+        offsetInitialized = true;
+      }
+      else
+      {
+        fullRoute.min_lane_offset = std::min(fullRoute.min_lane_offset, laneSegment.route_lane_offset);
+        fullRoute.max_lane_offset = std::max(fullRoute.max_lane_offset, laneSegment.route_lane_offset);
+      }
+    }
+  }
+  if (!offsetInitialized)
+  {
+    fullRoute.min_lane_offset = 0;
+    fullRoute.max_lane_offset = 0;
   }
 }
 
@@ -675,6 +731,7 @@ FindWaypointResult findWaypoint(physics::Distance const &length, route::FullRout
         auto shortenedInterval = shortenIntervalFromBegin(laneSegmentIter->lane_interval, remainingLength);
         return FindWaypointResult(route, getIntervalStart(shortenedInterval), roadSegmentIter, laneSegmentIter);
       }
+      ++roadSegmentIter;
     }
   }
   // seem that end of route was reachead before lenght reached
@@ -784,7 +841,7 @@ FindWaypointResult findCenterWaypoint(match::Object const &object, route::FullRo
         auto const routeParmetricLaneRange = route::toParametricRange(laneWaypoint.laneSegmentIterator->lane_interval);
         auto const intersectingRange
           = physics::getIntersectionRange(routeParmetricLaneRange, occupiedRegion.longitudinal_range);
-        if (physics::isRangeValid(intersectingRange))
+        if (physics::isRangeValid(intersectingRange, false))
         {
           laneWaypoint.queryPosition.parametric_offset = intersectingRange.minimum;
           resultWaypoint = laneWaypoint;
@@ -799,6 +856,7 @@ FindWaypointResult findCenterWaypoint(match::Object const &object, route::FullRo
 FindWaypointResult objectOnRoute(match::MapMatchedObjectBoundingBox const &object, route::FullRoute const &route)
 {
   point::ParaPointList positions;
+  positions.reserve(object.lane_occupied_regions.size() * 2u);
   for (auto const &occupiedRegion : object.lane_occupied_regions)
   {
     point::ParaPoint point;
@@ -881,7 +939,7 @@ void alignRouteStartingPoints(point::ParaPoint const &startAlignmentParaPoint, r
 
   // we need to ensure, that the starting point of all segments are aligned,
   // i.e. the starting points are located on an imaginary line on the curve radius
-  auto const startAlignmentLane = lane::getLane(startAlignmentParaPoint.lane_id);
+  auto const &startAlignmentLane = lane::getLane(startAlignmentParaPoint.lane_id);
   auto const startAlignmentPoint = lane::getProjectedParametricPoint(
     startAlignmentLane, startAlignmentParaPoint.parametric_offset, physics::ParametricValue(0.5));
 
@@ -894,7 +952,7 @@ void alignRouteStartingPoints(point::ParaPoint const &startAlignmentParaPoint, r
     if ((laneSegmentIter->lane_interval.lane_id != startAlignmentParaPoint.lane_id)
         && (!route::isDegenerated(laneSegmentIter->lane_interval)))
     {
-      auto const lane = lane::getLane(laneSegmentIter->lane_interval.lane_id);
+      auto const &lane = lane::getLane(laneSegmentIter->lane_interval.lane_id);
       auto const rightT = point::findNearestPointOnEdge(lane.edge_right, startAlignmentPoint);
       auto const leftT = point::findNearestPointOnEdge(lane.edge_left, startAlignmentPoint);
       auto const newStart = 0.5 * (rightT + leftT);
@@ -921,7 +979,7 @@ void alignRouteEndingPoints(point::ParaPoint const &alignmentParaPoint, route::F
 
   // we need to ensure, that the end point of all segments are aligned,
   // i.e. the end points are located on an imaginary line on the curve radius
-  auto const alignmentLane = lane::getLane(alignmentParaPoint.lane_id);
+  auto const &alignmentLane = lane::getLane(alignmentParaPoint.lane_id);
   auto const alignmentPoint = lane::getProjectedParametricPoint(
     alignmentLane, alignmentParaPoint.parametric_offset, physics::ParametricValue(0.5));
 
@@ -934,7 +992,7 @@ void alignRouteEndingPoints(point::ParaPoint const &alignmentParaPoint, route::F
     if ((laneSegmentIter->lane_interval.lane_id != alignmentParaPoint.lane_id)
         && (!route::isDegenerated(laneSegmentIter->lane_interval)))
     {
-      auto const lane = lane::getLane(laneSegmentIter->lane_interval.lane_id);
+      auto const &lane = lane::getLane(laneSegmentIter->lane_interval.lane_id);
       auto const rightT = point::findNearestPointOnEdge(lane.edge_right, alignmentPoint);
       auto const leftT = point::findNearestPointOnEdge(lane.edge_left, alignmentPoint);
       auto const newEnd = 0.5 * (rightT + leftT);
@@ -1422,7 +1480,9 @@ bool calculateRouteParaPointAtDistance(route::FullRoute const &route,
 
       resultingPoint.route_planning_counter = route.route_planning_counter;
       resultingPoint.segment_count_from_destination = routeIterator.roadSegmentIterator->segment_count_from_destination;
-      physics::ParametricValue delta(remainingLength / segmentLength);
+      physics::ParametricValue const delta = (segmentLength > physics::Distance(0.))
+        ? physics::ParametricValue(remainingLength / segmentLength)
+        : physics::ParametricValue(0.);
       if (distance < physics::Distance(0))
       {
         resultingPoint.parametric_offset = originOffset - delta;
@@ -1472,8 +1532,20 @@ bool getRouteParaPointFromParaPoint(point::ParaPoint const &para_point,
 
   routeParaPoint.route_planning_counter = route.route_planning_counter;
   routeParaPoint.segment_count_from_destination = waypointResult.roadSegmentIterator->segment_count_from_destination;
-  routeParaPoint.parametric_offset
-    = std::fabs(para_point.parametric_offset - waypointResult.laneSegmentIterator->lane_interval.start);
+  auto const &laneInterval = waypointResult.laneSegmentIterator->lane_interval;
+  physics::ParametricValue const intervalParamLength = calcParametricLength(laneInterval);
+  if (intervalParamLength == physics::ParametricValue(0.))
+  {
+    routeParaPoint.parametric_offset = physics::ParametricValue(0.);
+  }
+  else
+  {
+    double const signedDiff = isRouteDirectionPositive(laneInterval)
+      ? (para_point.parametric_offset.mParametricValue - laneInterval.start.mParametricValue)
+      : (laneInterval.start.mParametricValue - para_point.parametric_offset.mParametricValue);
+    routeParaPoint.parametric_offset
+      = physics::ParametricValue(std::clamp(signedDiff / intervalParamLength.mParametricValue, 0.0, 1.0));
+  }
 
   return true;
 }
@@ -1580,11 +1652,12 @@ FullRoute getRouteSection(FindWaypointResult const &currentLane,
                                  newRoadSegment,
                                  accumulatedDistanceFront,
                                  distanceFront);
-      resultRoute.road_segments.insert(std::begin(resultRoute.road_segments), newRoadSegment);
+      resultRoute.road_segments.push_back(std::move(newRoadSegment));
 
       // prepare for next cycle
       currentPredecessors.swap(nextPredecessors);
     }
+    std::reverse(resultRoute.road_segments.begin(), resultRoute.road_segments.end());
   }
 
   LaneInterval currentEndInterval;
@@ -1615,7 +1688,7 @@ FullRoute getRouteSection(FindWaypointResult const &currentLane,
                              distanceFront,
                              accumulatedDistanceEnd,
                              distanceEnd);
-  resultRoute.road_segments.insert(std::end(resultRoute.road_segments), currentRoadSegment);
+  resultRoute.road_segments.push_back(std::move(currentRoadSegment));
 
   auto currentSuccessors = currentLane.getSuccessorLanes();
   while ( // required distance not yet reached
@@ -1652,7 +1725,7 @@ FullRoute getRouteSection(FindWaypointResult const &currentLane,
                                newRoadSegment,
                                accumulatedDistanceEnd,
                                distanceEnd);
-    resultRoute.road_segments.insert(std::end(resultRoute.road_segments), newRoadSegment);
+    resultRoute.road_segments.push_back(std::move(newRoadSegment));
 
     // prepare for next cycle
     currentSuccessors.swap(nextSuccessors);
@@ -1905,7 +1978,7 @@ void addRoutePredecessorRelationToNewSegment(lane::Lane const &lane,
   {
     return;
   }
-  for (auto predecessorLaneContact : lane::getContactLanes(
+  for (auto const &predecessorLaneContact : lane::getContactLanes(
          lane, routeDirectionPositive ? lane::ContactLocation::PREDECESSOR : lane::ContactLocation::SUCCESSOR))
   {
     auto predecessorLaneId = predecessorLaneContact.to_lane;
@@ -1968,7 +2041,7 @@ void appendLaneSegmentToRoute(route::LaneInterval const &lane_interval,
                               route::FullRoute &route,
                               route::SegmentCounter const segment_count_from_destination)
 {
-  auto lane = lane::getLane(lane_interval.lane_id);
+  auto const &lane = lane::getLane(lane_interval.lane_id);
 
   route::RoadSegment roadSegment;
   roadSegment.bounding_sphere = lane.bounding_sphere;
@@ -1990,7 +2063,7 @@ void appendRoadSegmentToRoute(route::LaneInterval const &lane_interval,
                               FullRoute &route,
                               lane::LaneIdSet const &relevantLanes)
 {
-  auto lane = lane::getLane(lane_interval.lane_id);
+  auto const &lane = lane::getLane(lane_interval.lane_id);
 
   route::RoadSegment roadSegment;
   roadSegment.bounding_sphere = lane.bounding_sphere;
@@ -2200,7 +2273,7 @@ bool addOpposingLaneToRoute(point::ParaPoint const &pointOnOppositeLane,
   while (coveredDistance < distanceOnWrongLane)
   {
     auto segmentDistance = route::addOpposingLaneSegmentToRoadSegment(
-      startPoint, distanceOnWrongLane, route.road_segments[segmentCounter], route);
+      startPoint, distanceOnWrongLane - coveredDistance, route.road_segments[segmentCounter], route);
 
     if (segmentDistance < physics::Distance(0.))
     {
@@ -2274,7 +2347,7 @@ bool calculateBypassingRoute(route::FullRoute const &route, route::FullRoute &by
     bool useLeftNeighbor = isRouteDirectionPositive(laneSegment.lane_interval);
     useLeftNeighbor = useLeftNeighbor ^ access::isLeftHandedTraffic();
 
-    auto lane = lane::getLane(laneSegment.lane_interval.lane_id);
+    auto const &lane = lane::getLane(laneSegment.lane_interval.lane_id);
     lane::ContactLaneList contact_lanes;
     if (useLeftNeighbor)
     {
@@ -2292,7 +2365,7 @@ bool calculateBypassingRoute(route::FullRoute const &route, route::FullRoute &by
     }
 
     auto neighborLaneId = contact_lanes.front().to_lane;
-    auto neighborLane = lane::getLane(neighborLaneId);
+    auto const &neighborLane = lane::getLane(neighborLaneId);
     if (lane::isLanePartOfAnIntersection(neighborLane))
     {
       return false;
@@ -2307,10 +2380,7 @@ bool calculateBypassingRoute(route::FullRoute const &route, route::FullRoute &by
     route::appendLaneSegmentToRoute(neighborLaneInterval, bypassingRoute);
   }
 
-  for (size_t i = 0; i < bypassingRoute.road_segments.size(); ++i)
-  {
-    bypassingRoute.road_segments[i].segment_count_from_destination = bypassingRoute.road_segments.size() - i;
-  }
+  planning::updateRoutePlanningCounters(bypassingRoute);
 
   return true;
 }

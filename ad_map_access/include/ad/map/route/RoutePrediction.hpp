@@ -162,8 +162,8 @@ private:
   //! the list of elements to be processed
   std::deque<RouteTreeElement *> mElementsToProcess;
 
-  //! the list of all elements created
-  std::deque<RouteTreeElement *> mElementsCreated;
+  //! the list of all elements created (deque preserves element addresses on push/emplace)
+  std::deque<RouteTreeElement> mElementsCreated;
 };
 
 } // namespace planning

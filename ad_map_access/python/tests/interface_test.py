@@ -92,6 +92,13 @@ class AdMapAccessPythonTest(unittest.TestCase):
         debug_drawing = ad.geometry.DebugDrawing.getInstance()
         debug_drawing.drawPolygon(lane_polygon, "red", "test")
 
+        # ensure submodules are scoped under ad_map_access.map and do not collide with ad_physics or top-level sys.modules
+        self.assertIsNot(ad.geometry, ad.map.geometry)
+        self.assertNotIn("map", sys.modules)
+        self.assertNotIn("route", sys.modules)
+        self.assertIn("ad_map_access.map", sys.modules)
+        self.assertIn("ad_map_access.map.route", sys.modules)
+
         ad.map.access.cleanup()
 
 
