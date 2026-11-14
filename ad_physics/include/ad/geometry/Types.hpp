@@ -173,7 +173,7 @@ inline bool operator!=(ad::geometry::Point const &a, ad::geometry::Point const &
  */
 inline bool operator==(ad::geometry::Polygon const &a, ad::geometry::Polygon const &b)
 {
-  if (a.outer().size() != b.outer().size())
+  if ((a.outer().size() != b.outer().size()) || (a.inners().size() != b.inners().size()))
   {
     return false;
   }
@@ -182,6 +182,20 @@ inline bool operator==(ad::geometry::Polygon const &a, ad::geometry::Polygon con
     if (a.outer()[i] != b.outer()[i])
     {
       return false;
+    }
+  }
+  for (size_t h = 0u; h < a.inners().size(); ++h)
+  {
+    if (a.inners()[h].size() != b.inners()[h].size())
+    {
+      return false;
+    }
+    for (size_t i = 0u; i < a.inners()[h].size(); ++i)
+    {
+      if (a.inners()[h][i] != b.inners()[h][i])
+      {
+        return false;
+      }
     }
   }
   return true;
@@ -212,18 +226,11 @@ inline bool operator!=(ad::geometry::Polygon const &a, ad::geometry::Polygon con
  */
 inline bool operator<(ad::geometry::Point const &a, ad::geometry::Point const &b)
 {
-  if (a == b)
-  {
-    return false;
-  }
-  else if (std::abs(a.x() - b.x()) > std::numeric_limits<double>::epsilon())
+  if (a.x() != b.x())
   {
     return a.x() < b.x();
   }
-  else
-  {
-    return a.y() < b.y();
-  }
+  return a.y() < b.y();
 }
 
 /*!
@@ -238,19 +245,42 @@ inline bool operator<(ad::geometry::Point const &a, ad::geometry::Point const &b
  */
 inline bool operator<(ad::geometry::Polygon const &a, ad::geometry::Polygon const &b)
 {
-  if (a.outer().size() == b.outer().size())
-  {
-    for (size_t i = 0u; i < a.outer().size(); ++i)
-    {
-      if (a.outer()[i] != b.outer()[i])
-      {
-        return a.outer()[i] < b.outer()[i];
-      }
-    }
-  }
-  else
+  if (a.outer().size() != b.outer().size())
   {
     return a.outer().size() < b.outer().size();
+  }
+  for (size_t i = 0u; i < a.outer().size(); ++i)
+  {
+    if (a.outer()[i] < b.outer()[i])
+    {
+      return true;
+    }
+    if (b.outer()[i] < a.outer()[i])
+    {
+      return false;
+    }
+  }
+  if (a.inners().size() != b.inners().size())
+  {
+    return a.inners().size() < b.inners().size();
+  }
+  for (size_t h = 0u; h < a.inners().size(); ++h)
+  {
+    if (a.inners()[h].size() != b.inners()[h].size())
+    {
+      return a.inners()[h].size() < b.inners()[h].size();
+    }
+    for (size_t i = 0u; i < a.inners()[h].size(); ++i)
+    {
+      if (a.inners()[h][i] < b.inners()[h][i])
+      {
+        return true;
+      }
+      if (b.inners()[h][i] < a.inners()[h][i])
+      {
+        return false;
+      }
+    }
   }
   return false;
 }
@@ -286,7 +316,7 @@ inline std::string to_string(ad::geometry::Polygon const &value)
 {
   std::stringstream stream;
   stream << "[";
-  for (auto pt : value.outer())
+  for (auto const &pt : value.outer())
   {
     stream << std::to_string(pt) << ",";
   }
@@ -305,7 +335,7 @@ inline std::string to_string(ad::geometry::PolygonVector const &value)
 {
   std::stringstream stream;
   stream << "[";
-  for (auto polygon : value)
+  for (auto const &polygon : value)
   {
     stream << std::to_string(polygon) << ",";
   }
@@ -320,11 +350,11 @@ inline std::string to_string(ad::geometry::PolygonVector const &value)
  *
  * @returns string describing line
  */
-inline std::string to_string(ad::geometry::Line value)
+inline std::string to_string(ad::geometry::Line const &value)
 {
   std::stringstream stream;
   stream << "[";
-  for (auto pt : value)
+  for (auto const &pt : value)
   {
     stream << "[" << pt.x() << "," << pt.y() << "],";
   }

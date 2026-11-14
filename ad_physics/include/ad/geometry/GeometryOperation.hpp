@@ -14,6 +14,7 @@
 
 #include <ad/geometry/Types.hpp>
 #include <ad/physics/Types.hpp>
+#include <stdexcept>
 
 /*!
  * @brief namespace ad
@@ -114,22 +115,36 @@ bool combinePolygon(ad::geometry::Polygon const &a, ad::geometry::Polygon const 
  * @param[out] geometry geometry the calculated points are added to
  */
 template <typename T>
-void calculateCircleArc(Point origin,
+void calculateCircleArc(Point const &origin,
                         physics::Distance const &radius,
                         physics::Angle const &from,
                         physics::Angle const &delta,
                         physics::Angle const &stepWidth,
                         T &geometry)
 {
-  physics::Angle currentAngle = from;
-  physics::Angle maxAngle = currentAngle + delta;
-  while (currentAngle <= maxAngle)
+  stepWidth.ensureValid();
+  if (stepWidth <= physics::Angle(0.0))
   {
-    boost::geometry::append(geometry, getPointOnCircle(origin, radius, currentAngle));
-    currentAngle += stepWidth;
+    throw std::invalid_argument("calculateCircleArc: stepWidth must be > 0");
   }
-  if (currentAngle - stepWidth != maxAngle)
+  physics::Angle currentAngle = from;
+  physics::Angle const maxAngle = currentAngle + delta;
+  if (delta >= physics::Angle(0.0))
   {
+    while (currentAngle < maxAngle)
+    {
+      boost::geometry::append(geometry, getPointOnCircle(origin, radius, currentAngle));
+      currentAngle += stepWidth;
+    }
+    boost::geometry::append(geometry, getPointOnCircle(origin, radius, maxAngle));
+  }
+  else
+  {
+    while (currentAngle > maxAngle)
+    {
+      boost::geometry::append(geometry, getPointOnCircle(origin, radius, currentAngle));
+      currentAngle -= stepWidth;
+    }
     boost::geometry::append(geometry, getPointOnCircle(origin, radius, maxAngle));
   }
 }

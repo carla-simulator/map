@@ -7,6 +7,7 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "gtest/gtest.h"
+#include <set>
 #include "ad/geometry/GeometryOperation.hpp"
 
 namespace ad {
@@ -101,6 +102,56 @@ TEST(GeometryTests, calculateCircleArc)
   ASSERT_NEAR(0., polygon.outer()[2].y(), epsilon);
   ASSERT_NEAR(0., polygon.outer()[3].x(), epsilon);
   ASSERT_NEAR(-1., polygon.outer()[3].y(), epsilon);
+
+  Polygon reversePolygon;
+  calculateCircleArc(
+    Point(0., 0.), physics::Distance(1.), physics::Angle(0.0), -3. / 2. * physics::cPI, physics::cPI_2, reversePolygon);
+  ASSERT_EQ(4u, reversePolygon.outer().size());
+  ASSERT_NEAR(1., reversePolygon.outer()[0].x(), epsilon);
+  ASSERT_NEAR(0., reversePolygon.outer()[0].y(), epsilon);
+  ASSERT_NEAR(0., reversePolygon.outer()[1].x(), epsilon);
+  ASSERT_NEAR(-1., reversePolygon.outer()[1].y(), epsilon);
+  ASSERT_NEAR(-1., reversePolygon.outer()[2].x(), epsilon);
+  ASSERT_NEAR(0., reversePolygon.outer()[2].y(), epsilon);
+  ASSERT_NEAR(0., reversePolygon.outer()[3].x(), epsilon);
+  ASSERT_NEAR(1., reversePolygon.outer()[3].y(), epsilon);
+
+  Polygon invalidPolygon;
+  ASSERT_THROW(
+    calculateCircleArc(
+      Point(0., 0.), physics::Distance(1.), physics::Angle(0.0), physics::cPI, physics::Angle(0.0), invalidPolygon),
+    std::invalid_argument);
+}
+
+TEST(GeometryTests, pointAndPolygonOrderingAndHoles)
+{
+  double const eps = std::numeric_limits<double>::epsilon();
+  Point const pA(0.0, 1.0);
+  Point const pB(0.75 * eps, 2.0);
+  Point const pC(1.5 * eps, 0.0);
+  ASSERT_TRUE(pA < pB);
+  ASSERT_TRUE(pB < pC);
+  ASSERT_TRUE(pA < pC);
+  ASSERT_FALSE(pC < pA);
+
+  std::set<Point> pointSet{pC, pA, pB};
+  ASSERT_EQ(3u, pointSet.size());
+
+  Polygon polyNoHole;
+  boost::geometry::append(polyNoHole.outer(), Point(0.0, 0.0));
+  boost::geometry::append(polyNoHole.outer(), Point(4.0, 0.0));
+  boost::geometry::append(polyNoHole.outer(), Point(4.0, 4.0));
+  boost::geometry::append(polyNoHole.outer(), Point(0.0, 0.0));
+
+  Polygon polyWithHole = polyNoHole;
+  polyWithHole.inners().resize(1u);
+  boost::geometry::append(polyWithHole.inners()[0], Point(1.0, 1.0));
+  boost::geometry::append(polyWithHole.inners()[0], Point(1.0, 2.0));
+  boost::geometry::append(polyWithHole.inners()[0], Point(2.0, 2.0));
+  boost::geometry::append(polyWithHole.inners()[0], Point(1.0, 1.0));
+
+  ASSERT_NE(polyNoHole, polyWithHole);
+  ASSERT_TRUE((polyNoHole < polyWithHole) != (polyWithHole < polyNoHole));
 }
 
 TEST(GeometryTests, collides)
@@ -150,6 +201,11 @@ TEST(GeometryTests, isInsideHeadingRange)
   range.end = 1. / 4. * physics::cPI;
   ASSERT_FALSE(isInsideHeadingRange(1. / 2. * physics::cPI, range));
   ASSERT_TRUE(isInsideHeadingRange(3. / 2. * physics::cPI, range));
+
+  range.begin = 7. / 4. * physics::cPI;
+  range.end = 1. / 4. * physics::cPI;
+  ASSERT_FALSE(isInsideHeadingRange(-physics::cPI_2, range));
+  ASSERT_TRUE(isInsideHeadingRange(-1. / 8. * physics::cPI, range));
 }
 
 TEST(GeometryTests, getHeadingOverlap)
@@ -333,6 +389,18 @@ TEST(GeometryTests, overlapHeadingRange)
   ASSERT_EQ(1u, overlapRanges.size());
   ASSERT_EQ(-1. / 4. * physics::cPI, overlapRanges[0].begin);
   ASSERT_EQ(1. / 2. * physics::cPI, overlapRanges[0].end);
+
+  // negative vs [0, 2*PI) wrap-around equivalence
+  overlapRanges.clear();
+  headingRange.begin = -1. / 4. * physics::cPI;
+  headingRange.end = 1. / 4. * physics::cPI;
+  resultRange.begin = 7. / 4. * physics::cPI;
+  resultRange.end = 1. / 4. * physics::cPI;
+  overlapRanges.push_back(resultRange);
+  ASSERT_TRUE(::ad::geometry::getHeadingOverlap(headingRange, overlapRanges));
+  ASSERT_EQ(1u, overlapRanges.size());
+  ASSERT_EQ(-1. / 4. * physics::cPI, overlapRanges[0].begin);
+  ASSERT_EQ(1. / 4. * physics::cPI, overlapRanges[0].end);
 }
 } // namespace geometry
 } // namespace ad

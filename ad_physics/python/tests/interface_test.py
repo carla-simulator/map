@@ -61,6 +61,10 @@ class AdPhysicsPythonTest(unittest.TestCase):
         time_point = ad.physics.time_point()
         time_point.set_time(time.time())
         print(time_point)
+        with self.assertRaises(IndexError):
+            time_point.set_time(float("nan"))
+        self.assertNotIn("physics", sys.modules)
+        self.assertNotIn("geometry", sys.modules)
 
     def test_geometry(self):
         """

@@ -24,36 +24,38 @@ namespace ad {
  */
 namespace geometry {
 
-physics::Distance getDistance(geometry::Point const &point1, geometry::Point const &point2)
+namespace {
+
+physics::Angle getHeadingSpan(geometry::HeadingRange const &range)
 {
-  auto const directionalVector = point1 - point2;
-  return physics::Distance(sqrt(boost::geometry::dot_product(directionalVector, directionalVector)));
+  physics::Angle const diff = range.end - range.begin;
+  if (diff >= physics::c2PI)
+  {
+    return physics::c2PI;
+  }
+  if (range.begin == range.end)
+  {
+    return physics::Angle(0.0);
+  }
+  physics::Angle const span = physics::normalizeAngle(diff);
+  if ((span == physics::Angle(0.0)) || (span == physics::c2PI))
+  {
+    return (diff > physics::Angle(0.0)) ? physics::c2PI : physics::Angle(0.0);
+  }
+  return span;
 }
 
-void splitLineAtIntersectionPoint(geometry::Point const &intersectionPoint,
-                                  geometry::Line const &line,
-                                  Line &before,
-                                  geometry::Line &after)
+physics::Angle getCounterClockwiseOffset(physics::Angle const &from, physics::Angle const &to)
 {
-  auto *currentSection = &before;
-  for (auto it = line.begin(); it != line.end(); ++it)
+  physics::Angle const offset = physics::normalizeAngle(to - from);
+  if (offset == physics::c2PI)
   {
-    auto const pt = *it;
-    boost::geometry::append(*currentSection, *it);
-    if (((it + 1) != line.end()) && (currentSection != &after))
-    {
-      auto const nextPt = *(it + 1);
-      auto const pt2intersection = intersectionPoint - pt;
-      auto const nextPt2intersection = intersectionPoint - nextPt;
-      if (boost::geometry::dot_product(pt2intersection, nextPt2intersection) < 0.)
-      {
-        boost::geometry::append(*currentSection, intersectionPoint);
-        currentSection = &after;
-        boost::geometry::append(*currentSection, intersectionPoint);
-      }
-    }
+    return physics::Angle(0.0);
   }
+  return offset;
 }
+
+} // namespace
 
 Point rotateAroundPoint(ad::geometry::Point const &origin,
                         ad::geometry::Point const &relativePoint,
@@ -80,6 +82,7 @@ Point getCircleOrigin(ad::geometry::Point const &point, physics::Distance const 
 
 void toPolygon(::ad::physics::Distance2DList const &trajectorySet, ad::geometry::Polygon &polygon)
 {
+  polygon.outer().reserve(polygon.outer().size() + trajectorySet.size() + 1u);
   for (auto const &distance : trajectorySet)
   {
     ::boost::geometry::append(polygon, toPoint(distance));
@@ -95,6 +98,7 @@ void toPolygon(::ad::geometry::PointVector const &pointVector, ad::geometry::Pol
 
 void toTrajectorySet(ad::geometry::Polygon const &polygon, ::ad::physics::Distance2DList &trajectorySet)
 {
+  trajectorySet.reserve(trajectorySet.size() + polygon.outer().size());
   for (auto const &point : polygon.outer())
   {
     trajectorySet.push_back(toDistance(point));
@@ -173,41 +177,57 @@ bool combinePolygon(ad::geometry::Polygon const &a, ad::geometry::Polygon const 
 
 bool isInsideHeadingRange(physics::Angle const &angle, geometry::HeadingRange const &range)
 {
-  if (range.end >= range.begin)
+  physics::Angle const span = getHeadingSpan(range);
+  if (span >= physics::c2PI)
   {
-    return (angle >= range.begin) && (angle <= range.end);
+    angle.ensureValid();
+    return true;
   }
-  else
-  {
-    return (angle >= range.begin) || (angle <= range.end);
-  }
+  return getCounterClockwiseOffset(range.begin, angle) <= span;
 }
 
 bool getHeadingOverlap(geometry::HeadingRange const &a,
                        geometry::HeadingRange const &b,
                        geometry::HeadingRangeVector &overlapRanges)
 {
-  bool aStartsInB = isInsideHeadingRange(a.begin, b);
-  bool aEndsInB = isInsideHeadingRange(a.end, b);
-  bool bStartsInA = isInsideHeadingRange(b.begin, a);
-  bool bEndsInA = isInsideHeadingRange(b.end, a);
+  physics::Angle const spanA = getHeadingSpan(a);
+  physics::Angle const spanB = getHeadingSpan(b);
+  if (spanB >= physics::c2PI)
+  {
+    overlapRanges.push_back(a);
+    return true;
+  }
+  if (spanA >= physics::c2PI)
+  {
+    overlapRanges.push_back(b);
+    return true;
+  }
+  if ((getCounterClockwiseOffset(a.begin, b.begin) == physics::Angle(0.0))
+      && (getCounterClockwiseOffset(a.end, b.end) == physics::Angle(0.0)))
+  {
+    overlapRanges.push_back(a);
+    return true;
+  }
 
-  auto overlaps = aStartsInB || aEndsInB || bStartsInA || bEndsInA;
+  bool const aStartsInB = isInsideHeadingRange(a.begin, b);
+  bool const aEndsInB = isInsideHeadingRange(a.end, b);
+  bool const bStartsInA = isInsideHeadingRange(b.begin, a);
+  bool const bEndsInA = isInsideHeadingRange(b.end, a);
+
+  auto const overlaps = aStartsInB || aEndsInB || bStartsInA || bEndsInA;
 
   if (overlaps)
   {
     geometry::HeadingRange range;
     if (aStartsInB && aEndsInB && bStartsInA && bEndsInA)
     {
-      if (!((a.begin == b.begin) && (a.end == b.end)))
-      {
-        geometry::HeadingRange secondRange;
-        secondRange.begin = a.begin;
-        secondRange.end = b.end;
-        overlapRanges.push_back(secondRange);
-      }
+      geometry::HeadingRange secondRange;
+      secondRange.begin = a.begin;
+      secondRange.end = (getCounterClockwiseOffset(a.begin, b.end) == physics::Angle(0.0)) ? a.begin : b.end;
+      overlapRanges.push_back(secondRange);
+
       range.begin = b.begin;
-      range.end = a.end;
+      range.end = (getCounterClockwiseOffset(b.begin, a.end) == physics::Angle(0.0)) ? b.begin : a.end;
     }
     else if (aStartsInB && aEndsInB)
     {
@@ -222,12 +242,12 @@ bool getHeadingOverlap(geometry::HeadingRange const &a,
     else if (aStartsInB && !aEndsInB)
     {
       range.begin = a.begin;
-      range.end = b.end;
+      range.end = (getCounterClockwiseOffset(a.begin, b.end) == physics::Angle(0.0)) ? a.begin : b.end;
     }
     else if (bStartsInA && !bEndsInA)
     {
       range.begin = b.begin;
-      range.end = a.end;
+      range.end = (getCounterClockwiseOffset(b.begin, a.end) == physics::Angle(0.0)) ? b.begin : a.end;
     }
     overlapRanges.push_back(range);
     return true;
