@@ -21,7 +21,7 @@ LaneIdSet getLanesOfMapArea(::ad::map::point::BoundingSphere const &bounding_sph
   LaneIdSet mapArea;
   for (auto const &lane_id : ::ad::map::lane::getLanes())
   {
-    auto lane = ::ad::map::lane::getLane(lane_id);
+    auto const &lane = ::ad::map::lane::getLane(lane_id);
     if (::ad::map::lane::isNear(lane, bounding_sphere))
     {
       mapArea.insert(lane_id);
@@ -55,12 +55,12 @@ LaneIdSet getLanesOfMapArea(::ad::map::point::ENUPoint const &intersectionPoint,
   LaneIdSet mapArea;
   auto intersections
     = ::ad::map::intersection::CoreIntersection::getCoreIntersectionsForInLaneMatches(intersectionPoint);
-  for (auto intersection : intersections)
+  for (auto const &intersection : intersections)
   {
     auto const &internalLanes = intersection->internalLanes();
     mapArea.insert(internalLanes.begin(), internalLanes.end());
 
-    for (auto entryParaPoint : intersection->entryParaPoints())
+    for (auto const &entryParaPoint : intersection->entryParaPoints())
     {
       auto const reachableRoutes
         = ::ad::map::route::planning::predictRoutesDirectionless(entryParaPoint,
@@ -74,7 +74,7 @@ LaneIdSet getLanesOfMapArea(::ad::map::point::ENUPoint const &intersectionPoint,
         mapArea.insert(route_lanes.begin(), route_lanes.end());
       }
     }
-    for (auto exitParaPoint : intersection->exitParaPoints())
+    for (auto const &exitParaPoint : intersection->exitParaPoints())
     {
       auto const reachableRoutes
         = ::ad::map::route::planning::predictRoutesDirectionless(exitParaPoint,

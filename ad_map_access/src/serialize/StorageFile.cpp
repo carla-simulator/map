@@ -48,9 +48,9 @@ bool StorageFile::doClose()
 {
   if (file_ != nullptr)
   {
-    fclose(file_);
+    int const closeResult = fclose(file_);
     file_ = nullptr;
-    return true;
+    return closeResult == 0;
   }
   else
   {
@@ -63,6 +63,10 @@ bool StorageFile::doWrite(const void *x, size_t bytes)
 {
   if (file_ != nullptr)
   {
+    if (bytes == 0u)
+    {
+      return true;
+    }
     return fwrite(x, bytes, 1, file_) == 1;
   }
   else
@@ -76,6 +80,10 @@ bool StorageFile::doRead(void *x, size_t bytes)
 {
   if (file_ != nullptr)
   {
+    if (bytes == 0u)
+    {
+      return true;
+    }
     return fread(x, bytes, 1, file_) == 1;
   }
   else

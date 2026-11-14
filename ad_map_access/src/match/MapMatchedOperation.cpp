@@ -29,43 +29,47 @@ point::ParaPointList getParaPoints(MapMatchedPositionConfidenceList const &inMap
 
 point::ENUHeading getObjectENUHeading(const match::MapMatchedObjectBoundingBox &map_matched_bounding_box)
 {
+  auto const numReferencePoints = map_matched_bounding_box.reference_point_positions.size();
   point::ECEFPoint rearLeftPosition;
-  bool const rearLeftAvailable
-    = map_matched_bounding_box.reference_point_positions[int32_t(match::ObjectReferencePoints::RearLeft)].size() > 0u;
+  bool const rearLeftAvailable = (size_t(match::ObjectReferencePoints::RearLeft) < numReferencePoints)
+    && (map_matched_bounding_box.reference_point_positions[size_t(match::ObjectReferencePoints::RearLeft)].size() > 0u);
   if (rearLeftAvailable)
   {
     rearLeftPosition
-      = map_matched_bounding_box.reference_point_positions[int32_t(match::ObjectReferencePoints::RearLeft)]
+      = map_matched_bounding_box.reference_point_positions[size_t(match::ObjectReferencePoints::RearLeft)]
           .front()
           .query_point;
   }
   point::ECEFPoint rearRightPosition;
-  bool const rearRightAvailable
-    = map_matched_bounding_box.reference_point_positions[int32_t(match::ObjectReferencePoints::RearRight)].size() > 0u;
+  bool const rearRightAvailable = (size_t(match::ObjectReferencePoints::RearRight) < numReferencePoints)
+    && (map_matched_bounding_box.reference_point_positions[size_t(match::ObjectReferencePoints::RearRight)].size()
+        > 0u);
   if (rearRightAvailable)
   {
     rearRightPosition
-      = map_matched_bounding_box.reference_point_positions[int32_t(match::ObjectReferencePoints::RearRight)]
+      = map_matched_bounding_box.reference_point_positions[size_t(match::ObjectReferencePoints::RearRight)]
           .front()
           .query_point;
   }
   point::ECEFPoint frontLeftPosition;
-  bool const frontLeftAvailable
-    = map_matched_bounding_box.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontLeft)].size() > 0u;
+  bool const frontLeftAvailable = (size_t(match::ObjectReferencePoints::FrontLeft) < numReferencePoints)
+    && (map_matched_bounding_box.reference_point_positions[size_t(match::ObjectReferencePoints::FrontLeft)].size()
+        > 0u);
   if (frontLeftAvailable)
   {
     frontLeftPosition
-      = map_matched_bounding_box.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontLeft)]
+      = map_matched_bounding_box.reference_point_positions[size_t(match::ObjectReferencePoints::FrontLeft)]
           .front()
           .query_point;
   }
   point::ECEFPoint frontRightPosition;
-  bool const frontRightAvailable
-    = map_matched_bounding_box.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontRight)].size() > 0u;
+  bool const frontRightAvailable = (size_t(match::ObjectReferencePoints::FrontRight) < numReferencePoints)
+    && (map_matched_bounding_box.reference_point_positions[size_t(match::ObjectReferencePoints::FrontRight)].size()
+        > 0u);
   if (frontRightAvailable)
   {
     frontRightPosition
-      = map_matched_bounding_box.reference_point_positions[int32_t(match::ObjectReferencePoints::FrontRight)]
+      = map_matched_bounding_box.reference_point_positions[size_t(match::ObjectReferencePoints::FrontRight)]
           .front()
           .query_point;
   }
@@ -165,9 +169,9 @@ lane::ENUBorder getENUBorder(LaneOccupiedRegion const &lane_occupied_region)
   auto fullEnuBorder = route::getENUBorder(laneInterval);
   lane::ENUBorder resultBorder;
   resultBorder.left = lane::getLateralAlignmentEdge(
-    fullEnuBorder, (physics::ParametricValue(1.0) - lane_occupied_region.lateral_range.maximum));
-  resultBorder.right = lane::getLateralAlignmentEdge(
     fullEnuBorder, (physics::ParametricValue(1.0) - lane_occupied_region.lateral_range.minimum));
+  resultBorder.right = lane::getLateralAlignmentEdge(
+    fullEnuBorder, (physics::ParametricValue(1.0) - lane_occupied_region.lateral_range.maximum));
 
   return resultBorder;
 }

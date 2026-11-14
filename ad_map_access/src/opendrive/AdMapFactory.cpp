@@ -17,6 +17,7 @@
 #include "ad/map/lane/LaneOperation.hpp"
 #include "ad/map/lane/Types.hpp"
 #include "ad/map/point/GeoOperation.hpp"
+#include "ad/map/point/Operation.hpp"
 #include "ad/map/point/Transform.hpp"
 
 namespace ad {
@@ -81,10 +82,18 @@ bool AdMapFactory::createAdMap(::opendrive::OpenDriveData &openDriveData, double
   }
   else if (std::isnan(openDriveData.geoReference.latitude) || std::isnan(openDriveData.geoReference.longitude))
   {
-    auto geoRefPoint = access::getENUReferencePoint();
-    openDriveData.geoReference.latitude = geoRefPoint.latitude.mLatitude;
-    openDriveData.geoReference.longitude = geoRefPoint.longitude.mLongitude;
-    access::getLogger()->info("Opened opendrive map: using external geo reference {}", access::getENUReferencePoint());
+    if (access::isENUReferencePointSet())
+    {
+      auto geoRefPoint = access::getENUReferencePoint();
+      openDriveData.geoReference.latitude = geoRefPoint.latitude.mLatitude;
+      openDriveData.geoReference.longitude = geoRefPoint.longitude.mLongitude;
+      access::getLogger()->info("Opened opendrive map: using external geo reference {}",
+                                access::getENUReferencePoint());
+    }
+    else
+    {
+      access::getLogger()->warn("Opened opendrive map: neither internal nor external geo reference defined");
+    }
   }
   else
   {
@@ -125,17 +134,14 @@ bool AdMapFactory::addLandmark(::opendrive::Landmark const &landmark)
   bool ok = true;
 
   point::Geometry bounding_box;
+  bounding_box.length = physics::Distance(0.);
   landmark::LandmarkId landmark_id(toLandmarkId(landmark.id));
   access::PartitionId partitionId(0);
 
-  auto position = toECEF(landmark.position);
-
-  point::Longitude landmarkDirectionLon(landmark.position.x + cos(landmark.orientation));
-  point::Latitude landmarkDirectionLat(landmark.position.y + sin(landmark.orientation));
-
-  point::GeoPoint geoOrientation
-    = point::createGeoPoint(landmarkDirectionLon, landmarkDirectionLat, point::Altitude(0.));
-  auto orientation = point::toECEF(geoOrientation);
+  auto const geoPosition = toGeo(landmark.position);
+  auto const position = point::toECEF(geoPosition);
+  auto const ecefHeading = point::createECEFHeading(point::createENUHeading(landmark.orientation), geoPosition);
+  auto const orientation = position + point::createECEFPoint(ecefHeading.x, ecefHeading.y, ecefHeading.z);
 
   auto landmarkType = toLandmarkType(landmark.type);
   if (landmarkType == landmark::LandmarkType::TRAFFIC_LIGHT)
@@ -156,7 +162,7 @@ bool AdMapFactory::addLandmark(::opendrive::Landmark const &landmark)
   }
   else
   {
-    if (Factory::addLandmark(partitionId, landmark_id, landmarkType, position, orientation, bounding_box))
+    if (!Factory::addLandmark(partitionId, landmark_id, landmarkType, position, orientation, bounding_box))
     {
       ok = false;
     }
@@ -277,9 +283,16 @@ bool AdMapFactory::addSpecialContacts(::opendrive::Lane const &lane, ::opendrive
   bool ok = true;
   for (auto const &signalReference : lane.signalReferences)
   {
+    auto const landmarkIt = landmarks.find(signalReference.id);
+    if (landmarkIt == landmarks.end())
+    {
+      access::getLogger()->warn(
+        "addSpecialContacts() Landmark {} referenced by lane {} not found", signalReference.id, lane.id);
+      ok = false;
+      continue;
+    }
     auto const location = toContactLocation(signalReference, lane.junction != -1);
-    auto const &landmark = landmarks.at(signalReference.id);
-    if (!addSpecialContact(lane, landmark, location))
+    if (!addSpecialContact(lane, landmarkIt->second, location))
     {
       ok = false;
     }
@@ -304,7 +317,6 @@ bool AdMapFactory::addContactLanes(::opendrive::Lane const &lane)
   {
     return false;
   }
-  auto adlane = *adlanePtr;
 
   if (lane.leftNeighbor != 0u)
   {

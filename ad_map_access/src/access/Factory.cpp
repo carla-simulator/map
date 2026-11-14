@@ -196,7 +196,7 @@ bool Factory::add(const lane::LaneId &id, const lane::ContactLane &contact_lane)
 
 bool Factory::add(const lane::LaneId &id, const lane::ContactLaneList &contact_lanes)
 {
-  for (auto contact_lane : contact_lanes)
+  for (auto const &contact_lane : contact_lanes)
   {
     if (!add(id, contact_lane))
     {
@@ -240,7 +240,7 @@ bool Factory::add(const lane::LaneId &id, const landmark::LandmarkId &landmark_i
     lane::Lane::Ptr lane = it->second;
     if (lane)
     {
-      for (auto existing_visible_landmark : lane->visible_landmarks)
+      for (auto const &existing_visible_landmark : lane->visible_landmarks)
       {
         if (landmark_id == existing_visible_landmark)
         {
@@ -475,7 +475,7 @@ bool Factory::deleteLane(lane::LaneId id)
     if (erased > 0u)
     {
       bool removed_from_part_map = false;
-      for (auto part_id_and_lane_ids : mStore.part_lane_map_)
+      for (auto &part_id_and_lane_ids : mStore.part_lane_map_)
       {
         auto const removeIter = std::remove(part_id_and_lane_ids.second.begin(), part_id_and_lane_ids.second.end(), id);
         if (removeIter != part_id_and_lane_ids.second.end())
@@ -515,7 +515,8 @@ bool Factory::deleteContacts(lane::LaneId id, lane::LaneId to_id)
       {
         lane::ContactLaneList &cls = lane->contact_lanes;
         cls.erase(
-          std::remove_if(cls.begin(), cls.end(), [to_id](const lane::ContactLane &cl) { return cl.to_lane == to_id; }));
+          std::remove_if(cls.begin(), cls.end(), [to_id](const lane::ContactLane &cl) { return cl.to_lane == to_id; }),
+          cls.end());
         return true;
       }
     }
@@ -535,7 +536,7 @@ bool Factory::deleteLandmark(landmark::LandmarkId id)
     if (erased > 0u)
     {
       bool removed_from_part_map = false;
-      for (auto part_id_and_landmark_ids : mStore.part_landmark_map_)
+      for (auto &part_id_and_landmark_ids : mStore.part_landmark_map_)
       {
         auto const removeIter
           = std::remove(part_id_and_landmark_ids.second.begin(), part_id_and_landmark_ids.second.end(), id);
@@ -608,6 +609,10 @@ bool correctLaneEdgeAtFront(::ad::map::point::Geometry &first,
                             ::ad::map::point::ECEFPoint const &new_end_point,
                             ad::physics::Distance const max_delta_length)
 {
+  if (first.ecef_points.empty())
+  {
+    return false;
+  }
   auto previousDirection = new_end_point - first.ecef_points.back();
   ad::map::point::ECEFPointList newPoints;
   for (auto iter = first.ecef_points.rbegin(); iter != first.ecef_points.rend(); ++iter)
@@ -631,6 +636,8 @@ bool correctLaneEdgeAtFront(::ad::map::point::Geometry &first,
         std::reverse(newPoints.begin(), newPoints.end());
         first.ecef_points.swap(newPoints);
         first.length = newLength;
+        first.private_enu_points_cache.enu_version = 0;
+        first.private_enu_points_cache.enu_points.clear();
         return true;
       }
       else
@@ -659,6 +666,10 @@ bool correctLaneEdgeAtBack(::ad::map::point::Geometry &first,
                            ::ad::map::point::ECEFPoint const &new_end_point,
                            ad::physics::Distance const max_delta_length)
 {
+  if (first.ecef_points.empty())
+  {
+    return false;
+  }
   auto previousDirection = new_end_point - first.ecef_points.front();
   ad::map::point::ECEFPointList newPoints;
   for (auto iter = first.ecef_points.begin(); iter != first.ecef_points.end(); ++iter)
@@ -679,8 +690,10 @@ bool correctLaneEdgeAtBack(::ad::map::point::Geometry &first,
           newPoints.size(),
           first.length,
           newLength);
-        first.ecef_points = newPoints;
+        first.ecef_points = std::move(newPoints);
         first.length = newLength;
+        first.private_enu_points_cache.enu_version = 0;
+        first.private_enu_points_cache.enu_points.clear();
         return true;
       }
       else
@@ -709,6 +722,10 @@ bool correctLaneEdge(::ad::map::point::Geometry &first,
                      ::ad::map::point::Geometry const &second,
                      ad::physics::Distance const max_correction_distance = ad::physics::Distance(.5))
 {
+  if (first.ecef_points.empty() || second.ecef_points.empty())
+  {
+    return false;
+  }
   bool ok = false;
   if (ad::map::point::distance(first.ecef_points.back(), second.ecef_points.front()) < max_correction_distance)
   {
@@ -732,12 +749,14 @@ bool correctLaneEdge(::ad::map::point::Geometry &first,
 bool Factory::correctLaneBorder(lane::LaneId from_id, lane::LaneId to_id)
 {
   bool ok = false;
+  lane::Lane::Ptr from_lane;
+  lane::Lane::ConstPtr to_lane;
   if (lane::isValid(from_id) && lane::isValid(to_id))
   {
-    lane::Lane::Ptr from_lane = std::const_pointer_cast<lane::Lane>(mStore.getLanePtr(from_id));
+    from_lane = std::const_pointer_cast<lane::Lane>(mStore.getLanePtr(from_id));
     if (from_lane)
     {
-      lane::Lane::ConstPtr to_lane = mStore.getLanePtr(to_id);
+      to_lane = mStore.getLanePtr(to_id);
       if (to_lane)
       {
         if (from_lane->direction == to_lane->direction)
@@ -762,10 +781,18 @@ bool Factory::correctLaneBorder(lane::LaneId from_id, lane::LaneId to_id)
   }
   else
   {
+    from_lane->bounding_sphere = point::calcBoundingSphere(from_lane->edge_left, from_lane->edge_right);
+    lane::updateLaneLengths(*from_lane);
     access::getLogger()->info("Factory::correctLaneBorder({} -> {}) succeeded", from_id, to_id);
+    if (lane::getContactLocation(*from_lane, to_id) == lane::ContactLocation::INVALID)
+    {
+      ok &= autoConnect(from_id, to_id);
+    }
+    if (lane::getContactLocation(*to_lane, from_id) == lane::ContactLocation::INVALID)
+    {
+      ok &= autoConnect(to_id, from_id);
+    }
   }
-  ok = autoConnect(from_id, to_id);
-  ok &= autoConnect(to_id, from_id);
   return ok;
 }
 
@@ -884,12 +911,27 @@ void Factory::addDefaultIntersectionContacts()
       return;
   }
 
+  landmark::LandmarkId nextFakeTrafficLightId(landmark::LandmarkId::cMaxValue);
+  auto allocateFakeTrafficLightId = [this, &nextFakeTrafficLightId]() {
+    while ((mStore.landmark_map_.find(nextFakeTrafficLightId) != mStore.landmark_map_.end())
+           && (nextFakeTrafficLightId > landmark::LandmarkId(1)))
+    {
+      nextFakeTrafficLightId -= landmark::LandmarkId(1);
+    }
+    auto const allocatedId = nextFakeTrafficLightId;
+    if (nextFakeTrafficLightId > landmark::LandmarkId(1))
+    {
+      nextFakeTrafficLightId -= landmark::LandmarkId(1);
+    }
+    return allocatedId;
+  };
+
   for (auto &lane_entry : mStore.lane_map_)
   {
     auto lane_id = lane_entry.first;
-    auto lanePtr = lane_entry.second;
+    auto const &lanePtr = lane_entry.second;
 
-    if (lanePtr->type == lane::LaneType::INTERSECTION)
+    if (!lanePtr || (lanePtr->type == lane::LaneType::INTERSECTION))
     {
       continue;
     }
@@ -901,7 +943,7 @@ void Factory::addDefaultIntersectionContacts()
          lane::getContactLanes(*lanePtr, {lane::ContactLocation::SUCCESSOR, lane::ContactLocation::PREDECESSOR}))
     {
       auto intersectionLanePtr = mStore.getLanePtr(outerContact.to_lane);
-      if (intersectionLanePtr->type == lane::LaneType::INTERSECTION)
+      if (intersectionLanePtr && (intersectionLanePtr->type == lane::LaneType::INTERSECTION))
       {
         // intersection successor or predecessor found
         if (((outerContact.location == lane::ContactLocation::SUCCESSOR) && !lane::isLaneDirectionNegative(*lanePtr))
@@ -936,6 +978,11 @@ void Factory::addDefaultIntersectionContacts()
       }
     }
 
+    bool hasSuccessorTrafficLight = false;
+    landmark::LandmarkId successorTrafficLightId;
+    bool hasPredecessorTrafficLight = false;
+    landmark::LandmarkId predecessorTrafficLightId;
+
     for (auto const &contact : unknownIntersectionTransitions)
     {
       if (knownIntersectionTransitions.find(contact.to_lane) == knownIntersectionTransitions.end())
@@ -943,22 +990,57 @@ void Factory::addDefaultIntersectionContacts()
         auto restrictions = createRoadRestrictions();
         if (defaultIntersectionContact == lane::ContactType::TRAFFIC_LIGHT)
         {
-          landmark::LandmarkId fakeTrafficLightId(landmark::LandmarkId::cMaxValue);
-          point::Geometry bounding_box;
-          point::ECEFPoint position;
-          point::ECEFPoint orientation;
+          landmark::LandmarkId fakeTrafficLightId;
           if (contact.location == lane::ContactLocation::SUCCESSOR)
           {
-            position = lanePtr->edge_right.ecef_points[lanePtr->edge_right.ecef_points.size() - 1];
-            orientation = lanePtr->edge_right.ecef_points[lanePtr->edge_right.ecef_points.size() - 2];
+            if (lanePtr->edge_right.ecef_points.size() < 2u)
+            {
+              access::getLogger()->error(
+                "Factory::addDefaultIntersectionContacts() insufficient right edge points on lane {}", lane_id);
+              continue;
+            }
+            if (!hasSuccessorTrafficLight)
+            {
+              successorTrafficLightId = allocateFakeTrafficLightId();
+              point::Geometry bounding_box;
+              bounding_box.length = physics::Distance(0.);
+              auto const &position = lanePtr->edge_right.ecef_points[lanePtr->edge_right.ecef_points.size() - 1];
+              auto const &orientation = lanePtr->edge_right.ecef_points[lanePtr->edge_right.ecef_points.size() - 2];
+              (void)addTrafficLight(access::PartitionId(0),
+                                    successorTrafficLightId,
+                                    mDefaultTrafficLightType,
+                                    position,
+                                    orientation,
+                                    bounding_box);
+              hasSuccessorTrafficLight = true;
+            }
+            fakeTrafficLightId = successorTrafficLightId;
           }
           else
           {
-            position = lanePtr->edge_left.ecef_points[0];
-            orientation = lanePtr->edge_left.ecef_points[1];
+            if (lanePtr->edge_left.ecef_points.size() < 2u)
+            {
+              access::getLogger()->error(
+                "Factory::addDefaultIntersectionContacts() insufficient left edge points on lane {}", lane_id);
+              continue;
+            }
+            if (!hasPredecessorTrafficLight)
+            {
+              predecessorTrafficLightId = allocateFakeTrafficLightId();
+              point::Geometry bounding_box;
+              bounding_box.length = physics::Distance(0.);
+              auto const &position = lanePtr->edge_left.ecef_points[0];
+              auto const &orientation = lanePtr->edge_left.ecef_points[1];
+              (void)addTrafficLight(access::PartitionId(0),
+                                    predecessorTrafficLightId,
+                                    mDefaultTrafficLightType,
+                                    position,
+                                    orientation,
+                                    bounding_box);
+              hasPredecessorTrafficLight = true;
+            }
+            fakeTrafficLightId = predecessorTrafficLightId;
           }
-          (void)addTrafficLight(
-            access::PartitionId(0), fakeTrafficLightId, mDefaultTrafficLightType, position, orientation, bounding_box);
           add(
             lane_id, contact.to_lane, contact.location, {defaultIntersectionContact}, restrictions, fakeTrafficLightId);
         }
@@ -976,13 +1058,11 @@ void Factory::addDefaultIntersectionContacts()
 
 lane::LaneId Factory::getNextLaneId() const
 {
-  lane::LaneId new_lane_id(0);
-  for (auto it : mStore.lane_map_)
+  if (mStore.lane_map_.empty())
   {
-    new_lane_id = std::max(new_lane_id, it.second->id);
+    return lane::LaneId(1);
   }
-  new_lane_id += lane::LaneId(1);
-  return new_lane_id;
+  return mStore.lane_map_.rbegin()->first + lane::LaneId(1);
 }
 
 } // namespace access

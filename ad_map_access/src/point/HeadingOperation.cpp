@@ -32,9 +32,25 @@ ECEFHeading createECEFHeading(ECEFPoint const &start, ECEFPoint const &end)
 
 ECEFHeading createECEFHeading(ENUHeading const &yaw, GeoPoint const &enu_reference_point)
 {
-  ECEFPoint const start = toECEF(enu_reference_point);
-  ENUPoint const enuEndPoint = getDirectionalVectorZPlane(yaw);
-  ECEFPoint const end = toECEF(enuEndPoint, enu_reference_point);
+  auto const coordinateTransform = access::getCoordinateTransform();
+  if (coordinateTransform && coordinateTransform->isGeoProjectionValid())
+  {
+    ECEFPoint const start = toECEF(enu_reference_point);
+    ENUPoint const enuOrigin = toENU(enu_reference_point);
+    ECEFPoint const end = toECEF(enuOrigin + getDirectionalVectorZPlane(yaw));
+    return createECEFHeading(start, end);
+  }
+  if (coordinateTransform && coordinateTransform->isENUValid()
+      && (enu_reference_point == coordinateTransform->getENUReferencePoint()))
+  {
+    ECEFPoint const start = coordinateTransform->Geo2ECEF(enu_reference_point);
+    ECEFPoint const end = coordinateTransform->ENU2ECEF(getDirectionalVectorZPlane(yaw));
+    return createECEFHeading(start, end);
+  }
+  CoordinateTransform localTransform;
+  localTransform.setENUReferencePoint(enu_reference_point);
+  ECEFPoint const start = localTransform.Geo2ECEF(enu_reference_point);
+  ECEFPoint const end = localTransform.ENU2ECEF(getDirectionalVectorZPlane(yaw));
   return createECEFHeading(start, end);
 }
 
@@ -65,9 +81,32 @@ ENUHeading createENUHeading(ECEFHeading const &ecefHeading, ECEFPoint const &enu
 
 ENUHeading createENUHeading(ECEFHeading const &ecefHeading, GeoPoint const &enu_reference_point)
 {
-  ECEFPoint const enuZero = toECEF(enu_reference_point);
-  ECEFPoint const enuEastAxis = toECEF(getEnuEastAxis(), enu_reference_point);
-  ECEFPoint const enuUpAxis = toECEF(getEnuUpAxis(), enu_reference_point);
+  ECEFPoint enuZero;
+  ECEFPoint enuEastAxis;
+  ECEFPoint enuUpAxis;
+  auto const coordinateTransform = access::getCoordinateTransform();
+  if (coordinateTransform && coordinateTransform->isGeoProjectionValid())
+  {
+    enuZero = toECEF(enu_reference_point);
+    ENUPoint const enuOrigin = toENU(enu_reference_point);
+    enuEastAxis = toECEF(enuOrigin + getEnuEastAxis());
+    enuUpAxis = toECEF(enuOrigin + getEnuUpAxis());
+  }
+  else if (coordinateTransform && coordinateTransform->isENUValid()
+           && (enu_reference_point == coordinateTransform->getENUReferencePoint()))
+  {
+    enuZero = coordinateTransform->Geo2ECEF(enu_reference_point);
+    enuEastAxis = coordinateTransform->ENU2ECEF(getEnuEastAxis());
+    enuUpAxis = coordinateTransform->ENU2ECEF(getEnuUpAxis());
+  }
+  else
+  {
+    CoordinateTransform localTransform;
+    localTransform.setENUReferencePoint(enu_reference_point);
+    enuZero = localTransform.Geo2ECEF(enu_reference_point);
+    enuEastAxis = localTransform.ENU2ECEF(getEnuEastAxis());
+    enuUpAxis = localTransform.ENU2ECEF(getEnuUpAxis());
+  }
 
   ECEFHeading const toEast = createECEFHeading(enuZero, enuEastAxis);
   ECEFHeading const toUp = createECEFHeading(enuZero, enuUpAxis);

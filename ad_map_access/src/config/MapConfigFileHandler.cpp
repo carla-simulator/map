@@ -140,16 +140,24 @@ bool MapConfigFileHandler::parseConfigFile(std::string const &configFileName)
       boost::filesystem::path path(mBaseDir);
       path /= boost::filesystem::path(mapFilename);
       path = boost::filesystem::canonical(path);
-      if (!boost::starts_with(path.string(), mBaseDir))
+      auto const pathStr = path.string();
+      bool isInsideBaseDir = boost::starts_with(pathStr, mBaseDir);
+      if (isInsideBaseDir && (pathStr.size() > mBaseDir.size()) && !mBaseDir.empty() && (mBaseDir.back() != '/')
+          && (mBaseDir.back() != '\\'))
+      {
+        char const nextChar = pathStr[mBaseDir.size()];
+        isInsideBaseDir = (nextChar == '/') || (nextChar == '\\');
+      }
+      if (!isInsideBaseDir)
       {
         access::getLogger()->error("Given map file {} seems not to be located below current configuration directory {} "
                                    "concatenating results in: {}",
                                    mapFilename,
                                    mBaseDir,
-                                   path.string());
+                                   pathStr);
         return false;
       }
-      mapEntry.filename = path.string();
+      mapEntry.filename = pathStr;
 
       physics::Distance open_drive_overlap_margin{0.};
       if (vm.count("ADMap.open_drive_overlap_margin"))
@@ -247,7 +255,12 @@ bool MapConfigFileHandler::parsePointOfIntereset(std::string const &entry)
     access::getLogger()->warn("Error extracting altitude");
     return false;
   }
-  for (auto existingEntry : mPointsOfInterest)
+  if (!point::isValid(poi.geo_point, false))
+  {
+    access::getLogger()->warn("Invalid POI geo point: {}", entry);
+    return false;
+  }
+  for (auto const &existingEntry : mPointsOfInterest)
   {
     if (existingEntry.name == poi.name)
     {
@@ -277,6 +290,11 @@ bool MapConfigFileHandler::parseENUReference(std::string const &entry)
   if (!(input >> enuReference.altitude))
   {
     access::getLogger()->warn("Error extracting altitude");
+    return false;
+  }
+  if (!point::isValid(enuReference, false))
+  {
+    access::getLogger()->warn("Invalid ENU reference geo point: {}", entry);
     return false;
   }
   mDefaultEnuReference = enuReference;

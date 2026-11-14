@@ -7,10 +7,15 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "GeometryStore.hpp"
+#include <algorithm>
+#include <cstdlib>
+#include <limits>
 #include <memory>
+#include "../lane/LaneOperationPrivate.hpp"
 #include "ad/map/access/Logging.hpp"
 #include "ad/map/access/Store.hpp"
 #include "ad/map/lane/LaneOperation.hpp"
+#include "ad/map/point/BoundingSphereOperation.hpp"
 #include "ad/map/point/GeometryOperation.hpp"
 #include "ad/map/serialize/SerializeGeneratedTypes.hpp"
 
@@ -18,11 +23,12 @@ namespace ad {
 namespace map {
 namespace access {
 
-GeometryStore::GeometryStore()
+GeometryStore::GeometryStore(Store const *map_store)
 {
   store_ = nullptr;
   points3d_ = 0;
   capacity3d_ = 0;
+  map_store_ = map_store;
 }
 
 GeometryStore::~GeometryStore()
@@ -87,6 +93,15 @@ bool GeometryStore::restore(lane::Lane::Ptr lane) const
         {
           lane->edge_left = point::createGeometry(left, false);
           lane->edge_right = point::createGeometry(right, false);
+          if ((lane->bounding_sphere.center == point::createECEFPoint(0., 0., 0.))
+              || (lane->bounding_sphere.radius == physics::Distance(0.)))
+          {
+            lane->bounding_sphere = point::calcBoundingSphere(lane->edge_left, lane->edge_right);
+          }
+          if (lane->length == physics::Distance(0.))
+          {
+            lane::updateLaneLengths(*lane);
+          }
           return true;
         }
         else
@@ -168,15 +183,20 @@ bool GeometryStore::store(lane::Lane::ConstPtr lane, lane::ContactLocation locat
   }
   const point::ECEFPointList &ecef
     = (location == lane::ContactLocation::LEFT) ? lane->edge_left.ecef_points : lane->edge_right.ecef_points;
+  if (ecef.size() > std::numeric_limits<uint32_t>::max())
+  {
+    return false;
+  }
   size = static_cast<uint32_t>(ecef.size());
   lane::ContactLaneList contact_lanes = lane::getContactLanes(*lane, location);
-  for (auto contact_lane : contact_lanes)
+  for (auto const &contact_lane : contact_lanes)
   {
     lane::LaneId contact_lane_id = contact_lane.to_lane;
     auto it = lane_items_.find(contact_lane_id);
     if (it != lane_items_.end())
     {
-      lane::Lane::ConstPtr clane = lane::getLanePtr(contact_lane_id);
+      lane::Lane::ConstPtr clane
+        = (map_store_ != nullptr) ? map_store_->getLanePtr(contact_lane_id) : lane::getLanePtr(contact_lane_id);
       if (clane)
       {
         const point::ECEFPointList &ecef1
@@ -195,7 +215,12 @@ bool GeometryStore::store(lane::Lane::ConstPtr lane, lane::ContactLocation locat
 
 bool GeometryStore::store(const point::ECEFPointList &ecef, uint32_t &offset3d)
 {
-  while (points3d_ + ecef.size() >= capacity3d_)
+  if (ecef.size() > std::numeric_limits<uint32_t>::max() - points3d_)
+  {
+    access::getLogger()->error("GeometryStore: Point count overflow.");
+    return false;
+  }
+  while (static_cast<size_t>(points3d_) + ecef.size() > static_cast<size_t>(capacity3d_))
   {
     if (!expand())
     {
@@ -203,9 +228,9 @@ bool GeometryStore::store(const point::ECEFPointList &ecef, uint32_t &offset3d)
     }
   }
   offset3d = points3d_;
-  for (auto pt : ecef)
+  for (auto const &pt : ecef)
   {
-    uint32_t index = (points3d_++) * 3;
+    size_t index = static_cast<size_t>(points3d_++) * 3u;
     store_[index++] = pt.x.mECEFCoordinate;
     store_[index++] = pt.y.mECEFCoordinate;
     store_[index++] = pt.z.mECEFCoordinate;
@@ -219,9 +244,10 @@ bool GeometryStore::restore(point::ECEFPointList &ecef, uint32_t offset3d, uint3
   {
     throw std::runtime_error("ecef not empty");
   }
-  if (offset3d + points3d <= capacity3d_)
+  if (static_cast<size_t>(offset3d) + static_cast<size_t>(points3d) <= static_cast<size_t>(capacity3d_))
   {
-    for (uint32_t index = offset3d * 3; points3d != 0; points3d--)
+    ecef.reserve(points3d);
+    for (size_t index = static_cast<size_t>(offset3d) * 3u; points3d != 0u; points3d--)
     {
       point::ECEFPoint pt;
       pt.x = point::ECEFCoordinate(store_[index++]);
@@ -246,10 +272,10 @@ void GeometryStore::destroy()
   {
     free(store_);
     store_ = nullptr;
-    points3d_ = 0;
-    capacity3d_ = 0;
     access::getLogger()->debug("GeometryStore: Destroyed.");
   }
+  points3d_ = 0;
+  capacity3d_ = 0;
 }
 
 bool GeometryStore::expand()
@@ -260,12 +286,20 @@ bool GeometryStore::expand()
   }
   else
   {
-    size_t bytes = (capacity3d_ + SIZE_INCREMENT) * 3 * sizeof(double);
+    if (capacity3d_ == std::numeric_limits<uint32_t>::max())
+    {
+      access::getLogger()->error("GeometryStore: Maximum capacity reached.");
+      return false;
+    }
+    uint32_t const new_capacity = (capacity3d_ > std::numeric_limits<uint32_t>::max() / 2u)
+      ? std::numeric_limits<uint32_t>::max()
+      : std::max(capacity3d_ * 2u, capacity3d_ + SIZE_INCREMENT);
+    size_t const bytes = static_cast<size_t>(new_capacity) * 3u * sizeof(double);
     double *store = static_cast<double *>(std::realloc(store_, bytes));
     if (store != nullptr)
     {
       store_ = store;
-      capacity3d_ += SIZE_INCREMENT;
+      capacity3d_ = new_capacity;
       return true;
     }
     else
@@ -279,7 +313,11 @@ bool GeometryStore::expand()
 bool GeometryStore::create(uint32_t capacity3d)
 {
   destroy();
-  size_t bytes = capacity3d * 3 * sizeof(double);
+  if (capacity3d == 0u)
+  {
+    return true;
+  }
+  size_t const bytes = static_cast<size_t>(capacity3d) * 3u * sizeof(double);
   store_ = static_cast<double *>(std::malloc(bytes));
   if (store_ != nullptr)
   {
@@ -305,9 +343,11 @@ bool GeometryStore::serialize(serialize::ISerializer &serializer)
 
   if (ok)
   {
+    size_t const bytes = static_cast<size_t>(points3d_) * 3u * sizeof(double);
     if (!serializer.isStoring())
     {
-      if (create(points3d_))
+      uint32_t const target_points3d = points3d_;
+      if (create(target_points3d))
       {
         points3d_ = capacity3d_;
       }
@@ -315,11 +355,11 @@ bool GeometryStore::serialize(serialize::ISerializer &serializer)
       {
         return false;
       }
-      ok = serializer.read(store_, points3d_ * 3 * sizeof(double));
+      ok = serializer.read(store_, bytes);
     }
     else
     {
-      ok = serializer.write(store_, points3d_ * 3 * sizeof(double));
+      ok = serializer.write(store_, bytes);
     }
   }
   return ok;

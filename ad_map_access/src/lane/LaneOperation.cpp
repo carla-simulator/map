@@ -98,7 +98,7 @@ point::ECEFHeading getLaneECEFHeading(match::MapMatchedPosition const &mapMatche
 
 point::ECEFHeading getLaneECEFHeading(point::ParaPoint const &para_point)
 {
-  auto lane = getLane(para_point.lane_id);
+  auto const &lane = getLane(para_point.lane_id);
 
   point::ECEFHeading laneDrivingDirection = getLaneECEFDirection(lane, para_point);
   if (!isLaneDirectionPositive(lane))
@@ -188,7 +188,7 @@ physics::Duration getDuration(Lane const &lane, physics::ParametricRange const &
   for (auto const &speed_limit : lane.speed_limits)
   {
     auto const intersectedRange = getIntersectionRange(speed_limit.lane_piece, range);
-    if (isRangeValid(intersectedRange))
+    if (isRangeValid(intersectedRange, false))
     {
       physics::Distance const speedLimitDistance = (intersectedRange.maximum - intersectedRange.minimum) * lane.length;
       physics::Speed speedLimitValue = std::numeric_limits<physics::Speed>::max();
@@ -214,7 +214,7 @@ ContactLaneList getContactLanes(Lane const &lane, ContactLocation const &locatio
 {
   if (location == ContactLocation::INVALID)
   {
-    std::runtime_error("LaneOperation::getContactLanes() location is INVALID");
+    throw std::runtime_error("LaneOperation::getContactLanes() location is INVALID");
   }
   ContactLaneList contact_lanes;
   for (auto const &contactLane : lane.contact_lanes)
@@ -233,7 +233,7 @@ ContactLaneList getContactLanes(Lane const &lane, ContactLocationList const &loc
   for (auto const &location : locations)
   {
     auto const locationContactLanes = getContactLanes(lane, location);
-    contact_lanes.insert(std::begin(contact_lanes), std::begin(locationContactLanes), std::end(locationContactLanes));
+    contact_lanes.insert(std::end(contact_lanes), std::begin(locationContactLanes), std::end(locationContactLanes));
   }
   return contact_lanes;
 }
@@ -516,13 +516,13 @@ bool isHeadingInLaneDirection(point::ParaPoint const &position, point::ENUHeadin
 
 bool isLaneDirectionPositive(LaneId const &lane_id)
 {
-  auto const lane = getLane(lane_id);
+  auto const &lane = getLane(lane_id);
   return isLaneDirectionPositive(lane);
 }
 
 bool isLaneDirectionNegative(LaneId const &lane_id)
 {
-  auto const lane = getLane(lane_id);
+  auto const &lane = getLane(lane_id);
   return isLaneDirectionNegative(lane);
 }
 
@@ -536,9 +536,9 @@ bool projectPositionToLaneInHeadingDirection(point::ParaPoint const &position,
     return true;
   }
 
-  const auto lane = getLane(position.lane_id);
+  auto const &lane = getLane(position.lane_id);
   ContactLocationList types;
-  if (isLaneDirectionPositive(position.lane_id))
+  if (isLaneDirectionPositive(lane))
   {
     types.push_back(ContactLocation::LEFT);
     types.push_back(ContactLocation::RIGHT);
@@ -550,12 +550,17 @@ bool projectPositionToLaneInHeadingDirection(point::ParaPoint const &position,
   }
   for (auto contactType : types)
   {
+    LaneIdSet visitedLanes{position.lane_id};
     auto contact_lanes = getContactLanes(lane, contactType);
     while (contact_lanes.size() > 0)
     {
       // check first neighbor
       const auto neighborLaneId = contact_lanes[0].to_lane;
-      const auto neighborLane = getLane(neighborLaneId);
+      if (!visitedLanes.insert(neighborLaneId).second)
+      {
+        break;
+      }
+      auto const &neighborLane = getLane(neighborLaneId);
 
       projectedPosition.lane_id = neighborLaneId;
       projectedPosition.parametric_offset = position.parametric_offset;
@@ -763,21 +768,25 @@ physics::Distance getDistanceToLane(LaneId lane_id, match::Object const &object)
                               match::ObjectReferencePoints::RearLeft,
                               match::ObjectReferencePoints::RearRight})
   {
-    auto mapMatchedConfidenceList = object.map_matched_bounding_box.reference_point_positions[size_t(referencePoint)];
-    for (auto const &mapMatchedPosition : mapMatchedConfidenceList)
+    if (size_t(referencePoint) < object.map_matched_bounding_box.reference_point_positions.size())
     {
-      if (mapMatchedPosition.lane_point.para_point.lane_id == lane_id)
+      auto const &mapMatchedConfidenceList
+        = object.map_matched_bounding_box.reference_point_positions[size_t(referencePoint)];
+      for (auto const &mapMatchedPosition : mapMatchedConfidenceList)
       {
-        mapMatchedPointFound = true;
-        // use the smallest distance if multiple have been matched
-        distance = std::min(distance, point::distance(mapMatchedPosition.matched_point, objectPointECEF));
+        if (mapMatchedPosition.lane_point.para_point.lane_id == lane_id)
+        {
+          mapMatchedPointFound = true;
+          // use the smallest distance if multiple have been matched
+          distance = std::min(distance, point::distance(mapMatchedPosition.matched_point, objectPointECEF));
+        }
       }
     }
   }
   if (!mapMatchedPointFound)
   {
     // need to perform map matching on our own
-    auto lane = getLane(lane_id);
+    auto const &lane = getLane(lane_id);
     match::MapMatchedPosition mapMatchedPosition;
     if (findNearestPointOnLane(lane, objectPointECEF, mapMatchedPosition))
     {
@@ -844,18 +853,16 @@ ContactLocation getDirectNeighborhoodRelation(LaneId const lane_id, LaneId const
   {
     return ContactLocation::OVERLAP;
   }
-  auto lane = getLane(lane_id);
+  auto const &lane = getLane(lane_id);
   for (auto contactLocation :
        {ContactLocation::LEFT, ContactLocation::RIGHT, ContactLocation::SUCCESSOR, ContactLocation::PREDECESSOR})
   {
-    auto contact_lanes = getContactLanes(lane, contactLocation);
-    auto findResult
-      = std::find_if(std::begin(contact_lanes), std::end(contact_lanes), [checkLaneId](ContactLane const &contactLane) {
-          return contactLane.to_lane == checkLaneId;
-        });
-    if (findResult != std::end(contact_lanes))
+    for (auto const &contactLane : lane.contact_lanes)
     {
-      return contactLocation;
+      if ((contactLane.location == contactLocation) && (contactLane.to_lane == checkLaneId))
+      {
+        return contactLocation;
+      }
     }
   }
   return ContactLocation::INVALID;
@@ -877,7 +884,7 @@ bool isSameOrDirectNeighbor(LaneId const lane_id, LaneId const checkLaneId)
 point::ENUPoint getENULanePoint(point::ParaPoint const parametricPoint, physics::ParametricValue const &lateralOffset)
 {
   // perform map matching
-  auto lane = getLane(parametricPoint.lane_id);
+  auto const &lane = getLane(parametricPoint.lane_id);
   auto ecefPoint = getParametricPoint(lane, parametricPoint.parametric_offset, lateralOffset);
   auto enuPoint = point::toENU(ecefPoint);
   return enuPoint;
@@ -919,8 +926,17 @@ LaneAltitudeRange calcLaneAltitudeRange(Lane const &lane)
   for (auto const &pt : getCachedENUPointList(lane.edge_right))
   {
     auto const altitude = point::Altitude(pt.z.mENUCoordinate);
-    altitude_range.minimum = std::min(altitude_range.minimum, altitude);
-    altitude_range.maximum = std::max(altitude_range.maximum, altitude);
+    if (initialize)
+    {
+      initialize = false;
+      altitude_range.minimum = altitude;
+      altitude_range.maximum = altitude;
+    }
+    else
+    {
+      altitude_range.minimum = std::min(altitude_range.minimum, altitude);
+      altitude_range.maximum = std::max(altitude_range.maximum, altitude);
+    }
   }
   return altitude_range;
 }

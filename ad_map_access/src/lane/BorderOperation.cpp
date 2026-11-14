@@ -97,12 +97,13 @@ void removeDegeneratedEdgePoints(ENUEdge &edge, ENUEdge const *previousEdge = nu
 
     // if the two edges are near to each other or the direction is dramatically different,
     // the start point is overwritten by the end of the previous edge
-    if ((point::vectorLength(nextEdgeDir) > point::cEdgePointBorderDistance)
+    auto const nextEdgeLength = point::vectorLength(nextEdgeDir);
+    if ((nextEdgeLength > point::cEdgePointBorderDistance)
         || (point::vectorDotProduct(previousEdgeDir, nextEdgeDir) < 0.))
     {
       edge.points[0] = previousEdge->points.at(previousEdge->points.size() - 1u);
     }
-    else
+    else if (nextEdgeLength > physics::Distance(0.))
     {
       previousEdgeDir = nextEdgeDir;
     }
@@ -121,14 +122,24 @@ void removeDegeneratedEdgePoints(ENUEdge &edge, ENUEdge const *previousEdge = nu
       edge.points[i - pointsToDrop] = edge.points[i];
     }
     auto nextEdgeDir = edge.points[i - pointsToDrop] - edge.points[i - pointsToDrop - 1];
-    auto dotProduct = point::vectorDotProduct(previousEdgeDir, nextEdgeDir);
-    if (dotProduct < 0.)
+    if (point::vectorLength(nextEdgeDir) == physics::Distance(0.))
     {
-      pointsToDrop++;
+      if ((edge.points.size() - pointsToDrop) > 2u)
+      {
+        pointsToDrop++;
+      }
     }
     else
     {
-      previousEdgeDir = nextEdgeDir;
+      auto dotProduct = point::vectorDotProduct(previousEdgeDir, nextEdgeDir);
+      if (dotProduct < 0.)
+      {
+        pointsToDrop++;
+      }
+      else
+      {
+        previousEdgeDir = nextEdgeDir;
+      }
     }
   }
   if (pointsToDrop > 0u)
@@ -184,10 +195,14 @@ point::ENUPoint interpolatePoint(point::ENUPoint const &pointBefore,
                                  physics::ParametricValue const pointInterpolatedParametricEdgeOffset,
                                  physics::ParametricValue const pointAfterParametricEdgeOffset)
 {
-  physics::ParametricValue const parametric_offset(
-    (pointInterpolatedParametricEdgeOffset - pointBeforeParametricEdgeOffset)
-    / (pointAfterParametricEdgeOffset - pointBeforeParametricEdgeOffset));
-  return point::vectorInterpolate(pointBefore, pointAfter, parametric_offset);
+  auto const denom = pointAfterParametricEdgeOffset - pointBeforeParametricEdgeOffset;
+  if (denom <= physics::ParametricValue(0.))
+  {
+    return pointBefore;
+  }
+  double const ratio
+    = std::clamp((pointInterpolatedParametricEdgeOffset - pointBeforeParametricEdgeOffset) / denom, 0.0, 1.0);
+  return point::vectorInterpolate(pointBefore, pointAfter, physics::ParametricValue(ratio));
 }
 
 void fillSmallerEdge(ENUEdge const &biggerEdge, ENUEdge &smallerEdge)
@@ -200,27 +215,57 @@ void fillSmallerEdge(ENUEdge const &biggerEdge, ENUEdge &smallerEdge)
   ENUEdge newSmallerEdge;
   newSmallerEdge.points.reserve(biggerEdge.points.size());
   newSmallerEdge.points.push_back(smallerEdge.points.front());
-  std::size_t lastWrittenSmallerEdgeIndex = 0u;
-  for (std::size_t i = 1u; i < smallerEdgeIndices.size() - 1u; ++i)
-  {
-    // i-1, i, i+1 indices are valid for smallerEdgeIndices and biggerEdgeParametricPoints
 
-    if ( // smaller point already processed, insert an interpolated
-      (smallerEdgeIndices[i] == lastWrittenSmallerEdgeIndex)
-      // the point before the last point of the smaller edge is already written, so we have to interpolate till the end
-      || (lastWrittenSmallerEdgeIndex == (smallerEdge.points.size() - 2u)))
+  std::size_t const lastSmallerIndex = smallerEdge.points.size() - 1u;
+  std::size_t const lastBiggerIndex = smallerEdgeIndices.size() - 1u;
+  std::size_t anchorBiggerIndex = 0u;
+  std::size_t anchorSmallerIndex = 0u;
+
+  auto findNextAnchor = [&](std::size_t fromBiggerIndex, std::size_t fromSmallerIndex) {
+    for (std::size_t b = fromBiggerIndex + 1u; b < lastBiggerIndex; ++b)
     {
-      auto interpolatedPoint = interpolatePoint(smallerEdge.points[lastWrittenSmallerEdgeIndex],
-                                                smallerEdge.points[lastWrittenSmallerEdgeIndex + 1u],
-                                                biggerEdgeParametricPoints[i - 1],
-                                                biggerEdgeParametricPoints[i],
-                                                biggerEdgeParametricPoints[i + 1]);
-      newSmallerEdge.points.push_back(interpolatedPoint);
+      if ((smallerEdgeIndices[b] > fromSmallerIndex) && (smallerEdgeIndices[b] < lastSmallerIndex))
+      {
+        return std::make_pair(b, smallerEdgeIndices[b]);
+      }
+    }
+    return std::make_pair(lastBiggerIndex, lastSmallerIndex);
+  };
+
+  auto nextAnchor = findNextAnchor(anchorBiggerIndex, anchorSmallerIndex);
+  for (std::size_t i = 1u; i < lastBiggerIndex; ++i)
+  {
+    if (i == nextAnchor.first)
+    {
+      anchorBiggerIndex = nextAnchor.first;
+      anchorSmallerIndex = nextAnchor.second;
+      newSmallerEdge.points.push_back(smallerEdge.points[anchorSmallerIndex]);
+      nextAnchor = findNextAnchor(anchorBiggerIndex, anchorSmallerIndex);
     }
     else
     {
-      lastWrittenSmallerEdgeIndex = smallerEdgeIndices[i];
-      newSmallerEdge.points.push_back(smallerEdge.points[lastWrittenSmallerEdgeIndex]);
+      auto const biggerSpan
+        = biggerEdgeParametricPoints[nextAnchor.first] - biggerEdgeParametricPoints[anchorBiggerIndex];
+      double const alpha = (biggerSpan > physics::ParametricValue(0.))
+        ? std::clamp(
+            (biggerEdgeParametricPoints[i] - biggerEdgeParametricPoints[anchorBiggerIndex]) / biggerSpan, 0.0, 1.0)
+        : 0.0;
+      physics::ParametricValue const targetSmallerOffset(
+        smallerEdgeParametricPoints[anchorSmallerIndex].mParametricValue
+        + alpha
+          * (smallerEdgeParametricPoints[nextAnchor.second].mParametricValue
+             - smallerEdgeParametricPoints[anchorSmallerIndex].mParametricValue));
+      std::size_t segIdx = anchorSmallerIndex;
+      while ((segIdx + 1u < nextAnchor.second) && (smallerEdgeParametricPoints[segIdx + 1u] < targetSmallerOffset))
+      {
+        ++segIdx;
+      }
+      auto const interpolatedPoint = interpolatePoint(smallerEdge.points[segIdx],
+                                                      smallerEdge.points[segIdx + 1u],
+                                                      smallerEdgeParametricPoints[segIdx],
+                                                      targetSmallerOffset,
+                                                      smallerEdgeParametricPoints[segIdx + 1u]);
+      newSmallerEdge.points.push_back(interpolatedPoint);
     }
   }
   newSmallerEdge.points.push_back(smallerEdge.points.back());
@@ -434,8 +479,9 @@ point::ENUHeading getENUHeading(ENUBorderList const &borderList,
       else
       {
         // looks as we have found a potential segment
-        auto const ptLeft = point::getParametricPoint(borderIter->left.points, parametricOffsetLeft);
-        auto const ptRight = point::getParametricPoint(borderIter->right.points, parametricOffsetRight);
+        auto const ptLeft = point::getParametricPoint(borderIter->left.points, edgeLeftLength, parametricOffsetLeft);
+        auto const ptRight
+          = point::getParametricPoint(borderIter->right.points, edgeRightLength, parametricOffsetRight);
         bool const withinBorder = isPointWithinBorderPoints(ptLeft, ptRight, enuPoint);
 
         if (withinBorder)
@@ -518,6 +564,10 @@ void performMakeTransitionToSecondEdgeContinuous(ENUEdge const &first,
   auto const interpolatingDistance = sinAngle * 2.0 * firstToSecondDistance;
 
   auto const secondLength = calcLength(second.points);
+  if (secondLength == physics::Distance(0.))
+  {
+    return;
+  }
 
   physics::ParametricValue const parametricInterpolatingDistance(std::min(.95, interpolatingDistance / secondLength));
 

@@ -45,11 +45,11 @@ MapMetaData const &Store::getMetaData() const
 PartitionIdList Store::getPartitions() const
 {
   PartitionIdList part_ids;
-  for (auto partition_id_and_ids : part_lane_map_)
+  for (auto const &partition_id_and_ids : part_lane_map_)
   {
     part_ids.push_back(partition_id_and_ids.first);
   }
-  for (auto partition_id_and_ids : part_landmark_map_)
+  for (auto const &partition_id_and_ids : part_landmark_map_)
   {
     if (std::find(part_ids.begin(), part_ids.end(), partition_id_and_ids.first) == part_ids.end())
     {
@@ -77,7 +77,8 @@ lane::Lane::ConstPtr Store::getLanePtr(lane::LaneId const &id) const
 lane::LaneIdList Store::getLanes() const
 {
   lane::LaneIdList ids;
-  for (auto partition_id_and_ids : part_lane_map_)
+  ids.reserve(lane_map_.size());
+  for (auto const &partition_id_and_ids : part_lane_map_)
   {
     const lane::LaneIdList &tids = partition_id_and_ids.second;
     ids.insert(ids.end(), tids.begin(), tids.end());
@@ -98,9 +99,9 @@ lane::LaneIdList Store::getLanes(PartitionId const &partition_id) const
 lane::LaneIdList Store::getLanes(std::string const &type_filter, bool is_hov) const
 {
   lane::LaneIdList ids;
-  for (auto id_and_lane : lane_map_)
+  for (auto const &id_and_lane : lane_map_)
   {
-    lane::Lane::Ptr lane = id_and_lane.second;
+    lane::Lane::ConstPtr const &lane = id_and_lane.second;
     if (lane && lane::satisfiesFilter(*lane, type_filter, is_hov))
     {
       ids.push_back(id_and_lane.first);
@@ -115,12 +116,12 @@ lane::LaneIdList Store::getLanes(PartitionId partition_id, std::string const &ty
   auto partition_and_ids = part_lane_map_.find(partition_id);
   if (partition_and_ids != part_lane_map_.end())
   {
-    for (auto lane_id : partition_and_ids->second)
+    for (auto const &lane_id : partition_and_ids->second)
     {
       auto findResult = lane_map_.find(lane_id);
       if (findResult != lane_map_.end())
       {
-        if (lane::satisfiesFilter(*findResult->second, type_filter, is_hov))
+        if (findResult->second && lane::satisfiesFilter(*findResult->second, type_filter, is_hov))
         {
           ids.push_back(lane_id);
         }
@@ -158,7 +159,8 @@ landmark::Landmark::ConstPtr Store::getLandmarkPtr(landmark::LandmarkId id) cons
 landmark::LandmarkIdList Store::getLandmarks() const
 {
   landmark::LandmarkIdList ids;
-  for (auto id_and_landmark : landmark_map_)
+  ids.reserve(landmark_map_.size());
+  for (auto const &id_and_landmark : landmark_map_)
   {
     ids.push_back(id_and_landmark.first);
   }
@@ -172,7 +174,7 @@ void Store::removePartition(PartitionId partition_id)
     auto findLanesResult = part_lane_map_.find(partition_id);
     if (findLanesResult != part_lane_map_.end())
     {
-      for (auto lane_id : findLanesResult->second)
+      for (auto const &lane_id : findLanesResult->second)
       {
         lane_map_.erase(lane_id);
       }
@@ -185,7 +187,7 @@ void Store::removePartition(PartitionId partition_id)
     auto findLandmarkResult = part_landmark_map_.find(partition_id);
     if (findLandmarkResult != part_landmark_map_.end())
     {
-      for (auto landmark_id : findLandmarkResult->second)
+      for (auto const &landmark_id : findLandmarkResult->second)
       {
         landmark_map_.erase(landmark_id);
       }
@@ -200,13 +202,11 @@ void Store::removePartition(PartitionId partition_id)
 physics::Distance Store::getCumulativeLaneLength() const
 {
   physics::Distance total(0);
-  lane::LaneIdList ids = getLanes();
-  for (auto id : ids)
+  for (auto const &id_and_lane : lane_map_)
   {
-    lane::Lane::ConstPtr lane = getLanePtr(id);
-    if (lane)
+    if (id_and_lane.second)
     {
-      total += lane->length;
+      total += id_and_lane.second->length;
     }
   }
   return total;
@@ -215,14 +215,21 @@ physics::Distance Store::getCumulativeLaneLength() const
 point::BoundingSphere Store::getBoundingSphere() const
 {
   point::BoundingSphere bounding_sphere;
-  if (lane_map_.empty())
+  bool initialized = false;
+  for (auto const &id_and_lane : lane_map_)
   {
-    return bounding_sphere;
-  }
-  bounding_sphere = lane_map_.begin()->second->bounding_sphere;
-  for (auto id_and_lane : lane_map_)
-  {
-    bounding_sphere = bounding_sphere + id_and_lane.second->bounding_sphere;
+    if (id_and_lane.second)
+    {
+      if (!initialized)
+      {
+        bounding_sphere = id_and_lane.second->bounding_sphere;
+        initialized = true;
+      }
+      else
+      {
+        bounding_sphere = bounding_sphere + id_and_lane.second->bounding_sphere;
+      }
+    }
   }
   return bounding_sphere;
 }

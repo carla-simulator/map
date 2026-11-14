@@ -73,7 +73,7 @@ std::vector<config::PointOfInterest> const &getPointsOfInterest()
 
 bool getPointOfInterest(std::string const &name, config::PointOfInterest &poi)
 {
-  for (auto pointOfInterest : getPointsOfInterest())
+  for (auto const &pointOfInterest : getPointsOfInterest())
   {
     if (pointOfInterest.name == name)
     {
@@ -140,9 +140,14 @@ bool saveAsAdm(std::string const &admFileName, bool writeConfigFile)
   if (!access::getStore().save(serializer))
   {
     access::getLogger()->warn("Unable to save map to file {}", admFileName);
+    (void)serializer.close();
     return false;
   }
-  serializer.close();
+  if (!serializer.close())
+  {
+    access::getLogger()->warn("Unable to close map file {}", admFileName);
+    return false;
+  }
   access::getLogger()->info("Successfully saved map to file {}", admFileName);
 
   if (writeConfigFile)
@@ -156,12 +161,20 @@ bool saveAsAdm(std::string const &admFileName, bool writeConfigFile)
     }
     out << "[ADMap]" << std::endl;
     out << "map=" << boost::filesystem::path(admFileName).filename().string() << std::endl;
-    out << std::endl;
-    out << "[ENUReference]" << std::endl;
-    out << "default=" << std::setprecision(10) << getENUReferencePoint().latitude.mLatitude << " "
-        << getENUReferencePoint().longitude.mLongitude << " " << getENUReferencePoint().altitude.mAltitude << " "
-        << std::endl;
+    if (isENUReferencePointSet())
+    {
+      auto const enuRef = getENUReferencePoint();
+      out << std::endl;
+      out << "[ENUReference]" << std::endl;
+      out << "default=" << std::setprecision(10) << enuRef.latitude.mLatitude << " " << enuRef.longitude.mLongitude
+          << " " << enuRef.altitude.mAltitude << " " << std::endl;
+    }
     out.close();
+    if (out.fail())
+    {
+      access::getLogger()->warn("Error writing map config text file {}", configFileName);
+      return false;
+    }
     access::getLogger()->info("Successfully saved map config text file {}", configFileName);
   }
 

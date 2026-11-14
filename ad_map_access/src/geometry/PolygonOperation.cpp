@@ -123,9 +123,7 @@ extractOccupiedRegions(::ad::map::geometry::PolygonIntersection const &polygonIn
                        ::ad::map::lane::LaneId const &laneId)
 {
   match::LaneOccupiedRegionList lane_occupied_regions;
-  ::ad::map::lane::Lane currentLane;
-
-  currentLane = lane::getLane(laneId);
+  auto const &currentLane = lane::getLane(laneId);
 
   for (auto const &eachLine : polygonIntersection.intersection_lines)
   {
@@ -159,6 +157,10 @@ extractRegionsBasedOnMode(::ad::geometry::PolygonVector const &visiblePolygons,
     lane_polygon = ::ad::map::geometry::toPolygon(lane_interval);
 
     ::ad::geometry::PolygonVector output;
+    if (visiblePolygons.empty() && (currentMode == eMODE_DIFFERENCE))
+    {
+      output.push_back(lane_polygon);
+    }
     bool process_lane_polygon = true;
     for (auto const &visiblePolygon : visiblePolygons)
     {
@@ -181,7 +183,7 @@ extractRegionsBasedOnMode(::ad::geometry::PolygonVector const &visiblePolygons,
           // previous output to reduce it further in case of overlap
           ::ad::geometry::PolygonVector last_output;
           last_output.swap(output);
-          for (auto last_output_polygon : last_output)
+          for (auto const &last_output_polygon : last_output)
           {
             boost::geometry::difference(last_output_polygon, visiblePolygon, output);
           }
@@ -414,6 +416,7 @@ match::LaneOccupiedRegionList mergeFullyOccludedRegions(LaneRegions const &left,
 
   auto fully_occluded_right = subtractRegionsLongitudinally(right.fully_occluded, left.fully_visible);
   fully_occluded_right = subtractRegionsLongitudinally(fully_occluded_right, left.partly_occluded);
+  fully_occluded_right = subtractRegionsLongitudinally(fully_occluded_right, fully_occluded_left);
 
   merged_fully_occluded_regions.insert(
     merged_fully_occluded_regions.end(), fully_occluded_left.begin(), fully_occluded_left.end());

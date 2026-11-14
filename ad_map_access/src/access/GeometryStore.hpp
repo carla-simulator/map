@@ -17,6 +17,8 @@ namespace ad {
 namespace map {
 namespace access {
 
+class Store;
+
 /**
  * @brief Geometries container for serialization.
  */
@@ -27,7 +29,7 @@ public: // Constructor/Destructor
    * @brief Default constructor.
    *        Creates empty store.
    */
-  explicit GeometryStore();
+  explicit GeometryStore(Store const *map_store = nullptr);
 
   /**
    * @brief Constructor.
@@ -133,6 +135,7 @@ private: // Data Members
   double_t *store_;                                      ///< Memory block containing data.
   uint32_t points3d_;                                    ///< Number of 3D points in the store.
   uint32_t capacity3d_;                                  ///< Size of the store in 3D points.
+  Store const *map_store_;                               ///< Optional non-owning Store pointer for contact lookup.
   std::map<lane::LaneId, GeometryStoreItem> lane_items_; ///< Description of lane items in the store.
 };
 

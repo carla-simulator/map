@@ -343,9 +343,10 @@ point::ECEFPoint toECEF(::opendrive::Point const &point)
   return point::toECEF(toGeo(point));
 }
 
-point::Geometry toGeometry(std::vector<::opendrive::Point> edgePoints)
+point::Geometry toGeometry(std::vector<::opendrive::Point> const &edgePoints)
 {
   point::ECEFPointList ecef_points;
+  ecef_points.reserve(edgePoints.size());
   for (auto const &point : edgePoints)
   {
     ecef_points.push_back(toECEF(point));

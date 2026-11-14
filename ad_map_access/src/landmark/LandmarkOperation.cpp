@@ -61,7 +61,6 @@ ENULandmark getENULandmark(LandmarkId const &id)
 
 LandmarkIdList getVisibleLandmarks(lane::LaneId const &lane_id)
 {
-  LandmarkIdList landmarks;
   auto const lanePtr = lane::getLanePtr(lane_id);
   if (!bool(lanePtr))
   {
@@ -88,24 +87,24 @@ LandmarkIdList getVisibleLandmarks(LandmarkType const &landmarkType, lane::LaneI
 
 LandmarkId uniqueLandmarkId(point::GeoPoint const &geo_point)
 {
-  LandmarkIdList landmarksIds;
   LandmarkId id;
+  bool found = false;
 
-  landmarksIds = access::getStore().getLandmarks();
-  if (landmarksIds.size() == 0)
+  LandmarkIdList const landmarksIds = access::getStore().getLandmarks();
+  if (landmarksIds.empty())
   {
     throw std::invalid_argument("There is no landmarks in the map.");
   }
 
-  point::ECEFPoint ecefDstPoint = toECEF(geo_point);
+  point::ECEFPoint const ecefDstPoint = toECEF(geo_point);
   physics::Distance minDistance = std::numeric_limits<physics::Distance>::max();
   for (auto const &landmark_id : landmarksIds)
   {
     auto const landmarkPtr = getLandmarkPtr(landmark_id);
     point::GeoPoint geoSrcPoint = toGeo(landmarkPtr->position);
     geoSrcPoint.altitude = geo_point.altitude;
-    point::ECEFPoint ecefSrcPoint = toECEF(geoSrcPoint);
-    auto distance = point::distance(ecefSrcPoint, ecefDstPoint);
+    point::ECEFPoint const ecefSrcPoint = toECEF(geoSrcPoint);
+    auto const distance = point::distance(ecefSrcPoint, ecefDstPoint);
 
     if (landmarkPtr->bounding_box.is_valid)
     {
@@ -113,18 +112,20 @@ LandmarkId uniqueLandmarkId(point::GeoPoint const &geo_point)
       {
         minDistance = distance;
         id = landmarkPtr->id;
+        found = true;
       }
     }
     else if (distance <= physics::Distance(10) && distance < minDistance)
     {
       minDistance = distance;
       id = landmarkPtr->id;
+      found = true;
     }
   }
 
-  if (id.mLandmarkId == std::numeric_limits<uint64_t>::quiet_NaN())
+  if (!found)
   {
-    throw std::invalid_argument("Cannot find any lardmark given geo point.");
+    throw std::invalid_argument("Cannot find any landmark given geo point.");
   }
   return id;
 }

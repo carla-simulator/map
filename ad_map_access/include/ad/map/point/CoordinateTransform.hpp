@@ -12,8 +12,10 @@
 #pragma once
 
 #define ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+#include <atomic>
 #include <memory>
 #include <proj_api.h>
+#include <string>
 #include <vector>
 #include "ad/map/point/Types.hpp"
 
@@ -39,8 +41,13 @@ public: // Constructor/Destructor
    */
   CoordinateTransform();
 
+  CoordinateTransform(CoordinateTransform const &other);
+  CoordinateTransform(CoordinateTransform &&other) noexcept;
+  CoordinateTransform &operator=(CoordinateTransform const &other);
+  CoordinateTransform &operator=(CoordinateTransform &&other) noexcept;
+
   /**
-   * Destructor. Does nothing.
+   * Destructor. Frees any active projection handle.
    */
   ~CoordinateTransform();
 
@@ -239,7 +246,7 @@ public: // Conversions
   {
     ys.clear();
     ys.reserve(xs.size());
-    for (auto x : xs)
+    for (auto const &x : xs)
     {
       TargetC y;
       convert(x, y);
@@ -264,6 +271,7 @@ private:                     // ENU Conversion parameters
 
   projPJ projPtr_; ///< proj object to be used for ENU conversion. In case of OpenDrive import ENU conversions have to
                    ///< use the exact projection string provided with the map.
+  std::string geo_projection_; ///< Stored projection string for copy construction/assignment.
 
 private:                                              // Constants
   static constexpr double PI = 3.141592654;           ///< PI
@@ -277,9 +285,9 @@ private:                                              // Constants
   static constexpr double A5 = A1 + A3;               ///< Precalculated constant.
   static constexpr double A6 = 9.9330562000986220e-1; ///< Precalculated constant.
 
-private:                           // Static Data
-  static size_t instance_counter_; ///< This class instance counter.
-                                   ///< Used to generate initial reference point identifier.
+private:                                        // Static Data
+  static std::atomic<size_t> instance_counter_; ///< This class instance counter.
+                                                ///< Used to generate initial reference point identifier.
 };
 
 } // namespace point

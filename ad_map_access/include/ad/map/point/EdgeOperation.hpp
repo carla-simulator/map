@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <utility>
 #include <vector>
 #include "ad/map/point/PointOperation.hpp"
@@ -46,7 +47,7 @@ physics::RatioValue findNearestPointOnEdge(PointType const &a, const PointType &
   PointType line = vectorSub(pt1, pt0);
   PointType pt02a = vectorSub(a, pt0);
   auto const divisor = vectorDotProduct(line, line);
-  if (physics::Distance(divisor) > physics::Distance(0))
+  if (divisor > 0.)
   {
     auto const dividend = vectorDotProduct(pt02a, line);
     auto result = dividend / divisor;
@@ -108,21 +109,32 @@ template <typename PointType> physics::Distance calculateEdgeLength(std::vector<
 template <typename PointType> physics::ParametricValueList getParametricEdgePoints(std::vector<PointType> const &edge)
 {
   physics::ParametricValueList resultPoints;
+  if (edge.empty())
+  {
+    return resultPoints;
+  }
   resultPoints.reserve(edge.size());
   resultPoints.push_back(physics::ParametricValue(0.));
+  std::vector<double> cumulativeLengths;
+  cumulativeLengths.reserve(edge.size() - 1u);
   physics::Distance length(0.);
   for (auto i = 1u; i < edge.size(); ++i)
   {
     length += distance(edge[i - 1u], edge[i]);
-    resultPoints.push_back(physics::ParametricValue(length.mDistance));
+    cumulativeLengths.push_back(length.mDistance);
   }
 
-  for (auto i = 1u; i < edge.size(); ++i)
+  if (length > physics::Distance(0.))
   {
-    if (length > physics::Distance(0.))
+    double const invLength = 1.0 / length.mDistance;
+    for (double const cumLen : cumulativeLengths)
     {
-      resultPoints[i] = resultPoints[i] / length.mDistance;
+      resultPoints.push_back(physics::ParametricValue(std::min(1.0, std::max(0.0, cumLen * invLength))));
     }
+  }
+  else
+  {
+    resultPoints.resize(edge.size(), physics::ParametricValue(0.));
   }
   return resultPoints;
 }
@@ -153,7 +165,7 @@ PointType getParametricPoint(std::vector<PointType> const &edge,
         if (length_1 >= length_t)
         {
           auto d_t = length_t - length;
-          physics::ParametricValue tt(d_t / d);
+          physics::ParametricValue tt(std::min(1.0, std::max(0.0, static_cast<double>(d_t / d))));
           return vectorInterpolate(pt0, pt1, tt);
         }
         else
@@ -211,7 +223,7 @@ std::vector<PointType> getParametricRange(std::vector<PointType> const &edge,
         if (d != physics::Distance(0))
         {
           physics::Distance d_t = length_t_start - length;
-          physics::ParametricValue tt(d_t / d);
+          physics::ParametricValue tt(std::min(1.0, std::max(0.0, static_cast<double>(d_t / d))));
           PointType pt_start = vectorInterpolate(pt0, pt1, tt);
           pts.push_back(pt_start);
         }
@@ -246,7 +258,7 @@ std::vector<PointType> getParametricRange(std::vector<PointType> const &edge,
         if (d != physics::Distance(0))
         {
           physics::Distance d_t = length_t_end - length;
-          physics::ParametricValue tt(d_t / d);
+          physics::ParametricValue tt(std::min(1.0, std::max(0.0, static_cast<double>(d_t / d))));
           PointType pt_end = vectorInterpolate(pt0, pt1, tt);
           pts.push_back(pt_end);
         }
@@ -304,23 +316,32 @@ findNearestPointOnEdge(std::vector<PointType> const &edge, physics::Distance con
     {
       physics::ParametricValue t_one = findNearestPointOnSegment(pt, edge[0], edge[1]);
       PointType pt_nearest = vectorInterpolate(edge[0], edge[1], t_one);
-      physics::Distance d_nearest = distance(pt, pt_nearest);
+      PointType const diff_zero = vectorSub(pt, pt_nearest);
+      double d_nearest_sq = vectorDotProduct(diff_zero, diff_zero);
+      physics::Distance d_nearest(std::sqrt(d_nearest_sq));
       physics::Distance offset_nearest = distance(pt_nearest, edge[0]);
       physics::Distance running_offset = physics::Distance(0);
       for (size_t i = 1; i + 1 < edge.size(); i++)
       {
+        running_offset += distance(edge[i - 1], edge[i]);
         physics::ParametricValue t = findNearestPointOnSegment(pt, edge[i], edge[i + 1]);
         PointType pt_candidate = vectorInterpolate(edge[i], edge[i + 1], t);
-        physics::Distance d = distance(pt_candidate, pt);
-        running_offset += distance(edge[i - 1], edge[i]);
-        if (d < d_nearest)
+        PointType const diff = vectorSub(pt_candidate, pt);
+        double const d_sq = vectorDotProduct(diff, diff);
+        if (d_sq < d_nearest_sq)
         {
-          pt_nearest = pt_candidate;
-          d_nearest = d;
-          offset_nearest = running_offset + distance(pt_nearest, edge[i]);
+          physics::Distance const d(std::sqrt(d_sq));
+          if (d < d_nearest)
+          {
+            pt_nearest = pt_candidate;
+            d_nearest = d;
+            d_nearest_sq = d_sq;
+            offset_nearest = running_offset + distance(pt_nearest, edge[i]);
+          }
         }
       }
-      return physics::ParametricValue(offset_nearest / edgeLength);
+      double const ratio = std::min(1.0, std::max(0.0, static_cast<double>(offset_nearest / edgeLength)));
+      return physics::ParametricValue(ratio);
     }
   }
   else
@@ -377,7 +398,7 @@ std::pair<physics::MetricRange, physics::Distance> calculateWidthRange(std::vect
   {
     auto const pt0 = getParametricPoint(edge_left, edgeLeftLength, longitudinalOffset);
     auto const pt1 = getParametricPoint(edge_right, edgeRightLength, longitudinalOffset);
-    if (!isValid(pt1) || !isValid(pt1))
+    if (!isValid(pt0, false) || !isValid(pt1, false))
     {
       return std::make_pair(physics::MetricRange(), physics::Distance());
     }
@@ -447,16 +468,18 @@ std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &lef
                                                physics::RatioValue const lateral_alignment)
 {
   typedef std::vector<PointType> EdgeType;
+  if (leftEdge.empty() || rightEdge.empty())
+  {
+    return EdgeType();
+  }
 
   EdgeType const *primary;
   EdgeType const *secondary;
-  physics::Distance primaryLength;
   physics::Distance secondaryLength;
   physics::RatioValue lateralOffset = lateral_alignment;
   if (leftEdge.size() > rightEdge.size())
   {
     primary = &leftEdge;
-    primaryLength = leftEdgeLength;
     secondary = &rightEdge;
     secondaryLength = rightEdgeLength;
     lateralOffset = physics::RatioValue(1.) - lateral_alignment;
@@ -464,7 +487,6 @@ std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &lef
   else
   {
     primary = &rightEdge;
-    primaryLength = rightEdgeLength;
     secondary = &leftEdge;
     secondaryLength = leftEdgeLength;
   }
@@ -472,10 +494,55 @@ std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &lef
   physics::ParametricValueList const primaryParametric = getParametricEdgePoints(*primary);
   EdgeType alignmentEdge;
   alignmentEdge.reserve(primaryParametric.size());
+
+  size_t secIdx = 0u;
+  physics::Distance secAccumLength(0.);
+  physics::Distance currentSegLength(0.);
+  bool currentSegLengthValid = false;
+
   for (size_t i = 0; i < primaryParametric.size(); i++)
   {
-    PointType const &pri = primary->at(i);
-    PointType const sec = getParametricPoint(*secondary, secondaryLength, primaryParametric[i]);
+    PointType const &pri = (*primary)[i];
+    PointType sec;
+    if (secondary->size() == 1u)
+    {
+      sec = secondary->front();
+    }
+    else
+    {
+      physics::Distance const length_t = secondaryLength * primaryParametric[i];
+      bool interpolated = false;
+      while (secIdx + 1u < secondary->size())
+      {
+        if (!currentSegLengthValid)
+        {
+          currentSegLength = distance((*secondary)[secIdx], (*secondary)[secIdx + 1u]);
+          currentSegLengthValid = true;
+        }
+        if (currentSegLength == physics::Distance(0.))
+        {
+          ++secIdx;
+          currentSegLengthValid = false;
+          continue;
+        }
+        physics::Distance const length_1 = secAccumLength + currentSegLength;
+        if (length_1 >= length_t)
+        {
+          physics::Distance const d_t = length_t - secAccumLength;
+          physics::ParametricValue const tt(std::min(1.0, std::max(0.0, static_cast<double>(d_t / currentSegLength))));
+          sec = vectorInterpolate((*secondary)[secIdx], (*secondary)[secIdx + 1u], tt);
+          interpolated = true;
+          break;
+        }
+        secAccumLength = length_1;
+        ++secIdx;
+        currentSegLengthValid = false;
+      }
+      if (!interpolated)
+      {
+        sec = secondary->back();
+      }
+    }
     PointType const alignmentPoint = vectorInterpolate(pri, sec, lateralOffset);
     alignmentEdge.push_back(alignmentPoint);
   }
@@ -578,7 +645,7 @@ std::vector<PointType> getLateralAlignmentEdge(std::vector<PointType> const &lef
  * If the two start points of the edge are too close to each other, a third point is used if possible to increase
  * the accuracy.
  */
-template <typename PointType> PointType getEdgeStartDirectionalVector(std::vector<PointType> const edge)
+template <typename PointType> PointType getEdgeStartDirectionalVector(std::vector<PointType> const &edge)
 {
   if (edge.size() <= 1u)
   {
@@ -601,7 +668,7 @@ template <typename PointType> PointType getEdgeStartDirectionalVector(std::vecto
  * If the two end points of the edge are too close to each other, a third point is used if possible to increase
  * the accuracy.
  */
-template <typename PointType> PointType getEdgeEndDirectionalVector(std::vector<PointType> const edge)
+template <typename PointType> PointType getEdgeEndDirectionalVector(std::vector<PointType> const &edge)
 {
   if (edge.size() <= 1u)
   {

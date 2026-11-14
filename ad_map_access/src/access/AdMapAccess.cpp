@@ -183,6 +183,7 @@ void AdMapAccess::reset()
   mStore = std::make_shared<Store>();
   mConfigFileHandler.reset();
   mInitializedFromStore = false;
+  mInitializeFromOpenDriveContentChecksum = 0u;
   mCoordinateTransform = std::make_shared<point::CoordinateTransform>();
 }
 
@@ -221,6 +222,7 @@ bool AdMapAccess::readAdMap(std::string const &mapName)
   if (!mStore->load(serializer))
   {
     mLogger->warn("Unable to read map {}", mapName);
+    (void)serializer.close();
     return false;
   }
   if (!serializer.close())

@@ -22,8 +22,7 @@ namespace point {
 
 CoordinateTransform::CoordinateTransform()
 {
-  enu_ref_ = instance_counter_;
-  instance_counter_ += 0x00100000;
+  enu_ref_ = instance_counter_.fetch_add(0x00100000u, std::memory_order_relaxed);
   enu_h_ = 0;
   enu_tmp1_ = 0;
   enu_tmp1_3_ = 0;
@@ -36,6 +35,108 @@ CoordinateTransform::CoordinateTransform()
   std::memset(ecef_enu_, 0, sizeof(ecef_enu_));
 
   projPtr_ = nullptr;
+}
+
+CoordinateTransform::CoordinateTransform(CoordinateTransform const &other)
+  : enu_ref_(instance_counter_.fetch_add(0x00100000u, std::memory_order_relaxed))
+  , enu_ref_point_(other.enu_ref_point_)
+  , ecef_ref_point_(other.ecef_ref_point_)
+  , enu_phi_(other.enu_phi_)
+  , enu_lam_(other.enu_lam_)
+  , enu_h_(other.enu_h_)
+  , enu_tmp1_(other.enu_tmp1_)
+  , enu_tmp1_3_(other.enu_tmp1_3_)
+  , enu_cp_(other.enu_cp_)
+  , enu_sp_(other.enu_sp_)
+  , enu_cp_2_(other.enu_cp_2_)
+  , enu_sp_2_(other.enu_sp_2_)
+  , projPtr_(nullptr)
+  , geo_projection_(other.geo_projection_)
+{
+  std::memcpy(ecef_enu_, other.ecef_enu_, sizeof(ecef_enu_));
+  if (other.projPtr_ != nullptr)
+  {
+    projPtr_ = pj_init_plus(geo_projection_.c_str());
+  }
+}
+
+CoordinateTransform::CoordinateTransform(CoordinateTransform &&other) noexcept
+  : enu_ref_(other.enu_ref_)
+  , enu_ref_point_(other.enu_ref_point_)
+  , ecef_ref_point_(other.ecef_ref_point_)
+  , enu_phi_(other.enu_phi_)
+  , enu_lam_(other.enu_lam_)
+  , enu_h_(other.enu_h_)
+  , enu_tmp1_(other.enu_tmp1_)
+  , enu_tmp1_3_(other.enu_tmp1_3_)
+  , enu_cp_(other.enu_cp_)
+  , enu_sp_(other.enu_sp_)
+  , enu_cp_2_(other.enu_cp_2_)
+  , enu_sp_2_(other.enu_sp_2_)
+  , projPtr_(other.projPtr_)
+  , geo_projection_(std::move(other.geo_projection_))
+{
+  std::memcpy(ecef_enu_, other.ecef_enu_, sizeof(ecef_enu_));
+  other.projPtr_ = nullptr;
+}
+
+CoordinateTransform &CoordinateTransform::operator=(CoordinateTransform const &other)
+{
+  if (this != &other)
+  {
+    if (projPtr_ != nullptr)
+    {
+      pj_dalloc(projPtr_);
+      projPtr_ = nullptr;
+    }
+    ++enu_ref_;
+    enu_ref_point_ = other.enu_ref_point_;
+    ecef_ref_point_ = other.ecef_ref_point_;
+    enu_phi_ = other.enu_phi_;
+    enu_lam_ = other.enu_lam_;
+    enu_h_ = other.enu_h_;
+    enu_tmp1_ = other.enu_tmp1_;
+    enu_tmp1_3_ = other.enu_tmp1_3_;
+    enu_cp_ = other.enu_cp_;
+    enu_sp_ = other.enu_sp_;
+    enu_cp_2_ = other.enu_cp_2_;
+    enu_sp_2_ = other.enu_sp_2_;
+    std::memcpy(ecef_enu_, other.ecef_enu_, sizeof(ecef_enu_));
+    geo_projection_ = other.geo_projection_;
+    if (other.projPtr_ != nullptr)
+    {
+      projPtr_ = pj_init_plus(geo_projection_.c_str());
+    }
+  }
+  return *this;
+}
+
+CoordinateTransform &CoordinateTransform::operator=(CoordinateTransform &&other) noexcept
+{
+  if (this != &other)
+  {
+    if (projPtr_ != nullptr)
+    {
+      pj_dalloc(projPtr_);
+    }
+    enu_ref_ = other.enu_ref_;
+    enu_ref_point_ = other.enu_ref_point_;
+    ecef_ref_point_ = other.ecef_ref_point_;
+    enu_phi_ = other.enu_phi_;
+    enu_lam_ = other.enu_lam_;
+    enu_h_ = other.enu_h_;
+    enu_tmp1_ = other.enu_tmp1_;
+    enu_tmp1_3_ = other.enu_tmp1_3_;
+    enu_cp_ = other.enu_cp_;
+    enu_sp_ = other.enu_sp_;
+    enu_cp_2_ = other.enu_cp_2_;
+    enu_sp_2_ = other.enu_sp_2_;
+    std::memcpy(ecef_enu_, other.ecef_enu_, sizeof(ecef_enu_));
+    projPtr_ = other.projPtr_;
+    geo_projection_ = std::move(other.geo_projection_);
+    other.projPtr_ = nullptr;
+  }
+  return *this;
 }
 
 CoordinateTransform::~CoordinateTransform()
@@ -54,9 +155,11 @@ bool CoordinateTransform::setGeoProjection(std::string const &geo_projection)
     pj_dalloc(projPtr_);
     projPtr_ = nullptr;
   }
+  geo_projection_.clear();
   projPtr_ = pj_init_plus(geo_projection.c_str());
   if (projPtr_ != nullptr)
   {
+    geo_projection_ = geo_projection;
     enu_ref_++;
     auto enu_zero = createENUPoint(0, 0, 0);
     // create dummy reference point to allow calculation of actual one
@@ -148,12 +251,17 @@ ENUPoint CoordinateTransform::Geo2ENU(const GeoPoint &pt) const
         pjGeoPoint.v = toRadians(pt.latitude);
 
         auto pjEnuPoint = pj_fwd(pjGeoPoint, projPtr_);
+        if ((pjEnuPoint.u == HUGE_VAL) || (pjEnuPoint.v == HUGE_VAL))
+        {
+          access::getLogger()->error("Cannot convert from Geo to ENU: Geo projection forward transform failed.");
+          throw std::invalid_argument("Cannot convert from Geo to ENU: Geo projection forward transform failed.");
+        }
         return createENUPoint(pjEnuPoint.u, pjEnuPoint.v, pt.altitude.mAltitude);
       }
       else
       {
         double dphi = toRadians(pt.latitude) - enu_phi_;
-        double dlam = toRadians(pt.longitude) - enu_lam_;
+        double dlam = std::remainder(toRadians(pt.longitude) - enu_lam_, 2.0 * M_PI);
         double dh = pt.altitude.mAltitude - enu_h_;
         double dlam_2 = dlam * dlam;
         double dphi_2 = dphi * dphi;
@@ -192,6 +300,11 @@ GeoPoint CoordinateTransform::ENU2Geo(const ENUPoint &pt) const
         pjEnuPoint.v = pt.y.mENUCoordinate;
 
         auto pjGeoPoint = pj_inv(pjEnuPoint, projPtr_);
+        if ((pjGeoPoint.u == HUGE_VAL) || (pjGeoPoint.v == HUGE_VAL))
+        {
+          access::getLogger()->error("Cannot convert from ENU to Geo: Geo projection inverse transform failed.");
+          throw std::invalid_argument("Cannot convert from ENU to Geo: Geo projection inverse transform failed.");
+        }
         return createGeoPoint(Longitude(radians2degree(pjGeoPoint.u)),
                               Latitude(radians2degree(pjGeoPoint.v)),
                               Altitude(pt.z.mENUCoordinate));
@@ -252,6 +365,10 @@ GeoPoint CoordinateTransform::ECEF2Geo(const ECEFPoint &pt) const
     double w2 = x * x + y * y;
     double w = std::sqrt(w2);
     double r2 = w2 + z * z;
+    if (r2 == 0.0)
+    {
+      return createGeoPoint(Longitude(0.0), Latitude(0.0), Altitude(-A));
+    }
     double r = std::sqrt(r2);
     double lon = std::atan2(y, x);
     double s2 = z * z / r2;
@@ -401,7 +518,7 @@ double CoordinateTransform::geocentricLatitude(Latitude const &lat)
 //////////////
 // Static data
 
-size_t CoordinateTransform::instance_counter_ = 0;
+std::atomic<size_t> CoordinateTransform::instance_counter_{0};
 
 } // namespace point
 } // namespace map

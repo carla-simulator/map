@@ -11,10 +11,12 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cstdint>
 #include <limits>
 #include <map>
 #include <memory>
+#include <string>
 #include <type_traits>
 #include <utility>
 #include <vector>
@@ -301,8 +303,12 @@ template <> inline bool ISerializer::read<bool>(bool &x)
 
 template <> inline bool ISerializer::write<std::string>(std::string const &value)
 {
+  if (value.size() > std::numeric_limits<uint32_t>::max())
+  {
+    return false;
+  }
   uint32_t n = static_cast<uint32_t>(value.size());
-  return serialize(n) && write(value.c_str(), n);
+  return serialize(n) && write(value.data(), n);
 }
 
 template <> inline bool ISerializer::read<std::string>(std::string &value)
@@ -310,18 +316,28 @@ template <> inline bool ISerializer::read<std::string>(std::string &value)
   uint32_t n = 0;
   if (serialize(n))
   {
-    char *buffer = new char[n + 1];
-    if (buffer != nullptr)
+    if (n == 0u)
     {
-      if (read(buffer, n))
-      {
-        buffer[n] = '\0';
-        value = buffer;
-        delete[] buffer;
-        return true;
-      }
-      delete[] buffer;
+      value.clear();
+      return true;
     }
+    std::string result;
+    constexpr uint32_t cMaxInitialReserve = 65536u;
+    result.reserve(std::min(n, cMaxInitialReserve));
+    char chunk[4096];
+    uint32_t remaining = n;
+    while (remaining > 0u)
+    {
+      uint32_t const toRead = std::min<uint32_t>(remaining, static_cast<uint32_t>(sizeof(chunk)));
+      if (!read(chunk, toRead))
+      {
+        return false;
+      }
+      result.append(chunk, toRead);
+      remaining -= toRead;
+    }
+    value = std::move(result);
+    return true;
   }
   return false;
 }
@@ -393,11 +409,13 @@ template <typename T> inline bool ISerializer::writeVector(std::vector<T> &x)
 
 template <typename T> inline bool ISerializer::readVector(std::vector<T> &x)
 {
+  x.clear();
   if (serialize(SerializeableMagic::VectorType))
   {
     size_t n;
     if (read(n))
     {
+      x.reserve(std::min<size_t>(n, 65536u));
       for (size_t i = 0; i < n; i++)
       {
         T xi;
@@ -435,17 +453,19 @@ template <typename T> inline bool ISerializer::writeObjectVector(std::vector<T> 
 
 template <typename T> inline bool ISerializer::readObjectVector(std::vector<T> &x, SerializeableMagic const &magic)
 {
+  x.clear();
   if (serialize(magic))
   {
     size_t n;
     if (read(n))
     {
+      x.reserve(std::min<size_t>(n, 65536u));
       for (size_t i = 0; i < n; i++)
       {
         T xi;
         if (doSerialize(*this, xi))
         {
-          x.push_back(xi);
+          x.push_back(std::move(xi));
         }
         else
         {
@@ -465,11 +485,10 @@ template <typename T, typename U, typename Comp> inline bool ISerializer::writeO
     size_t n = x.size();
     if (write(n))
     {
-      typedef std::map<T, U> Map;
-      for (typename Map::iterator it = x.begin(); it != x.end(); ++it)
+      for (auto &kv : x)
       {
-        T key = it->first;
-        if (!doSerialize(*this, key) || !doSerialize(*this, it->second))
+        T key = kv.first;
+        if (!doSerialize(*this, key) || !doSerialize(*this, kv.second))
         {
           return false;
         }
@@ -482,6 +501,7 @@ template <typename T, typename U, typename Comp> inline bool ISerializer::writeO
 
 template <typename T, typename U, typename Comp> inline bool ISerializer::readObjectMap(std::map<T, U, Comp> &x)
 {
+  x.clear();
   if (serialize(SerializeableMagic::ObjectMapType))
   {
     size_t n;
@@ -495,7 +515,7 @@ template <typename T, typename U, typename Comp> inline bool ISerializer::readOb
           U second;
           if (doSerialize(*this, second))
           {
-            auto insertResult = x.insert({first, second});
+            auto insertResult = x.insert({std::move(first), std::move(second)});
             if (!insertResult.second)
             {
               return false;
@@ -528,7 +548,7 @@ inline bool ISerializer::writeObjectPtrMap(std::map<T, std::shared_ptr<U>, Comp>
       for (auto it = x.begin(); it != x.end(); it++)
       {
         T key = it->first;
-        if (!doSerialize(*this, key) || !doSerialize(*this, *it->second))
+        if (!it->second || !doSerialize(*this, key) || !doSerialize(*this, *it->second))
         {
           return false;
         }
@@ -542,6 +562,7 @@ inline bool ISerializer::writeObjectPtrMap(std::map<T, std::shared_ptr<U>, Comp>
 template <typename T, typename U, typename Comp>
 inline bool ISerializer::readObjectPtrMap(std::map<T, std::shared_ptr<U>, Comp> &x)
 {
+  x.clear();
   if (serialize(SerializeableMagic::ObjectPtrMapType))
   {
     size_t n;
@@ -555,7 +576,7 @@ inline bool ISerializer::readObjectPtrMap(std::map<T, std::shared_ptr<U>, Comp> 
           std::shared_ptr<U> second = std::make_shared<U>();
           if (doSerialize(*this, *second))
           {
-            auto insertResult = x.insert({first, second});
+            auto insertResult = x.insert({std::move(first), std::move(second)});
             if (!insertResult.second)
             {
               return false;
@@ -602,6 +623,7 @@ inline bool ISerializer::writeObjectVecMap(std::map<T, std::vector<U>, Comp> &x)
 template <typename T, typename U, typename Comp>
 inline bool ISerializer::readObjectVecMap(std::map<T, std::vector<U>, Comp> &x)
 {
+  x.clear();
   if (serialize(SerializeableMagic::ObjectVectorMapType))
   {
     size_t n;
