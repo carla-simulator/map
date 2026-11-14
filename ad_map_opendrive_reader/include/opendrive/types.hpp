@@ -246,7 +246,7 @@ struct GeometryAttributesParamPoly3 : public GeometryAttributes
   double bV{0.};
   double cV{0.};
   double dV{0.};
-  std::string p_range{"arcLength"};
+  std::string p_range{"normalized"};
 };
 
 /////////////////////////////////////////////////////////////////

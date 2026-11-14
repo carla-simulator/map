@@ -52,8 +52,12 @@ double GetAttributeOrDefault(const pugi::xml_node &node, const std::string &attr
     refPoint.u = 0;
     refPoint.v = 0;
     const auto geoPoint = pj_inv(refPoint, projPtr);
-    result.longitude = geoPoint.u * RAD_TO_DEG;
-    result.latitude = geoPoint.v * RAD_TO_DEG;
+    if ((geoPoint.u != HUGE_VAL) && (geoPoint.v != HUGE_VAL))
+    {
+      result.longitude = geoPoint.u * RAD_TO_DEG;
+      result.latitude = geoPoint.v * RAD_TO_DEG;
+    }
+    pj_dalloc(projPtr);
   }
   else
   {

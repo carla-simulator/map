@@ -12,8 +12,11 @@
 #include <boost/math/tools/rational.hpp>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
+#include <stdexcept>
+#include <unordered_map>
 #include "opendrive/geometry/CenterLine.hpp"
 #include "opendrive/geometry/LaneSectionSampling.hpp"
 #include "opendrive/geometry/LaneUtils.hpp"
@@ -120,11 +123,11 @@ void generateTrafficSignal(TrafficSignalInformation &trafficSignalInfo,
 
 std::vector<LaneSection>::iterator getLaneSection(double s, RoadInformation &roadInfo)
 {
-  for (auto it = roadInfo.lanes.lane_sections.end() - 1; it >= roadInfo.lanes.lane_sections.begin(); --it)
+  for (auto it = roadInfo.lanes.lane_sections.rbegin(); it != roadInfo.lanes.lane_sections.rend(); ++it)
   {
     if (s >= it->start_position)
     {
-      return it;
+      return std::prev(it.base());
     }
   }
   return roadInfo.lanes.lane_sections.end();
@@ -314,7 +317,7 @@ double convertToMetersPerSecond(double const value, std::string const &units)
   }
 }
 
-double speedAt(double s, std::vector<RoadSpeed> speed)
+double speedAt(double s, std::vector<RoadSpeed> const &speed)
 {
   for (auto it = speed.rbegin(); it != speed.rend(); ++it)
   {
@@ -335,7 +338,7 @@ double speedAt(double s, std::vector<RoadSpeed> speed)
 
 // Creates a parametric speed entries vector using the given road speed as reference
 // The range [s0, s1] is mapped to [0., 1.0]
-std::vector<ParametricSpeed> parametricSpeed(double s0, double s1, std::vector<RoadSpeed> speed)
+std::vector<ParametricSpeed> parametricSpeed(double s0, double s1, std::vector<RoadSpeed> const &speed)
 {
   double length = s1 - s0;
 
@@ -473,11 +476,16 @@ bool belongsToIntersection(::opendrive::RoadInformation const &roadInfo)
 }
 
 void setPredecessor(::opendrive::OpenDriveData &mapData,
+                    std::unordered_map<int, ::opendrive::RoadInformation const *> const &roadById,
                     ::opendrive::RoadInformation const &roadInfo,
                     ::opendrive::LaneInfo const &laneInfo)
 {
+  if (roadInfo.lanes.lane_sections.empty())
+  {
+    return;
+  }
   auto const &contact = roadInfo.road_link.predecessor->contact_point;
-  auto roadIt = findRoad(mapData, roadInfo.road_link.predecessor->id);
+  auto const roadIt = roadById.find(roadInfo.road_link.predecessor->id);
 
   // predecessor road is connected to the first lane section
   uint64_t thisLaneSectionIndex = 1;
@@ -485,30 +493,45 @@ void setPredecessor(::opendrive::OpenDriveData &mapData,
 
   checkId(thisLaneId, "::SetPredecessor");
 
-  if (roadIt != mapData.roads.end())
+  if ((roadIt != roadById.end()) && !roadIt->second->lanes.lane_sections.empty())
   {
-    auto const &roadId = roadIt->attributes.id;
+    auto const &predRoad = *(roadIt->second);
+    auto const &roadId = predRoad.attributes.id;
     Id predecessorId{0u};
     if (contact == ::opendrive::ContactPoint::End)
     {
-      predecessorId = laneId(roadId, roadIt->lanes.lane_sections.size(), laneInfo.link->predecessor_id);
-      checkAddSuccessor(mapData.laneMap[predecessorId], mapData.laneMap[thisLaneId]);
+      predecessorId = laneId(roadId, predRoad.lanes.lane_sections.size(), laneInfo.link->predecessor_id);
+      if ((mapData.laneMap.find(predecessorId) != mapData.laneMap.end())
+          && (mapData.laneMap.find(thisLaneId) != mapData.laneMap.end()))
+      {
+        checkAddSuccessor(mapData.laneMap[predecessorId], mapData.laneMap[thisLaneId]);
+        checkAddPredecessor(mapData.laneMap[thisLaneId], mapData.laneMap[predecessorId]);
+      }
     }
     else if (contact == ::opendrive::ContactPoint::Start)
     {
       predecessorId = laneId(roadId, 1, laneInfo.link->predecessor_id);
-      checkAddPredecessor(mapData.laneMap[predecessorId], mapData.laneMap[thisLaneId]);
+      if ((mapData.laneMap.find(predecessorId) != mapData.laneMap.end())
+          && (mapData.laneMap.find(thisLaneId) != mapData.laneMap.end()))
+      {
+        checkAddPredecessor(mapData.laneMap[predecessorId], mapData.laneMap[thisLaneId]);
+        checkAddPredecessor(mapData.laneMap[thisLaneId], mapData.laneMap[predecessorId]);
+      }
     }
-    checkAddPredecessor(mapData.laneMap[thisLaneId], mapData.laneMap[predecessorId]);
   }
 }
 
 void setSuccessor(::opendrive::OpenDriveData &mapData,
+                  std::unordered_map<int, ::opendrive::RoadInformation const *> const &roadById,
                   ::opendrive::RoadInformation const &roadInfo,
                   ::opendrive::LaneInfo const &laneInfo)
 {
+  if (roadInfo.lanes.lane_sections.empty())
+  {
+    return;
+  }
   auto const &contact = roadInfo.road_link.successor->contact_point;
-  auto roadIt = findRoad(mapData, roadInfo.road_link.successor->id);
+  auto const roadIt = roadById.find(roadInfo.road_link.successor->id);
 
   // successor road is connected to the last lane section
   auto thisLaneSectionIndex = roadInfo.lanes.lane_sections.size();
@@ -516,21 +539,31 @@ void setSuccessor(::opendrive::OpenDriveData &mapData,
 
   checkId(thisLaneId, "::setSuccessor");
 
-  if (roadIt != mapData.roads.end())
+  if ((roadIt != roadById.end()) && !roadIt->second->lanes.lane_sections.empty())
   {
-    auto const &roadId = roadIt->attributes.id;
+    auto const &succRoad = *(roadIt->second);
+    auto const &roadId = succRoad.attributes.id;
     Id successorId{0u};
     if (contact == ::opendrive::ContactPoint::End)
     {
-      successorId = laneId(roadId, roadIt->lanes.lane_sections.size(), laneInfo.link->successor_id);
-      checkAddSuccessor(mapData.laneMap[successorId], mapData.laneMap[thisLaneId]);
+      successorId = laneId(roadId, succRoad.lanes.lane_sections.size(), laneInfo.link->successor_id);
+      if ((mapData.laneMap.find(successorId) != mapData.laneMap.end())
+          && (mapData.laneMap.find(thisLaneId) != mapData.laneMap.end()))
+      {
+        checkAddSuccessor(mapData.laneMap[successorId], mapData.laneMap[thisLaneId]);
+        checkAddSuccessor(mapData.laneMap[thisLaneId], mapData.laneMap[successorId]);
+      }
     }
     else if (contact == ::opendrive::ContactPoint::Start)
     {
       successorId = laneId(roadId, 1, laneInfo.link->successor_id);
-      checkAddPredecessor(mapData.laneMap[successorId], mapData.laneMap[thisLaneId]);
+      if ((mapData.laneMap.find(successorId) != mapData.laneMap.end())
+          && (mapData.laneMap.find(thisLaneId) != mapData.laneMap.end()))
+      {
+        checkAddPredecessor(mapData.laneMap[successorId], mapData.laneMap[thisLaneId]);
+        checkAddSuccessor(mapData.laneMap[thisLaneId], mapData.laneMap[successorId]);
+      }
     }
-    checkAddSuccessor(mapData.laneMap[thisLaneId], mapData.laneMap[successorId]);
   }
 }
 
@@ -547,6 +580,7 @@ bool hasPredecessorRoad(RoadInformation const &roadInfo)
 }
 
 void setSuccessorPredecessor(::opendrive::OpenDriveData &mapData,
+                             std::unordered_map<int, ::opendrive::RoadInformation const *> const &roadById,
                              ::opendrive::RoadInformation const &roadInfo,
                              ::opendrive::LaneInfo const &laneInfo,
                              uint64_t const laneSectionIndex)
@@ -565,7 +599,7 @@ void setSuccessorPredecessor(::opendrive::OpenDriveData &mapData,
     // set predecessor
     if (laneInfo.link->predecessor_id != 0 && hasPredecessorRoad(roadInfo))
     {
-      setPredecessor(mapData, roadInfo, laneInfo);
+      setPredecessor(mapData, roadById, roadInfo, laneInfo);
     }
   }
   else
@@ -573,7 +607,8 @@ void setSuccessorPredecessor(::opendrive::OpenDriveData &mapData,
     if (laneInfo.link->predecessor_id != 0)
     {
       Id predecessorId = laneId(roadInfo.attributes.id, laneSectionIndex - 1, laneInfo.link->predecessor_id);
-      if (mapData.laneMap.find(predecessorId) != mapData.laneMap.end())
+      if ((mapData.laneMap.find(predecessorId) != mapData.laneMap.end())
+          && (mapData.laneMap.find(currentLaneId) != mapData.laneMap.end()))
       {
         checkAddPredecessor(mapData.laneMap[currentLaneId], mapData.laneMap[predecessorId]);
       }
@@ -593,7 +628,18 @@ void setSuccessorPredecessor(::opendrive::OpenDriveData &mapData,
     if (laneInfo.link->successor_id != 0)
     {
       Id successorId = laneId(roadInfo.attributes.id, laneSectionIndex + 1, laneInfo.link->successor_id);
-      checkAddSuccessor(mapData.laneMap[currentLaneId], mapData.laneMap[successorId]);
+      if ((mapData.laneMap.find(successorId) != mapData.laneMap.end())
+          && (mapData.laneMap.find(currentLaneId) != mapData.laneMap.end()))
+      {
+        checkAddSuccessor(mapData.laneMap[currentLaneId], mapData.laneMap[successorId]);
+      }
+      else
+      {
+        spdlog::error("Warning: successorId for road {} lane {} and section {} does not exist",
+                      roadInfo.attributes.id,
+                      laneInfo.link->successor_id,
+                      laneSectionIndex + 1);
+      }
     }
   }
   else
@@ -601,7 +647,7 @@ void setSuccessorPredecessor(::opendrive::OpenDriveData &mapData,
     // set successor
     if (laneInfo.link->successor_id != 0 && hasSuccessorRoad(roadInfo))
     {
-      setSuccessor(mapData, roadInfo, laneInfo);
+      setSuccessor(mapData, roadById, roadInfo, laneInfo);
     }
   }
 }
@@ -674,7 +720,9 @@ void setLeftRightNeighbor(::opendrive::OpenDriveData &mapData,
   }
 }
 
-void generateTopology(RoadInformation &roadInfo, opendrive::OpenDriveData &mapData)
+void generateTopology(RoadInformation &roadInfo,
+                      opendrive::OpenDriveData &mapData,
+                      std::unordered_map<int, ::opendrive::RoadInformation const *> const &roadById)
 {
   auto &laneSections = roadInfo.lanes.lane_sections;
 
@@ -691,12 +739,12 @@ void generateTopology(RoadInformation &roadInfo, opendrive::OpenDriveData &mapDa
     for (std::size_t k = 0; k < laneSection.left.size(); k++)
     {
       auto &laneInfo = laneSection.left[k];
-      setSuccessorPredecessor(mapData, roadInfo, laneInfo, laneSectionIndex);
+      setSuccessorPredecessor(mapData, roadById, roadInfo, laneInfo, laneSectionIndex);
     }
     for (std::size_t k = 0; k < laneSection.right.size(); k++)
     {
       auto &laneInfo = laneSection.right[k];
-      setSuccessorPredecessor(mapData, roadInfo, laneInfo, laneSectionIndex);
+      setSuccessorPredecessor(mapData, roadById, roadInfo, laneInfo, laneSectionIndex);
     }
   }
 }
@@ -706,45 +754,9 @@ void autoConnectIntersectionLanes(opendrive::OpenDriveData &mapData, double cons
   auto &laneMap = mapData.laneMap;
   auto &intersectionLaneIds = mapData.intersectionLaneIds;
 
-  for (auto &element : intersectionLaneIds)
+  for (auto const &element : intersectionLaneIds)
   {
-    auto &lanes = element.second;
-    for (auto leftIt = lanes.begin(); leftIt != lanes.end(); leftIt++)
-    {
-      for (auto rightIt = leftIt; rightIt != lanes.end(); rightIt++)
-      {
-        if (lanesOverlap(laneMap[*leftIt], laneMap[*rightIt], overlapMargin))
-        {
-          laneMap[*leftIt].overlaps.insert(*rightIt);
-          laneMap[*rightIt].overlaps.insert(*leftIt);
-        }
-        switch (contactPlace(laneMap[*leftIt], laneMap[*rightIt]))
-        {
-          case ContactPlace::LeftLeft:
-            // lane and neighbors need inversion
-            invertLaneAndNeighbors(laneMap, mapData.laneMap[*rightIt]);
-          // fall through
-          case ContactPlace::LeftRight:
-            laneMap[*leftIt].leftNeighbor = *rightIt;
-            laneMap[*rightIt].rightNeighbor = *leftIt;
-            break;
-          case ContactPlace::RightRight:
-            // lane and neighbors need inversion
-            invertLaneAndNeighbors(laneMap, mapData.laneMap[*rightIt]);
-          // fall through
-          case ContactPlace::RightLeft:
-            laneMap[*leftIt].rightNeighbor = *rightIt;
-            laneMap[*rightIt].leftNeighbor = *leftIt;
-            break;
-          case ContactPlace::Overlap:
-          case ContactPlace::None:
-            // nothing to be done
-            break;
-          default:
-            break;
-        }
-      }
-    }
+    connectIntersectionLanes(laneMap, element.second, overlapMargin);
   }
 }
 
@@ -758,36 +770,56 @@ double length(::opendrive::Edge const &edge)
   return edgeLength;
 }
 
-bool contains(std::set<Id> laneIdSet, Id const &laneId)
+bool contains(std::set<Id> const &laneIdSet, Id const &laneId)
 {
   return laneIdSet.find(laneId) != laneIdSet.end();
 }
 
 void fixNeighborEdgesAtEnd(opendrive::OpenDriveData &mapData, Lane const &lane)
 {
+  if (lane.leftEdge.empty() || lane.rightEdge.empty())
+  {
+    return;
+  }
   if (lane.leftNeighbor != 0)
   {
-    auto &leftNeighbor = mapData.laneMap[lane.leftNeighbor];
-    leftNeighbor.rightEdge.back() = lane.leftEdge.back();
+    auto it = mapData.laneMap.find(lane.leftNeighbor);
+    if ((it != mapData.laneMap.end()) && !it->second.rightEdge.empty())
+    {
+      it->second.rightEdge.back() = lane.leftEdge.back();
+    }
   }
   if (lane.rightNeighbor != 0)
   {
-    auto &rightNeighbor = mapData.laneMap[lane.rightNeighbor];
-    rightNeighbor.leftEdge.back() = lane.rightEdge.back();
+    auto it = mapData.laneMap.find(lane.rightNeighbor);
+    if ((it != mapData.laneMap.end()) && !it->second.leftEdge.empty())
+    {
+      it->second.leftEdge.back() = lane.rightEdge.back();
+    }
   }
 }
 
 void fixNeighborEdgesAtBegin(opendrive::OpenDriveData &mapData, Lane const &lane)
 {
+  if (lane.leftEdge.empty() || lane.rightEdge.empty())
+  {
+    return;
+  }
   if (lane.leftNeighbor != 0)
   {
-    auto &leftNeighbor = mapData.laneMap[lane.leftNeighbor];
-    leftNeighbor.rightEdge.front() = lane.leftEdge.front();
+    auto it = mapData.laneMap.find(lane.leftNeighbor);
+    if ((it != mapData.laneMap.end()) && !it->second.rightEdge.empty())
+    {
+      it->second.rightEdge.front() = lane.leftEdge.front();
+    }
   }
   if (lane.rightNeighbor != 0)
   {
-    auto &rightNeighbor = mapData.laneMap[lane.rightNeighbor];
-    rightNeighbor.leftEdge.front() = lane.rightEdge.front();
+    auto it = mapData.laneMap.find(lane.rightNeighbor);
+    if ((it != mapData.laneMap.end()) && !it->second.leftEdge.empty())
+    {
+      it->second.leftEdge.front() = lane.rightEdge.front();
+    }
   }
 }
 
@@ -809,6 +841,11 @@ bool checkLaneConsistency(opendrive::OpenDriveData &mapData)
       ok = false;
     }
 
+    if (lane.leftEdge.empty() || lane.rightEdge.empty())
+    {
+      continue;
+    }
+
     // check all points of successors/predecessors
     // if the points don't match exactly, the lanes either overlap a bit or we have a gap
     // this is due to inaccuracies on geometry generation and the near() function for topology creation
@@ -821,7 +858,16 @@ bool checkLaneConsistency(opendrive::OpenDriveData &mapData)
     // share the geometric edge
     for (auto successorId : lane.successors)
     {
-      Lane &successorLane = mapData.laneMap[successorId];
+      auto succIt = mapData.laneMap.find(successorId);
+      if (succIt == mapData.laneMap.end())
+      {
+        continue;
+      }
+      Lane &successorLane = succIt->second;
+      if (successorLane.leftEdge.empty() || successorLane.rightEdge.empty())
+      {
+        continue;
+      }
       if (contains(successorLane.predecessors, lane.id))
       {
         if ((lane.leftEdge.back() != successorLane.leftEdge.front())
@@ -859,7 +905,7 @@ bool checkLaneConsistency(opendrive::OpenDriveData &mapData)
             lane.rightEdge.back() = successorLane.leftEdge.back();
             fixNeighborEdgesAtEnd(mapData, lane);
           }
-          else if (successorLane.predecessors.size() == 1u)
+          else if (successorLane.successors.size() == 1u)
           {
             successorLane.rightEdge.back() = lane.leftEdge.back();
             successorLane.leftEdge.back() = lane.rightEdge.back();
@@ -881,7 +927,16 @@ bool checkLaneConsistency(opendrive::OpenDriveData &mapData)
     }
     for (auto predecessorId : lane.predecessors)
     {
-      Lane &predecessorLane = mapData.laneMap[predecessorId];
+      auto predIt = mapData.laneMap.find(predecessorId);
+      if (predIt == mapData.laneMap.end())
+      {
+        continue;
+      }
+      Lane &predecessorLane = predIt->second;
+      if (predecessorLane.leftEdge.empty() || predecessorLane.rightEdge.empty())
+      {
+        continue;
+      }
       if (contains(predecessorLane.successors, lane.id))
       {
         if ((lane.leftEdge.front() != predecessorLane.leftEdge.back())
@@ -919,7 +974,7 @@ bool checkLaneConsistency(opendrive::OpenDriveData &mapData)
             lane.rightEdge.front() = predecessorLane.leftEdge.front();
             fixNeighborEdgesAtBegin(mapData, lane);
           }
-          else if (predecessorLane.successors.size() == 1u)
+          else if (predecessorLane.predecessors.size() == 1u)
           {
             predecessorLane.rightEdge.front() = lane.leftEdge.front();
             predecessorLane.leftEdge.front() = lane.rightEdge.front();
@@ -946,8 +1001,8 @@ bool checkLaneConsistency(opendrive::OpenDriveData &mapData)
 
 bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
 {
-  auto projPtr = pj_init_plus(mapData.geoReference.projection.c_str());
-  if (projPtr == nullptr)
+  auto rawProjPtr = pj_init_plus(mapData.geoReference.projection.c_str());
+  if (rawProjPtr == nullptr)
   {
     if (std::isnan(mapData.geoReference.longitude) || std::isnan(mapData.geoReference.latitude))
     {
@@ -956,14 +1011,16 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
 
     std::string defaultProjection = "+proj=tmerc +ellps=WGS84 +lon_0=" + std::to_string(mapData.geoReference.longitude)
       + " +lat_0=" + std::to_string(mapData.geoReference.latitude);
-    projPtr = pj_init_plus(defaultProjection.c_str());
+    rawProjPtr = pj_init_plus(defaultProjection.c_str());
     spdlog::error("Using default projection: {}", defaultProjection);
-    if (projPtr == nullptr)
+    if (rawProjPtr == nullptr)
     {
       spdlog::error("Unknown error while creating the projection");
       return false;
     }
   }
+  std::unique_ptr<void, decltype(&pj_dalloc)> projGuard(rawProjPtr, &pj_dalloc);
+  auto projPtr = projGuard.get();
 
   auto convertENUToGeo = [&projPtr, &mapData](Point &point) {
     if (!point.isValid())
@@ -983,6 +1040,12 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
     enuPoint.v = y_rot;
 
     auto geoPoint = pj_inv(enuPoint, projPtr);
+    if ((geoPoint.u == HUGE_VAL) || (geoPoint.v == HUGE_VAL))
+    {
+      spdlog::error(
+        "ConvertENUToGeo: Output point invalid ({},{}) -> ({},{})", enuPoint.u, enuPoint.v, geoPoint.u, geoPoint.v);
+      throw std::runtime_error("pj_inv failed");
+    }
     point.x = geoPoint.u * RAD_TO_DEG;
     point.y = geoPoint.v * RAD_TO_DEG;
     if (!point.isValid())
@@ -1017,10 +1080,16 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
 
   for (auto &element : mapData.landmarks)
   {
-    convertENUToGeo(element.second.position);
+    try
+    {
+      convertENUToGeo(element.second.position);
+    }
+    catch (...)
+    {
+      spdlog::error("convertToGeoPoints>> error converting ENU point of landmark {} to Geo Point", element.first);
+    }
   }
 
-  pj_dalloc(projPtr);
   return true;
 }
 
@@ -1036,13 +1105,20 @@ bool GenerateGeometry(opendrive::OpenDriveData &open_drive_data, double const ov
     }
   }
 
+  std::unordered_map<int, ::opendrive::RoadInformation const *> roadById;
+  roadById.reserve(open_drive_data.roads.size());
+  for (auto const &roadInfo : open_drive_data.roads)
+  {
+    roadById[roadInfo.attributes.id] = &roadInfo;
+  }
+
   for (auto &roadInfo : open_drive_data.roads)
   {
     calculateSpeed(roadInfo, open_drive_data.laneMap);
   }
   for (auto &roadInfo : open_drive_data.roads)
   {
-    generateTopology(roadInfo, open_drive_data);
+    generateTopology(roadInfo, open_drive_data, roadById);
   }
 
   if (!checkLaneConsistency(open_drive_data))

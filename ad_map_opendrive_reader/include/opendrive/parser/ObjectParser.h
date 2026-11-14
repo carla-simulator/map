@@ -10,6 +10,8 @@
  * ----------------- END LICENSE BLOCK -----------------------------------
  */
 
+#pragma once
+
 #include "opendrive/types.hpp"
 
 #include <pugixml.hpp>

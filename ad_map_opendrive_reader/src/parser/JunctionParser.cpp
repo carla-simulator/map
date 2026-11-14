@@ -44,7 +44,7 @@ void opendrive::parser::JunctionParser::ParseConnection(const pugi::xml_node &xm
     out_connections.emplace_back(jConnection);
   }
 
-  for (pugi::xml_node junctionController : xmlNode.child("controller"))
+  for (pugi::xml_node junctionController : xmlNode.children("controller"))
   {
     opendrive::JunctionController jController;
     jController.attributes.id = std::atoi(junctionController.attribute("id").value());

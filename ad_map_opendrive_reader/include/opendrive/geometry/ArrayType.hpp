@@ -16,12 +16,13 @@
 #pragma once
 
 #include <boost/version.hpp>
+#include <cstddef>
 #define BOOST_MINOR (BOOST_VERSION / 100 % 1000)
 #define BOOST_MAJOR (BOOST_VERSION / 100000)
 
 #if (BOOST_MAJOR == 1) and (BOOST_MINOR < 78)
 
-#include "opendrive/geometry/ArrayType.hpp"
+#include <boost/array.hpp>
 
 namespace opendrive {
 namespace geometry {

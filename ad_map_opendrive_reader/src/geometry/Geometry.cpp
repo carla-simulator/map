@@ -72,7 +72,7 @@ double Geometry::GetHeading() const
   return _heading;
 }
 
-const Point &Geometry::GetStartPosition()
+const Point &Geometry::GetStartPosition() const
 {
   return _start_position;
 }
@@ -82,11 +82,13 @@ Geometry::Geometry(GeometryType type, double start_offset, double length, double
   , _length(length)
   , _start_position_offset(start_offset)
   , _heading(heading)
+  , _cos_heading(std::cos(heading))
+  , _sin_heading(std::sin(heading))
   , _start_position(start_pos)
 {
-  if (DirectedPoint::floatCompare(_length, 0.))
+  if ((_length <= 0.) || DirectedPoint::floatCompare(_length, 0.))
   {
-    throw std::invalid_argument("Geometry of length 0");
+    throw std::invalid_argument("Geometry of invalid length");
   }
 }
 
@@ -98,8 +100,8 @@ GeometryLine::GeometryLine(double start_offset, double length, double heading, c
 const DirectedPoint GeometryLine::PosFromDist(const double dist) const
 {
   DirectedPoint p(_start_position, _heading);
-  p.location.x += dist * std::cos(p.tangent);
-  p.location.y += dist * std::sin(p.tangent);
+  p.location.x += dist * _cos_heading;
+  p.location.y += dist * _sin_heading;
   return p;
 }
 
@@ -113,8 +115,10 @@ const DirectedPoint GeometryArc::PosFromDist(double dist) const
 {
   if (std::fabs(_curvature) < 1e-15)
   {
-    // case not supported given the small curvature
-    return DirectedPoint(_start_position, _heading);
+    DirectedPoint p(_start_position, _heading);
+    p.location.x += dist * _cos_heading;
+    p.location.y += dist * _sin_heading;
+    return p;
   }
   const double radius = 1.0 / _curvature;
   const double theta = _heading - M_PI_2;
@@ -151,17 +155,14 @@ const DirectedPoint GeometryPoly3::PosFromDist(const double dist) const
   double u = dist;
   double v = boost::math::tools::evaluate_polynomial(poly, u);
 
-  const double cos_t = std::cos(_heading);
-  const double sin_t = std::sin(_heading);
-
   double x0 = _start_position.x;
   double y0 = _start_position.y;
   double z0 = _start_position.z;
-  double x = u * cos_t - v * sin_t;
-  double y = u * sin_t + v * cos_t;
+  double x = u * _cos_heading - v * _sin_heading;
+  double y = u * _sin_heading + v * _cos_heading;
   double z = 0.0;
 
-  auto tangentPoly = ArrayType<double, 4>{{_b, 2.0 * _c, 3.0 * _d}};
+  auto tangentPoly = ArrayType<double, 3>{{_b, 2.0 * _c, 3.0 * _d}};
 
   double tangentV = boost::math::tools::evaluate_polynomial(tangentPoly, u);
   double theta = atan2(tangentV, 1.0);
@@ -201,7 +202,7 @@ const DirectedPoint GeometryParamPoly3::PosFromDist(const double dist) const
   double p = dist;
   if (_p_range_is_normalized)
   {
-    p = std::min(1.0, dist / _length);
+    p = std::max(0.0, std::min(1.0, dist / _length));
   }
 
   auto polyU = ArrayType<double, 4>{{_aU, _bU, _cU, _dU}};
@@ -210,17 +211,15 @@ const DirectedPoint GeometryParamPoly3::PosFromDist(const double dist) const
   double u = boost::math::tools::evaluate_polynomial(polyU, p);
   double v = boost::math::tools::evaluate_polynomial(polyV, p);
 
-  const double cos_t = std::cos(_heading);
-  const double sin_t = std::sin(_heading);
   double x0 = _start_position.x;
   double y0 = _start_position.y;
   double z0 = _start_position.z;
-  double x = u * cos_t - v * sin_t;
-  double y = u * sin_t + v * cos_t;
+  double x = u * _cos_heading - v * _sin_heading;
+  double y = u * _sin_heading + v * _cos_heading;
   double z = 0.0;
 
-  auto tangentPolyU = ArrayType<double, 4>{{_bU, 2.0 * _cU, 3.0 * _dU, 0.0}};
-  auto tangentPolyV = ArrayType<double, 4>{{_bV, 2.0 * _cV, 3.0 * _dV, 0.0}};
+  auto tangentPolyU = ArrayType<double, 3>{{_bU, 2.0 * _cU, 3.0 * _dU}};
+  auto tangentPolyV = ArrayType<double, 3>{{_bV, 2.0 * _cV, 3.0 * _dV}};
 
   double tangentU = boost::math::tools::evaluate_polynomial(tangentPolyU, p);
   double tangentV = boost::math::tools::evaluate_polynomial(tangentPolyV, p);
@@ -235,36 +234,49 @@ GeometrySpiral::GeometrySpiral(
   : Geometry(GeometryType::SPIRAL, start_offset, length, heading, start_pos)
   , _curve_start(curve_start)
   , _curve_end(curve_end)
+  , _curve_dot((_curve_end - _curve_start) / _length)
 {
+  if (std::fabs(_curve_dot) >= 1e-15)
+  {
+    _s_o = _curve_start / _curve_dot;
+    odrSpiral(_s_o, _curve_dot, &_x_o, &_y_o, &_t_o);
+    const double angle = _heading - _t_o;
+    _cos_a = std::cos(angle);
+    _sin_a = std::sin(angle);
+  }
 }
 
 const DirectedPoint GeometrySpiral::PosFromDist(const double dist) const
 {
+  if (std::fabs(_curve_dot) < 1e-15)
+  {
+    if (std::fabs(_curve_start) < 1e-15)
+    {
+      DirectedPoint p(_start_position, _heading);
+      p.location.x += dist * _cos_heading;
+      p.location.y += dist * _sin_heading;
+      return p;
+    }
+    const double radius = 1.0 / _curve_start;
+    const double theta = _heading - M_PI_2;
+    double x = _start_position.x - radius * (std::cos(theta) - std::cos(theta + dist * _curve_start));
+    double y = _start_position.y - radius * (std::sin(theta) - std::sin(theta + dist * _curve_start));
+    return DirectedPoint(x, y, _start_position.z, _heading + dist * _curve_start);
+  }
+
   DirectedPoint p(_start_position, _heading);
 
-  const double curve_dot = (_curve_end - _curve_start) / (_length);
-  const double s_o = _curve_start / curve_dot;
-  double s = s_o + dist;
+  double x = 0.0;
+  double y = 0.0;
+  double t = 0.0;
+  odrSpiral(_s_o + dist, _curve_dot, &x, &y, &t);
 
-  double x;
-  double y;
-  double t;
-  odrSpiral(s, curve_dot, &x, &y, &t);
+  x -= _x_o;
+  y -= _y_o;
+  t -= _t_o;
 
-  double x_o;
-  double y_o;
-  double t_o;
-  odrSpiral(s_o, curve_dot, &x_o, &y_o, &t_o);
-
-  x = x - x_o;
-  y = y - y_o;
-  t = t - t_o;
-
-  const double angle = _heading - t_o;
-  const double cos_a = std::cos(angle);
-  const double sin_a = std::sin(angle);
-  p.location.x += x * cos_a - y * sin_a;
-  p.location.y += y * cos_a + x * sin_a;
+  p.location.x += x * _cos_a - y * _sin_a;
+  p.location.y += y * _cos_a + x * _sin_a;
   p.tangent = _heading + t;
 
   return p;

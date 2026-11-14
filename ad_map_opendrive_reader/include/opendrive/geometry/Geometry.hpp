@@ -15,7 +15,9 @@
 
 #pragma once
 
+#include <algorithm>
 #include <boost/math/tools/rational.hpp>
+#include <cmath>
 #include "opendrive/geometry/ArrayType.hpp"
 #include "opendrive/types.hpp"
 
@@ -55,7 +57,7 @@ struct DirectedPoint
   /**
    * @brief Compares two points, returns true if their parameters are identical
    */
-  bool operator==(const DirectedPoint &lhs)
+  bool operator==(const DirectedPoint &lhs) const
   {
     if ((lhs.location == location) && (floatCompare(lhs.tangent, tangent)))
     {
@@ -94,7 +96,7 @@ public:
   /**
    * @brief Returns the start position in the global reference frame.
    */
-  const Point &GetStartPosition();
+  const Point &GetStartPosition() const;
 
   virtual ~Geometry() = default;
 
@@ -112,6 +114,8 @@ protected:
 
   double _start_position_offset; // s-offset [meters]
   double _heading;               // start orientation [radians]
+  double _cos_heading;
+  double _sin_heading;
 
   Point _start_position; // [meters]
 };
@@ -194,24 +198,38 @@ public:
 private:
   double _curve_start;
   double _curve_end;
+  double _curve_dot{0.};
+  double _s_o{0.};
+  double _x_o{0.};
+  double _y_o{0.};
+  double _t_o{0.};
+  double _cos_a{1.};
+  double _sin_a{0.};
 };
 
 template <class T> double evalPoly3(std::set<T> const &sOffsetPoly3Set, double s)
 {
+  if (sOffsetPoly3Set.empty())
+  {
+    return 0.0;
+  }
   T search;
   search.start_offset = s;
   auto smallerOrEqual = sOffsetPoly3Set.upper_bound(search);
-  if (smallerOrEqual != sOffsetPoly3Set.begin())
+  if (smallerOrEqual == sOffsetPoly3Set.begin())
+  {
+    if (s + 1e-9 < smallerOrEqual->start_offset)
+    {
+      return 0.0;
+    }
+  }
+  else
   {
     // upper_bound is first larger element
-    smallerOrEqual--;
+    --smallerOrEqual;
   }
-  if (smallerOrEqual != sOffsetPoly3Set.end())
-  {
-    auto poly = ArrayType<double, 4>{{smallerOrEqual->a, smallerOrEqual->b, smallerOrEqual->c, smallerOrEqual->d}};
-    return boost::math::tools::evaluate_polynomial(poly, s - smallerOrEqual->start_offset);
-  }
-  return 0.0;
+  auto poly = ArrayType<double, 4>{{smallerOrEqual->a, smallerOrEqual->b, smallerOrEqual->c, smallerOrEqual->d}};
+  return boost::math::tools::evaluate_polynomial(poly, std::max(0.0, s - smallerOrEqual->start_offset));
 }
 
 } // namespace geometry
