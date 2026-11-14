@@ -7,6 +7,7 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "ad/map/maker/geometry/Line2d.hpp"
+#include <algorithm>
 #include <cmath>
 #include <limits>
 
@@ -122,11 +123,25 @@ bool Line2d::lineIntersectsSegment(Line2d const &line, Line2d const &segment, Po
 
 bool Line2d::segmentsIntersect(Line2d const &segmentA, Line2d const &segmentB)
 {
-  if (lineIntersectsSegment(segmentA, segmentB) && lineIntersectsSegment(segmentB, segmentA))
+  if (!lineIntersectsSegment(segmentA, segmentB) || !lineIntersectsSegment(segmentB, segmentA))
   {
-    return true;
+    return false;
   }
-  return false;
+
+  double const minAx = std::min(segmentA.pointA.x, segmentA.pointB.x);
+  double const maxAx = std::max(segmentA.pointA.x, segmentA.pointB.x);
+  double const minBx = std::min(segmentB.pointA.x, segmentB.pointB.x);
+  double const maxBx = std::max(segmentB.pointA.x, segmentB.pointB.x);
+  if (std::max(minAx, minBx) > std::min(maxAx, maxBx))
+  {
+    return false;
+  }
+
+  double const minAy = std::min(segmentA.pointA.y, segmentA.pointB.y);
+  double const maxAy = std::max(segmentA.pointA.y, segmentA.pointB.y);
+  double const minBy = std::min(segmentB.pointA.y, segmentB.pointB.y);
+  double const maxBy = std::max(segmentB.pointA.y, segmentB.pointB.y);
+  return std::max(minAy, minBy) <= std::min(maxAy, maxBy);
 }
 
 bool Line2d::segmentsIntersect(Line2d const &segmentA, Line2d const &segmentB, Point2d &intersectionPoint)
@@ -136,7 +151,14 @@ bool Line2d::segmentsIntersect(Line2d const &segmentA, Line2d const &segmentB, P
     return false;
   }
 
-  return linesIntersect(segmentA, segmentB, intersectionPoint);
+  if (linesIntersect(segmentA, segmentB, intersectionPoint))
+  {
+    return true;
+  }
+
+  // Collinear overlapping segments: project segmentB.pointA onto segmentA to obtain a point in both segments
+  intersectionPoint = segmentA.projectOnSegment(segmentB.pointA);
+  return true;
 }
 
 Point2d Line2d::projectOnLine(Point2d const &point) const

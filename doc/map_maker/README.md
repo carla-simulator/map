@@ -96,7 +96,7 @@ setting=:Info:
 ```
 Sets the threshold for all logging contexts to Info
 ```
-setting=::/tmp/log.txt
+setting=::file:/tmp/log.txt
 ```
 Sets all output to be written to /tmp/log.txt
 ```
@@ -111,7 +111,7 @@ The logging context for ModuleA will filter at default threshold Warning and wri
 ```
 setting=ModuleA:Info:file:/tmp/moduleA.log
 ```
-The logging context for ModuleA will filter at level Info and will output into a buffer, all other logging contexts will use the built-in default values.
+The logging context for ModuleA will filter at level Info and writes to the file /tmp/moduleA.log, all other logging contexts will use the built-in default values.
 ```
 setting=ModuleA:Info:buffer:module_buffer,:Warning:file:/tmp/log.txt
 ```

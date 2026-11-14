@@ -116,24 +116,16 @@ class MapPredictionTest(QgsMapToolEmitPoint):
     def __calculate_predictions__(self):
         "..."
         routes = Predictions(self.pt_start, self.mode, self.length, self.duration)
-        for each in routes:
-            borderList = ad.map.route.getGeoBorderOfRoute(each)
         if routes is not None:
             self.routes_borders = []
             self.__resize_route_layers__(len(routes))
-            for route in routes:
-                self.routes_borders.append([])
-                for border in borderList:
-                    self.__add_border__(border)
+            for index, route in enumerate(routes):
+                border_list = ad.map.route.getGeoBorderOfRoute(route)
+                self.routes_borders.append(list(border_list))
+                for border in border_list:
+                    self.layer_routes[index].add_lla2(border.left.points, border.right.points, [])
         else:
             Globs.log.error("Cannot predict route.")
-
-    def __add_border__(self, new_border):
-        "..."
-        for border in self.routes_borders:
-            current_prediction_index = len(self.routes_borders) - 1
-            self.layer_routes[current_prediction_index].add_lla2(new_border.left.points, new_border.right.points, [])
-            self.routes_borders[current_prediction_index].append(new_border)
 
     def __resize_route_layers__(self, required_size):
         while len(self.layer_routes) < required_size:

@@ -126,11 +126,19 @@ geometry::Point2d Intersection::calculateLSQIntersectionPoint() const
 geometry::Point2d Intersection::calculateIntersectionCentroid() const
 {
   geometry::Point2d center;
-  double numberOfArmsRatio = 1 / (static_cast<double>(mArms.size()));
+  if (mArms.empty())
+  {
+    return center;
+  }
+  std::size_t validArmCount = 0u;
   for (auto const &arm : mArms)
   {
     auto const &road = mStore.road(arm.connectedRoad);
     auto const &polyLine = mStore.polyLine(road.mCenterLineId);
+    if (polyLine.mNodes.empty())
+    {
+      continue;
+    }
     geometry::Point2d point;
     if (arm.isEntry)
     {
@@ -140,7 +148,12 @@ geometry::Point2d Intersection::calculateIntersectionCentroid() const
     {
       point = mStore.point(polyLine.mNodes.front());
     }
-    center += numberOfArmsRatio * point;
+    center += point;
+    ++validArmCount;
+  }
+  if (validArmCount > 0u)
+  {
+    center *= (1.0 / static_cast<double>(validArmCount));
   }
   return center;
 }
@@ -213,12 +226,16 @@ void Intersection::adjustArm(IntersectionArm &arm, double distance) const
   geometry::Point2d center = mStore.point(mCenterPointId);
   std::vector<MapDataId> *nodes = getListOfNodes(roadId, mStore);
   double traveledDistance = 0.0;
-  geometry::Point2d previousNode;
-  geometry::Point2d currentNode;
+  geometry::Point2d previousNode = center;
+  geometry::Point2d currentNode = center;
 
   double margin = marginForTypeOfRoad(mStore.road(roadId).mRoadType);
   double adjustingDistance = std::min(distance + margin, 20.0);
-  if (arm.isEntry)
+  if (nodes->empty())
+  {
+    roadId = InvalidId;
+  }
+  else if (arm.isEntry)
   {
     currentNode = mStore.point(nodes->back());
     do
@@ -234,7 +251,10 @@ void Intersection::adjustArm(IntersectionArm &arm, double distance) const
           road.mSuccessor = InvalidId;
           mLog(common::LogLevel::Info) << "Switching to predecessor: " << roadId << "\n";
           nodes = getListOfNodes(roadId, mStore);
-          nodes->pop_back();
+          if (!nodes->empty())
+          {
+            nodes->pop_back();
+          }
         }
       }
       if (!nodes->empty())
@@ -261,7 +281,10 @@ void Intersection::adjustArm(IntersectionArm &arm, double distance) const
           road.mSuccessor = InvalidId;
           mLog(common::LogLevel::Info) << "Switching to successor: " << roadId << "\n";
           nodes = getListOfNodes(roadId, mStore);
-          nodes->erase(nodes->begin());
+          if (!nodes->empty())
+          {
+            nodes->erase(nodes->begin());
+          }
         }
       }
       if (!nodes->empty())
@@ -321,15 +344,18 @@ void Intersection::adjustArm(IntersectionArm &arm, double distance) const
   {
     Road &road = mStore.road(roadId);
     const auto center = mStore.point(mCenterPointId);
-    const auto roadCenterLine = mStore.polyLine(mStore.road(roadId).mCenterLineId).mNodes;
+    const auto &roadCenterLine = mStore.polyLine(mStore.road(roadId).mCenterLineId).mNodes;
     geometry::Point2d roadPoint = center;
-    if (isRoadEntry(roadId))
+    if (!roadCenterLine.empty())
     {
-      roadPoint = mStore.point(roadCenterLine.back());
-    }
-    else if (isRoadExit(roadId))
-    {
-      roadPoint = mStore.point(roadCenterLine.front());
+      if (isRoadEntry(roadId))
+      {
+        roadPoint = mStore.point(roadCenterLine.back());
+      }
+      else if (isRoadExit(roadId))
+      {
+        roadPoint = mStore.point(roadCenterLine.front());
+      }
     }
     const geometry::Line2d line(roadPoint, center);
     road.mDistanceToJunctionCenter = line.length();
@@ -366,25 +392,27 @@ void Intersection::adjustRoads()
 
 void Intersection::calculateConnectionPoints()
 {
-  std::map<MapDataId, double> armDists;
+  std::vector<double> armDists(mArms.size(), 0.0);
 
-  for (auto const &arm : mArms)
+  for (std::size_t armIdx = 0u; armIdx < mArms.size(); ++armIdx)
   {
+    auto const &arm = mArms[armIdx];
     if (isCrosswalk())
     {
       double crosswalkMargin = 1.0; // in m
       mLog(common::LogLevel::Info) << "Intersection is crosswalk, using dist " << crosswalkMargin << "\n";
-      armDists[arm.connectedRoad] = crosswalkMargin;
+      armDists[armIdx] = crosswalkMargin;
     }
     else
     {
       // Loop over all arm combinations and calculate the intersection points between the arms
       double maxAdjustingDistance{0.0};
-      for (auto const &otherArm : mArms)
+      for (std::size_t otherIdx = 0u; otherIdx < mArms.size(); ++otherIdx)
       {
+        auto const &otherArm = mArms[otherIdx];
         mLog(common::LogLevel::Verbose) << "Adjusting arm " << arm.connectedRoad << " with arm "
                                         << otherArm.connectedRoad << "\n";
-        if ((arm.connectedRoad == otherArm.connectedRoad) && (!(arm.isEntry != otherArm.isEntry)))
+        if (armIdx == otherIdx)
         {
           mLog(common::LogLevel::Verbose) << "Ignoring arm pair \n";
         }
@@ -398,13 +426,13 @@ void Intersection::calculateConnectionPoints()
           maxAdjustingDistance = std::max(adjustingDistance, maxAdjustingDistance);
         }
       }
-      armDists[arm.connectedRoad] = maxAdjustingDistance;
+      armDists[armIdx] = maxAdjustingDistance;
     }
   }
 
-  for (auto &arm : mArms)
+  for (std::size_t armIdx = 0u; armIdx < mArms.size(); ++armIdx)
   {
-    arm.distanceToCenter = armDists[arm.connectedRoad];
+    mArms[armIdx].distanceToCenter = armDists[armIdx];
   }
 }
 
@@ -496,7 +524,8 @@ double Intersection::calculateAdjustingDistance(const IntersectionArm &thisArm, 
 
 void Intersection::orderArmsByDirection()
 {
-  std::map<double, IntersectionArm> orderedArms;
+  std::vector<IntersectionArm> orderedArms;
+  orderedArms.reserve(mArms.size());
   for (auto &arm : mArms)
   {
     if (isValidArm(arm))
@@ -526,7 +555,7 @@ void Intersection::orderArmsByDirection()
 
       geometry::Direction2d dir(connPoint, roadPoint);
       arm.orientation = dir.orientation;
-      orderedArms[arm.orientation] = arm;
+      orderedArms.push_back(arm);
       mLog(common::LogLevel::Verbose) << "Arm for road " << arm.connectedRoad << " has direction " << arm.orientation
                                       << " (" << arm.orientation * 180. / M_PI << " deg)\n";
     }
@@ -536,11 +565,10 @@ void Intersection::orderArmsByDirection()
     }
   }
 
-  mArms.clear();
-  for (auto orderedArm : orderedArms)
-  {
-    mArms.push_back(orderedArm.second);
-  }
+  std::stable_sort(orderedArms.begin(), orderedArms.end(), [](IntersectionArm const &lhs, IntersectionArm const &rhs) {
+    return lhs.orientation < rhs.orientation;
+  });
+  mArms = std::move(orderedArms);
 }
 
 /*
@@ -676,14 +704,19 @@ void Intersection::addInternalRoadConnection(const IntersectionConnection &conne
     road.mPredecessor = entryRoad.mId;
     road.mForwardWidths.push_back(widthAtStart);
     road.mForwardWidthsAtEnd.push_back(widthAtEnd);
-    double forwardSpeedLimit = inArm.isEntry ? entryRoad.mForwardSpeedLimit : entryRoad.mBackwardSpeedLimit;
-    forwardSpeedLimit
-      = std::min(forwardSpeedLimit, outArm.isEntry ? exitRoad.mBackwardSpeedLimit : exitRoad.mForwardSpeedLimit);
-    road.mForwardSpeedLimit = forwardSpeedLimit;
-    double backwardSpeedLimit = inArm.isEntry ? entryRoad.mBackwardSpeedLimit : entryRoad.mForwardSpeedLimit;
-    backwardSpeedLimit
-      = std::min(backwardSpeedLimit, outArm.isEntry ? exitRoad.mForwardSpeedLimit : exitRoad.mBackwardSpeedLimit);
-    road.mBackwardSpeedLimit = backwardSpeedLimit;
+    auto combineSpeedLimits = [](double firstLimit, double secondLimit) {
+      if ((firstLimit > 0.) && (secondLimit > 0.))
+      {
+        return std::min(firstLimit, secondLimit);
+      }
+      return std::max(0., std::max(firstLimit, secondLimit));
+    };
+    double const inForwardSpeedLimit = inArm.isEntry ? entryRoad.mForwardSpeedLimit : entryRoad.mBackwardSpeedLimit;
+    double const outForwardSpeedLimit = outArm.isEntry ? exitRoad.mBackwardSpeedLimit : exitRoad.mForwardSpeedLimit;
+    road.mForwardSpeedLimit = combineSpeedLimits(inForwardSpeedLimit, outForwardSpeedLimit);
+    double const inBackwardSpeedLimit = inArm.isEntry ? entryRoad.mBackwardSpeedLimit : entryRoad.mForwardSpeedLimit;
+    double const outBackwardSpeedLimit = outArm.isEntry ? exitRoad.mForwardSpeedLimit : exitRoad.mBackwardSpeedLimit;
+    road.mBackwardSpeedLimit = combineSpeedLimits(inBackwardSpeedLimit, outBackwardSpeedLimit);
 
     internalRoad.roadId = roadId;
     mInternalRoads.push_back(internalRoad);
@@ -783,7 +816,7 @@ geometry::Polyline2d Intersection::generateBasicPolylineForInterpolation(Interna
   auto secondToLastPoint = endDir.movePoint(endPoint, 0.1); // only a reference point
 
   // Minimum angle between the arms in the [0, M_PI] domain
-  double angleBetweenArms = fmod(fabs(startDir.orientation - endDir.orientation), M_PI);
+  double angleBetweenArms = std::fabs(geometry::minimumAngleDifference(startDir.orientation, endDir.orientation));
 
   geometry::Point2d center;
   geometry::Point2d internalPointA;
@@ -811,8 +844,11 @@ geometry::Polyline2d Intersection::generateBasicPolylineForInterpolation(Interna
       auto py_num = (p1.x * p2.y - p1.y * p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x * p4.y - p3.y * p4.x);
       auto xy_den = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
 
-      center.x = px_num / xy_den;
-      center.y = py_num / xy_den;
+      if (std::fabs(xy_den) > 1e-9)
+      {
+        center.x = px_num / xy_den;
+        center.y = py_num / xy_den;
+      }
     }
   }
 
@@ -921,7 +957,7 @@ MapDataId Intersection::getInternalRoadId(MapDataId const startId, MapDataId con
 {
   for (auto const &internalRoad : mInternalRoads)
   {
-    if ((internalRoad.startPointId == endId) && (internalRoad.endPointId == startId))
+    if ((internalRoad.startPointId == startId) && (internalRoad.endPointId == endId))
     {
       return internalRoad.roadId;
     }

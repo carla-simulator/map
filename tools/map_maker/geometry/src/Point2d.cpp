@@ -58,12 +58,6 @@ Point2d &Point2d::operator+=(Point2d const &other)
   return *this;
 }
 
-Point2d operator*(double const &scalar, Point2d const &p)
-{
-  Point2d res = p * scalar;
-  return res;
-}
-
 double Point2d::norm() const
 {
   return std::sqrt(x * x + y * y);

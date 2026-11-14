@@ -57,15 +57,17 @@ void Direction2d::normalize()
 
 double normalizeAngle(double orientation)
 {
-  while (orientation < 0.)
+  if (!std::isfinite(orientation))
   {
-    orientation += 2 * M_PI;
+    return 0.;
   }
-  while (orientation > 2 * M_PI)
+  double const twoPi = 2. * M_PI;
+  double result = std::fmod(orientation, twoPi);
+  if (result < 0.)
   {
-    orientation -= 2 * M_PI;
+    result += twoPi;
   }
-  return orientation;
+  return result;
 }
 
 double degToRad(double angle)
@@ -80,23 +82,21 @@ double radToDeg(double angle)
 
 double minimumAngleDifference(double alpha, double beta)
 {
-  // angle difference in [0, 2 * M_PI]
-  double angleDifference = fmod(fabs(alpha - beta), 2 * M_PI);
-
-  // Minimung angle in the [0, M_PI] domain
-  if (angleDifference > M_PI)
+  if (!std::isfinite(alpha) || !std::isfinite(beta))
   {
-    angleDifference = 2 * M_PI - angleDifference;
+    return 0.;
   }
-
-  double sign = -1.0;
-
-  if ((alpha - beta >= 0.0 && alpha - beta <= M_PI) || (alpha - beta <= -M_PI && alpha - beta >= -2 * M_PI))
+  double const twoPi = 2. * M_PI;
+  double diff = std::fmod(alpha - beta, twoPi);
+  if (diff > M_PI)
   {
-    sign = 1.0;
+    diff -= twoPi;
   }
-
-  return sign * angleDifference;
+  else if (diff <= -M_PI)
+  {
+    diff += twoPi;
+  }
+  return diff;
 }
 
 Point2d threePointShift(Point2d const &before, Point2d const &center, Point2d const &after, double const distance)

@@ -14,8 +14,10 @@
 #include <ad/map/maker/geometry/CoordinateTransform.hpp>
 #include <ad/map/maker/geometry/Point2d.hpp>
 #include <cmath>
+#include <cstdint>
 #include <map>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 #include "ad/map/maker/map_data/Intersection.hpp"
 #include "ad/map/maker/map_data/Landmark.hpp"
@@ -139,37 +141,22 @@ private:
   common::LogChannel &mLog;
   MapDataId mNextId{1};
 
-  /* It is intended to have hash and compare private inside this class as we only use it
-   * for the one specialized unordered_map of points
-   */
-  struct PointHash
-  {
-    std::size_t operator()(geometry::Point2d const &t) const
-    {
-      double const xRounded = std::round(t.x * 10000);
-      double const yRounded = std::round(t.y * 10000);
+  using PointGridKey = std::pair<int64_t, int64_t>;
 
-      // this is from http://en.cppreference.com/w/cpp/utility/hash
-      std::size_t xHash = std::hash<double>{}(xRounded);
-      std::size_t yHash = std::hash<double>{}(yRounded);
-      return xHash ^ (yHash << 1);
+  struct PointGridKeyHash
+  {
+    std::size_t operator()(PointGridKey const &key) const
+    {
+      std::size_t const xHash = std::hash<int64_t>{}(key.first);
+      std::size_t const yHash = std::hash<int64_t>{}(key.second);
+      return xHash ^ (yHash + 0x9e3779b9u + (xHash << 6) + (xHash >> 2));
     }
   };
 
-  /* It is intended to have hash and compare private inside this class as we only use it
-   * for the one specialized unordered_map of points
-   */
-  struct PointCompareWithEpsilon
-  {
-    bool operator()(geometry::Point2d const &me, geometry::Point2d const &other) const
-    {
-      return (me.squaredDistance(other) < epsilon);
-    }
+  static constexpr double cPointGridScale{10000.};
+  static constexpr double cPointCompareSquaredEpsilon{1e-9};
 
-    static constexpr double epsilon{1e-9};
-  };
-
-  std::unordered_map<geometry::Point2d, MapDataId, PointHash, PointCompareWithEpsilon> mPointToId;
+  std::unordered_map<PointGridKey, std::vector<MapDataId>, PointGridKeyHash> mPointGrid;
   std::map<MapDataId, geometry::Point2d> mPointIds;
   std::map<MapDataId, PolyLine> mPolyLines;
   std::map<MapDataId, Lane> mLanes;

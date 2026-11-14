@@ -68,7 +68,7 @@ jobs:
           CC: ${{ matrix.CC }}
           CXX: ${{ matrix.CXX }}
       run: |
-        sudo apt-get install ${EXTRA_PACKAGES}
+        if [ -n "${EXTRA_PACKAGES}" ]; then sudo apt-get install -y ${EXTRA_PACKAGES}; fi
         rm -rf log build install
         source map-build-venv/bin/activate
         eval CC=${CC} CXX=${CXX} ${BUILDCMD}

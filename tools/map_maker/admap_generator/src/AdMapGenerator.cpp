@@ -19,6 +19,9 @@
 #include <ad/map/point/Operation.hpp>
 #include <ad/map/point/Transform.hpp>
 #include <ad/map/point/Types.hpp>
+#include <algorithm>
+#include <cmath>
+#include <unordered_map>
 #include <unordered_set>
 #include "ad/map/maker/admap_generator/AdMapLandmarkTypeGenerator.hpp"
 
@@ -164,7 +167,7 @@ std::vector<map_data::MapDataId> AdMapGenerator::getLaneTrafficLights(const map_
   std::vector<map_data::MapDataId> trafficLightIds;
   for (auto id : mDataStore.road(roadId).mTrafficLights)
   {
-    auto trafficLight = mDataStore.landmark(id);
+    auto const &trafficLight = mDataStore.landmark(id);
     if (trafficLight.laneAssignments.count(laneIndex) == 1)
     {
       trafficLightIds.push_back(id);
@@ -211,8 +214,8 @@ void AdMapGenerator::processIntersectionArms()
 {
   for (auto id : mDataStore.listOfIntersectionIds())
   {
-    auto intersection = mDataStore.intersection(id);
-    for (auto arm : intersection.mArms)
+    auto const &intersection = mDataStore.intersection(id);
+    for (auto const &arm : intersection.mArms)
     {
       auto row = toAdmContactBase(arm.rightOfWay, mDataStore.isPrioToRightAndStraight()); // same for both directions
       using Location = lane::ContactLocation;
@@ -322,20 +325,16 @@ void AdMapGenerator::setupLaneContacts(map_data::MapDataId internalLaneId)
 
 void AdMapGenerator::setupLaneSpeedLimit(map_data::MapDataId internalLaneId, bool const forward)
 {
-  lane::LaneId lane_id(internalLaneId);
   auto const &lane = mDataStore.lane(internalLaneId);
   if (!mDataStore.hasRoad(lane.parentRoadId))
   {
     return;
   }
   auto const &road = mDataStore.road(lane.parentRoadId);
-  if (forward)
+  double const speedLimit = forward ? road.mForwardSpeedLimit : road.mBackwardSpeedLimit;
+  if (speedLimit > 0.)
   {
-    mFactory.set(lane::LaneId(internalLaneId), physics::Speed(road.mForwardSpeedLimit));
-  }
-  else
-  {
-    mFactory.set(lane::LaneId(internalLaneId), physics::Speed(road.mBackwardSpeedLimit));
+    mFactory.set(lane::LaneId(internalLaneId), physics::Speed(speedLimit));
   }
 }
 
@@ -394,7 +393,7 @@ void AdMapGenerator::addTrafficLightContactToLane(map_data::MapDataId const &lan
 bool AdMapGenerator::isPointCloseToBorder(geometry::Point2d const &location,
                                           std::vector<geometry::Point2d> const &border) const
 {
-  if (border.empty())
+  if (border.size() < 2u)
   {
     return false;
   }
@@ -418,7 +417,11 @@ bool AdMapGenerator::isPointCloseToBorder(geometry::Point2d const &location,
     }
     else
     {
-      return true;
+      geometry::Point2d const projectedPoint = (1.0 - projection) * border[i] + projection * border[i + 1];
+      if (location.squaredDistance(projectedPoint) < cSquaredVisibleDistance)
+      {
+        return true;
+      }
     }
   }
 
@@ -446,39 +449,47 @@ void AdMapGenerator::setupOverlappingLanes()
 
 void AdMapGenerator::setupOverlappingLanesForIntersection(std::unordered_set<map_data::MapDataId> const &lanes)
 {
-  for (auto lane_id : lanes)
-  {
-    auto const &fromLane = mDataStore.lane(lane_id);
-    for (auto otherLaneId : lanes)
-    {
-      if (lane_id != otherLaneId)
-      {
-        auto const &to_lane = mDataStore.lane(otherLaneId);
-        if (fromLane.overlapsWithLane(mDataStore, to_lane))
-        {
-          mFactory.add(toLaneId(lane_id),
-                       toLaneId(otherLaneId),
-                       lane::ContactLocation::OVERLAP,
-                       {lane::ContactType::UNKNOWN},
-                       restriction::Restrictions());
+  std::vector<map_data::MapDataId> const laneIds(lanes.begin(), lanes.end());
+  auto addOverlapAndSideContact = [this](map_data::MapDataId firstId,
+                                         map_data::Lane const &firstLane,
+                                         map_data::MapDataId secondId,
+                                         map_data::Lane const &secondLane) {
+    mFactory.add(toLaneId(firstId),
+                 toLaneId(secondId),
+                 lane::ContactLocation::OVERLAP,
+                 {lane::ContactType::UNKNOWN},
+                 restriction::Restrictions());
 
-          if (fromLane.hasRightContactWithLane(mDataStore, to_lane))
-          {
-            mFactory.add(toLaneId(lane_id),
-                         toLaneId(otherLaneId),
-                         lane::ContactLocation::RIGHT,
-                         {lane::ContactType::UNKNOWN},
-                         restriction::Restrictions());
-          }
-          else if (fromLane.hasLeftContactWithLane(mDataStore, to_lane))
-          {
-            mFactory.add(toLaneId(lane_id),
-                         toLaneId(otherLaneId),
-                         lane::ContactLocation::LEFT,
-                         {lane::ContactType::UNKNOWN},
-                         restriction::Restrictions());
-          }
-        }
+    if (firstLane.hasRightContactWithLane(mDataStore, secondLane))
+    {
+      mFactory.add(toLaneId(firstId),
+                   toLaneId(secondId),
+                   lane::ContactLocation::RIGHT,
+                   {lane::ContactType::UNKNOWN},
+                   restriction::Restrictions());
+    }
+    else if (firstLane.hasLeftContactWithLane(mDataStore, secondLane))
+    {
+      mFactory.add(toLaneId(firstId),
+                   toLaneId(secondId),
+                   lane::ContactLocation::LEFT,
+                   {lane::ContactType::UNKNOWN},
+                   restriction::Restrictions());
+    }
+  };
+
+  for (std::size_t i = 0u; i < laneIds.size(); ++i)
+  {
+    auto const lane_id = laneIds[i];
+    auto const &fromLane = mDataStore.lane(lane_id);
+    for (std::size_t j = i + 1u; j < laneIds.size(); ++j)
+    {
+      auto const otherLaneId = laneIds[j];
+      auto const &to_lane = mDataStore.lane(otherLaneId);
+      if (fromLane.overlapsWithLane(mDataStore, to_lane))
+      {
+        addOverlapAndSideContact(lane_id, fromLane, otherLaneId, to_lane);
+        addOverlapAndSideContact(otherLaneId, to_lane, lane_id, fromLane);
       }
     }
   }
@@ -643,6 +654,7 @@ std::vector<geometry::Point2d> AdMapGenerator::transformPolyline(map_data::MapDa
 {
   auto const &border = mDataStore.polyLine(borderId).mNodes;
   std::vector<geometry::Point2d> result;
+  result.reserve(border.size());
   for (auto id : border)
   {
     auto const &point = mDataStore.point(id);
@@ -655,15 +667,70 @@ std::vector<geometry::Point2d> AdMapGenerator::transformPolyline(map_data::MapDa
 
 void AdMapGenerator::addVisibleLandmarksToLanes()
 {
+  if (mGeneratedLandmarks.empty())
+  {
+    return;
+  }
+
+  struct CachedBorder
+  {
+    std::vector<geometry::Point2d> points;
+    double minX{0.};
+    double maxX{0.};
+    double minY{0.};
+    double maxY{0.};
+  };
+
+  double const visibleDistance = std::sqrt(cSquaredVisibleDistance);
+  std::unordered_map<map_data::MapDataId, CachedBorder> borderCache;
+
+  auto getCachedBorder
+    = [this, &borderCache, visibleDistance](map_data::MapDataId const borderId) -> CachedBorder const & {
+    auto it = borderCache.find(borderId);
+    if (it != borderCache.end())
+    {
+      return it->second;
+    }
+    CachedBorder cached;
+    cached.points = transformPolyline(borderId);
+    if (!cached.points.empty())
+    {
+      cached.minX = cached.points[0].x;
+      cached.maxX = cached.points[0].x;
+      cached.minY = cached.points[0].y;
+      cached.maxY = cached.points[0].y;
+      for (std::size_t i = 1u; i < cached.points.size(); ++i)
+      {
+        cached.minX = std::min(cached.minX, cached.points[i].x);
+        cached.maxX = std::max(cached.maxX, cached.points[i].x);
+        cached.minY = std::min(cached.minY, cached.points[i].y);
+        cached.maxY = std::max(cached.maxY, cached.points[i].y);
+      }
+      cached.minX -= visibleDistance;
+      cached.maxX += visibleDistance;
+      cached.minY -= visibleDistance;
+      cached.maxY += visibleDistance;
+    }
+    return borderCache.emplace(borderId, std::move(cached)).first->second;
+  };
+
+  auto withinExpandedBounds = [](geometry::Point2d const &loc, CachedBorder const &border) {
+    return (!border.points.empty()) && (loc.x >= border.minX) && (loc.x <= border.maxX) && (loc.y >= border.minY)
+      && (loc.y <= border.maxY);
+  };
+
   for (auto lane_id : mDataStore.listOfLaneIds())
   {
     auto const &lane = mDataStore.lane(lane_id);
-    auto leftBorder = transformPolyline(lane.leftBorder);
-    auto rightBorder = transformPolyline(lane.rightBorder);
+    auto const &leftBorder = getCachedBorder(lane.leftBorder);
+    auto const &rightBorder = getCachedBorder(lane.rightBorder);
     for (auto const &landmarkEntry : mGeneratedLandmarks)
     {
-      if (isPointCloseToBorder(landmarkEntry.location, leftBorder)
-          || isPointCloseToBorder(landmarkEntry.location, rightBorder))
+      bool const closeToLeft = withinExpandedBounds(landmarkEntry.location, leftBorder)
+        && isPointCloseToBorder(landmarkEntry.location, leftBorder.points);
+      if (closeToLeft
+          || (withinExpandedBounds(landmarkEntry.location, rightBorder)
+              && isPointCloseToBorder(landmarkEntry.location, rightBorder.points)))
       {
         mFactory.add(lane::LaneId(lane_id), landmark::LandmarkId(landmarkEntry.id));
       }

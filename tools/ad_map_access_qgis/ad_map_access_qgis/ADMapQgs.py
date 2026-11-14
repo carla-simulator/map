@@ -31,43 +31,67 @@ class ADMapQgs(QtCore.QObject):
 
     def __init__(self):
         "..."
-        super(QtCore.QObject, self).__init__()
+        super().__init__()
         self.workers = []
         self.worker_threads = []
         self.layers = ADMapQgsLayers()
 
     def data_added(self):
         "..."
-
         Globs.log.info("Start adding data to layers.")
         self.workers = []
         self.worker_threads = []
-        self.__add_lane_dir_worker__()
-        self.__add_lane_orientation_worker__()
-        self.__add_contact_to_trafficLight_worker__()
-        for contact_type in self.layers.LANE_CONTACT_TYPE:
-            self.__add_lane_contact_type_worker__(contact_type)
-        for topo in self.layers.LANE_TOPO:
-            self.__add_lane_topo_worker__(topo)
-        self.__add_lane_speed_worker__()
-        self.__add_lane_surface_workers__(False)
-        self.__add_lane_edge_worker__()
-        for landmark_type in self.layers.LANDMARK_TYPE:
-            self.__add_landmark_worker__(landmark_type)
-        self.worker_finished_count = 0
-        for worker in self.workers:
-            worker_thread = QtCore.QThread()
-            worker.moveToThread(worker_thread)
-            worker_thread.started.connect(worker.do_work)
-            worker.finished.connect(worker_thread.quit)
-            worker.finished.connect(self.worker_finished)
-            worker_thread.start()
-            self.worker_threads.append(worker_thread)
 
-    def worker_finished(self):
-        self.worker_finished_count += 1
-        if self.worker_finished_count >= len(self.workers):
-            Globs.log.info("All layer data added")
+        all_layers = list(self.layers.layer.values())
+        for qgs_layer in all_layers:
+            if qgs_layer is not None:
+                qgs_layer.show(False)
+                qgs_layer.begin_batch()
+
+        try:
+            dir_mgr = self.layers.layer_managers[self.layers.LANE_DIRECTION]
+            orient_mgr = self.layers.layer_managers[self.layers.LANE_ORIENTATION]
+            tl_mgr = self.layers.layer_managers[self.layers.CONTACT_TRAFFIC_LIGHT]
+            edge_mgr = self.layers.layer_managers[self.layers.LANE_EDGE]
+            contact_mgrs = [self.layers.layer_managers["Contact " + ct] for ct in self.layers.LANE_CONTACT_TYPE]
+            topo_mgrs = [self.layers.layer_managers["Lane " + topo] for topo in self.layers.LANE_TOPO]
+
+            for lane_id in ad.map.lane.getLanes():
+                lane = ad.map.lane.getLane(lane_id)
+                if lane is None:
+                    Globs.log.error("Failed to GetLane(" + str(lane_id) + ")")
+                    continue
+                dir_mgr.add(lane)
+                orient_mgr.add(lane)
+                tl_mgr.add(lane)
+                edge_mgr.add(lane)
+                surface_title = self.layers.lane_surface_layer_name(str(lane.type), False)
+                self.layers.layer_managers[surface_title].add(lane)
+                for speed_limit in lane.speed_limits:
+                    self.layers.speed_layer_manager(speed_limit.speed_limit).add_speed_limit(lane, speed_limit)
+                for contact_mgr in contact_mgrs:
+                    contact_mgr.add(lane)
+                for topo_mgr in topo_mgrs:
+                    topo_mgr.add(lane)
+
+            for landmark_id in ad.map.landmark.getLandmarks():
+                landmark = ad.map.landmark.getLandmark(landmark_id)
+                if landmark is None:
+                    Globs.log.error("Failed to GetLandmark(" + str(landmark_id) + ")")
+                    continue
+                typ_str = str(landmark.type)
+                target_type = str(landmark.traffic_sign_type) if typ_str == "TRAFFIC_SIGN" else typ_str
+                if target_type not in self.layers.LANDMARK_TYPE:
+                    target_type = "LANDMARK"
+                self.layers.layer_managers[target_type].add(landmark)
+        finally:
+            for qgs_layer in all_layers:
+                if qgs_layer is not None:
+                    qgs_layer.end_batch()
+                    qgs_layer.show(qgs_layer.visible)
+                    qgs_layer.refresh()
+
+        Globs.log.info("All layer data added")
 
     def __add_landmark_worker__(self, landmark_type):
         "..."
@@ -171,18 +195,11 @@ class ADMapQgs(QtCore.QObject):
 
     def create_new_lane(self):
         "..."
-        lane_adder = LaneAdder(self.layers.layer_new_lane)
-        new_lane_id = lane_adder.add_new_lane()
-        self.__draw_new_lane__(new_lane_id)
+        Globs.log.error("Creating new lanes is not supported.")
 
     def make_intersection_lane(self, straight):
         "..."
-        inter_lane_maker = IntersectionLaneMaker(self.layers)
-        new_lane_id = inter_lane_maker.make_intersection_lane(straight)
-        if new_lane_id is not None:
-            self.__draw_new_lane__(new_lane_id)
-        else:
-            Globs.log.error("Failed to create intersection lane.")
+        Globs.log.error("Creating intersection lanes is not supported.")
 
     def update_lanes(self, lane_ids):
         "..."

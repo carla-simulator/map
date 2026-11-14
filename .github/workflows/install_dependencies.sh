@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eo pipefail
 
 install_boost() {
   if ((IS_DEFAULT_PYTHON_VERSION)); then
@@ -19,13 +20,13 @@ install_boost() {
     py3_root=`${py3} -c "import sys; print(sys.prefix)"`
     pyv=`$py3 -c "import sys;x='{v[0]}.{v[1]}'.format(v=list(sys.version_info[:2]));sys.stdout.write(x)";`
 
-    ./bootstrap.sh \
+    if ! ./bootstrap.sh \
       --prefix="/usr" \
       --with-libraries=python,filesystem,system,program_options \
-      --with-python=${py3} --with-python-version=${pyv} --with-python-root=${py3_root}
-    if (( $? )); then
+      --with-python=${py3} --with-python-version=${pyv} --with-python-root=${py3_root}; then
       echo "!!!!!!! boost bootstrap failed !!!!!!!"
       cat bootstrap.log
+      exit 1
     fi
 
     # the python headers were installed via system and not by the virtual environment
@@ -36,12 +37,13 @@ install_boost() {
     touch COLCON_IGNORE
 
     popd
+    popd
   fi
 }
 
 IS_DEFAULT_PYTHON_VERSION=1
-if [ `lsb_release -a | grep Release | grep "22.04" | wc -l` == 1 ]; then
-  if [ "${PYTHON_BINDING_VERSION}" == "" ]; then
+if [ "$(lsb_release -rs)" == "22.04" ]; then
+  if [ "${PYTHON_BINDING_VERSION:-}" == "" ]; then
     echo "!!!!!!! Setting default python version for Ubuntu22.04 !!!!!!!"
     PYTHON_BINDING_VERSION="3.10"
   elif [ "${PYTHON_BINDING_VERSION}" != "3.10" ]; then
@@ -49,8 +51,8 @@ if [ `lsb_release -a | grep Release | grep "22.04" | wc -l` == 1 ]; then
   fi
 fi
 
-if [ `lsb_release -a | grep Release | grep "24.04" | wc -l` == 1 ]; then
-  if [ "${PYTHON_BINDING_VERSION}" == "" ]; then
+if [ "$(lsb_release -rs)" == "24.04" ]; then
+  if [ "${PYTHON_BINDING_VERSION:-}" == "" ]; then
     echo "!!!!!!! Setting default python version for Ubuntu24.04 !!!!!!!"
     PYTHON_BINDING_VERSION="3.12"
   elif [ "${PYTHON_BINDING_VERSION}" != "3.12" ]; then
@@ -61,23 +63,23 @@ fi
 echo "!!!!!!! Python version: ${PYTHON_BINDING_VERSION} !!!!!!!"
 
 if ((! IS_DEFAULT_PYTHON_VERSION)); then
-  sudo add-apt-repository ppa:deadsnakes/ppa
+  sudo add-apt-repository -y ppa:deadsnakes/ppa
 fi
 
 sudo apt-get update
 
 sudo apt-get install -y lsb-core
-sudo apt-get install -y --no-install-recommends build-essential castxml cmake sqlite3 libgtest-dev libpugixml-dev libgtest-dev liblapacke-dev libspdlog-dev
+sudo apt-get install -y --no-install-recommends build-essential castxml cmake sqlite3 libgtest-dev libpugixml-dev liblapacke-dev libspdlog-dev
 
 
 
 sudo apt-get install -y --no-install-recommends python${PYTHON_BINDING_VERSION}-dev python${PYTHON_BINDING_VERSION}-venv libpython${PYTHON_BINDING_VERSION}-dev
 
-if [[ "${BUILD_DOCU}x" != "x" ]]; then
-  sudo apt-get install doxygen graphviz lcov
+if [[ "${BUILD_DOCU:-}x" != "x" ]]; then
+  sudo apt-get install -y doxygen graphviz lcov
 fi
 
-sudo apt remove python3-pygments
+sudo apt-get remove -y python3-pygments
 
 echo "creating virtual python${PYTHON_BINDING_VERSION} environment at $PWD/map-build-venv"
 export PYTHONNOUSERSITE=1

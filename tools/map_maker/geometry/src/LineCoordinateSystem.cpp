@@ -21,7 +21,7 @@ LineCoordinateSystem::LineCoordinateSystem(Point2d const &startPoint, Point2d co
   , mDirection(-Direction2d(mStart, mEnd).orientation)
   , mCos(std::cos(mDirection))
   , mSin(std::sin(mDirection))
-  , mDistance(projectToLineCoordinateSystem(mEnd).x + 0.1)
+  , mDistance(projectToLineCoordinateSystem(mEnd).x)
 {
 }
 

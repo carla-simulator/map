@@ -102,9 +102,8 @@ class Main(object):
 
         init_map_succeeded = False
         if file_name.endswith('.xodr'):
-            open_drive_file = open(file_name, 'r')
-            open_drive_content = open_drive_file.read()
-            open_drive_file.close()
+            with open(file_name, 'r') as open_drive_file:
+                open_drive_content = open_drive_file.read()
             init_map_succeeded = ad.map.access.initFromOpenDriveContent(
                 open_drive_content, 0.2, ad.map.intersection.IntersectionType.PriorityToRight, ad.map.landmark.TrafficLightType.UNKNOWN)
             if init_map_succeeded and not ad.map.access.isENUReferencePointSet():
@@ -137,17 +136,19 @@ class Main(object):
         "..."
         title = "Select CARLA ad_map_access file..."
         default_dir = "/"
-        self.file_name = QFileDialog.getOpenFileName(None, title, default_dir)
+        selected_file, _ = QFileDialog.getOpenFileName(None, title, default_dir)
+        return selected_file
 
     def __map_load__(self):
         "..."
-        self.__select_file_name__()
-        if self.file_name:
-            Globs.log.info("Loading data from " + self.file_name[0] + " ...")
-            if self.__open_map__(self.file_name[0]):
-                Globs.log.info("Map loaded from from " + self.file_name[0] + ".")
+        selected_file = self.__select_file_name__()
+        if selected_file:
+            self.file_name = selected_file
+            Globs.log.info("Loading data from " + self.file_name + " ...")
+            if self.__open_map__(self.file_name):
+                Globs.log.info("Map loaded from " + self.file_name + ".")
             else:
-                Globs.log.error("Can't load map from  " + self.file_name[0] + ".")
+                Globs.log.error("Can't load map from " + self.file_name + ".")
 
     def __map_unload__(self):
         "..."
@@ -162,11 +163,11 @@ class Main(object):
     def __map_export__(self):
         "..."
         title = "Store CARLA ad_map_access binary file..."
-        default_name = os.path.splitext(self.file_name[0])[0] + ".adm"
-        file_name = QFileDialog.getSaveFileName(None, title, default_name, "ad_map_access binary file (*.adm)")
+        default_name = os.path.splitext(self.file_name)[0] + ".adm"
+        file_name, _ = QFileDialog.getSaveFileName(None, title, default_name, "ad_map_access binary file (*.adm)")
         if file_name:
-            Globs.log.info("Exporting data to " + file_name[0] + " ...")
-            self.__export_map__(file_name[0])
+            Globs.log.info("Exporting data to " + file_name + " ...")
+            self.__export_map__(file_name)
 
     def __map_routing__(self):
         "..."
@@ -287,9 +288,8 @@ class Main(object):
     def __destroy_map_tools__(self):
         "..."
         for action_name in self.action_tool:
-            action = self.action_tool[action_name][0]
-            if not action.isChecked():
-                tool = self.action_tool[action_name][1]
+            action, tool = self.action_tool[action_name]
+            if tool is not None:
                 Globs.iface.mapCanvas().unsetMapTool(tool)
             action.setChecked(False)
             self.action_tool[action_name] = (action, None)

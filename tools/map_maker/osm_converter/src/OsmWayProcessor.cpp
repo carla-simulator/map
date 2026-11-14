@@ -266,27 +266,29 @@ void OsmWayProcessor::extractNumberOfLanes(::osmium::Way const &way,
 
   if (hasForwardLanes && hasBackwardLanes)
   {
-    forward = static_cast<uint32_t>(forwardLanes);
-    backward = static_cast<uint32_t>(backwardLanes);
+    forward = static_cast<uint32_t>(std::max(0, forwardLanes));
+    backward = static_cast<uint32_t>(std::max(0, backwardLanes));
     return;
   }
 
   if (hasForwardLanes && !hasBackwardLanes)
   {
-    forward = static_cast<uint32_t>(forwardLanes);
+    int32_t const clampedForward = std::max(0, forwardLanes);
+    forward = static_cast<uint32_t>(clampedForward);
     if (hasTotalLanes)
     {
-      backward = static_cast<uint32_t>(numTotalLanes - forwardLanes);
+      backward = static_cast<uint32_t>(std::max(0, numTotalLanes - clampedForward));
     }
     return;
   }
 
   if (hasBackwardLanes && !hasForwardLanes)
   {
-    backward = static_cast<uint32_t>(backwardLanes);
+    int32_t const clampedBackward = std::max(0, backwardLanes);
+    backward = static_cast<uint32_t>(clampedBackward);
     if (hasTotalLanes)
     {
-      forward = static_cast<uint32_t>(numTotalLanes - backwardLanes);
+      forward = static_cast<uint32_t>(std::max(0, numTotalLanes - clampedBackward));
     }
     return;
   }
@@ -376,16 +378,22 @@ void OsmWayProcessor::extractAndAssignWidthToOsmWay(::osmium::Way const &way,
     }
   }
 
+  uint32_t const totalLaneCount = numBackwardLanes + numForwardLanes;
+  if (totalLaneCount == 0u)
+  {
+    return;
+  }
+
   double totalWidth{};
   bool const hasTotalWidth = doubleValueForTag("width", way, totalWidth);
   if (!hasTotalWidth)
   {
-    totalWidth = defaultWidthForHighwayType(highwayType) * (numBackwardLanes + numForwardLanes);
+    totalWidth = defaultWidthForHighwayType(highwayType) * totalLaneCount;
     mLog(common::LogLevel::Info) << "  No widths for lanes. Falling back to default width per lane of: "
                                  << defaultWidthForHighwayType(highwayType) << " m\n";
   }
 
-  double widthPerLane = totalWidth / static_cast<double>(numBackwardLanes + numForwardLanes);
+  double widthPerLane = totalWidth / static_cast<double>(totalLaneCount);
 
   // fill up the missing parts
   for (auto i = osmWay.mBackwardLanes.mWidths.size(); i < numBackwardLanes; ++i)
@@ -502,9 +510,10 @@ void OsmWayProcessor::extractLayerInformation(::osmium::Way const &way, OsmWay &
 {
   const char *const layer = way.tags()["layer"];
   osmWay.mLayer = 0;
-  if (layer)
+  if ((layer != nullptr) && !common::integerFromString(layer, osmWay.mLayer))
   {
-    osmWay.mLayer = std::stoi(layer);
+    mLog(common::LogLevel::Warning) << "  Invalid layer information for way: " << osmWay.mWayId << "\n";
+    osmWay.mLayer = 0;
   }
 }
 
@@ -645,25 +654,32 @@ void OsmWayProcessor::extractSpeedLimit(::osmium::Way const &way, OsmWay &osmWay
    * for now we will only consider:
    * maxspeed (sole key)
    * maxspeed:forward
-   * maxspeed: backward
+   * maxspeed:backward
    */
-  double forwardSpeed{-1};
-  if (!getSpeedLimitForWay(way, "maxspeed:forward", forwardSpeed))
+  double commonSpeed{0.};
+  bool const hasCommonSpeed = getSpeedLimitForWay(way, "maxspeed", commonSpeed);
+
+  double forwardSpeed = hasCommonSpeed ? commonSpeed : 0.;
+  bool const hasForwardSpeed = getSpeedLimitForWay(way, "maxspeed:forward", forwardSpeed) || hasCommonSpeed;
+
+  double backwardSpeed = hasCommonSpeed ? commonSpeed : 0.;
+  bool const hasBackwardSpeed = getSpeedLimitForWay(way, "maxspeed:backward", backwardSpeed) || hasCommonSpeed;
+
+  if (!hasForwardSpeed && !hasBackwardSpeed)
   {
-    if (!getSpeedLimitForWay(way, "maxspeed", forwardSpeed))
-    {
-      mLog(common::LogLevel::Info) << "No speed limit for way: " << way.id() << "\n";
-      return;
-    }
+    mLog(common::LogLevel::Info) << "No speed limit for way: " << way.id() << "\n";
+    return;
   }
-  double backwardSpeed{forwardSpeed};
-  if (!getSpeedLimitForWay(way, "maxspeed:backward", backwardSpeed))
+  if (hasForwardSpeed)
   {
-    mLog(common::LogLevel::Info) << "No speed limit for backward direction. Using forward speed limit\n";
+    osmWay.mForwardLanes.mMaxSpeed = forwardSpeed;
   }
-  mLog(common::LogLevel::Verbose) << "Extracted speed limits (f|b): " << forwardSpeed << "|" << backwardSpeed << "\n";
-  osmWay.mForwardLanes.mMaxSpeed = forwardSpeed;
-  osmWay.mBackwardLanes.mMaxSpeed = backwardSpeed;
+  if (hasBackwardSpeed)
+  {
+    osmWay.mBackwardLanes.mMaxSpeed = backwardSpeed;
+  }
+  mLog(common::LogLevel::Verbose) << "Extracted speed limits (f|b): " << osmWay.mForwardLanes.mMaxSpeed << "|"
+                                  << osmWay.mBackwardLanes.mMaxSpeed << "\n";
 }
 
 } // namespace osm_converter

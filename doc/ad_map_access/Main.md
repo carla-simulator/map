@@ -12,7 +12,7 @@ This *ad_map_access* library provides a C++ implementation for accessing and ope
 *ad_map_access* transfers a-priori AD map information from a standardized
 [OpenDRIVE](https://www.asam.net/standards/detail/opendrive/) file format into an internal
 representation. Optionally, the internal representation can be stored/read in a proprietary binary format.
-Furthermore, the [MapMaker](#map_maker) tools provide basic offline conversion from
+Furthermore, the [MapMaker](#mapmaker) tools provide basic offline conversion from
 [OpenStreetMap](https://www.openstreetmap.org/) data into the internal ad_map_access
 binary format.
 
@@ -59,7 +59,7 @@ There is also a python binding for the *ad_map_access* library available: [*ad_m
 ### QGIS <a name="qgis"></a>
 Visualization of the map data is crucial to be able to inspect the data and work with it.
 Therefore a plugin for the free [QGIS](https://qgis.org/) tool (currently Version 3.1x) is available providing insight
-into the inner [data model of the map](#mapdatamodel). The following shows a screenshot with
+into the inner [data model of the map](./HLD_MapDataModel.md). The following shows a screenshot with
 active ad_map_access_qgis plugin:
 
 | ![QGIS view](images/QGIS_Tool.png) |
@@ -75,7 +75,7 @@ The following map data is e.g. visualized there:
 - lane contact relations like left/right neighbor, successor/predecessor lane
 - right-of-way regulation, speed limits and other landmarks
 
-Also basic tools to test the [map matching](#mapmatchingapi) and [routing](#routingapi)
+Also basic tools to test the [map matching](./HLD_MapMatching.md) and [routing](./HLD_Routes.md)
 functionality are provided:
 
 | ![QGIS route planning test](images/RoutePlanning_SingleLaneRoads.png) |

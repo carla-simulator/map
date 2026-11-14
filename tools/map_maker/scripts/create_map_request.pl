@@ -21,31 +21,33 @@ my $minlon;
 my $maxlat;
 my $maxlon;
 
-# gets a string of type something = 'number'
+# gets a string of type something = 'number' or something = "number"
 sub extractNumberFromTag {
   my $tag = shift;
-  my ($result) = $tag =~ /.*\'(\d+\.\d+)'.*/;
+  my ($result) = $tag =~ /['"]([-+]?\d+(?:\.\d+)?)['"]/;
   return $result;
 }
 
 while (my $filename = shift(@ARGV)) {
-  open FILE, $filename;
-  while (<FILE>) {
+  open(my $fh, '<', $filename) or die "Cannot open '$filename': $!";
+  while (<$fh>) {
     if (/<bounds/) {
       my @tags = split(' ', $_);
       foreach my $tag (@tags) {
-        if ($tag =~ m/minlat/g) {
+        if ($tag =~ m/minlat/) {
           $minlat = extractNumberFromTag($tag);
-        } elsif ($tag =~ m/minlon/g) {
+        } elsif ($tag =~ m/minlon/) {
           $minlon = extractNumberFromTag($tag);
-        } elsif ($tag =~ m/maxlat/g) {
+        } elsif ($tag =~ m/maxlat/) {
           $maxlat = extractNumberFromTag($tag);
-        } elsif ($tag =~ m/maxlon/g) {
+        } elsif ($tag =~ m/maxlon/) {
           $maxlon = extractNumberFromTag($tag);
-       }
+        }
       }
+      close($fh);
       print "http://api.openstreetmap.org/api/0.6/map?bbox=$minlon,$minlat,$maxlon,$maxlat\n";
       exit;
     }
   }
+  close($fh);
 }

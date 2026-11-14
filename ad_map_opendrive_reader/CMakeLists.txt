@@ -42,7 +42,7 @@ list(APPEND ad_map_opendrive_reader_TARGET_INCLUDE_DIRECTORIES ${PUGIXML_INCLUDE
 list(APPEND ad_map_opendrive_reader_TARGET_LINK_LIBRARIES ${PUGIXML_LIBRARIES})
 
 if((NOT PUGIXML_LIBRARIES) OR (NOT PUGIXML_INCLUDE_DIR))
-  message(FATAL "Dependency pugixml not found!")
+  message(FATAL_ERROR "Dependency pugixml not found!")
 endif()
 
 #proj
@@ -56,7 +56,7 @@ list(APPEND ad_map_opendrive_reader_TARGET_INCLUDE_DIRECTORIES ${PROJ_INCLUDE_DI
 list(APPEND ad_map_opendrive_reader_TARGET_LINK_LIBRARIES ${PROJ_LIBRARIES})
 
 if((NOT PROJ_LIBRARIES) OR (NOT PROJ_INCLUDE_DIR))
-  message(FATAL "Dependency proj not found!")
+  message(FATAL_ERROR "Dependency proj not found!")
 endif()
 
 #odrSpiral
@@ -76,7 +76,7 @@ list(APPEND ad_map_opendrive_reader_TARGET_INCLUDE_DIRECTORIES ${ODRSPIRAL_INCLU
 list(APPEND ad_map_opendrive_reader_TARGET_LINK_LIBRARIES ${ODRSPIRAL_LIBRARIES})
 
 if((NOT ODRSPIRAL_LIBRARIES) OR (NOT ODRSPIRAL_INCLUDE_DIR))
-  message(FATAL "Dependency odrSpiral not found!")
+  message(FATAL_ERROR "Dependency odrSpiral not found!")
 endif()
 
 add_library(${PROJECT_NAME}

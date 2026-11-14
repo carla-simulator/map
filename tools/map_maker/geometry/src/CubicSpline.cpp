@@ -7,10 +7,10 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "ad/map/maker/geometry/CubicSpline.hpp"
+#include <algorithm>
 #include <cmath>
 #include <cstdint>
 #include <lapacke.h>
-#include <malloc.h>
 
 namespace ad {
 namespace map {
@@ -33,108 +33,68 @@ void setupRhs(const std::vector<Point2d> &points, std::vector<double> &rhs)
   rhs.resize(points.size());
 
   // 1. entry
-  rhs[0] = 3. * (points[1].y - points[0].y) / ((points[1].x - points[0].x) * (points[1].x - points[0].x));
+  double const dx0 = points[1].x - points[0].x;
+  rhs[0] = 3. * (points[1].y - points[0].y) / (dx0 * dx0);
 
   // 2 to last-1 entry
-  uint32_t i = 1;
-  for (; i < points.size() - 1; i++)
+  std::size_t i = 1u;
+  for (; i + 1u < points.size(); ++i)
   {
-    double nominator1 = points[i].y - points[i - 1].y;
-    double nominator2 = points[i + 1].y - points[i].y;
+    double const nominator1 = points[i].y - points[i - 1u].y;
+    double const nominator2 = points[i + 1u].y - points[i].y;
 
-    double denominator1 = (points[i].x - points[i - 1].x) * (points[i].x - points[i - 1].x);
-    double denominator2 = (points[i + 1].x - points[i].x) * (points[i + 1].x - points[i].x);
+    double const dx1 = points[i].x - points[i - 1u].x;
+    double const dx2 = points[i + 1u].x - points[i].x;
+    double const denominator1 = dx1 * dx1;
+    double const denominator2 = dx2 * dx2;
 
     rhs[i] = 3. * ((nominator1 / denominator1) + (nominator2 / denominator2));
   }
 
   // last entry
-  rhs[i] = 3. * (points[i].y - points[i - 1].y) / ((points[i].x - points[i - 1].x) * (points[i].x - points[i - 1].x));
+  double const dxLast = points[i].x - points[i - 1u].x;
+  rhs[i] = 3. * (points[i].y - points[i - 1u].y) / (dxLast * dxLast);
 }
 
 /**
- * @brief Setup matrix of equation system required for spline interpolation
+ * @brief Solve the tridiagonal cubic spline system Ax = b in O(N) using LAPACKE_dgtsv
  * @param[in] points (knotPoints)
- * @param[out] matrix
- */
-void setupMatrix(const std::vector<Point2d> &points, std::vector<double> &matrix)
-{
-  /**
-   * see https://en.wikipedia.org/wiki/Spline_interpolation on how to setup matrix for cubic spline interpolation
-   */
-
-  // reset matrix
-  matrix.clear();
-  matrix.resize(points.size() * points.size());
-  std::fill(matrix.begin(), matrix.end(), 0.);
-
-  // 1. row
-  matrix[0] = 2. / (points[1].x - points[0].x);
-  matrix[1] = 1. / (points[1].x - points[0].x);
-
-  // 2. row to last-1 row
-  uint32_t i = 1;
-  for (; i < points.size() - 1; i++)
-  {
-    double denominator1 = (points[i].x - points[i - 1].x);
-    double denominator2 = (points[i + 1].x - points[i].x);
-
-    matrix[i * points.size() + i - 1] = 1. / (denominator1);
-    matrix[i * points.size() + i] = 2. * ((1. / denominator1) + (1. / denominator2));
-    matrix[i * points.size() + i + 1] = 1. / (denominator2);
-  }
-
-  // last row
-  matrix[i * points.size() + i - 1] = 1. / (points[i].x - points[i - 1].x);
-  matrix[i * points.size() + i] = 2. / (points[i].x - points[i - 1].x);
-}
-
-/**
- * @brief Solve Ax = b using LU decomposition and pivoting
- * @param[in] Size of b
- * @param[in,out] matrix (A) as input and output (after internal pivoting)
- * @param[in,out] solution (x) as output, and b as input
+ * @param[in,out] solution (b on input, x on output)
  * @return true on success, false on failure
  */
-bool solveLinearSystem(const size_t size, double *matrix, double *solution)
+bool solveTridiagonalSplineSystem(const std::vector<Point2d> &points, std::vector<double> &solution)
 {
-  if ((matrix == nullptr) || (solution == nullptr))
+  std::size_t const n = points.size();
+  if ((n < 2u) || (solution.size() != n))
   {
     return false;
   }
 
-  int32_t *ipiv;
-  ipiv = (int32_t *)malloc(sizeof(int32_t) * size);
+  std::vector<double> dl(n - 1u, 0.);
+  std::vector<double> d(n, 0.);
+  std::vector<double> du(n - 1u, 0.);
 
-  // Factorize matrix into P*L*U with P being a pivot matrix \sa ipiv,
-  // L is a lower triangular matrix and U an upper triangluar matrix
-  // matrix is square (i.e. nxn)
-  int32_t info = LAPACKE_dgetrf(LAPACK_ROW_MAJOR /* we use row_major */,
-                                static_cast<int>(size) /* size of rhs */,
-                                static_cast<int>(size) /* size of rhs */,
-                                matrix,
-                                static_cast<int>(size) /* size of rhs */,
-                                ipiv /* pivot vector */);
+  double const invDx0 = 1. / (points[1].x - points[0].x);
+  d[0] = 2. * invDx0;
+  du[0] = invDx0;
 
-  // solve linear system (Ax=b) with A=P*L*U
-  info += LAPACKE_dgetrs(LAPACK_ROW_MAJOR /* we use row_major */,
-                         'N' /* matrix is not transposed */,
-                         static_cast<int>(size) /* size of rhs */,
-                         1 /* only one rhs */,
-                         matrix,
-                         static_cast<int>(size) /* size of rhs */,
-                         ipiv /* pivot vector */,
-                         solution /* input: rhs, output: solution */,
-                         1 /* only one rhs */);
-
-  free(ipiv);
-
-  if (info > 0)
+  for (std::size_t i = 1u; i + 1u < n; ++i)
   {
-    return false;
+    double const invDxPrev = 1. / (points[i].x - points[i - 1u].x);
+    double const invDxNext = 1. / (points[i + 1u].x - points[i].x);
+    dl[i - 1u] = invDxPrev;
+    d[i] = 2. * (invDxPrev + invDxNext);
+    du[i] = invDxNext;
   }
 
-  return true;
+  double const invDxLast = 1. / (points[n - 1u].x - points[n - 2u].x);
+  dl[n - 2u] = invDxLast;
+  d[n - 1u] = 2. * invDxLast;
+
+  lapack_int const lapackN = static_cast<lapack_int>(n);
+  lapack_int const info
+    = LAPACKE_dgtsv(LAPACK_COL_MAJOR, lapackN, 1, dl.data(), d.data(), du.data(), solution.data(), lapackN);
+  return info == 0;
 }
 
 /**
@@ -219,29 +179,34 @@ void stepwiseInterpolationAlongCurve(const double coefficient1,
 
 bool CubicSpline::interpolate(bool linearAlongXAxis)
 {
-  if (interpolationDistance < 0.001)
+  if ((interpolationDistance < 0.001) || (knotPoints.size() < 2u))
   {
     return false;
   }
+
+  bool const increasing = knotPoints[0].x < knotPoints[1].x;
+  for (std::size_t i = 0u; i + 1u < knotPoints.size(); ++i)
+  {
+    if (increasing ? !(knotPoints[i].x < knotPoints[i + 1u].x) : !(knotPoints[i].x > knotPoints[i + 1u].x))
+    {
+      return false;
+    }
+  }
+
   interpolatedPoints.clear();
 
-  std::vector<double> rhs;
-  setupRhs(knotPoints, rhs);
+  std::vector<double> coefficients;
+  setupRhs(knotPoints, coefficients);
 
-  std::vector<double> matrix;
-  setupMatrix(knotPoints, matrix);
-
-  std::vector<double> coefficients(rhs);
-
-  if (!solveLinearSystem(coefficients.size(), &matrix[0], &coefficients[0]))
+  if (!solveTridiagonalSplineSystem(knotPoints, coefficients))
   {
     return false;
   }
 
-  for (uint32_t i = 0; i < knotPoints.size() - 1; i++)
+  for (std::size_t i = 0u; i + 1u < knotPoints.size(); ++i)
   {
     Point2d thisPoint = knotPoints[i];
-    Point2d nextPoint = knotPoints[i + 1];
+    Point2d nextPoint = knotPoints[i + 1u];
 
     // go stepwise from thisPoint to nextPoint
     Point2d interpolatedPoint = thisPoint;

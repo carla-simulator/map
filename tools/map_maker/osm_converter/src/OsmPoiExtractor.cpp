@@ -189,6 +189,8 @@ void OsmPoiExtractor::extractTrafficSignRelatedPoi(::osmium::Node const &node)
 void OsmPoiExtractor::extractPois(std::shared_ptr<OsmObjectStore> objectStore)
 {
   mPois.clear();
+  mTrafficLights.clear();
+  mTrafficSigns.clear();
   for (auto nodeId : objectStore->allNodeIds())
   {
     ::osmium::Node const &node = objectStore->node(nodeId);
@@ -202,14 +204,16 @@ void OsmPoiExtractor::extractPois(std::shared_ptr<OsmObjectStore> objectStore)
   }
 }
 
-ObjectIdSet OsmPoiExtractor::getPois(PoiType poiType) const
+ObjectIdSet const &OsmPoiExtractor::getPois(PoiType poiType) const
 {
-  if (mPois.count(poiType) > 0)
+  static ObjectIdSet const emptyResult{};
+  auto const it = mPois.find(poiType);
+  if (it != mPois.end())
   {
-    return mPois.at(poiType);
+    return it->second;
   }
 
-  return ObjectIdSet();
+  return emptyResult;
 }
 
 bool OsmPoiExtractor::extractTrafficLightAttributes(::osmium::Node const &node, TrafficLightAttributes &result) const
@@ -286,8 +290,8 @@ bool OsmPoiExtractor::extractTrafficLightAttributes(::osmium::Node const &node, 
     result.isForward = (std::string(direction) == "forward");
   }
 
-  if ((result.placements.size() != result.configs.size())
-      || (result.placements.size() != result.laneAssignments.size()))
+  if ((result.placements.size() != result.configs.size()) || (result.placements.size() != result.laneAssignments.size())
+      || (result.placements.size() != result.ids.size()))
   {
     // number of traffic lights (configs) does not match number of placements
     mLog(common::LogLevel::Error) << "Error handling traffic light " << node.id() << "\n";
@@ -318,11 +322,17 @@ bool extractSignAndSupplement(std::string const &value, std::string &signType, s
   std::string valueWithFixedQuotes = common::replace("\"", "[", value);
   valueWithFixedQuotes = common::replace("\"", "]", valueWithFixedQuotes);
   auto parts = common::splitString(valueWithFixedQuotes, '[');
+  if (parts.empty())
+  {
+    signType.clear();
+    supplement.clear();
+    return false;
+  }
   signType = parts[0];
-  if (parts.size() == 2)
+  if (parts.size() >= 2)
   {
     supplement = parts[1];
-    if (parts[1].back() == ']')
+    if (!parts[1].empty() && (parts[1].back() == ']'))
     {
       supplement.pop_back();
     }

@@ -47,7 +47,7 @@ def get_safe_compiler_include_dirs(compiler_path, language="c++"):
     cmd = [compiler_path, "-E", "-x", language, "-", "-v"]
     try:
         result = subprocess.run(cmd, input=b'', capture_output=True, check=True)
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as e:
         print(f"\n[!] ERROR extracting paths: {e.stderr.decode('utf-8', errors='ignore')}\n")
         return []
 
@@ -80,7 +80,7 @@ def get_safe_compiler_include_dirs(compiler_path, language="c++"):
     print(f"Detected safe compiler include directories: {include_dirs}")
     return include_dirs
 
-def generate_python_wrapper(header_directories, include_paths, library_name, cpp_filename, declarations, main_namespace="", ignore_declarations={}, ignore_files={}, add_declarations={}):
+def generate_python_wrapper(header_directories, include_paths, library_name, cpp_filename, declarations, main_namespace="", ignore_declarations=None, ignore_files=None, add_declarations=None):
     """
     Function to generate Python-C++ binding code by calling pygccxml and py++
 
@@ -105,6 +105,12 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
     :type add_declarations: list<string>
     :return:
     """
+    if ignore_declarations is None:
+        ignore_declarations = ()
+    if ignore_files is None:
+        ignore_files = ()
+    if add_declarations is None:
+        add_declarations = ()
 
     warnings.filterwarnings(action="once", category=DeprecationWarning)
 
@@ -240,7 +246,7 @@ def generate_python_wrapper(header_directories, include_paths, library_name, cpp
     print("generate_python_wrapper(): {} written.".format(cpp_filename))
 
 
-def post_process_python_wrapper(header_directories, cpp_filename_in, cpp_filename_out, additional_replacements=[], additional_includes={}, spdx_license="MIT", fix_include_directives=True, fix_enum_class=True):
+def post_process_python_wrapper(header_directories, cpp_filename_in, cpp_filename_out, additional_replacements=None, additional_includes=None, spdx_license="MIT", fix_include_directives=True, fix_enum_class=True):
     """
     Post process generated binding code
 
@@ -261,68 +267,71 @@ def post_process_python_wrapper(header_directories, cpp_filename_in, cpp_filenam
     :type fix_enum_class: boolean
     :return:
     """
+    if additional_replacements is None:
+        additional_replacements = ()
+    if additional_includes is None:
+        additional_includes = ()
 
     enum_declaration_start = re.compile(".*bp::enum_< ([^>]*)>.*")
     enum_namespace = ""
     enum_namespace_full = ""
     enum_started = False
 
-    file_input = fileinput.input(cpp_filename_in)
-    file_output = open(cpp_filename_out, "w")
     write_prefix = True
-    for line in file_input:
-        if write_prefix:
+    with fileinput.input(cpp_filename_in) as file_input, open(cpp_filename_out, "w") as file_output:
+        for line in file_input:
+            if write_prefix:
 
-            file_output.write("/*\n"
-                              " * ----------------- BEGIN LICENSE BLOCK ---------------------------------\n"
-                              " *\n"
-                              " * Copyright (c) 2020-2021 Intel Corporation\n"
-                              " *\n"
-                              " * SPDX-License-Identifier: " + spdx_license + "\n"
-                              " *\n"
-                              " * ----------------- END LICENSE BLOCK -----------------------------------\n"
-                              " */\n"
-                              "// clang-format off\n"
-                              "#pragma GCC diagnostic push\n"
-                              "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
-                              "#pragma GCC diagnostic ignored \"-Wignored-qualifiers\"\n"
-                              "#if defined(__clang__) && (__clang_major__ >= 7)\n"
-                              "#  pragma GCC diagnostic ignored \"-Wself-assign-overloaded\"\n"
-                              "#endif\n\n")
+                file_output.write("/*\n"
+                                  " * ----------------- BEGIN LICENSE BLOCK ---------------------------------\n"
+                                  " *\n"
+                                  " * Copyright (c) 2020-2021 Intel Corporation\n"
+                                  " *\n"
+                                  " * SPDX-License-Identifier: " + spdx_license + "\n"
+                                  " *\n"
+                                  " * ----------------- END LICENSE BLOCK -----------------------------------\n"
+                                  " */\n"
+                                  "// clang-format off\n"
+                                  "#pragma GCC diagnostic push\n"
+                                  "#pragma GCC diagnostic ignored \"-Wshadow\"\n"
+                                  "#pragma GCC diagnostic ignored \"-Wignored-qualifiers\"\n"
+                                  "#if defined(__clang__) && (__clang_major__ >= 7)\n"
+                                  "#  pragma GCC diagnostic ignored \"-Wself-assign-overloaded\"\n"
+                                  "#endif\n\n")
 
-            for additional_include in additional_includes:
-                file_output.write("#include <{}>\n".format(additional_include))
+                for additional_include in additional_includes:
+                    file_output.write("#include <{}>\n".format(additional_include))
 
-            write_prefix = False
+                write_prefix = False
 
-        # Remove the leading include
-        if fix_include_directives:
-            for header_dir in header_directories:
-                if not header_dir.endswith("/"):
-                    header_dir = header_dir + "/"
-                line = str.replace(line, header_dir, "")
+            # Remove the leading include
+            if fix_include_directives:
+                for header_dir in header_directories:
+                    if not header_dir.endswith("/"):
+                        header_dir = header_dir + "/"
+                    line = str.replace(line, header_dir, "")
 
-        # Fix C++ enum classes
-        if fix_enum_class:
-            if enum_started:
-                if line.find("export_values()") != -1:
-                    enum_started = False
+            # Fix C++ enum classes
+            if fix_enum_class:
+                if enum_started:
+                    if line.find("export_values()") != -1:
+                        enum_started = False
+                    else:
+                        line = str.replace(line, enum_namespace, enum_namespace_full)
                 else:
-                    line = str.replace(line, enum_namespace, enum_namespace_full)
-            else:
-                match = enum_declaration_start.match(line)
-                if match:
-                    enum_started = True
-                    enum_name_start = match.group(1).rindex(':')
-                    enum_namespace = match.group(1)[:enum_name_start + 1]
-                    enum_namespace_full = match.group(1) + "::"
+                    match = enum_declaration_start.match(line)
+                    if match:
+                        enum_started = True
+                        enum_name_start = match.group(1).rindex(':')
+                        enum_namespace = match.group(1)[:enum_name_start + 1]
+                        enum_namespace_full = match.group(1) + "::"
 
-        for replacement in additional_replacements:
-            line = str.replace(line, replacement[0], replacement[1])
+            for replacement in additional_replacements:
+                line = str.replace(line, replacement[0], replacement[1])
 
-        file_output.write(line)
+            file_output.write(line)
 
-    file_output.write("\n#pragma GCC diagnostic pop\n"
-                      "// clang-format on\n")
+        file_output.write("\n#pragma GCC diagnostic pop\n"
+                          "// clang-format on\n")
 
     print("post_process_python_wrapper(): {} written.".format(cpp_filename_out))

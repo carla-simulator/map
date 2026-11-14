@@ -26,7 +26,7 @@ class Logger(QtCore.QObject):
             "       1: errors, warnings,\n" \
             "       2: errors, warnings, infos,\n" \
             "       3: errors, warnings, infos, debug.\n"
-        super(QtCore.QObject, self).__init__()
+        super().__init__()
         self.level = level
 
     def error(self, msg):

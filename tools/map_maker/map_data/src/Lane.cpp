@@ -8,8 +8,10 @@
 
 #include "ad/map/maker/map_data/Lane.hpp"
 #include <ad/map/maker/geometry/Point2d.hpp>
+#include <algorithm>
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
+#include <limits>
 #include <unordered_set>
 #include "ad/map/maker/map_data/MapDataStore.hpp"
 #include "ad/map/maker/map_data/PolyLineConversion.hpp"
@@ -22,12 +24,68 @@ namespace map_data {
 typedef ::boost::geometry::model::d2::point_xy<double> Boost2dPoint;
 typedef ::boost::geometry::model::polygon<Boost2dPoint> BoostPolygon;
 
-BoostPolygon fromLane(MapDataStore const &store, Lane const &lane)
+namespace {
+
+struct LaneBounds
 {
+  double minX{std::numeric_limits<double>::max()};
+  double maxX{std::numeric_limits<double>::lowest()};
+  double minY{std::numeric_limits<double>::max()};
+  double maxY{std::numeric_limits<double>::lowest()};
+  bool valid{false};
+};
+
+LaneBounds computeLaneBounds(MapDataStore const &store, Lane const &lane)
+{
+  LaneBounds bounds;
+  if (!store.hasPolyLine(lane.leftBorder) || !store.hasPolyLine(lane.rightBorder))
+  {
+    return bounds;
+  }
   auto const &leftBorder = store.polyLine(lane.leftBorder).mNodes;
   auto const &rightBorder = store.polyLine(lane.rightBorder).mNodes;
+  if (leftBorder.empty() || rightBorder.empty())
+  {
+    return bounds;
+  }
+  for (auto const id : leftBorder)
+  {
+    auto const &p = store.point(id);
+    bounds.minX = std::min(bounds.minX, p.x);
+    bounds.maxX = std::max(bounds.maxX, p.x);
+    bounds.minY = std::min(bounds.minY, p.y);
+    bounds.maxY = std::max(bounds.maxY, p.y);
+  }
+  for (auto const id : rightBorder)
+  {
+    auto const &p = store.point(id);
+    bounds.minX = std::min(bounds.minX, p.x);
+    bounds.maxX = std::max(bounds.maxX, p.x);
+    bounds.minY = std::min(bounds.minY, p.y);
+    bounds.maxY = std::max(bounds.maxY, p.y);
+  }
+  bounds.valid = true;
+  return bounds;
+}
+
+} // namespace
+
+BoostPolygon fromLane(MapDataStore const &store, Lane const &lane)
+{
+  BoostPolygon result;
+  if (!store.hasPolyLine(lane.leftBorder) || !store.hasPolyLine(lane.rightBorder))
+  {
+    return result;
+  }
+  auto const &leftBorder = store.polyLine(lane.leftBorder).mNodes;
+  auto const &rightBorder = store.polyLine(lane.rightBorder).mNodes;
+  if (leftBorder.empty() || rightBorder.empty())
+  {
+    return result;
+  }
   // at first shot, we assume that both borders have the same order of points, e.g. from left to right
   std::vector<Boost2dPoint> points;
+  points.reserve(leftBorder.size() + rightBorder.size() + 1u);
   for (auto const id : leftBorder)
   {
     auto const &p = store.point(id);
@@ -40,7 +98,6 @@ BoostPolygon fromLane(MapDataStore const &store, Lane const &lane)
   }
   // close polygon
   points.push_back(points.front());
-  BoostPolygon result;
   ::boost::geometry::assign_points(result, points);
   // ensure that all polygons have the same orientation
   ::boost::geometry::correct(result);
@@ -52,6 +109,14 @@ bool Lane::overlapsWithLane(MapDataStore const &store, Lane const &other) const
   if (&other == this)
   {
     return true;
+  }
+  auto const thisBounds = computeLaneBounds(store, *this);
+  auto const thatBounds = computeLaneBounds(store, other);
+  if (!thisBounds.valid || !thatBounds.valid || (thisBounds.maxX < thatBounds.minX)
+      || (thatBounds.maxX < thisBounds.minX) || (thisBounds.maxY < thatBounds.minY)
+      || (thatBounds.maxY < thisBounds.minY))
+  {
+    return false;
   }
   auto thisP = fromLane(store, *this);
   auto thatP = fromLane(store, other);
@@ -67,12 +132,23 @@ Contact Lane::checkLeftRightContact(MapDataStore const &store, Lane const &other
     return Contact::Overlap;
   }
 
+  if (!store.hasPolyLine(leftBorder) || !store.hasPolyLine(rightBorder) || !store.hasPolyLine(other.leftBorder)
+      || !store.hasPolyLine(other.rightBorder))
+  {
+    return Contact::None;
+  }
+
   // check forward contact
   auto const &thisLeftBorder = store.polyLine(leftBorder).mNodes;
   auto const &thisRightBorder = store.polyLine(rightBorder).mNodes;
 
   auto const &otherLeftBorder = store.polyLine(other.leftBorder).mNodes;
   auto const &otherRightBorder = store.polyLine(other.rightBorder).mNodes;
+
+  if (thisLeftBorder.empty() || thisRightBorder.empty() || otherLeftBorder.empty() || otherRightBorder.empty())
+  {
+    return Contact::None;
+  }
 
   auto const thisLeftStart = thisLeftBorder.front();
   auto const thisRightStart = thisRightBorder.front();

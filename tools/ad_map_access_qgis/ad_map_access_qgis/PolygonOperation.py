@@ -22,7 +22,7 @@ from .QGISLayer import WGS84PointLayer, WGS84SurfaceLayer, WGS84PolylineLayer
 from .LayerManager import LayerManager
 
 
-class PolygonOperation(QgsMapTool):
+class PolygonOperation(QgsMapToolEmitPoint):
     "..."
     WAYPOINT_TITLE = "Waypoint"
     WAYPOINT_SYMBOL = "star"
@@ -73,6 +73,7 @@ class PolygonOperation(QgsMapTool):
         self.reference_point = None
         self.influence_distance = None
         self.flag = None
+        self.has_polygon_points = False
 
     def activate(self):
         "..."
@@ -98,8 +99,10 @@ class PolygonOperation(QgsMapTool):
 
         self.__create_layers__()
         self.action.setChecked(True)
-        self.secondFreespacePolygon = self.freespacePolygon
+        if self.has_polygon_points:
+            self.secondFreespacePolygon = self.freespacePolygon
         self.freespacePolygon = ad.geometry.Polygon()
+        self.has_polygon_points = False
         Globs.iface.messageBar().pushMessage("Click somewhere on the map to select it as reference point", level=Qgis.Info, duration=3)
         self.flag = True
 
@@ -108,7 +111,7 @@ class PolygonOperation(QgsMapTool):
         super(PolygonOperation, self).deactivate()
         self.action.setChecked(False)
 
-        if self.freespacePolygon:
+        if self.freespacePolygon is not None and self.has_polygon_points and self.reference_point is not None and self.influence_distance is not None:
             Globs.log.info("Polygon creation complete")
             ad.map.geometry.correctPolygon(self.freespacePolygon)
             self.__draw_polygon__(self.freespacePolygon)
@@ -145,11 +148,14 @@ class PolygonOperation(QgsMapTool):
                 self.flag = False
         else:
             raw_pt = self.toLayerCoordinates(self.layer_input_polygon_points.layer, event.pos())
-            attrs = [str(raw_pt.x)]
+            attrs = [str(raw_pt.x())]
             self.layer_input_polygon_points.add_QgsPointXY(raw_pt, attrs)
             self.layer_input_polygon_points.refresh()
 
-            geo_point_clicked = ad.map.point.createGeoPoint(raw_pt.x(), raw_pt.y(), 0.0)
+            geo_point_clicked = ad.map.point.createGeoPoint(
+                ad.map.point.Longitude(raw_pt.x()),
+                ad.map.point.Latitude(raw_pt.y()),
+                ad.map.point.Altitude(0.0))
             self.__add_points_to_polygon__(geo_point_clicked)
 
     def __draw_polygon__(self, input_polygon):
@@ -159,7 +165,10 @@ class PolygonOperation(QgsMapTool):
         geo_point_list = ad.map.point.GeoPointList()
         attrs = []
         for each_point in output_drawing:
-            enu_point = ad.map.point.createENUPoint(each_point.x, each_point.y, 0.0)
+            enu_point = ad.map.point.createENUPoint(
+                ad.map.point.ENUCoordinate(each_point.x),
+                ad.map.point.ENUCoordinate(each_point.y),
+                ad.map.point.ENUCoordinate(0.0))
             geo_point = ad.map.point.toGeo(enu_point)
             geo_point_list.append(geo_point)
         self.layer_drawing_polygon.add_lla(geo_point_list, attrs)
@@ -168,9 +177,9 @@ class PolygonOperation(QgsMapTool):
     def __add_points_to_polygon__(self, geo):
 
         enu_point = ad.map.point.toENU(geo)
-        point = ad.geometry.Point()
         point = ad.geometry.toPoint(enu_point.x.mENUCoordinate, enu_point.y.mENUCoordinate)
         ad.map.geometry.appendToPolygon(self.freespacePolygon, point)
+        self.has_polygon_points = True
 
     def __add_occupied_regions_to_layer__(self, layer, occupied_regions):
         for each_region in occupied_regions:
@@ -196,7 +205,7 @@ class PolygonOperation(QgsMapTool):
     def __calculate_regions(self, visible_area):
 
         lane_regions = ad.map.geometry.extractRegions(
-            visible_area, self.reference_point, self.influence_distance)
+            visible_area, self.reference_point, ad.physics.Distance(self.influence_distance))
 
         self.__add_occupied_regions_to_layer__(self.layer_fully_invisible, lane_regions.fully_occluded)
         self.__add_occupied_regions_to_layer__(self.layer_partly_invisible, lane_regions.partly_occluded)

@@ -35,7 +35,13 @@ PolyLine geometryToPolyline(MapDataStore &store,
 {
   PolyLine polyline;
   polyline.mNodes.clear();
-  for (std::size_t i = indexOfFirstPoint; i < polyline2d.points.size() - indexOfLastPoint; ++i)
+  if (indexOfFirstPoint + indexOfLastPoint >= polyline2d.points.size())
+  {
+    return polyline;
+  }
+  std::size_t const endIndex = polyline2d.points.size() - indexOfLastPoint;
+  polyline.mNodes.reserve(endIndex - indexOfFirstPoint);
+  for (std::size_t i = indexOfFirstPoint; i < endIndex; ++i)
   {
     polyline.mNodes.push_back(store.getOrCreateIdForPoint(polyline2d.points[i]));
   }

@@ -97,7 +97,7 @@ bool MapDataValidator::validateRoadConnection(MapDataId firstId,
   auto const &secondRoad = mStore.road(secondId);
   if (!secondRoad.isValid())
   {
-    mLog(common::LogLevel::Info) << "Second road " << firstId << " is not valid road!\n";
+    mLog(common::LogLevel::Info) << "Second road " << secondId << " is not valid road!\n";
     return false;
   }
 
@@ -155,14 +155,25 @@ bool MapDataValidator::validatePolyLineConnection(MapDataId firstLineId,
   if (firstLineId == InvalidId)
   {
     mLog(common::LogLevel::Info) << "First polyline id is not valid!\n";
+    return false;
   }
 
   if (secondLineId == InvalidId)
   {
     mLog(common::LogLevel::Info) << "Second polyline id is not valid!\n";
+    return false;
+  }
+
+  if (!mStore.hasPolyLine(firstLineId) || !mStore.hasPolyLine(secondLineId))
+  {
+    return false;
   }
   auto const &firstLine = mStore.polyLine(firstLineId).mNodes;
   auto const &secondLine = mStore.polyLine(secondLineId).mNodes;
+  if (firstLine.empty() || secondLine.empty())
+  {
+    return false;
+  }
 
   auto const firstPointId = (useFrontOfFirst ? firstLine.front() : firstLine.back());
   auto const secondPointId = (useFrontOfSecond ? secondLine.front() : secondLine.back());
@@ -295,8 +306,8 @@ bool MapDataValidator::validateLanesAtArm(MapDataId connectionPoint, MapDataId f
     uint64_t numBackward = std::min(firstRoad.mBackwardLanes.size(), secondRoad.mBackwardLanes.size());
     for (uint32_t i = 0u; i < numBackward; ++i)
     {
-      MapDataId firstBorder = firstRoad.borderIdOfBackwardLane(i, false);
-      MapDataId secondBorder = secondRoad.borderIdOfBackwardLane(i, false);
+      MapDataId firstBorder = firstRoad.borderIdOfBackwardLane(i, true);
+      MapDataId secondBorder = secondRoad.borderIdOfBackwardLane(i, true);
       if (!validatePolyLineConnection(firstBorder, firstStartsHere, secondBorder, secondStartsHere))
       {
         return false;

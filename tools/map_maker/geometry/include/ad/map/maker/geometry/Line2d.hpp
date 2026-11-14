@@ -82,33 +82,33 @@ struct Line2d
   bool intersects(Line2d const &other, Point2d &intersectionPoint) const;
 
   /**
-   * @brief Returns true if the line intersects with a line segment.
+   * @brief Treats the line as a segment and checks if it intersects with another segment.
    *
-   * A line intersects with a segment only if the two segment endpoints
-   * lie on different sides of the intersecting line.
+   * The end points of both segments must be on different sides of the intersecting line respectively.
    */
   bool segmentsIntersect(Line2d const &other) const;
 
   /**
-   * @brief Returns true if the line intersects with a line segment.
+   * @brief Treats the line as a segment and checks if it intersects with another segment.
    *
-   * A line intersects with a segment only if the two segment endpoints
-   * lie on different sides of the intersecting line.
+   * The end points of both segments must be on different sides of the intersecting line respectively.
    * The intersection point is written to intersectionPoint.
    */
   bool segmentsIntersect(Line2d const &other, Point2d &intersectionPoint) const;
 
   /**
-   * @brief Treats the line as a segment and checks if it intersects with another segment.
+   * @brief Returns true if the line intersects with a line segment.
    *
-   * The end points of both segments must be on different sides of the intersecting line respectively.
+   * A line intersects with a segment only if the two segment endpoints
+   * lie on different sides of the intersecting line.
    */
   bool lineIntersectsSegment(Line2d const &segment) const;
 
   /**
-   * @brief Treats the line as a segment and checks if it intersects with another segment.
+   * @brief Returns true if the line intersects with a line segment.
    *
-   * The end points of both segments must be on different sides of the intersecting line respectively.
+   * A line intersects with a segment only if the two segment endpoints
+   * lie on different sides of the intersecting line.
    * The intersection point is written to intersectionPoint.
    */
   bool lineIntersectsSegment(Line2d const &segment, Point2d &intersectionPoint) const;

@@ -44,7 +44,7 @@ void OsmToInternalConverter::convertMap(bool adjustLateralOffsetOfRoads)
 {
   mLog(common::LogLevel::Info) << "Converting map...\n";
   mAdjustLateralOffsetOfRoads = adjustLateralOffsetOfRoads;
-  auto junctions = mOsmProcessor.junctionProcessor()->allJunctions();
+  auto const &junctions = mOsmProcessor.junctionProcessor()->allJunctions();
 
   // First add all junctions to the MapStore so later we can reference them while creating the roads
   for (auto junctionCenter : junctions)
@@ -64,7 +64,7 @@ void OsmToInternalConverter::convertMap(bool adjustLateralOffsetOfRoads)
   }
 
   // Iterate over the mIntersectionConnections and connect roads to intersections
-  for (auto connection : mIntersectionConnections)
+  for (auto const &connection : mIntersectionConnections)
   {
     auto const &intersectionId = connection.intersectionId;
     auto const &roadId = connection.roadId;
@@ -113,8 +113,8 @@ void OsmToInternalConverter::processJunction(::osmium::object_id_type const &jun
 {
   mLog(common::LogLevel::Verbose) << "Processing intersection " << junctionCenter << "\n";
 
-  auto osmJunctionEntries = mJunctionProcessor->junctionArms(junctionCenter);
-  for (auto osmArm : osmJunctionEntries)
+  auto const &osmJunctionEntries = mJunctionProcessor->junctionArms(junctionCenter);
+  for (auto const &osmArm : osmJunctionEntries)
   {
     mLog(common::LogLevel::Verbose) << "  Processing next junction arm " << osmArm.mArmId << " \n";
 
@@ -139,9 +139,8 @@ void OsmToInternalConverter::addNodeToRoadGeometry(RoadGeometry &roadGeometry, :
 
 void OsmToInternalConverter::processArm(OsmJunctionArm const &osmArm)
 {
-  auto crosswalks = mOsmProcessor.poiExtractor()->getPois(PoiType::Crosswalk);
-  auto pelicanCrossings = mOsmProcessor.poiExtractor()->getPois(PoiType::PelicanCrossing);
-  auto trafficLights = mOsmProcessor.poiExtractor()->getPois(PoiType::TrafficLight);
+  auto const &crosswalks = mOsmProcessor.poiExtractor()->getPois(PoiType::Crosswalk);
+  auto const &pelicanCrossings = mOsmProcessor.poiExtractor()->getPois(PoiType::PelicanCrossing);
   auto wayProcessor = mOsmProcessor.wayProcessor();
   OsmWayTraveler traveler(mObjectStore, mJunctionProcessor, mPointStore, osmArm, mLogFactory.logChannel("Iterator"));
   RoadGeometry roadGeometry;
@@ -226,15 +225,17 @@ void OsmToInternalConverter::processArm(OsmJunctionArm const &osmArm)
   } while (traveler.stillTraveling());
 
   // only add the current roadGeoemtry if if represents a valid road
-  if (mRoadsGeometry.size() > 0)
+  if (roadGeometry.centerLineGeometry.points.size() > 1)
   {
-    auto const &lastElem = mRoadsGeometry.back();
-    if (lastElem.roadId == roadGeometry.roadId)
+    if (mRoadGeometryIndex.count(roadGeometry.roadId) > 0)
     {
       mLog(common::LogLevel::Verbose) << " Adding road geometry for a second time!\n";
     }
+    else
+    {
+      addRoadGeometry(roadGeometry);
+    }
   }
-  mRoadsGeometry.push_back(roadGeometry);
 }
 
 void OsmToInternalConverter::insertCrosswalk(map_data::IntersectionType crosswalkType,
@@ -250,12 +251,18 @@ void OsmToInternalConverter::insertCrosswalk(map_data::IntersectionType crosswal
   mIntersectionMap.insert(std::make_pair(prevOsmNode, mapDataId));
 }
 
+void OsmToInternalConverter::addRoadGeometry(RoadGeometry const &roadGeometry)
+{
+  mRoadGeometryIndex[roadGeometry.roadId] = mRoadsGeometry.size();
+  mRoadsGeometry.push_back(roadGeometry);
+}
+
 void OsmToInternalConverter::finishCurrentRoad(RoadGeometry &roadGeometry, bool setupSuccessor)
 {
   // only push it if we have at least two points in, otherwise keep it
   if (roadGeometry.centerLineGeometry.points.size() > 1)
   {
-    mRoadsGeometry.push_back(roadGeometry);
+    addRoadGeometry(roadGeometry);
     // only set up a successor when there really is a successor
     if (setupSuccessor)
     {
@@ -296,12 +303,10 @@ double roadOffset(map_data::Road const &road)
 
 std::size_t OsmToInternalConverter::findRoadGeometry(map_data::MapDataId roadId) const
 {
-  for (std::size_t index = 0; index < mRoadsGeometry.size(); ++index)
+  auto const it = mRoadGeometryIndex.find(roadId);
+  if (it != mRoadGeometryIndex.end())
   {
-    if (mRoadsGeometry[index].roadId == roadId)
-    {
-      return index;
-    }
+    return it->second;
   }
   throw std::runtime_error("Unable to find geometry for roadId");
 }
@@ -352,7 +357,8 @@ geometry::Point2d OsmToInternalConverter::successorIntersectionPoint(RoadGeometr
   auto const &geometryPoints = roadGeometry.centerLineGeometry.points;
 
   auto const intersectionId = road.mSuccessor;
-  mTransitionDetectors[intersectionId].generateTransitionOffsets(mMapDataStore, mRoadsGeometry, intersectionId);
+  mTransitionDetectors[intersectionId].generateTransitionOffsets(
+    mMapDataStore, mRoadsGeometry, mRoadGeometryIndex, intersectionId);
   double const transitionOffset = mTransitionDetectors[intersectionId].transitionOffsetForRoad(roadGeometry.roadId);
   double const offset = (mAdjustLateralOffsetOfRoads ? transitionOffset : 0);
   auto const &point = geometryPoints[geometryPoints.size() - 1];
@@ -376,7 +382,8 @@ geometry::Point2d OsmToInternalConverter::predecessorIntersectionPoint(RoadGeome
   auto const &geometryPoints = roadGeometry.centerLineGeometry.points;
 
   auto const intersectionId = road.mPredecessor;
-  mTransitionDetectors[intersectionId].generateTransitionOffsets(mMapDataStore, mRoadsGeometry, intersectionId);
+  mTransitionDetectors[intersectionId].generateTransitionOffsets(
+    mMapDataStore, mRoadsGeometry, mRoadGeometryIndex, intersectionId);
   double const transitionOffset = mTransitionDetectors[intersectionId].transitionOffsetForRoad(roadGeometry.roadId);
   double const offset = (mAdjustLateralOffsetOfRoads ? transitionOffset : 0);
   geometry::Point2d contactPoint;
@@ -635,7 +642,7 @@ void OsmToInternalConverter::convertPois()
   for (auto poiType : poiTypes)
   {
     mLog(common::LogLevel::Verbose) << "Transferring pois of type: " << poiTypeToString(poiType) << "\n";
-    auto poiList = mOsmProcessor.poiExtractor()->getPois(poiType);
+    auto const &poiList = mOsmProcessor.poiExtractor()->getPois(poiType);
     for (auto nodeId : poiList)
     {
       // create position
@@ -667,7 +674,7 @@ bool trafficLightAttributesMatchRoad(OsmPoiExtractor::TrafficLightAttributes con
     logger(common::LogLevel::Info) << "Traffic light is backward but no backward lanes\n";
     return false;
   }
-  for (auto assignments : attributes.laneAssignments)
+  for (auto const &assignments : attributes.laneAssignments)
   {
     for (auto lane : assignments)
     {
@@ -704,7 +711,7 @@ bool trafficLightAttributesMatchRoad(OsmPoiExtractor::TrafficLightAttributes con
 bool OsmToInternalConverter::convertTrafficLight(::osmium::object_id_type const currentNodeId,
                                                  RoadGeometry const &roadGeometry)
 {
-  auto trafficLights = mOsmProcessor.poiExtractor()->getPois(PoiType::TrafficLight);
+  auto const &trafficLights = mOsmProcessor.poiExtractor()->getPois(PoiType::TrafficLight);
   if (trafficLights.count(currentNodeId) == 0)
   {
     return false;
@@ -890,7 +897,7 @@ OsmToInternalConverter::calculateTrafficLightPositions(::osmium::object_id_type 
 void OsmToInternalConverter::addTrafficSignsToRoad(::osmium::object_id_type const nodeIdOfSign,
                                                    map_data::MapDataId const roadId)
 {
-  auto trafficSigns = mOsmProcessor.poiExtractor()->trafficSigns(nodeIdOfSign);
+  auto const &trafficSigns = mOsmProcessor.poiExtractor()->trafficSigns(nodeIdOfSign);
   if (trafficSigns.empty())
   {
     return;
@@ -925,7 +932,7 @@ void OsmToInternalConverter::generateTrafficSign(LandmarkOnCenterLine const &dat
   map_data::MapDataId locationIdAgainst{};
 
   // add landmark for each traffic sign
-  auto trafficSigns = mOsmProcessor.poiExtractor()->trafficSigns(data.nodeId);
+  auto const &trafficSigns = mOsmProcessor.poiExtractor()->trafficSigns(data.nodeId);
   for (map_data::Landmark mark : trafficSigns)
   {
     if (mark.alongRoadDirection)

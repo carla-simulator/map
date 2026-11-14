@@ -30,13 +30,13 @@ class LayerManagerLaneTopology(LayerManager):
         "..."
         lane_id = lane.id
         pts_from = self.__generate_alt_points__(lane_id, self.tlon, self.tlat)
-        if self.position is "Left":
+        if self.position == "Left":
             conns = ad.map.lane.getContactLanes(lane, ad.map.lane.ContactLocation.LEFT)
-        elif self.position is "Right":
+        elif self.position == "Right":
             conns = ad.map.lane.getContactLanes(lane, ad.map.lane.ContactLocation.RIGHT)
-        elif self.position is "Successor":
+        elif self.position == "Successor":
             conns = ad.map.lane.getContactLanes(lane, ad.map.lane.ContactLocation.SUCCESSOR)
-        elif self.position is "Predecessor":
+        elif self.position == "Predecessor":
             conns = ad.map.lane.getContactLanes(lane, ad.map.lane.ContactLocation.PREDECESSOR)
         else:
             conns = ad.map.lane.getContactLanes(lane, ad.map.lane.ContactLocation.OVERLAP)

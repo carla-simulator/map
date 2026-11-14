@@ -40,7 +40,10 @@ class LaneViewer(QgsMapTool):
     def toggle(self):
         if self.activated:
             for each_layer in self.layer_group:
-                layer = QgsProject.instance().mapLayersByName(each_layer)[0]
+                layers = QgsProject.instance().mapLayersByName(each_layer)
+                if not layers:
+                    continue
+                layer = layers[0]
                 layer.setLabelsEnabled(False)
                 layer.triggerRepaint(False)
             self.activated = False
@@ -54,22 +57,19 @@ class LaneViewer(QgsMapTool):
 
     def __calculate_Lane_IDs__(self):
         "..."
+        text_format = QgsTextFormat()
+        label = QgsPalLayerSettings()
+        label.fieldName = 'Id'
+        label.enabled = True
+        label.setFormat(text_format)
+        label.placement = QgsPalLayerSettings.OverPoint
 
-        laneList = ad.map.lane.getLanes()
         for each_layer in self.layer_group:
-            layer = QgsProject.instance().mapLayersByName(each_layer)[0]
-            for each_lane in laneList:
-                lane = ad.map.lane.getLane(each_lane)
-
-                text_format = QgsTextFormat()
-                label = QgsPalLayerSettings()
-                label.fieldName = 'Id'
-                label.__setattr__('Id', lane.id)
-                label.enabled = True
-                label.setFormat(text_format)
-                label.placement = QgsPalLayerSettings.OverPoint
-
-                labeler = QgsVectorLayerSimpleLabeling(label)
-                layer.setLabeling(labeler)
-                layer.setLabelsEnabled(True)
-                layer.triggerRepaint(True)
+            layers = QgsProject.instance().mapLayersByName(each_layer)
+            if not layers:
+                continue
+            layer = layers[0]
+            labeler = QgsVectorLayerSimpleLabeling(label)
+            layer.setLabeling(labeler)
+            layer.setLabelsEnabled(True)
+            layer.triggerRepaint(True)

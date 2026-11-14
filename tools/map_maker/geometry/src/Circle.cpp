@@ -42,11 +42,11 @@ bool Circle::interpolate(double const from, double delta, bool const counterCloc
   // rationale: full circle has 2*PI*r = 360 deg ( = 2 * PI rad)
   //                                 r = 1 rad
   //                 interpolationStep = (interpolationStep / r) rad
-  double increment = interpolationStep / radius;
+  double const increment = interpolationStep / radius;
+  Direction2d angle{from};
   if (counterClockwise)
   {
-    double to = from + delta;
-    Direction2d angle{from};
+    double const to = angle.orientation + delta;
     for (; angle.orientation < to; angle.orientation += increment)
     {
       interpolatedPoints.push_back(angle.movePoint(origin, radius));
@@ -56,8 +56,7 @@ bool Circle::interpolate(double const from, double delta, bool const counterCloc
   }
   else
   {
-    double to = from - delta;
-    Direction2d angle{from};
+    double const to = angle.orientation - delta;
     for (; angle.orientation > to; angle.orientation -= increment)
     {
       interpolatedPoints.push_back(angle.movePoint(origin, radius));

@@ -37,16 +37,24 @@ class LaneCorrectionTool(QgsMapToolEmitPoint):
 
         Globs.log.info("Lane Correction Tool Activated")
 
-        items = []
-        for lane_id in ad.map.lane.getLanes():
-            items.append(str(lane_id))
+        items = [str(lane_id) for lane_id in ad.map.lane.getLanes()]
+        if not items:
+            Globs.log.warning("No lanes available for correction.")
+            return
 
-        tf = False
-        from_lane_id, tf = QInputDialog.getItem(QWidget(), "Select lane_id of lane to correct LaneBorder",
-                                                "LaneBorderCorrection", items, 0, False)
-        to_lane_id, tf = QInputDialog.getItem(QWidget(), "Select lane_id of lane to connect LaneBorder to by shortening/extending",
-                                              "LaneBorderCorrection", items, 0, False)
-        ad.map.lane.correctLaneBorder(ad.map.lane.LaneId(int(from_lane_id)), ad.map.lane.LaneId(int(to_lane_id)))
+        from_lane_id, ok_from = QInputDialog.getItem(QWidget(), "Select lane_id of lane to correct LaneBorder",
+                                                     "LaneBorderCorrection", items, 0, False)
+        if not ok_from or not from_lane_id:
+            return
+        to_lane_id, ok_to = QInputDialog.getItem(QWidget(), "Select lane_id of lane to connect LaneBorder to by shortening/extending",
+                                                 "LaneBorderCorrection", items, 0, False)
+        if not ok_to or not to_lane_id:
+            return
+        from_id = ad.map.lane.LaneId(int(from_lane_id))
+        to_id = ad.map.lane.LaneId(int(to_lane_id))
+        ad.map.lane.correctLaneBorder(from_id, to_id)
+        Globs.dirty_lanes.extend([from_id, to_id])
+        Globs.main.map_refresh()
 
     def deactivate(self):
         "..."

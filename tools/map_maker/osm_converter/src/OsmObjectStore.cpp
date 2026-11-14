@@ -184,7 +184,8 @@ void setDefaultInfoForBuilder(typename ::osmium::builder::OSMObjectBuilder<ItemT
 std::unordered_set<::osmium::object_id_type> OsmObjectStore::allWayIds() const
 {
   std::unordered_set<::osmium::object_id_type> result;
-  for (auto way : mIdToWayHandle)
+  result.reserve(mIdToWayHandle.size());
+  for (auto const &way : mIdToWayHandle)
   {
     result.insert(way.first);
   }
@@ -194,7 +195,8 @@ std::unordered_set<::osmium::object_id_type> OsmObjectStore::allWayIds() const
 std::unordered_set<::osmium::object_id_type> OsmObjectStore::allNodeIds() const
 {
   std::unordered_set<::osmium::object_id_type> result;
-  for (auto node : mIdToNodeHandle)
+  result.reserve(mIdToNodeHandle.size());
+  for (auto const &node : mIdToNodeHandle)
   {
     result.insert(node.first);
   }

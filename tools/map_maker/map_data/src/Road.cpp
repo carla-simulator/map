@@ -245,8 +245,24 @@ void Road::invertRoadDirection()
   }
 
   std::swap(mPredecessor, mSuccessor);
-  std::swap(mForwardWidths, mBackwardWidthsAtEnd);
-  std::swap(mBackwardWidths, mForwardWidthsAtEnd);
+  if (mForwardWidthsAtEnd.empty() && mBackwardWidthsAtEnd.empty())
+  {
+    std::swap(mForwardWidths, mBackwardWidths);
+  }
+  else
+  {
+    if (mForwardWidthsAtEnd.empty())
+    {
+      mForwardWidthsAtEnd = mForwardWidths;
+    }
+    if (mBackwardWidthsAtEnd.empty())
+    {
+      mBackwardWidthsAtEnd = mBackwardWidths;
+    }
+    std::swap(mForwardWidths, mBackwardWidthsAtEnd);
+    std::swap(mBackwardWidths, mForwardWidthsAtEnd);
+  }
+  std::swap(mForwardSpeedLimit, mBackwardSpeedLimit);
   std::swap(mForwardLanes, mBackwardLanes);
   std::swap(mForwardTurnDirections, mBackwardTurnDirections);
   std::reverse(mCreatedLanes.begin(), mCreatedLanes.end());
@@ -268,7 +284,8 @@ void Road::convertToLeftHandTraffic()
   }
 
   std::swap(mForwardWidths, mBackwardWidths);
-  std::swap(mBackwardWidths, mForwardWidths);
+  std::swap(mForwardWidthsAtEnd, mBackwardWidthsAtEnd);
+  std::swap(mForwardSpeedLimit, mBackwardSpeedLimit);
   std::swap(mForwardLanes, mBackwardLanes);
   std::swap(mForwardTurnDirections, mBackwardTurnDirections);
   std::reverse(mCreatedLanes.begin(), mCreatedLanes.end());
@@ -500,7 +517,7 @@ void Road::assignSuccPredLaneNeighbors() const
   {
     if (mPredecessor != InvalidId)
     {
-      mLog(common::LogLevel::Warning) << "Road " << mId << " has invalid predecessor: " << mSuccessor << "\n";
+      mLog(common::LogLevel::Warning) << "Road " << mId << " has invalid predecessor: " << mPredecessor << "\n";
     }
   }
 
@@ -721,7 +738,11 @@ std::size_t indexOfPoint(MapDataId pointId, std::vector<MapDataId> const &points
 
 geometry::Direction2d Road::shiftingDirectionAtPoint(MapDataId pointId) const
 {
-  auto centerline = mStore.polyLine(mCenterLineId).mNodes;
+  auto const &centerline = mStore.polyLine(mCenterLineId).mNodes;
+  if (centerline.size() < 2u)
+  {
+    throw std::runtime_error("Centerline has fewer than two points");
+  }
   auto pos = indexOfPoint(pointId, centerline);
   // at the beginning
   if (pos == 0)
@@ -734,14 +755,14 @@ geometry::Direction2d Road::shiftingDirectionAtPoint(MapDataId pointId) const
         throw std::runtime_error("Predecessor has no center line");
       }
       auto const &otherline = mStore.polyLine(mStore.road(mPredecessor).mCenterLineId).mNodes;
-      auto const &before = otherline[otherline.size() - 2];
-      return geometry::bisectionAngle(
-        mStore.point(before), mStore.point(centerline[pos]), mStore.point(centerline[pos + 1]));
+      if (otherline.size() >= 2u)
+      {
+        auto const &before = otherline[otherline.size() - 2];
+        return geometry::bisectionAngle(
+          mStore.point(before), mStore.point(centerline[pos]), mStore.point(centerline[pos + 1]));
+      }
     }
-    else
-    {
-      return geometry::orthogonalDirection(mStore.point(centerline[pos]), mStore.point(centerline[pos + 1]));
-    }
+    return geometry::orthogonalDirection(mStore.point(centerline[pos]), mStore.point(centerline[pos + 1]));
   }
   // in between
   else if (pos < centerline.size() - 1)
@@ -759,14 +780,14 @@ geometry::Direction2d Road::shiftingDirectionAtPoint(MapDataId pointId) const
         throw std::runtime_error("Successor has no center line");
       }
       auto const &otherline = mStore.polyLine(mStore.road(mSuccessor).mCenterLineId).mNodes;
-      auto const &after = otherline[1];
-      return geometry::bisectionAngle(
-        mStore.point(centerline[pos - 1]), mStore.point(centerline[pos]), mStore.point(after));
+      if (otherline.size() >= 2u)
+      {
+        auto const &after = otherline[1];
+        return geometry::bisectionAngle(
+          mStore.point(centerline[pos - 1]), mStore.point(centerline[pos]), mStore.point(after));
+      }
     }
-    else
-    {
-      return geometry::orthogonalDirection(mStore.point(centerline[pos - 1]), mStore.point(centerline[pos]));
-    }
+    return geometry::orthogonalDirection(mStore.point(centerline[pos - 1]), mStore.point(centerline[pos]));
   }
   // no else intended here
 

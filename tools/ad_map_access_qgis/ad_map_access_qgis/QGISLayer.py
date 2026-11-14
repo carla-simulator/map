@@ -37,6 +37,7 @@ class WGS84Layer(object):
         self.provider = self.layer.dataProvider()
         self.layer = QgsProject.instance().addMapLayer(self.layer)
         self.canvas = iface.mapCanvas()
+        self._defer_extents = False
         if group is not None:
             layer_t = QgsProject.instance().mapLayersByName(layer_name)[0]
             root = QgsProject.instance().layerTreeRoot()
@@ -103,6 +104,15 @@ class WGS84Layer(object):
         self.provider.addAttributes(attributes)
         self.layer.updateFields()
 
+    def begin_batch(self):
+        "..."
+        self._defer_extents = True
+
+    def end_batch(self):
+        "..."
+        self._defer_extents = False
+        self.layer.updateExtents()
+
     def add_feature(self, geometry, attributes):
         "..."
         added_feature = QgsFeature()
@@ -110,7 +120,8 @@ class WGS84Layer(object):
         added_feature.setAttributes(attributes)
         success, feat = self.provider.addFeatures([added_feature])
         if success:
-            self.layer.updateExtents()
+            if not self._defer_extents:
+                self.layer.updateExtents()
             return feat[0]
         return None
 
@@ -120,8 +131,8 @@ class WGS84Layer(object):
 
     def remove_all_features(self):
         "..."
-        for feature in self.layer.getFeatures():
-            self.remove_feature(feature)
+        self.provider.truncate()
+        self.layer.updateExtents()
 
     def enable_labeling(self, field, font="Arial", size=10, weight=50, rgb=(0, 0, 0), placement=1):
         "..."
@@ -197,7 +208,7 @@ class WGS84PointLayer(WGS84Layer):
 
     def add_lla(self, point, attributes):
         "..."
-        qgs_point = QgsPointXY(point.x, point.y)
+        qgs_point = QgsPointXY(point.longitude.mLongitude, point.latitude.mLatitude)
         geometry = QgsGeometry.fromPointXY(qgs_point)
         return self.add_feature(geometry, attributes)
 
@@ -300,8 +311,6 @@ class WGS84SurfaceLayer(WGS84Layer):
     def add_lla2(self, edge, another_edge, attrs):
         "..."
         if len(edge) > 1 and len(another_edge) > 1:
-            another_edge.reverse()
-            for point in another_edge:
-                edge.append(point)
-            return self.add_lla(edge, attrs)
+            polygon = list(edge) + list(reversed(another_edge))
+            return self.add_lla(polygon, attrs)
         return None

@@ -93,7 +93,7 @@ The different features provided by the plugin are:
       *One of the loaded maps view in Qgis 3.1x*
 
 - To set the snap altitude the icon is selected from the toolbar and the default altitude is set by selecting the point on the map.
- ![Snap Altitude](images/SetSnapAltitude.png)
+ ![Snap Altitude](images/SetSnapAltitude_result.png)
       *The Qgs logger shows the snapped altitude after it is set*
 
 - In order to start the routing test, the routing test is activated, the option for the route creation mode is selected. Next, the start point and the destination point of the route is snapped on the map which generates the route, highlighted on the map in green.

@@ -82,7 +82,7 @@ void OsmWayIterator::extractNodeAndValidateIndex()
   {
     // verify index
     ::osmium::Way const &way = mStore->way(mWay);
-    if (mIndex < way.nodes().size())
+    if ((way.nodes().size() >= 2u) && (mIndex < way.nodes().size()))
     {
       mCurrentNode = way.nodes()[mIndex].ref();
       mIsValid = true;
@@ -125,10 +125,16 @@ bool OsmWayIterator::next()
     ::osmium::object_id_type successorId;
     if (mJunctionProcessor->uniqueSuccessorForWay(currentWay(), successorId))
     {
+      ::osmium::Way const &nextWay = mStore->way(successorId);
+      if (nextWay.nodes().size() < 2)
+      {
+        mLog(common::LogLevel::Error) << "OsmWayIterator: Way has only one node! WayId " << successorId << "\n";
+        throw std::runtime_error("OsmWayIterator: Way has only one node! while parsing " + std::to_string(successorId));
+      }
       mWay = successorId;
       mIndex = 1;
       mLog(common::LogLevel::Verbose) << "[next]  switching to unambigous next way " << currentWay() << " at point "
-                                      << myWay.nodes()[mIndex].ref() << "\n";
+                                      << nextWay.nodes()[mIndex].ref() << "\n";
     }
   }
 

@@ -9,11 +9,6 @@ updates:
         patterns:
           - "github/codeql-action/*"
 
-  - package-ecosystem: docker
-    directory: /.github/workflows/wheels/docker
-    schedule:
-      interval: weekly
-
   - package-ecosystem: pip
     directory: /doc
     schedule:

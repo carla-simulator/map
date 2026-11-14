@@ -10,7 +10,7 @@ project(ad_map_access_python VERSION ${CARLA-MAP_VERSION})
 
 include(GNUInstallDirs)
 
-set(CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(ad_map_opendrive_reader REQUIRED CONFIG)

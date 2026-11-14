@@ -21,12 +21,4 @@ main = None
 
 def geo_str(pts):
     "..."
-    s = None
-    for pt in pts:
-        if s is None:
-            s = "["
-        else:
-            s += ", "
-        s += "(%.6f, %.6f)" % pt
-    s += "]"
-    return s
+    return "[" + ", ".join("(%.6f, %.6f)" % pt for pt in pts) + "]"
