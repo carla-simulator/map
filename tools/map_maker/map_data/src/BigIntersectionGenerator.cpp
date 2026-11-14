@@ -25,6 +25,11 @@ void BigIntersectionGenerator::generateBigIntersection(std::vector<MapDataId> in
                                                        double interpolationStepSize,
                                                        bool fullInterpolation)
 {
+  if (intersectionIds.empty())
+  {
+    return;
+  }
+
   for (auto const &intersectionId : intersectionIds)
   {
     Intersection &intersection = mStore.intersection(intersectionId);
@@ -35,6 +40,7 @@ void BigIntersectionGenerator::generateBigIntersection(std::vector<MapDataId> in
   newIntersection.mIntersectionType = IntersectionType::Complex;
 
   geometry::Point2d newCenter;
+  std::unordered_set<MapDataId> roadsToDelete;
   for (auto const &intersectionId : intersectionIds)
   {
     newCenter += mStore.point(mStore.intersection(intersectionId).mCenterPointId);
@@ -50,7 +56,7 @@ void BigIntersectionGenerator::generateBigIntersection(std::vector<MapDataId> in
             if (otherArm.connectedRoad == thisArm.connectedRoad)
             {
               connectRoad = false;
-              mStore.deleteRoad(thisArm.connectedRoad);
+              roadsToDelete.insert(thisArm.connectedRoad);
             }
           }
         }
@@ -61,6 +67,10 @@ void BigIntersectionGenerator::generateBigIntersection(std::vector<MapDataId> in
         newIntersection.mArms.push_back(thisArm);
       }
     }
+  }
+  for (auto const roadId : roadsToDelete)
+  {
+    mStore.deleteRoad(roadId);
   }
   for (auto const &intersectionId : intersectionIds)
   {
@@ -197,7 +207,22 @@ void BigIntersectionGenerator::detectBigIntersections(
           // In such case the same <bigIntersectionId> is given to the new intersection
           // (i.e. they are part of a big intersection already in the map)
           // If none of the intersections is on the map then the intersections form a new big intersection.
-          if (bigIntersectionMap.count(intersectionId) > 0)
+          if ((bigIntersectionMap.count(intersectionId) > 0) && (bigIntersectionMap.count(nextIntersectionId) > 0))
+          {
+            uint32_t const targetClusterId = bigIntersectionMap[intersectionId];
+            uint32_t const sourceClusterId = bigIntersectionMap[nextIntersectionId];
+            if (targetClusterId != sourceClusterId)
+            {
+              for (auto &entry : bigIntersectionMap)
+              {
+                if (entry.second == sourceClusterId)
+                {
+                  entry.second = targetClusterId;
+                }
+              }
+            }
+          }
+          else if (bigIntersectionMap.count(intersectionId) > 0)
           {
             bigIntersectionMap[nextIntersectionId] = bigIntersectionMap[intersectionId];
           }

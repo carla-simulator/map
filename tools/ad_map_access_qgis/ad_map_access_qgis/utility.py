@@ -73,6 +73,8 @@ def Predictions(pt, createMode, length, duration):
 
     default_radius = ad.physics.Distance(2.)
     mmpts_start = ad.map.match.AdMapMatching.findLanes(pt, default_radius)
+    if len(mmpts_start) == 0:
+        return None
 
     default_prediction_length = ad.physics.Distance(length)
     default_prediction_duration = ad.physics.Duration(duration)
@@ -96,6 +98,8 @@ def Route(start_pt, end_pt, createMode):
     default_radius = ad.physics.Distance(2.)
     mmpts_start = ad.map.match.AdMapMatching.findLanes(start_pt, default_radius)
     mmpts_dest = ad.map.match.AdMapMatching.findLanes(end_pt, default_radius)
+    if len(mmpts_start) == 0 or len(mmpts_dest) == 0:
+        return None
     para_start = ad.map.route.createRoutingPoint(mmpts_start[0].lane_point.para_point)
     para_dest = ad.map.route.createRoutingPoint(mmpts_dest[0].lane_point.para_point)
     routeResult = ad.map.route.planRoute(para_start, para_dest, entryMode)

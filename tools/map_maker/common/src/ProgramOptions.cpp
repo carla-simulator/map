@@ -22,8 +22,12 @@ namespace common {
 
 namespace po = ::boost::program_options;
 
-std::string getNameOfExecutable(char *executableCallingName)
+std::string getNameOfExecutable(char const *executableCallingName)
 {
+  if (executableCallingName == nullptr)
+  {
+    return {};
+  }
   ::boost::filesystem::path pathAndNameOfExecutable(executableCallingName);
   return pathAndNameOfExecutable.filename().string();
 }
@@ -58,7 +62,7 @@ bool ProgramOptions::parseOptions(int argc, char *argv[])
   po::store(po::command_line_parser(argc, argv).options(mAllOptions).positional(freeArgument).run(), vm);
   po::notify(vm);
 
-  mConfiguration.execName = getNameOfExecutable(argv[0]);
+  mConfiguration.execName = (argc > 0) ? getNameOfExecutable(argv[0]) : std::string{};
   if (mConfiguration.printVersion)
   {
     dumpVersion();
@@ -74,6 +78,11 @@ bool ProgramOptions::parseOptions(int argc, char *argv[])
   if (vm.count("config-file"))
   {
     std::ifstream settingsFile(configFileName);
+    if (!settingsFile.is_open())
+    {
+      std::cerr << "Error: Unable to open config-file \"" << configFileName << "\"\n";
+      return false;
+    }
     std::cout << "Reading config-file \"" << configFileName << "\"\n";
     po::store(po::parse_config_file(settingsFile, mSharedOptions), vm);
     po::notify(vm);

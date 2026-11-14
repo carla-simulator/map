@@ -7,6 +7,8 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "ad/map/maker/test_helper/StringTestHelper.hpp"
+#include <fstream>
+#include <sstream>
 #include <stdio.h>
 
 namespace ad {
@@ -116,7 +118,7 @@ void printStringDifferences(std::string const &expected, std::string const &actu
   }
   else
   {
-    printf("Either exected (size: %lu) or actual (size: %lu) is empty\n", expected.size(), actual.size());
+    printf("Either expected (size: %zu) or actual (size: %zu) is empty\n", expected.size(), actual.size());
   }
 }
 
@@ -169,31 +171,25 @@ bool testStringAndPrintDifference(std::string const &expected, std::string const
 
 bool readFile(char const *fileName, std::string &fileContent)
 {
-  FILE *input = fopen(fileName, "r");
-  if (input == nullptr)
+  if (fileName == nullptr)
   {
     return false;
   }
 
-  if (fseek(input, 0, SEEK_END) != 0)
+  std::ifstream input(fileName, std::ios::in | std::ios::binary);
+  if (!input.is_open())
   {
     return false;
   }
 
-  size_t fileSize = static_cast<size_t>(ftell(input));
-  rewind(input);
-
-  char *content = new char[fileSize + 1];
-  size_t readCount = fread(content, sizeof(char), fileSize, input);
-  if (readCount != fileSize)
+  std::ostringstream buffer;
+  buffer << input.rdbuf();
+  if (input.bad())
   {
-    delete[] content;
-    content = nullptr;
     return false;
   }
-  content[fileSize] = 0;
 
-  fileContent.assign(content);
+  fileContent = buffer.str();
   return true;
 }
 

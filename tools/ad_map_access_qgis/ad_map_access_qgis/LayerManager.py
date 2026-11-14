@@ -92,7 +92,7 @@ class LayerManager(object):
             request.setFilterFid(feature_id)
             for feature in self.layer.layer.getFeatures(request):
                 attributes = feature.attributes()
-                lane_id = attributes[0]
+                lane_id = ad.map.lane.LaneId(int(attributes[0]))
                 dirty = False
                 attribute_map = changed_attribute_values[feature_id]
                 for index in attribute_map:
@@ -101,7 +101,7 @@ class LayerManager(object):
                         dirty = True
                         attribute_changes_success = attribute_changes_success + 1
                     else:
-                        attribute_changes_fail = attribute_changes_fail
+                        attribute_changes_fail = attribute_changes_fail + 1
                 if dirty:
                     lane_changes = lane_changes + 1
                     Globs.dirty_lanes.append(lane_id)

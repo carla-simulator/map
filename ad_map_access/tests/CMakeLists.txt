@@ -23,7 +23,6 @@ set(TEST_SOURCES
   geometry/PolygonOperationTests.cpp
   intersection/MapSetup.cpp
   intersection/MapSetupTests.cpp
-  intersection/SyntheticIntersectionTestBase.cpp
   intersection/IntersectionTests.cpp
   intersection/IntersectionPriorityToRightLefthandTests.cpp
   intersection/IntersectionPriorityToRightSingaporeTests.cpp
@@ -55,7 +54,7 @@ set(TEST_SOURCES
   main.cpp
   ${GENERATED_TEST_SOURCES}
 )
-set_source_files_properties(${TEST_SOURCES_WITH_PRIVATE_ACCESS} PROPERITES COMPILE_FLAGS -fno-access-control)
+set_source_files_properties(${TEST_SOURCES_WITH_PRIVATE_ACCESS} PROPERTIES COMPILE_FLAGS -fno-access-control)
 
 add_executable(${EXEC_NAME} ${TEST_SOURCES})
 

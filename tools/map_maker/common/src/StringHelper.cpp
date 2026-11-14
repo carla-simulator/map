@@ -87,8 +87,11 @@ bool readStringWithOptionalQuotes(std::istream &input, std::string &result)
 
 std::string writeStringParam(std::string const &param)
 {
-  // do we nee any error handling?
-  if ((param.front() != '\"') && (param.back() != '\"'))
+  if (param.empty())
+  {
+    return "\"\"";
+  }
+  if ((param.size() < 2u) || (param.front() != '\"') || (param.back() != '\"'))
   {
     return {"\"" + param + "\""};
   }

@@ -22,15 +22,30 @@ MapDataStore::MapDataStore(common::LogFactory &logFactory)
 
 MapDataId MapDataStore::getOrCreateIdForPoint(geometry::Point2d const &point)
 {
-  auto found = mPointToId.find(point);
-  if (found != mPointToId.end())
+  int64_t const gx = static_cast<int64_t>(std::llround(point.x * cPointGridScale));
+  int64_t const gy = static_cast<int64_t>(std::llround(point.y * cPointGridScale));
+
+  for (int64_t dx = -1; dx <= 1; ++dx)
   {
-    return found->second;
+    for (int64_t dy = -1; dy <= 1; ++dy)
+    {
+      auto const cellIt = mPointGrid.find(PointGridKey{gx + dx, gy + dy});
+      if (cellIt != mPointGrid.end())
+      {
+        for (MapDataId const candidateId : cellIt->second)
+        {
+          if (point.squaredDistance(mPointIds.at(candidateId)) < cPointCompareSquaredEpsilon)
+          {
+            return candidateId;
+          }
+        }
+      }
+    }
   }
 
-  MapDataId id = getNextId();
-  mPointToId[point] = id;
+  MapDataId const id = getNextId();
   mPointIds[id] = point;
+  mPointGrid[PointGridKey{gx, gy}].push_back(id);
   return id;
 }
 
@@ -42,7 +57,8 @@ geometry::Point2d const &MapDataStore::point(MapDataId const id) const
 std::vector<MapDataId> MapDataStore::listOfPointIds() const
 {
   std::vector<MapDataId> result;
-  for (auto id : mPointIds)
+  result.reserve(mPointIds.size());
+  for (auto const &id : mPointIds)
   {
     result.push_back(id.first);
   }
@@ -75,13 +91,14 @@ PolyLine const &MapDataStore::polyLine(MapDataId const id) const
 
 PolyLine &MapDataStore::polyLine(MapDataId const id)
 {
-  return mPolyLines[id];
+  return mPolyLines.at(id);
 }
 
 std::vector<MapDataId> MapDataStore::listOfPolyLineIds() const
 {
   std::vector<MapDataId> result;
-  for (auto id : mPolyLines)
+  result.reserve(mPolyLines.size());
+  for (auto const &id : mPolyLines)
   {
     result.push_back(id.first);
   }
@@ -109,13 +126,14 @@ Lane const &MapDataStore::lane(MapDataId const id) const
 
 Lane &MapDataStore::lane(MapDataId const id)
 {
-  return mLanes[id];
+  return mLanes.at(id);
 }
 
 std::vector<MapDataId> MapDataStore::listOfLaneIds() const
 {
   std::vector<MapDataId> result;
-  for (auto id : mLanes)
+  result.reserve(mLanes.size());
+  for (auto const &id : mLanes)
   {
     result.push_back(id.first);
   }
@@ -163,7 +181,8 @@ Road &MapDataStore::road(MapDataId const id)
 std::vector<MapDataId> MapDataStore::listOfRoadIds() const
 {
   std::vector<MapDataId> result;
-  for (auto id : mRoads)
+  result.reserve(mRoads.size());
+  for (auto const &id : mRoads)
   {
     result.push_back(id.first);
   }
@@ -214,7 +233,8 @@ Intersection &MapDataStore::intersection(MapDataId const id)
 std::vector<MapDataId> MapDataStore::listOfIntersectionIds() const
 {
   std::vector<MapDataId> result;
-  for (auto id : mIntersections)
+  result.reserve(mIntersections.size());
+  for (auto const &id : mIntersections)
   {
     result.push_back(id.first);
   }
@@ -257,13 +277,14 @@ Landmark const &MapDataStore::landmark(MapDataId const id) const
 
 Landmark &MapDataStore::landmark(MapDataId const id)
 {
-  return mLandmarks[id];
+  return mLandmarks.at(id);
 }
 
 std::vector<MapDataId> MapDataStore::listOfLandmarkIds() const
 {
   std::vector<MapDataId> result;
-  for (auto id : mLandmarks)
+  result.reserve(mLandmarks.size());
+  for (auto const &id : mLandmarks)
   {
     result.push_back(id.first);
   }
@@ -273,12 +294,18 @@ std::vector<MapDataId> MapDataStore::listOfLandmarkIds() const
 
 void MapDataStore::transformToGCS(geometry::CoordinateTransform const &transformer)
 {
-  mPointToId.clear();
+  mPointGrid.clear();
   for (auto &pointEntry : mPointIds)
   {
     auto &p = pointEntry.second;
-    transformer.metricToGcs(p.x, p.y, p.y, p.x); // Points are stored as (longitude, latitude)
-    mPointToId[p] = pointEntry.first;
+    double lat = 0.;
+    double lon = 0.;
+    transformer.metricToGcs(p.x, p.y, lat, lon); // Points are stored as (longitude, latitude)
+    p.x = lon;
+    p.y = lat;
+    int64_t const gx = static_cast<int64_t>(std::llround(p.x * cPointGridScale));
+    int64_t const gy = static_cast<int64_t>(std::llround(p.y * cPointGridScale));
+    mPointGrid[PointGridKey{gx, gy}].push_back(pointEntry.first);
   }
 }
 

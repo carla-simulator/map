@@ -157,7 +157,7 @@ class ADMapQgsLayers(object):
                 "SUPPLEMENT_ARROW_APPLIES_UP_DOWN": "Zusatzzeichen_1000-31_-_beide_Richtungen_zwei_gegengerichtete_senkrechte_Pfeile_StVO_1992.svg",
                 "SUPPLEMENT_ARROW_APPLIES_LEFT_RIGHT_BICYCLE": "Zusatzzeichen_1000-32_-_Radfahrer_kreuzen_von_rechts_und_links_StVO_1997.svg",
                 "SUPPLEMENT_ARROW_APPLIES_UP_DOWN_BICYCLE": "Zusatzzeichen_1000-33_-_Radverkehr_im_Gegenverkehr_StVO_1997.svg",
-                "SUPPLEMENT_APPLIES_NEXT_N_KM": "Zusatzzeichen_1001-31_-_auf_..._km_600x330_StVO_1992.svg",
+                "SUPPLEMENT_APPLIES_NEXT_N_KM_TIME": "Zusatzzeichen_1001-31_-_auf_..._km_600x330_StVO_1992.svg",
                 "SUPPLEMENT_ENDS": "Zusatzzeichen_1012-31_-_Ende_600x330_StVO_1992.svg",
                 "SUPPLEMENT_RESIDENTS_ALLOWED": "Zusatzzeichen_1020-30_-_Anlieger_frei_600x330_StVO_1992.svg",
                 "SUPPLEMENT_BICYCLE_ALLOWED": "Zusatzzeichen_1022-10_-_Radfahrer_frei_StVO_1992.svg",
@@ -245,7 +245,8 @@ class ADMapQgsLayers(object):
             QgsField("Traffic Light Type", QVariant.String),
             QgsField("Traffic Sign Type", QVariant.String)]
         layer = WGS84SVGPointLayer(Globs.iface, title, svg_size, attrs, svg_resource, group)
-        layer_manager = LayerManagerLandmark(layer, landmark_type)
+        known_types = set(self.LANDMARK_TYPE.keys()) - {"LANDMARK"} if landmark_type == "LANDMARK" else None
+        layer_manager = LayerManagerLandmark(layer, landmark_type, known_types)
         self.layer[title] = layer
         self.layer_managers[title] = layer_manager
         self.layer_managers_landmark.append(layer_manager)
@@ -267,28 +268,21 @@ class ADMapQgsLayers(object):
 
     def __add_lane_surface_layer__(self, typ, hov, color):
         "..."
-        lane_ids = []
-        lane_list = ad.map.lane.getLanes()
-        for lane_id in lane_list:
-            lane = ad.map.lane.getLane(lane_id)
-            if (ad.map.lane.satisfiesFilter(lane, typ, hov)):
-                lane_ids.append(lane_id)
-
-        attr_keys = []
-        attr_keys.append(QgsField("Id", QVariant.LongLong))
-        attr_keys.append(QgsField("Type", QVariant.String))
-        attr_keys.append(QgsField("HOV", QVariant.String))
-        attr_keys.append(QgsField("Road ID", QVariant.Int))
-        attr_keys.append(QgsField("Lane Section Index", QVariant.Int))
-        attr_keys.append(QgsField("Lane Index", QVariant.Int))
-        if lane_ids is not None:
-            title = self.lane_surface_layer_name(typ, hov)
-            group = self.layer_groups[self.LANES]
-            layer = WGS84SurfaceLayer(Globs.iface, title, color, attr_keys, group)
-            layer_manager = LayerManagerLaneSurface(layer)
-            self.layer[title] = layer
-            self.layer_managers[title] = layer_manager
-            self.layer_managers_surface.append(layer_manager)
+        attr_keys = [
+            QgsField("Id", QVariant.LongLong),
+            QgsField("Type", QVariant.String),
+            QgsField("HOV", QVariant.String),
+            QgsField("Road ID", QVariant.Int),
+            QgsField("Lane Section Index", QVariant.Int),
+            QgsField("Lane Index", QVariant.Int),
+        ]
+        title = self.lane_surface_layer_name(typ, hov)
+        group = self.layer_groups[self.LANES]
+        layer = WGS84SurfaceLayer(Globs.iface, title, color, attr_keys, group)
+        layer_manager = LayerManagerLaneSurface(layer)
+        self.layer[title] = layer
+        self.layer_managers[title] = layer_manager
+        self.layer_managers_surface.append(layer_manager)
 
     def __add_lane_speed_layer__(self):
         "..."
@@ -398,11 +392,10 @@ class ADMapQgsLayers(object):
         "..."
         to_refresh = []
         landmark = ad.map.landmark.getLandmark(landmark_id)
-        for layer_name in layer_managers_landmark:
-            layer = self.layer[layer_name]
-            manager = self.layer_managers[layer_name]
+        for manager in self.layer_managers_landmark:
+            manager.remove_old_feature(landmark_id)
             manager.add(landmark)
-            to_refresh.append(layer)
+            to_refresh.append(manager)
         return to_refresh
 
     def update_lane_layers(self, lane_id):
@@ -420,10 +413,9 @@ class ADMapQgsLayers(object):
         to_refresh = []
         lane = ad.map.lane.getLane(lane_id)
         for layer_name in layer_names:
-            layer = self.layer[layer_name]
             manager = self.layer_managers[layer_name]
             manager.add(lane)
-            to_refresh.append(layer)
+            to_refresh.append(manager)
         return to_refresh
 
     def update_lane_main_layers(self, lane_id):
@@ -457,7 +449,7 @@ class ADMapQgsLayers(object):
         "..."
         lane = ad.map.lane.getLane(lane_id)
         to_refresh = self.__remove_lane_from__(lane_id, self.layer_managers_surface)
-        typ = lane.type
+        typ = str(lane.type)
         hov = ad.map.lane.getHOV(lane) > 1
         layer_manager_name = self.lane_surface_layer_name(typ, hov)
         layer_manager = self.layer_managers[layer_manager_name]
@@ -503,11 +495,9 @@ class ADMapQgsLayers(object):
 
     def lane_surface_layer_name(self, typ, hov):
         "..."
-        if typ not in self.lane_types():
-            title = "OTHER"
-        else:
-            title = typ
-        return title
+        if typ not in self.LANE_SURFACE_COLOR:
+            return "OTHER"
+        return typ
 
     def speed_layer_manager(self, mpers):
         "..."

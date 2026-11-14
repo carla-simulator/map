@@ -55,22 +55,24 @@ class MapSnapper(QgsMapToolEmitPoint):
             lane_ids_int = self.__find_lane_ids_at_point__(event.pos())
             if len(lane_ids_int) > 0:
                 lla_left = GetLaneEdgeLeft(ad.map.lane.LaneId(lane_ids_int[0]))
-                if lla_left is not None:
+                if lla_left is not None and len(lla_left) > 0:
                     alt_sum = 0
                     for lla in lla_left:
                         alt_sum = alt_sum + lla.altitude.mAltitude
                     self.altitude = alt_sum / len(lla_left)
                     Globs.log.info("Default altitude set to " + str(self.altitude))
                 else:
-                    Globs.log.error("Cannot get edge for lane " + str(lane_id_int))
+                    Globs.log.error("Cannot get edge for lane " + str(lane_ids_int[0]))
             else:
                 Globs.log.error("Cannot find any lane at that point.")
 
     def getGeoPointFromRaw(self, raw_pt):
+        lon = ad.map.point.Longitude(raw_pt.x())
+        lat = ad.map.point.Latitude(raw_pt.y())
         if self.altitude_setter_active:
-            pt_geo = ad.map.point.createGeoPoint(raw_pt.x(), raw_pt.y(), self.altitude)
+            pt_geo = ad.map.point.createGeoPoint(lon, lat, ad.map.point.Altitude(self.altitude))
         else:
-            pt_geo = ad.map.point.createGeoPoint(raw_pt.x(), raw_pt.y(), ad.map.point.AltitudeUnknown)
+            pt_geo = ad.map.point.createGeoPoint(lon, lat, ad.map.point.AltitudeUnknown)
         return pt_geo
 
     def snap(self, raw_pt):

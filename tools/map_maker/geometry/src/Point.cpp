@@ -61,7 +61,7 @@ Point &Point::operator*=(double const &scalar)
   return *this;
 }
 
-bool Point::operator!=(Point const &other)
+bool Point::operator!=(Point const &other) const
 {
   return !(*this == other);
 }

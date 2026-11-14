@@ -27,7 +27,13 @@ if (NOT OSMIUM_FOUND)
 
   configure_file(libosmium-cmake.txt.in libosmium-download/CMakeLists.txt)
   execute_process(COMMAND "${CMAKE_COMMAND}" . RESULT_VARIABLE result WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/libosmium-download")
+  if(result)
+    message(FATAL_ERROR "Configuring libosmium download failed: ${result}")
+  endif()
   execute_process(COMMAND "${CMAKE_COMMAND}" --build . RESULT_VARIABLE result WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/libosmium-download")
+  if(result)
+    message(FATAL_ERROR "Building libosmium download failed: ${result}")
+  endif()
 
   set(OSMIUM_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/libosmium-src/include)
 endif()
@@ -36,14 +42,17 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 find_library(EXPAT NAMES "expat")
+if(NOT EXPAT)
+  message(FATAL_ERROR "Unable to find libexpat. Maybe you need to install libexpat1-dev.")
+endif()
 
-set(CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_compile_options(-Wall -Wextra -Werror -Wconversion -pedantic)
 
-if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 9.0.0)
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 9.0.0)
   add_compile_options(-Wno-final-dtor-non-final-class)
 endif()
 

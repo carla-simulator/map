@@ -16,7 +16,7 @@ namespace osm_converter {
 OsmMultiLaneInterpolation::OsmMultiLaneInterpolation(OsmMultiLane const &start, OsmMultiLane const &end)
   : mStart(start)
   , mEnd(end)
-  , mNumberOfLanesDifference(static_cast<int64_t>(mEnd.mWidths.size() - mStart.mWidths.size()))
+  , mNumberOfLanesDifference(static_cast<int64_t>(mEnd.mWidths.size()) - static_cast<int64_t>(mStart.mWidths.size()))
 {
   mFrom = mStart;
   mTo = mEnd;
@@ -46,6 +46,10 @@ OsmMultiLaneInterpolation::OsmMultiLaneInterpolation(OsmMultiLane const &start, 
 
 bool OsmMultiLaneInterpolation::hasNext() const
 {
+  if (mNumberOfLanesDifference < 0)
+  {
+    return (mTo.mWidths.size() > mEnd.mWidths.size() + 1u);
+  }
   return (mTo.mWidths.size() != mEnd.mWidths.size());
 }
 
@@ -68,7 +72,7 @@ void OsmMultiLaneInterpolation::next()
   {
     mTo.mWidths.pop_back();
     mFrom = mTo;
-    if (mTo.mWidths.size() != mEnd.mWidths.size())
+    if (!mTo.mWidths.empty())
     {
       mTo.mWidths.back() = 0.;
     }

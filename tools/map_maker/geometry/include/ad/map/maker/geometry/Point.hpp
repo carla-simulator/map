@@ -44,7 +44,7 @@ struct Point
     return (this->x == other.x && this->y == other.y && this->z == other.z);
   }
 
-  bool operator!=(Point const &other);
+  bool operator!=(Point const &other) const;
 };
 
 // really needed?

@@ -42,6 +42,10 @@ struct OsmTransitionDetector
   void generateTransitionOffsets(map_data::MapDataStore const &store,
                                  std::vector<RoadGeometry> const &roadsGeometry,
                                  map_data::MapDataId const intersectionId);
+  void generateTransitionOffsets(map_data::MapDataStore const &store,
+                                 std::vector<RoadGeometry> const &roadsGeometry,
+                                 std::unordered_map<map_data::MapDataId, std::size_t> const &roadGeometryIndex,
+                                 map_data::MapDataId const intersectionId);
 
   /**
    * @brief Retrieve the offset for the given road.
@@ -64,6 +68,8 @@ private:
   bool mGenerated{false}; // sets to true if the offsets are already available for use.
 
   bool setRoadsGeometry(std::vector<RoadGeometry> const &roadsGeometry);
+  bool setRoadsGeometry(std::vector<RoadGeometry> const &roadsGeometry,
+                        std::unordered_map<map_data::MapDataId, std::size_t> const &roadGeometryIndex);
   void calculateArmsOrientation();
 
   /**

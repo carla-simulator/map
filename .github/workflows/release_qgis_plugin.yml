@@ -8,8 +8,13 @@ on:
   pull_request:
     branches: main
 
+permissions:
+  contents: read
+
 jobs:
   publish:
+    permissions:
+      contents: write
     name: Publish AD-Map QGIS Plugin
     runs-on: ubuntu-22.04
 

@@ -58,7 +58,7 @@ class LayerManagerLaneContactType(LayerManager):
                     new_contact_type = ad.map.lane.ContactType.values[contact_type_key]
                 if str(contact_type_value) == self.contact_type:
                     old_contact_type = ad.map.lane.ContactType.values[contact_type_key]
-            from_lane_id = ad.map.lane.LaneId(int(lane_id))
+            from_lane_id = lane_id if isinstance(lane_id, ad.map.lane.LaneId) else ad.map.lane.LaneId(int(lane_id))
             to_lane_id = ad.map.lane.LaneId(int(attributes[1]))
             if new_contact_type != ad.map.lane.ContactType.INVALID and old_contact_type != ad.map.lane.ContactType.INVALID:
                 succeeded = ad.map.lane.switchLaneContact(from_lane_id, to_lane_id, old_contact_type, new_contact_type)

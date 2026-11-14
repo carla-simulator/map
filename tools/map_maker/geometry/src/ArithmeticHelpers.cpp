@@ -26,7 +26,7 @@ vec2d::vec2d(Point const &first, Point const &second)
 }
 
 vec2d::vec2d(double const len, double const suv1x, double const suv1y)
-  : vec2d(len * suv1y, len * suv1x)
+  : vec2d(len * suv1x, len * suv1y)
 {
 }
 
@@ -44,8 +44,11 @@ void vec2d::scale(double const factor)
 void vec2d::normalize()
 {
   const double len = length();
-  x /= len;
-  y /= len;
+  if (len > 0.0)
+  {
+    x /= len;
+    y /= len;
+  }
 }
 
 std::string vec2d::toString() const
@@ -80,12 +83,17 @@ double dot_product(vec2d const &u, vec2d const &v)
 
 double angle(vec2d const &u, vec2d const &v)
 {
-  auto const arg = dot_product(u, v) / (u.length() * v.length());
-  if (std::fabs(arg - 1.0) <= 10e-6)
+  double const denom = u.length() * v.length();
+  if (!(denom > 0.0))
   {
     return 0.0;
   }
-  else if (std::fabs(arg + 1.0) <= 10e-6)
+  auto const arg = dot_product(u, v) / denom;
+  if (arg >= 1.0 - 10e-6)
+  {
+    return 0.0;
+  }
+  else if (arg <= -1.0 + 10e-6)
   {
     return M_PI;
   }
@@ -108,7 +116,8 @@ double directedAngle(Point const &a, Point const &b)
 
 vec2d rotated90Vector(vec2d const &v, Side const side, double const len)
 {
-  if (!std::isnormal(v.length()))
+  double const vLen = v.length();
+  if (!(vLen > 0.0) || !std::isfinite(vLen))
   {
     throw std::logic_error{std::string{"rotated90Vector() error, invalid vector passed: "} + v.toString()};
   }
@@ -136,7 +145,9 @@ vec2d bisectingVector(vec2d const &u, vec2d const &v, double const len)
 
 vec2d bisectingVector(vec2d const &u, vec2d const &v, Side const side, double const len)
 {
-  if (!std::isnormal(u.length()) || !std::isnormal(v.length()))
+  double const uLen = u.length();
+  double const vLen = v.length();
+  if (!(uLen > 0.0) || !std::isfinite(uLen) || !(vLen > 0.0) || !std::isfinite(vLen))
   {
     throw std::invalid_argument{std::string{"bisectingVector() error, invalid vector passed: "} + v.toString()};
   }
@@ -157,7 +168,7 @@ vec2d bisectingVector(vec2d const &u, vec2d const &v, Side const side, double co
     rotate(-M_PI_2 + theta * turn, bisectingVector);
   }
 
-  if (!std::isnormal(bisectingVector.x) || !std::isnormal(bisectingVector.y))
+  if (!std::isfinite(bisectingVector.x) || !std::isfinite(bisectingVector.y))
   {
     throw std::logic_error{"bisectingVector() error, resulting vector is NaN"};
   }
@@ -253,7 +264,7 @@ straight2d parallelShiftedLineCoefs(Point first, Point second, double const lane
 
 void move(vec2d const &offset, straight2d &straight)
 {
-  straight.C = (-straight.B) * offset.x + straight.C + offset.y;
+  straight.C -= straight.A * offset.x + straight.B * offset.y;
 }
 
 bool haveCrossingPoint(straight2d first, straight2d second)
@@ -292,20 +303,20 @@ Point closerCrossingPoint(Point const &p1, Point const &p2, circle2d const &c)
 
   double det = B * B - 4 * A * C;
 
-  if (A < 0.0000001 || det < 0)
+  if (A < 0.0000001 || det < 0.0)
   {
     throw std::runtime_error{"closerCrossingPoint() - no crossing point found"};
   }
-  else if (det == 0)
+
+  double const sqrtDet = std::sqrt(det);
+  double const t1 = (-B - sqrtDet) / (2.0 * A);
+  double const t2 = (-B + sqrtDet) / (2.0 * A);
+  double const t = (t1 >= 0.0) ? t1 : t2;
+  if (t < 0.0)
   {
-    double t = -B / (2 * A);
-    return Point{NAN, NAN, p1.x + t * dx, p1.y + t * dy, 0.0};
+    throw std::runtime_error{"closerCrossingPoint() - no crossing point found"};
   }
-  else
-  {
-    double t = ((-B + std::sqrt(det)) / (2 * A));
-    return Point{NAN, NAN, p1.x + t * dx, p1.y + t * dy, 0.0};
-  }
+  return Point{NAN, NAN, p1.x + t * dx, p1.y + t * dy, 0.0};
 }
 
 } // namespace geometry

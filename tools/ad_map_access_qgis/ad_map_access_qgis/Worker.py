@@ -20,7 +20,7 @@ class Worker(QtCore.QObject):
     progress = QtCore.pyqtSlot(int)
 
     def __init__(self, title, layer, runner):
-        super(QtCore.QObject, self).__init__()
+        super().__init__()
         self.title = title
         self.layer = layer
         self.runner = runner

@@ -7,6 +7,7 @@
 // ----------------- END LICENSE BLOCK -----------------------------------
 
 #include "ad/map/maker/geometry/Clothoid.hpp"
+#include <algorithm>
 #include <cmath>
 
 namespace ad {
@@ -16,7 +17,7 @@ namespace geometry {
 
 bool Clothoid::interpolate(double startRadius, double endRadius, double startAngle, double endAngle)
 {
-  if (interpolationStep < 0.001)
+  if ((interpolationStep < 0.001) || (startRadius <= 0.) || (endRadius <= 0.))
   {
     return false;
   }
@@ -24,56 +25,37 @@ bool Clothoid::interpolate(double startRadius, double endRadius, double startAng
   interpolatedPoints.clear();
 
   // calculate the clothoid traversing parameter
-  double lambda{1.};
   double const deltaAngle = endAngle - startAngle;
-  if (deltaAngle < 0.) // clothoid bend to right
+  if (std::abs(deltaAngle) < 1e-9)
   {
-    lambda = -1.;
+    return false;
   }
+  double const lambda = (deltaAngle < 0.) ? -1. : 1.;
 
-  // clothoid parameters A = R*sqrt(2*deltAngle) in this case no zero curvature
-  // radius if given and the fromula is different
-  double const endRadiusSquared = endRadius * endRadius;
-  double const startRadiusSquared = startRadius * startRadius;
-  double const endStartRadiusProduct = endRadius * startRadius;
-  double const endStartRadiusSubtracted = endRadiusSquared - startRadiusSquared;
-  double const clothoidConstantA
-    = endStartRadiusProduct * std::sqrt(2. * std::abs(deltaAngle / endStartRadiusSubtracted));
-  double const clothoidConstantASquared = clothoidConstantA * clothoidConstantA;
+  // Linearly varying curvature along forward arc-length sigma in [0, totalLength]:
+  //   k(sigma) = lambda * (k1 + ((k2 - k1) / totalLength) * sigma)
+  //   totalLength = 2 * |deltaAngle| / (k1 + k2)
+  // This handles tightening (startRadius > endRadius), opening (startRadius < endRadius),
+  // and constant-curvature (startRadius == endRadius) arcs identically without division by zero.
+  double const k1 = 1. / startRadius;
+  double const k2 = 1. / endRadius;
+  double const totalLength = (2. * std::abs(deltaAngle)) / (k1 + k2);
+  double const curvatureSlope = (k2 - k1) / totalLength;
 
-  // length of clothoid till the starting point
-  double const l1 = clothoidConstantASquared / startRadius;
-
-  // length of clothoid till the end point
-  double const l2 = clothoidConstantASquared / endRadius;
-
-  // road5 reports l2 - l1 as its length ...
-  // angle in the zero curviture (real begining of the clothoid)
-  double const angle0 = startAngle - lambda * ((clothoidConstantASquared / 2) / startRadiusSquared);
-  // numerically estimating by Euler's method
-  Point2d current{};
-  for (double currLen = l1; currLen < l2; currLen += interpolationStep)
-  {
-    double const snA = currLen / clothoidConstantA;
-    double const snASquared = snA * snA;
-    double const argument = lambda / 2 * snASquared + angle0;
-    current.x = current.x + interpolationStep * cos(argument);
-    current.y = current.y + interpolationStep * sin(argument);
-    interpolatedPoints.push_back(current);
-  }
-  double const snA = l2 / clothoidConstantA;
-  double const snASquared = snA * snA;
-  double const argument = lambda / 2 * snASquared + angle0;
-  current.x = current.x + interpolationStep * cos(argument);
-  current.y = current.y + interpolationStep * sin(argument);
+  Point2d current = origin;
   interpolatedPoints.push_back(current);
 
-  // and finally move points to correct location
-  Point2d translation = origin - interpolatedPoints[0];
-  for (Point2d &p : interpolatedPoints)
+  double sigma = 0.;
+  while (sigma < totalLength - 1e-9)
   {
-    p += translation;
+    double const step = std::min(interpolationStep, totalLength - sigma);
+    double const argument = startAngle + lambda * (k1 * sigma + 0.5 * curvatureSlope * sigma * sigma);
+    current.x += step * std::cos(argument);
+    current.y += step * std::sin(argument);
+    interpolatedPoints.push_back(current);
+    sigma += step;
   }
+
   return true;
 }
 

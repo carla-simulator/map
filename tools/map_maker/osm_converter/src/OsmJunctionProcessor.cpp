@@ -149,7 +149,7 @@ void OsmJunctionProcessor::compileListOfJunctionCenters()
   }
 }
 
-std::unordered_set<::osmium::object_id_type> OsmJunctionProcessor::allJunctions() const
+std::unordered_set<::osmium::object_id_type> const &OsmJunctionProcessor::allJunctions() const
 {
   return mJunctionCenters;
 }
@@ -208,7 +208,7 @@ bool OsmJunctionProcessor::uniquePredecessorForWay(::osmium::object_id_type cons
   return false;
 }
 
-std::unordered_set<OsmJunctionArm>
+std::unordered_set<OsmJunctionArm> const &
 OsmJunctionProcessor::junctionArms(::osmium::object_id_type const junctionCenter) const
 {
   return mJunctionArms.at(junctionCenter);
@@ -217,6 +217,10 @@ OsmJunctionProcessor::junctionArms(::osmium::object_id_type const junctionCenter
 void OsmJunctionProcessor::logJunction(::osmium::object_id_type const junctionCenter)
 {
   auto entry = mJunctionArms.find(junctionCenter);
+  if (entry == mJunctionArms.end())
+  {
+    return;
+  }
   mLog(common::LogLevel::Verbose) << "Center: " << entry->first << "\n";
   for (OsmJunctionArm const &arm : entry->second)
   {
@@ -233,8 +237,8 @@ void OsmJunctionProcessor::logJunction(::osmium::object_id_type const junctionCe
 OsmJunctionArm OsmJunctionProcessor::getOsmArm(::osmium::object_id_type centerNode,
                                                ::osmium::object_id_type entryNode) const
 {
-  auto osmJunctionEntries = junctionArms(centerNode);
-  for (auto osmArm : osmJunctionEntries)
+  auto const &osmJunctionEntries = junctionArms(centerNode);
+  for (auto const &osmArm : osmJunctionEntries)
   {
     if (osmArm.mArmId == entryNode)
     {
@@ -250,7 +254,7 @@ bool OsmJunctionProcessor::armIsRamp(OsmJunctionArm const &arm) const
 {
   ::osmium::Way const &way = mStore->way(arm.mWayId);
   const char *highway = way.tags()["highway"];
-  if (common::endsWith(highway, "_link"))
+  if ((highway != nullptr) && common::endsWith(highway, "_link"))
   {
     return true;
   }

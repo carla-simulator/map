@@ -19,4 +19,4 @@ class Runner(QtCore.QObject):
 
     def __init__(self):
         "..."
-        super(QtCore.QObject, self).__init__()
+        super().__init__()

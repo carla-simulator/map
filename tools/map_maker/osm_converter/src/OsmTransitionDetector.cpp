@@ -87,24 +87,53 @@ bool isLinkRoad(map_data::Road const &road)
   return road.mRoadType == map_data::RoadType::Link;
 }
 
-std::size_t findRoadGeometry(std::vector<RoadGeometry> const &roadsGeometry, map_data::MapDataId roadId)
+bool findRoadGeometry(std::vector<RoadGeometry> const &roadsGeometry,
+                      map_data::MapDataId roadId,
+                      std::size_t &foundIndex)
 {
-  for (uint32_t index = 0; index < roadsGeometry.size(); ++index)
+  for (std::size_t index = 0; index < roadsGeometry.size(); ++index)
   {
     if (roadsGeometry[index].roadId == roadId)
     {
-      return index;
+      foundIndex = index;
+      return true;
     }
   }
-  throw std::runtime_error("No road geometry found for road " + std::to_string(roadId));
+  return false;
 }
 
 bool OsmTransitionDetector::setRoadsGeometry(std::vector<RoadGeometry> const &roadsGeometry)
 {
+  mRoadsGeometry.clear();
+  mRoadsGeometry.reserve(mArms.size());
   for (auto const &arm : mArms)
   {
-    auto const roadGeometryIndex = findRoadGeometry(roadsGeometry, arm.connectedRoad);
+    std::size_t roadGeometryIndex = 0u;
+    if (!findRoadGeometry(roadsGeometry, arm.connectedRoad, roadGeometryIndex)
+        || (roadsGeometry[roadGeometryIndex].centerLineGeometry.points.size() < 2u))
+    {
+      return false;
+    }
     mRoadsGeometry.push_back(roadsGeometry[roadGeometryIndex]);
+  }
+  return true;
+}
+
+bool OsmTransitionDetector::setRoadsGeometry(
+  std::vector<RoadGeometry> const &roadsGeometry,
+  std::unordered_map<map_data::MapDataId, std::size_t> const &roadGeometryIndex)
+{
+  mRoadsGeometry.clear();
+  mRoadsGeometry.reserve(mArms.size());
+  for (auto const &arm : mArms)
+  {
+    auto const it = roadGeometryIndex.find(arm.connectedRoad);
+    if ((it == roadGeometryIndex.end()) || (it->second >= roadsGeometry.size())
+        || (roadsGeometry[it->second].centerLineGeometry.points.size() < 2u))
+    {
+      return false;
+    }
+    mRoadsGeometry.push_back(roadsGeometry[it->second]);
   }
   return true;
 }
@@ -115,6 +144,11 @@ void OsmTransitionDetector::calculateArmsOrientation()
   {
     auto const &geometry = mRoadsGeometry[armIndex];
     auto const &geometryPoints = geometry.centerLineGeometry.points;
+    if (geometryPoints.size() < 2u)
+    {
+      mArms[armIndex].orientation = 0.;
+      continue;
+    }
 
     double armOrientation{0.};
     if (mArms[armIndex].isEntry)
@@ -161,7 +195,7 @@ bool OsmTransitionDetector::isRampJunction(map_data::MapDataStore const &store, 
     }
   }
 
-  if (linkArmIndexes.size() != 1)
+  if ((linkArmIndexes.size() != 1) || (mergingArmIndexes.size() < 2))
   {
     return false;
   }
@@ -206,7 +240,7 @@ bool OsmTransitionDetector::isMergeJunction(map_data::MapDataStore const &store,
     }
   }
 
-  if (twoWayArmIndexes.size() != 1)
+  if ((twoWayArmIndexes.size() != 1) || (oneWayArmIndexes.size() < 2))
   {
     return false;
   }
@@ -339,15 +373,23 @@ bool OsmTransitionDetector::generateRampJunctionOffset(map_data::MapDataStore co
 
   if (linkArm.isEntry)
   {
+    std::size_t const outLanes = lanesOut(mergingRoad, mergingArm.isEntry);
+    if (outLanes == 0u)
+    {
+      return false;
+    }
     mergingArmWidth = widthOut(mergingRoad, mergingArm.isEntry) - defaultRoadOffset(mergingRoad);
-    widthOfMergingLane
-      = widthOut(mergingRoad, mergingArm.isEntry) / static_cast<double>(lanesOut(mergingRoad, mergingArm.isEntry));
+    widthOfMergingLane = widthOut(mergingRoad, mergingArm.isEntry) / static_cast<double>(outLanes);
   }
   else
   {
+    std::size_t const inLanes = lanesIn(mergingRoad, mergingArm.isEntry);
+    if (inLanes == 0u)
+    {
+      return false;
+    }
     mergingArmWidth = widthIn(mergingRoad, mergingArm.isEntry) - defaultRoadOffset(mergingRoad);
-    widthOfMergingLane
-      = widthIn(mergingRoad, mergingArm.isEntry) / static_cast<double>(lanesIn(mergingRoad, mergingArm.isEntry));
+    widthOfMergingLane = widthIn(mergingRoad, mergingArm.isEntry) / static_cast<double>(inLanes);
   }
 
   mTransitionOffsetForRoad[linkRoadId] = -(mergingArmWidth - linkLanes * widthOfMergingLane);
@@ -372,14 +414,59 @@ void OsmTransitionDetector::generateTransitionOffsets(map_data::MapDataStore con
                                                       std::vector<RoadGeometry> const &roadsGeometry,
                                                       map_data::MapDataId const intersectionId)
 {
-  mArms = store.intersection(intersectionId).mArms;
-
   if (mGenerated)
   {
     return;
   }
 
+  mArms = store.intersection(intersectionId).mArms;
+
   if (!setRoadsGeometry(roadsGeometry))
+  {
+    generateDefaultOffset(store);
+    return;
+  }
+
+  calculateArmsOrientation();
+
+  if (mArms.size() != 3u)
+  {
+    generateDefaultOffset(store);
+    return;
+  }
+
+  if (generateYJunctionOffset(store))
+  {
+    return;
+  }
+  else if (generateTJunctionOffset(store))
+  {
+    return;
+  }
+  else if (generateRampJunctionOffset(store))
+  {
+    return;
+  }
+  else
+  {
+    generateDefaultOffset(store);
+  }
+}
+
+void OsmTransitionDetector::generateTransitionOffsets(
+  map_data::MapDataStore const &store,
+  std::vector<RoadGeometry> const &roadsGeometry,
+  std::unordered_map<map_data::MapDataId, std::size_t> const &roadGeometryIndex,
+  map_data::MapDataId const intersectionId)
+{
+  if (mGenerated)
+  {
+    return;
+  }
+
+  mArms = store.intersection(intersectionId).mArms;
+
+  if (!setRoadsGeometry(roadsGeometry, roadGeometryIndex))
   {
     generateDefaultOffset(store);
     return;

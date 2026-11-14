@@ -55,7 +55,7 @@ public:
    */
   void extractPois(std::shared_ptr<OsmObjectStore> objectStore);
 
-  std::unordered_set<::osmium::object_id_type> getPois(PoiType poiType) const;
+  std::unordered_set<::osmium::object_id_type> const &getPois(PoiType poiType) const;
 
   struct TrafficLightAttributes
   {

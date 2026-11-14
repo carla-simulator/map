@@ -10,6 +10,8 @@
 #include <ad/map/maker/common/LogChannel.hpp>
 #include <ad/map/maker/common/LogFactory.hpp>
 #include <ad/map/maker/geometry/LineCoordinateSystem.hpp>
+#include <utility>
+#include <vector>
 #include "ad/map/maker/osm_converter/OsmObjectStore.hpp"
 #include "ad/map/maker/osm_converter/OsmPoiExtractor.hpp"
 #include "ad/map/maker/osm_converter/PointStore.hpp"
@@ -35,29 +37,30 @@ OsmPoiProcessor::OsmPoiProcessor(common::LogFactory &logFactory)
 
 bool OsmPoiProcessor::hasPoisForSegment(::osmium::object_id_type first, ::osmium::object_id_type last) const
 {
-  if (mSegmentToPoiMap.count(first) == 0)
+  auto const firstIter = mSegmentToPoiMap.find(first);
+  if (firstIter == mSegmentToPoiMap.end())
   {
     return false;
   }
 
-  if (mSegmentToPoiMap.at(first).count(last) == 0)
-  {
-    return false;
-  }
-
-  return true;
+  return firstIter->second.find(last) != firstIter->second.end();
 }
 
 std::unordered_set<::osmium::object_id_type> OsmPoiProcessor::poisForSegment(::osmium::object_id_type first,
                                                                              ::osmium::object_id_type last) const
 {
-  std::unordered_set<::osmium::object_id_type> result;
-  if (!hasPoisForSegment(first, last))
+  auto const firstIter = mSegmentToPoiMap.find(first);
+  if (firstIter == mSegmentToPoiMap.end())
   {
-    return result;
+    return {};
+  }
+  auto const lastIter = firstIter->second.find(last);
+  if (lastIter == firstIter->second.end())
+  {
+    return {};
   }
 
-  return mSegmentToPoiMap.at(first).at(last);
+  return lastIter->second;
 }
 
 /*
@@ -72,27 +75,45 @@ void OsmPoiProcessor::processPoisForWay(std::shared_ptr<OsmObjectStore> objectSt
                                         std::unordered_set<::osmium::object_id_type> const &listOfPoi,
                                         PoiType typeOfPoi)
 {
+  if (listOfPoi.empty())
+  {
+    return;
+  }
+
+  std::vector<std::pair<::osmium::object_id_type, geometry::Point2d>> poiLocations;
+  poiLocations.reserve(listOfPoi.size());
+  for (::osmium::object_id_type poiId : listOfPoi)
+  {
+    auto const &poiPt = pointStore->point(poiId);
+    poiLocations.emplace_back(poiId, geometry::Point2d{poiPt.x, poiPt.y});
+  }
+
   for (auto wayId : objectStore->allWayIds())
   {
     ::osmium::Way const &way = objectStore->way(wayId);
     auto const &nodes = way.nodes();
-    for (uint32_t index = 0u; index < nodes.size() - 1; ++index)
+    if (nodes.size() < 2u)
     {
+      continue;
+    }
+    for (std::size_t index = 0u; index + 1u < nodes.size(); ++index)
+    {
+      auto const startRef = nodes[index].ref();
+      auto const endRef = nodes[index + 1u].ref();
       // Create a local coordinate system for each pair of nodes of the segment
-      auto start = pointStore->point(nodes[index].ref());
-      auto end = pointStore->point(nodes[index + 1].ref());
+      auto const &start = pointStore->point(startRef);
+      auto const &end = pointStore->point(endRef);
       geometry::LineCoordinateSystem lcs(geometry::Point2d{start.x, start.y}, geometry::Point2d{end.x, end.y});
       // ... and project all POIs to that coordinate system
-      for (::osmium::object_id_type poiId : listOfPoi)
+      for (auto const &poiEntry : poiLocations)
       {
-        auto poiLoc = geometry::Point2d{pointStore->point(poiId).x, pointStore->point(poiId).y};
-        geometry::Point2d projection = lcs.projectToLineCoordinateSystem(poiLoc);
+        geometry::Point2d const projection = lcs.projectToLineCoordinateSystem(poiEntry.second);
         if (lcs.pointIsInsideSegment(projection, 0.))
         {
           geometry::Point p;
           p.x = projection.x;
           p.y = projection.y;
-          mPoiToSegmentMapping[poiId].update(nodes[index].ref(), nodes[index + 1].ref(), p, typeOfPoi, poiId);
+          mPoiToSegmentMapping[poiEntry.first].update(startRef, endRef, p, typeOfPoi, poiEntry.first);
         }
       }
     }
@@ -101,25 +122,66 @@ void OsmPoiProcessor::processPoisForWay(std::shared_ptr<OsmObjectStore> objectSt
 
 /*
  * Map POIs to the closest line segment
- * Iterate over all types of POIs
- *  - if there are any POIs of given type, iterator over all ways
- *
- * Maybe we should change this for use in map_data, since there we will only transfer all related information
+ * Collect all POIs across all configured types once and perform a single pass over ways/segments.
  */
 void OsmPoiProcessor::processPois(std::shared_ptr<OsmPoiExtractor> poiExtractor,
                                   std::shared_ptr<OsmObjectStore> objectStore,
                                   std::shared_ptr<PointStore> pointStore)
 {
+  mPoiToSegmentMapping.clear();
+  mSegmentToPoiMap.clear();
+
+  struct PoiCandidate
+  {
+    ::osmium::object_id_type id;
+    geometry::Point2d location;
+    PoiType type;
+  };
+
+  std::vector<PoiCandidate> candidates;
   for (PoiType typeOfPoi : mPoiTypes)
   {
-    auto listOfPoi = poiExtractor->getPois(typeOfPoi);
-    if (listOfPoi.size() > 0)
+    auto const &listOfPoi = poiExtractor->getPois(typeOfPoi);
+    for (::osmium::object_id_type poiId : listOfPoi)
     {
-      processPoisForWay(objectStore, pointStore, listOfPoi, typeOfPoi);
+      auto const &poiPt = pointStore->point(poiId);
+      candidates.push_back(PoiCandidate{poiId, geometry::Point2d{poiPt.x, poiPt.y}, typeOfPoi});
     }
   }
 
-  for (auto poiId : mPoiToSegmentMapping)
+  if (!candidates.empty())
+  {
+    for (auto wayId : objectStore->allWayIds())
+    {
+      ::osmium::Way const &way = objectStore->way(wayId);
+      auto const &nodes = way.nodes();
+      if (nodes.size() < 2u)
+      {
+        continue;
+      }
+      for (std::size_t index = 0u; index + 1u < nodes.size(); ++index)
+      {
+        auto const startRef = nodes[index].ref();
+        auto const endRef = nodes[index + 1u].ref();
+        auto const &start = pointStore->point(startRef);
+        auto const &end = pointStore->point(endRef);
+        geometry::LineCoordinateSystem lcs(geometry::Point2d{start.x, start.y}, geometry::Point2d{end.x, end.y});
+        for (auto const &candidate : candidates)
+        {
+          geometry::Point2d const projection = lcs.projectToLineCoordinateSystem(candidate.location);
+          if (lcs.pointIsInsideSegment(projection, 0.))
+          {
+            geometry::Point p;
+            p.x = projection.x;
+            p.y = projection.y;
+            mPoiToSegmentMapping[candidate.id].update(startRef, endRef, p, candidate.type, candidate.id);
+          }
+        }
+      }
+    }
+  }
+
+  for (auto const &poiId : mPoiToSegmentMapping)
   {
     const PointOfInterest &mapping = poiId.second;
     mSegmentToPoiMap[mapping.mStart][mapping.mEnd].insert(poiId.first);

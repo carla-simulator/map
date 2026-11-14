@@ -171,7 +171,7 @@ std::shared_ptr<std::ostream> LogFactory::getOrCreateFileSink(std::string const 
     }
     else
     {
-      std::cerr << "Unable to open " << target << "for logging. Falling back to stdout instead!\n";
+      std::cerr << "Unable to open " << target << " for logging. Falling back to stdout instead!\n";
       return std::shared_ptr<std::ostream>(&std::cout, [](void *) {});
     }
   }
@@ -183,7 +183,7 @@ std::shared_ptr<std::ostream> LogFactory::getOrCreateFileSink(std::string const 
 
 std::shared_ptr<std::ostream> LogFactory::getSinkForSetting(LogSetting const &setting)
 {
-  if (setting.output == "console")
+  if ((setting.output == "console") || setting.output.empty())
   {
     // the shared_ptr must not release std::cout, see
     // https://stackoverflow.com/questions/17220154/c11-stdshared-ptrstdostream-from-stdcout

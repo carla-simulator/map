@@ -84,8 +84,8 @@ struct OsmJunctionProcessor
   bool uniqueSuccessorForWay(::osmium::object_id_type const wayId, ::osmium::object_id_type &successor) const;
   bool uniquePredecessorForWay(::osmium::object_id_type const wayId, ::osmium::object_id_type &predecessor) const;
 
-  std::unordered_set<::osmium::object_id_type> allJunctions() const;
-  std::unordered_set<OsmJunctionArm> junctionArms(::osmium::object_id_type const junctionCenter) const;
+  std::unordered_set<::osmium::object_id_type> const &allJunctions() const;
+  std::unordered_set<OsmJunctionArm> const &junctionArms(::osmium::object_id_type const junctionCenter) const;
 
   void logJunction(::osmium::object_id_type const junctionCenter);
 

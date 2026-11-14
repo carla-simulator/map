@@ -40,8 +40,13 @@ int main(int argc, char *argv[])
       ::osm_converter::OsmConverter converter(
         appConfig.config, osmConverterConfig.config, mapGenerationConfig.config, "osm_to_adm");
 
-      // @todo do we need to dereference?
-      converter.dataStore.transformToGCS(*converter.osmProcessor.coordinateTransform());
+      auto const coordinateTransform = converter.osmProcessor.coordinateTransform();
+      if (!coordinateTransform)
+      {
+        std::cerr << "Error: Coordinate transform is not initialized\n";
+        return EXIT_FAILURE;
+      }
+      converter.dataStore.transformToGCS(*coordinateTransform);
       ::ad::map::access::Store store;
       ::ad::map::access::Factory factory(store);
       admap_generator::AdMapGenerator generator(factory, converter.dataStore, converter.logFactory);
@@ -49,9 +54,18 @@ int main(int argc, char *argv[])
       ::ad::map::serialize::SerializerFileCRC32 serializer(true);
       size_t versionMajorWrite = ::ad::map::serialize::SerializerFileCRC32::VERSION_MAJOR;
       size_t versionMinorWrite = ::ad::map::serialize::SerializerFileCRC32::VERSION_MINOR;
-      serializer.open(appConfig.config.outputFile.c_str(), versionMajorWrite, versionMinorWrite);
-      store.save(serializer);
-      serializer.close();
+      if (!serializer.open(appConfig.config.outputFile.c_str(), versionMajorWrite, versionMinorWrite))
+      {
+        std::cerr << "Error: Unable to open output file \"" << appConfig.config.outputFile << "\"\n";
+        return EXIT_FAILURE;
+      }
+      bool const saved = store.save(serializer);
+      bool const closed = serializer.close();
+      if (!saved || !closed)
+      {
+        std::cerr << "Error: Failed to save ADM map to \"" << appConfig.config.outputFile << "\"\n";
+        return EXIT_FAILURE;
+      }
 
       if (appConfig.config.printStats)
       {

@@ -158,6 +158,8 @@ private:
                                  OsmPoiExtractor::TrafficLightAttributes const &attributes) const;
 
   std::vector<RoadGeometry> mRoadsGeometry;
+  std::unordered_map<map_data::MapDataId, std::size_t> mRoadGeometryIndex;
+  void addRoadGeometry(RoadGeometry const &roadGeometry);
   std::size_t findRoadGeometry(map_data::MapDataId roadId) const;
   void addNodeToRoadGeometry(RoadGeometry &roadGeometry, ::osmium::object_id_type nodeId);
 
