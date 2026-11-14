@@ -554,7 +554,7 @@ predictRoutesDirectionless(const match::Object &startObject,
  *
  * @returns the filtered list of routes according to the provided \a filterMode
  */
-FullRouteList filterDuplicatedRoutes(const FullRouteList fullRoutes, FilterDuplicatesMode const filterMode);
+FullRouteList filterDuplicatedRoutes(FullRouteList const &fullRoutes, FilterDuplicatesMode const filterMode);
 
 /** @brief result for comparing two routes with each other
  */

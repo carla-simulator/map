@@ -72,7 +72,7 @@ public:
   }
 
   RouteExpander(RouteExpander const &) = delete;
-  RouteExpander(RouteExpander const &&) = delete;
+  RouteExpander(RouteExpander &&) = delete;
   RouteExpander &operator=(RouteExpander const &) = delete;
   RouteExpander &operator=(RouteExpander &&) = delete;
 
@@ -130,8 +130,7 @@ protected:
                            RoutingPoint const &origin,
                            lane::Lane::ConstPtr neighborLane,
                            RoutingPoint const &neighbor,
-                           ExpandReason const &expandReason)
-    = 0;
+                           ExpandReason const &expandReason) = 0;
 
   //! @returns \c true if the given origin point is the parametric start
   bool isStart(RoutingPoint const &origin)
@@ -276,12 +275,16 @@ void RouteExpander<RoutingCostData>::expandSameLaneNeighbors(
   lane::Lane::ConstPtr lane, typename RouteExpander<RoutingCostData>::RoutingPoint const &origin)
 {
   if ((lane->id == getDest().lane_id)
+      && ((getRoutingDest().direction == RoutingDirection::DONT_CARE)
+          || (getRoutingDest().direction == origin.first.direction))
       && ((isPositiveMovement(lane, origin) && (origin.first.point.parametric_offset <= getDest().parametric_offset))
           || (isNegativeMovement(lane, origin)
               && (origin.first.point.parametric_offset >= getDest().parametric_offset))))
   {
-    // approaching the destination from valid side
-    auto const neighbor = createNeighbor(lane, origin, lane, getRoutingDest());
+    // approaching the destination from valid side; preserve concrete movement direction
+    auto const destRoutingPoint
+      = createRoutingParaPoint(getDest().lane_id, getDest().parametric_offset, origin.first.direction);
+    auto const neighbor = createNeighbor(lane, origin, lane, destRoutingPoint);
     addNeighbor(lane, origin, lane, neighbor, ExpandReason::Destination);
   }
   if (isPositiveMovement(lane, origin) && !isEnd(origin))
@@ -311,7 +314,7 @@ void RouteExpander<RoutingCostData>::expandLongitudinalNeighbors(
   {
     contact_lanes = lane::getContactLanes(*lane, lane::ContactLocation::PREDECESSOR);
   }
-  for (auto contactLane : contact_lanes)
+  for (auto const &contactLane : contact_lanes)
   {
     if (!isLaneRelevantForExpansion(contactLane.to_lane))
     {

@@ -24,7 +24,7 @@ namespace bp = boost::python;
 BOOST_PYTHON_MODULE(ad_map_access_@PYTHON_BINDING_NAME@)
 {
   // create/import the map module scope
-  bp::object ad_map_access_module(bp::handle<>(bp::borrowed(PyImport_AddModule("map"))));
+  bp::object ad_map_access_module(bp::handle<>(bp::borrowed(PyImport_AddModule("ad_map_access.map"))));
   bp::scope().attr("map") = ad_map_access_module;
   bp::scope submodule_scope = ad_map_access_module;
   bp::scope().attr("__doc__") = "Python binding of ad::map namespace C++ code for @PYTHON_BINDING_NAME@";

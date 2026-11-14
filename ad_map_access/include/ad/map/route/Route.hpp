@@ -78,7 +78,7 @@ public:
         Type const &routingType);
 
   Route(Route const &) = delete;
-  Route(Route const &&) = delete;
+  Route(Route &&) = delete;
   Route &operator=(Route const &) = delete;
   Route &operator=(Route &&) = delete;
 

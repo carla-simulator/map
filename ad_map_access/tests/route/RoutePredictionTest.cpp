@@ -11,6 +11,7 @@
 #include <ad/map/intersection/Intersection.hpp>
 #include <ad/map/match/Operation.hpp>
 #include <ad/map/route/Planning.hpp>
+#include <ad/map/route/RouteOperation.hpp>
 #include <ad/map/route/RoutePrediction.hpp>
 #include <gtest/gtest.h>
 
@@ -140,6 +141,20 @@ TEST_F(RoutePredictionTestTown01, route_prediction_dont_care)
   // the next crossing leads to a split of the route
   routePredictions = route::planning::predictRoutesOnDistance(predictionStart, physics::Distance(150.));
   EXPECT_EQ(routePredictions.size(), 2u);
+
+  // DONT_CARE on a unidirectional lane must not emit a bogus 1-point negative root route
+  RoutePrediction rawPrediction(predictionStart, physics::Distance(10.));
+  ASSERT_TRUE(rawPrediction.calculate());
+  EXPECT_EQ(rawPrediction.getRawRoutes().size(), 1u);
+
+  auto shorterFilteredPredictions
+    = route::planning::predictRoutesOnDistance(predictionStart,
+                                               physics::Distance(10.),
+                                               RouteCreationMode::SameDrivingDirection,
+                                               planning::FilterDuplicatesMode::SubRoutesPreferShorterOnes);
+  ASSERT_EQ(shorterFilteredPredictions.size(), 1u);
+  ASSERT_FALSE(shorterFilteredPredictions[0].road_segments.empty());
+  EXPECT_GT(route::calcLength(shorterFilteredPredictions[0]), physics::Distance(0.));
 }
 
 TEST_F(RoutePredictionTestTown01, route_prediction_directionless)
