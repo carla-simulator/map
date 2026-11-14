@@ -33,7 +33,7 @@ bool doSerialize(ISerializer &serializer, lane::Lane &lane)
     && serializer.serialize(lane.compliance_version) && doSerialize(serializer, lane.bounding_sphere)
     && serializer.serializeObjectVector(lane.visible_landmarks);
 
-  if (ok)
+  if (ok && !serializer.isStoring())
   {
     //@toDO: version 0.4 compat: cope with empty bounding sphere in old files
     if ((lane.bounding_sphere.center == point::createECEFPoint(0., 0., 0.))

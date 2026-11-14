@@ -171,4 +171,14 @@ TEST_F(GeoOperationTest, isOnTheLeft)
   edge3_geo.push_back(createGeoPoint(Longitude(-121.935549), Latitude(37.401336), Altitude(123.456)));
   edge3_geo.push_back(createGeoPoint(Longitude(-121.935549 + diff), Latitude(37.401336 + diff), Altitude(123.456)));
   ASSERT_FALSE(isOnTheLeft(edge2_geo, edge3_geo));
+
+  // Northbound edges straddling the +/-180 degree antimeridian: +179.99 is west (left) of -179.99
+  GeoPointList westOfAntimeridian;
+  westOfAntimeridian.push_back(createGeoPoint(Longitude(179.99), Latitude(0.0), Altitude(0.0)));
+  westOfAntimeridian.push_back(createGeoPoint(Longitude(179.99), Latitude(0.01), Altitude(0.0)));
+  GeoPointList eastOfAntimeridian;
+  eastOfAntimeridian.push_back(createGeoPoint(Longitude(-179.99), Latitude(0.0), Altitude(0.0)));
+  eastOfAntimeridian.push_back(createGeoPoint(Longitude(-179.99), Latitude(0.01), Altitude(0.0)));
+  ASSERT_TRUE(isOnTheLeft(westOfAntimeridian, eastOfAntimeridian));
+  ASSERT_FALSE(isOnTheLeft(eastOfAntimeridian, westOfAntimeridian));
 }

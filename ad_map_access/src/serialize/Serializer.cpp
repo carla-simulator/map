@@ -55,6 +55,7 @@ bool Serializer::close()
 {
   if (open_)
   {
+    open_ = false;
     if (isStoring())
     {
       return closeForWrite();
@@ -95,6 +96,7 @@ bool Serializer::openForRead(std::string const &config, size_t &version_major, s
         {
           access::getLogger()->error(
             "Serializer: Version mismatch: Expected {}, Found {}", VERSION_MAJOR, version_major);
+          doCloseForRead();
           throw std::runtime_error("Wrong map version!");
         }
       }

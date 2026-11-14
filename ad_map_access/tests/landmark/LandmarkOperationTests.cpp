@@ -173,3 +173,17 @@ TEST_F(LandmarkOperationTests, TestTrafficSign)
   EXPECT_EQ(lane.visible_landmarks.size(), 1u);
   EXPECT_TRUE(lane.visible_landmarks.front() == landmark_id);
 }
+
+TEST_F(LandmarkOperationTests, UniqueLandmarkIdZero)
+{
+  GeoPoint point = createGeoPoint(Longitude(8.44038283714), Latitude(49.0199362465), Altitude(115.));
+  ECEFPoint position = toECEF(point);
+  GeoPoint orientation = createGeoPoint(Longitude(8.44038283714), Latitude(49.0), Altitude(115.));
+  ECEFPoint orientationECEF = toECEF(orientation);
+  Geometry bounding_box = createGeometry({position, orientationECEF}, true);
+
+  landmark::LandmarkId const zeroId(0);
+  ASSERT_TRUE(mFactory->addLandmark(
+    mPartitionId, zeroId, landmark::LandmarkType::UNKNOWN, position, orientationECEF, bounding_box));
+  EXPECT_EQ(landmark::uniqueLandmarkId(point), zeroId);
+}

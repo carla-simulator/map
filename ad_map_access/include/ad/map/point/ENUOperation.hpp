@@ -117,7 +117,7 @@ inline ENUPoint getEnuUpAxis()
  *
  * @returns vector c = a x b
  */
-template ENUPoint vectorCrossProduct(ENUPoint const &a, ENUPoint const &b);
+extern template ENUPoint vectorCrossProduct(ENUPoint const &a, ENUPoint const &b);
 
 /**
  * @brief calculate the dot product of two vectors
@@ -127,21 +127,21 @@ template ENUPoint vectorCrossProduct(ENUPoint const &a, ENUPoint const &b);
  *
  * @returns value d = a * b
  */
-template double vectorDotProduct(ENUPoint const &a, ENUPoint const &b);
+extern template double vectorDotProduct(ENUPoint const &a, ENUPoint const &b);
 
 /**
  * @brief multiplies a vector with a scalar
  * @param[in] a vector a
  * @param[in] b scalar b
  */
-template ENUPoint vectorMultiplyScalar(ENUPoint const &a, double const &b);
+extern template ENUPoint vectorMultiplyScalar(ENUPoint const &a, double const &b);
 
 /**
  * @brief multiplies a vector with a scalar
  * @param[in] a vector a
  * @param[in] b scalar b
  */
-template ENUPoint vectorMultiplyScalar(ENUPoint const &a, physics::Distance const &b);
+extern template ENUPoint vectorMultiplyScalar(ENUPoint const &a, physics::Distance const &b);
 
 /**
  * @brief calculate the length of a vector
@@ -150,7 +150,7 @@ template ENUPoint vectorMultiplyScalar(ENUPoint const &a, physics::Distance cons
  *
  * @returns value d = |a|
  */
-template physics::Distance vectorLength(ENUPoint const &a);
+extern template physics::Distance vectorLength(ENUPoint const &a);
 
 /**
  * @brief normalizes a vector
@@ -159,7 +159,7 @@ template physics::Distance vectorLength(ENUPoint const &a);
  *
  * @returns vector c = a  / |a|
  */
-template ENUPoint vectorNorm(ENUPoint const &a);
+extern template ENUPoint vectorNorm(ENUPoint const &a);
 
 /**
  * @brief add two vectors
@@ -169,7 +169,7 @@ template ENUPoint vectorNorm(ENUPoint const &a);
  *
  * @returns vector c = a + b
  */
-template ENUPoint vectorAdd(ENUPoint const &a, ENUPoint const &b);
+extern template ENUPoint vectorAdd(ENUPoint const &a, ENUPoint const &b);
 
 /**
  * @brief subtract two vectors from each right
@@ -179,7 +179,7 @@ template ENUPoint vectorAdd(ENUPoint const &a, ENUPoint const &b);
  *
  * @returns c = a - b
  */
-template ENUPoint vectorSub(ENUPoint const &a, ENUPoint const &b);
+extern template ENUPoint vectorSub(ENUPoint const &a, ENUPoint const &b);
 
 /**
  * @brief Interpolates point between two points.
@@ -192,7 +192,8 @@ template ENUPoint vectorSub(ENUPoint const &a, ENUPoint const &b);
  *          with tparam==0, it will return point a;
  *          with tparam==1, it will return point b.
  */
-template ENUPoint vectorInterpolate(ENUPoint const &a, ENUPoint const &b, physics::ParametricValue const &tparam);
+extern template ENUPoint
+vectorInterpolate(ENUPoint const &a, ENUPoint const &b, physics::ParametricValue const &tparam);
 
 /**
  * @brief Extrapolate point based on line defined by two points.
@@ -205,13 +206,13 @@ template ENUPoint vectorInterpolate(ENUPoint const &a, ENUPoint const &b, physic
  *          with scalar==0, it will return point a;
  *          with scalar==1, it will return point b.
  */
-template ENUPoint vectorExtrapolate(ENUPoint const &a, ENUPoint const &b, double const &scalar);
+extern template ENUPoint vectorExtrapolate(ENUPoint const &a, ENUPoint const &b, double const &scalar);
 
 /**
  * @brief Computes distance between ENU points.
  * @returns Distance between two points in meters.
  */
-template physics::Distance distance(ENUPoint const &point, ENUPoint const &other);
+extern template physics::Distance distance(ENUPoint const &point, ENUPoint const &other);
 
 /**
  * @brief Find point nearest to the line formed by two points.
@@ -221,7 +222,7 @@ template physics::Distance distance(ENUPoint const &point, ENUPoint const &other
  * @param[in] pt1 Second point of the line.
  * @returns Value of t;  nearest point to a can be calculated as (1-t)*pt0+t*pt1.
  */
-template physics::RatioValue findNearestPointOnEdge(ENUPoint const &a, const ENUPoint &pt0, const ENUPoint &pt1);
+extern template physics::RatioValue findNearestPointOnEdge(ENUPoint const &a, const ENUPoint &pt0, const ENUPoint &pt1);
 
 /**
  * @brief Find point nearest to the segment formed by two points.
@@ -232,7 +233,7 @@ template physics::RatioValue findNearestPointOnEdge(ENUPoint const &a, const ENU
  * @returns Value of 0<=t<=1;  nearest point to this can be calculated as (1-t)*pt0+t*pt1.
  *
  */
-template physics::ParametricValue
+extern template physics::ParametricValue
 findNearestPointOnSegment(ENUPoint const &a, const ENUPoint &pt0, const ENUPoint &pt1);
 
 /**
@@ -240,14 +241,14 @@ findNearestPointOnSegment(ENUPoint const &a, const ENUPoint &pt0, const ENUPoint
  * @param[in] edge The input edge to operate on.
  * @return The length of the edge
  */
-template physics::Distance calculateEdgeLength(ENUPointList const &edge);
+extern template physics::Distance calculateEdgeLength(ENUPointList const &edge);
 
 /**
  * @brief Get the parametric edge points
  * @param[in] edge The input edge to operate on.
  * @return Vector of parametric values on the edge.
  */
-template physics::ParametricValueList getParametricEdgePoints(ENUPointList const &edge);
+extern template physics::ParametricValueList getParametricEdgePoints(ENUPointList const &edge);
 
 /**
  * @brief Calculates parametric point on the edge.
@@ -255,7 +256,7 @@ template physics::ParametricValueList getParametricEdgePoints(ENUPointList const
  * @param[in] t Parameter. 0 will return first point, and 1 last point on the edge.
  * @return Parametric point on the edge.
  */
-template ENUPoint
+extern template ENUPoint
 getParametricPoint(ENUPointList const &edge, physics::Distance const &edgeLength, const physics::ParametricValue &t);
 
 /**
@@ -264,7 +265,7 @@ getParametricPoint(ENUPointList const &edge, physics::Distance const &edgeLength
  * @param[in] t Parameter. 0 will return first point, and 1 last point on the edge.
  * @return Parametric point on the edge.
  */
-template ENUPoint getParametricPoint(ENUPointList const &edge, const physics::ParametricValue &t);
+extern template ENUPoint getParametricPoint(ENUPointList const &edge, const physics::ParametricValue &t);
 
 /**
  * @brief Generates sub-edge for given range.
@@ -272,9 +273,9 @@ template ENUPoint getParametricPoint(ENUPointList const &edge, const physics::Pa
  * @param[in] trange Specifies parametric range.
  * @return Sub-geometry.
  */
-template ENUPointList getParametricRange(ENUPointList const &edge,
-                                         physics::Distance const &edgeLength,
-                                         const physics::ParametricRange &trange);
+extern template ENUPointList getParametricRange(ENUPointList const &edge,
+                                                physics::Distance const &edgeLength,
+                                                const physics::ParametricRange &trange);
 
 /**
  * @brief Generates sub-edge for given range.
@@ -282,7 +283,7 @@ template ENUPointList getParametricRange(ENUPointList const &edge,
  * @param[in] trange Specifies parametric range.
  * @return Sub-geometry.
  */
-template ENUPointList getParametricRange(ENUPointList const &edge, const physics::ParametricRange &trange);
+extern template ENUPointList getParametricRange(ENUPointList const &edge, const physics::ParametricRange &trange);
 
 /**
  * @brief Finds point on geometry nearest to given point.
@@ -290,7 +291,7 @@ template ENUPointList getParametricRange(ENUPointList const &edge, const physics
  * @returns Parametric point on geometry nearest to the pt.
  *          Can be invalid (if pt is Invalid(), geometry is empty etc.).
  */
-template physics::ParametricValue
+extern template physics::ParametricValue
 findNearestPointOnEdge(ENUPointList const &edge, physics::Distance const &edgeLength, const ENUPoint &pt);
 
 /**
@@ -300,7 +301,7 @@ findNearestPointOnEdge(ENUPointList const &edge, physics::Distance const &edgeLe
  * @returns Parametric point on geometry nearest to the pt.
  *          Can be invalid (if pt is Invalid(), geometry is empty etc.).
  */
-template physics::ParametricValue findNearestPointOnEdge(ENUPointList const &edge, const ENUPoint &pt);
+extern template physics::ParametricValue findNearestPointOnEdge(ENUPointList const &edge, const ENUPoint &pt);
 
 /**
  * @brief Calculate the width range and the average width of a pair of edges
@@ -314,7 +315,7 @@ template physics::ParametricValue findNearestPointOnEdge(ENUPointList const &edg
  *
  * @returns pair containing the range of the width and the average width between the two input edges.
  */
-template std::pair<physics::MetricRange, physics::Distance>
+extern template std::pair<physics::MetricRange, physics::Distance>
 calculateWidthRange(ENUPointList const &edge_left,
                     physics::Distance const &edgeLeftLength,
                     ENUPointList const &edge_right,
@@ -338,11 +339,11 @@ calculateWidthRange(ENUPointList const &edge_left,
  *
  * @throws std::invalid_argument if the lateral_alignment parameter is smaller than 0. or larger than 1.
  */
-template ENUPointList getLateralAlignmentEdge(ENUPointList const &leftEdge,
-                                              physics::Distance const &leftEdgeLength,
-                                              ENUPointList const &rightEdge,
-                                              physics::Distance const &rightEdgeLength,
-                                              physics::ParametricValue const lateral_alignment);
+extern template ENUPointList getLateralAlignmentEdge(ENUPointList const &leftEdge,
+                                                     physics::Distance const &leftEdgeLength,
+                                                     ENUPointList const &rightEdge,
+                                                     physics::Distance const &rightEdgeLength,
+                                                     physics::ParametricValue const lateral_alignment);
 
 /**
  * @brief Get an edge between the two given border edges with corresponding lateral_alignment
@@ -362,9 +363,9 @@ template ENUPointList getLateralAlignmentEdge(ENUPointList const &leftEdge,
  *
  * @throws std::invalid_argument if the lateral_alignment parameter is smaller than 0. or larger than 1.
  */
-template ENUPointList getLateralAlignmentEdge(ENUPointList const &leftEdge,
-                                              ENUPointList const &rightEdge,
-                                              physics::ParametricValue const lateral_alignment);
+extern template ENUPointList getLateralAlignmentEdge(ENUPointList const &leftEdge,
+                                                     ENUPointList const &rightEdge,
+                                                     physics::ParametricValue const lateral_alignment);
 
 /**
  * @brief get a normalized vector representing the edge direction at edge start
@@ -373,7 +374,7 @@ template ENUPointList getLateralAlignmentEdge(ENUPointList const &leftEdge,
  * If the two start points of the edge are too close to each other, a third point is used if possible to increase
  * the accuracy.
  */
-template ENUPoint getEdgeStartDirectionalVector(ENUPointList const edge);
+extern template ENUPoint getEdgeStartDirectionalVector(ENUPointList const &edge);
 
 /**
  * @brief get a normalized vector representing the edge direction at edge end
@@ -382,7 +383,7 @@ template ENUPoint getEdgeStartDirectionalVector(ENUPointList const edge);
  * If the two end points of the edge are too close to each other, a third point is used if possible to increase
  * the accuracy.
  */
-template ENUPoint getEdgeEndDirectionalVector(ENUPointList const edge);
+extern template ENUPoint getEdgeEndDirectionalVector(ENUPointList const &edge);
 
 /** @brief calculate the length of the provided border as distance value
  *

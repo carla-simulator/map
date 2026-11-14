@@ -129,6 +129,13 @@ public:
   void addRouteHint(route::FullRoute const &routeHint)
   {
     mRouteHints.push_back(routeHint);
+    for (auto const &roadSegment : routeHint.road_segments)
+    {
+      for (auto const &laneSegment : roadSegment.drivable_lane_segments)
+      {
+        mRouteHintLanes.insert(laneSegment.lane_interval.lane_id);
+      }
+    }
   }
 
   /**
@@ -137,6 +144,7 @@ public:
   void clearRouteHints()
   {
     mRouteHints.clear();
+    mRouteHintLanes.clear();
   }
 
   /**
@@ -268,7 +276,7 @@ public:
    *
    * @returns the map matched bounding box of the object
    */
-  LaneOccupiedRegionList getLaneOccupiedRegions(ENUObjectPositionList enuObjectPositionList,
+  LaneOccupiedRegionList getLaneOccupiedRegions(ENUObjectPositionList const &enuObjectPositionList,
                                                 physics::Distance const &sampling_distance
                                                 = physics::Distance(1.)) const;
 
@@ -373,6 +381,7 @@ private:
   std::list<point::ECEFHeading> mHeadingHints;
   double mHeadingHintFactor{2.};
   std::list<route::FullRoute> mRouteHints;
+  ::ad::map::lane::LaneIdSet mRouteHintLanes;
   double mRouteHintFactor{10.};
 
   ::ad::map::lane::LaneIdSet mRelevantLanes;

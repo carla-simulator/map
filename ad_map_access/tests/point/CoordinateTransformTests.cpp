@@ -365,3 +365,40 @@ TEST_F(CoordianteTransformTest, TOENU)
   enu_length = calcLength(enu_edge_ret);
   EXPECT_EQ(enu_length, geo_edge_length);
 }
+
+TEST_F(CoordianteTransformTest, CopyAndGeoProjection)
+{
+  std::string const projStr = "+proj=tmerc +lat_0=49 +lon_0=8 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs";
+  GeoPoint const testGeo = createGeoPoint(Longitude(8.001), Latitude(49.001), Altitude(110.0));
+  ENUPoint expectedEnu;
+  {
+    CoordinateTransform projTransform;
+    ASSERT_TRUE(projTransform.setGeoProjection(projStr));
+    ASSERT_TRUE(projTransform.isGeoProjectionValid());
+    expectedEnu = projTransform.Geo2ENU(testGeo);
+
+    CoordinateTransform copyConstructed(projTransform);
+    ASSERT_TRUE(copyConstructed.isGeoProjectionValid());
+    EXPECT_EQ(copyConstructed.Geo2ENU(testGeo), expectedEnu);
+
+    CoordinateTransform copyAssigned;
+    copyAssigned = projTransform;
+    ASSERT_TRUE(copyAssigned.isGeoProjectionValid());
+    EXPECT_EQ(copyAssigned.Geo2ENU(testGeo), expectedEnu);
+  }
+  ASSERT_TRUE(isValid(expectedEnu));
+}
+
+TEST_F(CoordianteTransformTest, Geo2ENUAntimeridian)
+{
+  CoordinateTransform transform;
+  GeoPoint const refGeo = createGeoPoint(Longitude(179.999), Latitude(0.0), Altitude(0.0));
+  GeoPoint const targetGeo = createGeoPoint(Longitude(-179.999), Latitude(0.0), Altitude(0.0));
+  transform.setENUReferencePoint(refGeo);
+
+  ENUPoint const enuFromGeo = transform.Geo2ENU(targetGeo);
+  ENUPoint const enuFromEcef = transform.ECEF2ENU(transform.Geo2ECEF(targetGeo));
+  EXPECT_GT(enuFromGeo.x.mENUCoordinate, 200.0);
+  EXPECT_LT(enuFromGeo.x.mENUCoordinate, 250.0);
+  EXPECT_LE(distance(enuFromGeo, enuFromEcef), Distance(0.05));
+}

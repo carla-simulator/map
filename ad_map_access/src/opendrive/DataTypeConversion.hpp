@@ -33,7 +33,11 @@ inline lane::LaneId toLaneId(::opendrive::Id id)
  */
 inline landmark::LandmarkId toLandmarkId(int id)
 {
-  return landmark::LandmarkId(size_t(id));
+  if (id < 0)
+  {
+    return landmark::LandmarkId();
+  }
+  return landmark::LandmarkId(static_cast<uint64_t>(id));
 }
 
 /**
@@ -89,7 +93,7 @@ point::ECEFPoint toECEF(::opendrive::Point const &geo_point);
  * @param[in] edge Opendrive Edge to be converted
  * @returns The equivalent point::Geometry
  */
-point::Geometry toGeometry(std::vector<::opendrive::Point> edgePoints);
+point::Geometry toGeometry(std::vector<::opendrive::Point> const &edgePoints);
 
 } // namespace opendrive
 } // namespace map

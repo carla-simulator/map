@@ -189,3 +189,27 @@ TEST_F(PointOperationTest, CalcENUDistance)
   ENUHeading heading = normalizeENUHeading(point::createENUHeading(M_PI_2));
   ASSERT_EQ(heading, createENUHeading(M_PI_2));
 }
+
+TEST_F(PointOperationTest, EmptyEdgeAndInvalidWidthRange)
+{
+  ENUPointList const emptyEdge;
+  ENUPoint const emptyPt = getParametricPoint(emptyEdge, physics::Distance(0.), physics::ParametricValue(0.5));
+  EXPECT_FALSE(isValid(emptyPt, false));
+
+  physics::ParametricRange range;
+  range.minimum = physics::ParametricValue(0.2);
+  range.maximum = physics::ParametricValue(0.8);
+  ENUPointList const emptySubEdge = getParametricRange(emptyEdge, physics::Distance(0.), range);
+  EXPECT_TRUE(emptySubEdge.empty());
+
+  Geometry const emptyGeometry;
+  ECEFPointList outputEcef;
+  getParametricRange(emptyGeometry, range, outputEcef);
+  EXPECT_TRUE(outputEcef.empty());
+
+  ENUPointList validLeft{createENUPoint(0., 2., 0.), createENUPoint(10., 2., 0.)};
+  ENUPointList invalidRight{ENUPoint(), createENUPoint(10., 0., 0.)};
+  auto const widthResult = calculateWidthRange(validLeft, physics::Distance(10.), invalidRight, physics::Distance(10.));
+  EXPECT_FALSE(physics::isRangeValid(widthResult.first, false));
+  EXPECT_FALSE(widthResult.second.isValid());
+}

@@ -327,3 +327,31 @@ TEST_F(AdMapBoundingBoxMapMatchingTest, box_not_touching_second_lane_within_samp
 
   ASSERT_EQ(result.lane_occupied_regions.size(), 1u);
 }
+
+TEST_F(AdMapBoundingBoxMapMatchingTest, empty_reference_points_and_occupied_region_enu_border)
+{
+  match::MapMatchedObjectBoundingBox emptyBox;
+  EXPECT_THROW(getObjectENUHeading(emptyBox), std::runtime_error);
+
+  match::Object emptyObj;
+  emptyObj.enu_position = mObjectPosition;
+  auto const lanes = lane::getLanes();
+  ASSERT_FALSE(lanes.empty());
+  EXPECT_THROW(lane::getDistanceToLane(lanes.front(), emptyObj), std::runtime_error);
+
+  match::LaneOccupiedRegion fullLaneRegion;
+  fullLaneRegion.lane_id = lanes.front();
+  fullLaneRegion.longitudinal_range.minimum = physics::ParametricValue(0.0);
+  fullLaneRegion.longitudinal_range.maximum = physics::ParametricValue(1.0);
+  fullLaneRegion.lateral_range.minimum = physics::ParametricValue(0.0);
+  fullLaneRegion.lateral_range.maximum = physics::ParametricValue(1.0);
+
+  auto const regionBorder = getENUBorder(fullLaneRegion);
+  auto const laneBorder = lane::getENUBorder(fullLaneRegion.lane_id);
+  EXPECT_EQ(regionBorder.left.edge_type, lane::EdgeType::LEFT);
+  EXPECT_EQ(regionBorder.right.edge_type, lane::EdgeType::RIGHT);
+  ASSERT_FALSE(regionBorder.left.points.empty());
+  ASSERT_FALSE(regionBorder.right.points.empty());
+  EXPECT_EQ(regionBorder.left.points.front(), laneBorder.left.points.front());
+  EXPECT_EQ(regionBorder.right.points.front(), laneBorder.right.points.front());
+}

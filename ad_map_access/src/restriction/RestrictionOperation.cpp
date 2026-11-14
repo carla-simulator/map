@@ -45,23 +45,19 @@ bool isAccessOk(Restriction const &restriction, VehicleDescriptor const &vehicle
 
 bool isAccessOk(Restrictions const &restrictions, VehicleDescriptor const &vehicle)
 {
-  //* \todo Improve implenentation based on more complex rules.
+  //* \todo Improve implementation based on more complex rules.
   if (restrictions.conjunctions.empty() && restrictions.disjunctions.empty())
   {
     return true;
   }
-  else if (!restrictions.conjunctions.empty())
+  for (auto const &restriction : restrictions.conjunctions)
   {
-    for (auto const &restriction : restrictions.conjunctions)
+    if (!isAccessOk(restriction, vehicle))
     {
-      if (!isAccessOk(restriction, vehicle))
-      {
-        return false;
-      }
+      return false;
     }
-    return true;
   }
-  else if (!restrictions.disjunctions.empty())
+  if (!restrictions.disjunctions.empty())
   {
     for (auto const &restriction : restrictions.disjunctions)
     {
@@ -72,10 +68,7 @@ bool isAccessOk(Restrictions const &restrictions, VehicleDescriptor const &vehic
     }
     return false;
   }
-  else
-  {
-    throw std::runtime_error("IsAccessOk: conjunctions and disjunctions invalid");
-  }
+  return true;
 }
 
 PassengerCount getHOV(Restrictions const &restrictions)

@@ -81,7 +81,7 @@ inline ECEFPoint createECEFPoint(ECEFCoordinate const x, ECEFCoordinate const y,
  *
  * @returns vector c = a x b
  */
-template ECEFPoint vectorCrossProduct(ECEFPoint const &a, ECEFPoint const &b);
+extern template ECEFPoint vectorCrossProduct(ECEFPoint const &a, ECEFPoint const &b);
 
 /**
  * @brief calculate the dot product of two vectors
@@ -91,21 +91,21 @@ template ECEFPoint vectorCrossProduct(ECEFPoint const &a, ECEFPoint const &b);
  *
  * @returns value d = a * b
  */
-template double vectorDotProduct(ECEFPoint const &a, ECEFPoint const &b);
+extern template double vectorDotProduct(ECEFPoint const &a, ECEFPoint const &b);
 
 /**
  * @brief multiplies a vector with a scalar
  * @param[in] a vector a
  * @param[in] b scalar b
  */
-template ECEFPoint vectorMultiplyScalar(ECEFPoint const &a, double const &b);
+extern template ECEFPoint vectorMultiplyScalar(ECEFPoint const &a, double const &b);
 
 /**
  * @brief multiplies a vector with a scalar
  * @param[in] a vector a
  * @param[in] b scalar b
  */
-template ECEFPoint vectorMultiplyScalar(ECEFPoint const &a, physics::Distance const &b);
+extern template ECEFPoint vectorMultiplyScalar(ECEFPoint const &a, physics::Distance const &b);
 
 /**
  * @brief calculate the length of a vector
@@ -114,7 +114,7 @@ template ECEFPoint vectorMultiplyScalar(ECEFPoint const &a, physics::Distance co
  *
  * @returns value d = |a|
  */
-template physics::Distance vectorLength(ECEFPoint const &a);
+extern template physics::Distance vectorLength(ECEFPoint const &a);
 
 /**
  * @brief normalizes a vector
@@ -123,7 +123,7 @@ template physics::Distance vectorLength(ECEFPoint const &a);
  *
  * @returns vector c = a  / |a|
  */
-template ECEFPoint vectorNorm(ECEFPoint const &a);
+extern template ECEFPoint vectorNorm(ECEFPoint const &a);
 
 /**
  * @brief add two vectors
@@ -133,7 +133,7 @@ template ECEFPoint vectorNorm(ECEFPoint const &a);
  *
  * @returns vector c = a + b
  */
-template ECEFPoint vectorAdd(ECEFPoint const &a, ECEFPoint const &b);
+extern template ECEFPoint vectorAdd(ECEFPoint const &a, ECEFPoint const &b);
 
 /**
  * @brief subtract two vectors from each right
@@ -143,7 +143,7 @@ template ECEFPoint vectorAdd(ECEFPoint const &a, ECEFPoint const &b);
  *
  * @returns c = a - b
  */
-template ECEFPoint vectorSub(ECEFPoint const &a, ECEFPoint const &b);
+extern template ECEFPoint vectorSub(ECEFPoint const &a, ECEFPoint const &b);
 
 /**
  * @brief Interpolates point between two points.
@@ -156,7 +156,8 @@ template ECEFPoint vectorSub(ECEFPoint const &a, ECEFPoint const &b);
  *          with tparam==0, it will return point a;
  *          with tparam==1, it will return point b.
  */
-template ECEFPoint vectorInterpolate(ECEFPoint const &a, ECEFPoint const &b, physics::ParametricValue const &tparam);
+extern template ECEFPoint
+vectorInterpolate(ECEFPoint const &a, ECEFPoint const &b, physics::ParametricValue const &tparam);
 
 /**
  * @brief Extrapolate point based on line defined by two points.
@@ -169,13 +170,13 @@ template ECEFPoint vectorInterpolate(ECEFPoint const &a, ECEFPoint const &b, phy
  *          with scalar==0, it will return point a;
  *          with scalar==1, it will return point b.
  */
-template ECEFPoint vectorExtrapolate(ECEFPoint const &a, ECEFPoint const &b, double const &scalar);
+extern template ECEFPoint vectorExtrapolate(ECEFPoint const &a, ECEFPoint const &b, double const &scalar);
 
 /**
  * @brief Computes distance between ECEF points.
  * @returns Distance between two points in meters.
  */
-template physics::Distance distance(ECEFPoint const &point, ECEFPoint const &other);
+extern template physics::Distance distance(ECEFPoint const &point, ECEFPoint const &other);
 
 /**
  * @brief Find point nearest to the line formed by two points.
@@ -185,7 +186,8 @@ template physics::Distance distance(ECEFPoint const &point, ECEFPoint const &oth
  * @param[in] pt1 Second point of the line.
  * @returns Value of t;  nearest point to a can be calculated as (1-t)*pt0+t*pt1.
  */
-template physics::RatioValue findNearestPointOnEdge(ECEFPoint const &a, const ECEFPoint &pt0, const ECEFPoint &pt1);
+extern template physics::RatioValue
+findNearestPointOnEdge(ECEFPoint const &a, const ECEFPoint &pt0, const ECEFPoint &pt1);
 
 /**
  * @brief Find point nearest to the segment formed by two points.
@@ -196,7 +198,7 @@ template physics::RatioValue findNearestPointOnEdge(ECEFPoint const &a, const EC
  * @returns Value of 0<=t<=1;  nearest point to this can be calculated as (1-t)*pt0+t*pt1.
  *
  */
-template physics::ParametricValue
+extern template physics::ParametricValue
 findNearestPointOnSegment(ECEFPoint const &a, const ECEFPoint &pt0, const ECEFPoint &pt1);
 
 /**
@@ -204,14 +206,14 @@ findNearestPointOnSegment(ECEFPoint const &a, const ECEFPoint &pt0, const ECEFPo
  * @param[in] edge The input edge to operate on.
  * @return The length of the edge
  */
-template physics::Distance calculateEdgeLength(ECEFPointList const &edge);
+extern template physics::Distance calculateEdgeLength(ECEFPointList const &edge);
 
 /**
  * @brief Get the parametric edge points
  * @param[in] edge The input edge to operate on.
  * @return Vector of parametric values on the edge.
  */
-template physics::ParametricValueList getParametricEdgePoints(ECEFPointList const &edge);
+extern template physics::ParametricValueList getParametricEdgePoints(ECEFPointList const &edge);
 
 /**
  * @brief Calculates parametric point on the edge.
@@ -219,7 +221,7 @@ template physics::ParametricValueList getParametricEdgePoints(ECEFPointList cons
  * @param[in] t Parameter. 0 will return first point, and 1 last point on the edge.
  * @return Parametric point on the edge.
  */
-template ECEFPoint
+extern template ECEFPoint
 getParametricPoint(ECEFPointList const &edge, physics::Distance const &edgeLength, const physics::ParametricValue &t);
 
 /**
@@ -228,7 +230,7 @@ getParametricPoint(ECEFPointList const &edge, physics::Distance const &edgeLengt
  * @param[in] t Parameter. 0 will return first point, and 1 last point on the edge.
  * @return Parametric point on the edge.
  */
-template ECEFPoint getParametricPoint(ECEFPointList const &edge, const physics::ParametricValue &t);
+extern template ECEFPoint getParametricPoint(ECEFPointList const &edge, const physics::ParametricValue &t);
 
 /**
  * @brief Generates sub-edge for given range.
@@ -236,9 +238,9 @@ template ECEFPoint getParametricPoint(ECEFPointList const &edge, const physics::
  * @param[in] trange Specifies parametric range.
  * @return Sub-geometry.
  */
-template ECEFPointList getParametricRange(ECEFPointList const &edge,
-                                          physics::Distance const &edgeLength,
-                                          const physics::ParametricRange &trange);
+extern template ECEFPointList getParametricRange(ECEFPointList const &edge,
+                                                 physics::Distance const &edgeLength,
+                                                 const physics::ParametricRange &trange);
 
 /**
  * @brief Generates sub-edge for given range.
@@ -246,7 +248,7 @@ template ECEFPointList getParametricRange(ECEFPointList const &edge,
  * @param[in] trange Specifies parametric range.
  * @return Sub-geometry.
  */
-template ECEFPointList getParametricRange(ECEFPointList const &edge, const physics::ParametricRange &trange);
+extern template ECEFPointList getParametricRange(ECEFPointList const &edge, const physics::ParametricRange &trange);
 
 /**
  * @brief Finds point on geometry nearest to given point.
@@ -254,7 +256,7 @@ template ECEFPointList getParametricRange(ECEFPointList const &edge, const physi
  * @returns Parametric point on geometry nearest to the pt.
  *          Can be invalid (if pt is Invalid(), geometry is empty etc.).
  */
-template physics::ParametricValue
+extern template physics::ParametricValue
 findNearestPointOnEdge(ECEFPointList const &edge, physics::Distance const &edgeLength, const ECEFPoint &pt);
 
 /**
@@ -264,7 +266,7 @@ findNearestPointOnEdge(ECEFPointList const &edge, physics::Distance const &edgeL
  * @returns Parametric point on geometry nearest to the pt.
  *          Can be invalid (if pt is Invalid(), geometry is empty etc.).
  */
-template physics::ParametricValue findNearestPointOnEdge(ECEFPointList const &edge, const ECEFPoint &pt);
+extern template physics::ParametricValue findNearestPointOnEdge(ECEFPointList const &edge, const ECEFPoint &pt);
 
 /**
  * @brief Calculate the width range and the average width of a pair of edges
@@ -278,7 +280,7 @@ template physics::ParametricValue findNearestPointOnEdge(ECEFPointList const &ed
  *
  * @returns pair containing the range of the width and the average width between the two input edges.
  */
-template std::pair<physics::MetricRange, physics::Distance>
+extern template std::pair<physics::MetricRange, physics::Distance>
 calculateWidthRange(ECEFPointList const &edge_left,
                     physics::Distance const &edgeLeftLength,
                     ECEFPointList const &edge_right,
@@ -302,11 +304,11 @@ calculateWidthRange(ECEFPointList const &edge_left,
  *
  * @throws std::invalid_argument if the lateral_alignment parameter is smaller than 0. or larger than 1.
  */
-template ECEFPointList getLateralAlignmentEdge(ECEFPointList const &leftEdge,
-                                               physics::Distance const &leftEdgeLength,
-                                               ECEFPointList const &rightEdge,
-                                               physics::Distance const &rightEdgeLength,
-                                               physics::ParametricValue const lateral_alignment);
+extern template ECEFPointList getLateralAlignmentEdge(ECEFPointList const &leftEdge,
+                                                      physics::Distance const &leftEdgeLength,
+                                                      ECEFPointList const &rightEdge,
+                                                      physics::Distance const &rightEdgeLength,
+                                                      physics::ParametricValue const lateral_alignment);
 
 /**
  * @brief Get an edge between the two given border edges with corresponding lateral_alignment
@@ -326,9 +328,9 @@ template ECEFPointList getLateralAlignmentEdge(ECEFPointList const &leftEdge,
  *
  * @throws std::invalid_argument if the lateral_alignment parameter is smaller than 0. or larger than 1.
  */
-template ECEFPointList getLateralAlignmentEdge(ECEFPointList const &leftEdge,
-                                               ECEFPointList const &rightEdge,
-                                               physics::ParametricValue const lateral_alignment);
+extern template ECEFPointList getLateralAlignmentEdge(ECEFPointList const &leftEdge,
+                                                      ECEFPointList const &rightEdge,
+                                                      physics::ParametricValue const lateral_alignment);
 
 /**
  * @brief get a normalized vector representing the edge direction at edge start
@@ -337,7 +339,7 @@ template ECEFPointList getLateralAlignmentEdge(ECEFPointList const &leftEdge,
  * If the two start points of the edge are too close to each other, a third point is used if possible to increase
  * the accuracy.
  */
-template ECEFPoint getEdgeStartDirectionalVector(ECEFPointList const edge);
+extern template ECEFPoint getEdgeStartDirectionalVector(ECEFPointList const &edge);
 
 /**
  * @brief get a normalized vector representing the edge direction at edge end
@@ -346,7 +348,7 @@ template ECEFPoint getEdgeStartDirectionalVector(ECEFPointList const edge);
  * If the two end points of the edge are too close to each other, a third point is used if possible to increase
  * the accuracy.
  */
-template ECEFPoint getEdgeEndDirectionalVector(ECEFPointList const edge);
+extern template ECEFPoint getEdgeEndDirectionalVector(ECEFPointList const &edge);
 
 /** @brief calculate the length of the provided border as distance value
  *

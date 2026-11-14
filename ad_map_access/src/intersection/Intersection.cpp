@@ -71,9 +71,9 @@ IntersectionType Intersection::intersectionTypeFromContactTypes(lane::ContactTyp
 
 IntersectionType getRightOfWayForTransition(lane::LaneId fromLaneId, lane::LaneId toLaneId)
 {
-  auto laneFrom = lane::getLane(fromLaneId);
+  auto const &laneFrom = lane::getLane(fromLaneId);
   auto contactLanesFromOutside = lane::getContactLane(laneFrom, toLaneId);
-  for (auto contact : contactLanesFromOutside)
+  for (auto const &contact : contactLanesFromOutside)
   {
     auto intersectionTypeFromOutside = Intersection::intersectionTypeFromContactTypes(contact.types);
     if (intersectionTypeFromOutside != IntersectionType::Unknown)
@@ -82,9 +82,9 @@ IntersectionType getRightOfWayForTransition(lane::LaneId fromLaneId, lane::LaneI
     }
   }
 
-  auto laneTo = lane::getLane(toLaneId);
+  auto const &laneTo = lane::getLane(toLaneId);
   auto contactLanesFromInside = lane::getContactLane(laneTo, fromLaneId);
-  for (auto contact : contactLanesFromInside)
+  for (auto const &contact : contactLanesFromInside)
   {
     auto intersectionTypeFromInside = Intersection::intersectionTypeFromContactTypes(contact.types);
     if (intersectionTypeFromInside != IntersectionType::Unknown)
@@ -241,6 +241,11 @@ void Intersection::extractRightOfWayAndCollectTrafficLights(route::LaneInterval 
       mIntersectionType = intersectionType;
       collectTrafficLights(beforeLaneId, toLaneId);
     }
+    else if (toLaneId == lane::LaneId(0))
+    {
+      toLaneId = succId;
+      collectTrafficLights(beforeLaneId, toLaneId);
+    }
   }
 }
 
@@ -278,6 +283,10 @@ Intersection::Intersection(route::FullRoute const &route,
     }
   }
 
+  if (toLaneId == lane::LaneId(0))
+  {
+    throw std::runtime_error("Lane is not part of intersection!");
+  }
   extractLanesOfCoreIntersection(toLaneId);
   if (!isLanePartOfCoreIntersection(toLaneId))
   {
@@ -476,7 +485,7 @@ void Intersection::extractCrossingLanes()
 // this function return the directional angle of lane_id
 point::ENUHeading getLaneDirectionalAngle(lane::LaneId lane_id)
 {
-  auto lane = lane::getLane(lane_id);
+  auto const &lane = lane::getLane(lane_id);
 
   // Collect the parapoint of the lane
   physics::ParametricValue laneParapoint
@@ -521,26 +530,21 @@ point::ENUHeading degToENUHeading(double angle)
 TurnDirection turnDirectionForAngle(point::ENUHeading const angle)
 {
   // we assume that the angle is in range [0 2 PI] where 0 is the direction of the entering lane
-  if ((angle > degToENUHeading(315.)) || (angle < degToENUHeading(45.)))
+  if ((angle >= degToENUHeading(315.)) || (angle < degToENUHeading(45.)))
   {
     return TurnDirection::UTurn;
   }
-  else if (angle > degToENUHeading(225.))
+  else if (angle >= degToENUHeading(225.))
   {
     return TurnDirection::Left;
   }
-  else if (angle > degToENUHeading(135.))
+  else if (angle >= degToENUHeading(135.))
   {
     return TurnDirection::Straight;
   }
-  else if (angle > degToENUHeading(45.))
-  {
-    return TurnDirection::Right;
-  }
   else
   {
-    // we should never come here
-    return TurnDirection::Unknown;
+    return TurnDirection::Right;
   }
 }
 
@@ -561,7 +565,7 @@ void Intersection::orderIntersectionArmsAndExtractTurnDirection()
 
   // Group all incoming/outgoing lanes into arms (ordered counterclockwise).
 
-  for (auto laneDirection : intersectionLanesDirection)
+  for (auto const &laneDirection : intersectionLanesDirection)
   {
     auto turnDirection = turnDirectionForAngle(laneDirection.first);
     if ((mTurnDirection == TurnDirection::Unknown) && (mOutgoingLanesOnRoute.count(laneDirection.second.lane_id) > 0))
@@ -769,8 +773,10 @@ void Intersection::adjustLanesForYield()
         {
           addLaneAndSuccessorsToInternalLanesWithHigherPriority(sucessorLaneId);
         }
-        // yield lanes only have to be respected if we turn
-        else if ((trafficRuleAtOtherLane == IntersectionType::Yield) && turnDirectionCrossesStraightTraffic())
+        // yield/stop lanes only have to be respected if we turn
+        else if (((trafficRuleAtOtherLane == IntersectionType::Yield)
+                  || (trafficRuleAtOtherLane == IntersectionType::Stop))
+                 && turnDirectionCrossesStraightTraffic())
         {
           addLaneAndSuccessorsToInternalLanesWithHigherPriorityIfCrossing(sucessorLaneId);
         }
@@ -1073,11 +1079,11 @@ bool Intersection::objectRouteCrossesLanesWithHigherPriority(route::FullRoute co
 
 void Intersection::collectTrafficLights(lane::LaneId fromLaneId, lane::LaneId toLaneId)
 {
-  auto laneFrom = lane::getLane(fromLaneId);
-  auto laneTo = lane::getLane(toLaneId);
+  auto const &laneFrom = lane::getLane(fromLaneId);
+  auto const &laneTo = lane::getLane(toLaneId);
   auto contactLanesFromOutside = lane::getContactLane(laneFrom, toLaneId);
   auto contactLanesFromInside = lane::getContactLane(laneTo, fromLaneId);
-  for (auto contactLaneFromOutside : contactLanesFromOutside)
+  for (auto const &contactLaneFromOutside : contactLanesFromOutside)
   {
     for (auto const &contactType : contactLaneFromOutside.types)
     {
@@ -1088,7 +1094,7 @@ void Intersection::collectTrafficLights(lane::LaneId fromLaneId, lane::LaneId to
     }
   }
 
-  for (auto contactLaneFromInside : contactLanesFromInside)
+  for (auto const &contactLaneFromInside : contactLanesFromInside)
   {
     for (auto const &contactType : contactLaneFromInside.types)
     {
@@ -1123,7 +1129,7 @@ void Intersection::calculateSpeedLimit()
 
 landmark::TrafficLightType Intersection::extractTrafficLightType(landmark::LandmarkId trafficLightId)
 {
-  auto trafficLight = landmark::getLandmark(trafficLightId);
+  auto const &trafficLight = landmark::getLandmark(trafficLightId);
   return trafficLight.traffic_light_type;
 }
 

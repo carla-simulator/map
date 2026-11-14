@@ -440,10 +440,44 @@ TEST_F(FactoryTest, TestRestriction)
   roadRestriction.road_user_types
     = {restriction::RoadUserType::CAR, restriction::RoadUserType::BUS, restriction::RoadUserType::TRUCK};
   roadRestrictions.conjunctions.push_back(roadRestriction);
+  vehicle.type = restriction::RoadUserType::CAR;
+  vehicle.passengers = restriction::PassengerCount(4);
+  ASSERT_TRUE(isAccessOk(roadRestrictions, vehicle));
+  // Conjunction fails (insufficient passengers) while disjunction still holds -> must be false
+  vehicle.passengers = restriction::PassengerCount(2);
+  ASSERT_FALSE(isAccessOk(roadRestrictions, vehicle));
+  // Conjunction holds while disjunction fails -> must be false
+  roadRestrictions.disjunctions.clear();
+  restriction::Restriction busOnly;
+  busOnly.road_user_types = {restriction::RoadUserType::BUS};
+  roadRestrictions.disjunctions.push_back(busOnly);
+  vehicle.passengers = restriction::PassengerCount(4);
+  ASSERT_FALSE(isAccessOk(roadRestrictions, vehicle));
+  vehicle.type = restriction::RoadUserType::BUS;
+  ASSERT_TRUE(isAccessOk(roadRestrictions, vehicle));
+
+  roadRestrictions.disjunctions.clear();
+  roadRestrictions.disjunctions.push_back(pedestrians);
   restriction::PassengerCount ret(5.);
   ASSERT_EQ(getHOV(roadRestrictions), ret);
   mStorePtr->removePartition(access::PartitionId(0));
   ASSERT_TRUE(mStorePtr->empty());
+}
+
+TEST_F(FactoryTest, DeleteMultipleContacts)
+{
+  lane::ContactLocation succ(lane::ContactLocation::SUCCESSOR);
+  lane::ContactLocation left(lane::ContactLocation::LEFT);
+  lane::ContactTypeList free({lane::ContactType::FREE});
+  restriction::Restrictions emptyRestrs;
+  ASSERT_TRUE(pFactory->add(x11, x13, succ, free, emptyRestrs));
+  ASSERT_TRUE(pFactory->add(x11, x13, left, free, emptyRestrs));
+  ASSERT_TRUE(pFactory->deleteContacts(x11, x13));
+  auto const &lane11 = lane::getLane(x11);
+  for (auto const &contact : lane11.contact_lanes)
+  {
+    ASSERT_NE(contact.to_lane, x13);
+  }
 }
 
 TEST_F(FactoryTest, Store)

@@ -11,7 +11,9 @@
 #include "ad/map/access/Logging.hpp"
 #include "ad/map/access/Operation.hpp"
 #include "ad/map/access/Store.hpp"
+#include "ad/map/landmark/LandmarkOperation.hpp"
 #include "ad/map/lane/LaneOperation.hpp"
+#include "ad/map/point/ECEFOperation.hpp"
 #include "ad/map/serialize/SerializeGeneratedTypes.hpp"
 
 #include <algorithm>
@@ -45,7 +47,18 @@ bool Store::load(serialize::ISerializer &serializer)
   bool ok = false;
   if (!serializer.isStoring())
   {
+    lane_map_.clear();
+    landmark_map_.clear();
+    part_lane_map_.clear();
+    part_landmark_map_.clear();
     ok = serialize(serializer);
+    if (!ok)
+    {
+      lane_map_.clear();
+      landmark_map_.clear();
+      part_lane_map_.clear();
+      part_landmark_map_.clear();
+    }
   }
   else
   {
@@ -63,7 +76,7 @@ bool Store::isValid() const
   {
     return false;
   }
-  for (auto id_and_lane : lane_map_)
+  for (auto const &id_and_lane : lane_map_)
   {
     const lane::LaneId &lane_id = id_and_lane.first;
     const lane::Lane::Ptr &lane = id_and_lane.second;
@@ -72,10 +85,21 @@ bool Store::isValid() const
       return false;
     }
   }
-  for (auto partition_id_and_ids : part_lane_map_)
+  for (auto const &id_and_landmark : landmark_map_)
+  {
+    const landmark::LandmarkId &landmark_id = id_and_landmark.first;
+    const landmark::Landmark::Ptr &landmark = id_and_landmark.second;
+    if (!landmark::isValid(landmark_id, false) || !landmark || (landmark->id != landmark_id)
+        || !withinValidInputRange(landmark->type, false) || !point::isValid(landmark->position, false)
+        || !point::isValid(landmark->orientation, false))
+    {
+      return false;
+    }
+  }
+  for (auto const &partition_id_and_ids : part_lane_map_)
   {
     const lane::LaneIdList &lane_ids = partition_id_and_ids.second;
-    for (auto lane_id : lane_ids)
+    for (auto const &lane_id : lane_ids)
     {
       if (lane_map_.find(lane_id) == lane_map_.end())
       {
@@ -83,10 +107,10 @@ bool Store::isValid() const
       }
     }
   }
-  for (auto partition_id_and_ids : part_landmark_map_)
+  for (auto const &partition_id_and_ids : part_landmark_map_)
   {
     const landmark::LandmarkIdList &landmark_ids = partition_id_and_ids.second;
-    for (auto landmark_id : landmark_ids)
+    for (auto const &landmark_id : landmark_ids)
     {
       if (landmark_map_.find(landmark_id) == landmark_map_.end())
       {
@@ -134,7 +158,7 @@ bool Store::serialize(serialize::ISerializer &serializer)
   {
     if (use_geometry_store_)
     {
-      GeometryStore gs;
+      GeometryStore gs(this);
       if (serializer.isStoring())
       {
         ok = storeGeometry(gs);
@@ -163,7 +187,7 @@ bool Store::serialize(serialize::ISerializer &serializer)
 
 bool Store::storeGeometry(GeometryStore &gs)
 {
-  for (auto lane : lane_map_)
+  for (auto const &lane : lane_map_)
   {
     if (!gs.store(lane.second))
     {
@@ -176,7 +200,7 @@ bool Store::storeGeometry(GeometryStore &gs)
 
 bool Store::restoreGeometry(const GeometryStore &gs)
 {
-  for (auto lane : lane_map_)
+  for (auto const &lane : lane_map_)
   {
     if (!gs.restore(lane.second))
     {
@@ -189,7 +213,7 @@ bool Store::restoreGeometry(const GeometryStore &gs)
 
 bool Store::checkGeometry(const GeometryStore &gs)
 {
-  for (auto lane : lane_map_)
+  for (auto const &lane : lane_map_)
   {
     if (!gs.check(lane.second))
     {

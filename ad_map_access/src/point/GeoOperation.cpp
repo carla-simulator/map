@@ -102,10 +102,14 @@ GeoPoint approxAltitude(GeoPoint const &point, const GeoPointList &pts)
   }
   else
   {
+    auto const ptCartesian = toCartesianCoordinates(pt);
+    auto flatDistFromPt = [&ptCartesian](GeoPoint const &other) {
+      return vectorLength(vectorSub(ptCartesian, toCartesianCoordinates(zeroAltitude(other))));
+    };
     GeoPoint pt0(pts[0]);
     GeoPoint pt1(pts[1]);
-    auto d0 = flatDistance(pt, pt0);
-    auto d1 = flatDistance(pt, pt1);
+    auto d0 = flatDistFromPt(pt0);
+    auto d1 = flatDistFromPt(pt1);
     if (d0 > d1)
     {
       std::swap(pt0, pt1);
@@ -113,7 +117,7 @@ GeoPoint approxAltitude(GeoPoint const &point, const GeoPointList &pts)
     }
     for (size_t i = 2; i < pts.size(); i++)
     {
-      auto const d = flatDistance(pt, pts[i]);
+      auto const d = flatDistFromPt(pts[i]);
       if (d < d0)
       {
         pt1 = pt0;
@@ -143,47 +147,11 @@ GeoPoint approxAltitude(GeoPoint const &point, const GeoPointList &pts)
 
 bool isOnTheLeft(GeoPoint const &point, const GeoPoint &pt0, const GeoPoint &pt1)
 {
-  if ((pt1.longitude - pt0.longitude) == Longitude(0.))
-  {
-    if (point.longitude < pt1.longitude)
-    {
-      return pt1.latitude > pt0.latitude;
-    }
-    else if (point.longitude > pt1.longitude)
-    {
-      return pt1.latitude < pt0.latitude;
-    }
-  }
-  else if ((pt1.latitude - pt0.latitude) == Latitude(0.))
-  {
-    if (point.latitude < pt1.latitude)
-    {
-      return pt1.longitude < pt0.longitude;
-    }
-    else if (point.latitude > pt1.latitude)
-    {
-      return pt1.longitude > pt0.longitude;
-    }
-  }
-  else
-  {
-    auto const slope
-      = physics::RatioValue((pt1.latitude - pt0.latitude).mLatitude / (pt1.longitude - pt0.longitude).mLongitude);
-    if (slope != physics::RatioValue(0.))
-    {
-      double yi = pt0.latitude.mLatitude - pt0.longitude.mLongitude * slope.mRatioValue;
-      double cs = (slope.mRatioValue * point.longitude.mLongitude) + yi;
-      if (point.latitude.mLatitude > cs)
-      {
-        return pt1.longitude > pt0.longitude;
-      }
-      if (point.latitude.mLatitude < cs)
-      {
-        return pt1.longitude < pt0.longitude;
-      }
-    }
-  }
-  return false;
+  double const dlonLine = std::remainder((pt1.longitude - pt0.longitude).mLongitude, 360.0);
+  double const dlatLine = (pt1.latitude - pt0.latitude).mLatitude;
+  double const dlonPt = std::remainder((point.longitude - pt0.longitude).mLongitude, 360.0);
+  double const dlatPt = (point.latitude - pt0.latitude).mLatitude;
+  return (dlonLine * dlatPt - dlatLine * dlonPt) > 0.0;
 }
 
 bool haveSameOrientation(const GeoPointList &pts0, const GeoPointList &pts1)

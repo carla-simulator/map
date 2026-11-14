@@ -226,3 +226,23 @@ TEST_F(AdMapMatchingTest, laneOperation)
   mMapMatching->addLaneRegions(lane_occupied_regions, otherLaneOccupiedRegions);
   ASSERT_EQ(lane_occupied_regions[0].lateral_range, range);
 }
+
+TEST_F(AdMapMatchingTest, singleLaneRouteProbabilityAndHeadingFactor)
+{
+  addRouteHint();
+  auto const hintPoint
+    = point::createGeoPoint(point::Longitude(8.4401803), point::Latitude(49.0191987), point::Altitude(0.));
+  auto const routeMatches = AdMapMatching::findRouteLanes(point::toECEF(hintPoint), mRouteHint);
+  ASSERT_EQ(routeMatches.size(), 1u);
+  EXPECT_EQ(routeMatches.front().probability, physics::Probability(1.));
+
+  auto const laneHeading = lane::getLaneECEFHeading(routeMatches.front());
+  mMapMatching->clearHeadingHints();
+  mMapMatching->setMaxHeadingHintFactor(3.0);
+  mMapMatching->addHeadingHint(laneHeading);
+  EXPECT_NEAR(mMapMatching->getHeadingFactor(routeMatches.front()), 3.0, 1e-6);
+
+  mMapMatching->clearHeadingHints();
+  mMapMatching->addHeadingHint(-1.0 * laneHeading);
+  EXPECT_NEAR(mMapMatching->getHeadingFactor(routeMatches.front()), 1.0, 1e-6);
+}

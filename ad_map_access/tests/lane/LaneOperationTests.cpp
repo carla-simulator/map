@@ -737,3 +737,66 @@ TEST_F(LaneOperationTest, getENUHeadingOfRoute)
   auto const heading = getENUHeading({border}, ref_point);
   ASSERT_LE(std::fabs(heading), ad::map::point::ENUHeading(M_PI));
 }
+
+TEST_F(LaneOperationTest, InvalidContactLocationAndCycleSafetyAndBorderInterpolation)
+{
+  setupSingleLongLane();
+  auto const &singleLane = lane::getLane(lane_id);
+  EXPECT_THROW(lane::getContactLanes(singleLane, lane::ContactLocation::INVALID), std::runtime_error);
+
+  // Cyclic lateral neighbor contacts should terminate cleanly without infinite recursion
+  access::PartitionId p(0);
+  ECEFPoint basePoint
+    = point::toECEF(point::createGeoPoint(point::Longitude(8.4495), point::Latitude(49.0075), point::Altitude(0.)));
+  access::setENUReferencePoint(point::toGeo(basePoint));
+
+  lane::LaneId cycleA(9001);
+  lane::LaneId cycleB(9002);
+  pFactory->add(p, cycleA, lane::LaneType::NORMAL, lane::LaneDirection::POSITIVE);
+  pFactory->add(p, cycleB, lane::LaneType::NORMAL, lane::LaneDirection::POSITIVE);
+
+  ECEFPointList leftA{point::toECEF(createENUPoint(0., 4., 0.)), point::toECEF(createENUPoint(20., 4., 0.))};
+  ECEFPointList rightA{point::toECEF(createENUPoint(0., 2., 0.)), point::toECEF(createENUPoint(20., 2., 0.))};
+  ECEFPointList leftB{point::toECEF(createENUPoint(0., 2., 0.)), point::toECEF(createENUPoint(20., 2., 0.))};
+  ECEFPointList rightB{point::toECEF(createENUPoint(0., 0., 0.)), point::toECEF(createENUPoint(20., 0., 0.))};
+  pFactory->set(cycleA, createGeometry(leftA, false), createGeometry(rightA, false));
+  pFactory->set(cycleB, createGeometry(leftB, false), createGeometry(rightB, false));
+
+  restriction::Restrictions emptyRestrs;
+  lane::ContactTypeList freeTypes{lane::ContactType::FREE};
+  ASSERT_TRUE(pFactory->add(cycleA, cycleB, lane::ContactLocation::RIGHT, freeTypes, emptyRestrs));
+  ASSERT_TRUE(pFactory->add(cycleB, cycleA, lane::ContactLocation::LEFT, freeTypes, emptyRestrs));
+  // Artificial cyclic self/cross contact where heading points away from both lanes
+  ASSERT_TRUE(pFactory->add(cycleA, cycleB, lane::ContactLocation::LEFT, freeTypes, emptyRestrs));
+  ASSERT_TRUE(pFactory->add(cycleB, cycleA, lane::ContactLocation::RIGHT, freeTypes, emptyRestrs));
+
+  point::ParaPoint startPos;
+  startPos.lane_id = cycleA;
+  startPos.parametric_offset = physics::ParametricValue(0.5);
+  point::ParaPoint projectedPos;
+  // Heading along lane (0 rad) is parallel to both lanes, so lateral projection misses neighbor intervals
+  EXPECT_FALSE(lane::projectPositionToLaneInHeadingDirection(startPos, point::createENUHeading(0.0), projectedPos));
+
+  // normalizeBorder with 3-point smallerEdge and 5-point biggerEdge clustered near end
+  ENUBorder border;
+  border.left.edge_type = EdgeType::LEFT;
+  border.left.lateral_alignment = cLateralAlignmentLeft;
+  border.left.points = {createENUPoint(0., 4., 0.),
+                        createENUPoint(80., 4., 0.),
+                        createENUPoint(90., 4., 0.),
+                        createENUPoint(95., 4., 0.),
+                        createENUPoint(100., 4., 0.)};
+  border.right.edge_type = EdgeType::RIGHT;
+  border.right.lateral_alignment = cLateralAlignmentRight;
+  border.right.points = {createENUPoint(0., 0., 0.), createENUPoint(50., 0., 0.), createENUPoint(100., 0., 0.)};
+
+  normalizeBorder(border);
+  ASSERT_EQ(border.left.points.size(), 5u);
+  ASSERT_EQ(border.right.points.size(), 5u);
+  EXPECT_EQ(border.right.points.front(), createENUPoint(0., 0., 0.));
+  EXPECT_EQ(border.right.points.back(), createENUPoint(100., 0., 0.));
+  for (size_t idx = 1u; idx < border.right.points.size(); ++idx)
+  {
+    EXPECT_LE(border.right.points[idx - 1u].x, border.right.points[idx].x);
+  }
+}
