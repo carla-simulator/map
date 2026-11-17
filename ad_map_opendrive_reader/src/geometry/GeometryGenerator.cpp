@@ -10,6 +10,7 @@
 #include "opendrive/geometry/GeometryGenerator.hpp"
 #include <algorithm>
 #include <boost/math/tools/rational.hpp>
+#include <cmath>
 #include <iostream>
 #include <map>
 #include <memory>
@@ -1040,7 +1041,7 @@ bool convertToGeoPoints(opendrive::OpenDriveData &mapData)
     enuPoint.v = y_rot;
 
     auto geoPoint = pj_inv(enuPoint, projPtr);
-    if ((geoPoint.u == HUGE_VAL) || (geoPoint.v == HUGE_VAL))
+    if (!std::isfinite(geoPoint.u) || !std::isfinite(geoPoint.v))
     {
       spdlog::error(
         "ConvertENUToGeo: Output point invalid ({},{}) -> ({},{})", enuPoint.u, enuPoint.v, geoPoint.u, geoPoint.v);
