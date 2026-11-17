@@ -226,9 +226,13 @@ inline bool operator!=(ad::geometry::Polygon const &a, ad::geometry::Polygon con
  */
 inline bool operator<(ad::geometry::Point const &a, ad::geometry::Point const &b)
 {
-  if (a.x() != b.x())
+  if (a.x() < b.x())
   {
-    return a.x() < b.x();
+    return true;
+  }
+  if (b.x() < a.x())
+  {
+    return false;
   }
   return a.y() < b.y();
 }
