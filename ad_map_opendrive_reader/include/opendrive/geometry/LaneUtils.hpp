@@ -14,6 +14,7 @@
 #pragma once
 
 #include <cmath>
+#include <vector>
 #include "opendrive/types.hpp"
 
 namespace opendrive {
@@ -38,6 +39,7 @@ inline bool near(Point const &left, Point const &right, double resolution = 1e-2
 }
 
 bool lanesOverlap(Lane const &leftLane, Lane const &rightLane, double const overlapMargin);
+void connectIntersectionLanes(LaneMap &laneMap, std::vector<Id> const &lanes, double const overlapMargin);
 void invertLaneAndNeighbors(LaneMap &laneMap, Lane &lane);
 void checkAddSuccessor(Lane &lane, Lane const &otherLane);
 void checkAddPredecessor(Lane &lane, Lane const &otherLane);

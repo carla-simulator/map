@@ -31,25 +31,36 @@ double laneShapeHeightEval(std::pair<std::map<double, std::set<LateralProfileSha
                            double s,
                            double t)
 {
-  auto const sr1 = bounds.first->first;
   auto const h_sr1 = evalPoly3(bounds.first->second, t);
+  if (bounds.first == bounds.second)
+  {
+    return h_sr1;
+  }
+  auto const sr1 = bounds.first->first;
   auto const sr2 = bounds.second->first;
   auto const h_sr2 = evalPoly3(bounds.second->second, t);
-  auto h_s = (h_sr1 + h_sr2) * (s - sr1) / (sr2 - sr1);
-  return h_s;
+  return h_sr1 + (h_sr2 - h_sr1) * (s - sr1) / (sr2 - sr1);
 }
 
 std::pair<std::map<double, std::set<LateralProfileShape>>::const_iterator,
           std::map<double, std::set<LateralProfileShape>>::const_iterator>
 laneShapeHeightBounds(std::map<double, std::set<LateralProfileShape>> const &shapeProfile, double s)
 {
-  auto upperBound = shapeProfile.upper_bound(s);
-  auto lowerBound = upperBound;
-  if (lowerBound != shapeProfile.begin())
+  if (shapeProfile.empty())
   {
-    lowerBound--;
+    return {shapeProfile.end(), shapeProfile.end()};
   }
-  return {lowerBound, upperBound};
+  auto upperBound = shapeProfile.upper_bound(s);
+  if (upperBound == shapeProfile.begin())
+  {
+    return {upperBound, upperBound};
+  }
+  if (upperBound == shapeProfile.end())
+  {
+    auto const last = std::prev(upperBound);
+    return {last, last};
+  }
+  return {std::prev(upperBound), upperBound};
 }
 
 void normalizeEdge(Id const id, std::string const &what, Edge &edge)
@@ -140,7 +151,7 @@ bool LaneSectionSampling::addSamples(LaneSection const &laneSection,
   bool ok = true;
   double s0 = laneSection.start_position;
   double s1 = laneSection.end_position;
-  if (std::fabs(s1 - laneSamplingPoints.back()) > Point::cCoordinateTolerance)
+  if (!laneSamplingPoints.empty() && (std::fabs(s1 - laneSamplingPoints.back()) > Point::cCoordinateTolerance))
   {
     // the tolerance at the end of the lane sections is necessary so that the lane offset applies only to the current
     // lane section
@@ -284,9 +295,10 @@ LaneSectionSampling::evalProfile(LaneSection const &laneSection, uint64_t const 
       point.leftEdgePoint = centerPoint.getLateralOffsetPoint(leftT);
 
       // apply lane height
-      auto laneHeightIter = laneInfo.lane_height.lower_bound(laneHeightSearch);
-      if (laneHeightIter != laneInfo.lane_height.end())
+      auto laneHeightIter = laneInfo.lane_height.upper_bound(laneHeightSearch);
+      if (laneHeightIter != laneInfo.lane_height.begin())
       {
+        --laneHeightIter;
         point.rightEdgePoint.z += laneHeightIter->inner;
         point.leftEdgePoint.z += laneHeightIter->outer;
       }
@@ -347,9 +359,10 @@ LaneSectionSampling::evalProfile(LaneSection const &laneSection, uint64_t const 
       point.rightEdgePoint = centerPoint.getLateralOffsetPoint(rightT);
 
       // apply lane height
-      auto laneHeightIter = laneInfo.lane_height.lower_bound(laneHeightSearch);
-      if (laneHeightIter != laneInfo.lane_height.end())
+      auto laneHeightIter = laneInfo.lane_height.upper_bound(laneHeightSearch);
+      if (laneHeightIter != laneInfo.lane_height.begin())
       {
+        --laneHeightIter;
         point.leftEdgePoint.z += laneHeightIter->inner;
         point.rightEdgePoint.z += laneHeightIter->outer;
       }

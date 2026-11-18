@@ -14,6 +14,7 @@
 #include "opendrive/types.hpp"
 
 #include <boost/algorithm/string.hpp>
+#include <cmath>
 #include <iostream>
 #include <limits>
 #include <vector>
@@ -52,8 +53,12 @@ double GetAttributeOrDefault(const pugi::xml_node &node, const std::string &attr
     refPoint.u = 0;
     refPoint.v = 0;
     const auto geoPoint = pj_inv(refPoint, projPtr);
-    result.longitude = geoPoint.u * RAD_TO_DEG;
-    result.latitude = geoPoint.v * RAD_TO_DEG;
+    if (std::isfinite(geoPoint.u) && std::isfinite(geoPoint.v))
+    {
+      result.longitude = geoPoint.u * RAD_TO_DEG;
+      result.latitude = geoPoint.v * RAD_TO_DEG;
+    }
+    pj_dalloc(projPtr);
   }
   else
   {

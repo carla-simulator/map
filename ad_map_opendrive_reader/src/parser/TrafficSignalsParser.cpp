@@ -141,12 +141,9 @@ void opendrive::parser::TrafficSignalsParser::Parse(
     trafficSignalReference.track_position = std::stod(signal.attribute("t").value());
     trafficSignalReference.orientation = signal.attribute("orientation").value();
 
-    for (pugi::xml_node userData = xmlNode.child("signalReference").child("userData"); userData;
-         userData = userData.next_sibling("userData"))
+    for (pugi::xml_node userData : signal.children("userData"))
     {
-      std::string node_name = "vectorSignal";
-      for (pugi::xml_node vector_node = userData.child(node_name.c_str()); vector_node;
-           vector_node = vector_node.next_sibling("vectorSignal"))
+      for (pugi::xml_node vector_node : userData.children("vectorSignal"))
       {
         trafficSignalReference.relation = vector_node.attribute("turnRelation").value();
       }

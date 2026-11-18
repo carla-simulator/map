@@ -11,6 +11,7 @@
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <spdlog/spdlog.h>
+#include <unordered_map>
 #include <vector>
 #include "opendrive/geometry/Geometry.hpp"
 #include "opendrive/geometry/GeometryGenerator.hpp"
@@ -20,6 +21,7 @@ namespace geometry {
 
 typedef ::boost::geometry::model::d2::point_xy<double> Boost2dPoint;
 typedef ::boost::geometry::model::polygon<Boost2dPoint> BoostPolygon;
+typedef ::boost::geometry::model::box<Boost2dPoint> BoostBox;
 
 /**
  * Convert lane to boost polygon
@@ -32,7 +34,9 @@ BoostPolygon fromLane(Lane const &lane, double const margin)
   auto const &rightBorder = lane.rightEdge;
 
   std::vector<Boost2dPoint> leftPoints;
+  leftPoints.reserve(leftBorder.size());
   std::vector<Boost2dPoint> rightPoints;
+  rightPoints.reserve(rightBorder.size());
 
   for (auto it = leftBorder.begin(); it != leftBorder.end(); ++it)
   {
@@ -92,9 +96,15 @@ BoostPolygon fromLane(Lane const &lane, double const margin)
     boost::geometry::add_point(rightPoints[i], orthogonalDirection);
   }
 
-  std::vector<Boost2dPoint> points = leftPoints;
+  std::vector<Boost2dPoint> points;
+  points.reserve(leftPoints.size() + rightPoints.size() + 1u);
+  points.insert(points.end(), leftPoints.begin(), leftPoints.end());
   // insert the right points in vice versa direction
   points.insert(points.end(), rightPoints.rbegin(), rightPoints.rend());
+  if (points.empty())
+  {
+    return BoostPolygon{};
+  }
   // close polygon
   points.push_back(points.front());
   BoostPolygon polygon;
@@ -138,7 +148,8 @@ void invertLaneAndNeighbors(LaneMap &laneMap, Lane &lane)
     auto insertResult = neighborhood.insert(leftNeighbor);
     if (insertResult.second)
     {
-      leftNeighbor = laneMap[leftNeighbor].leftNeighbor;
+      auto it = laneMap.find(leftNeighbor);
+      leftNeighbor = (it != laneMap.end()) ? it->second.leftNeighbor : 0u;
     }
     else
     {
@@ -152,7 +163,8 @@ void invertLaneAndNeighbors(LaneMap &laneMap, Lane &lane)
     auto insertResult = neighborhood.insert(rightNeighbor);
     if (insertResult.second)
     {
-      rightNeighbor = laneMap[rightNeighbor].rightNeighbor;
+      auto it = laneMap.find(rightNeighbor);
+      rightNeighbor = (it != laneMap.end()) ? it->second.rightNeighbor : 0u;
     }
     else
     {
@@ -162,7 +174,11 @@ void invertLaneAndNeighbors(LaneMap &laneMap, Lane &lane)
   }
   for (auto const &laneId : neighborhood)
   {
-    invertLane(laneMap[laneId]);
+    auto it = laneMap.find(laneId);
+    if (it != laneMap.end())
+    {
+      invertLane(it->second);
+    }
   }
 }
 
@@ -215,6 +231,11 @@ ContactPlace contactPlace(Lane const &leftLane, Lane const &rightLane)
 
 void checkAddPredecessor(Lane &lane, Lane const &otherLane)
 {
+  if (lane.leftEdge.empty() || lane.rightEdge.empty() || otherLane.leftEdge.empty() || otherLane.rightEdge.empty())
+  {
+    spdlog::error("checkAddPredecessor[ {} ] empty lane edge with other lane: {}", lane.id, otherLane.id);
+    return;
+  }
   auto const thisLeftStart = lane.leftEdge.front();
   auto const thisRightStart = lane.rightEdge.front();
   auto const otherLeftStart = otherLane.leftEdge.front();
@@ -235,6 +256,11 @@ void checkAddPredecessor(Lane &lane, Lane const &otherLane)
 
 void checkAddSuccessor(Lane &lane, Lane const &otherLane)
 {
+  if (lane.leftEdge.empty() || lane.rightEdge.empty() || otherLane.leftEdge.empty() || otherLane.rightEdge.empty())
+  {
+    spdlog::error("checkAddSuccessor[ {} ] empty lane edge with other lane: {}", lane.id, otherLane.id);
+    return;
+  }
   auto const thisLeftEnd = lane.leftEdge.back();
   auto const thisRightEnd = lane.rightEdge.back();
   auto const otherLeftStart = otherLane.leftEdge.front();
@@ -292,6 +318,18 @@ bool lanesOverlap(Lane const &leftLane, Lane const &rightLane, double const over
   {
     auto leftPolygon = fromLane(leftLane, overlapMargin);
     auto rightPolygon = fromLane(rightLane, overlapMargin);
+    if (leftPolygon.outer().empty() || rightPolygon.outer().empty())
+    {
+      return false;
+    }
+    BoostBox leftBox;
+    BoostBox rightBox;
+    ::boost::geometry::envelope(leftPolygon, leftBox);
+    ::boost::geometry::envelope(rightPolygon, rightBox);
+    if (!::boost::geometry::intersects(leftBox, rightBox))
+    {
+      return false;
+    }
     std::deque<BoostPolygon> output;
     (void)::boost::geometry::intersection(leftPolygon, rightPolygon, output);
     return (!output.empty());
@@ -306,6 +344,125 @@ bool lanesOverlap(Lane const &leftLane, Lane const &rightLane, double const over
                   rightLane.leftEdge.size(),
                   rightLane.rightEdge.size());
     return false;
+  }
+}
+
+void connectIntersectionLanes(LaneMap &laneMap, std::vector<Id> const &lanes, double const overlapMargin)
+{
+  struct CachedLanePolygon
+  {
+    BoostPolygon polygon;
+    BoostBox box;
+    bool valid{false};
+  };
+
+  std::unordered_map<Id, CachedLanePolygon> polygonCache;
+  polygonCache.reserve(lanes.size());
+
+  auto getOrBuildPolygon = [&polygonCache, overlapMargin](Lane const &lane) -> CachedLanePolygon const & {
+    auto it = polygonCache.find(lane.id);
+    if (it != polygonCache.end())
+    {
+      return it->second;
+    }
+    CachedLanePolygon entry;
+    if (lane.type == LaneType::Driving)
+    {
+      try
+      {
+        entry.polygon = fromLane(lane, overlapMargin);
+        if (!entry.polygon.outer().empty())
+        {
+          ::boost::geometry::envelope(entry.polygon, entry.box);
+          entry.valid = true;
+        }
+      }
+      catch (...)
+      {
+        spdlog::error("Error while building polygon for lane {} (left:{}, right:{})",
+                      lane.id,
+                      lane.leftEdge.size(),
+                      lane.rightEdge.size());
+      }
+    }
+    return polygonCache.emplace(lane.id, std::move(entry)).first->second;
+  };
+
+  for (auto leftIt = lanes.begin(); leftIt != lanes.end(); ++leftIt)
+  {
+    for (auto rightIt = std::next(leftIt); rightIt != lanes.end(); ++rightIt)
+    {
+      if (*leftIt == *rightIt)
+      {
+        continue;
+      }
+      auto leftMapIt = laneMap.find(*leftIt);
+      auto rightMapIt = laneMap.find(*rightIt);
+      if ((leftMapIt == laneMap.end()) || (rightMapIt == laneMap.end()))
+      {
+        continue;
+      }
+      auto &leftLane = leftMapIt->second;
+      auto &rightLane = rightMapIt->second;
+
+      if ((leftLane.type == LaneType::Driving) && (rightLane.type == LaneType::Driving))
+      {
+        auto const &leftCached = getOrBuildPolygon(leftLane);
+        auto const &rightCached = getOrBuildPolygon(rightLane);
+        if (leftCached.valid && rightCached.valid && ::boost::geometry::intersects(leftCached.box, rightCached.box))
+        {
+          try
+          {
+            std::deque<BoostPolygon> output;
+            (void)::boost::geometry::intersection(leftCached.polygon, rightCached.polygon, output);
+            if (!output.empty())
+            {
+              leftLane.overlaps.insert(*rightIt);
+              rightLane.overlaps.insert(*leftIt);
+            }
+          }
+          catch (...)
+          {
+            spdlog::error(
+              "Error while checking overlap between lanes {} (left:{}, right:{}) and {} (left:{}, right:{})",
+              leftLane.id,
+              leftLane.leftEdge.size(),
+              leftLane.rightEdge.size(),
+              rightLane.id,
+              rightLane.leftEdge.size(),
+              rightLane.rightEdge.size());
+          }
+        }
+      }
+
+      switch (contactPlace(leftLane, rightLane))
+      {
+        case ContactPlace::LeftLeft:
+          // lane and neighbors need inversion
+          invertLaneAndNeighbors(laneMap, rightLane);
+          polygonCache.clear();
+          // fall through
+        case ContactPlace::LeftRight:
+          leftLane.leftNeighbor = *rightIt;
+          rightLane.rightNeighbor = *leftIt;
+          break;
+        case ContactPlace::RightRight:
+          // lane and neighbors need inversion
+          invertLaneAndNeighbors(laneMap, rightLane);
+          polygonCache.clear();
+          // fall through
+        case ContactPlace::RightLeft:
+          leftLane.rightNeighbor = *rightIt;
+          rightLane.leftNeighbor = *leftIt;
+          break;
+        case ContactPlace::Overlap:
+        case ContactPlace::None:
+          // nothing to be done
+          break;
+        default:
+          break;
+      }
+    }
   }
 }
 } // namespace geometry

@@ -19,9 +19,9 @@ void opendrive::parser::TrafficGroupParser::Parse(const pugi::xml_node &xmlNode,
   opendrive::parser::TrafficGroupParser parser;
   opendrive::TrafficLightGroup traffic_light_group;
 
-  traffic_light_group.red_time = std::atoi(xmlNode.attribute("redTime").value());
-  traffic_light_group.yellow_time = std::atoi(xmlNode.attribute("yellowTime").value());
-  traffic_light_group.green_time = std::atoi(xmlNode.attribute("greenTime").value());
+  traffic_light_group.red_time = xmlNode.attribute("redTime").as_double(0.0);
+  traffic_light_group.yellow_time = xmlNode.attribute("yellowTime").as_double(0.0);
+  traffic_light_group.green_time = xmlNode.attribute("greenTime").as_double(0.0);
 
   parser.ParseTrafficLight(xmlNode, traffic_light_group.traffic_lights);
   out_trafficLights.emplace_back(traffic_light_group);

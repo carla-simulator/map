@@ -61,7 +61,10 @@ void opendrive::parser::GeometryParser::ParseParamPoly3(
   out_geometry_param_poly3->bV = std::stod(xmlNode.attribute("bV").value());
   out_geometry_param_poly3->cV = std::stod(xmlNode.attribute("cV").value());
   out_geometry_param_poly3->dV = std::stod(xmlNode.attribute("dV").value());
-  out_geometry_param_poly3->p_range = xmlNode.attribute("pRange").value();
+  if (!xmlNode.attribute("pRange").empty())
+  {
+    out_geometry_param_poly3->p_range = xmlNode.attribute("pRange").value();
+  }
 }
 
 void opendrive::parser::GeometryParser::Parse(
@@ -108,6 +111,7 @@ void opendrive::parser::GeometryParser::Parse(
     else
     {
       ODP_ASSERT(false, "Geometry type unknown");
+      continue;
     }
 
     geometry_attributes->start_position = std::stod(roadGeometry.attribute("s").value());
