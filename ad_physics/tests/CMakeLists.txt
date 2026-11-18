@@ -18,6 +18,7 @@ set(TEST_SOURCES
   main.cpp
   AngleTests.cpp
   GeometryOperationTest.cpp
+  RangeOperationTests.cpp
   ${GENERATED_TEST_SOURCES}
 )
 

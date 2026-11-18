@@ -9,33 +9,43 @@
  */
 
 #include <chrono>
+#include <cmath>
 #include <iostream>
+#include <limits>
+#include <stdexcept>
 #include "boost/python.hpp"
 
 namespace bp = boost::python;
 
 static int64_t get_seconds(const ::std::chrono::system_clock::time_point &self)
 {
-  auto nanoseconds = std::chrono::nanoseconds(self.time_since_epoch()).count();
+  auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(self.time_since_epoch()).count();
   return nanoseconds / std::nano::den;
 }
 
 static int64_t get_nanoseconds(const ::std::chrono::system_clock::time_point &self)
 {
-  auto nanoseconds = std::chrono::nanoseconds(self.time_since_epoch()).count();
+  auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(self.time_since_epoch()).count();
   return nanoseconds % std::nano::den;
 }
 
 static void set_time(::std::chrono::system_clock::time_point &self, int64_t seconds, int64_t nanoseconds)
 {
-  self = std::chrono::system_clock::time_point(std::chrono::seconds(seconds) + std::chrono::nanoseconds(nanoseconds));
+  self = std::chrono::system_clock::time_point(std::chrono::duration_cast<std::chrono::system_clock::duration>(
+    std::chrono::seconds(seconds) + std::chrono::nanoseconds(nanoseconds)));
 }
 
 static void set_time_double(::std::chrono::system_clock::time_point &self, double seconds_since_epoch)
 {
-  int64_t seconds = int64_t(seconds_since_epoch);
-  int64_t nanoseconds = int64_t((seconds_since_epoch - (double)seconds) * std::nano::den);
-  self = std::chrono::system_clock::time_point(std::chrono::seconds(seconds) + std::chrono::nanoseconds(nanoseconds));
+  constexpr double cMaxSeconds = static_cast<double>(std::numeric_limits<int64_t>::max() / std::nano::den);
+  if (!std::isfinite(seconds_since_epoch) || (seconds_since_epoch < -cMaxSeconds)
+      || (seconds_since_epoch > cMaxSeconds))
+  {
+    throw std::out_of_range("set_time: seconds_since_epoch out of range");
+  }
+  auto const seconds = static_cast<int64_t>(seconds_since_epoch);
+  auto const nanoseconds = static_cast<int64_t>((seconds_since_epoch - static_cast<double>(seconds)) * std::nano::den);
+  set_time(self, seconds, nanoseconds);
 }
 
 namespace std {
@@ -51,7 +61,7 @@ std::ostream &operator<<(std::ostream &out, const ::std::chrono::system_clock::t
 
 void export_time_point()
 {
-  bp::object ad_physics_module(bp::handle<>(bp::borrowed(PyImport_AddModule("physics"))));
+  bp::object ad_physics_module(bp::handle<>(bp::borrowed(PyImport_AddModule("ad_physics.physics"))));
   bp::scope().attr("physics") = ad_physics_module;
   bp::scope submodule_scope = ad_physics_module;
 

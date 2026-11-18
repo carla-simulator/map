@@ -90,7 +90,7 @@ def main():
         additional_replacements_component.append(
                 ("BOOST_PYTHON_MODULE({}){{".format(component),
                  "void export_ad_{}(){{\n\n".format(component) +
-                 "  bp::object ad_{}_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"{}\"))));\n".format(component, component) +
+                 "  bp::object ad_{}_module(bp::handle<>(bp::borrowed(PyImport_AddModule(\"ad_physics.{}\"))));\n".format(component, component) +
                  "  bp::scope().attr(\"{}\") = ad_{}_module;\n".format(component, component) +
                  "  bp::scope submodule_scope = ad_{}_module;\n\n".format(component) +
                  "  bp::scope().attr(\"__doc__\") = \"Python binding of ad_physics ad::{} namespace C++ code for @PYTHON_BINDING_NAME@\";".format(component) +

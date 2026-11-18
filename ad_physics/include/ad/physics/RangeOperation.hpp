@@ -12,6 +12,9 @@
 
 #pragma once
 
+#include <algorithm>
+#include <limits>
+#include <vector>
 #include "ad/physics/AccelerationRangeValidInputRange.hpp"
 #include "ad/physics/MetricRangeValidInputRange.hpp"
 #include "ad/physics/ParametricRangeValidInputRange.hpp"
@@ -71,8 +74,8 @@ template <typename RangeType> bool isRangeContained(RangeType const &left, Range
  */
 template <typename RangeType> bool doRangesOverlap(RangeType const &left, RangeType const &right)
 {
-  return isWithinRange(left, right.minimum) || isWithinRange(left, right.maximum) || isWithinRange(right, left.minimum)
-    || isWithinRange(right, left.maximum) || isRangeContained(left, right) || isRangeContained(right, left);
+  return (left.minimum <= left.maximum) && (right.minimum <= right.maximum) && (left.minimum <= right.maximum)
+    && (right.minimum <= left.maximum);
 }
 
 /**
@@ -83,7 +86,7 @@ template <typename RangeType> bool doRangesOverlap(RangeType const &left, RangeT
  */
 template <typename RangeType> bool areRangesDisjunct(RangeType const &left, RangeType const &right)
 {
-  return !doRangesOverlaps(left, right);
+  return !doRangesOverlap(left, right);
 }
 
 /**
@@ -202,6 +205,11 @@ template <typename RangeType> RangeType getIntersectionRange(RangeType const &le
     result.minimum = std::max(left.minimum, right.minimum);
     result.maximum = std::min(left.maximum, right.maximum);
   }
+  else
+  {
+    result.minimum = std::numeric_limits<decltype(result.minimum)>::max();
+    result.maximum = std::numeric_limits<decltype(result.maximum)>::lowest();
+  }
   return result;
 }
 
@@ -215,7 +223,7 @@ template <typename RangeType> RangeType getIntersectionRange(RangeType const &le
 template <typename RangeType> bool intersectRangeWith(RangeType &left, RangeType const &right)
 {
   left = getIntersectionRange(left, right);
-  return isRangeValid(left);
+  return isRangeValid(left, false);
 }
 
 /**
@@ -229,12 +237,14 @@ template <typename RangeType> bool intersectRangeWith(RangeType &left, RangeType
  * @retval If the ranges overlap and \c subtrahend is actually inside of \c minuend,
  *    the two remaining parts of \c minuend are returned (if non-empty).
  */
-template <typename RangeType> std::vector<RangeType> subtract(RangeType &minuend, RangeType const &subtrahend)
+template <typename RangeType> std::vector<RangeType> subtract(RangeType const &minuend, RangeType const &subtrahend)
 {
   std::vector<RangeType> resultList;
   if (!isRangeEmpty(subtrahend) && doRangesOverlap(minuend, subtrahend))
   {
-    auto intersectingRange = getIntersectionRange(minuend, subtrahend);
+    RangeType intersectingRange;
+    intersectingRange.minimum = std::max(minuend.minimum, subtrahend.minimum);
+    intersectingRange.maximum = std::min(minuend.maximum, subtrahend.maximum);
     if ((intersectingRange.maximum == minuend.maximum) || (intersectingRange.minimum != minuend.minimum))
     {
       RangeType result;
